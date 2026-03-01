@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Globe } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
   { code: 'en', name: 'English', initials: 'EN' },
@@ -11,6 +12,7 @@ const LANGUAGES = [
 
 export const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useI18n();
+  const { getThemeGradient } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

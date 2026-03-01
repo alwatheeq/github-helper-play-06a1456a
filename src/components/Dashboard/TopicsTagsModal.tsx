@@ -28,6 +28,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
   selectedTopics,
   onApply
 }) => {
+  const { getThemeGradient } = useTheme();
   const [activeTab, setActiveTab] = useState<'topics' | 'tags'>('topics');
   const [localSelectedTags, setLocalSelectedTags] = useState<string[]>(selectedTags);
   const [localSelectedTopics, setLocalSelectedTopics] = useState<string[]>(selectedTopics);

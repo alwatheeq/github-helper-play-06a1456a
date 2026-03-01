@@ -7,6 +7,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { AVAILABLE_LANGUAGES } from '../../utils/translation';
 import { NotificationCenter } from './NotificationCenter';
 import { useSubscription } from '../../hooks/useSubscription';
+import { ErrorLogger } from '../../utils/errorLogger';
 
 export const Header: React.FC = () => {
   const { user, signOut } = useAuth();
