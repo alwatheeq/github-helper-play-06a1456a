@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 import { useCredits } from '../../contexts/CreditContext';
+import { ErrorLogger } from '../../utils/errorLogger';
 
 export const LowCreditBanner: React.FC = () => {
   const { balance } = useCredits();

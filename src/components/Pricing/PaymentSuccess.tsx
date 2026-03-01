@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home } from 'lucide-react';
 import { useSubscription } from '../../hooks/useSubscription';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();

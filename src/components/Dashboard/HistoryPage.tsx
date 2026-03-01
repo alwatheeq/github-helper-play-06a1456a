@@ -9,6 +9,8 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { SummaryDisplay } from './SummaryDisplay';
 import { FlashcardViewer } from './FlashcardViewer';
 import { useChatContext } from '../../contexts/ChatContext';
+import { usePageTutorial } from '../../hooks/usePageTutorial';
+import { PageTutorial } from '../Onboarding/PageTutorial';
 
 interface HistoryEntry {
   id: string;

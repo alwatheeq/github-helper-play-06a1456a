@@ -106,7 +106,7 @@ export function withErrorHandling<T extends (...args: unknown[]) => unknown>(
           });
         }
         
-        return result;
+        return result as any;
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
         ErrorLogger.error(err, { ...context, attempt });

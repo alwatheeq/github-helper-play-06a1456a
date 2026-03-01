@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, Check, X, Save } from 'lucide-react';
 import { useToast } from '../Toast/Toast';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface Question {
   question: string;

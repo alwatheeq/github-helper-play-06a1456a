@@ -127,7 +127,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
       if (gameError || !gameData) {
         const error = gameError instanceof Error ? gameError : new Error('Failed to load game');
-        ErrorLogger.error(error, { component: 'EduPlayPage', action: 'loadGameFromUrl', gameCode: code });
+        ErrorLogger.error(error, { component: 'EduPlayPage', action: 'loadGameFromUrl', gameCode: searchParams.get('game') });
         showErrorToast('Invalid game link or game not found');
         return;
       }
@@ -142,7 +142,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
       if (participantError) {
         const error = participantError instanceof Error ? participantError : new Error('Failed to check participant status');
-        ErrorLogger.error(error, { component: 'EduPlayPage', action: 'loadGameFromUrl', gameCode: code });
+        ErrorLogger.error(error, { component: 'EduPlayPage', action: 'loadGameFromUrl', gameCode: searchParams.get('game') });
         return;
       }
 
@@ -289,7 +289,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
     // Check subscription first
     if (!hasActiveSubscription()) {
-      setShowSubscriptionModal(true);
+      showErrorToast('Active subscription required to create games');
       return;
     }
 
@@ -501,7 +501,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       setViewMode('lobby');
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { component: 'EduPlayPage', action: 'handleJoinGame', gameCode });
+      ErrorLogger.error(err, { component: 'EduPlayPage', action: 'handleJoinGame', gameCode: joinCode });
       showErrorToast('Failed to join game. Please try again.');
     }
   };
@@ -572,7 +572,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       setViewMode('menu');
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { component: 'EduPlayPage', action: 'handleLeaveGame', gameSessionId: currentGameSession?.id });
+      ErrorLogger.error(err, { component: 'EduPlayPage', action: 'handleLeaveGame', gameSessionId: currentGame?.id });
     }
   };
 

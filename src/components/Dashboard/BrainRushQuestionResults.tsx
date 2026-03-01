@@ -43,6 +43,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
   onNextQuestion,
   currentUserId
 }) => {
+  const { getThemeGradient } = useTheme();
   const [participantResults, setParticipantResults] = useState<ParticipantResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState(5);
