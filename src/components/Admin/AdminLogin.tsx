@@ -11,6 +11,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 export const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const { signIn, signOut, user } = useAuth();
+  const { getThemeGradient } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -85,7 +86,7 @@ export const AdminLogin: React.FC = () => {
       } else {
         ErrorLogger.warn('Non-admin user detected after login', { component: 'AdminLogin', action: 'checkAdminAccess', userId: user.id });
         const accessError = new Error('User not found in admin_users table or inactive');
-        ErrorLogger.warn(accessError, { component: 'AdminLogin', action: 'checkAdminAccess', userId: user.id });
+        ErrorLogger.warn(accessError.message, { component: 'AdminLogin', action: 'checkAdminAccess', userId: user.id });
         setError('Access denied. This account is not registered as an admin. Only authorized administrators can access this portal.');
 
         // Log failed admin access attempt (authenticated but not admin)

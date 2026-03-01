@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
 import {
-  Search, Download, TrendingUp, Users, AlertTriangle, BarChart3, RefreshCw, Calendar, Activity
+  Search, Download, Users, AlertTriangle, BarChart3, RefreshCw, Calendar, Activity
 } from 'lucide-react';
 import { getTierDisplayInfo, formatTokenUsage } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';

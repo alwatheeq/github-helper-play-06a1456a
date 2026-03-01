@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { I18nProvider } from './contexts/I18nContext';
@@ -29,11 +29,7 @@ const PaymentSuccess = lazy(() => import('./components/Pricing/PaymentSuccess').
 const PaymentCancel = lazy(() => import('./components/Pricing/PaymentCancel').then(m => ({ default: m.PaymentCancel })));
 const SubscriptionManagementPage = lazy(() => import('./components/Dashboard/SubscriptionManagementPage').then(m => ({ default: m.SubscriptionManagementPage })));
 const BillingHistoryPage = lazy(() => import('./components/Dashboard/BillingHistoryPage').then(m => ({ default: m.BillingHistoryPage })));
-const NotFound = lazy(() => import('./components/NotFound').then(m => ({ default: m.NotFound })));
 const GameJoinPage = lazy(() => import('./components/Dashboard/GameJoinPage').then(m => ({ default: m.GameJoinPage })));
-const MultiplayerLobby = lazy(() => import('./components/Dashboard/MultiplayerLobby'));
-const MultiplayerGamePlay = lazy(() => import('./components/Dashboard/MultiplayerGamePlay'));
-const MultiplayerResults = lazy(() => import('./components/Dashboard/MultiplayerResults'));
 const AccountSuspended = lazy(() => import('./components/AccountSuspended').then(m => ({ default: m.AccountSuspended })));
 
 function AppContent() {
