@@ -17,6 +17,7 @@ interface TagData {
 }
 
 export const TagsManagementPage: React.FC = React.memo(() => {
+  const { user } = useAuth();
   const { error: showErrorToast } = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const [tags, setTags] = useState<TagData[]>([]);
@@ -98,7 +99,7 @@ export const TagsManagementPage: React.FC = React.memo(() => {
           p_old_values: { name: oldTag?.name },
           p_new_values: { name: editingName.trim() },
           p_description: `Updated tag name from "${oldTag?.name}" to "${editingName.trim()}"`
-        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'TagsManagementPage', action: 'handleSaveEdit', tagId, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'TagsManagementPage', action: 'handleSaveEdit', tagId, error: err instanceof Error ? err : new Error(String(err)) }));
       }
 
       await fetchTags();
@@ -144,7 +145,7 @@ export const TagsManagementPage: React.FC = React.memo(() => {
           p_record_id: tagId,
           p_old_values: { name: tagName, usage_count: usageCount },
           p_description: `Deleted tag "${tagName}"${usageCount > 0 ? ` (removed from ${usageCount} items)` : ''}`
-        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'TagsManagementPage', action: 'handleDeleteTag', tagId, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'TagsManagementPage', action: 'handleDeleteTag', tagId, error: err instanceof Error ? err : new Error(String(err)) }));
       }
 
       await fetchTags();

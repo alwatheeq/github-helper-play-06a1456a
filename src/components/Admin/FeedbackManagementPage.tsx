@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
-import { Search, Filter, Eye, X, CheckCircle, Clock, Image as ImageIcon, Video, Download, Trash2 } from 'lucide-react';
+import { Search, Filter, Eye, X, Clock, Image as ImageIcon, Download, Trash2 } from 'lucide-react';
 import { useToast } from '../Toast/Toast';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -78,7 +78,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
           p_old_values: { status: feedbacks.find(f => f.id === id)?.status },
           p_new_values: { status: newStatus },
           p_description: `Updated feedback status to ${newStatus}`
-        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'FeedbackManagementPage', action: 'updateFeedbackStatus', feedbackId: id, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'FeedbackManagementPage', action: 'updateFeedbackStatus', feedbackId: id, error: err instanceof Error ? err : new Error(String(err)) }));
       }
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
@@ -119,7 +119,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
           p_record_id: id,
           p_old_values: { feedback_text: feedbacks.find(f => f.id === id)?.feedback_text, status: feedbacks.find(f => f.id === id)?.status },
           p_description: `Deleted feedback from ${feedbacks.find(f => f.id === id)?.user_email || 'unknown user'}`
-        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'FeedbackManagementPage', action: 'deleteFeedback', feedbackId: id, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'FeedbackManagementPage', action: 'deleteFeedback', feedbackId: id, error: err instanceof Error ? err : new Error(String(err)) }));
       }
 
       showSuccessToast('Feedback deleted successfully');

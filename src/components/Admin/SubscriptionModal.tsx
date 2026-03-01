@@ -153,7 +153,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             p_record_id: null,
             p_new_values: { user_id: formData.user_id, subscription_tier: formData.subscription_tier, status: formData.status },
             p_description: `Created ${formData.subscription_tier} subscription for ${createdUser?.email || formData.user_id}`
-          }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', mode: 'create', error: err instanceof Error ? err : new Error(String(err)) }));
+          }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', mode: 'create', error: err instanceof Error ? err : new Error(String(err)) }));
         }
 
         showSuccessToast('Subscription created successfully!');
@@ -180,7 +180,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             p_old_values: { subscription_tier: subscription!.subscription_tier, status: subscription!.status, auto_renew: subscription!.auto_renew },
             p_new_values: { subscription_tier: formData.subscription_tier, status: formData.status, auto_renew: formData.auto_renew },
             p_description: `Updated subscription: ${formData.subscription_tier} (${formData.status})`
-          }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', mode: 'edit', subscriptionId: subscription!.id, error: err instanceof Error ? err : new Error(String(err)) }));
+          }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', mode: 'edit', subscriptionId: subscription!.id, error: err instanceof Error ? err : new Error(String(err)) }));
         }
 
         showSuccessToast('Subscription updated successfully!');

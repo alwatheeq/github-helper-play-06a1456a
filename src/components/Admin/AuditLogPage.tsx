@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useToast } from '../Toast/Toast';
-import { Shield, Search, Filter, Download, Calendar, User, Activity, Eye } from 'lucide-react';
+import { Shield, Search, Download, Calendar, User, Activity, Eye } from 'lucide-react';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface AuditLog {
   id: string;
@@ -33,6 +34,7 @@ interface AuditStats {
 
 export const AuditLogPage: React.FC = React.memo(() => {
   const toast = useToast();
+  const { getThemeGradient } = useTheme();
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
   const [stats, setStats] = useState<AuditStats | null>(null);
   const [loading, setLoading] = useState(true);
