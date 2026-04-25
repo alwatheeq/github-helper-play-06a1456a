@@ -240,7 +240,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         return;
       }
 
-      let finalCourses: Course[] | null = (coursesData as Course[] | null) ?? null;
+      let finalCourses: Course[] | null = (coursesData as unknown as Course[] | null) ?? null;
       let finalCoursesError = coursesError;
       let usedFallbackCourseSelectWithoutGenOptions = false;
 
@@ -254,7 +254,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
           .select('id,course_name,course_code,topic_id,academics_topics(name)')
           .eq('user_id', user.id)
           .order('created_at', { ascending: false });
-        finalCourses = (retry.data as Course[] | null) ?? null;
+        finalCourses = (retry.data as unknown as Course[] | null) ?? null;
         finalCoursesError = retry.error;
       }
 
@@ -308,8 +308,8 @@ export const AcademicsPage: React.FC = React.memo(() => {
         .order('created_at', { ascending: false })
     ]);
 
-    setCourseItems((itemsData || []) as CourseItem[]);
-    setCourseQuizzes((quizzesData || []) as CourseQuiz[]);
+    setCourseItems((itemsData || []) as unknown as CourseItem[]);
+    setCourseQuizzes((quizzesData || []) as unknown as CourseQuiz[]);
   }, [selectedCourseId]);
 
   const loadAnalytics = useCallback(async () => {
@@ -323,8 +323,8 @@ export const AcademicsPage: React.FC = React.memo(() => {
       .from('academics_course_quizzes')
       .select('course_id,quiz_session_id,quiz_sessions(id,questions_json)');
 
-    const mappings = (allMappings || []) as AcademicsCourseItemMappingRow[];
-    const courseQuizRows = (allCourseQuizzes || []) as AcademicsCourseQuizAnalyticsRow[];
+    const mappings = (allMappings || []) as unknown as AcademicsCourseItemMappingRow[];
+    const courseQuizRows = (allCourseQuizzes || []) as unknown as AcademicsCourseQuizAnalyticsRow[];
 
     const quizSessionIds = courseQuizRows.map((q) => q.quiz_session_id);
     const { data: attemptsData } = quizSessionIds.length
