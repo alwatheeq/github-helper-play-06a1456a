@@ -572,8 +572,6 @@ export const AcademicsPage: React.FC = React.memo(() => {
             flashMode,
             0,
             extracted?.pageCount || 0,
-            false,
-            ACADEMICS_AI_EXTRAS
           );
           flashcards = flashcardsResult.flashcards || [];
         }
