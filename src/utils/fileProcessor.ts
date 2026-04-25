@@ -59,7 +59,7 @@ export const validateFile = (file: File, mode: 'file' | 'ocr' = 'file'): { isVal
     return { isValid: true, error: null };
   }
 
-  if (!CONFIG.ALLOWED_FILE_TYPES.includes(file.type)) {
+  if (!(CONFIG.ALLOWED_FILE_TYPES as readonly string[]).includes(file.type)) {
     return { 
       isValid: false, 
       error: 'Invalid file type. Please upload a PDF, PPTX, or DOCX file.' 

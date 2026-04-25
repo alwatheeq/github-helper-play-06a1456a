@@ -10,6 +10,7 @@ export interface ErrorContext {
   action?: string;
   userId?: string;
   metadata?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 interface ErrorEntry {
@@ -91,12 +92,13 @@ export class ErrorLogger {
     this.log(new Error(message), context, LogLevel.INFO);
   }
 
-  static warn(message: string, context: ErrorContext = {}): void {
-    this.log(new Error(message), context, LogLevel.WARN);
+  static warn(message: string | Error | unknown, context: ErrorContext = {}): void {
+    const err = message instanceof Error ? message : new Error(typeof message === 'string' ? message : String(message));
+    this.log(err, context, LogLevel.WARN);
   }
 
-  static error(error: Error | string, context: ErrorContext = {}): void {
-    const err = typeof error === 'string' ? new Error(error) : error;
+  static error(error: Error | string | unknown, context: ErrorContext = {}): void {
+    const err = error instanceof Error ? error : new Error(typeof error === 'string' ? error : String(error));
     this.log(err, context, LogLevel.ERROR);
   }
 

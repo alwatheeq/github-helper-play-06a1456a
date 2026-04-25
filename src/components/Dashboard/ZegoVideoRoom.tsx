@@ -133,9 +133,9 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
             },
           ],
           scenario: {
-            mode: "VideoConference",
+            mode: "VideoConference" as any,
             config: {
-              role: "Host",
+              role: "Host" as any,
             },
           },
 

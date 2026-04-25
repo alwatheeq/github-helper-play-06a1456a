@@ -27,6 +27,7 @@ interface Subscription {
   user_profiles: {
     email: string;
     display_name: string | null;
+    name?: string | null;
   };
 }
 
@@ -383,7 +384,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
   };
 
   if (loading) {
-    return <LoadingSkeleton type="table" count={10} className="mt-8" />;
+    return <div className="mt-8 p-8 text-center text-gray-400">Loading subscriptions...</div>;
   }
 
   return (

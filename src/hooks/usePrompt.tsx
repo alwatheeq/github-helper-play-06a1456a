@@ -65,7 +65,7 @@ export const usePrompt = () => {
     }
   }, [config]);
 
-  const PromptModalComponent = config ? (
+  const PromptModalComponent: JSX.Element = config ? (
     <PromptModal
       isOpen={isOpen}
       onClose={handleCancel}
@@ -78,7 +78,7 @@ export const usePrompt = () => {
       cancelText={config.cancelText}
       validate={config.validate}
     />
-  ) : null;
+  ) : <></>;
 
   return {
     prompt,

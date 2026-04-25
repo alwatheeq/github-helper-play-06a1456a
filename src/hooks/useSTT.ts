@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+type SpeechRecognition = any;
+
 declare global {
   interface Window {
-    webkitSpeechRecognition?: typeof SpeechRecognition;
+    SpeechRecognition?: any;
+    webkitSpeechRecognition?: any;
   }
 }
 

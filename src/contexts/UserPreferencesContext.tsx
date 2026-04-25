@@ -141,7 +141,7 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
         throw error;
       }
 
-      setPreferences((prev) => prev ? { ...prev, sidebar_mode: mode } : { sidebar_mode: mode, free_form_mode_enabled: false });
+      setPreferences((prev) => prev ? { ...prev, sidebar_mode: mode } : { sidebar_mode: mode, free_form_mode_enabled: false, tts_hover_enabled: false });
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       handleSupabaseError(err, { component: 'UserPreferencesContext', action: 'updateSidebarMode', userId: user.id, mode });
@@ -180,7 +180,7 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
         throw error;
       }
 
-      setPreferences((prev) => prev ? { ...prev, free_form_mode_enabled: enabled } : { sidebar_mode: 'collapsible', free_form_mode_enabled: enabled });
+      setPreferences((prev) => prev ? { ...prev, free_form_mode_enabled: enabled } : { sidebar_mode: 'collapsible', free_form_mode_enabled: enabled, tts_hover_enabled: false });
       ErrorLogger.info('Free-form mode preference updated', { component: 'UserPreferencesContext', action: 'updateFreeFormMode', userId: user.id, enabled });
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
@@ -220,7 +220,7 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
         throw error;
       }
 
-      setPreferences((prev) => prev ? { ...prev, color_theme: theme } : { sidebar_mode: 'collapsible', free_form_mode_enabled: false, color_theme: theme });
+      setPreferences((prev) => prev ? { ...prev, color_theme: theme } : { sidebar_mode: 'collapsible', free_form_mode_enabled: false, color_theme: theme, tts_hover_enabled: false });
       ErrorLogger.info('Color theme preference updated', { component: 'UserPreferencesContext', action: 'updateColorTheme', userId: user.id, theme });
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));

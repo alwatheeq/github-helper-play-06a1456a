@@ -79,9 +79,9 @@ export const processSummaryBatches = async (
           false,
           invokeExtras
         );
-        const summaryText = result.summary || result;
+        const summaryText: string = typeof result === 'string' ? result : (result.summary || '');
 
-        ErrorLogger.debug(`Chunk ${i + 1} summary generated`, { component: 'queueProcessor', action: 'processSummaryBatches', chunkIndex: i + 1, totalChunks, summaryLength: summaryText?.length || 0 });
+        ErrorLogger.debug(`Chunk ${i + 1} summary generated`, { component: 'queueProcessor', action: 'processSummaryBatches', chunkIndex: i + 1, totalChunks, summaryLength: summaryText.length });
 
         if (!summaryText || summaryText.trim().length === 0) {
           const error = new Error(`Empty summary returned for chunk ${i + 1}`);
@@ -91,7 +91,7 @@ export const processSummaryBatches = async (
 
         summaryChunks.push(summaryText);
 
-        if (result.tokens && result.tokens.total) {
+        if (typeof result !== 'string' && result.tokens && result.tokens.total) {
           totalTokensUsed += result.tokens.total;
           ErrorLogger.debug(`Chunk ${i + 1} used ${result.tokens.total} tokens`, { component: 'queueProcessor', action: 'processSummaryBatches', chunkIndex: i + 1, tokens: result.tokens.total });
         }
@@ -193,7 +193,7 @@ export const processFlashcardBatches = async (
           false
         );
 
-        const batchFlashcards = result.flashcards || result;
+        const batchFlashcards = Array.isArray(result) ? result : (result.flashcards || []);
 
         const uniqueBatchCards = deduplicateFlashcards([...allFlashcards, ...batchFlashcards])
           .slice(allFlashcards.length);

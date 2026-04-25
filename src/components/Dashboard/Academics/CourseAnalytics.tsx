@@ -71,7 +71,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
         const sessionTitleMap: Record<string, string> = {};
         (courseQuizzes || []).forEach((q, idx) => {
-          const qs = q.quiz_sessions as { id: string; quiz_title: string; questions_json: unknown[] } | null;
+          const qs = q.quiz_sessions as unknown as { id: string; quiz_title: string; questions_json: unknown[] } | null;
           sessionTitleMap[q.quiz_session_id] = qs?.quiz_title || `Quiz ${idx + 1}`;
         });
 

@@ -362,8 +362,8 @@ export const CreditManagementPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <ConfirmModal />
-      <PromptModal />
+      {ConfirmModal}
+      {PromptModal}
     </div>
   );
 });

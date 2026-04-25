@@ -10,7 +10,7 @@ interface UseConfirmOptions {
 
 export const useConfirm = (): {
   confirm: (message: string, options?: UseConfirmOptions) => Promise<boolean>;
-  ConfirmModal: JSX.Element | null;
+  ConfirmModal: JSX.Element;
 } => {
   const [isOpen, setIsOpen] = useState(false);
   const [config, setConfig] = useState<{
@@ -58,7 +58,7 @@ export const useConfirm = (): {
     }
   }, [config]);
 
-  const ConfirmModal = config ? (
+  const ConfirmModal: JSX.Element = config ? (
     <ConfirmationModal
       isOpen={isOpen}
       onClose={handleCancel}
@@ -69,7 +69,7 @@ export const useConfirm = (): {
       cancelText={config.cancelText}
       variant={config.variant}
     />
-  ) : null;
+  ) : <></>;
 
   return {
     confirm,

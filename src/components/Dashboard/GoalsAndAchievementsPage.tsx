@@ -157,12 +157,6 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   const handleCreateGoal = async () => {
     if (!user || !goalTitle.trim()) return;
 
-    // Check subscription first
-    if (!hasActiveSubscription()) {
-      setShowSubscriptionModal(true);
-      return;
-    }
-
     if (isOffline()) {
       handleOfflineError(showErrorToast);
       return;
