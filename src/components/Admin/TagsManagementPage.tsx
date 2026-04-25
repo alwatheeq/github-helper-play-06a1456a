@@ -5,6 +5,7 @@ import { useToast } from '../Toast/Toast';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
+import { useAuth } from '../../hooks/useAuth';
 
 interface TagData {
   id: string;
@@ -18,6 +19,7 @@ interface TagData {
 export const TagsManagementPage: React.FC = React.memo(() => {
   const { error: showErrorToast } = useToast();
   const { confirm, ConfirmModal } = useConfirm();
+  const { user } = useAuth();
   const [tags, setTags] = useState<TagData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');

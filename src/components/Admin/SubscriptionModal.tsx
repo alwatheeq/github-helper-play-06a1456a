@@ -146,13 +146,17 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         // Log audit action
         if (user?.id) {
           const createdUser = users.find(u => u.id === formData.user_id);
-          await supabase.rpc('log_admin_action', {
-            p_action_type: 'CREATE',
-            p_table_name: 'subscriptions',
-            p_record_id: null,
-            p_new_values: { user_id: formData.user_id, subscription_tier: formData.subscription_tier, status: formData.status },
-            p_description: `Created ${formData.subscription_tier} subscription for ${createdUser?.email || formData.user_id}`
-          }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', mode: 'create', error: err instanceof Error ? err : new Error(String(err)) }));
+          try {
+            await supabase.rpc('log_admin_action', {
+              p_action_type: 'CREATE',
+              p_table_name: 'subscriptions',
+              p_record_id: null,
+              p_new_values: { user_id: formData.user_id, subscription_tier: formData.subscription_tier, status: formData.status },
+              p_description: `Created ${formData.subscription_tier} subscription for ${createdUser?.email || formData.user_id}`
+            });
+          } catch (err: unknown) {
+            ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', metadata: { mode: 'create', error: err instanceof Error ? err.message : String(err) } });
+          }
         }
 
         showSuccessToast('Subscription created successfully!');
