@@ -141,7 +141,7 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
         throw error;
       }
 
-      setPreferences((prev) => prev ? { ...prev, sidebar_mode: mode } : { sidebar_mode: mode, free_form_mode_enabled: false });
+      setPreferences((prev) => prev ? { ...prev, sidebar_mode: mode } : { sidebar_mode: mode, free_form_mode_enabled: false, tts_hover_enabled: false });
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       handleSupabaseError(err, { component: 'UserPreferencesContext', action: 'updateSidebarMode', userId: user.id, mode });
