@@ -65,7 +65,7 @@ export const usePrompt = () => {
     }
   }, [config]);
 
-  const PromptModalComponent = config ? (
+  const PromptModalComponent: React.FC = () => config ? (
     <PromptModal
       isOpen={isOpen}
       onClose={handleCancel}

@@ -10,7 +10,7 @@ interface UseConfirmOptions {
 
 export const useConfirm = (): {
   confirm: (message: string, options?: UseConfirmOptions) => Promise<boolean>;
-  ConfirmModal: React.ReactNode;
+  ConfirmModal: React.FC;
 } => {
   const [isOpen, setIsOpen] = useState(false);
   const [config, setConfig] = useState<{
@@ -58,7 +58,7 @@ export const useConfirm = (): {
     }
   }, [config]);
 
-  const ConfirmModal = config ? (
+  const ConfirmModal: React.FC = () => config ? (
     <ConfirmationModal
       isOpen={isOpen}
       onClose={handleCancel}
