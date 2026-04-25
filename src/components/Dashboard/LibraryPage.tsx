@@ -284,9 +284,9 @@ export const LibraryPage: React.FC = React.memo(() => {
     } else if (sortOption === 'created_at_asc') {
       query = query.order('created_at', { ascending: true });
     } else if (sortOption === 'last_viewed_desc') {
-      query = query.order('last_viewed_at', { ascending: false, nullsLast: true });
+      query = query.order('last_viewed_at', { ascending: false, nullsFirst: false });
     } else if (sortOption === 'last_viewed_asc') {
-      query = query.order('last_viewed_at', { ascending: true, nullsLast: true });
+      query = query.order('last_viewed_at', { ascending: true, nullsFirst: false });
     } else if (sortOption === 'title_asc') {
       query = query.order('title', { ascending: true });
     } else if (sortOption === 'title_desc') {
@@ -546,7 +546,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           showNotification(t('library.alert_share_link_generated'), 'success');
         } catch (clipboardError) {
           // Clipboard might fail, but link was generated - show success with note
-          ErrorLogger.warn(clipboardError instanceof Error ? clipboardError : new Error(String(clipboardError)), { 
+          ErrorLogger.warn(clipboardError instanceof Error ? clipboardError.message : String(clipboardError), { 
             component: 'LibraryPage', 
             action: 'handleShareItem', 
             step: 'clipboard',
@@ -556,7 +556,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         }
         await fetchLibraryItems(); // Refresh to show updated sharing status
       } else {
-        ErrorLogger.warn(new Error('No public_url in response'), { 
+        ErrorLogger.warn('No public_url in response', { 
           component: 'LibraryPage', 
           action: 'handleShareItem', 
           itemId,
@@ -706,7 +706,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>{t('common.error_loading_library')}</h3>
             <p className={`${getThemeTextSecondary()} mb-4`}>{error}</p>
             <button
-              onClick={fetchLibraryData}
+              onClick={() => fetchLibraryData()}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 mx-auto"
             >
               <span>{t('common.try_again')}</span>
@@ -1257,7 +1257,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         isOpen={showTopicsTagsModal}
         onClose={() => setShowTopicsTagsModal(false)}
         tags={tags}
-        predefinedTopics={PREDEFINED_TOPICS}
+        predefinedTopics={[...PREDEFINED_TOPICS]}
         selectedTags={selectedTags}
         selectedTopics={selectedTopics}
         onApply={handleApplyTopicsTagsFilters}
