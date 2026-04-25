@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useMemo, ReactNode } from 'react';
 import { CheckCircle, XCircle, AlertCircle, Info, X } from 'lucide-react';
+import { toErrorMessage } from '../../utils/errorHandler';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -39,7 +40,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 
   const showToast = useCallback((type: ToastType, message: string, duration: number = 5000) => {
     const id = Math.random().toString(36).substring(2, 9);
-    const newToast: Toast = { id, type, message, duration };
+    const newToast: Toast = { id, type, message: toErrorMessage(message as unknown), duration };
 
     setToasts(prev => [...prev, newToast]);
 
@@ -110,7 +111,7 @@ interface ToastItemProps {
 
 const ToastItem: React.FC<ToastItemProps> = ({ toast, onClose }) => {
   const getToastStyles = () => {
-    const baseStyles = 'flex items-start space-x-3 p-4 rounded-lg shadow-lg border backdrop-blur-sm transition-all duration-300 animate-slide-in';
+    const baseStyles = 'flex items-start space-x-3 p-4 rounded-lg shadow border backdrop-blur-sm transition-colors duration-150 animate-slide-in';
 
     switch (toast.type) {
       case 'success':

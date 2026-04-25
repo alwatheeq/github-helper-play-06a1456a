@@ -1,16 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../lib/supabase';
 import { handleSupabaseError, isOffline } from '../utils/errorHandler';
 import { ErrorLogger } from '../utils/errorLogger';
+import { useCreditStore } from '../stores/useCreditStore';
+import type { CreditBalance } from '../stores/useCreditStore';
 
-interface CreditBalance {
-  credits_remaining: number;
-  credits_total: number;
-  cycle_start: string | null;
-  cycle_end: string | null;
-  free_credits_claimed: boolean;
-}
+export type { CreditBalance };
 
 interface CreditContextType {
   balance: CreditBalance | null;
@@ -22,8 +18,7 @@ const CreditContext = createContext<CreditContextType | undefined>(undefined);
 
 export const CreditProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const [balance, setBalance] = useState<CreditBalance | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { balance, loading, setBalance, setLoading } = useCreditStore();
 
   const fetchBalance = useCallback(async () => {
     if (!user) {
@@ -55,7 +50,11 @@ export const CreditProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           credits_total: data.credits_total,
           cycle_start: data.cycle_start,
           cycle_end: data.cycle_end,
-          free_credits_claimed: data.free_credits_claimed
+          free_credits_claimed: data.free_credits_claimed,
+          zego_credits_remaining: data.zego_credits_remaining ?? 0,
+          zego_credits_total: data.zego_credits_total ?? 0,
+          chat_tokens_remaining: data.chat_tokens_remaining ?? 0,
+          chat_token_limit: data.chat_token_limit ?? 0
         });
       }
     } catch (err) {
