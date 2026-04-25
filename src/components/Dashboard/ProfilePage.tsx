@@ -765,8 +765,8 @@ export const ProfilePage: React.FC = React.memo(() => {
       } else if (achievementsData) {
         const formattedAchievements = achievementsData
           .filter(a => a.achievements_definitions)
-          .map(a => ({
-            ...(a.achievements_definitions as Achievement),
+          .map((a: any) => ({
+            ...(Array.isArray(a.achievements_definitions) ? a.achievements_definitions[0] : a.achievements_definitions),
             earned_at: a.earned_at
           }));
         setAchievements(formattedAchievements);

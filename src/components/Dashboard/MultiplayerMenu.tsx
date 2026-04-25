@@ -101,7 +101,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
       onLobbyJoined(lobby.id);
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { component: 'MultiplayerMenu', action: 'handleCreateLobby', gameTitle, questionCount, difficulty });
+      ErrorLogger.error(error, { component: 'MultiplayerMenu', action: 'handleCreateLobby', metadata: { questionCount } });
       setError(error.message || 'Failed to create lobby');
     } finally {
       setLoading(false);
