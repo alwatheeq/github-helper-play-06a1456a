@@ -187,9 +187,9 @@ export const BillingHistoryPage: React.FC = () => {
       const opt = {
         margin: 10,
         filename: `receipt-${transaction.id.slice(0, 8)}-${new Date(transaction.created_at).toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg' as const, quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
       };
 
       const element = document.createElement('div');
