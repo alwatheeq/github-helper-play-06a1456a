@@ -6,6 +6,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { recordFlashcardStudy, recordFlashcardRating } from '../../utils/studyTracking';
 import { ReadAloudButton } from './ReadAloud/ReadAloudButton';
 import { supabase } from '../../lib/supabase';
+import { ErrorLogger } from '../../utils/errorLogger';
 
 interface Flashcard {
   front: string;
