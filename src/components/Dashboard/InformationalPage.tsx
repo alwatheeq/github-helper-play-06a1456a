@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Info, FileText, Upload, Brain, BookOpen, History, Share2, Globe, Tag, Folder, Eye, Download, RotateCcw, CreditCard as Edit3, List, HelpCircle, User, BarChart3, ChevronRight, Stethoscope } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { AVAILABLE_LANGUAGES } from '../../utils/translation';
 import { useTheme } from '../../contexts/ThemeContext';
-import { usePageTutorial } from '../../hooks/usePageTutorial';
-import { PageTutorial } from '../Onboarding/PageTutorial';
 
 export const InformationalPage: React.FC = React.memo(() => {
   const { t } = useI18n();

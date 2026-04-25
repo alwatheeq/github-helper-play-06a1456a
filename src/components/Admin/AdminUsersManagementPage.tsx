@@ -7,7 +7,6 @@ import { Shield, Search, UserPlus, UserX, UserCheck, Clock, Calendar, AlertCircl
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface AdminUser {
   id: string;
@@ -34,7 +33,6 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const toast = useToast();
   const { confirm, ConfirmModal } = useConfirm();
-  const { getThemeGradient } = useTheme();
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
   const [loginAttempts, setLoginAttempts] = useState<LoginAttempt[]>([]);
   const [loading, setLoading] = useState(true);
@@ -120,7 +118,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         p_record_id: data?.user_id || null,
         p_new_values: { email: newAdminEmail.trim() },
         p_description: `Added new admin user: ${newAdminEmail.trim()}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleAddAdmin', error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleAddAdmin', error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success('Admin user added successfully!');
       setShowAddModal(false);
@@ -129,7 +127,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
       fetchAdminUsers();
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { component: 'AdminUsersManagementPage', action: 'handleAddAdmin', email: newAdminEmail });
+      ErrorLogger.error(error, { component: 'AdminUsersManagementPage', action: 'handleAddAdmin', email });
       toast.error(error.message || 'Failed to add admin user');
     } finally {
       setIsAddingAdmin(false);
@@ -165,7 +163,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         p_old_values: { is_active: true },
         p_new_values: { is_active: false },
         p_description: `Deactivated admin user: ${adminEmail}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleDeactivateAdmin', adminEmail, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleDeactivateAdmin', adminEmail, error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success('Admin user deactivated successfully');
       fetchAdminUsers();
@@ -200,7 +198,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         p_old_values: { is_active: false },
         p_new_values: { is_active: true },
         p_description: `Reactivated admin user: ${adminEmail}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleReactivateAdmin', adminEmail, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'AdminUsersManagementPage', action: 'handleReactivateAdmin', adminEmail, error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success('Admin user reactivated successfully');
       fetchAdminUsers();

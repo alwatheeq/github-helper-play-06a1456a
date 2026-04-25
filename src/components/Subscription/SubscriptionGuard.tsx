@@ -4,7 +4,6 @@ import { useFeatureAccess, FeatureName } from '../../hooks/useFeatureAccess';
 import { useAuth } from '../../hooks/useAuth';
 import { Lock, Zap, Crown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface SubscriptionGuardProps {
   children: ReactNode;

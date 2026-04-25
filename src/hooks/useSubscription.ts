@@ -175,7 +175,8 @@ export const useSubscription = () => {
         .gt('end_date', new Date().toISOString())
         .order('end_date', { ascending: false })
         .limit(1)
-        .maybeSingle();
+        .maybeSingle()
+        .abortSignal(controller.signal);
 
       clearTimeout(timeoutId);
 

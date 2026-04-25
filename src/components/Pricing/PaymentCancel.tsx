@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { XCircle, ArrowLeft, RefreshCw } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export const PaymentCancel: React.FC = () => {
   const navigate = useNavigate();

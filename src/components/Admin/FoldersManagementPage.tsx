@@ -101,7 +101,7 @@ export const FoldersManagementPage: React.FC = React.memo(() => {
           p_old_values: { name: oldFolder?.name },
           p_new_values: { name: editingName.trim() },
           p_description: `Updated folder name from "${oldFolder?.name}" to "${editingName.trim()}"`
-        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'FoldersManagementPage', action: 'handleSaveEdit', folderId, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'FoldersManagementPage', action: 'handleSaveEdit', folderId, error: err instanceof Error ? err : new Error(String(err)) }));
       }
 
       await fetchFolders();
@@ -147,7 +147,7 @@ export const FoldersManagementPage: React.FC = React.memo(() => {
           p_record_id: folderId,
           p_old_values: { name: folderName, item_count: itemCount },
           p_description: `Deleted folder "${folderName}"${itemCount > 0 ? ` (${itemCount} items moved to uncategorized)` : ''}`
-        }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'FoldersManagementPage', action: 'handleDeleteFolder', folderId, error: err instanceof Error ? err : new Error(String(err)) }));
+        }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'FoldersManagementPage', action: 'handleDeleteFolder', folderId, error: err instanceof Error ? err : new Error(String(err)) }));
       }
 
       await fetchFolders();

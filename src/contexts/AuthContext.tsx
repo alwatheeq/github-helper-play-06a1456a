@@ -131,7 +131,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (profileError) {
         handleSupabaseError(profileError, { component: 'AuthContext', action: 'loadUserProfile', step: 'fetchProfile', userId: supabaseUser.id });
-        ErrorLogger.warn(profileError.message || String(profileError), { component: 'AuthContext', action: 'loadUserProfile', step: 'fetchProfile', userId: supabaseUser.id });
+        ErrorLogger.warn(profileError, { component: 'AuthContext', action: 'loadUserProfile', step: 'fetchProfile', userId: supabaseUser.id });
       }
 
       // If profile doesn't exist, try to create it manually

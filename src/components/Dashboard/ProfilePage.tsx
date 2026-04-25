@@ -11,8 +11,6 @@ import { useI18n } from '../../contexts/I18nContext';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { usePageTutorial } from '../../hooks/usePageTutorial';
-import { PageTutorial } from '../Onboarding/PageTutorial';
 
 interface UserStats {
   level: number;
@@ -739,7 +737,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         const formattedAchievements = achievementsData
           .filter(a => a.achievements_definitions)
           .map(a => ({
-            ...(a.achievements_definitions as unknown as Achievement),
+            ...(a.achievements_definitions as Achievement),
             earned_at: a.earned_at
           }));
         setAchievements(formattedAchievements);
@@ -1157,7 +1155,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                         try {
                           await setTheme(theme);
                           setSettingsMessage('Theme updated successfully!');
-                          showSuccessToast('Theme updated successfully!');
+                          toast.show('Theme updated successfully!', 'success');
                           setTimeout(() => setSettingsMessage(null), 3000);
                         } catch (error) {
                           const errorMessage = error instanceof Error ? error.message : String(error);

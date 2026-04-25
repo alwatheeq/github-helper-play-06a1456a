@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../lib/supabase';
 import {
-  Search, Download, Plus,
-  DollarSign, TrendingUp, Users, CheckCircle, XCircle, Clock, Edit, Trash2, Ban, RotateCw
+  Search, Filter, Download, Plus, Crown, Calendar,
+  DollarSign, TrendingUp, Users, CheckCircle, XCircle, AlertCircle, Clock, Edit, Trash2, Ban, RotateCw
 } from 'lucide-react';
 import { getTierDisplayInfo, getStatusDisplayInfo, formatCurrency } from '../../utils/subscriptionHelpers';
 import { SubscriptionModal } from './SubscriptionModal';
@@ -11,8 +11,6 @@ import { useToast } from '../Toast/Toast';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
 import { usePrompt } from '../../hooks/usePrompt';
-import { useDebounce } from '../../hooks/useDebounce';
-import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 
 interface Subscription {
   id: string;
@@ -66,7 +64,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
   }, []);
 
   const fetchSubscriptions = async () => {
-    return (async () => {
+    return PerformanceMonitor.measureAsync('SubscriptionsManagementPage.fetchSubscriptions', async () => {
       try {
         setLoading(true);
 
@@ -200,7 +198,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         p_old_values: { status: subscription.status },
         p_new_values: { status: 'canceled' },
         p_description: `Canceled subscription for ${subscription.user_profiles.email}${reason ? ` - Reason: ${reason}` : ''}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionsManagementPage', action: 'handleCancel', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionsManagementPage', action: 'handleCancel', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
       
       fetchSubscriptions();
       fetchStats();
@@ -265,7 +263,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         p_old_values: { status: subscription.status },
         p_new_values: { status: 'active' },
         p_description: `Reactivated subscription for ${subscription.user_profiles.email}${extendDays ? ` - Extended by ${extendDays} days` : ''}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'SubscriptionsManagementPage', action: 'handleReactivate', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'SubscriptionsManagementPage', action: 'handleReactivate', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
       
       fetchSubscriptions();
       fetchStats();
@@ -301,7 +299,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         p_record_id: subscription.id,
         p_old_values: { user_id: subscription.user_id, subscription_tier: subscription.subscription_tier, status: subscription.status },
         p_description: `Deleted subscription for ${subscription.user_profiles.email}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionsManagementPage', action: 'handleDelete', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionsManagementPage', action: 'handleDelete', subscriptionId: subscription.id, error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success('Subscription deleted successfully!');
       fetchSubscriptions();
@@ -322,7 +320,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
     const headers = ['Email', 'Name', 'Tier', 'Status', 'Start Date', 'End Date', 'Auto Renew'];
     const rows = filteredSubscriptions.map(sub => [
       sub.user_profiles.email,
-      sub.user_profiles.display_name || '',
+      sub.user_profiles.name || '',
       sub.subscription_tier,
       sub.status,
       new Date(sub.start_date).toLocaleDateString(),
@@ -496,7 +494,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
                         <p className="text-sm font-medium text-white">
-                          {subscription.user_profiles.display_name || 'No Name'}
+                          {subscription.user_profiles.name || 'No Name'}
                         </p>
                         <p className="text-xs text-gray-400">{subscription.user_profiles.email}</p>
                       </div>

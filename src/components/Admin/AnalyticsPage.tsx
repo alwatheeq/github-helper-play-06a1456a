@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
 import {
   TrendingUp, Users, DollarSign, Activity, Calendar, BarChart3, ArrowUp, ArrowDown
 } from 'lucide-react';
@@ -31,13 +30,12 @@ interface TokenUsageStats {
 }
 
 export const AnalyticsPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const [userGrowth, setUserGrowth] = useState<UserGrowth[]>([]);
   const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
   const [subscriptionStats, setSubscriptionStats] = useState<SubscriptionStats[]>([]);
   const [tokenUsageStats, setTokenUsageStats] = useState<TokenUsageStats[]>([]);
   const [loading, setLoading] = useState(true);
-  const [dateRange, setDateRange] = useState<'7' | '30' | '90' | '365'>('30');
+  const [dateRange, setDateRange] = useState<'7' | '30' | '90'>('30');
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);

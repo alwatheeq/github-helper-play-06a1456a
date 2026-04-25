@@ -11,7 +11,6 @@ import { getTierDisplayInfo, getStatusDisplayInfo, formatCurrency, PRICING, form
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export const SubscriptionManagementPage: React.FC = () => {
   const { user } = useAuth();

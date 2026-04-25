@@ -172,7 +172,7 @@ export const needsPaymentMethod = (subscription: Subscription | null | undefined
   return (
     subscription.auto_renew &&
     !subscription.payment_method_saved &&
-    ([SUBSCRIPTION_TIERS.MONTHLY, SUBSCRIPTION_TIERS.QUARTERLY, SUBSCRIPTION_TIERS.BIANNUAL] as string[]).includes(subscription.subscription_tier)
+    [SUBSCRIPTION_TIERS.MONTHLY, SUBSCRIPTION_TIERS.QUARTERLY, SUBSCRIPTION_TIERS.BIANNUAL].includes(subscription.subscription_tier)
   );
 };
 

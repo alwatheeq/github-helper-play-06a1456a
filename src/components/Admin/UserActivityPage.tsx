@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 import { useToast } from '../Toast/Toast';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { LoadingSkeleton } from '../Common/LoadingSkeleton';
-import { Activity, Clock, TrendingUp, Users, Calendar, Eye, X } from 'lucide-react';
+import { Activity, Clock, TrendingUp, Users, Calendar, Eye } from 'lucide-react';
 import { useDebounce } from '../../hooks/useDebounce';
 
 interface UserActivity {
@@ -69,7 +69,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
         .in('user_id', userIds);
 
       if (sessionsError) {
-        ErrorLogger.warn((sessionsError instanceof Error ? sessionsError : new Error(String(sessionsError))).message, {
+        ErrorLogger.warn(sessionsError instanceof Error ? sessionsError : new Error(String(sessionsError)), {
           component: 'UserActivityPage',
           action: 'fetchActivities',
           step: 'fetchSessions'
@@ -87,7 +87,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
         .gte('created_at', sevenDaysAgo.toISOString());
 
       if (historyError) {
-        ErrorLogger.warn((historyError instanceof Error ? historyError : new Error(String(historyError))).message, {
+        ErrorLogger.warn(historyError instanceof Error ? historyError : new Error(String(historyError)), {
           component: 'UserActivityPage',
           action: 'fetchActivities',
           step: 'fetchHistory'
@@ -101,7 +101,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
         .in('user_id', userIds);
 
       if (libraryError) {
-        ErrorLogger.warn((libraryError instanceof Error ? libraryError : new Error(String(libraryError))).message, {
+        ErrorLogger.warn(libraryError instanceof Error ? libraryError : new Error(String(libraryError)), {
           component: 'UserActivityPage',
           action: 'fetchActivities',
           step: 'fetchLibrary'
@@ -129,7 +129,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
       });
 
       // Get last login from admin_users for admin users, or estimate from sessions
-      const { data: adminUsers } = await supabase
+      const { data: adminUsers, error: adminError } = await supabase
         .from('admin_users')
         .select('id, last_login_at')
         .in('id', userIds);
@@ -196,25 +196,25 @@ export const UserActivityPage: React.FC = React.memo(() => {
       const userIds = (profiles || []).map(p => p.id);
 
       // Get active users
-      const { data: sessionsToday } = await supabase
+      const { data: sessionsToday, error: todayError } = await supabase
         .from('study_sessions')
         .select('user_id')
         .in('user_id', userIds)
         .gte('completed_at', today.toISOString());
 
-      const { data: sessionsWeek } = await supabase
+      const { data: sessionsWeek, error: weekError } = await supabase
         .from('study_sessions')
         .select('user_id')
         .in('user_id', userIds)
         .gte('completed_at', weekAgo.toISOString());
 
-      const { data: sessionsMonth } = await supabase
+      const { data: sessionsMonth, error: monthError } = await supabase
         .from('study_sessions')
         .select('user_id')
         .in('user_id', userIds)
         .gte('completed_at', monthAgo.toISOString());
 
-      const { data: allSessions } = await supabase
+      const { data: allSessions, error: allSessionsError } = await supabase
         .from('study_sessions')
         .select('duration_minutes')
         .in('user_id', userIds);

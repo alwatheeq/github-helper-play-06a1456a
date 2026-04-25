@@ -75,13 +75,13 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
       ErrorLogger.debug('Fetching quiz data', { component: 'QuizTakingComponent', action: 'fetchQuizData', quizId });
       const { data, error } = await supabase
         .from('quiz_sessions')
-        .select('id, quiz_title, time_limit_minutes, questions_json, quiz_language, available_languages, translated_questions_json, question_count')
+        .select('quiz_title, time_limit_minutes, questions_json, quiz_language, available_languages, translated_questions_json')
         .eq('id', quizId)
         .single();
 
       if (error) {
         const err = error instanceof Error ? error : new Error(String(error));
-        ErrorLogger.error(err, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId: quizId });
+        ErrorLogger.error(err, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId });
         throw error;
       }
 
@@ -95,7 +95,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
 
       if (!data.questions_json || !Array.isArray(data.questions_json) || data.questions_json.length === 0) {
         const error = new Error(t('quiz.no_questions_error'));
-        ErrorLogger.error(error, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId: quizId, questionsJson: data.questions_json });
+        ErrorLogger.error(error, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId, questionsJson: data.questions_json });
         throw error;
       }
 
@@ -110,7 +110,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
         const q = questions[i];
         if (!q.question || !q.options || !Array.isArray(q.options) || q.options.length < 2) {
           const error = new Error(`Question ${i + 1} is invalid or incomplete.`);
-          ErrorLogger.error(error, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId: quizId, questionIndex: i, question: q });
+          ErrorLogger.error(error, { component: 'QuizTakingComponent', action: 'loadQuiz', quizSessionId, questionIndex: i, question: q });
           throw error;
         }
       }

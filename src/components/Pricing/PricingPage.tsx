@@ -3,7 +3,6 @@ import { Check, Zap, Crown, Star, ArrowRight, X, ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { PRICING, formatCurrency, isStripeEnabled } from '../../utils/subscriptionHelpers';
-import { useTheme } from '../../contexts/ThemeContext';
 
 export const PricingPage: React.FC = () => {
   const navigate = useNavigate();

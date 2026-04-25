@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 import MultiplayerMenu from './MultiplayerMenu';
 import MultiplayerLobby from './MultiplayerLobby';
 import MultiplayerGamePlay from './MultiplayerGamePlay';

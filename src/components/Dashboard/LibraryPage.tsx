@@ -261,7 +261,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (!user) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -315,7 +315,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (!user) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -388,9 +388,9 @@ export const LibraryPage: React.FC = React.memo(() => {
     } else if (sortOption === 'created_at_asc') {
       query = query.order('created_at', { ascending: true });
     } else if (sortOption === 'last_viewed_desc') {
-      query = query.order('last_viewed_at', { ascending: false, nullsFirst: false });
+      query = query.order('last_viewed_at', { ascending: false, nullsLast: true });
     } else if (sortOption === 'last_viewed_asc') {
-      query = query.order('last_viewed_at', { ascending: true, nullsFirst: false });
+      query = query.order('last_viewed_at', { ascending: true, nullsLast: true });
     } else if (sortOption === 'title_asc') {
       query = query.order('title', { ascending: true });
     } else if (sortOption === 'title_desc') {
@@ -549,7 +549,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (!user || !newFolderName.trim()) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -594,7 +594,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     }
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -633,7 +633,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (!confirmDelete) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -697,7 +697,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       showNotification('Invitation accepted successfully', 'success');
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { component: 'LibraryPage', action: 'handleAcceptInvitation' });
+      ErrorLogger.error(err, { component: 'LibraryPage', action: 'handleAcceptInvitation', invitationId });
       showNotification(t('library.alert_failed_accept_invitation'), 'error');
     }
   };
@@ -706,7 +706,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (selectedItems.size === 0) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -770,7 +770,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (selectedItems.size === 0) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -827,7 +827,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
   const handleShareItem = async (itemId: string) => {
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -853,7 +853,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           showNotification(t('library.alert_share_link_generated'), 'success');
         } catch (clipboardError) {
           // Clipboard might fail, but link was generated - show success with note
-          ErrorLogger.warn((clipboardError instanceof Error ? clipboardError : new Error(String(clipboardError))).message, { 
+          ErrorLogger.warn(clipboardError instanceof Error ? clipboardError : new Error(String(clipboardError)), { 
             component: 'LibraryPage', 
             action: 'handleShareItem', 
             step: 'clipboard',
@@ -863,7 +863,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         }
         await fetchLibraryItems(); // Refresh to show updated sharing status
       } else {
-        ErrorLogger.warn('No public_url in response', { 
+        ErrorLogger.warn(new Error('No public_url in response'), { 
           component: 'LibraryPage', 
           action: 'handleShareItem', 
           itemId,
@@ -880,7 +880,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
   const handleUnshareItem = async (itemId: string) => {
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -918,7 +918,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     if (!confirmDelete) return;
 
     if (isOffline()) {
-      handleOfflineError((msg: string) => showNotification(msg, 'error'));
+      handleOfflineError(showNotification);
       return;
     }
 
@@ -1058,7 +1058,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <h3 className="text-lg font-semibold text-gray-900 mb-2 dark:text-gray-100">{t('common.error_loading_library')}</h3>
             <p className="text-gray-600 mb-4 dark:text-gray-300">{error}</p>
             <button
-              onClick={() => fetchLibraryData()}
+              onClick={fetchLibraryData}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 mx-auto"
             >
               <span>{t('common.try_again')}</span>
@@ -1247,9 +1247,9 @@ export const LibraryPage: React.FC = React.memo(() => {
                           <Folder className="h-4 w-4" />
                           <span className="flex-1">{folder.name}</span>
                           {isPublicFolder ? (
-                            <Globe className="h-3 w-3 text-green-600 dark:text-green-400" />
+                            <Globe className="h-3 w-3 text-green-600 dark:text-green-400" title="Public Folder" />
                           ) : (
-                            <Lock className="h-3 w-3 text-gray-400 dark:text-gray-600" />
+                            <Lock className="h-3 w-3 text-gray-400 dark:text-gray-600" title="Private Folder" />
                           )}
                         </div>
                         {!isOwnFolder && (

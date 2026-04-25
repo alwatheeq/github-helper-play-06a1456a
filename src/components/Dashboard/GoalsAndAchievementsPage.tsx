@@ -10,7 +10,6 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface StudyGoal {
   id: string;
@@ -67,8 +66,6 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   const [deadlineDate, setDeadlineDate] = useState('');
   const [creating, setCreating] = useState(false);
   const [hasCheckedModal, setHasCheckedModal] = useState(false);
-  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
-  const { getThemeGradient } = useTheme();
 
   // Check and show modal after page load
   useEffect(() => {

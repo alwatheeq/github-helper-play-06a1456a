@@ -6,7 +6,6 @@ import { supabase } from '../lib/supabase';
 import { SummaryDisplay } from './Dashboard/SummaryDisplay';
 import { FlashcardViewer } from './Dashboard/FlashcardViewer';
 import { ErrorLogger } from '../utils/errorLogger';
-import { useTheme } from '../contexts/ThemeContext';
 
 interface SharedItem {
   id: string;
@@ -21,7 +20,6 @@ interface SharedItem {
 export const ShareView: React.FC = () => {
   const { shareableLinkId } = useParams<{ shareableLinkId: string }>();
   const { t } = useI18n();
-  const { getThemeGradient } = useTheme();
   const [item, setItem] = useState<SharedItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

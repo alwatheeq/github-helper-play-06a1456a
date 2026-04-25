@@ -296,8 +296,8 @@ export const StudyRoomsPage: React.FC = () => {
           user_id: p.user_id,
           joined_at: p.joined_at,
           is_host: p.is_host,
-          display_name: (p.user_profiles as any)?.display_name || (Array.isArray(p.user_profiles) ? p.user_profiles[0]?.display_name : null),
-          avatar_url: (p.user_profiles as any)?.avatar_url || (Array.isArray(p.user_profiles) ? p.user_profiles[0]?.avatar_url : null)
+          display_name: p.user_profiles.display_name,
+          avatar_url: p.user_profiles.avatar_url
         }));
 
         ErrorLogger.debug('Participants loaded', { component: 'StudyRoomsPage', action: 'fetchParticipants', roomId: selectedRoom.id, participantCount: participants.length });

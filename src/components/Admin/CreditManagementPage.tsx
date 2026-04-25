@@ -7,7 +7,7 @@ import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 import { useAuth } from '../../hooks/useAuth';
 import { useConfirm } from '../../hooks/useConfirm';
 import { usePrompt } from '../../hooks/usePrompt';
-import { Coins, Search, Plus, Minus, TrendingUp, Download } from 'lucide-react';
+import { Coins, Search, Plus, Minus, TrendingUp, Download, Eye } from 'lucide-react';
 
 interface UserCredit {
   id: string;
@@ -41,7 +41,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
-  const [_selectedUser, _setSelectedUser] = useState<UserCredit | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserCredit | null>(null);
   const [adjustingUserId, setAdjustingUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -162,7 +162,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
         p_old_values: { credits_remaining: currentCredits },
         p_new_values: { credits_remaining: newCredits },
         p_description: `Admin ${adminUser.email} ${action} ${amount} credits for ${userEmail}. New total: ${newCredits}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'CreditManagementPage', action: 'adjustCredits', userId, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'CreditManagementPage', action: 'adjustCredits', userId, error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success(`Credits adjusted successfully! New total: ${newCredits}`);
       await fetchUsers();
@@ -349,8 +349,8 @@ export const CreditManagementPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      {ConfirmModal}
-      {PromptModal}
+      <ConfirmModal />
+      <PromptModal />
     </div>
   );
 });

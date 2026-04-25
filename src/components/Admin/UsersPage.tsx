@@ -9,7 +9,7 @@ import { useConfirm } from '../../hooks/useConfirm';
 import { usePrompt } from '../../hooks/usePrompt';
 import { getTierDisplayInfo, getStatusDisplayInfo } from '../../utils/subscriptionHelpers';
 import { PerformanceMonitor } from '../../utils/performanceMonitor';
-import { Search, Calendar, TrendingUp, Eye, X, Download, CheckCircle, XCircle, UserPlus, UserX, Ban, CheckSquare, Square, Tag, FileText } from 'lucide-react';
+import { Search, Calendar, TrendingUp, Eye, X, Download, CheckCircle, XCircle, CreditCard, MoreVertical, UserPlus, UserX, Crown, Ban, CheckSquare, Square, Tag, FileText } from 'lucide-react';
 import { BlockUserModal } from './BlockUserModal';
 
 interface UserProfile {
@@ -88,7 +88,7 @@ export const UsersPage: React.FC = React.memo(() => {
           .eq('status', 'active');
 
         if (subsError) {
-          ErrorLogger.warn((subsError instanceof Error ? subsError : new Error(String(subsError))).message, { 
+          ErrorLogger.warn(subsError instanceof Error ? subsError : new Error(String(subsError)), { 
             component: 'UsersPage', 
             action: 'fetchUsers', 
             step: 'fetchSubscriptions' 
@@ -364,7 +364,7 @@ export const UsersPage: React.FC = React.memo(() => {
         p_old_values: { has_paid: currentStatus },
         p_new_values: { has_paid: !currentStatus },
         p_description: `${!currentStatus ? 'Marked' : 'Unmarked'} user as paid: ${userEmail}`
-      }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'UsersPage', action: 'togglePaymentStatus', userId, userEmail, error: err instanceof Error ? err : new Error(String(err)) }));
+      }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'UsersPage', action: 'togglePaymentStatus', userId, userEmail, error: err instanceof Error ? err : new Error(String(err)) }));
 
       toast.success(`Payment status updated successfully`);
       await fetchUsers();
@@ -518,7 +518,7 @@ export const UsersPage: React.FC = React.memo(() => {
       p_action_type: 'EXPORT',
       p_table_name: 'user_profiles',
       p_description: `Exported ${filteredUsers.length} user records to CSV`
-    }).then(null, (err: unknown) => ErrorLogger.warn('Failed to log action', { component: 'UsersPage', action: 'exportToCSV', userCount: filteredUsers.length, error: err instanceof Error ? err : new Error(String(err)) }));
+    }).catch(err => ErrorLogger.warn('Failed to log action', { component: 'UsersPage', action: 'exportToCSV', userCount: filteredUsers.length, error: err instanceof Error ? err : new Error(String(err)) }));
 
     toast.success(`Exported ${filteredUsers.length} users to CSV`);
   };
@@ -1190,8 +1190,8 @@ export const UsersPage: React.FC = React.memo(() => {
         </div>
       )}
 
-      {ConfirmModal}
-      {PromptModal}
+      <ConfirmModal />
+      <PromptModal />
     </div>
   );
 });

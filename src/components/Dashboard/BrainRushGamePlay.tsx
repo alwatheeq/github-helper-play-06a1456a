@@ -60,7 +60,6 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   onGameEnd
 }) => {
   const { user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const { error: showErrorToast } = useToast();
   const [currentQuestion, setCurrentQuestion] = useState<GameQuestion | null>(null);
   const [timeLeft, setTimeLeft] = useState(gameSession.question_timer_seconds);

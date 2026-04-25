@@ -4,7 +4,6 @@ import { useI18n } from '../../contexts/I18nContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../contexts/ThemeContext';
 import { recordFlashcardStudy } from '../../utils/studyTracking';
-import { ErrorLogger } from '../../utils/errorLogger';
 
 interface Flashcard {
   front: string;
