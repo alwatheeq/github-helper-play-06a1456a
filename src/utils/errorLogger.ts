@@ -10,6 +10,7 @@ export interface ErrorContext {
   action?: string;
   userId?: string;
   metadata?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 interface ErrorEntry {
