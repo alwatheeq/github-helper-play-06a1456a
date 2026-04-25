@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -37,18 +37,14 @@ export const AnalyticsPage: React.FC = React.memo(() => {
   const [subscriptionStats, setSubscriptionStats] = useState<SubscriptionStats[]>([]);
   const [tokenUsageStats, setTokenUsageStats] = useState<TokenUsageStats[]>([]);
   const [loading, setLoading] = useState(true);
-  const [dateRange, setDateRange] = useState<'7' | '30' | '90' | '365'>('30');
+  const [dateRange, setDateRange] = useState<'7' | '30' | '90'>('30');
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [activeSubscriptions, setActiveSubscriptions] = useState(0);
   const [totalTokenUsage, setTotalTokenUsage] = useState(0);
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [dateRange]);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -78,7 +74,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       });
 
       const growthData: UserGrowth[] = [];
-      let cumulativeTotal = usersCount || 0;
+      const cumulativeTotal = usersCount || 0;
       Array.from(growthMap.entries()).forEach(([date, newUsers]) => {
         growthData.push({
           date,
@@ -162,7 +158,11 @@ export const AnalyticsPage: React.FC = React.memo(() => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dateRange]);
+
+  useEffect(() => {
+    void fetchAnalytics();
+  }, [fetchAnalytics]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -173,11 +173,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
   const getTierDisplayName = (tier: string) => {
     const names: Record<string, string> = {
-      trial_1day: '1-Day Trial',
+      trial_1day: 'Legacy 1-day',
       trial_7day: '7-Day Trial',
       monthly: 'Monthly',
       quarterly: 'Quarterly',
-      biannual: 'Biannual'
+      biannual: 'Biannual',
+      standard: 'Standard',
+      none: 'None'
     };
     return names[tier] || tier;
   };
@@ -218,8 +220,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
         </div>
         <select
           value={dateRange}
-          onChange={(e) => setDateRange(e.target.value as '7' | '30' | '90' | '365')}
-          className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value === '7' || value === '30' || value === '90') {
+              setDateRange(value);
+            }
+          }}
+          className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
         >
           <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
@@ -229,7 +236,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className={`${getThemeGradient('ui')} text-white rounded-xl p-6`}>
+        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Total Users</p>
@@ -249,7 +256,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl p-6">
+        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-md p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Total Revenue</p>
@@ -269,7 +276,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className={`${getThemeGradient('ui')} text-white rounded-xl p-6`}>
+        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Active Subscriptions</p>
@@ -282,7 +289,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-xl p-6">
+        <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-md p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Token Usage</p>
@@ -297,7 +304,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       </div>
 
       {/* User Growth Chart */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
           <Calendar className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
           User Growth
@@ -306,13 +313,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
         {userGrowth.length > 0 ? (
           <div className="space-y-3">
             {userGrowth.slice(-10).map((data, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg">
                 <div className="flex items-center space-x-3">
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {new Date(data.date).toLocaleDateString()}
                   </div>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-6">
                   <div className="text-right">
                     <div className="text-sm font-semibold text-gray-900 dark:text-white">
                       +{data.new_users} new
@@ -321,9 +328,9 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                       {data.total_users} total
                     </div>
                   </div>
-                  <div className="w-32 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                  <div className="w-32 bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-600 rounded-full h-2">
                     <div
-                      className="bg-blue-600 h-2 rounded-full"
+                      className="bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] h-2 rounded-full"
                       style={{ width: `${Math.min((data.new_users / 10) * 100, 100)}%` }}
                     />
                   </div>
@@ -339,7 +346,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       {/* Revenue and Subscriptions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Breakdown */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
             <DollarSign className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" />
             Revenue Trend
@@ -348,7 +355,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           {revenueData.length > 0 ? (
             <div className="space-y-3">
               {revenueData.slice(-7).map((data, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg">
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {new Date(data.date).toLocaleDateString()}
                   </div>
@@ -369,7 +376,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
         </div>
 
         {/* Subscription Distribution */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
             <BarChart3 className="h-5 w-5 mr-2 text-purple-600 dark:text-purple-400" />
             Subscription Distribution
@@ -389,7 +396,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                         {stat.count} ({percentage.toFixed(1)}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                    <div className="w-full bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-600 rounded-full h-2">
                       <div
                         className={`${getThemeGradient('ui')} h-2 rounded-full`}
                         style={{ width: `${percentage}%` }}

@@ -1,24 +1,48 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Home } from 'lucide-react';
-import { useSubscription } from '../../hooks/useSubscription';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useSubscription } from '../../hooks/useSubscription';
+import { useAuth } from '../../hooks/useAuth';
+import { useCredits } from '../../contexts/CreditContext';
+import { SUBSCRIPTION_PROCESSING_PAYWALL_SESSION_KEY } from '../../contexts/PersistentModalContext';
+import { verifySubscriptionCreditsAfterCheckout } from '../../utils/postSubscribeCredits';
+import { ErrorLogger } from '../../utils/errorLogger';
 
 export const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();
   const { getThemeGradient } = useTheme();
   const [searchParams] = useSearchParams();
+  const { user } = useAuth();
   const { refresh } = useSubscription();
+  const { refreshBalance } = useCredits();
   const sessionId = searchParams.get('session_id');
-  const isTrial = searchParams.get('trial') === 'true';
 
   useEffect(() => {
-    refresh();
-  }, []);
+    void (async () => {
+      if (user?.id) {
+        const v = await verifySubscriptionCreditsAfterCheckout(user.id);
+        if (!v.ok) {
+          ErrorLogger.warn('Credits verification after payment success', {
+            component: 'PaymentSuccess',
+            action: 'verifySubscriptionCreditsAfterCheckout',
+            metadata: { message: v.userMessage },
+          });
+        }
+      }
+      await refresh();
+      await refreshBalance();
+      window.dispatchEvent(new CustomEvent('creditUpdated'));
+    })();
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.removeItem(SUBSCRIPTION_PROCESSING_PAYWALL_SESSION_KEY);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after checkout
+  }, [user?.id]);
 
   return (
     <div className={`min-h-screen ${getThemeGradient('bg')} flex items-center justify-center p-6`}>
-      <div className="max-w-2xl w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+      <div className="max-w-2xl w-full bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
         <div className="flex items-center justify-center mb-6">
           <div className="bg-green-100 dark:bg-green-900/30 p-6 rounded-full">
             <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />
@@ -36,22 +60,6 @@ export const PaymentSuccess: React.FC = () => {
         <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-6 mb-8">
           <h2 className="font-semibold text-gray-900 dark:text-white mb-4">What's Next?</h2>
           <ul className="space-y-3">
-            {!isTrial && (
-              <li className="flex items-start space-x-3">
-                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-700 dark:text-gray-300">
-                  Your 7-day free trial has started - you won't be charged until it ends
-                </span>
-              </li>
-            )}
-            {isTrial && (
-              <li className="flex items-start space-x-3">
-                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-700 dark:text-gray-300">
-                  Your 1-day free trial is active - try each feature once!
-                </span>
-              </li>
-            )}
             <li className="flex items-start space-x-3">
               <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
               <span className="text-gray-700 dark:text-gray-300">

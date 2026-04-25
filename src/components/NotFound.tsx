@@ -9,7 +9,7 @@ export const NotFound: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${getThemeGradient('bg')} flex items-center justify-center p-4`}>
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 max-w-md w-full text-center">
         <div className="flex items-center justify-center mb-6">
           <div className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-full">
             <FileQuestion className="h-16 w-16 text-blue-600 dark:text-blue-400" />

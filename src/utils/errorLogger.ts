@@ -10,7 +10,6 @@ export interface ErrorContext {
   action?: string;
   userId?: string;
   metadata?: Record<string, unknown>;
-  [key: string]: unknown;
 }
 
 interface ErrorEntry {
@@ -96,8 +95,8 @@ export class ErrorLogger {
     this.log(new Error(message), context, LogLevel.WARN);
   }
 
-  static error(error: unknown, context: ErrorContext = {}): void {
-    const err = error instanceof Error ? error : new Error(String(error));
+  static error(error: Error | string, context: ErrorContext = {}): void {
+    const err = typeof error === 'string' ? new Error(error) : error;
     this.log(err, context, LogLevel.ERROR);
   }
 
@@ -193,7 +192,7 @@ export class ErrorLogger {
           if (!insertError) {
             return; // Successfully logged
           }
-        } catch (e) {
+        } catch (_e) {
           // Table might not exist or RLS might block, continue to fallback
         }
       }
