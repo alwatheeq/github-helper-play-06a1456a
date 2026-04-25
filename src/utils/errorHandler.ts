@@ -178,10 +178,10 @@ export const isOffline = (): boolean => {
 /**
  * Handle offline scenarios
  */
-export const handleOfflineError = (showToast: (msg: string) => void): void => {
+export const handleOfflineError = (showToast: (msg: string, ...args: unknown[]) => void): void => {
   if (isOffline()) {
     ErrorLogger.warn('User is offline', { component: 'Network', action: 'checkConnection' });
-    showToast('You are currently offline. Please check your internet connection.');
+    showToast('You are currently offline. Please check your internet connection.', 'error');
   }
 };
 
