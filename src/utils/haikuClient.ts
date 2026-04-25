@@ -169,7 +169,6 @@ class HaikuClient {
       mode,
       batchIndex,
       pageCount,
-      ...(extras?.usageChannel ? { usageChannel: extras.usageChannel } : {})
     });
 
     if (!Array.isArray(flashcards) || flashcards.length === 0) {
