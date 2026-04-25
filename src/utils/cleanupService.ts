@@ -79,12 +79,13 @@ export const triggerManualCleanup = async (): Promise<CleanupResult> => {
  * Get retention statistics for user data
  */
 export const getRetentionStats = async (): Promise<RetentionStats> => {
-  if (!supabase.auth.user) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
     throw new Error('User must be authenticated');
   }
 
   try {
-    const userId = (supabase.auth.user as unknown as { id: string }).id;
+    const userId = user.id;
     const currentTime = new Date().toISOString();
 
     // Get history statistics
