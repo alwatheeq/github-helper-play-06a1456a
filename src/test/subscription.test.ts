@@ -31,6 +31,8 @@ describe('isSubscriptionActive', () => {
       billing_cycle_end: null,
       tokens_used_current_cycle: 0,
       token_limit: 520000,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
     expect(isSubscriptionActive(subscription)).toBe(true);
@@ -66,6 +68,8 @@ describe('isSubscriptionActive', () => {
       billing_cycle_end: null,
       tokens_used_current_cycle: 0,
       token_limit: 520000,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
     expect(isSubscriptionActive(subscription)).toBe(false);
@@ -93,6 +97,8 @@ describe('isSubscriptionActive', () => {
       billing_cycle_end: null,
       tokens_used_current_cycle: 0,
       token_limit: 520000,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     };
 
     expect(isSubscriptionActive(subscription)).toBe(false);

@@ -218,7 +218,9 @@ export const processFlashcardBatches = async (
               false
             );
 
-            const additionalCards = additionalResult.flashcards || additionalResult;
+            const additionalCards = Array.isArray(additionalResult)
+              ? additionalResult
+              : (additionalResult.flashcards || []);
 
             const uniqueAdditional = deduplicateFlashcards([...allFlashcards, ...additionalCards])
               .slice(allFlashcards.length);
