@@ -85,30 +85,6 @@ export const useNotifications = () => {
     }
   };
 
-  const setupRealtimeSubscription = () => {
-    if (!user) return;
-
-    const channel = supabase
-      .channel('notifications')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'notifications',
-          filter: `user_id=eq.${user.id}`
-        },
-        (payload) => {
-          setNotifications(prev => [payload.new as Notification, ...prev]);
-          setUnreadCount(prev => prev + 1);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    };
-  };
 
   const markAsRead = async (notificationId: string) => {
     if (!user) return;
