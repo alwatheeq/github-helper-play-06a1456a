@@ -1,47 +1,84 @@
-## Fix the 4 Build Errors Blocking the Preview
+## Project review — current health
 
-The preview is white because TypeScript is failing the build on 4 errors. All are small, mechanical fixes — no logic changes, no UI changes, no Supabase changes.
+I ran the full toolchain and inspected the codebase section by section. Here is what I found and what I propose to fix.
+
+### What is already healthy
+- **Tests**: 73/73 pass across 9 files (auth, credits, dedup, queue, subscription, examples).
+- **Edge functions**: `tsc` on `supabase/functions/tsconfig.json` is clean — no errors.
+- **Dev server**: no runtime errors in the log; preview is rendering.
+- **Memory + theme system**: ThemeContext, error logger, Supabase init all wired correctly per project memory.
+- **Workflow checks**: `useAuth` → `AuthContext`, `AdminRoute` double-verifies via `admin_users` table (server-side), CORS shared module is correct, Stripe checkout flow validates inputs and uses metadata correctly. No cross-file regressions detected.
+
+### What is broken
+
+`npx tsc --noEmit -p tsconfig.app.json` reports **3 errors**, and ESLint reports **1 error** (102 warnings — non-blocking, mostly `any` in tests/utils and exhaustive-deps hints).
+
+| # | File | Line | Issue |
+|---|------|------|-------|
+| 1 | `src/hooks/useSTT.ts` | 68 | `Cannot find name 'SpeechRecognitionEvent'` |
+| 2 | `src/hooks/useSTT.ts` | 84 | `Cannot find name 'SpeechRecognitionErrorEvent'` |
+| 3 | `src/utils/haikuClient.ts` | 60 | `'signal' does not exist in type 'FunctionInvokeOptions'` |
+| 4 | `src/hooks/useNotifications.ts` | 88 | ESLint error: `setupRealtimeSubscription` defined but never used |
 
 ---
 
-### 1. `src/test/subscription.test.ts` — 3 errors (lines 36, 71, 98)
+## Fixes (mechanical, no behavior change)
 
-**Problem**: The mock subscription objects in 3 test cases are missing `created_at` and `updated_at`, which the `Subscription` type requires.
+### Fix 1 + 2 — `src/hooks/useSTT.ts` Web Speech types
 
-**Fix**: Add the two timestamp fields to each of the three mock subscription objects (the ones starting at lines 16, 51, and 78). Use `new Date().toISOString()` for both:
+The file already declares `type SpeechRecognition = any` for the constructor but uses two more types (`SpeechRecognitionEvent`, `SpeechRecognitionErrorEvent`) that the TS DOM lib in this project does not ship. Add matching local type aliases right next to the existing one:
 
 ```ts
-created_at: new Date().toISOString(),
-updated_at: new Date().toISOString(),
+type SpeechRecognition = any;
+type SpeechRecognitionEvent = any;
+type SpeechRecognitionErrorEvent = any;
 ```
 
-No test logic changes — just adding the missing properties so the mock matches the type contract.
+This keeps the existing relaxed-typing pattern for the browser-only API. No runtime change.
 
----
+### Fix 3 — `src/utils/haikuClient.ts` invoke `signal` option
 
-### 2. `src/utils/queueProcessor.ts` line 223 — destructuring a non-iterable
-
-**Problem**: Line 221 does `const additionalCards = additionalResult.flashcards || additionalResult;`. When the fallback (`additionalResult`) is hit, it's a `FlashcardsResult` object (not an array), so spreading it on line 223 (`[...allFlashcards, ...additionalCards]`) fails because `FlashcardsResult` has no iterator.
-
-**Fix**: Make the fallback safe by ensuring `additionalCards` is always an array:
+`supabase.functions.invoke()` in `@supabase/supabase-js@2.54.x` does not accept `signal` in its options type — passing it currently has no effect at runtime *and* fails the build. Replace the `AbortController` + `signal` pattern with a real `Promise.race` timeout that actually enforces the timeout:
 
 ```ts
-const additionalCards = Array.isArray(additionalResult)
-  ? additionalResult
-  : (additionalResult.flashcards || []);
+async callFunction(functionName: string, body: Record<string, unknown>): Promise<any> {
+  try {
+    ErrorLogger.debug('Invoking function', { /* unchanged */ });
+
+    const invokePromise = supabase.functions.invoke(functionName, { body });
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(
+        () => reject(new Error(`Function ${functionName} timed out after ${this.requestTimeout}ms`)),
+        this.requestTimeout
+      )
+    );
+
+    const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
+    // ...rest of the function unchanged (drop the clearTimeout line)
+  }
+}
 ```
 
-This guarantees the spread on line 223 always works, no behavior change for the normal case.
+This actually enforces the timeout (the previous code didn't, since `signal` was silently ignored) and is fully type-safe.
+
+### Fix 4 — `src/hooks/useNotifications.ts` dead code
+
+`setupRealtimeSubscription` (lines 88–111) is a leftover duplicate — the realtime channel is already set up inline in the `useEffect` at lines 24–49. Delete the unused function. No behavior change because nothing calls it.
 
 ---
 
-### What this does NOT touch
-- No Supabase / database / migration changes
-- No UI changes
-- No new features
-- No theme or design system changes
+## What I am NOT changing
+- No Supabase schema / RLS / migrations.
+- No UI, theme, or layout work (the redesign discussion stays paused — pick that up separately when you're ready).
+- No alert→toast migration on `QuizPage` / `EduPlayPage` / `StudyRoomsPage` (tracked in `IMPLEMENTATION_REVIEW_REPORT.md`, but it's a UX cleanup, not a build blocker — happy to do it as a follow-up).
+- 102 ESLint warnings remain (mostly `any` in test mocks and `react-hooks/exhaustive-deps` suggestions). They don't block the build and fixing them risks behavior changes; recommend addressing only if you want a fully green lint.
 
 ---
 
-### After this is fixed
-The preview will load and we can move on to your next ask: the **personalized onboarding stage** ("what are you studying for?" → med / university / self-learner → templated home screen). I'll bring that up as the next step once you can see the app running.
+## After these fixes
+- `npx tsc --noEmit -p tsconfig.app.json` → 0 errors
+- `npm run lint` → 0 errors (warnings only)
+- `npx vitest run` → 73/73 pass (unchanged)
+- `npm run quality` should pass end-to-end
+
+Then we can resume the UI redesign conversation, or I can start on the alert→toast cleanup as a follow-up — your call.
