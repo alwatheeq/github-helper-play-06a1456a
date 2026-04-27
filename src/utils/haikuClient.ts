@@ -42,9 +42,6 @@ class HaikuClient {
   }
 
   async callFunction(functionName: string, body: Record<string, unknown>): Promise<any> {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), this.requestTimeout);
-
     try {
       ErrorLogger.debug('Invoking function', {
         component: 'haikuClient',
@@ -55,12 +52,17 @@ class HaikuClient {
         model: body.model
       });
 
-      const { data, error } = await supabase.functions.invoke(functionName, {
-        body,
-        signal: controller.signal
-      });
+      // Enforce timeout via Promise.race — supabase-js v2.54 invoke() options
+      // do not accept a `signal` field, so AbortController would have no effect.
+      const invokePromise = supabase.functions.invoke(functionName, { body });
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(
+          () => reject(new Error(`Function ${functionName} timed out after ${this.requestTimeout}ms`)),
+          this.requestTimeout
+        )
+      );
 
-      clearTimeout(timeoutId);
+      const { data, error } = await Promise.race([invokePromise, timeoutPromise]);
 
       try {
         throwIfEdgeFunctionInvokeFailed(data, error);
@@ -91,8 +93,7 @@ class HaikuClient {
 
       return data;
     } catch (error) {
-      clearTimeout(timeoutId);
-      if ((error as Error).name === 'AbortError') {
+      if ((error as Error).message?.includes('timed out') || (error as Error).name === 'AbortError') {
         const timeoutError = new Error(`Request timeout - the function took longer than ${this.requestTimeout / 1000} seconds to respond`);
         ErrorLogger.error(timeoutError, { component: 'haikuClient', action: 'callFunction', functionName, timeout: this.requestTimeout });
         throw timeoutError;
