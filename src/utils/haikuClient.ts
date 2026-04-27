@@ -93,8 +93,7 @@ class HaikuClient {
 
       return data;
     } catch (error) {
-      clearTimeout(timeoutId);
-      if ((error as Error).name === 'AbortError') {
+      if ((error as Error).message?.includes('timed out') || (error as Error).name === 'AbortError') {
         const timeoutError = new Error(`Request timeout - the function took longer than ${this.requestTimeout / 1000} seconds to respond`);
         ErrorLogger.error(timeoutError, { component: 'haikuClient', action: 'callFunction', functionName, timeout: this.requestTimeout });
         throw timeoutError;
