@@ -9,7 +9,7 @@ import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 import { PageBreakConfig, paginateSummary } from '../../../utils/bookModeHelpers';
 import { Modal } from '../../Common/Modal';
-import MindMapView from '../MindMap/MindMapView';
+const MindMapView = React.lazy(() => import('../MindMap/MindMapView'));
 
 interface BookModeViewerProps {
   summaryId: string | null;
@@ -246,7 +246,9 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       </button>
 
       <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-        <MindMapView text={summaryText} title={t('mind_map.title')} />
+        <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+          <MindMapView text={summaryText} title={t('mind_map.title')} />
+        </React.Suspense>
       </Modal>
 
       {/* Add Widget Button (floating) - click to open, click outside to close */}

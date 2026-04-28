@@ -17,7 +17,7 @@ import { ReadAloudButton } from './ReadAloud/ReadAloudButton';
 import { sanitizeForTts } from './ReadAloud/readAloudUtils';
 import HighlightLayer from './Highlighting/HighlightLayer';
 import { Modal } from '../Common/Modal';
-import MindMapView from './MindMap/MindMapView';
+const MindMapView = React.lazy(() => import('./MindMap/MindMapView'));
 
 interface SummaryDisplayProps {
   summaryChunks: string[];
@@ -1097,7 +1097,9 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     )}
 
     <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-      <MindMapView text={combinedSummary} title={t('mind_map.title')} />
+      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+        <MindMapView text={combinedSummary} title={t('mind_map.title')} />
+      </React.Suspense>
     </Modal>
 
     {/* Publish to Library Modal */}
