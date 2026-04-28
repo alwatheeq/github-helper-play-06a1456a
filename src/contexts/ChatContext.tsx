@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useCallback, ReactNode } from 'react';
+import React, { createContext, useContext, useMemo, useCallback, ReactNode } from 'react';
 import { useChatStore } from '../stores/useChatStore';
 import type { ChatContextData, ChatContextType } from '../stores/useChatStore';
 
@@ -13,36 +13,35 @@ interface ChatContextValue {
 const ChatContext = createContext<ChatContextValue | undefined>(undefined);
 
 export const ChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const store = useChatStore();
+  // Subscribe to individual fields so the context object reference is stable
+  // when unrelated store state changes, and so callbacks don't change identity.
+  const summaryText = useChatStore((s) => s.summaryText);
+  const originalText = useChatStore((s) => s.originalText);
+  const topics = useChatStore((s) => s.topics);
+  const medicalMode = useChatStore((s) => s.medicalMode);
+  const contextType = useChatStore((s) => s.contextType);
+  const contextId = useChatStore((s) => s.contextId);
 
-  const context: ChatContextData = {
-    summaryText: store.summaryText,
-    originalText: store.originalText,
-    topics: store.topics,
-    medicalMode: store.medicalMode,
-    contextType: store.contextType,
-    contextId: store.contextId,
-  };
+  const context = useMemo<ChatContextData>(
+    () => ({ summaryText, originalText, topics, medicalMode, contextType, contextId }),
+    [summaryText, originalText, topics, medicalMode, contextType, contextId]
+  );
 
+  // Use store API methods directly — they have stable identity across renders.
   const setChatContext = useCallback((data: Partial<ChatContextData>) => {
-    store.setChatContext(data);
-  }, [store]);
+    useChatStore.getState().setChatContext(data);
+  }, []);
 
   const clearChatContext = useCallback(() => {
-    store.clearChatContext();
-  }, [store]);
+    useChatStore.getState().clearChatContext();
+  }, []);
 
-  return (
-    <ChatContext.Provider
-      value={{
-        context,
-        setChatContext,
-        clearChatContext,
-      }}
-    >
-      {children}
-    </ChatContext.Provider>
+  const value = useMemo(
+    () => ({ context, setChatContext, clearChatContext }),
+    [context, setChatContext, clearChatContext]
   );
+
+  return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
 };
 
 export const useChatContext = (): ChatContextValue => {
@@ -52,4 +51,3 @@ export const useChatContext = (): ChatContextValue => {
   }
   return contextValue;
 };
-
