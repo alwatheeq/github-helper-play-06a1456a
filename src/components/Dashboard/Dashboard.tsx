@@ -1721,6 +1721,7 @@ export const Dashboard: React.FC = () => {
                 </div>
               </div>
             )}
+            </Suspense>
           </div>
         </main>
       </div>
