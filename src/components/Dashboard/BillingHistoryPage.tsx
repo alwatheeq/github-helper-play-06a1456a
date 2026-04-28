@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { Download, Receipt, Calendar, CheckCircle, XCircle, Clock, ArrowLeft } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
-import html2pdf from 'html2pdf.js';
+// html2pdf.js is dynamically imported on demand to keep it out of the initial bundle.
 import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
@@ -207,6 +207,7 @@ export const BillingHistoryPage: React.FC = () => {
       const element = document.createElement('div');
       element.innerHTML = receiptContent;
 
+      const { default: html2pdf } = await import('html2pdf.js');
       await html2pdf().set(opt).from(element).save();
     } catch (err) {
       const message = handleApiError(err, { component: 'BillingHistoryPage', action: 'downloadReceipt', transactionId: transaction.id });

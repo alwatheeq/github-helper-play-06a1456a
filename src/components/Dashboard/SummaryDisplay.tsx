@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileText, RefreshCw, Copy, Check, BookOpen, FileSearch, X, Download, Folder, Tag, Plus, AlertCircle, Stethoscope, GraduationCap, Activity, Globe, Lock, Brain } from 'lucide-react';
-import html2pdf from 'html2pdf.js'; // Ensure html2pdf.js is correctly imported
+// html2pdf.js is dynamically imported on demand to keep it out of the initial bundle.
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
@@ -17,7 +17,7 @@ import { ReadAloudButton } from './ReadAloud/ReadAloudButton';
 import { sanitizeForTts } from './ReadAloud/readAloudUtils';
 import HighlightLayer from './Highlighting/HighlightLayer';
 import { Modal } from '../Common/Modal';
-import MindMapView from './MindMap/MindMapView';
+const MindMapView = React.lazy(() => import('./MindMap/MindMapView'));
 
 interface SummaryDisplayProps {
   summaryChunks: string[];
@@ -776,7 +776,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     URL.revokeObjectURL(url);
   }, [t, combinedSummary, flashcards]);
 
-  const exportAsPdf = React.useCallback(() => {
+  const exportAsPdf = React.useCallback(async () => {
     const questionLabel = t('flashcards.question');
     const answerLabel = t('flashcards.answer');
     
@@ -808,6 +808,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' as const }
     };
 
+    const { default: html2pdf } = await import('html2pdf.js');
     html2pdf().set(opt).from(element).save();
   }, [t, combinedSummary, flashcards]);
 
@@ -1096,7 +1097,9 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     )}
 
     <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-      <MindMapView text={combinedSummary} title={t('mind_map.title')} />
+      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+        <MindMapView text={combinedSummary} title={t('mind_map.title')} />
+      </React.Suspense>
     </Modal>
 
     {/* Publish to Library Modal */}

@@ -22,7 +22,7 @@ import {
   mergeGenerationPreferences,
 } from '../../../utils/academicsGenerationPreferences';
 import { SRSReviewPanel } from './SRSReviewPanel';
-import { CourseAnalytics } from './CourseAnalytics';
+const CourseAnalytics = React.lazy(() => import('./CourseAnalytics').then(m => ({ default: m.CourseAnalytics })));
 import { ExamScheduler } from './ExamScheduler';
 import { CourseTutor } from './CourseTutor';
 
@@ -894,7 +894,9 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   courseId={selectedCourse.id}
                   itemIds={courseItems.map(ci => ci.item_id)}
                 />
-                <CourseAnalytics courseId={selectedCourse.id} />
+                <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+                  <CourseAnalytics courseId={selectedCourse.id} />
+                </React.Suspense>
                 <ExamScheduler courseId={selectedCourse.id} />
                 <CourseTutor
                   courseId={selectedCourse.id}

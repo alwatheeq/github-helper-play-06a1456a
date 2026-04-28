@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { MoreVertical, Copy, Check, FileSearch, Download, BookOpen, GraduationCap, RefreshCw, ArrowLeft, PanelLeft } from 'lucide-react';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
-import { SummaryDisplay } from './SummaryDisplay';
-import { HistoryPage } from './HistoryPage';
-import { LibraryPage } from './LibraryPage';
-import { InformationalPage } from './InformationalPage';
-import { FeedbackPage } from './FeedbackPage';
-import { ProfilePage } from './ProfilePage';
-import { QuizPage } from './QuizPage';
-import { EduPlayPage } from './EduPlayPage';
-import { StudyRoomsPage } from './StudyRoomsPage';
-import { AcademicsPage } from './Academics/AcademicsPage';
+// Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.
+const SummaryDisplay = lazy(() => import('./SummaryDisplay').then(m => ({ default: m.SummaryDisplay })));
+const HistoryPage = lazy(() => import('./HistoryPage').then(m => ({ default: m.HistoryPage })));
+const LibraryPage = lazy(() => import('./LibraryPage').then(m => ({ default: m.LibraryPage })));
+const InformationalPage = lazy(() => import('./InformationalPage').then(m => ({ default: m.InformationalPage })));
+const FeedbackPage = lazy(() => import('./FeedbackPage').then(m => ({ default: m.FeedbackPage })));
+const ProfilePage = lazy(() => import('./ProfilePage').then(m => ({ default: m.ProfilePage })));
+const QuizPage = lazy(() => import('./QuizPage').then(m => ({ default: m.QuizPage })));
+const EduPlayPage = lazy(() => import('./EduPlayPage').then(m => ({ default: m.EduPlayPage })));
+const StudyRoomsPage = lazy(() => import('./StudyRoomsPage').then(m => ({ default: m.StudyRoomsPage })));
+const AcademicsPage = lazy(() => import('./Academics/AcademicsPage').then(m => ({ default: m.AcademicsPage })));
 import { InsufficientCreditsModal } from './InsufficientCreditsModal';
 import { PersistentSubscriptionModal } from '../Subscription/PersistentSubscriptionModal';
 import {
@@ -1458,6 +1459,11 @@ export const Dashboard: React.FC = () => {
           )}
 
           <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+            <Suspense fallback={
+              <div className="flex items-center justify-center py-16">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+              </div>
+            }>
             {currentView === 'history' && (
               <HistoryPage key="history" onViewHistoryEntry={handleViewHistoryEntry} />
             )}
@@ -1720,6 +1726,7 @@ export const Dashboard: React.FC = () => {
                 </div>
               </div>
             )}
+            </Suspense>
           </div>
         </main>
       </div>

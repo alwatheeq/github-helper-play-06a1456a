@@ -40,8 +40,7 @@ const OnboardingWizard = lazy(() => import('./components/Onboarding/OnboardingWi
 const AppContentInternal: React.FC = () => {
   const { user, loading } = useAuth();
   const { getBackgroundGradient } = useTheme();
-  const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
-  const [checkingBlock, setCheckingBlock] = useState(true);
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
   // Per-user key so each account gets its own onboarding gate regardless of browser history
   const onboardingDone =
@@ -56,7 +55,6 @@ const AppContentInternal: React.FC = () => {
   useEffect(() => {
     const checkBlockStatus = async () => {
       if (!user || user.role === 'admin') {
-        setCheckingBlock(false);
         setIsBlocked(false);
         return;
       }
@@ -67,10 +65,10 @@ const AppContentInternal: React.FC = () => {
         });
 
         if (error) {
-          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), { 
-            component: 'App', 
-            action: 'checkBlockStatus', 
-            userId: user.id 
+          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), {
+            component: 'App',
+            action: 'checkBlockStatus',
+            userId: user.id
           });
           setIsBlocked(false);
         } else if (data && data.is_blocked) {
@@ -82,15 +80,13 @@ const AppContentInternal: React.FC = () => {
         const err = error instanceof Error ? error : new Error(String(error));
         ErrorLogger.error(err, { component: 'App', action: 'checkBlockStatus', userId: user.id });
         setIsBlocked(false);
-      } finally {
-        setCheckingBlock(false);
       }
     };
 
     checkBlockStatus();
   }, [user]);
 
-  if (loading || checkingBlock) {
+  if (loading) {
     return (
       <div className={`min-h-screen w-full min-w-full overflow-x-auto ${getBackgroundGradient()} flex items-center justify-center`}>
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -129,8 +125,7 @@ const AppContentInternal: React.FC = () => {
 // Fallback component when theme is not available
 const AppContentWithoutTheme: React.FC = () => {
   const { user, loading } = useAuth();
-  const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
-  const [checkingBlock, setCheckingBlock] = useState(true);
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
   // Per-user key so each account gets its own onboarding gate regardless of browser history
   const onboardingDone =
@@ -145,7 +140,6 @@ const AppContentWithoutTheme: React.FC = () => {
   useEffect(() => {
     const checkBlockStatus = async () => {
       if (!user || user.role === 'admin') {
-        setCheckingBlock(false);
         setIsBlocked(false);
         return;
       }
@@ -156,10 +150,10 @@ const AppContentWithoutTheme: React.FC = () => {
         });
 
         if (error) {
-          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), { 
-            component: 'App', 
-            action: 'checkBlockStatus', 
-            userId: user.id 
+          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), {
+            component: 'App',
+            action: 'checkBlockStatus',
+            userId: user.id
           });
           setIsBlocked(false);
         } else if (data && data.is_blocked) {
@@ -171,15 +165,13 @@ const AppContentWithoutTheme: React.FC = () => {
         const err = error instanceof Error ? error : new Error(String(error));
         ErrorLogger.error(err, { component: 'App', action: 'checkBlockStatus', userId: user.id });
         setIsBlocked(false);
-      } finally {
-        setCheckingBlock(false);
       }
     };
 
     checkBlockStatus();
   }, [user]);
 
-  if (loading || checkingBlock) {
+  if (loading) {
     return (
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
