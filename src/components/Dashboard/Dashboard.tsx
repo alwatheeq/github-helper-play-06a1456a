@@ -1459,6 +1459,11 @@ export const Dashboard: React.FC = () => {
           )}
 
           <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+            <Suspense fallback={
+              <div className="flex items-center justify-center py-16">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
+              </div>
+            }>
             {currentView === 'history' && (
               <HistoryPage key="history" onViewHistoryEntry={handleViewHistoryEntry} />
             )}
