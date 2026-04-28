@@ -140,7 +140,6 @@ const AppContentWithoutTheme: React.FC = () => {
   useEffect(() => {
     const checkBlockStatus = async () => {
       if (!user || user.role === 'admin') {
-        setCheckingBlock(false);
         setIsBlocked(false);
         return;
       }
@@ -151,10 +150,10 @@ const AppContentWithoutTheme: React.FC = () => {
         });
 
         if (error) {
-          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), { 
-            component: 'App', 
-            action: 'checkBlockStatus', 
-            userId: user.id 
+          ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), {
+            component: 'App',
+            action: 'checkBlockStatus',
+            userId: user.id
           });
           setIsBlocked(false);
         } else if (data && data.is_blocked) {
@@ -166,15 +165,13 @@ const AppContentWithoutTheme: React.FC = () => {
         const err = error instanceof Error ? error : new Error(String(error));
         ErrorLogger.error(err, { component: 'App', action: 'checkBlockStatus', userId: user.id });
         setIsBlocked(false);
-      } finally {
-        setCheckingBlock(false);
       }
     };
 
     checkBlockStatus();
   }, [user]);
 
-  if (loading || checkingBlock) {
+  if (loading) {
     return (
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
