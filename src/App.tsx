@@ -125,8 +125,7 @@ const AppContentInternal: React.FC = () => {
 // Fallback component when theme is not available
 const AppContentWithoutTheme: React.FC = () => {
   const { user, loading } = useAuth();
-  const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
-  const [checkingBlock, setCheckingBlock] = useState(true);
+  const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
   // Per-user key so each account gets its own onboarding gate regardless of browser history
   const onboardingDone =
