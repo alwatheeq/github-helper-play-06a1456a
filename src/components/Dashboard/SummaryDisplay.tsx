@@ -776,7 +776,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     URL.revokeObjectURL(url);
   }, [t, combinedSummary, flashcards]);
 
-  const exportAsPdf = React.useCallback(() => {
+  const exportAsPdf = React.useCallback(async () => {
     const questionLabel = t('flashcards.question');
     const answerLabel = t('flashcards.answer');
     
