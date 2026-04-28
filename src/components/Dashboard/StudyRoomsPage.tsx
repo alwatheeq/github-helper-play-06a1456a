@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Users, Plus, X, Copy, Check, Clock, UserPlus, Trash2, Search, Heart, UsersRound } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { ZegoVideoRoom } from './ZegoVideoRoom';
+const ZegoVideoRoom = React.lazy(() => import('./ZegoVideoRoom').then(m => ({ default: m.ZegoVideoRoom })));
 import { useI18n } from '../../contexts/I18nContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
@@ -1028,19 +1028,21 @@ export const StudyRoomsPage: React.FC = () => {
 
           {/* Full-screen ZegoCloud video interface */}
           <div className="bg-black rounded-md overflow-hidden shadow-lg" style={{ height: 'calc(100vh - 140px)' }}>
-            <ZegoVideoRoom
-              roomId={selectedRoom.room_code}
-              roomName={selectedRoom.room_name}
-              userName={userDisplayName || user?.email?.split('@')[0] || 'Anonymous'}
-              onDisconnect={handleLeaveRoom}
-              floatingRoomMeta={{
-                id: selectedRoom.id,
-                room_code: selectedRoom.room_code,
-                name: selectedRoom.room_name,
-                description: selectedRoom.room_description,
-                max_participants: selectedRoom.max_participants,
-              }}
-            />
+            <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" /></div>}>
+              <ZegoVideoRoom
+                roomId={selectedRoom.room_code}
+                roomName={selectedRoom.room_name}
+                userName={userDisplayName || user?.email?.split('@')[0] || 'Anonymous'}
+                onDisconnect={handleLeaveRoom}
+                floatingRoomMeta={{
+                  id: selectedRoom.id,
+                  room_code: selectedRoom.room_code,
+                  name: selectedRoom.room_name,
+                  description: selectedRoom.room_description,
+                  max_participants: selectedRoom.max_participants,
+                }}
+              />
+            </React.Suspense>
           </div>
         </div>
       </div>
