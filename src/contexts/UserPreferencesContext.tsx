@@ -80,7 +80,7 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
       } else {
         const { data: newPrefs, error: insertError } = await supabase
           .from('user_preferences')
-          .insert({ user_id: user.id, sidebar_mode: 'collapsible', free_form_mode_enabled: false, color_theme: 'sky-blue' })
+          .insert({ user_id: user.id, sidebar_mode: 'collapsible', free_form_mode_enabled: false, color_theme: 'navy-gold' })
           .select('sidebar_mode, free_form_mode_enabled, color_theme')
           .single();
 
