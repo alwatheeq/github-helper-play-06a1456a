@@ -149,6 +149,9 @@ export default {
         'muted-ink-on-dark': 'var(--text-muted-light)',
         'divider':           'var(--divider)',
         'divider-on-dark':   'var(--divider-dark)',
+        'subtle':            'var(--bg-subtle)',
+        'secondary-ink':     'var(--text-secondary-dark)',
+        'chip':              'var(--chip)',
 
         // ---- Legacy aliases (kept until phases 3–13 migrate consumers) ----
         'theme-bg-from':     'var(--theme-bg-from, var(--bg-page))',
@@ -156,6 +159,10 @@ export default {
         'theme-primary-from':'var(--theme-primary-from, var(--accent-gold))',
         'theme-primary-to':  'var(--theme-primary-to, var(--accent-gold-soft))',
         'theme-accent':      'var(--theme-accent, var(--accent-gold))',
+      },
+      ringColor: {
+        'focus': 'var(--ring-focus)',
+      },
       },
     },
   },
