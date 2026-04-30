@@ -130,14 +130,32 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        display: ['Fraunces', 'Amiri', 'Georgia', 'Times New Roman', 'serif'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        arabic: ['Amiri', 'Fraunces', 'Georgia', 'serif'],
+      },
       colors: {
-        // Theme colors will be dynamically applied via CSS variables
-        // These are fallback colors if CSS variables aren't available
-        'theme-bg-from': 'var(--theme-bg-from, rgb(239 246 255))', // blue-50 default
-        'theme-bg-to': 'var(--theme-bg-to, rgb(250 250 250))', // white default
-        'theme-primary-from': 'var(--theme-primary-from, rgb(59 130 246))', // blue-500 default
-        'theme-primary-to': 'var(--theme-primary-to, rgb(147 51 234))', // purple-600 default
-        'theme-accent': 'var(--theme-accent, rgb(37 99 235))', // blue-600 default
+        // ---- Scholar role-based tokens (spec) ----
+        'page':              'var(--bg-page)',
+        'sidebar':           'var(--bg-sidebar)',
+        'card-dark':         'var(--bg-card-dark)',
+        'card-light':        'var(--bg-card-light)',
+        'accent-gold':       'var(--accent-gold)',
+        'accent-gold-soft':  'var(--accent-gold-soft)',
+        'ink':               'var(--text-primary-dark)',
+        'ink-on-dark':       'var(--text-primary-light)',
+        'muted-ink':         'var(--text-muted-dark)',
+        'muted-ink-on-dark': 'var(--text-muted-light)',
+        'divider':           'var(--divider)',
+        'divider-on-dark':   'var(--divider-dark)',
+
+        // ---- Legacy aliases (kept until phases 3–13 migrate consumers) ----
+        'theme-bg-from':     'var(--theme-bg-from, var(--bg-page))',
+        'theme-bg-to':       'var(--theme-bg-to, var(--bg-page))',
+        'theme-primary-from':'var(--theme-primary-from, var(--accent-gold))',
+        'theme-primary-to':  'var(--theme-primary-to, var(--accent-gold-soft))',
+        'theme-accent':      'var(--theme-accent, var(--accent-gold))',
       },
     },
   },
