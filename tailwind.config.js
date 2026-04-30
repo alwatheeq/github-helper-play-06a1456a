@@ -163,7 +163,6 @@ export default {
       ringColor: {
         'focus': 'var(--ring-focus)',
       },
-      },
     },
   },
   plugins: [],
