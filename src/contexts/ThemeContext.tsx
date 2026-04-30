@@ -376,22 +376,20 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const activeBackground = isDark ? themeColors.background.dark : themeColors.background.light;
   const activeUI = isDark ? themeColors.ui.dark : themeColors.ui.light;
 
-  // Sync data-theme attribute + CSS variables for global consumers
+  // Sync data-theme attribute on <html> — the role-based CSS variables
+  // (--bg-page, --accent-gold, etc.) are defined per [data-theme="…"]
+  // selector in src/index.css, so simply setting the attribute applies
+  // the entire palette globally. No inline style writes needed.
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute('data-theme', currentTheme);
-    root.style.setProperty('--theme-bg-from', activeBackground.from);
-    root.style.setProperty('--theme-bg-to', activeBackground.to);
-    root.style.setProperty('--theme-ui-from', activeUI.from);
-    root.style.setProperty('--theme-ui-to', activeUI.to);
-    root.style.setProperty('--theme-accent', activeUI.accent);
-    ErrorLogger.debug('CSS variables updated', {
+    ErrorLogger.debug('Scholar theme applied', {
       component: 'ThemeContext',
-      action: 'updateCSSVars',
+      action: 'applyTheme',
       theme: currentTheme,
       darkMode: isDark,
     });
-  }, [currentTheme, isDark, activeBackground, activeUI]);
+  }, [currentTheme, isDark]);
 
   const setTheme = async (theme: ColorTheme, updateDatabase?: () => Promise<void>) => {
     ErrorLogger.debug('Setting theme', { component: 'ThemeContext', action: 'setTheme', theme });
