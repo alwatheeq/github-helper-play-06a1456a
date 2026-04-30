@@ -15,183 +15,231 @@
 /* 1. Navy & Gold (default) — light */
 :root,
 [data-theme="navy-gold"] {
-  --bg-page:            #EFE9DC;
-  --bg-sidebar:         #0E1A2B;
-  --bg-card-dark:       #14233A;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #C8932E;
-  --accent-gold-soft:   #E0B85F;
-  --text-primary-dark:  #0E1A2B;
-  --text-primary-light: #F4EFE2;
-  --text-muted-dark:    #6B6356;
-  --text-muted-light:   #9AA5B5;
-  --divider:            #C9BFA8;
-  --divider-dark:       #1F3050;
+  --bg-page:             #F4ECDC;
+  --bg-sidebar:          #1A2540;
+  --bg-card-dark:        #1A2540;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #EDE3CC;
+  --accent-gold:         #C9A24E;
+  --accent-gold-soft:    #E8D49A;
+  --text-primary-dark:   #1A2540;
+  --text-primary-light:  #F4ECDC;
+  --text-secondary-dark: #3D4A6B;
+  --text-muted-dark:     #6B7280;
+  --text-muted-light:    #A8B0C4;
+  --divider:             #D9CDB0;
+  --divider-dark:        #2A3656;
+  --chip:                #EDE3CC;
+  --ring-focus:          rgba(201,162,78,0.4);
 }
 .dark[data-theme="navy-gold"],
 .dark:root {
-  --bg-page:            #0E1A2B;
-  --bg-sidebar:         #08111E;
-  --bg-card-dark:       #14233A;
-  --bg-card-light:      #14233A;
-  --accent-gold:        #D4A24A;
-  --accent-gold-soft:   #E6C07A;
-  --text-primary-dark:  #F4EFE2;
-  --text-primary-light: #F4EFE2;
-  --text-muted-dark:    #9AA5B5;
-  --text-muted-light:   #9AA5B5;
-  --divider:            #1F3050;
-  --divider-dark:       #2A3F60;
+  --bg-page:             #0E1628;
+  --bg-sidebar:          #060B18;
+  --bg-card-dark:        #18233D;
+  --bg-card-light:       #18233D;
+  --bg-subtle:           #0E1628;
+  --accent-gold:         #E0BC65;
+  --accent-gold-soft:    #2C2316;
+  --text-primary-dark:   #F2E6C7;
+  --text-primary-light:  #F2E6C7;
+  --text-secondary-dark: #C8BC9A;
+  --text-muted-dark:     #8A8170;
+  --text-muted-light:    #8A8170;
+  --divider:             #2A3656;
+  --divider-dark:        #3A4670;
+  --chip:                #18233D;
+  --ring-focus:          rgba(224,188,101,0.45);
 }
 
 /* 2. Oxblood & Cream — light */
 [data-theme="oxblood-cream"] {
-  --bg-page:            #F4EDE0;
-  --bg-sidebar:         #2A1A18;
-  --bg-card-dark:       #3A2522;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #7A1F22;       /* oxblood used in the gold-role slot */
-  --accent-gold-soft:   #A33A3D;
-  --text-primary-dark:  #2A1A18;
-  --text-primary-light: #F4EDE0;
-  --text-muted-dark:    #6E5B52;
-  --text-muted-light:   #C9B7A8;
-  --divider:            #D9CDB8;
-  --divider-dark:       #3A2522;
+  --bg-page:             #F4EDE0;
+  --bg-sidebar:          #2A1A18;
+  --bg-card-dark:        #3A2522;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #EDE3D2;
+  --accent-gold:         #7A1F22;
+  --accent-gold-soft:    #A33A3D;
+  --text-primary-dark:   #2A1A18;
+  --text-primary-light:  #F4EDE0;
+  --text-secondary-dark: #5A3D38;
+  --text-muted-dark:     #6E5B52;
+  --text-muted-light:    #C9B7A8;
+  --divider:             #D9CDB8;
+  --divider-dark:        #3A2522;
+  --chip:                #EDE3D2;
+  --ring-focus:          rgba(122,31,34,0.4);
 }
 .dark[data-theme="oxblood-cream"] {
-  --bg-page:            #1F1311;
-  --bg-sidebar:         #150B0A;
-  --bg-card-dark:       #2A1A18;
-  --bg-card-light:      #2A1A18;
-  --accent-gold:        #B8484A;
-  --accent-gold-soft:   #D06A6C;
-  --text-primary-dark:  #F4EDE0;
-  --text-primary-light: #F4EDE0;
-  --text-muted-dark:    #C9B7A8;
-  --text-muted-light:   #C9B7A8;
-  --divider:            #3A2522;
-  --divider-dark:       #4A332E;
+  --bg-page:             #1F1311;
+  --bg-sidebar:          #150B0A;
+  --bg-card-dark:        #2A1A18;
+  --bg-card-light:       #2A1A18;
+  --bg-subtle:           #1F1311;
+  --accent-gold:         #B8484A;
+  --accent-gold-soft:    #D06A6C;
+  --text-primary-dark:   #F4EDE0;
+  --text-primary-light:  #F4EDE0;
+  --text-secondary-dark: #D9C7B8;
+  --text-muted-dark:     #C9B7A8;
+  --text-muted-light:    #C9B7A8;
+  --divider:             #3A2522;
+  --divider-dark:        #4A332E;
+  --chip:                #2A1A18;
+  --ring-focus:          rgba(184,72,74,0.45);
 }
 
 /* 3. Forest & Parchment — light */
 [data-theme="forest-parchment"] {
-  --bg-page:            #EFE9DC;
-  --bg-sidebar:         #14271E;
-  --bg-card-dark:       #1C3528;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #C8932E;
-  --accent-gold-soft:   #E0B85F;
-  --text-primary-dark:  #14271E;
-  --text-primary-light: #EFE9DC;
-  --text-muted-dark:    #5C6B5C;
-  --text-muted-light:   #A8B5A0;
-  --divider:            #C9BFA8;
-  --divider-dark:       #1C3528;
+  --bg-page:             #EFE9DC;
+  --bg-sidebar:          #14271E;
+  --bg-card-dark:        #1C3528;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #E2DCCB;
+  --accent-gold:         #C8932E;
+  --accent-gold-soft:    #E0B85F;
+  --text-primary-dark:   #14271E;
+  --text-primary-light:  #EFE9DC;
+  --text-secondary-dark: #3A4D40;
+  --text-muted-dark:     #5C6B5C;
+  --text-muted-light:    #A8B5A0;
+  --divider:             #C9BFA8;
+  --divider-dark:        #1C3528;
+  --chip:                #E2DCCB;
+  --ring-focus:          rgba(200,147,46,0.4);
 }
 .dark[data-theme="forest-parchment"] {
-  --bg-page:            #14271E;
-  --bg-sidebar:         #0C1A14;
-  --bg-card-dark:       #1C3528;
-  --bg-card-light:      #1C3528;
-  --accent-gold:        #D4A24A;
-  --accent-gold-soft:   #E6C07A;
-  --text-primary-dark:  #EFE9DC;
-  --text-primary-light: #EFE9DC;
-  --text-muted-dark:    #A8B5A0;
-  --text-muted-light:   #A8B5A0;
-  --divider:            #1C3528;
-  --divider-dark:       #2A4A38;
+  --bg-page:             #14271E;
+  --bg-sidebar:          #0C1A14;
+  --bg-card-dark:        #1C3528;
+  --bg-card-light:       #1C3528;
+  --bg-subtle:           #14271E;
+  --accent-gold:         #D4A24A;
+  --accent-gold-soft:    #E6C07A;
+  --text-primary-dark:   #EFE9DC;
+  --text-primary-light:  #EFE9DC;
+  --text-secondary-dark: #C8C2B0;
+  --text-muted-dark:     #A8B5A0;
+  --text-muted-light:    #A8B5A0;
+  --divider:             #1C3528;
+  --divider-dark:        #2A4A38;
+  --chip:                #1C3528;
+  --ring-focus:          rgba(212,162,74,0.45);
 }
 
 /* 4. Ink & Blush — light */
 [data-theme="ink-blush"] {
-  --bg-page:            #F5E8E4;
-  --bg-sidebar:         #14110F;
-  --bg-card-dark:       #1F1A18;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #B85A6A;       /* dusty rose in the accent slot */
-  --accent-gold-soft:   #D08090;
-  --text-primary-dark:  #14110F;
-  --text-primary-light: #F5E8E4;
-  --text-muted-dark:    #6E5C58;
-  --text-muted-light:   #C9B0AC;
-  --divider:            #E0CCC6;
-  --divider-dark:       #1F1A18;
+  --bg-page:             #F5E8E4;
+  --bg-sidebar:          #14110F;
+  --bg-card-dark:        #1F1A18;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #EAD9D2;
+  --accent-gold:         #B85A6A;
+  --accent-gold-soft:    #D08090;
+  --text-primary-dark:   #14110F;
+  --text-primary-light:  #F5E8E4;
+  --text-secondary-dark: #4A3E3A;
+  --text-muted-dark:     #6E5C58;
+  --text-muted-light:    #C9B0AC;
+  --divider:             #E0CCC6;
+  --divider-dark:        #1F1A18;
+  --chip:                #EAD9D2;
+  --ring-focus:          rgba(184,90,106,0.4);
 }
 .dark[data-theme="ink-blush"] {
-  --bg-page:            #14110F;
-  --bg-sidebar:         #0A0807;
-  --bg-card-dark:       #1F1A18;
-  --bg-card-light:      #1F1A18;
-  --accent-gold:        #D08090;
-  --accent-gold-soft:   #E6A0B0;
-  --text-primary-dark:  #F5E8E4;
-  --text-primary-light: #F5E8E4;
-  --text-muted-dark:    #C9B0AC;
-  --text-muted-light:   #C9B0AC;
-  --divider:            #1F1A18;
-  --divider-dark:       #2E2622;
+  --bg-page:             #14110F;
+  --bg-sidebar:          #0A0807;
+  --bg-card-dark:        #1F1A18;
+  --bg-card-light:       #1F1A18;
+  --bg-subtle:           #14110F;
+  --accent-gold:         #D08090;
+  --accent-gold-soft:    #E6A0B0;
+  --text-primary-dark:   #F5E8E4;
+  --text-primary-light:  #F5E8E4;
+  --text-secondary-dark: #D9BEB8;
+  --text-muted-dark:     #C9B0AC;
+  --text-muted-light:    #C9B0AC;
+  --divider:             #1F1A18;
+  --divider-dark:        #2E2622;
+  --chip:                #1F1A18;
+  --ring-focus:          rgba(208,128,144,0.45);
 }
 
-/* 5. Copper & Charcoal — light (exact spec) */
+/* 5. Copper & Charcoal — light */
 [data-theme="copper-charcoal"] {
-  --bg-page:            #EFE6D6;
-  --bg-sidebar:         #1A1612;
-  --bg-card-dark:       #2A2218;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #B8732E;
-  --accent-gold-soft:   #D49454;
-  --text-primary-dark:  #1A1612;
-  --text-primary-light: #ECE0CC;
-  --text-muted-dark:    #6E5C48;
-  --text-muted-light:   #B0A088;
-  --divider:            #C8BFB0;
-  --divider-dark:       #3E362E;
+  --bg-page:             #EFE6D6;
+  --bg-sidebar:          #1A1612;
+  --bg-card-dark:        #2A2218;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #E2D8C4;
+  --accent-gold:         #B8732E;
+  --accent-gold-soft:    #D49454;
+  --text-primary-dark:   #1A1612;
+  --text-primary-light:  #ECE0CC;
+  --text-secondary-dark: #3E362E;
+  --text-muted-dark:     #6E5C48;
+  --text-muted-light:    #B0A088;
+  --divider:             #C8BFB0;
+  --divider-dark:        #3E362E;
+  --chip:                #E2D8C4;
+  --ring-focus:          rgba(184,115,46,0.4);
 }
 .dark[data-theme="copper-charcoal"] {
-  --bg-page:            #1E1A16;
-  --bg-sidebar:         #100D0A;
-  --bg-card-dark:       #2E2620;
-  --bg-card-light:      #2E2620;
-  --accent-gold:        #D48F5A;
-  --accent-gold-soft:   #E5AB7A;
-  --text-primary-dark:  #ECE0CC;
-  --text-primary-light: #ECE0CC;
-  --text-muted-dark:    #B0A088;
-  --text-muted-light:   #9E8E78;
-  --divider:            #3A3026;
-  --divider-dark:       #4A3E32;
+  --bg-page:             #1E1A16;
+  --bg-sidebar:          #100D0A;
+  --bg-card-dark:        #2E2620;
+  --bg-card-light:       #2E2620;
+  --bg-subtle:           #1E1A16;
+  --accent-gold:         #D48F5A;
+  --accent-gold-soft:    #E5AB7A;
+  --text-primary-dark:   #ECE0CC;
+  --text-primary-light:  #ECE0CC;
+  --text-secondary-dark: #C8B89A;
+  --text-muted-dark:     #B0A088;
+  --text-muted-light:    #9E8E78;
+  --divider:             #3A3026;
+  --divider-dark:        #4A3E32;
+  --chip:                #2E2620;
+  --ring-focus:          rgba(212,143,90,0.45);
 }
 
 /* 6. Monochrome — greyscale, no gold */
 [data-theme="monochrome"] {
-  --bg-page:            #F5F5F4;
-  --bg-sidebar:         #1A1A1A;
-  --bg-card-dark:       #262626;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #4A4A4A;       /* mid-grey replaces gold */
-  --accent-gold-soft:   #6E6E6E;
-  --text-primary-dark:  #1A1A1A;
-  --text-primary-light: #F5F5F4;
-  --text-muted-dark:    #6E6E6E;
-  --text-muted-light:   #B0B0B0;
-  --divider:            #D4D4D4;
-  --divider-dark:       #262626;
+  --bg-page:             #F5F5F4;
+  --bg-sidebar:          #1A1A1A;
+  --bg-card-dark:        #262626;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #EAEAEA;
+  --accent-gold:         #4A4A4A;
+  --accent-gold-soft:    #6E6E6E;
+  --text-primary-dark:   #1A1A1A;
+  --text-primary-light:  #F5F5F4;
+  --text-secondary-dark: #404040;
+  --text-muted-dark:     #6E6E6E;
+  --text-muted-light:    #B0B0B0;
+  --divider:             #D4D4D4;
+  --divider-dark:        #262626;
+  --chip:                #EAEAEA;
+  --ring-focus:          rgba(74,74,74,0.4);
 }
 .dark[data-theme="monochrome"] {
-  --bg-page:            #0F0F0F;
-  --bg-sidebar:         #050505;
-  --bg-card-dark:       #1A1A1A;
-  --bg-card-light:      #1A1A1A;
-  --accent-gold:        #B0B0B0;
-  --accent-gold-soft:   #D4D4D4;
-  --text-primary-dark:  #F5F5F4;
-  --text-primary-light: #F5F5F4;
-  --text-muted-dark:    #B0B0B0;
-  --text-muted-light:   #B0B0B0;
-  --divider:            #1A1A1A;
-  --divider-dark:       #2A2A2A;
+  --bg-page:             #0F0F0F;
+  --bg-sidebar:          #050505;
+  --bg-card-dark:        #1A1A1A;
+  --bg-card-light:       #1A1A1A;
+  --bg-subtle:           #0F0F0F;
+  --accent-gold:         #B0B0B0;
+  --accent-gold-soft:    #D4D4D4;
+  --text-primary-dark:   #F5F5F4;
+  --text-primary-light:  #F5F5F4;
+  --text-secondary-dark: #D4D4D4;
+  --text-muted-dark:     #B0B0B0;
+  --text-muted-light:    #B0B0B0;
+  --divider:             #1A1A1A;
+  --divider-dark:        #2A2A2A;
+  --chip:                #1A1A1A;
+  --ring-focus:          rgba(176,176,176,0.45);
 }
 
 /* ---------- Scholar: upright type enforcement ---------- */
