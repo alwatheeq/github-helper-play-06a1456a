@@ -1338,7 +1338,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                           <div className="font-medium text-gray-900 dark:text-gray-100">
                             {t(`profile.theme_${theme.replace(/-/g, '_')}`)}
                           </div>
-                          {theme === 'sky-blue' && (
+                          {theme === 'navy-gold' && (
                             <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t('profile.theme_default_badge')}</div>
                           )}
                         </div>
