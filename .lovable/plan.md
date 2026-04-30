@@ -1,78 +1,123 @@
-# Why the page is slow to appear
 
-Your app currently downloads a huge JavaScript bundle before it can render anything. Two things compound:
+# Scholar Redesign — Final Verified Plan
 
-1. **`Dashboard.tsx` eagerly imports every page** (Library, Quiz, Profile, StudyRooms, Academics, EduPlay, History, Informational, Feedback, SummaryDisplay, InputForm…). That's ~25,000 lines of component code pulled in on first load, even if the user only ever visits the home view.
-2. **Heavy third-party libraries are pulled into the main chunk** because the components that use them are eagerly imported through Dashboard:
-   - `@zegocloud/zego-uikit-prebuilt` (very large, used only in StudyRooms)
-   - `@xyflow/react` + `dagre` (MindMap only)
-   - `recharts` (CourseAnalytics only)
-   - `html2pdf.js` (SummaryDisplay PDF export + BillingHistory only)
-   - `qrcode.react`, all `lucide-react` icons
+A complete visual transformation of the app into a "university reading room" aesthetic. **100% functional parity** — only CSS variables, palette tokens, fonts, and component styling change. No business logic, hooks, Supabase calls, RPC names, table names, or routes are altered. No GitHub commits will be triggered until you confirm.
 
-Result: the browser must download/parse megabytes of JS before the dashboard shell paints. Slow networks/CPUs feel a multi-second white screen.
+---
 
-The console log already hints at it: `LibraryPage.fetchLibraryData: 699ms` runs immediately on dashboard mount because Library is part of the initial chunk and its effects run as soon as Dashboard mounts.
+## Scope guarantees
 
-# Plan — Reduce initial bundle and defer heavy work
+- **Themes**: 6 new Scholar palettes replace the active theme set. Legacy themes (`monochrome`, `warm-neutrals`, `sky-blue`, `rose-pink`, `slate-mist`, `plum-sand`) are **commented out, not deleted**, in `ThemeContext.tsx` and `VALID_COLOR_THEMES`. The new `monochrome` Scholar variant is included as the 6th palette.
+- **Typography**: `Fraunces` (display serif), `Inter` (UI sans), `Amiri` (Arabic serif). All loaded **without italic axes**. A global rule sets `font-style: normal !important` on `em`, `i`, and `.italic`.
+- **No surface skipped**: every file listed below is touched.
 
-## 1. Lazy-load every Dashboard sub-page
+---
 
-Convert the eager imports in `src/components/Dashboard/Dashboard.tsx` (lines 8–17) to `React.lazy(...)` and wrap the page-switch render in a single `<Suspense fallback={<LoadingSpinner/>}>`. Pages to lazy-load:
+## The 6 Scholar Palettes (light + dark each)
 
-- `LibraryPage`, `HistoryPage`, `InformationalPage`, `FeedbackPage`, `ProfilePage`, `QuizPage`, `EduPlayPage`, `StudyRoomsPage`, `AcademicsPage`, `SummaryDisplay`
+| # | Name | Light bg | Dark bg | Accent |
+|---|------|----------|---------|--------|
+| 1 | Navy & Gold | parchment cream | deep navy | warm gold |
+| 2 | Oxblood & Cream | cream | charcoal | oxblood red |
+| 3 | Forest & Parchment | parchment | dark forest | forest green + gold |
+| 4 | Ink & Blush | blush ivory | ink black | dusty rose |
+| 5 | Copper & Charcoal | warm beige | charcoal | copper |
+| 6 | Monochrome | gray-50 → white | gray-900 → black | grey gradient (no gold) |
 
-Keep eager: `Header`, `Sidebar`, `InputForm`, `ProcessingStatus` (needed for the default home view paint).
+Each palette exposes the same token contract so swapping is one variable change.
 
-This alone removes the largest chunks (Zego, MindMap, recharts, html2pdf) from the initial load — they only download when the user opens those features.
+---
 
-## 2. Lazy-load heavy components inside their pages
+## Phases & file inventory
 
-- `MindMapView` (`@xyflow/react`+`dagre`) → lazy inside `SummaryDisplay`/wherever it renders
-- `CourseAnalytics` (`recharts`) → lazy inside `AcademicsPage`
-- `ZegoVideoRoom` → already isolated; ensure it's only imported lazily by `StudyRoomsPage`
-- `html2pdf.js` → switch to dynamic `await import('html2pdf.js')` inside the export click handler in `SummaryDisplay.tsx` and `BillingHistoryPage.tsx`, instead of a top-level import
+### Phase 1 — Foundation
+- `index.html` — preload Fraunces / Inter / Amiri (upright weights only).
+- `src/index.css` — define `:root` and `[data-theme="..."]` CSS variables for all 6 palettes (×2 modes), parchment-shimmer keyframe, hairline divider util, `font-style: normal !important` override.
+- `src/styles/designSystem.css` — Scholar tokens (radii 6px, eyebrow caps, hairlines, shadow scale).
+- `tailwind.config.js` — extend with Scholar font families, semantic color tokens bound to CSS vars, safelist new gradient classes.
+- `src/contexts/ThemeContext.tsx` — comment out legacy `themeDefinitions`; add 6 Scholar entries; flip default; keep API (`getThemeGradient`, `getThemeCardBg`, etc.) identical so no consumer breaks.
 
-## 3. Tighten Vite chunking
+### Phase 2 — Scholar primitives (new folder `src/components/Scholar/`)
+- `ScholarCard.tsx`, `ScholarButton.tsx`, `ScholarEyebrow.tsx`, `RomanList.tsx`, `BookSpine.tsx`, `Hairline.tsx`
+- `ScholarSpinner.tsx`, `ScholarLoadingButton.tsx` (replaces `Common/LoadingButton.tsx` visuals via re-export wrapper — original file kept as thin pass-through for back-compat)
+- `SkeletonLine.tsx`, `SkeletonCard.tsx`, `SkeletonSpine.tsx` (parchment shimmer; supersedes `Common/LoadingSkeleton.tsx` visuals)
+- `EmptyState.tsx`, `ErrorState.tsx` (literary copy, themed icons)
+- `ScholarToast.tsx` + reconfigure Sonner in `src/components/Toast/Toast.tsx`
 
-Update `vite.config.ts` `manualChunks` so heavy libs each get their own chunk that only loads on demand:
+### Phase 3 — App shell
+- `src/components/Dashboard/Sidebar.tsx` — book-spine nav, eyebrow caps, hairline dividers
+- `src/components/Dashboard/Header.tsx` — serif title, gold underline, restyled credit pill
+- `src/components/Dashboard/Dashboard.tsx` — Suspense fallback → `ScholarSpinner`; mobile FAB restyled
 
-```text
-react-vendor:     react, react-dom, react-router-dom
-supabase-vendor:  @supabase/supabase-js
-zego-vendor:      @zegocloud/zego-uikit-prebuilt
-flow-vendor:      @xyflow/react, dagre
-charts-vendor:    recharts
-pdf-vendor:       html2pdf.js
-qr-vendor:        qrcode.react
-icons-vendor:     lucide-react
-```
+### Phase 4 — Home / input flow
+- `InputForm.tsx`, `ProcessingStatus.tsx`, `LowCreditBanner.tsx`, `LowCreditWarning.tsx`, `InsufficientCreditsModal.tsx`, `CreditBalanceWidget.tsx`
 
-Add `<link rel="preconnect">` to the Supabase URL in `index.html` so the auth round-trip starts earlier.
+### Phase 5 — Library, History, Content, Sharing
+- `LibraryPage.tsx`, `TopicsTagsModal.tsx`, `HistoryPage.tsx`, `ContentViewPage.tsx`, `ShareView.tsx` (both copies), `FavoriteButton.tsx`, `LikeButton.tsx`, `CommentSection.tsx`
 
-## 4. Defer non-critical effects on first paint
+### Phase 6 — Summary, Flashcards, MindMap, BookMode, ReadAloud, AudioStudy, Highlighting
+- `SummaryDisplay.tsx`, `FlashcardViewer.tsx`
+- `MindMap/*` (visual only — node/edge styling via theme vars)
+- `BookMode/*`, `ReadAloud/*`, `AudioStudy/*`, `Highlighting/*`
 
-- In `LibraryPage.tsx`, gate `fetchLibraryData` behind the user actually opening Library (it already runs at mount because Library mounts with Dashboard). Once step 1 lands, this is automatic.
-- In `App.tsx`, the `check_user_block_status` RPC (line 65) currently blocks the entire UI behind `checkingBlock`. Render the dashboard optimistically and only redirect to `/account/suspended` if the check returns blocked — removes one full RPC round-trip from time-to-interactive.
+### Phase 7 — Quiz, Manual builder, AI generator
+- `QuizPage.tsx`, `QuizTakingComponent.tsx`, `ManualQuestionBuilder.tsx`, `AIQuestionGenerator.tsx`
 
-## 5. Verify
+### Phase 8 — EduPlay / Brain Rush / Multiplayer / Study Rooms
+- `EduPlayPage.tsx`, `BrainRushGamePlay.tsx`, `BrainRushQuestionResults.tsx`, `BrainRushResults.tsx`, `BrainRushMultiplayerWrapper.tsx`
+- `MultiplayerMenu.tsx`, `MultiplayerLobby.tsx`, `MultiplayerGamePlay.tsx`, `MultiplayerResults.tsx`, `GameJoinPage.tsx`
+- `StudyRoomsPage.tsx`, `ZegoVideoRoom.tsx` (chrome only — Zego SDK untouched), `FloatingVideo/*`
 
-- Run `npm run build` and inspect the printed chunk sizes — the main entry chunk should drop substantially (target: main < 300 kB gz, with zego/flow/charts/pdf split into separate ≥100 kB chunks loaded on demand).
-- Manually confirm Library, Quiz, StudyRooms, Academics still navigate and render (lazy fallback spinner, then content).
+### Phase 9 — Academics, Social, Profile, Goals, Achievements
+- `Academics/*` (entire folder)
+- `Social/*`
+- `ProfilePage.tsx`, `StudyGoalsPage.tsx`, `GoalsAndAchievementsPage.tsx`, `AchievementsPage.tsx`, `GlobalExamDetailModal.tsx`, `UsernameSetupModal.tsx`
 
-## Expected impact
+### Phase 10 — Notifications, Pomodoro, Feedback, Informational, Billing, Subscription
+- `NotificationCenter.tsx` → "THE BULLETIN" (serif headers, themed icons, restyled Pomodoro section)
+- `PomodoroTimer.tsx`
+- `FeedbackPage.tsx`, `InformationalPage.tsx`
+- `BillingHistoryPage.tsx`, `SubscriptionManagementPage.tsx`
+- `Subscription/PersistentSubscriptionModal.tsx`, `Subscription/SubscriptionGuard.tsx`
 
-- First meaningful paint of the dashboard shell drops from "download everything" to roughly Header+Sidebar+InputForm only.
-- Routes the user never visits (e.g. StudyRooms with Zego, MindMap with xyflow, Analytics with recharts) never download their JS.
-- Removing the blocking block-status RPC removes ~200–500 ms before the UI shows.
+### Phase 11 — System UI layer (toasts / modals / loaders / hooks)
+- `Common/Modal.tsx`, `Common/ConfirmationModal.tsx`, `Common/PromptModal.tsx`
+- `Common/Card.tsx`, `Common/Badge.tsx`, `Common/Tooltip.tsx`
+- `Common/LoadingButton.tsx`, `Common/LoadingSkeleton.tsx` (re-skin to Scholar)
+- `Toast/Toast.tsx` + Sonner config
+- `hooks/useConfirm.tsx`, `hooks/usePrompt.tsx` (return Scholar-styled nodes)
+- `AccountSuspended.tsx`, `NotFound.tsx`, `EnvValidator.tsx`, `ErrorBoundary.tsx`, `LanguageToggle.tsx`, `SubscriptionRefreshListener.tsx`
 
-## Files to edit
+### Phase 12 — Auth, Onboarding, Pricing, Chat
+- `Auth/Auth.tsx`
+- `Onboarding/LanguageChoicePage.tsx`, `OnboardingWizard.tsx`, `PageTutorial.tsx`, `TutorialStep.tsx` (configs untouched)
+- `Pricing/PricingPage.tsx`, `CheckoutPage.tsx`, `PaymentSuccess.tsx`, `PaymentCancel.tsx`
+- `ChatAssistant/ChatAssistant.tsx` + `.css`, `GlobalChatAssistant.tsx` + `.css`
 
-- `src/components/Dashboard/Dashboard.tsx` — lazy imports + Suspense wrapper
-- `src/components/Dashboard/SummaryDisplay.tsx` — dynamic import for `html2pdf.js`, lazy `MindMapView`
-- `src/components/Dashboard/BillingHistoryPage.tsx` — dynamic import for `html2pdf.js`
-- `src/components/Dashboard/Academics/AcademicsPage.tsx` — lazy `CourseAnalytics`
-- `src/components/Dashboard/StudyRoomsPage.tsx` — confirm `ZegoVideoRoom` is lazy
-- `vite.config.ts` — expanded `manualChunks`
-- `index.html` — Supabase `preconnect`
-- `src/App.tsx` — non-blocking block-status check
+### Phase 13 — Admin surfaces (full pass)
+- `Admin/AdminLogin.tsx`, `AdminDashboard.tsx`, `AdminHeader.tsx`, `AdminSidebar.tsx`, `AdminRoute.tsx`
+- `OverviewPage.tsx`, `UsersPage.tsx`, `AdminUsersManagementPage.tsx`, `UserActivityPage.tsx`
+- `AnalyticsPage.tsx`, `TokenUsagePage.tsx`, `TransactionsPage.tsx`, `CreditManagementPage.tsx`
+- `SubscriptionsManagementPage.tsx`, `SubscriptionModal.tsx`
+- `FeedbackManagementPage.tsx`, `FoldersManagementPage.tsx`, `TagsManagementPage.tsx`
+- `AppSettingsPage.tsx`, `AuditLogPage.tsx`, `BlockUserModal.tsx`
+
+### Phase 14 — Theme picker + i18n + QA
+- Theme picker UI in `ProfilePage` + admin `AppSettingsPage` — 6 Scholar swatches with light/dark preview
+- i18n: add `scholar.*` namespace (loaders, empty states, error states, bulletin labels) to `src/locales/en.json`, `ar.json`, `fr.json`, `tr.json`
+- Final QA pass: RTL (Arabic), mobile (375 / 768), contrast (WCAG AA on every palette), keyboard focus rings visible on all 6 palettes, dark-mode parity for every page touched in phases 3–13
+
+---
+
+## Technical notes
+
+- **No DB / RPC / edge function changes.** No migrations. Supabase preserved per project memory.
+- **Token contract** stays identical (`getThemeGradient`, `getThemeCardBg`, `getThemeCardBorder`, `getThemeTextPrimary`, etc.) so existing consumers keep working — only the values they return change.
+- **Italic suppression** is enforced both at font-load level (no italic axes loaded) and CSS level (`em, i, .italic { font-style: normal !important; }`) so any third-party component rendering `<em>` still looks upright.
+- **GitHub sync**: Lovable's GitHub integration auto-syncs file edits. There is no manual push step to withhold. We'll work phase-by-phase so you can review each in the live preview, and any phase can be reverted from history before you publish.
+
+---
+
+## Order of execution after approval
+
+Phases run sequentially 1 → 14. After each phase I'll stop and surface what changed so you can spot-check the preview before I continue. Approve this plan to start with Phase 1.
