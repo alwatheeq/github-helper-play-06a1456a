@@ -15,33 +15,41 @@
 /* 1. Navy & Gold (default) — light */
 :root,
 [data-theme="navy-gold"] {
-  --bg-page:            #EFE9DC;
-  --bg-sidebar:         #0E1A2B;
-  --bg-card-dark:       #14233A;
-  --bg-card-light:      #FFFFFF;
-  --accent-gold:        #C8932E;
-  --accent-gold-soft:   #E0B85F;
-  --text-primary-dark:  #0E1A2B;
-  --text-primary-light: #F4EFE2;
-  --text-muted-dark:    #6B6356;
-  --text-muted-light:   #9AA5B5;
-  --divider:            #C9BFA8;
-  --divider-dark:       #1F3050;
+  --bg-page:             #F4ECDC;
+  --bg-sidebar:          #1A2540;
+  --bg-card-dark:        #1A2540;
+  --bg-card-light:       #FFFFFF;
+  --bg-subtle:           #EDE3CC;
+  --accent-gold:         #C9A24E;
+  --accent-gold-soft:    #E8D49A;
+  --text-primary-dark:   #1A2540;
+  --text-primary-light:  #F4ECDC;
+  --text-secondary-dark: #3D4A6B;
+  --text-muted-dark:     #6B7280;
+  --text-muted-light:    #A8B0C4;
+  --divider:             #D9CDB0;
+  --divider-dark:        #2A3656;
+  --chip:                #EDE3CC;
+  --ring-focus:          rgba(201,162,78,0.4);
 }
 .dark[data-theme="navy-gold"],
 .dark:root {
-  --bg-page:            #0E1A2B;
-  --bg-sidebar:         #08111E;
-  --bg-card-dark:       #14233A;
-  --bg-card-light:      #14233A;
-  --accent-gold:        #D4A24A;
-  --accent-gold-soft:   #E6C07A;
-  --text-primary-dark:  #F4EFE2;
-  --text-primary-light: #F4EFE2;
-  --text-muted-dark:    #9AA5B5;
-  --text-muted-light:   #9AA5B5;
-  --divider:            #1F3050;
-  --divider-dark:       #2A3F60;
+  --bg-page:             #0E1628;
+  --bg-sidebar:          #060B18;
+  --bg-card-dark:        #18233D;
+  --bg-card-light:       #18233D;
+  --bg-subtle:           #0E1628;
+  --accent-gold:         #E0BC65;
+  --accent-gold-soft:    #2C2316;
+  --text-primary-dark:   #F2E6C7;
+  --text-primary-light:  #F2E6C7;
+  --text-secondary-dark: #C8BC9A;
+  --text-muted-dark:     #8A8170;
+  --text-muted-light:    #8A8170;
+  --divider:             #2A3656;
+  --divider-dark:        #3A4670;
+  --chip:                #18233D;
+  --ring-focus:          rgba(224,188,101,0.45);
 }
 
 /* 2. Oxblood & Cream — light */

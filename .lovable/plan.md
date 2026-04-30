@@ -1,145 +1,77 @@
+# Re-align Navy & Gold tokens (light + dark)
 
-# Scholar Redesign — Phase 1 Correction Plan (6 themes, Monochrome kept)
+## What's wrong now
 
-The previous Phase 1 used approximated hex values and the wrong CSS variable names. This plan rewrites the foundation to match the official Scholar specification verbatim — using the exact role-based tokens — while **keeping all 6 themes** (the 5 from the spec plus the existing Monochrome variant).
+The Phase 1 implementation guessed Navy & Gold hexes instead of using the values you just pasted. Current vs. target on the key tokens:
 
----
-
-## What's wrong today
-
-1. **Wrong variable names** — `index.css` and `ThemeContext.tsx` emit `--theme-bg-from`, `--theme-accent`, `--theme-primary-from`, etc. The spec mandates role tokens: `--bg-page`, `--bg-sidebar`, `--bg-card-dark`, `--bg-card-light`, `--accent-gold`, `--accent-gold-soft`, `--text-primary-dark`, `--text-primary-light`, `--text-muted-dark`, `--text-muted-light`, `--divider`, `--divider-dark`.
-2. **Wrong hex values** — approximations like `#1a2540`, `#d4a84a` instead of the exact spec values (e.g. `#0E1A2B`, `#C8932E`, `#EFE9DC`).
-3. **Gold-is-rare rule not enforced** — gold should appear only on active nav, credits pill, primary CTAs, and small progress indicators.
-
----
-
-## The 6 themes (all kept)
-
-| Key | Name | Source of values |
+| Token | Current (wrong) | Target (your spec) |
 |---|---|---|
-| `navy-gold` (default) | Navy & Gold | spec, exact hexes |
-| `oxblood-cream` | Oxblood & Cream | spec, exact hexes |
-| `forest-parchment` | Forest & Parchment | spec, exact hexes |
-| `ink-blush` | Ink & Blush | spec, exact hexes |
-| `copper-charcoal` | Copper & Charcoal | spec, exact hexes (light + dark blocks given) |
-| `monochrome` | Monochrome | greyscale derivation, no gold |
+| `--bg-page` light | `#EFE9DC` | `#F4ECDC` |
+| `--bg-sidebar` light | `#0E1A2B` | `#1A2540` |
+| `--bg-card-dark` light | `#14233A` | `#1A2540` |
+| `--accent-gold` light | `#C8932E` | `#C9A24E` |
+| `--accent-gold-soft` light | `#E0B85F` | `#E8D49A` |
+| `--divider` light | `#C9BFA8` | `#D9CDB0` |
+| `--divider-dark` light | `#1F3050` | `#2A3656` |
+| `--bg-page` dark | `#0E1A2B` | `#0E1628` |
+| `--bg-sidebar` dark | `#08111E` | `#060B18` |
+| `--bg-card-dark` dark | `#14233A` | `#18233D` |
+| `--accent-gold` dark | `#D4A24A` | `#E0BC65` |
+| `--accent-gold-soft` dark | `#E6C07A` | `#2C2316` (dark wash, intentional) |
+| `--text-primary-dark` dark | `#F4EFE2` | `#F2E6C7` |
 
-Each theme exposes the **same 12-token contract** in light and dark.
+You also introduced two new role tokens not in the original token set: `--bg-subtle`, `--text-secondary-dark`, `--chip`, `--ring-focus`. These should be added so future Scholar primitives (alt rows, captions, chips, focus rings) can read through them.
 
----
+## Changes
 
-## Phase 1 — Foundation (rewrite)
+### 1. `src/index.css` — Navy & Gold blocks only
 
-### 1. `src/index.css` — emit exact spec tokens
+Replace the Navy & Gold light block (`:root, [data-theme="navy-gold"]`) and dark block (`.dark[data-theme="navy-gold"], .dark:root`) with the exact tokens you pasted:
 
-Replace the current `:root` and `[data-theme="..."]` blocks with 6 themes × 2 modes (12 token sets), using the exact hex values from the spec for the 5 named themes and a clean greyscale set for Monochrome. Pattern:
+**Light:**
+```
+--bg-page: #F4ECDC; --bg-sidebar: #1A2540;
+--bg-card-dark: #1A2540; --bg-card-light: #FFFFFF;
+--bg-subtle: #EDE3CC;
+--accent-gold: #C9A24E; --accent-gold-soft: #E8D49A;
+--text-primary-dark: #1A2540; --text-primary-light: #F4ECDC;
+--text-secondary-dark: #3D4A6B;
+--text-muted-dark: #6B7280; --text-muted-light: #A8B0C4;
+--divider: #D9CDB0; --divider-dark: #2A3656;
+--chip: #EDE3CC; --ring-focus: rgba(201,162,78,0.4);
+```
 
-````text
-:root, [data-theme="navy-gold"] {
-  --bg-page: #EFE9DC;
-  --bg-sidebar: #0E1A2B;
-  --bg-card-dark: #14233A;
-  --bg-card-light: #FFFFFF;
-  --accent-gold: #C8932E;
-  --accent-gold-soft: #E0B85F;
-  --text-primary-dark: #0E1A2B;
-  --text-primary-light: #F4EFE2;
-  --text-muted-dark: #6B6356;
-  --text-muted-light: #9AA5B5;
-  --divider: #C9BFA8;
-  --divider-dark: #1F3050;
-}
-.dark[data-theme="navy-gold"] { /* dark-mode hex swap */ }
+**Dark:**
+```
+--bg-page: #0E1628; --bg-sidebar: #060B18;
+--bg-card-dark: #18233D; --bg-card-light: #18233D;
+--bg-subtle: #0E1628;
+--accent-gold: #E0BC65; --accent-gold-soft: #2C2316;
+--text-primary-dark: #F2E6C7; --text-primary-light: #F2E6C7;
+--text-secondary-dark: #C8BC9A;
+--text-muted-dark: #8A8170; --text-muted-light: #8A8170;
+--divider: #2A3656; --divider-dark: #3A4670;
+--chip: #18233D; --ring-focus: rgba(224,188,101,0.45);
+```
 
-[data-theme="oxblood-cream"]    { /* spec values */ }
-.dark[data-theme="oxblood-cream"] { /* spec values */ }
-[data-theme="forest-parchment"] { /* spec values */ }
-.dark[data-theme="forest-parchment"] { /* spec values */ }
-[data-theme="ink-blush"]        { /* spec values */ }
-.dark[data-theme="ink-blush"]   { /* spec values */ }
-[data-theme="copper-charcoal"]  { /* spec values */ }
-.dark[data-theme="copper-charcoal"] { /* spec values, exact from spec */ }
-[data-theme="monochrome"]       { /* greyscale, no gold accents */ }
-.dark[data-theme="monochrome"]  { /* greyscale */ }
-````
+### 2. Add the four new role tokens to the other 5 themes
 
-All hex values for the 5 named themes come straight from the provided spec text — no approximations. Monochrome uses a neutral grey ramp and substitutes `--accent-gold` with a mid-grey so the gold-only rule doesn't visually break.
+`--bg-subtle`, `--text-secondary-dark`, `--chip`, `--ring-focus` get added to each of: Oxblood, Forest, Ink & Blush, Copper, Monochrome — light + dark — using palette-appropriate values derived from each theme's existing hexes (so e.g. monochrome's `--ring-focus` is grey, oxblood's is wine-tinted, etc.). This keeps all 6 themes structurally identical so components can rely on every token existing.
 
-Keep the upright-fonts block, the parchment-shimmer keyframe, and the `em, i, .italic { font-style: normal !important; }` override exactly as they are.
+### 3. `tailwind.config.js` — bind the new tokens
 
-### 2. `tailwind.config.js` — bind Tailwind semantics to the new tokens
+Add Tailwind utilities mapped to the new variables:
+- `bg-subtle` → `var(--bg-subtle)`
+- `text-secondary` → `var(--text-secondary-dark)`
+- `bg-chip` → `var(--chip)`
+- `ring-focus` → `var(--ring-focus)` (under `ringColor`)
 
-Replace the current `theme-*` color extensions with role-based bindings:
+No other tailwind keys change.
 
-````text
-colors: {
-  'page':              'var(--bg-page)',
-  'sidebar':           'var(--bg-sidebar)',
-  'card-dark':         'var(--bg-card-dark)',
-  'card-light':        'var(--bg-card-light)',
-  'accent-gold':       'var(--accent-gold)',
-  'accent-gold-soft':  'var(--accent-gold-soft)',
-  'ink':               'var(--text-primary-dark)',
-  'ink-on-dark':       'var(--text-primary-light)',
-  'muted-ink':         'var(--text-muted-dark)',
-  'muted-ink-on-dark': 'var(--text-muted-light)',
-  'divider':           'var(--divider)',
-  'divider-dark-on':   'var(--divider-dark)',
-}
-````
+### 4. No JS / context changes
 
-Components can then use `bg-page`, `bg-sidebar`, `text-ink`, `bg-accent-gold`, `border-divider` directly. The legacy `theme-bg-from` / `theme-accent` keys are kept temporarily as aliases pointing at the new tokens so nothing breaks until phases 3–13 migrate them.
+`ThemeContext.tsx` already applies `data-theme="navy-gold"` and toggles `.dark` — both blocks above are picked up automatically. No code changes outside the two files above.
 
-### 3. `src/contexts/ThemeContext.tsx` — 6 themes, correct keys
+## After this lands
 
-- Theme keys: `navy-gold` (default), `oxblood-cream`, `forest-parchment`, `ink-blush`, `copper-charcoal`, `monochrome`.
-- Update `LEGACY_COLOR_THEME_MAP` so old user prefs migrate cleanly (e.g. `warm-neutrals → copper-charcoal`, `slate-mist → navy-gold`, legacy `monochrome` stays `monochrome`).
-- Helper functions (`getThemeGradient`, `getThemeCardBg`, `getThemeCardBorder`, `getThemeTextPrimary`, …) keep their **signatures** but their return values now reference the new token-backed Tailwind classes (e.g. `getThemeCardBg()` returns `'bg-card-light'`). This keeps every existing consumer working without edits.
-- `applyTheme()` writes the `data-theme` attribute on `<html>`; CSS handles the rest.
-
-### 4. `src/styles/designSystem.css` — already correct
-
-`.scholar-card`, `.scholar-btn`, hairline, shadow scale stay as-is. They reference `var(--scholar-hairline)` etc. which are independent of the palette tokens.
-
-### 5. `.lovable/plan.md` — keep "6 Scholar Palettes"
-
-Update the palette table so the 5 named themes use the exact spec descriptions; Monochrome row stays.
-
----
-
-## Gold-is-rare enforcement (carried into Phases 3–14)
-
-When restyling components in later phases, `accent-gold` may **only** appear on:
-- the active sidebar nav item,
-- the credits/balance pill,
-- primary CTAs (one per view max),
-- small progress indicators (XP bars, quiz progress).
-
-Every other "highlight" use becomes ink, parchment, navy, or a hairline divider. Monochrome theme uses a neutral grey in place of gold to keep the rule visually consistent.
-
----
-
-## Phases 2–14 — unchanged
-
-Primitives, app shell, all dashboard pages, admin surfaces, auth/onboarding/pricing, system UI (toasts/modals/loaders), notifications ("THE BULLETIN"), Pomodoro, i18n `scholar.*` namespace in en/ar/fr/tr, and final QA (RTL, mobile, contrast, focus rings, dark-mode parity) all remain as previously approved. Only the foundation tokens they consume change.
-
----
-
-## Technical notes
-
-- No DB / RPC / edge function changes.
-- No GitHub commits triggered manually; review happens in the live preview phase by phase.
-- Italic suppression stays enforced at both font-load and CSS level.
-- Token-contract guarantee: every helper in `ThemeContext` keeps its signature, so no other file needs to change just because tokens were renamed under the hood.
-
----
-
-## Order of execution after approval
-
-1. Rewrite `src/index.css` with 6 themes × 2 modes using exact spec hexes (greyscale for Monochrome).
-2. Rewrite `tailwind.config.js` color bindings to the role tokens (with legacy aliases).
-3. Rewrite `src/contexts/ThemeContext.tsx` (6 themes, helpers updated to return new token-backed classes, legacy migration map).
-4. Update `.lovable/plan.md` palette table to reflect spec.
-5. Stop and let you verify in the live preview before Phase 2.
-
-Approve to proceed.
+Default page should match your spec exactly: `#F4ECDC` parchment, `#1A2540` navy sidebar, `#C9A24E` gold rules. Dark mode flips to `#0E1628` page with cream `#F2E6C7` text and lifted gold `#E0BC65`. Then we'll be safe to start Phase 2 (Scholar primitives) building against a stable token set.
