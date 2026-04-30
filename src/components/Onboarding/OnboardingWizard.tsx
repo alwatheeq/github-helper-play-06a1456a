@@ -22,40 +22,40 @@ interface ThemeOption {
 
 const THEME_OPTIONS: ThemeOption[] = [
   {
-    id: 'sky-blue',
-    name: 'Sky Blue',
-    swatch: 'linear-gradient(135deg, #38bdf8, #2563eb)',
-    desc: 'Calm & focused',
+    id: 'navy-gold',
+    name: 'Navy & Gold',
+    swatch: 'linear-gradient(135deg, #f5f5f4, #b45309)',
+    desc: 'Classic & scholarly',
   },
   {
-    id: 'rose-pink',
-    name: 'Rose Pink',
-    swatch: 'linear-gradient(135deg, #fb7185, #db2777)',
-    desc: 'Warm & inviting',
+    id: 'oxblood-cream',
+    name: 'Oxblood & Cream',
+    swatch: 'linear-gradient(135deg, #fafaf9, #991b1b)',
+    desc: 'Warm & literary',
+  },
+  {
+    id: 'forest-parchment',
+    name: 'Forest & Parchment',
+    swatch: 'linear-gradient(135deg, #ecfdf5, #065f46)',
+    desc: 'Calm & studious',
+  },
+  {
+    id: 'ink-blush',
+    name: 'Ink & Blush',
+    swatch: 'linear-gradient(135deg, #fff1f2, #be123c)',
+    desc: 'Soft & considered',
+  },
+  {
+    id: 'copper-charcoal',
+    name: 'Copper & Charcoal',
+    swatch: 'linear-gradient(135deg, #fff7ed, #c2410c)',
+    desc: 'Earthy & refined',
   },
   {
     id: 'monochrome',
     name: 'Monochrome',
-    swatch: 'linear-gradient(135deg, #9ca3af, #374151)',
-    desc: 'Clean & minimal',
-  },
-  {
-    id: 'warm-neutrals',
-    name: 'Warm Neutrals',
-    swatch: 'linear-gradient(135deg, #fbbf24, #92400e)',
-    desc: 'Earthy & cozy',
-  },
-  {
-    id: 'slate-mist',
-    name: 'Slate Mist',
-    swatch: 'linear-gradient(135deg, #64748b, #14b8a6 45%, #0891b2)',
-    desc: 'Cool & professional',
-  },
-  {
-    id: 'plum-sand',
-    name: 'Plum Sand',
-    swatch: 'linear-gradient(135deg, #c084fc, #7e22ce)',
-    desc: 'Bold & creative',
+    swatch: 'linear-gradient(135deg, #9ca3af, #1f2937)',
+    desc: 'Quiet & clinical',
   },
 ];
 
@@ -75,7 +75,7 @@ export const OnboardingWizard: React.FC = () => {
 
   const [step, setStep] = useState(1);
   const [selectedLang, setSelectedLang] = useState<string>(language || 'en');
-  const [selectedTheme, setSelectedTheme] = useState<ColorTheme>(currentTheme || 'sky-blue');
+  const [selectedTheme, setSelectedTheme] = useState<ColorTheme>(currentTheme || 'navy-gold');
   const [completing, setCompleting] = useState(false);
 
   const handleLangSelect = (code: string) => {

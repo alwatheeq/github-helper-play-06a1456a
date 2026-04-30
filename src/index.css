@@ -1,8 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Scholar Redesign — typography stack.
+   Italic axes intentionally NOT loaded; an !important override below
+   keeps third-party <em>/<i>/.italic rendering upright. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ---------- Scholar: upright type enforcement ---------- */
+em, i, .italic {
+  font-style: normal !important;
+}
+
+/* ---------- Scholar: serif display class ---------- */
+.font-display {
+  font-family: 'Fraunces', 'Amiri', Georgia, 'Times New Roman', serif;
+  font-style: normal;
+  letter-spacing: -0.005em;
+}
+
+html[lang="ar"] .font-display,
+html[dir="rtl"] .font-display {
+  font-family: 'Amiri', 'Fraunces', Georgia, serif;
+}
+
+/* ---------- Scholar: eyebrow caps ---------- */
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- Scholar: hairline divider ---------- */
+.hairline {
+  border: 0;
+  border-top: 1px solid currentColor;
+  opacity: 0.18;
+}
+
+/* ---------- Scholar: parchment shimmer for skeletons ---------- */
+@keyframes parchmentShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0;  }
+}
+
+.parchment-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.08) 50%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: parchmentShimmer 1.6s ease-in-out infinite;
+}
+
+.dark .parchment-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.10) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+}
+
+/* ---------- Scholar: card radius standard ---------- */
+.scholar-radius { border-radius: 6px; }
 
 @keyframes fadeIn {
   from {
