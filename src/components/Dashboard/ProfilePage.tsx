@@ -1597,13 +1597,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                         {achievement.description}
                       </p>
                       <div className="flex items-center justify-between mt-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          achievement.badge_tier === 'bronze' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white' :
-                          achievement.badge_tier === 'silver' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
-                          achievement.badge_tier === 'gold' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white' :
-                          achievement.badge_tier === 'platinum' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
-                          'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                        }`}>
+                        {/* TODO(Phase 6 polish): differentiate bronze/silver/gold/platinum tier colors. */}
+                        <span className="text-xs px-2 py-1 rounded-full bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark">
                           {achievement.badge_tier.toUpperCase()}
                         </span>
                         {achievement.earned_at && (
