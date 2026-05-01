@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Check, ArrowRight, X, ArrowLeft, Plus, Minus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useI18n } from '../../contexts/I18nContext';
 import {
   PRICING,
@@ -29,14 +28,6 @@ export const PricingPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { t } = useI18n();
-  const {
-    getThemeGradient,
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeSubtle,
-  } = useTheme();
   const [promoCode, setPromoCode] = useState('');
   const [showPromoInput, setShowPromoInput] = useState(false);
   const [zegoHours, setZegoHours] = useState(0);
