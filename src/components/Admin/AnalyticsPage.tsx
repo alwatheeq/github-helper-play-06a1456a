@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import {
   TrendingUp, Users, DollarSign, Activity, Calendar, BarChart3, ArrowUp, ArrowDown
 } from 'lucide-react';
