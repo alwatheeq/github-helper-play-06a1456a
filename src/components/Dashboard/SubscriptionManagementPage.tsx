@@ -11,7 +11,6 @@ import { getTierDisplayInfo, getStatusDisplayInfo, getToolsCreditsPlanCap } from
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useCredits } from '../../contexts/CreditContext';
 import { useI18n } from '../../contexts/I18nContext';
 
@@ -20,15 +19,6 @@ export const SubscriptionManagementPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useI18n();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
-  const {
-    getThemeGradient,
-    getBackgroundGradient,
-    getThemeCardBg,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeCardBorder,
-    getThemeSubtle
-  } = useTheme();
   const { balance: creditBalance } = useCredits();
   const {
     subscription,
