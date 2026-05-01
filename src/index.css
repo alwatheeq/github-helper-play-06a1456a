@@ -32,8 +32,7 @@
   --chip:                #EDE3CC;
   --ring-focus:          rgba(201,162,78,0.4);
 }
-.dark[data-theme="navy-gold"],
-.dark:root {
+.dark[data-theme="navy-gold"] {
   --bg-page:             #0E1628;
   --bg-sidebar:          #060B18;
   --bg-card-dark:        #18233D;
