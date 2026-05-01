@@ -7,6 +7,8 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { ReadAloudButton } from './ReadAloud/ReadAloudButton';
+import { ScholarCard } from '../Scholar/ScholarCard';
+import { ScholarButton } from '../Scholar/ScholarButton';
 
 type QuestionKind = 'multiple_choice' | 'true_false' | 'fill_in_blank' | 'open_ended';
 
