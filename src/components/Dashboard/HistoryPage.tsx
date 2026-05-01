@@ -4,11 +4,11 @@ import { History, FileText, Calendar, AlertCircle, RefreshCw, Tag, Clock, Stetho
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
-import { useTheme } from '../../contexts/ThemeContext';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
+import { ScholarCard, ScholarButton } from '../Scholar';
 
 interface HistoryEntry {
   id: string;
@@ -30,7 +30,6 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
   const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('history');
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -125,15 +124,19 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
     });
   };
 
+  const isMedicalEntry = (entry: HistoryEntry) =>
+    entry.original_file_name?.toLowerCase().includes('medical') ||
+    entry.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical'].some(med => topic.toLowerCase().includes(med)));
+
   if (loading) {
     return (
       <div className="w-full">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
+        <ScholarCard variant="default" padding="lg">
           <div className="flex items-center justify-center py-12">
-            <div className={`animate-spin rounded-full h-8 w-8 border-b-2 ${getThemeTextMuted()} mr-3`}></div>
-            <span className={getThemeTextSecondary()}>{t('history.loading_history')}</span>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-muted-ink dark:border-muted-ink-on-dark mr-3" />
+            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('history.loading_history')}</span>
           </div>
-        </div>
+        </ScholarCard>
       </div>
     );
   }
@@ -141,20 +144,22 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
   if (error) {
     return (
       <div className="w-full">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
+        <ScholarCard variant="default" padding="lg">
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>{t('history.error_loading')}</h3>
-            <p className={`${getThemeTextSecondary()} mb-4`}>{error}</p>
-            <button
+            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('history.error_loading')}</h3>
+            <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-4">{error}</p>
+            <ScholarButton
+              variant="primary"
               onClick={() => fetchHistory()}
-              className={`flex items-center space-x-2 px-4 py-2 ${getThemeGradient('ui')} text-white hover:opacity-90 transition duration-150 mx-auto rounded-lg`}
+              icon={<RefreshCw className="h-4 w-4" />}
+              iconPosition="left"
+              className="mx-auto"
             >
-              <RefreshCw className="h-4 w-4" />
-              <span>{t('history.try_again')}</span>
-            </button>
+              {t('history.try_again')}
+            </ScholarButton>
           </div>
-        </div>
+        </ScholarCard>
       </div>
     );
   }
@@ -162,34 +167,34 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
   return (
     <div className="w-full overflow-hidden">
       <div className="mb-8">
-        <h2 className={`text-3xl font-bold ${getThemeTextPrimary()} mb-2`}>{t('history.generation_history')}</h2>
-        <p className={`text-lg ${getThemeTextSecondary()}`}>
+        <h2 className="text-3xl font-bold text-ink dark:text-ink-on-dark mb-2">{t('history.generation_history')}</h2>
+        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
           {t('history.history_desc')}
         </p>
       </div>
 
       {/* Sorting Controls */}
-      <div className="bg-white rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-6 mb-6 dark:bg-gray-800 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-gray-100 dark:border-gray-700">
-        <div className="flex items-center justify-between">
+      <ScholarCard variant="default" padding="md" className="mb-6">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center space-x-3">
-            <div className={`${getThemeGradient('ui')} p-2 rounded-lg`}>
+            <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-2 rounded-lg">
               <History className="h-5 w-5 text-white" />
             </div>
-            <div> {/* Apply dark mode classes to sort options text */}
-              <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('history.sort_options')}</h3>
-              <p className={`text-sm ${getThemeTextMuted()}`}>{t('history.sort_desc')}</p>
+            <div>
+              <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('history.sort_options')}</h3>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('history.sort_desc')}</p>
             </div>
           </div>
-          
-          <div className="flex items-center space-x-3"> {/* Apply dark mode classes to sort by label and select */}
-            <label className={`text-sm font-medium ${getThemeTextSecondary()}`}>{t('history.sort_by')}</label>
+
+          <div className="flex items-center space-x-3">
+            <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">{t('history.sort_by')}</label>
             <select
               value={sortOption}
               onChange={(e) => {
                 ErrorLogger.debug('Sort option changed', { component: 'HistoryPage', action: 'handleSortChange', newSortOption: e.target.value });
                 setSortOption(e.target.value);
               }}
-              className={`px-3 py-2 ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+              className="px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
             >
               <option value="created_at_desc">{t('history.creation_newest')}</option>
               <option value="created_at_asc">{t('history.creation_oldest')}</option>
@@ -198,110 +203,111 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
             </select>
           </div>
         </div>
-      </div>
+      </ScholarCard>
 
       {historyEntries.length === 0 ? (
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
+        <ScholarCard variant="default" padding="lg">
           <div className="text-center py-12">
-            <History className={`h-12 w-12 ${getThemeTextMuted()} mx-auto mb-4`} />
-            <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>{t('history.no_history')}</h3>
-            <p className={getThemeTextSecondary()}>
+            <History className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('history.no_history')}</h3>
+            <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
               {t('history.process_first')}
             </p>
           </div>
-        </div>
+        </ScholarCard>
       ) : (
         <div className="space-y-4">
-          {historyEntries.map((entry) => (
-            <div key={entry.id} className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden dark:shadow-none`}>
-              <div className="p-6">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-lg ${
-                      entry.original_file_name?.toLowerCase().includes('medical') ||
-                      entry.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical'].some(med => topic.toLowerCase().includes(med)))
-                        ? 'bg-red-50 dark:bg-red-900/20 dark:from-red-600 dark:to-pink-700'
-                        : getThemeGradient('ui')
-                    }`}>
-                      {entry.original_file_name?.toLowerCase().includes('medical') ||
-                       entry.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical'].some(med => topic.toLowerCase().includes(med))) ? (
-                        <Stethoscope className="h-5 w-5 text-white" />
-                      ) : (
-                        <FileText className="h-5 w-5 text-white" />
-                      )}
-                    </div>
-                    <div> {/* Apply dark mode classes to entry details */}
-                      <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
-                        {entry.original_file_name || t('common.unknown')}
-                        {(entry.original_file_name?.toLowerCase().includes('medical') ||
-                          entry.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical'].some(med => topic.toLowerCase().includes(med)))) && (
-                          <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full dark:bg-red-900 dark:text-red-300">
-                            🩺 Medical
-                          </span>
+          {historyEntries.map((entry) => {
+            const medical = isMedicalEntry(entry);
+            return (
+              <ScholarCard key={entry.id} variant="default" padding="none" hover className="overflow-hidden">
+                <div className="p-6">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2 rounded-lg ${
+                        medical
+                          ? 'bg-red-50 dark:bg-red-900/20'
+                          : 'bg-gradient-to-r from-accent-gold to-accent-gold-soft'
+                      }`}>
+                        {medical ? (
+                          <Stethoscope className="h-5 w-5 text-red-600 dark:text-red-300" />
+                        ) : (
+                          <FileText className="h-5 w-5 text-white" />
                         )}
-                      </h3>
-                      <div className={`flex items-center space-x-4 text-sm ${getThemeTextMuted()}`}>
-                        <div className="flex items-center">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          {formatDate(entry.created_at)}
-                        </div>
-                        <span className="capitalize">
-                          {entry.original_input_type === 'file' ? t('history.file_upload') : t('history.text_input')}
-                        </span>
-                        <span>
-                          {entry.flashcards_json.length} {entry.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
-                        </span>
                       </div>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
-                    className={`px-3 py-2 text-white ${getThemeGradient('ui')} text-white hover:opacity-90 transition duration-150 text-sm font-medium whitespace-nowrap`}
-                  >
-                    {t('history.view_content')}
-                  </button>
-                </div>
-
-                {/* Topics display */}
-                {entry.topics && entry.topics.length > 0 && (
-                  <div className="mb-4">
-                    <div className="flex items-start space-x-2">
-                      <Tag className={`h-4 w-4 ${getThemeTextMuted()} flex-shrink-0 mt-1`} />
-                      <div className="flex flex-wrap gap-2 min-w-0">
-                        {entry.topics.map((topic, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full dark:bg-purple-900 dark:text-purple-300 whitespace-nowrap"
-                          >
-                            {topic}
+                      <div>
+                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
+                          {entry.original_file_name || t('common.unknown')}
+                          {medical && (
+                            <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full dark:bg-red-900 dark:text-red-300">
+                              🩺 Medical
+                            </span>
+                          )}
+                        </h3>
+                        <div className="flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark flex-wrap">
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 mr-1" />
+                            {formatDate(entry.created_at)}
+                          </div>
+                          <span className="capitalize">
+                            {entry.original_input_type === 'file' ? t('history.file_upload') : t('history.text_input')}
                           </span>
-                        ))}
+                          <span>
+                            {entry.flashcards_json.length} {entry.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
 
-                {/* Stored until badge */}
-                <div className="mb-4">
-                  <div className="flex items-center space-x-2 text-sm text-orange-600 dark:text-orange-400">
-                    <Clock className="h-4 w-4 flex-shrink-0" />
-                    <span className="truncate">{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
+                    <ScholarButton
+                      variant="primary"
+                      size="sm"
+                      onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
+                    >
+                      {t('history.view_content')}
+                    </ScholarButton>
+                  </div>
+
+                  {/* Topics display */}
+                  {entry.topics && entry.topics.length > 0 && (
+                    <div className="mb-4">
+                      <div className="flex items-start space-x-2">
+                        <Tag className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 mt-1" />
+                        <div className="flex flex-wrap gap-2 min-w-0">
+                          {entry.topics.map((topic, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full dark:bg-purple-900 dark:text-purple-300 whitespace-nowrap"
+                            >
+                              {topic}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Stored until badge */}
+                  <div className="mb-4">
+                    <div className="flex items-center space-x-2 text-sm text-orange-600 dark:text-orange-400">
+                      <Clock className="h-4 w-4 flex-shrink-0" />
+                      <span className="truncate">{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('history.summary_preview')}</h4>
+                    <p className="text-secondary-ink dark:text-secondary-ink-on-dark bg-subtle dark:bg-subtle-on-dark rounded-lg p-3">
+                      {entry.summary_text.length > 150
+                        ? entry.summary_text.substring(0, 150) + '...'
+                        : entry.summary_text
+                      }
+                    </p>
                   </div>
                 </div>
-
-                <div className="mb-4"> {/* Apply dark mode classes to summary preview */}
-                  <h4 className={`text-sm font-medium ${getThemeTextSecondary()} mb-2`}>{t('history.summary_preview')}</h4>
-                  <p className={`${getThemeTextSecondary()} ${getThemeSubtle('bg')} rounded-lg p-3`}>
-                    {entry.summary_text.length > 150 
-                      ? entry.summary_text.substring(0, 150) + '...'
-                      : entry.summary_text
-                    }
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+              </ScholarCard>
+            );
+          })}
         </div>
       )}
 
