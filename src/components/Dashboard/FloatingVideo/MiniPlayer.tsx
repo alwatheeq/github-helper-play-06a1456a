@@ -1,12 +1,10 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { Mic, MicOff, Maximize2, X, GripVertical } from 'lucide-react';
 import { useFloatingVideoStore } from '../../../stores/useFloatingVideoStore';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 
 const MiniPlayer: React.FC = () => {
   const { activeRoom, isMuted, toggleMute, leaveRoom } = useFloatingVideoStore();
-  const { getThemeCardBg, getThemeCardBorder } = useTheme();
   const { t } = useI18n();
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -61,7 +59,7 @@ const MiniPlayer: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className={`fixed z-[9998] w-40 h-28 rounded-xl shadow-2xl overflow-hidden flex flex-col select-none ${getThemeCardBg()} border ${getThemeCardBorder()}`}
+      className="fixed z-[9998] w-40 h-28 rounded-xl shadow-2xl overflow-hidden flex flex-col select-none bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark"
       style={{ left: pos.x, top: pos.y }}
     >
       {/* Drag handle + room name */}

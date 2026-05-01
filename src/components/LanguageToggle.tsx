@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Globe } from 'lucide-react';
 import { useI18n } from '../contexts/I18nContext';
-import { useTheme } from '../contexts/ThemeContext';
 
 const LANGUAGES = [
   { code: 'en', name: 'English', initials: 'EN' },
@@ -12,7 +11,6 @@ const LANGUAGES = [
 
 export const LanguageToggle: React.FC = () => {
   const { language, setLanguage } = useI18n();
-  const { getThemeGradient } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -43,15 +41,15 @@ export const LanguageToggle: React.FC = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-md"
+        className="flex items-center space-x-2 px-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg hover:bg-accent-gold-soft/10 transition-colors duration-150 shadow-sm hover:shadow-md"
         aria-label="Select language"
       >
-        <Globe className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-        <span className="font-semibold text-sm text-gray-700 dark:text-gray-300">
+        <Globe className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
+        <span className="font-semibold text-sm text-ink dark:text-ink-on-dark">
           {currentLanguage.initials}
         </span>
         <svg
-          className={`h-4 w-4 text-gray-600 dark:text-gray-400 transition-transform duration-200 ${
+          className={`h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark transition-transform duration-200 ${
             isOpen ? 'rotate-180' : ''
           }`}
           fill="none"
@@ -63,26 +61,26 @@ export const LanguageToggle: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden z-50 animate-fadeIn">
+        <div className="absolute right-0 mt-2 w-48 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg shadow-lg overflow-hidden z-50 animate-fadeIn">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
               onClick={() => handleLanguageChange(lang.code)}
               className={`w-full text-left px-4 py-3 flex items-center justify-between transition-colors duration-150 ${
                 language === lang.code
-                  ? `${getThemeGradient('bg')} text-blue-700 dark:text-blue-300`
-                  : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                  ? 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
+                  : 'hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark'
               }`}
             >
               <div className="flex items-center space-x-3">
-                <span className="font-semibold text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                <span className="font-semibold text-xs bg-accent-gold-soft/30 px-2 py-1 rounded">
                   {lang.initials}
                 </span>
                 <span className="text-sm font-medium">{lang.name}</span>
               </div>
               {language === lang.code && (
                 <svg
-                  className="h-4 w-4 text-blue-600 dark:text-blue-400"
+                  className="h-4 w-4 text-accent-gold"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
