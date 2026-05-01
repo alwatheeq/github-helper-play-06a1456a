@@ -127,7 +127,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                 <Ban className="h-5 w-5 text-red-500" />
               )}
             </div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
               {isCurrentlyBlocked ? 'Unblock User' : 'Block User'}
             </h3>
           </div>
@@ -143,16 +143,16 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
               {isCurrentlyBlocked ? (
-                <>Unblocking <span className="font-semibold text-gray-900 dark:text-white">{userEmail}</span> will restore their access to the website.</>
+                <>Unblocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will restore their access to the website.</>
               ) : (
-                <>Blocking <span className="font-semibold text-gray-900 dark:text-white">{userEmail}</span> will prevent them from accessing the website.</>
+                <>Blocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will prevent them from accessing the website.</>
               )}
             </p>
           </div>
 
           {!isCurrentlyBlocked && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
                 Block Type
               </label>
               <div className="flex space-x-6">
@@ -168,7 +168,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     }}
                     className="w-4 h-4 text-red-600 focus:ring-red-500"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Permanent</span>
+                  <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Permanent</span>
                 </label>
                 <label className="flex items-center space-x-2 cursor-pointer">
                   <input
@@ -179,7 +179,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     onChange={(e) => setBlockType(e.target.value as 'permanent' | 'temporary')}
                     className="w-4 h-4 text-red-600 focus:ring-red-500"
                   />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">Temporary</span>
+                  <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Temporary</span>
                 </label>
               </div>
             </div>
@@ -187,7 +187,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
 
           {!isCurrentlyBlocked && blockType === 'temporary' && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
                 <Clock className="h-4 w-4 inline mr-1" />
                 Expiration Date
               </label>
@@ -197,13 +197,13 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                 onChange={(e) => setExpirationDate(e.target.value)}
                 min={minDate}
                 required={blockType === 'temporary'}
-                className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
               <AlertCircle className="h-4 w-4 inline mr-1" />
               Reason {isCurrentlyBlocked ? '(optional)' : '(required)'}
             </label>
@@ -213,7 +213,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
               placeholder={isCurrentlyBlocked ? 'Reason for unblocking...' : 'Reason for blocking...'}
               required={!isCurrentlyBlocked}
               rows={4}
-              className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
@@ -221,7 +221,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
             <button
               type="button"
               onClick={handleClose}
-              className="px-5 py-2.5 text-gray-700 dark:text-gray-300 bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              className="px-5 py-2.5 text-secondary-ink dark:text-secondary-ink-on-dark bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
             >
               Cancel
             </button>
