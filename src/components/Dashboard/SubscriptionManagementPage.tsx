@@ -125,7 +125,7 @@ export const SubscriptionManagementPage: React.FC = () => {
     }
   };
 
-  const shell = `min-h-screen w-full ${getBackgroundGradient()}`;
+  const shell = `min-h-screen w-full bg-page-light dark:bg-page-dark`;
   const inner = 'max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8';
 
   if (loading) {
@@ -134,7 +134,7 @@ export const SubscriptionManagementPage: React.FC = () => {
         <div className={`${inner} flex items-center justify-center min-h-[60vh]`}>
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-sky-400" />
-            <p className={`mt-4 ${getThemeTextSecondary()}`}>{t('subscription_management.loading')}</p>
+            <p className={`mt-4 text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.loading')}</p>
           </div>
         </div>
       </div>
@@ -145,24 +145,24 @@ export const SubscriptionManagementPage: React.FC = () => {
     return (
       <div className={shell}>
         <div className={inner}>
-          <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} p-8`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark p-8`}>
             <div className="text-center">
-              <div className={`${getThemeSubtle('ui')} p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
-                <Crown className={`h-12 w-12 ${getThemeTextSecondary()}`} />
+              <div className={`bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
+                <Crown className={`h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark`} />
               </div>
 
-              <h2 className={`text-2xl font-bold ${getThemeTextPrimary()} mb-4`}>
+              <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>
                 {t('subscription_management.no_active_title')}
               </h2>
 
-              <p className={`${getThemeTextSecondary()} mb-8`}>
+              <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-8`}>
                 {t('subscription_management.no_active_desc')}
               </p>
 
               <button
                 type="button"
                 onClick={() => navigate('/pricing')}
-                className={`${getThemeGradient('ui')} hover:opacity-90 text-white font-bold py-3 px-8 rounded-lg transition duration-200`}
+                className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white font-bold py-3 px-8 rounded-lg transition duration-200`}
               >
                 {t('subscription_management.view_plans')}
               </button>
@@ -199,13 +199,13 @@ export const SubscriptionManagementPage: React.FC = () => {
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className={`flex items-center gap-2 ${getThemeTextSecondary()} hover:opacity-80 transition mb-4`}
+        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-4`}
       >
         <ArrowLeft className="h-5 w-5" />
         <span>{t('subscription_management.go_back')}</span>
       </button>
       {/* Current Subscription Card */}
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} overflow-hidden`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark overflow-hidden`}>
         <div className={`${tierInfo.bgColor} p-6`}>
           <div className="flex items-center justify-between">
             <div>
@@ -278,57 +278,57 @@ export const SubscriptionManagementPage: React.FC = () => {
           {/* Credits (tools / study room / AI) */}
           <>
               {/* Tools & Services */}
-              <div className={`${getThemeGradient('bg')} rounded-lg p-6`}>
+              <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     <div>
-                      <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('subscription_management.tools_services')}</h3>
-                      <p className={`text-sm ${getThemeTextSecondary()}`}>{t('subscription_management.current_billing_cycle')}</p>
+                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('subscription_management.tools_services')}</h3>
+                      <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.current_billing_cycle')}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`text-2xl font-bold ${getThemeTextPrimary()}`}>{toolCreditsRemaining.toLocaleString()}</p>
-                    <p className={`text-sm ${getThemeTextSecondary()}`}>
+                    <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
+                    <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       / {toolPlanCap.toLocaleString()} {t('subscription_management.credits_plan_cap_suffix')}
                     </p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <p className={`text-sm ${getThemeTextSecondary()}`}>
+                  <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                     {t('subscription_management.credits_remaining', { n: toolCreditsRemaining })}
                   </p>
-                  <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-3`}>
+                  <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                     <div
-                      className={`h-3 rounded-full transition-colors duration-150 ${getThemeGradient('ui')}`}
+                      className={`h-3 rounded-full transition-colors duration-150 bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
                       style={{ width: `${toolProgressPct}%` }}
                     />
                   </div>
                 </div>
               </div>
               {hasZego && (
-                <div className={`${getThemeGradient('bg')} rounded-lg p-6`}>
+                <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                       <div>
-                        <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('subscription_management.study_room')}</h3>
-                        <p className={`text-sm ${getThemeTextSecondary()}`}>{t('subscription_management.zego_subtitle')}</p>
+                        <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('subscription_management.study_room')}</h3>
+                        <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.zego_subtitle')}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`text-2xl font-bold ${getThemeTextPrimary()}`}>{zegoCreditsRemaining}</p>
-                      <p className={`text-sm ${getThemeTextSecondary()}`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
+                      <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
+                      <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className={`flex justify-between text-sm ${getThemeTextSecondary()}`}>
+                    <div className={`flex justify-between text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       <span>{t('subscription_management.percent_used', { pct: zegoCreditsTotal > 0 ? Math.round(((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0 })}</span>
                       <span>{t('subscription_management.credits_remaining', { n: zegoCreditsRemaining })}</span>
                     </div>
-                    <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-3`}>
+                    <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                       <div
-                        className={`h-3 rounded-full ${getThemeGradient('ui')}`}
+                        className={`h-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
                         style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }}
                       />
                     </div>
@@ -336,28 +336,28 @@ export const SubscriptionManagementPage: React.FC = () => {
                 </div>
               )}
               {hasAiAddon && (
-                <div className={`${getThemeGradient('bg')} rounded-lg p-6`}>
+                <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                       <div>
-                        <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('subscription_management.ai_chat')}</h3>
-                        <p className={`text-sm ${getThemeTextSecondary()}`}>{t('subscription_management.ai_chat_subtitle')}</p>
+                        <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('subscription_management.ai_chat')}</h3>
+                        <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.ai_chat_subtitle')}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`text-2xl font-bold ${getThemeTextPrimary()}`}>{aiChatCreditsUsed}</p>
-                      <p className={`text-sm ${getThemeTextSecondary()}`}>{t('subscription_management.of_credits', { total: aiChatCreditsTotal })}</p>
+                      <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{aiChatCreditsUsed}</p>
+                      <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: aiChatCreditsTotal })}</p>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className={`flex justify-between text-sm ${getThemeTextSecondary()}`}>
+                    <div className={`flex justify-between text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       <span>{t('subscription_management.percent_used', { pct: aiChatCreditsTotal > 0 ? Math.round((aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0 })}</span>
                       <span>{t('subscription_management.credits_remaining', { n: Math.max(0, aiChatCreditsTotal - aiChatCreditsUsed) })}</span>
                     </div>
-                    <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-3`}>
+                    <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                       <div
-                        className={`h-3 rounded-full ${getThemeGradient('ui')}`}
+                        className={`h-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
                         style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }}
                       />
                     </div>
@@ -367,14 +367,14 @@ export const SubscriptionManagementPage: React.FC = () => {
             </>
 
           {subscription.billing_cycle_end && (
-            <div className={`${getThemeGradient('bg')} rounded-lg p-4 border-t ${getThemeCardBorder()}`}>
+            <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4 border-t border border-divider dark:border-divider-on-dark`}>
               <div className="flex items-center justify-between text-sm">
-                <span className={getThemeTextSecondary()}>{t('subscription_management.billing_resets_in')}</span>
-                <span className={`font-semibold ${getThemeTextPrimary()}`}>
+                <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('subscription_management.billing_resets_in')}</span>
+                <span className={`font-semibold text-ink dark:text-ink-on-dark`}>
                   {t('subscription_management.days_left', { count: daysRemainingInCycle })}
                 </span>
               </div>
-              <p className={`text-xs ${getThemeTextSecondary()} mt-1`}>
+              <p className={`text-xs text-secondary-ink dark:text-secondary-ink-on-dark mt-1`}>
                 {t('subscription_management.resets_on', { date: new Date(subscription.billing_cycle_end).toLocaleDateString() })}
               </p>
             </div>
@@ -384,28 +384,28 @@ export const SubscriptionManagementPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
-                <div className={`flex items-center space-x-2 ${getThemeTextSecondary()} mb-1`}>
+                <div className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark mb-1`}>
                   <Calendar className="h-4 w-4" />
                   <span className="text-sm">{t('subscription_management.start_date')}</span>
                 </div>
-                <p className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+                <p className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                   {new Date(subscription.start_date).toLocaleDateString()}
                 </p>
               </div>
 
               <div>
-                <div className={`flex items-center space-x-2 ${getThemeTextSecondary()} mb-1`}>
+                <div className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark mb-1`}>
                   <Calendar className="h-4 w-4" />
                   <span className="text-sm">
                     {subscription.auto_renew ? t('subscription_management.next_billing') : t('subscription_management.expires_on')}
                   </span>
                 </div>
-                <p className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+                <p className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                   {subscription.next_billing_date
                     ? new Date(subscription.next_billing_date).toLocaleDateString()
                     : new Date(subscription.end_date).toLocaleDateString()}
                 </p>
-                <p className={`text-sm ${getThemeTextSecondary()}`}>
+                <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                   {t('subscription_management.paren_days_left', { count: daysRemaining })}
                 </p>
               </div>
@@ -413,7 +413,7 @@ export const SubscriptionManagementPage: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <div className={`flex items-center space-x-2 ${getThemeTextSecondary()} mb-1`}>
+                <div className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark mb-1`}>
                   <CreditCard className="h-4 w-4" />
                   <span className="text-sm">{t('subscription_management.payment_method')}</span>
                 </div>
@@ -421,19 +421,19 @@ export const SubscriptionManagementPage: React.FC = () => {
                   {subscription.payment_method_saved ? (
                     <>
                       <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      <span className={getThemeTextPrimary()}>{t('subscription_management.card_on_file')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.card_on_file')}</span>
                     </>
                   ) : (
                     <>
                       <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-                      <span className={getThemeTextPrimary()}>{t('subscription_management.no_card_saved')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.no_card_saved')}</span>
                     </>
                   )}
                 </div>
               </div>
 
               <div>
-                <div className={`flex items-center space-x-2 ${getThemeTextSecondary()} mb-1`}>
+                <div className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark mb-1`}>
                   <Shield className="h-4 w-4" />
                   <span className="text-sm">{t('subscription_management.auto_renewal')}</span>
                 </div>
@@ -441,12 +441,12 @@ export const SubscriptionManagementPage: React.FC = () => {
                   {subscription.auto_renew ? (
                     <>
                       <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      <span className={getThemeTextPrimary()}>{t('subscription_management.enabled')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.enabled')}</span>
                     </>
                   ) : (
                     <>
                       <XCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                      <span className={getThemeTextPrimary()}>{t('subscription_management.disabled')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.disabled')}</span>
                     </>
                   )}
                 </div>
@@ -455,7 +455,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className={`pt-6 border-t ${getThemeCardBorder()} space-y-3`}>
+          <div className={`pt-6 border-t border border-divider dark:border-divider-on-dark space-y-3`}>
             {subscription.auto_renew && isPaidUser() && subscription.status === 'active' && (
               <button
                 type="button"
@@ -479,7 +479,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/profile/billing')}
-              className={`w-full ${getThemeSubtle('ui')} hover:opacity-90 ${getThemeTextPrimary()} font-semibold py-3 px-6 rounded-lg transition duration-200`}
+              className={`w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200`}
             >
               {t('subscription_management.view_billing_history')}
             </button>
@@ -490,20 +490,20 @@ export const SubscriptionManagementPage: React.FC = () => {
       {/* Cancel Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`${getThemeCardBg()} rounded-lg shadow-lg ${getThemeCardBorder()} max-w-md w-full p-6`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-lg border border-divider dark:border-divider-on-dark max-w-md w-full p-6`}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className={`text-xl font-bold ${getThemeTextPrimary()}`}>{t('subscription_management.cancel_modal_title')}</h3>
+              <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{t('subscription_management.cancel_modal_title')}</h3>
               <button
                 type="button"
                 onClick={() => setShowCancelModal(false)}
-                className={`p-2 ${getThemeSubtle('ui')} hover:opacity-80 rounded-lg transition`}
+                className={`p-2 bg-subtle dark:bg-subtle-on-dark hover:opacity-80 rounded-lg transition`}
               >
-                <X className={`h-5 w-5 ${getThemeTextSecondary()}`} />
+                <X className={`h-5 w-5 text-secondary-ink dark:text-secondary-ink-on-dark`} />
               </button>
             </div>
 
             <div className="space-y-4 mb-6">
-              <p className={getThemeTextSecondary()}>
+              <p className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>
                 {t('subscription_management.cancel_modal_body')}
               </p>
 
@@ -531,7 +531,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 type="button"
                 onClick={() => setShowCancelModal(false)}
                 disabled={canceling}
-                className={`flex-1 ${getThemeSubtle('ui')} hover:opacity-90 ${getThemeTextPrimary()} font-semibold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50`}
+                className={`flex-1 bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50`}
               >
                 {t('subscription_management.keep_subscription')}
               </button>
@@ -552,7 +552,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               </button>
             </div>
 
-            <p className={`text-xs ${getThemeTextSecondary()} text-center mt-4`}>
+            <p className={`text-xs text-secondary-ink dark:text-secondary-ink-on-dark text-center mt-4`}>
               {t('subscription_management.cancel_footer')}
             </p>
           </div>
