@@ -7,7 +7,7 @@ import { Shield, Search, UserPlus, UserX, UserCheck, Clock, Calendar, AlertCircl
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface AdminUser {
   id: string;
