@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Bot, ChevronDown, ChevronUp } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
@@ -17,13 +16,6 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showErrorToast } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextMuted,
-    getThemeGradient,
-  } = useTheme();
 
   const [context, setContext] = useState('');
   const [loading, setLoading] = useState(true);
@@ -77,8 +69,8 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
 
   if (loading) {
     return (
-      <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6`}>
-        <div className={`animate-pulse text-sm ${getThemeTextMuted()}`}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6">
+        <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('ai_tutor.loading') || 'Loading tutor…'}
         </div>
       </div>
@@ -87,10 +79,10 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
 
   if (!context) {
     return (
-      <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6`} dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6" dir={dir}>
         <div className="flex items-center gap-3">
-          <Bot className={`h-5 w-5 ${getThemeTextMuted()}`} />
-          <span className={`text-sm ${getThemeTextMuted()}`}>
+          <Bot className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
+          <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
             {t('ai_tutor.no_context') || 'Upload materials to this course to enable the AI tutor'}
           </span>
         </div>
@@ -99,7 +91,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
   }
 
   return (
-    <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg overflow-hidden`} dir={dir}>
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg overflow-hidden" dir={dir}>
       {/* Collapsible header */}
       <button
         type="button"
@@ -107,17 +99,17 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
         className="w-full flex items-center justify-between gap-3 p-5"
       >
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white`}>
+          <div className="p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white">
             <Bot className="h-5 w-5" />
           </div>
-          <span className={`font-semibold ${getThemeTextPrimary()}`}>
+          <span className="font-semibold text-ink dark:text-ink-on-dark">
             {t('ai_tutor.title') || 'AI Course Tutor'}
           </span>
         </div>
         {expanded ? (
-          <ChevronUp className={`h-5 w-5 ${getThemeTextMuted()}`} />
+          <ChevronUp className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
         ) : (
-          <ChevronDown className={`h-5 w-5 ${getThemeTextMuted()}`} />
+          <ChevronDown className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
         )}
       </button>
 
