@@ -91,7 +91,7 @@ export const ScholarButton: React.FC<ScholarButtonProps> = (props) => {
   );
 
   if ('href' in props && props.href) {
-    const { href, ...anchorRest } = rest as React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
+    const { href, ...anchorRest } = rest as unknown as React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
     return (
       <a href={href} className={cls} aria-busy={loading || undefined} {...anchorRest}>
         {content}
