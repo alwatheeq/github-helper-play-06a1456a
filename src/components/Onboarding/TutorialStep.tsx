@@ -21,7 +21,7 @@ export const TutorialStep: React.FC<TutorialStepProps> = ({
     <div className="space-y-4">
       {/* Progress Indicator */}
       <div className="flex items-center justify-between mb-4">
-        <span className={`text-sm font-medium ${getThemeTextMuted()}`}>
+        <span className={`text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark`}>
           {progressText}
         </span>
         <div className="flex space-x-1">
@@ -30,8 +30,8 @@ export const TutorialStep: React.FC<TutorialStepProps> = ({
               key={index}
               className={`h-1.5 rounded-full transition-colors duration-150 ${
                 index + 1 <= stepNumber
-                  ? `${getThemeSolid('ui')} w-6`
-                  : `${getThemeSubtle('ui')} w-1.5`
+                  ? `bg-accent-gold w-6`
+                  : `bg-subtle dark:bg-subtle-on-dark w-1.5`
               }`}
             />
           ))}
@@ -39,12 +39,12 @@ export const TutorialStep: React.FC<TutorialStepProps> = ({
       </div>
 
       {/* Step Title */}
-      <h3 className={`text-xl font-bold ${getThemeTextPrimary()}`}>
+      <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>
         {step.title}
       </h3>
 
       {/* Step Content */}
-      <p className={`${getThemeTextSecondary()} leading-relaxed`}>
+      <p className={`text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed`}>
         {step.content}
       </p>
     </div>

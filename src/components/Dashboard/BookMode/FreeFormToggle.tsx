@@ -24,7 +24,7 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
         className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-colors ${
           enabled
             ? 'border-gray-700 dark:border-gray-200 bg-gray-700 dark:bg-gray-200 text-white dark:text-gray-900'
-            : `border-gray-200 dark:border-gray-700 ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5`
+            : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
         }`}
         title={enabled
           ? (t('free_form.disable') || 'Disable Free-Form Mode')

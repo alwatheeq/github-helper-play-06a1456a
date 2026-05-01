@@ -25,15 +25,15 @@ export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, o
   const isDisabled = stage !== 'idle';
 
   return (
-    <div className={`p-4 rounded-lg border ${getThemeCardBorder()} ${getThemeTextSecondary()}`}>
+    <div className={`p-4 rounded-lg border border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <div className={`p-2 rounded-md ${getThemeGradient('ui')} text-white`}>
+          <div className={`p-2 rounded-md bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
             <Mic className="h-5 w-5" />
           </div>
           <div>
             <h3 className="font-semibold">{t('audio_study.upload_title') || 'Audio Study'}</h3>
-            <p className={`${getThemeTextMuted()} text-sm`}>
+            <p className={`text-muted-ink dark:text-muted-ink-on-dark text-sm`}>
               {t('audio_study.upload_desc') || 'Upload an audio file to study from it (transcription coming soon).'}
             </p>
           </div>
@@ -61,8 +61,8 @@ export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, o
           onClick={() => inputRef.current?.click()}
           className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition duration-150 ${
             isDisabled
-              ? `opacity-60 cursor-not-allowed ${getThemeTextMuted()} border ${getThemeCardBorder()}`
-              : `${getThemeGradient('ui')} text-white hover:opacity-90`
+              ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark border border border-divider dark:border-divider-on-dark`
+              : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`
           }`}
         >
           <Upload className="h-4 w-4" />
@@ -71,11 +71,11 @@ export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, o
 
         {selectedFile ? (
           <div className="text-sm">
-            <div className={`font-medium ${getThemeTextSecondary()}`}>{selectedFile.name}</div>
-            <div className={`${getThemeTextMuted()}`}>{selectedFile.type || 'audio'}</div>
+            <div className={`font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>{selectedFile.name}</div>
+            <div className={`text-muted-ink dark:text-muted-ink-on-dark`}>{selectedFile.type || 'audio'}</div>
           </div>
         ) : (
-          <div className={`text-sm ${getThemeTextMuted()}`}>
+          <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
             {t('audio_study.no_file_selected') || 'No file selected'}
           </div>
         )}
