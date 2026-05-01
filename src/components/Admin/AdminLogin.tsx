@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import { adminHelpers } from '../../utils/adminHelpers';
 import { Shield, Mail, Lock, AlertCircle } from 'lucide-react';
 import { handleApiError, handleSupabaseError, isOffline } from '../../utils/errorHandler';
