@@ -31,7 +31,6 @@ interface TokenUsageStats {
 }
 
 export const AnalyticsPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const [userGrowth, setUserGrowth] = useState<UserGrowth[]>([]);
   const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
   const [subscriptionStats, setSubscriptionStats] = useState<SubscriptionStats[]>([]);
