@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Sparkles, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
-
 interface Question {
   question: string;
   options: string[];
@@ -27,7 +25,6 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
   const [topic, setTopic] = useState('');
   const [subject, setSubject] = useState('');
   const [generating, setGenerating] = useState(false);
-  const { getThemeGradient } = useTheme();
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
@@ -260,7 +257,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <button
                 onClick={handleGenerate}
                 disabled={!topic.trim() || topic.trim().length < 3}
-                className={`flex-1 px-6 py-3 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+                className={`flex-1 px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
               >
                 <Sparkles className="h-5 w-5" />
                 <span>Generate Questions</span>
@@ -284,7 +281,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="max-w-md mx-auto mb-4">
               <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div
-                  className={`h-full ${getThemeGradient('ui')} transition-colors duration-150 ease-out`}
+                  className={`h-full bg-gradient-to-r from-accent-gold to-accent-gold-soft transition-colors duration-150 ease-out`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -299,7 +296,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
 
       {/* Tips Section */}
       {!generating && (
-        <div className={`mt-6 ${getThemeGradient('bg')} rounded-md p-6`}>
+        <div className={`mt-6 bg-page-light dark:bg-page-dark rounded-md p-6`}>
           <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-purple-600 dark:text-purple-400" />
             <span>Tips for Better Questions</span>

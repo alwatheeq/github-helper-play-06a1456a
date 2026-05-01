@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, Edit2, Check, X, Save } from 'lucide-react';
 import { useToast } from '../Toast/Toast';
-import { useTheme } from '../../contexts/ThemeContext';
-
 interface Question {
   question: string;
   options: [string, string, string, string];
@@ -22,7 +20,6 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
   initialQuestions = []
 }) => {
   const { error: showErrorToast } = useToast();
-  const { getThemeGradient } = useTheme();
   const [questions, setQuestions] = useState<Question[]>(initialQuestions);
   const [currentQuestion, setCurrentQuestion] = useState<string>('');
   const [currentOptions, setCurrentOptions] = useState<[string, string, string, string]>(['', '', '', '']);
@@ -290,7 +287,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
         <button
           onClick={handleFinish}
           disabled={questions.length === 0}
-          className={`px-8 py-3 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
+          className={`px-8 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
         >
           <Save className="h-5 w-5" />
           <span>Finish & Create Game</span>

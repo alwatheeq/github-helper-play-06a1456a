@@ -3,7 +3,6 @@ import { Award, Lock, Star, TrendingUp, Users, BookOpen, Zap } from 'lucide-reac
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useI18n } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { ErrorLogger } from '../../utils/errorLogger';
 
 interface AchievementDefinition {
@@ -28,7 +27,6 @@ interface UserAchievement {
 export const AchievementsPage: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [allAchievements, setAllAchievements] = useState<AchievementDefinition[]>([]);
   const [userAchievements, setUserAchievements] = useState<UserAchievement[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -137,36 +135,36 @@ export const AchievementsPage: React.FC = () => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className={`animate-spin rounded-full h-12 w-12 border-b-2 ${getThemeTextMuted()} mx-auto`}></div>
-          <p className={`mt-4 ${getThemeTextSecondary()}`}>{t('achievements.loading')}</p>
+          <div className={`animate-spin rounded-full h-12 w-12 border-b-2 text-muted-ink dark:text-muted-ink-on-dark mx-auto`}></div>
+          <p className={`mt-4 text-secondary-ink dark:text-muted-ink-on-dark`}>{t('achievements.loading')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${getBackgroundGradient()} p-6`}>
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-7xl mx-auto">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-6 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-6 mb-6`}>
           <div className="flex items-center space-x-3 mb-6">
             <Award className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
             <div>
-              <h1 className={`text-3xl font-bold ${getThemeTextPrimary()}`}>{t('achievements.title')}</h1>
-              <p className={`text-sm ${getThemeTextSecondary()} mt-1`}>
+              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('achievements.title')}</h1>
+              <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-1`}>
                 {t('achievements.subtitle')}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={`${getThemeGradient('bg')} rounded-lg p-4`}>
+            <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4`}>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className={`text-sm ${getThemeTextPrimary()} font-medium`}>{t('achievements.unlocked')}</p>
-                  <p className={`text-3xl font-bold ${getThemeTextPrimary()} mt-1`}>
+                  <p className={`text-sm text-ink dark:text-ink-on-dark font-medium`}>{t('achievements.unlocked')}</p>
+                  <p className={`text-3xl font-bold text-ink dark:text-ink-on-dark mt-1`}>
                     {earnedCount}
                   </p>
-                  <p className={`text-xs ${getThemeTextPrimary()} mt-1`}>
+                  <p className={`text-xs text-ink dark:text-ink-on-dark mt-1`}>
                     {t('achievements.of')} {allAchievements.length}
                   </p>
                 </div>
@@ -206,7 +204,7 @@ export const AchievementsPage: React.FC = () => {
           </div>
         </div>
 
-        <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-4 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-4 mb-6`}>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
@@ -215,7 +213,7 @@ export const AchievementsPage: React.FC = () => {
                 className={`px-5 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
                   selectedCategory === category.id
                     ? 'bg-blue-600 text-white'
-                    : `${getThemeSubtle('ui')} ${getThemeTextSecondary()} hover:opacity-80`
+                    : `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
                 }`}
               >
                 {category.icon}
@@ -233,7 +231,7 @@ export const AchievementsPage: React.FC = () => {
             return (
               <div
                 key={achievement.id}
-                className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 transition-all ${
+                className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
                   isUnlocked
                     ? 'border-2 border-yellow-400 dark:border-yellow-600'
                     : 'opacity-75 hover:opacity-100'
@@ -244,13 +242,13 @@ export const AchievementsPage: React.FC = () => {
                     className={`p-3 rounded-md ${
                       isUnlocked
                         ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}`
-                        : getThemeSubtle('ui')
+                        : "bg-accent-gold-soft/20"
                     }`}
                   >
                     {isUnlocked ? (
                       <Award className="h-8 w-8 text-white" />
                     ) : (
-                      <Lock className={`h-8 w-8 ${getThemeTextMuted()}`} />
+                      <Lock className={`h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark`} />
                     )}
                   </div>
                   <div className="flex flex-col items-end">
@@ -259,7 +257,7 @@ export const AchievementsPage: React.FC = () => {
                         achievement.badge_tier === 'bronze'
                           ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300'
                           : achievement.badge_tier === 'silver'
-                          ? `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                          ? `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`
                           : achievement.badge_tier === 'gold'
                           ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
                           : achievement.badge_tier === 'platinum'
@@ -269,7 +267,7 @@ export const AchievementsPage: React.FC = () => {
                     >
                       {achievement.badge_tier.toUpperCase()}
                     </span>
-                    <span className={`text-xs ${getThemeTextMuted()} mt-1 flex items-center`}>
+                    <span className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1 flex items-center`}>
                       <Zap className="h-3 w-3 mr-1" />
                       {achievement.xp_reward} XP
                     </span>
@@ -278,22 +276,22 @@ export const AchievementsPage: React.FC = () => {
 
                 <h3 className={`text-lg font-bold mb-2 ${
                   isUnlocked
-                    ? getThemeTextPrimary()
-                    : getThemeTextSecondary()
+                    ? "text-ink dark:text-ink-on-dark"
+                    : "text-secondary-ink dark:text-muted-ink-on-dark"
                 }`}>
                   {achievement.title}
                 </h3>
 
                 <p className={`text-sm mb-3 ${
                   isUnlocked
-                    ? getThemeTextSecondary()
-                    : getThemeTextMuted()
+                    ? "text-secondary-ink dark:text-muted-ink-on-dark"
+                    : "text-muted-ink dark:text-muted-ink-on-dark"
                 }`}>
                   {achievement.description}
                 </p>
 
-                <div className={`flex items-center justify-between pt-3 border-t ${getThemeCardBorder()}`}>
-                  <div className={`flex items-center space-x-2 text-xs ${getThemeTextMuted()}`}>
+                <div className={`flex items-center justify-between pt-3 border-t border-divider dark:border-divider-on-dark`}>
+                  <div className={`flex items-center space-x-2 text-xs text-muted-ink dark:text-muted-ink-on-dark`}>
                     {getCategoryIcon(achievement.category)}
                     <span className="capitalize">{achievement.category}</span>
                   </div>
@@ -303,7 +301,7 @@ export const AchievementsPage: React.FC = () => {
                     </span>
                   )}
                   {!isUnlocked && (
-                    <span className={`text-xs ${getThemeTextMuted()} font-medium`}>
+                    <span className={`text-xs text-muted-ink dark:text-muted-ink-on-dark font-medium`}>
                       {t('achievements.locked')}
                     </span>
                   )}
@@ -314,9 +312,9 @@ export const AchievementsPage: React.FC = () => {
         </div>
 
         {filteredAchievements.length === 0 && (
-          <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
-            <Award className={`h-16 w-16 ${getThemeTextMuted()} mx-auto mb-4`} />
-            <p className={getThemeTextSecondary()}>{t('achievements.no_achievements')}</p>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
+            <Award className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+            <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{t('achievements.no_achievements')}</p>
           </div>
         )}
       </div>

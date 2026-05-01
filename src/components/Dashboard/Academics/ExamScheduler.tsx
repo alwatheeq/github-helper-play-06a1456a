@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CalendarDays, Plus, Trash2, Clock } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
@@ -39,17 +38,6 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeTextMuted,
-    getThemeGradient,
-    getThemeSubtle,
-    getThemeAccent,
-  } = useTheme();
-
   const [exams, setExams] = useState<Exam[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -147,8 +135,8 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
   if (loading) {
     return (
-      <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6`}>
-        <div className={`animate-pulse text-sm ${getThemeTextMuted()}`}>
+      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6`}>
+        <div className={`animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
           {t('exam_scheduler.loading') || 'Loading exams…'}
         </div>
       </div>
@@ -156,21 +144,21 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
   }
 
   return (
-    <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6 space-y-5`} dir={dir}>
+    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6 space-y-5`} dir={dir}>
       {/* Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white`}>
+          <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
             <CalendarDays className="h-5 w-5" />
           </div>
-          <h3 className={`font-semibold ${getThemeTextPrimary()}`}>
+          <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
             {t('exam_scheduler.title') || 'Exam Schedule'}
           </h3>
         </div>
         <button
           type="button"
           onClick={() => setShowForm((v) => !v)}
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm ${getThemeAccent()} text-white`}
+          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm bg-accent-gold hover:bg-accent-gold-soft text-white`}
         >
           <Plus className="h-4 w-4" />
           {t('exam_scheduler.add_exam') || 'Add Exam'}
@@ -179,25 +167,25 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Inline form */}
       {showForm && (
-        <div className={`p-4 rounded-lg border ${getThemeCardBorder()} ${getThemeSubtle('bg')} space-y-3`}>
+        <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark space-y-3`}>
           <input
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             placeholder={t('exam_scheduler.name_placeholder') || 'Exam name'}
-            className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()} text-sm`}
+            className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
           />
           <input
             type="datetime-local"
             value={newDate}
             onChange={(e) => setNewDate(e.target.value)}
-            className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()} text-sm`}
+            className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
           />
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className={`px-3 py-1.5 rounded-lg text-sm ${getThemeSubtle('ui')} ${getThemeTextSecondary()}`}
+              className={`px-3 py-1.5 rounded-lg text-sm bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`}
             >
               {t('common.cancel') || 'Cancel'}
             </button>
@@ -205,7 +193,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
               type="button"
               disabled={saving}
               onClick={handleAdd}
-              className={`px-4 py-1.5 rounded-lg text-sm ${getThemeAccent()} text-white disabled:opacity-50`}
+              className={`px-4 py-1.5 rounded-lg text-sm bg-accent-gold hover:bg-accent-gold-soft text-white disabled:opacity-50`}
             >
               {saving
                 ? (t('exam_scheduler.saving') || 'Saving…')
@@ -217,7 +205,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Exam list */}
       {exams.length === 0 ? (
-        <p className={`text-sm ${getThemeTextMuted()}`}>
+        <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
           {t('exam_scheduler.empty') || 'No exams scheduled yet'}
         </p>
       ) : (
@@ -227,13 +215,13 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
             return (
               <div
                 key={exam.id}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border ${getThemeCardBorder()} ${
+                className={`flex items-center justify-between gap-4 p-4 rounded-lg border border-divider dark:border-divider-on-dark ${
                   countdown.isPast ? 'opacity-60' : ''
                 }`}
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className={`font-medium truncate ${countdown.isPast ? getThemeTextMuted() : getThemeTextPrimary()}`}>
+                    <span className={`font-medium truncate ${countdown.isPast ? "text-muted-ink dark:text-muted-ink-on-dark" : "text-ink dark:text-ink-on-dark"}`}>
                       {exam.exam_name}
                     </span>
                     {countdown.isPast && (
@@ -242,15 +230,15 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
                       </Badge>
                     )}
                   </div>
-                  <div className={`text-xs ${getThemeTextMuted()} mt-1`}>
+                  <div className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
                     {new Date(exam.exam_date).toLocaleString()}
                   </div>
                 </div>
 
                 {!countdown.isPast && (
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <Clock className={`h-3.5 w-3.5 ${getThemeTextSecondary()}`} />
-                    <span className={`text-sm font-medium ${getThemeTextSecondary()}`}>
+                    <Clock className={`h-3.5 w-3.5 text-secondary-ink dark:text-muted-ink-on-dark`} />
+                    <span className={`text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark`}>
                       {countdown.days > 0 && `${countdown.days}d `}
                       {countdown.hours}h {countdown.minutes}m
                     </span>

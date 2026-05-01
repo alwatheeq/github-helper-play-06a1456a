@@ -4,8 +4,6 @@ import { Gamepad2, Users, AlertCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
-
 interface GameSession {
   id: string;
   game_title: string;
@@ -17,8 +15,6 @@ export const GameJoinPage: React.FC = () => {
   const { gameCode } = useParams<{ gameCode: string }>();
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted } = useTheme();
-
   const [displayName, setDisplayName] = useState('');
   const [joinAsGuest, setJoinAsGuest] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -136,10 +132,10 @@ export const GameJoinPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`min-h-screen ${getBackgroundGradient()} flex items-center justify-center p-4`}>
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
+      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
           <Loader2 className="h-16 w-16 text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
-          <p className={getThemeTextSecondary()}>Validating game code...</p>
+          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Validating game code...</p>
         </div>
       </div>
     );
@@ -147,11 +143,11 @@ export const GameJoinPage: React.FC = () => {
 
   if (error && !gameInfo) {
     return (
-      <div className={`min-h-screen ${getBackgroundGradient()} flex items-center justify-center p-4`}>
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
+      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
           <AlertCircle className="h-16 w-16 text-red-600 dark:text-red-400 mx-auto mb-4" />
-          <h2 className={`text-2xl font-bold ${getThemeTextPrimary()} mb-2`}>Unable to Join Game</h2>
-          <p className={`${getThemeTextSecondary()} mb-6`}>{error}</p>
+          <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Unable to Join Game</h2>
+          <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>{error}</p>
           <button
             onClick={() => navigate('/dashboard?view=eduplay')}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
@@ -164,23 +160,23 @@ export const GameJoinPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${getThemeGradient('bg')} flex items-center justify-center p-4`}>
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 max-w-md w-full`}>
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 max-w-md w-full`}>
         {/* Header */}
         <div className="text-center mb-8">
-          <div className={`${getThemeGradient('ui')} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
+          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
             <Gamepad2 className="h-12 w-12 text-white" />
           </div>
-          <h2 className={`text-3xl font-bold ${getThemeTextPrimary()} mb-2`}>Join Game</h2>
+          <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Join Game</h2>
           {gameInfo && (
-            <p className={`text-lg ${getThemeTextSecondary()}`}>{gameInfo.game_title}</p>
+            <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>{gameInfo.game_title}</p>
           )}
         </div>
 
         {/* Join Form */}
         <div className="space-y-6">
           <div>
-            <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>
+            <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
               Game Code
             </label>
             <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
@@ -191,7 +187,7 @@ export const GameJoinPage: React.FC = () => {
           </div>
 
           <div>
-            <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>
+            <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
               Your Display Name
             </label>
             <input
@@ -200,7 +196,7 @@ export const GameJoinPage: React.FC = () => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your name"
               maxLength={50}
-              className={`w-full px-4 py-3 ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+              className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -214,7 +210,7 @@ export const GameJoinPage: React.FC = () => {
           <button
             onClick={handleJoinGame}
             disabled={joining || !displayName.trim()}
-            className={`w-full px-6 py-3 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+            className={`w-full px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
           >
             {joining ? (
               <>
@@ -235,8 +231,8 @@ export const GameJoinPage: React.FC = () => {
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-lg p-8 max-w-md w-full">
-            <h3 className={`text-2xl font-bold ${getThemeTextPrimary()} mb-4`}>Join the Game</h3>
-            <p className={`${getThemeTextSecondary()} mb-6`}>
+            <h3 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
+            <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
               Choose how you'd like to join this game:
             </p>
 
@@ -257,13 +253,13 @@ export const GameJoinPage: React.FC = () => {
 
               <button
                 onClick={handleContinueAsGuest}
-                className={`w-full px-6 py-3 border-2 ${getThemeCardBorder()} ${getThemeTextSecondary()} rounded-lg hover:opacity-60 transition font-medium`}
+                className={`w-full px-6 py-3 border-2 border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-lg hover:opacity-60 transition font-medium`}
               >
                 Continue as Guest
               </button>
             </div>
 
-            <p className={`mt-4 text-sm ${getThemeTextMuted()} text-center`}>
+            <p className={`mt-4 text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>
               Guest users won't have their progress saved
             </p>
           </div>
