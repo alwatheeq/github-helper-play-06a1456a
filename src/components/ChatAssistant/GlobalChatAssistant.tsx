@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, useContext } from 'rea
 import { Sparkles, X, Send, Minimize2, Loader2, GripVertical } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { supabase } from '../../lib/supabase';
 import { handleApiError, isOffline, handleOfflineError } from '../../utils/errorHandler';
@@ -22,7 +21,6 @@ interface Message {
 const GlobalChatAssistantContent: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getThemeBorder, getThemeFocusRing } = useTheme();
   const { error: showErrorToast } = useToast();
   const location = useLocation();
   const { context: chatContext } = useChatContext();
@@ -495,7 +493,7 @@ const GlobalChatAssistantContent: React.FC = () => {
             });
           }
         }}
-        className={`fixed z-50 ${getThemeGradient('ui')} text-white p-4 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`fixed z-50 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white p-4 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -511,7 +509,7 @@ const GlobalChatAssistantContent: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className={`fixed z-50 flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border ${getThemeBorder()} transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
+      className={`fixed z-50 flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border border-divider dark:border-divider-on-dark transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -522,7 +520,7 @@ const GlobalChatAssistantContent: React.FC = () => {
       onMouseDown={handleChatMouseDown}
     >
       {/* Header with drag handle */}
-      <div className={`flex items-center justify-between p-4 ${getThemeGradient('ui')} text-white rounded-t-lg chat-header cursor-move`}>
+      <div className={`flex items-center justify-between p-4 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-t-lg chat-header cursor-move`}>
         <div className="flex items-center space-x-2 flex-1">
           <div className="drag-handle cursor-move">
             <GripVertical className="h-4 w-4 opacity-70" />
@@ -621,7 +619,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                     <div
                       className={`max-w-[80%] rounded-lg px-5 py-2.5 ${
                         message.role === 'user'
-                          ? `${getThemeGradient('ui')} text-white`
+                          ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
                           : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600'
                       }`}
                     >
@@ -650,14 +648,14 @@ const GlobalChatAssistantContent: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className={`flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 ${getThemeFocusRing()}`}
+                className={`flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-accent-gold`}
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
+                className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
                 aria-label={t('chat.send')}
               >
                 {loading ? (

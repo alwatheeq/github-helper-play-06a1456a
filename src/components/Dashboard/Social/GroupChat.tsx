@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowLeft, Send, Loader2 } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
@@ -40,16 +39,6 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showError } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextMuted,
-    getThemeSubtle,
-    getThemeGradient,
-    getThemeAccent,
-  } = useTheme();
-
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -230,14 +219,14 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
   return (
     <div dir={dir} className="flex flex-col h-full">
       {/* Header */}
-      <div className={`flex items-center gap-3 px-4 py-3 border-b shrink-0 ${getThemeCardBg()} ${getThemeCardBorder()}`}>
+      <div className={`flex items-center gap-3 px-4 py-3 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
         <button
           onClick={onBack}
-          className={`p-1.5 rounded-lg transition-colors ${getThemeSubtle('ui')}`}
+          className={`p-1.5 rounded-lg transition-colors bg-accent-gold-soft/20`}
         >
-          <ArrowLeft className={`w-5 h-5 ${getThemeTextPrimary()}`} />
+          <ArrowLeft className={`w-5 h-5 text-ink dark:text-ink-on-dark`} />
         </button>
-        <h2 className={`font-semibold text-sm truncate ${getThemeTextPrimary()}`}>
+        <h2 className={`font-semibold text-sm truncate text-ink dark:text-ink-on-dark`}>
           {groupName}
         </h2>
       </div>
@@ -250,10 +239,10 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       >
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className={`w-6 h-6 animate-spin ${getThemeTextMuted()}`} />
+            <Loader2 className={`w-6 h-6 animate-spin text-muted-ink dark:text-muted-ink-on-dark`} />
           </div>
         ) : messages.length === 0 ? (
-          <div className={`text-sm text-center py-16 ${getThemeTextMuted()}`}>
+          <div className={`text-sm text-center py-16 text-muted-ink dark:text-muted-ink-on-dark`}>
             {t('social.no_messages')}
           </div>
         ) : (
@@ -262,7 +251,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
               <button
                 onClick={loadOlderMessages}
                 disabled={loadingMore}
-                className={`w-full text-center text-xs py-2 rounded-lg transition-colors ${getThemeSubtle('ui')} ${getThemeTextMuted()}`}
+                className={`w-full text-center text-xs py-2 rounded-lg transition-colors bg-accent-gold-soft/20 text-muted-ink dark:text-muted-ink-on-dark`}
               >
                 {loadingMore ? (
                   <Loader2 className="w-3 h-3 animate-spin mx-auto" />
@@ -282,7 +271,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                     {/* Avatar */}
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0 ${
-                        own ? getThemeAccent() : getThemeGradient()
+                        own ? "bg-accent-gold hover:bg-accent-gold-soft" : "bg-gradient-to-r from-accent-gold to-accent-gold-soft"
                       }`}
                     >
                       {senderInitial(msg)}
@@ -291,21 +280,21 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                     {/* Bubble */}
                     <div>
                       {!own && (
-                        <div className={`text-[10px] mb-0.5 px-1 ${getThemeTextMuted()}`}>
+                        <div className={`text-[10px] mb-0.5 px-1 text-muted-ink dark:text-muted-ink-on-dark`}>
                           {senderLabel(msg)}
                         </div>
                       )}
                       <div
                         className={`px-3 py-2 rounded-xl text-sm leading-relaxed ${
                           own
-                            ? `${getThemeAccent()} text-white`
-                            : `${getThemeSubtle()} ${getThemeTextPrimary()}`
+                            ? `bg-accent-gold hover:bg-accent-gold-soft text-white`
+                            : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
                         }`}
                       >
                         {msg.content}
                       </div>
                       <div
-                        className={`text-[10px] mt-0.5 px-1 ${getThemeTextMuted()} ${
+                        className={`text-[10px] mt-0.5 px-1 text-muted-ink dark:text-muted-ink-on-dark ${
                           own ? 'text-end' : 'text-start'
                         }`}
                       >
@@ -322,7 +311,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       </div>
 
       {/* Input bar */}
-      <div className={`shrink-0 border-t px-4 py-3 ${getThemeCardBg()} ${getThemeCardBorder()}`}>
+      <div className={`shrink-0 border-t px-4 py-3 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center gap-2">
           <input
             type="text"
@@ -330,12 +319,12 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
             placeholder={t('social.type_message')}
-            className={`flex-1 rounded-xl px-4 py-2.5 text-sm border outline-none transition-colors ${getThemeSubtle()} ${getThemeCardBorder()} ${getThemeTextPrimary()}`}
+            className={`flex-1 rounded-xl px-4 py-2.5 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
           />
           <button
             onClick={handleSend}
             disabled={sending || !input.trim()}
-            className={`p-2.5 rounded-xl text-white transition-opacity disabled:opacity-40 ${getThemeAccent()}`}
+            className={`p-2.5 rounded-xl text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {sending ? (
               <Loader2 className="w-4 h-4 animate-spin" />

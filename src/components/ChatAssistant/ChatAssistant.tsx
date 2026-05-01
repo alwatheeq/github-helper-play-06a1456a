@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Minimize2, Maximize2, Loader2 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { supabase } from '../../lib/supabase';
 import { handleApiError, isOffline, handleOfflineError } from '../../utils/errorHandler';
@@ -34,7 +33,6 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
 }) => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getThemeBorder } = useTheme();
   const { error: showErrorToast } = useToast();
   
   const [isOpen, setIsOpen] = useState(false);
@@ -256,7 +254,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 ${getThemeGradient('ui')} text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center`}
+        className={`fixed bottom-6 right-6 z-50 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center`}
         aria-label={t('chat.open_assistant')}
       >
         <MessageCircle className="h-6 w-6" />
@@ -265,9 +263,9 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border ${getThemeBorder()} transition-colors duration-150`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
       {/* Header */}
-      <div className={`flex items-center justify-between p-6 ${getThemeGradient('ui')} text-white dark:text-gray-900 rounded-t-lg`}>
+      <div className={`flex items-center justify-between p-6 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-t-lg`}>
         <div className="flex items-center space-x-2">
           <MessageCircle className="h-5 w-5" />
           <span className="font-semibold">{t('chat.assistant_title')}</span>
@@ -306,7 +304,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(question)}
-                      className={`w-full text-left px-5 py-2.5 text-sm rounded-lg border ${getThemeBorder()} bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
+                      className={`w-full text-left px-5 py-2.5 text-sm rounded-lg border border-divider dark:border-divider-on-dark bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
                     >
                       {question}
                     </button>
@@ -323,7 +321,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     <div
                       className={`max-w-[80%] rounded-lg px-5 py-2.5 ${
                         message.role === 'user'
-                          ? `${getThemeGradient('ui')} text-white dark:text-gray-900`
+                          ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900`
                           : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600'
                       }`}
                     >
@@ -359,7 +357,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
               <button
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white dark:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
+                className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
                 aria-label={t('chat.send')}
               >
                 {loading ? (
