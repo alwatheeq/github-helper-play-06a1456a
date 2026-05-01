@@ -1508,13 +1508,13 @@ export const QuizPage: React.FC = React.memo(() => {
             <div className="lg:col-span-1">
               <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
+                  <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
                     <Folder className="h-5 w-5" />
                     <span>Folders</span>
                   </h3>
                   <button
                     onClick={() => setShowCreateFolder(true)}
-                    className="p-1 text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-200"
+                    className="p-1 text-ink hover:opacity-80 dark:text-ink-on-dark"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
@@ -1557,7 +1557,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     onClick={() => setSelectedFolder('all')}
                     className={`w-full text-left px-3 py-2 rounded-lg transition ${
                       selectedFolder === 'all'
-                        ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
+                        ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
                         : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -1567,7 +1567,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     onClick={() => setSelectedFolder('uncategorized')}
                     className={`w-full text-left px-3 py-2 rounded-lg transition ${
                       selectedFolder === 'uncategorized'
-                        ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
+                        ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
                         : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -1580,7 +1580,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         onClick={() => setSelectedFolder(folder.id)}
                         className={`flex-1 text-left px-3 py-2 rounded-lg transition ${
                           selectedFolder === folder.id
-                            ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'
+                            ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
                             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
                         }`}
                       >
@@ -1608,7 +1608,7 @@ export const QuizPage: React.FC = React.memo(() => {
             <div className="lg:col-span-3">
               <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-xl font-semibold text-ink dark:text-ink-on-dark">
                     {selectedFolder === 'all' ? 'All Quizzes' :
                      selectedFolder === 'uncategorized' ? 'Uncategorized Quizzes' :
                      quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
@@ -1637,7 +1637,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       <div key={quiz.id} className={`border border-divider dark:border-divider-on-dark opacity-60 dark:opacity-40 rounded-lg p-4`}>
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">{quiz.quiz_title}</h4>
+                            <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{quiz.quiz_title}</h4>
                             <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                               <span>{quiz.question_count} questions</span>
                               <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(quiz.difficulty_level)}`}>
@@ -1716,7 +1716,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       <div key={attempt.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">
                               {exam.exam_name}
                             </h3>
                             <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
@@ -1742,7 +1742,7 @@ export const QuizPage: React.FC = React.memo(() => {
                               <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
                             </div>
                           </div>
-                          <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                          <div className="text-3xl font-bold text-ink dark:text-ink-on-dark">
                             {attempt.score_percentage.toFixed(0)}%
                           </div>
                         </div>
@@ -1767,7 +1767,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     <div key={attempt.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">
                             {attempt.quiz_sessions.quiz_title}
                           </h3>
                           <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
@@ -1788,7 +1788,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
                           </div>
                         </div>
-                        <div className="text-3xl font-bold text-gray-900 dark:text-white">
+                        <div className="text-3xl font-bold text-ink dark:text-ink-on-dark">
                           {attempt.score_percentage.toFixed(0)}%
                         </div>
                       </div>
