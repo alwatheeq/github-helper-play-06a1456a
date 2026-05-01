@@ -103,8 +103,8 @@ export const BillingHistoryPage: React.FC = () => {
         label: 'Pending'
       },
       refunded: {
-        bg: 'bg-gray-100 dark:bg-gray-700',
-        text: 'text-gray-800 dark:text-gray-300',
+        bg: 'bg-subtle dark:bg-subtle-on-dark',
+        text: 'text-secondary-ink dark:text-secondary-ink-on-dark',
         label: 'Refunded'
       }
     };
