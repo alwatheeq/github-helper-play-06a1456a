@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Timer, Coffee, ChevronUp, ChevronDown } from 'lucide-react';
 import { usePomodoroStore } from '../../stores/usePomodoroStore';
 import { useI18n } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -21,13 +20,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
   const isEmbedded = variant === 'embedded';
   const [expanded, setExpanded] = useState(isEmbedded);
   const { t } = useI18n();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeGradient,
-  } = useTheme();
 
   const {
     isRunning,
@@ -53,10 +45,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
 
   const timerCard = (
     <div
-      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-2xl shadow-lg border ${getThemeCardBg()} ${getThemeCardBorder()} p-4 space-y-3`}
+      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-2xl shadow-lg border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
     >
       <div className="flex items-center justify-between">
-        <div className={`flex items-center gap-2 ${getThemeTextPrimary()}`}>
+        <div className="flex items-center gap-2 text-ink dark:text-ink-on-dark">
           <ModeIcon className="h-5 w-5" />
           <span className="font-semibold text-sm">{modeLabel}</span>
         </div>
@@ -64,7 +56,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
           <button
             type="button"
             onClick={() => setExpanded(false)}
-            className={`p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition ${getThemeTextSecondary()}`}
+            className="p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition text-secondary-ink dark:text-muted-ink-on-dark"
           >
             <ChevronDown className="h-4 w-4" />
           </button>
@@ -72,10 +64,10 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
       </div>
 
       <div className="text-center">
-        <p className={`text-4xl font-mono font-bold ${getThemeTextPrimary()}`}>{formatTime(timeRemaining)}</p>
+        <p className="text-4xl font-mono font-bold text-ink dark:text-ink-on-dark">{formatTime(timeRemaining)}</p>
       </div>
 
-      <p className={`text-center text-xs ${getThemeTextSecondary()}`}>
+      <p className="text-center text-xs text-secondary-ink dark:text-muted-ink-on-dark">
         {t('pomodoro.sessions_completed', { count: sessionsCompleted })}
       </p>
 
@@ -83,14 +75,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <button
           type="button"
           onClick={isRunning ? pause : start}
-          className={`p-2.5 rounded-full text-white transition bg-gradient-to-r ${getThemeGradient('ui')} hover:opacity-90`}
+          className="p-2.5 rounded-full text-white transition bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90"
         >
           {isRunning ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         </button>
         <button
           type="button"
           onClick={reset}
-          className={`p-2 rounded-full border transition hover:bg-black/5 dark:hover:bg-white/10 ${getThemeCardBorder()} ${getThemeTextSecondary()}`}
+          className="p-2 rounded-full border transition hover:bg-black/5 dark:hover:bg-white/10 border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark"
         >
           <RotateCcw className="h-4 w-4" />
         </button>
@@ -128,7 +120,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full shadow-lg border transition hover:scale-105 ${getThemeCardBg()} ${getThemeCardBorder()} ${getThemeTextPrimary()}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg border transition hover:scale-105 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark"
             >
               <ModeIcon className="h-4 w-4" />
               <span className="font-mono text-sm font-semibold">{formatTime(timeRemaining)}</span>
