@@ -5,7 +5,6 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { PREDEFINED_TOPICS } from '../../utils/config';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -75,7 +74,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 }) => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
+  // Phase 4: Scholar tokens replace useTheme helpers in this file
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { setChatContext, clearChatContext } = useChatContext();
   const { preferences: _preferences, loading: preferencesLoading, updateFreeFormMode } = useUserPreferences();
@@ -838,16 +837,16 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
-        <div className={`p-6 border-b ${getThemeCardBorder()}`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
+        <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className={`${getThemeSubtle('ui')} p-2 rounded-md ${getThemeCardBorder()}`}>
+              <div className={`bg-subtle p-2 rounded-md border-divider dark:border-divider-on-dark`}>
                 <FileSearch className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('summary.original_text')}</h3>
-                <p className={`text-sm ${getThemeTextMuted()}`}>
+                <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('summary.original_text')}</h3>
+                <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
                   {t('summary.full_extracted')}
                 </p>
               </div>
@@ -856,7 +855,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => copyToClipboard(originalText, -2)}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm ${getThemeTextSecondary()} hover:opacity-80 ${getThemeCardBorder()} rounded-lg hover:opacity-60 transition duration-150`}
+                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-lg hover:opacity-60 transition duration-150`}
               >
                 {copiedIndex === -2 ? (
                   <Check className="h-4 w-4 text-green-600" />
@@ -878,13 +877,13 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         </div>
 
         <div className="p-6 max-h-96 overflow-y-auto">
-          <div className={`${getThemeSubtle('bg')} rounded-lg p-4`}>
+          <div className={`bg-subtle rounded-lg p-4`}>
             {originalText && originalText.trim() ? (
-              <div className={`${getThemeTextSecondary()} text-sm`}>
+              <div className={`text-secondary-ink dark:text-muted-ink-on-dark text-sm`}>
                 <HighlightLayer text={originalText} itemId={effectiveLibraryItemId} />
               </div>
             ) : (
-              <p className={`${getThemeTextSecondary()} leading-relaxed whitespace-pre-wrap text-sm`}>
+              <p className={`text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed whitespace-pre-wrap text-sm`}>
                 {t('summary.no_original_text')}
               </p>
             )}
@@ -911,26 +910,26 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         />
       </div>
     ) : (
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
-      <div className={`p-6 border-b ${getThemeCardBorder()}`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border-divider dark:border-divider-on-dark`}>
+      <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className={`p-2 rounded-md border ${
               medicalMode
                 ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-                : `${getThemeSubtle('ui')} ${getThemeCardBorder()}`
+                : `bg-subtle border-divider dark:border-divider-on-dark`
             }`}>
               {medicalMode ? (
                 <Stethoscope className="h-5 w-5 text-red-700 dark:text-red-400" />
               ) : (
-                <FileText className={`h-5 w-5 ${getThemeTextPrimary()}`} />
+                <FileText className={`h-5 w-5 text-ink dark:text-ink-on-dark`} />
               )}
             </div>
             <div> {/* Apply dark mode classes to summary header text */}
-              <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+              <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                 {medicalMode ? '🏥 Medical Content Summary' : t('summary.document_summary')}
               </h3>
-              <p className={`text-sm ${getThemeTextMuted()}`}>
+              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
                 {medicalMode ? (
                   <>
                     {summaryChunks.length} clinical section{summaryChunks.length === 1 ? '' : 's'} processed
@@ -946,7 +945,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               {/* Topics Display */}
               {topics.length > 0 && (
                 <div className="flex items-center space-x-2 mt-2">
-                  <span className={`text-xs font-medium ${getThemeTextMuted()}`}>
+                  <span className={`text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark`}>
                     {medicalMode ? '🩺 Medical Specialties:' : t('summary.topics')}
                   </span>
                   <div className="flex flex-wrap gap-1">
@@ -983,7 +982,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             
             <button
               onClick={() => copyToClipboard(combinedSummary, -1)}
-              className={`flex items-center space-x-2 px-3 py-1.5 text-sm ${getThemeTextSecondary()} hover:opacity-80 ${getThemeCardBorder()} rounded-lg hover:opacity-60 transition duration-150`}
+              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-lg hover:opacity-60 transition duration-150`}
             >
               {copiedIndex === -1 ? (
                 <Check className="h-4 w-4 text-green-600" />
@@ -1043,7 +1042,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       ? 'text-green-600 bg-green-50 border border-green-200'
                       : medicalMode
                         ? 'text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 dark:bg-red-500 dark:hover:bg-red-600'
-                        : `${getThemeGradient('ui')} text-white hover:opacity-90 disabled:opacity-50`
+                        : `bg-accent-gold text-white hover:opacity-90 disabled:opacity-50`
                   }`}
                 >
                   {publishing ? (
@@ -1065,7 +1064,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             {!isSharedView && !hideNewDocumentButton && (
               <button
                 onClick={onReset}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm ${getThemeTextPrimary()} hover:opacity-80 transition duration-150`}
+                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-ink dark:text-ink-on-dark hover:opacity-80 transition duration-150`}
               >
                 <RefreshCw className="h-4 w-4" />
                 <span>{t('summary.new_document')}</span>
@@ -1074,7 +1073,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
           </div>
         </div>
       </div> {/* Apply dark mode classes to summary content */}
-      <div className={`p-6 max-h-96 overflow-y-auto ${getThemeTextSecondary()}`}>
+      <div className={`p-6 max-h-96 overflow-y-auto text-secondary-ink dark:text-muted-ink-on-dark`}>
         {/* Medical Mode Enhanced Summary Display */}
         {medicalMode && (
           <div className="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg dark:bg-red-900 dark:border-red-600">
@@ -1105,21 +1104,21 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     {/* Publish to Library Modal */}
     {showPublishModal && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className={`${getThemeCardBg()} rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col border ${getThemeCardBorder()}`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
 
-          <div className={`px-5 pt-5 pb-4 border-b ${getThemeCardBorder()} flex-shrink-0`}>
+          <div className={`px-5 pt-5 pb-4 border-b border-divider dark:border-divider-on-dark flex-shrink-0`}>
             <div className="flex items-start justify-between">
               <div>
-                <h3 className={`text-base font-semibold ${getThemeTextPrimary()}`}>{t('publish_modal.publish_to_library')}</h3>
-                <p className={`text-xs ${getThemeTextMuted()} mt-0.5`}>{t('publish_modal.choose_folder_tags')}</p>
-                <p className={`text-xs ${getThemeTextMuted()} mt-1 flex items-center gap-1`}>
+                <h3 className={`text-base font-semibold text-ink dark:text-ink-on-dark`}>{t('publish_modal.publish_to_library')}</h3>
+                <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-0.5`}>{t('publish_modal.choose_folder_tags')}</p>
+                <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1 flex items-center gap-1`}>
                   <Globe className="h-3 w-3 flex-shrink-0" />
                   Published items are visible to all subscribed users.
                 </p>
               </div>
               <button
                 onClick={() => setShowPublishModal(false)}
-                className={`p-1.5 rounded-full ${getThemeTextMuted()} hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex-shrink-0`}
+                className={`p-1.5 rounded-full text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex-shrink-0`}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1131,14 +1130,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             {/* Folder Selection */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className={`text-xs font-medium uppercase tracking-widest opacity-50 ${getThemeTextPrimary()}`}>
+                <label className={`text-xs font-medium uppercase tracking-widest opacity-50 text-ink dark:text-ink-on-dark`}>
                   <Folder className="h-3 w-3 inline mr-1" />
                   {t('publish_modal.folder_optional')}
                 </label>
                 {!showCreateFolderInput && (
                   <button
                     onClick={() => setShowCreateFolderInput(true)}
-                    className={`text-xs flex items-center gap-1 ${getThemeTextMuted()} hover:opacity-80`}
+                    className={`text-xs flex items-center gap-1 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80`}
                   >
                     <Plus className="h-3 w-3" />
                     {t('publish_modal.create_new_folder')}
@@ -1147,14 +1146,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateFolderInput && (
-                <div className={`mb-2 p-2 rounded-xl border ${getThemeCardBorder()} ${getThemeSubtle('bg')}`}>
+                <div className={`mb-2 p-2 rounded-xl border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newFolderNameInput}
                       onChange={(e) => setNewFolderNameInput(e.target.value)}
                       placeholder={t('publish_modal.new_folder_name')}
-                      className={`flex-1 px-2.5 py-1.5 text-sm border ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createFolderInPublishModal()}
                     />
                     <button
@@ -1177,7 +1176,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <select
                 value={selectedFolderId}
                 onChange={(e) => setSelectedFolderId(e.target.value)}
-                className={`w-full px-3 py-2 text-sm border ${getThemeCardBorder()} rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-xl focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               >
                 <option value="">{t('publish_modal.no_folder')}</option>
                 {folders.map(folder => (
@@ -1188,7 +1187,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
             {/* Predefined Topics — pill chips */}
             <div>
-              <label className={`text-xs font-medium uppercase tracking-widest opacity-50 ${getThemeTextPrimary()} mb-2 block`}>
+              <label className={`text-xs font-medium uppercase tracking-widest opacity-50 text-ink dark:text-ink-on-dark mb-2 block`}>
                 <Tag className="h-3 w-3 inline mr-1" />
                 {t('publish_modal.suggested_topics')}
               </label>
@@ -1207,7 +1206,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                         isSelected
                           ? 'bg-emerald-500 border-emerald-500 text-white'
-                          : `border-gray-200 dark:border-gray-700 ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5`
+                          : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                       }`}
                     >
                       {topic}
@@ -1220,14 +1219,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             {/* Tags — pill chips */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className={`text-xs font-medium uppercase tracking-widest opacity-50 ${getThemeTextPrimary()}`}>
+                <label className={`text-xs font-medium uppercase tracking-widest opacity-50 text-ink dark:text-ink-on-dark`}>
                   <Tag className="h-3 w-3 inline mr-1" />
                   Tags <span className="normal-case tracking-normal opacity-100 text-red-500">*</span>
                 </label>
                 {!showCreateTag && (
                   <button
                     onClick={() => setShowCreateTag(true)}
-                    className={`text-xs flex items-center gap-1 ${getThemeTextMuted()} hover:opacity-80`}
+                    className={`text-xs flex items-center gap-1 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80`}
                   >
                     <Plus className="h-3 w-3" />
                     New private tag
@@ -1236,14 +1235,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateTag && (
-                <div className={`mb-3 p-2 rounded-xl border ${getThemeCardBorder()} ${getThemeSubtle('bg')}`}>
+                <div className={`mb-3 p-2 rounded-xl border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newTagName}
                       onChange={(e) => setNewTagName(e.target.value)}
                       placeholder="New private tag name"
-                      className={`flex-1 px-2.5 py-1.5 text-sm border ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
                     <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors">
@@ -1262,7 +1261,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               {/* Public tags */}
               {tags.filter(t => t.is_public).length > 0 && (
                 <div className="mb-3">
-                  <p className={`text-[10px] uppercase tracking-widest ${getThemeTextMuted()} mb-1.5 flex items-center gap-1`}>
+                  <p className={`text-[10px] uppercase tracking-widest text-muted-ink dark:text-muted-ink-on-dark mb-1.5 flex items-center gap-1`}>
                     <Globe className="h-2.5 w-2.5" /> Public
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -1278,7 +1277,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
                               ? 'bg-emerald-500 border-emerald-500 text-white'
-                              : `border-gray-200 dark:border-gray-700 ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5`
+                              : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >
                           {tag.name}
@@ -1292,7 +1291,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               {/* Private tags */}
               {tags.filter(t => !t.is_public && t.user_id).length > 0 && (
                 <div>
-                  <p className={`text-[10px] uppercase tracking-widest ${getThemeTextMuted()} mb-1.5 flex items-center gap-1`}>
+                  <p className={`text-[10px] uppercase tracking-widest text-muted-ink dark:text-muted-ink-on-dark mb-1.5 flex items-center gap-1`}>
                     <Lock className="h-2.5 w-2.5" /> Private
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -1308,7 +1307,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
                               ? 'bg-gray-700 border-gray-700 text-white dark:bg-gray-200 dark:border-gray-200 dark:text-gray-900'
-                              : `border-gray-200 dark:border-gray-700 ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5`
+                              : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >
                           {tag.name}
@@ -1320,7 +1319,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               )}
 
               {tags.length === 0 && (
-                <p className={`text-xs italic ${getThemeTextMuted()}`}>No tags yet. Create a private tag or select a topic above.</p>
+                <p className={`text-xs italic text-muted-ink dark:text-muted-ink-on-dark`}>No tags yet. Create a private tag or select a topic above.</p>
               )}
 
               {(selectedTagIds.length === 0 && selectedPredefinedTopics.length === 0) && (
@@ -1333,10 +1332,10 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
           </div>
 
-          <div className={`px-5 py-4 border-t ${getThemeCardBorder()} flex items-center justify-end gap-3 flex-shrink-0`}>
+          <div className={`px-5 py-4 border-t border-divider dark:border-divider-on-dark flex items-center justify-end gap-3 flex-shrink-0`}>
             <button
               onClick={() => setShowPublishModal(false)}
-              className={`px-4 py-2 text-sm ${getThemeTextSecondary()} hover:opacity-80 transition-opacity`}
+              className={`px-4 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity`}
             >
               {t('common.cancel')}
             </button>
