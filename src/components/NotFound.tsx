@@ -1,11 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, ArrowLeft, FileQuestion } from 'lucide-react';
-import { useTheme } from '../contexts/ThemeContext';
 
 export const NotFound: React.FC = () => {
   const navigate = useNavigate();
-  const { getThemeGradient } = useTheme();
 
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
