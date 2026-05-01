@@ -101,7 +101,7 @@ export const Dashboard: React.FC = () => {
   const { hasExceededTokenLimit, getTokensRemaining, hasActiveSubscription } = useSubscription();
   const { showModal, dismissModal, isModalOpen, currentFeature } = usePersistentModal();
   const { setBusy } = useSubscriptionUpsellGate();
-  const { getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeGradient } = useTheme();
+  // Phase 4 migration — chrome/dashboard surfaces moved to Scholar tokens. ThemeContext kept alive for out-of-scope sub-pages.
   const { t, dir } = useI18n();
   const isRtl = dir === 'rtl';
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('dashboard');
@@ -1403,7 +1403,7 @@ export const Dashboard: React.FC = () => {
   const subscriptionFeatureConfig = getFeatureConfig(currentFeature);
 
   return (
-    <div className={`min-h-screen w-full flex flex-col ${getBackgroundGradient()}`}>
+    <div className="min-h-screen w-full flex flex-col bg-page">
       {/* Persistent Subscription Modal (all dashboard soft / paywall prompts) */}
       <PersistentSubscriptionModal
         isOpen={isModalOpen}
@@ -1451,7 +1451,7 @@ export const Dashboard: React.FC = () => {
             <button
               type="button"
               onClick={toggleSidebar}
-              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 ${getThemeGradient('ui')} text-white rounded-full shadow hover:opacity-90 transition duration-150`}
+              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-150`}
               aria-label={t('header.open_menu')}
             >
               <PanelLeft className="h-6 w-6" strokeWidth={2} aria-hidden />
