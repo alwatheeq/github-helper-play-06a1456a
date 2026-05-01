@@ -110,3 +110,93 @@ Run the same verification I ran for Wave 2:
 ## Execution gate
 
 Reply **"start wave 3"** and I'll begin with `PaymentCancel.tsx` (smallest, 65 lines, 2 helpers). One file per turn; you approve each before I move to the next, identical to Wave 2's cadence.
+
+**Wave 3 status: ✅ COMPLETE & verified clean.** All 8 files migrated, 0 legacy helpers, 0 banned literals, exports preserved, lazy boundaries intact, tsc clean.
+
+---
+
+# Wave 4 — Admin Surfaces
+
+Token-only refactor of all Admin pages still carrying legacy helpers OR banned literal pairs from the locked Phase 4 map. Same procedure, same precautions, same locked token mapping as Waves 1–3. No backend, RLS, or admin-permission changes.
+
+## Files (smallest-first execution order)
+
+| # | File | Lines | Legacy calls | Banned literals |
+|---|------|-------|---|---|
+| 1 | `Admin/BlockUserModal.tsx` | 252 | 0 | 11 |
+| 2 | `Admin/OverviewPage.tsx` | 255 | 4 | 4 |
+| 3 | `Admin/AdminLogin.tsx` | 318 | 3 | 0 |
+| 4 | `Admin/TagsManagementPage.tsx` | 338 | 0 | 4 |
+| 5 | `Admin/FoldersManagementPage.tsx` | 346 | 0 | 4 |
+| 6 | `Admin/SubscriptionModal.tsx` | 362 | 0 | 11 |
+| 7 | `Admin/CreditManagementPage.tsx` | 370 | 0 | 9 |
+| 8 | `Admin/TransactionsPage.tsx` | 383 | 3 | 9 |
+| 9 | `Admin/TokenUsagePage.tsx` | 408 | 0 | 1 |
+| 10 | `Admin/AnalyticsPage.tsx` | 416 | 4 | 8 |
+| 11 | `Admin/FeedbackManagementPage.tsx` | 479 | 0 | 11 |
+| 12 | `Admin/AuditLogPage.tsx` | 490 | 3 | 33 |
+| 13 | `Admin/UserActivityPage.tsx` | 546 | 0 | 19 |
+| 14 | `Admin/AdminUsersManagementPage.tsx` | 616 | 3 | 11 |
+| 15 | `Admin/UsersPage.tsx` | 1239 | 0 | 16 |
+
+Excluded (already clean, 0 legacy + 0 banned): `AdminDashboard.tsx`, `AdminHeader.tsx`, `AdminRoute.tsx`, `AdminSidebar.tsx`, `AppSettingsPage.tsx`, `SubscriptionsManagementPage.tsx`.
+
+Cadence: ship 1–2 files per turn (user choice). After each turn: `tsc --noEmit` clean + per-file checklist passes.
+
+## Token mapping (locked, identical to Waves 1–3)
+
+Same as Wave 3 — no new tokens. If a gap appears mid-wave, pause and add to `index.css` first.
+
+## Protected surfaces (do NOT touch)
+
+1. **Status / outcome semantic colors** (success-green, danger-red, warn-yellow, info-blue) for admin badges (active / banned / suspended / payment-failed / refunded) — preserved.
+2. **Admin role badges** with explicit role colors (super_admin / admin / moderator) if any — preserved.
+3. **Admin auth / route guards** (`AdminRoute`, `useAuth`, role checks, RLS-bound queries) — untouched.
+4. **Supabase queries, RPC calls, edge-function invocations, audit-log writes** — untouched.
+5. **Pagination, sort, filter, search logic** — untouched.
+6. **Chart libraries** (recharts/chart.js color palettes if any) — preserved exactly.
+
+## Cross-file integrity (verified before approval)
+
+- Public exports unchanged (named exports for all 15 files).
+- Lazy boundaries unchanged: `App.tsx` admin routes (verified pre-flight) keep their existing `lazy(() => import(...).then(m => ({ default: m.X })))` shape.
+- No new imports of `ThemeContext` introduced anywhere; remove `useTheme` import + destructure from each migrated file.
+- No prop / signature / hook-deps changes.
+
+## Per-file procedure (applied to each turn)
+
+1. Backup to `/tmp/<File>.bak.tsx`.
+2. Remove `useTheme` import + destructure.
+3. Run mechanical interpolation + plain replacements (same Python script as Wave 3).
+4. Run gray-pair cleanup pass for banned literals listed in that file's pre-scan.
+5. Run banned-literal recheck — must be 0.
+6. Run `tsc --noEmit -p tsconfig.app.json` — must be clean.
+7. Confirm `rg "^export "` matches pre-edit signature.
+8. Report: lines changed, helpers removed, tokens adopted, anomalies.
+
+## Wave-level verification (after all 15 files)
+
+1. `rg "useTheme\(\)|getTheme[A-Z]\w*\("` across `src/components/Admin/` → 0.
+2. `rg` for the 7 banned literal pairs → 0 in `src/components/Admin/`.
+3. `rg "ThemeContext"` against the 15 files → 0.
+4. `tsc --noEmit` whole project → clean.
+5. Cross-file consumer resolution intact (admin routes still resolve in `App.tsx`).
+6. Public-export signatures match pre-edit.
+7. Runtime preview: admin pages render, no new console errors.
+
+## Precautions (carried over)
+
+- No backend / Supabase / RLS / edge-function / webhook / audit-log touches.
+- No admin permission / role-check logic edits.
+- No router or `Suspense` boundary changes.
+- No i18n key changes; RTL spacing preserved.
+- No effect-deps "fixes" (existing exhaustive-deps warnings stay as-is).
+- 1–2 files per turn — no drive-by refactors.
+- Status / role semantic colors preserved.
+
+## Out of scope (deferred to Phase 6)
+
+- `ThemeContext` shim removal — happens in Phase 6 after all callers gone.
+- Visual polish of admin charts / tables.
+- Any admin-feature changes (data shape, columns, filters).
+
