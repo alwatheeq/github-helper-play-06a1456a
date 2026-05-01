@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Users, FileText, MessageSquare, TrendingUp, Calendar } from 'lucide-react';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface Stats {
   totalUsers: number;
@@ -21,7 +21,6 @@ interface RecentActivity {
 }
 
 export const OverviewPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const [stats, setStats] = useState<Stats>({
     totalUsers: 0,
     activeUsersThisMonth: 0,
@@ -133,7 +132,7 @@ export const OverviewPage: React.FC = React.memo(() => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Overview</h1>
+        <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Dashboard Overview</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">Monitor platform statistics and user activity</p>
       </div>
 
@@ -142,7 +141,7 @@ export const OverviewPage: React.FC = React.memo(() => {
           title="Total Users"
           value={stats.totalUsers}
           icon={<Users className="h-6 w-6" />}
-          bgColor={`${getThemeGradient('ui')} text-white`}
+          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
           iconColor="text-white"
         />
         <StatCard
@@ -157,7 +156,7 @@ export const OverviewPage: React.FC = React.memo(() => {
           title="Total Feedback"
           value={stats.totalFeedback}
           icon={<MessageSquare className="h-6 w-6" />}
-          bgColor={`${getThemeGradient('ui')} text-white`}
+          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
           iconColor="text-white"
           trend={`${stats.pendingFeedback} pending`}
         />
@@ -172,7 +171,7 @@ export const OverviewPage: React.FC = React.memo(() => {
           title="Library Items"
           value={stats.totalLibraryItems}
           icon={<FileText className="h-6 w-6" />}
-          bgColor={`${getThemeGradient('ui')} text-white`}
+          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
           iconColor="text-white"
         />
         <StatCard
@@ -187,7 +186,7 @@ export const OverviewPage: React.FC = React.memo(() => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-slate-800 rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
             <Calendar className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
             Recent Activity
           </h3>
@@ -202,7 +201,7 @@ export const OverviewPage: React.FC = React.memo(() => {
                     <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
                       {activity.user_email}
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">{activity.details}</p>
@@ -219,7 +218,7 @@ export const OverviewPage: React.FC = React.memo(() => {
         </div>
 
         <div className="bg-white dark:bg-slate-800 rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-sm border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4">Quick Actions</h3>
           <div className="space-y-3">
             <div className="p-6 bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
               <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">

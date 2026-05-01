@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import { adminHelpers } from '../../utils/adminHelpers';
 import { Shield, Mail, Lock, AlertCircle } from 'lucide-react';
 import { handleApiError, handleSupabaseError, isOffline } from '../../utils/errorHandler';
@@ -11,7 +11,6 @@ import { ErrorLogger } from '../../utils/errorLogger';
 export const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const { signIn, signOut, user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -227,7 +226,7 @@ export const AdminLogin: React.FC = () => {
       <div className="max-w-md w-full">
         <div className="bg-slate-800 rounded-lg s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg p-8 border border-slate-700">
           <div className="flex justify-center mb-8">
-            <div className={`${getThemeGradient('ui')} p-6 rounded-lg shadow`}>
+            <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 rounded-lg shadow`}>
               <Shield className="h-12 w-12 text-white" />
             </div>
           </div>
@@ -293,7 +292,7 @@ export const AdminLogin: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full ${getThemeGradient('ui')} text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition shadow`}
+              className={`w-full bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition shadow`}
             >
               {loading ? 'Signing in...' : 'Sign In to Admin Panel'}
             </button>
