@@ -1,141 +1,160 @@
 
-# Phase 1 Verification + Complete Phase 2 Implementation Plan
+# Phase 2 Verification + Phase 3 Plan
 
-## Part A — Phase 1 Verification
+## Part A — Phase 2 Verification
 
-I re-read `src/index.css`, `tailwind.config.js`, `src/contexts/ThemeContext.tsx`, and `src/styles/designSystem.css`. The token foundation is mostly correct, but **three issues** must be fixed before Phase 2 builds on top of it.
+I checked every Phase 2 deliverable against the codebase.
 
-### What's correct
-- All 6 themes define the full 15-token contract in light + dark.
-- Navy & Gold hexes match the spec exactly.
-- `tailwind.config.js` exposes role utilities (`bg-page`, `bg-sidebar`, `accent-gold`, `ink`, `subtle`, `chip`, `ring-focus`, etc.).
-- `ThemeContext` correctly applies `data-theme="…"` on `<html>` and toggles `.dark`.
+### Implementation status
+| Item | Status |
+|---|---|
+| Issue 1: `.dark:root` selector leak | ✅ Fixed — `src/index.css:35` is now `.dark[data-theme="navy-gold"] {` only |
+| Issue 2: legacy `.bg-subtle` class collision | ✅ Renamed to `.bg-legacy-subtle` in `designSystem.css`; only Tailwind utility now owns `bg-subtle` (verified by grep) |
+| 9 Scholar primitives | ✅ All present in `src/components/Scholar/` with barrel `index.ts` |
+| Toast restyle | ✅ `Toast.tsx` uses `bg-card-light/dark`, `border-divider`, accent bar, scholar shadow |
+| `LoadingButton` adapter | ✅ Now delegates to `<ScholarButton>` (no more inline `btn-primary` legacy classes) |
+| `Card` adapter | ✅ Now delegates to `<ScholarCard>`, no longer reads `useTheme()` |
+| `/scholar-preview` route | ✅ Wired in `App.tsx:330` via `lazy()` |
+| TS build | ✅ Last build error (`ScholarButton` href cast) was fixed; no errors since |
+| Console logs | ✅ Clean — only info-level subscription debug; no errors/warnings from Scholar code |
 
-### Issues to fix as part of Phase 2
+### Minor observations (NOT blockers — already correct, just documenting)
+- `bg-subtle` class is now used in 4 Scholar primitives (`ScholarButton` ghost/secondary hover, `ScholarIconButton` ghost/outline hover) → all read `var(--bg-subtle)` from the theme. Verified.
+- `LoadingButton`'s old `success`/`warning` variants now collapse to gold/secondary respectively. This is the intended Scholar trade-off (no green/amber CTAs in the parchment palette). Existing call sites keep working without API change.
+- `Card`'s previous shadow was a custom `box-shadow` literal; `ScholarCard` now uses `--scholar-shadow-sm`. Visually equivalent in both modes; lighter on light backgrounds.
 
-**Issue 1 — `.dark:root` selector leaks Navy dark tokens into all themes.**
-`src/index.css` line 36 reads:
-```css
-.dark[data-theme="navy-gold"], .dark:root { … }
+**Phase 2 is complete and stable.** Safe to proceed.
+
+---
+
+## Part B — Phase 3 Plan: Sidebar + Top-Nav restyle
+
+Goal: migrate the four chrome surfaces (`Dashboard/Sidebar`, `Dashboard/Header`, `Admin/AdminSidebar`, `Admin/AdminHeader`) onto Scholar role tokens and Scholar primitives. After Phase 3, the page chrome reads only from `--bg-sidebar`, `--bg-card-light/dark`, `--accent-gold`, `--text-primary-*`, `--text-muted-*`, `--divider*`. No more `getThemeCardBg()` / `getThemeSubtle()` Tailwind-class output anywhere in chrome.
+
+### Scope (4 files)
+
+```text
+src/components/Dashboard/Sidebar.tsx       278 lines, 19 theme-helper calls
+src/components/Dashboard/Header.tsx        420 lines, 44 theme-helper calls (largest)
+src/components/Admin/AdminSidebar.tsx      184 lines, 0 theme-helper calls (uses raw gray-*)
+src/components/Admin/AdminHeader.tsx        69 lines, 1 stub useTheme() call
 ```
-The bare `.dark:root` matches *any* dark mode regardless of `data-theme`, so when a user selects e.g. "Forest dark" the Navy dark hexes load on top of the Forest dark block. Effect: dark mode is broken for all 5 non-default themes.
-**Fix:** drop the `, .dark:root` half — keep only `.dark[data-theme="navy-gold"]`.
 
-**Issue 2 — Tailwind `bg-subtle` utility collides with a legacy class.**
-`src/styles/designSystem.css` defines `.bg-subtle { background-color:#f9fafb }` and `.dark .bg-subtle { background-color:#111827 }`. Tailwind also generates `.bg-subtle { background-color: var(--bg-subtle) }`. The legacy class wins in cascade order, so the new theme-aware utility silently breaks.
-**Fix:** rename the legacy class to `.bg-legacy-subtle` + `.bg-legacy-subtle-hover:hover`. Grep + update consumers (none expected, but verified during the edit).
+### Out of scope for Phase 3 (deferred)
+- `NotificationCenter`, `CreditBalanceWidget`, `LowCreditBanner` — embedded inside Header but are content widgets, not chrome. Phase 4.
+- Theme switcher / language toggle dropdowns inside Header — already function on plain Tailwind classes; will get token-aligned in Phase 4 alongside `ProfilePage`.
+- Mobile drawer overlay backdrop — kept on `bg-black/50` (intentional, theme-neutral).
 
-**Issue 3 — `tailwind.config.js` exposes `secondary-ink` but `.lovable/plan.md` referenced it as `text-secondary`.** The actual binding is correct (`secondary-ink` → `var(--text-secondary-dark)`), so no code change. Plan doc was misleading; will be corrected.
+### 3.1 — Dashboard Sidebar (`src/components/Dashboard/Sidebar.tsx`)
+
+**Visual contract:**
+- Container: `bg-sidebar text-ink-on-dark` (always dark navy/charcoal, in both light AND dark modes — sidebars in Scholar are inverse). Right border: `border-r border-divider-on-dark`.
+- Nav items: default = transparent + `text-muted-ink-on-dark`; hover = `bg-white/5`; active = `bg-accent-gold/15 text-accent-gold` with a 2px gold left rail (`border-l-2 border-accent-gold`).
+- Icons: `text-muted-ink-on-dark` default, `text-accent-gold` active.
+- Pin/unpin button: `<ScholarIconButton variant="ghost" size="sm">` with custom dark-on-dark color override (`text-muted-ink-on-dark hover:text-ink-on-dark`).
+- Section labels (eyebrow caps): `.eyebrow text-muted-ink-on-dark`.
+- Hairline dividers between groups: `<ScholarDivider />` with `border-divider-on-dark` override.
+
+**Code changes:**
+- Remove the `useTheme()` destructure (`getThemeCardBg`, `getThemeCardBorder`, `getThemeTextPrimary`, `getThemeTextSecondary`, `getThemeTextMuted`, `getThemeSubtle`).
+- Replace all 19 helper-call sites with the static class strings above.
+- Keep all existing logic intact: `useMouseProximity`, pin state, RTL mirror via `isRtl`, scroll-into-view layout effect, mobile drawer behavior, sidebar-mode preferences, TTS hover speak.
+- Active-item detection unchanged — only the Tailwind class output changes.
+
+### 3.2 — Dashboard Header (`src/components/Dashboard/Header.tsx`)
+
+**Visual contract:**
+- Container: `bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark`. Sticky top, z-40.
+- Logo block: `text-ink dark:text-ink-on-dark`, font-display.
+- Credit pill / chat token pill: `<ScholarBadge variant="default">` with embedded progress bar — bar uses `bg-accent-gold` over `bg-chip`.
+- Subscription tier pill: keep tier color (existing `tierColorClasses`) but wrap in `<ScholarBadge>` for radius/typography parity. Tier-specific bg/text classes preserved.
+- Profile dropdown trigger: `<ScholarIconButton variant="ghost">` with avatar.
+- Profile dropdown panel: `<ScholarCard variant="elevated" padding="sm">` absolute-positioned. Items inside use `text-ink dark:text-ink-on-dark` + `hover:bg-subtle`.
+- Credits dropdown panel: same `<ScholarCard variant="elevated">` shell. Inside: progress bars on `bg-chip` with `bg-accent-gold` fills; section dividers via `<ScholarDivider />`.
+- Light/dark toggle: `<ScholarIconButton variant="ghost">` swapping Sun/Moon icons.
+- Language switcher: `<ScholarSelect>` (existing native `<select>` swap).
+- Sign out button: `<ScholarButton variant="ghost" size="sm" icon={<LogOut/>}>`.
+
+**Code changes:**
+- Remove `useTheme()` destructure.
+- Replace all 44 helper-call sites.
+- Preserve: subscription/credits math (lines 30–67), `getTierDisplayName`/`getTierColor` logic, `tierColorClasses` map, `NotificationCenter` embedding, click-outside handlers for both dropdowns, ErrorLogger calls.
+- Wrap dropdowns with `<ScholarCard variant="elevated">` instead of inline `getThemeCardBg() + getThemeCardBorder()`.
+
+### 3.3 — Admin Sidebar (`src/components/Admin/AdminSidebar.tsx`)
+
+Currently uses raw `bg-gray-900`, `border-gray-800`, `text-gray-300` etc. — already inverse-colored, but hard-coded and theme-blind.
+
+**Visual contract:** identical to Dashboard sidebar (3.1) for visual parity across the app.
+
+**Code changes:**
+- Replace all `bg-gray-9XX`, `border-gray-8XX`, `text-gray-3XX` with role-token classes (`bg-sidebar`, `border-divider-on-dark`, `text-muted-ink-on-dark`, `text-accent-gold` for active).
+- Same active-state pattern (`bg-accent-gold/15 text-accent-gold` + left rail).
+- Pin button → `<ScholarIconButton>`.
+
+### 3.4 — Admin Header (`src/components/Admin/AdminHeader.tsx`)
+
+Has the corruption noted at line 22 (`s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-sm` — broken token concatenation, will be fixed). Uses raw `bg-gray-900`, hard-coded colors.
+
+**Visual contract:**
+- Container: `bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark` (NOT inverse — admin header is normal-mode like dashboard header).
+- Shield logo: `text-accent-gold` over `bg-chip` square.
+- Title text: `text-ink dark:text-ink-on-dark` font-display.
+- Subtitle: `text-muted-ink dark:text-muted-ink-on-dark`.
+- Menu toggle, sign-out, user pill: `<ScholarIconButton>` / `<ScholarButton>`.
+
+**Code changes:**
+- Fix the corrupted class string.
+- Remove the no-op `useTheme()` call.
+- Replace hard-coded grays with role tokens.
+- Keep the `signOut` + navigate behavior identical.
+
+### 3.5 — App-level background
+
+`src/App.tsx` calls `getBackgroundGradient()` in 4 places to set the page background (lines 91, 105, 119, 222, 250). Phase 3 leaves these alone — gradient classes still resolve correctly. Phase 5 cleanup will remove them once dashboard pages are migrated. **Not changed in Phase 3** to avoid touching unmigrated page contents.
+
+### 3.6 — Self-QA after build
+
+After implementation:
+1. Confirm build passes (harness auto-runs).
+2. Use `browser--navigate_to_sandbox` to load `/` (main app), then `/admin/login` → verify chrome looks correct.
+3. Switch through 3 themes (navy-gold, oxblood-cream, monochrome) × light/dark via the existing theme switcher; confirm:
+   - Sidebar stays inverse (always dark) and gold accent updates per palette.
+   - Header background flips light↔dark.
+   - Active nav item shows gold rail + tinted bg.
+   - No layout regressions (no shifted z-indexes, no missing borders).
+4. Hover the dashboard sidebar to confirm proximity-open still works.
+5. Open the profile dropdown + credits dropdown; confirm they render as elevated cards.
+6. Read console — no new errors.
+7. Confirm `/scholar-preview` still renders (regression check on primitives).
+
+### Cross-file precautions
+
+- **No public API changes.** All four files keep their existing `Props` interfaces. `Dashboard.tsx` passes `currentView`, `onNavigate`, `isSidebarOpen`, `toggleSidebar` to `Sidebar` — unchanged. `AdminDashboard.tsx` similarly unchanged.
+- **No `useTheme()` removal from `ThemeContext`** — many other components still consume it. Only the *call sites* in these 4 files are removed. ThemeContext stays intact until Phase 5 cleanup.
+- **Active-route logic preserved verbatim** — risk of breaking nav highlighting is the highest cross-file risk; will diff carefully.
+- **RTL preserved** — Dashboard sidebar uses `isRtl` for left/right swap; all class strings will mirror correctly (using `start-`/`end-` Tailwind logical properties where the original used `left-`/`right-`).
+- **Mobile drawer preserved** — `isSidebarOpen` + `toggleSidebar` flow untouched.
+- **No Supabase / data-fetching code touched.**
+- **`tierColorClasses` map kept** — sub status colors (gray/blue/violet/etc.) are *intentional* tier semantics, not theme tokens; Scholar wraps them, doesn't replace them.
+
+### File manifest (Phase 3)
+
+**Edited (4):**
+- `src/components/Dashboard/Sidebar.tsx`
+- `src/components/Dashboard/Header.tsx`
+- `src/components/Admin/AdminSidebar.tsx`
+- `src/components/Admin/AdminHeader.tsx`
+
+**Created:** none.
+
+**Untouched:** `ThemeContext`, `App.tsx`, all dashboard pages, all admin pages, Supabase, edge functions, Scholar primitives (already done in Phase 2).
 
 ---
 
-## Part B — Phase 2: Scholar Primitives (full implementation)
+## Out of Phase 3 (deferred)
 
-Phase 2 delivers the complete primitive library every later phase composes from. Each primitive reads only role tokens, so all 6 themes × 2 modes work with zero per-component branching.
+- **Phase 4** — Dashboard hub, Library, Folders, Quiz, Flashcards, Study Rooms, Brain Rush, Pricing, EduPlay, Academics, History, Profile, Feedback, Informational, NotificationCenter, CreditBalanceWidget, all admin pages.
+- **Phase 5** — Auth, OnboardingWizard, PageTutorial, modals (Confirmation/Prompt/PersistentSubscription/InsufficientCredits/etc.), GlobalChatAssistant, then ThemeContext legacy-helper cleanup, then `/scholar-preview` route removal.
 
-### 2.0 — Foundation fixes (prerequisites)
-
-| File | Change |
-|---|---|
-| `src/index.css` | Remove `, .dark:root` from the `[data-theme="navy-gold"]` dark selector (line 36) |
-| `src/styles/designSystem.css` | Rename `.bg-subtle` → `.bg-legacy-subtle`, `.bg-subtle-hover:hover` → `.bg-legacy-subtle-hover:hover` (and the `.dark` variants) |
-| `src/styles/designSystem.css` | Verify with `rg "bg-subtle"` across `src/` — replace any non-Tailwind consumer (likely zero hits inside Scholar surfaces; legacy admin pages may stay on legacy class) |
-
-### 2.1 — Scholar primitives (`src/components/Scholar/`)
-
-New folder. Each file is a single-purpose, theme-aware primitive that ONLY reads from CSS variables / Tailwind role utilities. No theme branching, no `useTheme()` calls.
-
-| File | Component | What it provides |
-|---|---|---|
-| `ScholarCard.tsx` | `<ScholarCard>` | `bg-card-light dark:bg-card-dark`, `border border-divider dark:border-divider-on-dark`, `rounded-[6px]`, shadow tokens (`--scholar-shadow-sm` → `-md` on hover). Variants: `default`, `elevated`, `flat`. Padding: `none|sm|md|lg`. Optional `as` prop for `<article>`/`<section>`. |
-| `ScholarButton.tsx` | `<ScholarButton>` | Variants: `primary` (`bg-accent-gold`, smart text color via `text-ink-on-dark` for navy/oxblood/forest/copper, `text-ink` override for monochrome via `[data-theme="monochrome"]_&:text-ink-on-dark` selector), `secondary` (transparent + `border-divider`), `ghost`, `danger` (kept red for destructive). Sizes `sm|md|lg`. Loading state with gold `<ScholarSpinner>`. Focus ring uses `ring-2 ring-focus`. Supports `asChild` via slot pattern (manual, no Radix dep) or accepts `href` to render `<a>`. |
-| `ScholarInput.tsx` | `<ScholarInput>`, `<ScholarTextarea>`, `<ScholarSelect>` | Three exports in one file. `bg-card-light dark:bg-card-dark`, `border-divider`, `text-ink dark:text-ink-on-dark`, focus → `ring-2 ring-focus border-accent-gold/60`. `error` prop adds red border. `label` + `helperText` + `errorText` props. |
-| `ScholarBadge.tsx` | `<ScholarBadge>`, `<ScholarChip>` | Badge: `bg-chip text-ink dark:text-ink-on-dark`. Variants: `default`, `accent` (`bg-accent-gold-soft text-ink`), `success`, `warn`, `danger`. Chip is the same primitive with `removable` + `onRemove` interaction. |
-| `ScholarSpinner.tsx` | `<ScholarSpinner>` | Lucide `Loader2` rotating, color `text-accent-gold`. Sizes `sm|md|lg|xl`. `label` prop renders sr-only text for a11y. |
-| `ScholarDivider.tsx` | `<ScholarDivider>` | `<hr>` using existing `.hairline` class + `border-divider dark:border-divider-on-dark`. Optional `label` prop renders centered eyebrow text using existing `.eyebrow` class. |
-| `ScholarAlert.tsx` | `<ScholarAlert>` | Card-shaped notice. Variants: `info` (gold left bar), `success` (green), `warn` (amber), `danger` (red). Uses `bg-card-light dark:bg-card-dark` body, role-driven left border. |
-| `ScholarSkeleton.tsx` | `<ScholarSkeleton>` | Wraps existing `.parchment-shimmer` class. Props: `width`, `height`, `rounded`, `count`. |
-| `ScholarIconButton.tsx` | `<ScholarIconButton>` | Square icon-only button — `size` (sm/md/lg), `variant` (ghost/solid), tooltip via existing `<Tooltip>`. |
-| `index.ts` | barrel | Re-exports all primitives + types. |
-
-**Why these 9 (not 6):** `ScholarAlert`, `ScholarSkeleton`, and `ScholarIconButton` are required by ≥3 surfaces each in Phases 3–5 (toasts, loading states, sidebar collapse, modals, page tutorials). Including them now means later phases are pure migration with no new primitive work.
-
-### 2.2 — Toast restyle (`src/components/Toast/Toast.tsx`)
-
-Move toasts to Scholar tokens:
-- Container: `bg-card-light dark:bg-card-dark`, `rounded-[6px]`, `shadow-[var(--scholar-shadow-md)]`, `border border-divider dark:border-divider-on-dark`.
-- Left accent bar: gold for success/info (`bg-accent-gold`), red for error, amber for warn.
-- Text: `text-ink dark:text-ink-on-dark` for title, `text-muted-ink dark:text-muted-ink-on-dark` for description.
-- Replaces inline gradient/teal classes.
-
-Will read existing `Toast.tsx` first, preserve all behavior (animations, auto-dismiss, queue), restyle only.
-
-### 2.3 — `LoadingButton` adapter (`src/components/Common/LoadingButton.tsx`)
-
-Existing `LoadingButton` is used widely across the app. Rather than break callers, rewrite its internals to delegate to `<ScholarButton loading={…}>`. Public props (`onClick`, `loading`, `variant`, `size`, `icon`) preserved 1:1. Variant mapping:
-| LoadingButton variant | ScholarButton variant |
-|---|---|
-| `primary` | `primary` |
-| `secondary` | `secondary` |
-| `danger` | `danger` |
-| `success` | `primary` (gold; success isn't a brand color in Scholar) — except when explicitly overridden via className |
-| `warning` | `secondary` with amber accent override class |
-
-This is a **cross-file** change but contained: one consumer file, no API change.
-
-### 2.4 — `Card` adapter (`src/components/Common/Card.tsx`)
-
-Existing `Card` calls `useTheme().getThemeCardBg()` / `getThemeCardBorder()` which return Tailwind class strings derived from the *legacy* themeDefinitions object. Rewrite internals to render `<ScholarCard>` directly, mapping the `padding` + `hover` props through. Public API unchanged.
-
-This decouples `Card` from the legacy `themeDefinitions` Tailwind-class branch in `ThemeContext`, which is critical because Phase 3 will start removing those branches.
-
-### 2.5 — Dev preview route (`src/pages/ScholarPreview.tsx`)
-
-Temporary route at `/scholar-preview` that renders every primitive in every variant/size, against all 6 themes (theme switcher inline) × light/dark. Used for visual QA only; will be removed at the start of Phase 3. Adding the route in `src/App.tsx`.
-
-### 2.6 — Self-QA after build
-
-After implementation I will:
-1. Run the build (harness auto-runs).
-2. Use `browser--navigate_to_sandbox` to load `/scholar-preview`, switch through all 6 themes × light/dark, and screenshot each combo to confirm no token leaks (Issue 1 fix verification).
-3. Verify `bg-subtle` Tailwind utility actually paints `var(--bg-subtle)` in DevTools (Issue 2 fix verification).
-4. Smoke-test one toast trigger to confirm restyle.
-5. Confirm no consoles errors and no TS errors.
-
----
-
-## File Manifest (Phase 2)
-
-**Edited (5):**
-- `src/index.css` — selector fix
-- `src/styles/designSystem.css` — rename `.bg-subtle` → `.bg-legacy-subtle`
-- `src/components/Toast/Toast.tsx` — restyle to Scholar tokens
-- `src/components/Common/LoadingButton.tsx` — delegate to `ScholarButton`
-- `src/components/Common/Card.tsx` — delegate to `ScholarCard`
-- `src/App.tsx` — register `/scholar-preview` route
-
-**Created (11):**
-- `src/components/Scholar/ScholarCard.tsx`
-- `src/components/Scholar/ScholarButton.tsx`
-- `src/components/Scholar/ScholarInput.tsx`
-- `src/components/Scholar/ScholarBadge.tsx`
-- `src/components/Scholar/ScholarSpinner.tsx`
-- `src/components/Scholar/ScholarDivider.tsx`
-- `src/components/Scholar/ScholarAlert.tsx`
-- `src/components/Scholar/ScholarSkeleton.tsx`
-- `src/components/Scholar/ScholarIconButton.tsx`
-- `src/components/Scholar/index.ts`
-- `src/pages/ScholarPreview.tsx`
-
-**Untouched:** ThemeContext, theme switcher, all dashboard/admin/auth pages, Supabase, edge functions. Migration of those happens in Phases 3–5.
-
----
-
-## Out of Phase 2 (deferred to later phases, by design)
-
-- Sidebar / top-nav restyle → Phase 3
-- Dashboard, Library, Folders, Quiz, Flashcards, Study Rooms, Brain Rush, Pricing → Phase 4
-- Auth, OnboardingWizard, PageTutorial, ConfirmationModal, PromptModal, PersistentSubscriptionModal, ChatAssistant → Phase 5
-- Removal of legacy gradient helpers (`getUIGradient`, `getBackgroundGradient`) from ThemeContext → Phase 5 cleanup, once all consumers are migrated.
-
-After Phase 2 lands and you've reviewed `/scholar-preview`, I'll plan Phase 3 separately.
+After Phase 3 lands and you've eyeballed the chrome across 2–3 themes, I'll plan Phase 4 in slices (it's ~20 page-level files; will likely break into 4a Library/Folders/History, 4b Quiz/Flashcards/Brain Rush, 4c Academics/Study Rooms/EduPlay, 4d Pricing/Profile/Admin pages).
