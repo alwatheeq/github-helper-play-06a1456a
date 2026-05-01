@@ -27,7 +27,7 @@ import type { FeatureType } from '../../contexts/PersistentModalContext';
 import { useSubscriptionUpsellGate } from '../../contexts/SubscriptionUpsellGateContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useSubscription } from '../../hooks/useSubscription';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard } from '../Scholar';
 import { GlobalChatAssistant } from '../ChatAssistant/GlobalChatAssistant';
 import { PageTutorial } from '../Onboarding/PageTutorial';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
@@ -101,7 +101,7 @@ export const Dashboard: React.FC = () => {
   const { hasExceededTokenLimit, getTokensRemaining, hasActiveSubscription } = useSubscription();
   const { showModal, dismissModal, isModalOpen, currentFeature } = usePersistentModal();
   const { setBusy } = useSubscriptionUpsellGate();
-  const { getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeGradient } = useTheme();
+  // Phase 4 migration — chrome/dashboard surfaces moved to Scholar tokens. ThemeContext kept alive for out-of-scope sub-pages.
   const { t, dir } = useI18n();
   const isRtl = dir === 'rtl';
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('dashboard');
@@ -1403,7 +1403,7 @@ export const Dashboard: React.FC = () => {
   const subscriptionFeatureConfig = getFeatureConfig(currentFeature);
 
   return (
-    <div className={`min-h-screen w-full flex flex-col ${getBackgroundGradient()}`}>
+    <div className="min-h-screen w-full flex flex-col bg-page">
       {/* Persistent Subscription Modal (all dashboard soft / paywall prompts) */}
       <PersistentSubscriptionModal
         isOpen={isModalOpen}
@@ -1451,7 +1451,7 @@ export const Dashboard: React.FC = () => {
             <button
               type="button"
               onClick={toggleSidebar}
-              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 ${getThemeGradient('ui')} text-white rounded-full shadow hover:opacity-90 transition duration-150`}
+              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-150`}
               aria-label={t('header.open_menu')}
             >
               <PanelLeft className="h-6 w-6" strokeWidth={2} aria-hidden />
@@ -1517,17 +1517,17 @@ export const Dashboard: React.FC = () => {
             {currentView === 'main' && processingState.stage === 'completed' && (
               <div className="space-y-8">
                 {/* Language Selector */}
-                <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 ${getThemeCardBorder()}`}>
+                <ScholarCard padding="md">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className={`${getThemeGradient('ui')} p-2 rounded-lg`}>
-                        <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="bg-accent-gold p-2 rounded-lg">
+                        <svg className="h-5 w-5 text-ink-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                         </svg>
                       </div>
-                      <div> {/* Apply dark mode classes to language selector text */}
-                        <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>Content Language</h3>
-                        <p className={`text-sm ${getThemeTextMuted()}`}>
+                      <div>
+                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">Content Language</h3>
+                        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                           {processingState.translating ? 'Translating content...' : 'Choose a language for your summary and flashcards'}
                         </p>
                       </div>
@@ -1538,7 +1538,7 @@ export const Dashboard: React.FC = () => {
                         value={processingState.selectedLanguage}
                         onChange={(e) => handleLanguageChange(e.target.value)}
                         disabled={processingState.translating}
-                        className={`px-4 py-2 ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                        className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                       >
                         {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
                           <option key={lang.code} value={lang.code}>
@@ -1548,11 +1548,11 @@ export const Dashboard: React.FC = () => {
                       </select>
                       
                       {processingState.translating && (
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-600"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-gold"></div>
                       )}
                     </div>
                   </div>
-                </div>
+                </ScholarCard>
 
                 {/* Action Bar - positioned below Content Language card */}
                 {actionBarData && (
@@ -1561,7 +1561,7 @@ export const Dashboard: React.FC = () => {
                     {loadedHistoryEntry && (
                       <button
                         onClick={handleBackToHistory}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm border ${getThemeCardBorder()} rounded-full ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 transition-colors ${getThemeCardBg()}`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors bg-card-light dark:bg-card-dark"
                       >
                         <ArrowLeft className="h-3.5 w-3.5" />
                         <span>{t('history.back_to_history') || 'Back to History'}</span>
@@ -1585,7 +1585,7 @@ export const Dashboard: React.FC = () => {
                     <div className="relative">
                       <button
                         onClick={() => setShowActionsMenu(!showActionsMenu)}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm border ${getThemeCardBorder()} rounded-xl ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 transition-colors`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-xl text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                       >
                         <MoreVertical className="h-3.5 w-3.5" />
                         <span>Actions</span>
@@ -1595,12 +1595,12 @@ export const Dashboard: React.FC = () => {
                       {showActionsMenu && (
                         <>
                           <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
-                          <div className={`absolute right-0 mt-1.5 w-56 ${getThemeCardBg()} border ${getThemeCardBorder()} rounded-xl shadow-xl z-50 overflow-hidden`}>
+                          <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-xl shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
                             <div className="p-1.5 space-y-0.5">
                               {/* Copy All */}
                               <button
                                 onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                               >
                                 {actionBarData.copiedIndex === -1 ? (
                                   <Check className="h-3.5 w-3.5 text-emerald-600" />
@@ -1613,7 +1613,7 @@ export const Dashboard: React.FC = () => {
                               {/* Dual-mode */}
                               <button
                                 onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                               >
                                 <FileSearch className="h-3.5 w-3.5 opacity-60" />
                                 <span>{t('summary.dual_mode')}</span>
@@ -1622,7 +1622,7 @@ export const Dashboard: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                               >
                                 <Download className="h-3.5 w-3.5 opacity-60" />
                                 <span>{t('summary.export_txt')}</span>
@@ -1630,14 +1630,14 @@ export const Dashboard: React.FC = () => {
                               <button
                                 type="button"
                                 onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                               >
                                 <Download className="h-3.5 w-3.5 opacity-60" />
                                 <span>{t('summary.export_pdf')}</span>
                               </button>
 
                               {/* Divider before primary action */}
-                              <div className={`my-1 border-t ${getThemeCardBorder()}`} />
+                              <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
 
                               {/* Publish to Library — highlighted */}
                               <button
@@ -1672,12 +1672,12 @@ export const Dashboard: React.FC = () => {
                               </button>
 
                               {/* Divider before destructive */}
-                              <div className={`my-1 border-t ${getThemeCardBorder()}`} />
+                              <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
 
                               {/* New Document */}
                               <button
                                 onClick={() => { actionBarData.onNewDocument(); setShowActionsMenu(false); }}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm ${getThemeTextMuted()} hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
                               >
                                 <RefreshCw className="h-3.5 w-3.5 opacity-60" />
                                 <span>{t('summary.new_document')}</span>

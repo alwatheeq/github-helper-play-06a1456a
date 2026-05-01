@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard } from '../Scholar';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -23,10 +23,16 @@ interface InputFormProps {
     useOCR?: boolean,
     generationPrefs?: AcademicsGenerationPreferences
   ) => void;
+  /**
+   * When true, all submission paths are short-circuited and primary CTAs are disabled.
+   * Used by /scholar-preview to render the form for visual QA without triggering Supabase
+   * calls, file extraction, or feature-usage tracking.
+   */
+  previewMode?: boolean;
 }
 
 // Internal component that uses hooks
-const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
+const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMode = false }) => {
   const [dragActive, setDragActive] = useState(false);
   const [flashcardCount, setFlashcardCount] = useState(10);
   const [fromSummary, setFromSummary] = useState(false);
@@ -41,7 +47,6 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   const [inputMode, setInputMode] = useState<'file' | 'text' | 'ocr'>('file');
   const ocrFileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [textInput, setTextInput] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [notification, setNotification] = useState<{ show: boolean; message: string; type: 'error' }>({
@@ -68,6 +73,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
 
   // Validate medical content when text changes
   React.useEffect(() => {
+    if (previewMode) return;
     const validateContent = async () => {
       if (medicalMode && textInput.trim().length > 100) {
         try {
@@ -85,7 +91,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
 
     const timeoutId = setTimeout(validateContent, 500); // Debounce validation
     return () => clearTimeout(timeoutId);
-  }, [textInput, medicalMode]);
+  }, [textInput, medicalMode, previewMode]);
 
   React.useEffect(() => {
     if (!generationPrefs.includeSummary && fromSummary) {
@@ -120,6 +126,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleDrop = (e: React.DragEvent) => {
+    if (previewMode) { e.preventDefault(); return; }
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
@@ -142,6 +149,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (previewMode) { e.preventDefault(); return; }
     e.preventDefault();
     if (e.target.files && e.target.files.length > 0) {
       const files = Array.from(e.target.files);
@@ -161,6 +169,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleFiles = async (files: File[]) => {
+    if (previewMode) return;
     if (files.length === 0) return;
     if (!assertRunnablePrefs()) return;
 
@@ -248,6 +257,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleFile = async (file: File) => {
+    if (previewMode) return;
     try {
       ErrorLogger.debug('Processing single file', { component: 'InputForm', action: 'handleFile', fileName: file.name, fileType: file.type, fileSize: file.size });
 
@@ -290,6 +300,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleOCRFile = async (file: File) => {
+    if (previewMode) return;
     if (!assertRunnablePrefs()) return;
 
     if (!hasActiveSubscription()) {
@@ -326,6 +337,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleOCRChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (previewMode) { e.preventDefault(); return; }
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
       handleOCRFile(e.target.files[0]);
@@ -333,6 +345,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleOCRDrop = (e: React.DragEvent) => {
+    if (previewMode) { e.preventDefault(); return; }
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
@@ -343,6 +356,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
   };
 
   const handleTextSubmit = async () => {
+    if (previewMode) return;
     if (!assertRunnablePrefs()) return;
 
     if (!hasActiveSubscription()) {
@@ -380,11 +394,27 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
     onProcessInput(textInput, flashcardCount, fromSummary, medicalMode, false, generationPrefs);
   };
 
+  // Tab button helper for the segmented control
+  const tabBtnCls = (active: boolean) =>
+    `flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
+      active
+        ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--scholar-shadow-sm)] border border-divider dark:border-divider-on-dark'
+        : 'text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80'
+    }`;
+
+  // Dropzone container helper
+  const dropzoneCls = (active: boolean) =>
+    `relative border-2 border-dashed rounded-lg p-12 text-center transition-colors duration-150 ${
+      active
+        ? 'border-accent-gold/50 bg-accent-gold/5'
+        : 'border-divider dark:border-divider-on-dark bg-subtle hover:border-accent-gold/40 hover:bg-accent-gold/5'
+    }`;
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center space-x-3 mb-4">
-          <h2 className={`text-3xl font-bold ${getThemeTextPrimary()}`}>{t('dashboard.process_content')}</h2>
+          <h2 className="text-3xl font-bold text-ink dark:text-ink-on-dark">{t('dashboard.process_content')}</h2>
           {medicalMode && (
             <div className="bg-red-50 dark:bg-red-900/20 px-3 py-1 rounded-full flex items-center space-x-2 border border-red-200 dark:border-red-800">
               <Stethoscope className="h-4 w-4 text-red-700 dark:text-red-400" />
@@ -392,12 +422,12 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
             </div>
           )}
         </div>
-        <p className={`text-lg ${getThemeTextSecondary()}`}>
+        <p className="text-lg text-secondary-ink dark:text-muted-ink-on-dark">
           {t('dashboard.process_desc')}
         </p>
       </div>
 
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 ${getThemeCardBorder()}`}>
+      <ScholarCard padding="lg">
         {/* Notification */}
         {notification.show && (
           <div className="mb-6 p-4 rounded-lg flex items-center space-x-3 bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200">
@@ -413,37 +443,16 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
         )}
         
         {/* Tab Navigation */}
-        <div className={`flex mb-6 ${getThemeSubtle('ui')} rounded-lg p-1`}>
-          <button
-            onClick={() => setInputMode('file')}
-            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
-              inputMode === 'file'
-                ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`
-                : `${getThemeTextSecondary()} hover:opacity-80`
-            }`}
-          >
+        <div className="flex mb-6 bg-subtle rounded-lg p-1">
+          <button onClick={() => setInputMode('file')} className={tabBtnCls(inputMode === 'file')}>
             <File className="h-4 w-4" />
             <span>{t('dashboard.upload_file')}</span>
           </button>
-          <button
-            onClick={() => setInputMode('text')}
-            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
-              inputMode === 'text'
-                ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`
-                : `${getThemeTextSecondary()} hover:opacity-80`
-            }`}
-          >
+          <button onClick={() => setInputMode('text')} className={tabBtnCls(inputMode === 'text')}>
             <Type className="h-4 w-4" />
             <span>{t('dashboard.paste_text')}</span>
           </button>
-          <button
-            onClick={() => setInputMode('ocr')}
-            className={`flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
-              inputMode === 'ocr'
-                ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`
-                : `${getThemeTextSecondary()} hover:opacity-80`
-            }`}
-          >
+          <button onClick={() => setInputMode('ocr')} className={tabBtnCls(inputMode === 'ocr')}>
             <Scan className="h-4 w-4" />
             <span>{t('dashboard.ocr_scan')}</span>
           </button>
@@ -452,11 +461,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
         {/* File Upload Mode */}
         {inputMode === 'file' && (
           <div
-            className={`relative border-2 border-dashed rounded-lg p-12 text-center transition-colors duration-150 ${
-              dragActive
-                ? `${getThemeCardBorder()} opacity-60 ${getThemeSubtle('bg')}`
-                : `${getThemeCardBorder()} hover:opacity-60 ${getThemeSubtle('bg')} hover:opacity-80`
-            }`}
+            className={dropzoneCls(dragActive)}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -468,33 +473,25 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
               accept=".pdf,.pptx,.docx"
               multiple
               onChange={handleChange}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              disabled={previewMode}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
             />
 
             <div className="space-y-4">
-              <div className={`mx-auto w-16 h-16 ${getThemeSubtle('ui')} rounded-full flex items-center justify-center ${getThemeCardBorder()}`}>
-                <Upload className={`h-8 w-8 ${getThemeTextPrimary()}`} />
+              <div className="mx-auto w-16 h-16 bg-subtle rounded-full flex items-center justify-center border border-divider dark:border-divider-on-dark">
+                <Upload className="h-8 w-8 text-ink dark:text-ink-on-dark" />
               </div>
 
               <div>
-                <p className={`text-xl font-semibold ${getThemeTextPrimary()} mb-2`}>{t('dashboard.drop_file')}</p>
-                <p className={getThemeTextMuted()}>{t('dashboard.supported_files')}</p>
-                <p className={`text-sm ${getThemeTextMuted()} mt-1`}>You can select multiple files at once</p>
+                <p className="text-xl font-semibold text-ink dark:text-ink-on-dark mb-2">{t('dashboard.drop_file')}</p>
+                <p className="text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">You can select multiple files at once</p>
               </div>
 
-              <div className={`flex justify-center space-x-4 text-sm ${getThemeTextMuted()}`}>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  PDF
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  PPTX
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  DOCX
-                </div>
+              <div className="flex justify-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PDF</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PPTX</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />DOCX</div>
               </div>
             </div>
           </div>
@@ -503,11 +500,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
         {/* OCR Scan Mode */}
         {inputMode === 'ocr' && (
           <div
-            className={`relative border-2 border-dashed rounded-lg p-12 text-center transition-colors duration-150 ${
-              dragActive
-                ? `${getThemeCardBorder()} opacity-60 ${getThemeSubtle('bg')}`
-                : `${getThemeCardBorder()} hover:opacity-60 ${getThemeSubtle('bg')} hover:opacity-80`
-            }`}
+            className={dropzoneCls(dragActive)}
             onDragEnter={handleDrag}
             onDragLeave={handleDrag}
             onDragOver={handleDrag}
@@ -518,40 +511,26 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
               type="file"
               accept=".jpg,.jpeg,.png,.bmp,.tiff,.gif,image/jpeg,image/jpg,image/png,image/bmp,image/tiff,image/gif"
               onChange={handleOCRChange}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              disabled={previewMode}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
             />
 
             <div className="space-y-4">
-              <div className={`mx-auto w-16 h-16 ${getThemeSubtle('ui')} rounded-full flex items-center justify-center ${getThemeCardBorder()}`}>
-                <Scan className={`h-8 w-8 ${getThemeTextPrimary()}`} />
+              <div className="mx-auto w-16 h-16 bg-subtle rounded-full flex items-center justify-center border border-divider dark:border-divider-on-dark">
+                <Scan className="h-8 w-8 text-ink dark:text-ink-on-dark" />
               </div>
 
               <div>
-                <p className={`text-xl font-semibold ${getThemeTextPrimary()} mb-2`}>{t('dashboard.ocr_scan_title')}</p>
-                <p className={getThemeTextMuted()}>{t('dashboard.ocr_upload_hint')}</p>
+                <p className="text-xl font-semibold text-ink dark:text-ink-on-dark mb-2">{t('dashboard.ocr_scan_title')}</p>
+                <p className="text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.ocr_upload_hint')}</p>
               </div>
 
-              <div className={`flex justify-center space-x-4 text-sm ${getThemeTextMuted()}`}>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  JPG
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  PNG
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  BMP
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  TIFF
-                </div>
-                <div className="flex items-center">
-                  <FileText className="h-4 w-4 mr-1" />
-                  GIF
-                </div>
+              <div className="flex justify-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />JPG</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PNG</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />BMP</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />TIFF</div>
+                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />GIF</div>
               </div>
             </div>
           </div>
@@ -561,17 +540,17 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
         {inputMode === 'text' && (
           <div className="space-y-4">
             <div>
-              <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>{t('dashboard.paste_content')}</label>
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('dashboard.paste_content')}</label>
               <textarea
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 placeholder={t('dashboard.paste_placeholder')}
-                className={`w-full h-64 px-4 py-3 ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent resize-none ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className="w-full h-64 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
             </div>
             
             <div className="flex justify-between items-center text-sm">
-              <span className={getThemeTextMuted()}>
+              <span className="text-muted-ink dark:text-muted-ink-on-dark">
                 {textInput.length.toLocaleString()} {t('dashboard.characters')}
                 {textInput.length > 0 && (
                   <span className="ml-2">
@@ -579,20 +558,21 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
                   </span>
                 )}
               </span>
-              <span className={getThemeTextMuted()}>{t('dashboard.min_characters')} | {t('dashboard.max_characters')}</span>
+              <span className="text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.min_characters')} | {t('dashboard.max_characters')}</span>
             </div>
 
             <button
               onClick={handleTextSubmit}
               disabled={
+                previewMode ||
                 textInput.trim().length < 100 ||
                 textInput.length > 100000 ||
                 (medicalMode && medicalValidation && !medicalValidation.isValid)
               }
-              className={`w-full py-3 px-4 text-white rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
+              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
                 medicalMode
-                  ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500 dark:bg-red-500 dark:hover:bg-red-600'
-                  : 'bg-gray-900 hover:bg-gray-800 focus:ring-gray-500 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200'
+                  ? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600'
+                  : 'bg-accent-gold text-ink-on-dark hover:opacity-90'
               }`}
             >
               {medicalMode ? `🩺 ${t('dashboard.process_medical_content')}` : t('dashboard.process_text')}
@@ -623,27 +603,27 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
         <div className="mt-6 flex items-center justify-between">
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className={`flex items-center space-x-2 ${getThemeTextSecondary()} hover:opacity-80 transition duration-150`}
+            className="flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-150"
           >
             <Settings className="h-4 w-4" />
             <span>{t('dashboard.processing_settings')}</span>
           </button>
 
-          <div className={`flex items-center space-x-2 text-sm ${getThemeTextMuted()}`}>
+          <div className="flex items-center space-x-2 text-sm text-muted-ink dark:text-muted-ink-on-dark">
             <Info className="h-4 w-4" />
             <span>{t('dashboard.content_secure')}</span>
           </div>
         </div>
 
         {showSettings && (
-          <div className={`mt-6 p-6 ${getThemeSubtle('bg')} rounded-lg space-y-4 ${getThemeCardBorder()}`}>
+          <div className="mt-6 p-6 bg-subtle rounded-lg space-y-4 border border-divider dark:border-divider-on-dark">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>{t('dashboard.flashcard_count')}</label>
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('dashboard.flashcard_count')}</label>
                 <select
                   value={flashcardCount}
                   onChange={(e) => setFlashcardCount(Number(e.target.value))}
-                  className={`w-full px-3 py-2 ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                  className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                 >
                   <option value={10}>10 {t('dashboard.cards')}</option>
                   <option value={20}>20 {t('dashboard.cards')}</option>
@@ -654,16 +634,16 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>{t('dashboard.generate_from')}</label>
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('dashboard.generate_from')}</label>
                 <div className="flex space-x-4">
                   <label className="flex items-center">
                     <input
                       type="radio"
                       checked={!fromSummary}
                       onChange={() => setFromSummary(false)}
-                      className={`h-4 w-4 text-cyan-600 focus:ring-cyan-500 ${getThemeCardBorder()}`}
+                      className="h-4 w-4 text-accent-gold focus:ring-focus border-divider dark:border-divider-on-dark"
                     />
-                    <span className={`ml-2 text-sm ${getThemeTextSecondary()}`}>{t('dashboard.full_content')}</span>
+                    <span className="ml-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.full_content')}</span>
                   </label>
                   <label className={`flex items-center ${!generationPrefs.includeSummary ? 'opacity-50 cursor-not-allowed' : ''}`}>
                     <input
@@ -671,51 +651,51 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
                       checked={fromSummary}
                       onChange={() => generationPrefs.includeSummary && setFromSummary(true)}
                       disabled={!generationPrefs.includeSummary}
-                      className={`h-4 w-4 text-cyan-600 focus:ring-cyan-500 ${getThemeCardBorder()}`}
+                      className="h-4 w-4 text-accent-gold focus:ring-focus border-divider dark:border-divider-on-dark"
                     />
-                    <span className={`ml-2 text-sm ${getThemeTextSecondary()}`}>{t('dashboard.summary')}</span>
+                    <span className="ml-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.summary')}</span>
                   </label>
                 </div>
                 {!generationPrefs.includeSummary && (
-                  <p className={`text-xs mt-1 ${getThemeTextMuted()}`}>{t('dashboard.summary_disabled_hint')}</p>
+                  <p className="text-xs mt-1 text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.summary_disabled_hint')}</p>
                 )}
               </div>
             </div>
 
             <div className="space-y-2">
-              <p className={`text-sm font-medium ${getThemeTextSecondary()}`}>{t('dashboard.generation_outputs_title')}</p>
-              <label className={`flex items-center gap-2 text-sm ${getThemeTextSecondary()}`}>
+              <p className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.generation_outputs_title')}</p>
+              <label className="flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 <input
                   type="checkbox"
                   checked={generationPrefs.includeSummary}
                   onChange={(e) =>
                     setGenerationPrefs((p) => ({ ...p, includeSummary: e.target.checked }))
                   }
-                  className={`h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 ${getThemeCardBorder()}`}
+                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
                 />
                 {t('dashboard.include_summary')}
               </label>
-              <label className={`flex items-center gap-2 text-sm ${getThemeTextSecondary()}`}>
+              <label className="flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 <input
                   type="checkbox"
                   checked={generationPrefs.includeFlashcards}
                   onChange={(e) =>
                     setGenerationPrefs((p) => ({ ...p, includeFlashcards: e.target.checked }))
                   }
-                  className={`h-4 w-4 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 ${getThemeCardBorder()}`}
+                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
                 />
                 {t('dashboard.include_flashcards')}
               </label>
-              <p className={`text-xs font-medium ${getThemeTextMuted()}`}>{t('dashboard.quiz_types_label')}</p>
-              <p className={`text-xs ${getThemeTextMuted()}`}>{t('dashboard.quiz_types_dashboard_hint')}</p>
+              <p className="text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.quiz_types_label')}</p>
+              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.quiz_types_dashboard_hint')}</p>
               <div className="flex flex-wrap gap-3">
                 {ALL_QUIZ_QUESTION_TYPES.map((qt) => (
-                  <label key={qt} className={`flex items-center gap-1.5 text-xs ${getThemeTextSecondary()}`}>
+                  <label key={qt} className="flex items-center gap-1.5 text-xs text-secondary-ink dark:text-muted-ink-on-dark">
                     <input
                       type="checkbox"
                       checked={generationPrefs.quizQuestionTypes.includes(qt)}
                       onChange={() => toggleDashboardQuizType(qt)}
-                      className={`h-3.5 w-3.5 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500 ${getThemeCardBorder()}`}
+                      className="h-3.5 w-3.5 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
                     />
                     {t(`dashboard.quiz_type_${qt}`)}
                   </label>
@@ -726,7 +706,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
             <div className={`text-sm rounded-lg p-3 ${
               medicalMode
                 ? 'bg-red-50 border border-red-200 text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
-                : `bg-blue-50 border border-blue-200 ${getThemeTextSecondary()} dark:bg-blue-900 dark:border-blue-700`
+                : 'bg-accent-gold/10 border border-accent-gold/30 text-secondary-ink dark:text-muted-ink-on-dark'
             }`}>
               <p className="font-medium mb-1">
                 {medicalMode ? '🩺 Medical Processing Tips' : t('dashboard.processing_tips')}
@@ -776,16 +756,16 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput }) => {
               <div className={`w-12 h-6 rounded-full transition-colors duration-150 ${
                 medicalMode
                   ? 'bg-red-600'
-                  : 'bg-gray-300 dark:bg-gray-600'
+                  : 'bg-divider dark:bg-divider-on-dark'
               }`}>
-                <div className={`w-5 h-5 bg-white rounded-full shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow transform transition duration-200 ${
+                <div className={`w-5 h-5 bg-card-light rounded-full shadow-[var(--scholar-shadow-sm)] border border-divider transform transition duration-200 ${
                   medicalMode ? 'translate-x-6' : 'translate-x-0.5'
                 } mt-0.5`}></div>
               </div>
             </label>
           </div>
         </div>
-      </div>
+      </ScholarCard>
 
     </div>
   );

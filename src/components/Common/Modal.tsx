@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { X } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard } from '../Scholar';
 
 interface ModalProps {
   isOpen: boolean;
@@ -29,8 +29,6 @@ export const Modal: React.FC<ModalProps> = ({
   maxWidth = 'md',
   closeOnOverlay = true,
 }) => {
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextPrimary } = useTheme();
-
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -57,15 +55,17 @@ export const Modal: React.FC<ModalProps> = ({
     >
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
-      <div
-        className={`relative w-full ${maxWidthClasses[maxWidth]} ${getThemeCardBg()} rounded-xl shadow-xl border ${getThemeCardBorder()} animate-scaleIn`}
+      <ScholarCard
+        variant="elevated"
+        padding="none"
+        className={`relative w-full ${maxWidthClasses[maxWidth]} animate-scaleIn`}
       >
         {title && (
-          <div className={`flex items-center justify-between p-5 border-b ${getThemeCardBorder()}`}>
-            <h2 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{title}</h2>
+          <div className="flex items-center justify-between p-5 border-b border-divider dark:border-divider-on-dark">
+            <h2 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
               aria-label="Close"
             >
               <X className="h-5 w-5" />
@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
         {!title && (
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors z-10"
+            className="absolute top-3 right-3 p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors z-10 text-secondary-ink dark:text-muted-ink-on-dark"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -86,9 +86,9 @@ export const Modal: React.FC<ModalProps> = ({
         <div className="p-5">{children}</div>
 
         {footer && (
-          <div className={`p-5 border-t ${getThemeCardBorder()}`}>{footer}</div>
+          <div className="p-5 border-t border-divider dark:border-divider-on-dark">{footer}</div>
         )}
-      </div>
+      </ScholarCard>
     </div>
   );
 };

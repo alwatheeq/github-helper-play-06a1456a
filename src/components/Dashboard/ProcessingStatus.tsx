@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Loader2, Brain, Zap, X, Stethoscope, Heart, Activity, Scan } from 'lucide-react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard } from '../Scholar';
 
 interface ProcessingStatusProps {
   stage: 'uploading' | 'processing';
@@ -55,7 +55,6 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
   onReset
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
   
   // Select facts based on medical mode
@@ -71,23 +70,23 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
   }, [facts.length]);
   
   return (
-    <div className="max-w-4xl mx-auto"> {/* Apply dark mode classes to main container */}
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 ${getThemeCardBorder()}`}>
+    <div className="max-w-4xl mx-auto">
+      <ScholarCard padding="lg">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-3">
             <div className={`p-3 rounded-full border ${
               medicalMode 
                 ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-                : `${getThemeSubtle('ui')} ${getThemeCardBorder()}`
+                : 'bg-subtle border-divider dark:border-divider-on-dark'
             }`}>
               {mode === 'fast' ? (
-                medicalMode ? <Activity className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Zap className={`h-6 w-6 ${getThemeTextPrimary()}`} />
+                medicalMode ? <Activity className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Zap className="h-6 w-6 text-accent-gold" />
               ) : (
-                medicalMode ? <Stethoscope className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Brain className={`h-6 w-6 ${getThemeTextPrimary()}`} />
+                medicalMode ? <Stethoscope className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Brain className="h-6 w-6 text-accent-gold" />
               )}
             </div>
-            <div> {/* Apply dark mode classes to text */}
-              <h3 className={`text-xl font-semibold ${getThemeTextPrimary()}`}>
+            <div>
+              <h3 className="text-xl font-semibold text-ink dark:text-ink-on-dark">
                 {medicalMode ? (
                   mode === 'fast' 
                     ? '🏥 Fast Medical Processing'
@@ -96,7 +95,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
                   mode === 'fast' ? t('processing.fast_processing') : t('processing.staged_processing')
                 )}
               </h3>
-              <p className={getThemeTextSecondary()}>
+              <p className="text-secondary-ink dark:text-muted-ink-on-dark">
                 {medicalMode ? (
                   mode === 'fast' 
                     ? 'Rapid medical content analysis for board exam preparation'
@@ -109,13 +108,13 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               {extractionMethod === 'OCR' && (
                 <div className="flex items-center space-x-2 mt-2">
                   <div className="flex items-center space-x-1">
-                    <Scan className="h-4 w-4 text-blue-500" />
-                    <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
+                    <Scan className="h-4 w-4 text-accent-gold" />
+                    <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
                       Using OCR to extract text from image
                     </span>
                   </div>
                   {confidence !== undefined && (
-                    <div className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">
+                    <div className="px-2 py-1 rounded-full text-xs font-medium bg-accent-gold/15 text-ink dark:text-ink-on-dark">
                       Confidence: {Math.round(confidence * 100)}%
                     </div>
                   )}
@@ -146,7 +145,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
           
           <button
             onClick={onReset}
-            className={`p-2 ${getThemeTextMuted()} hover:opacity-80 transition duration-150`}
+            className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-150"
             title={t('processing.cancel_processing')}
           >
             <X className="h-5 w-5" />
@@ -156,14 +155,12 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
         <div className="space-y-6">
           <div>
             <div className="flex justify-between items-center mb-2">
-              <span className={`text-sm font-medium ${getThemeTextSecondary()}`}>{message}</span>
-              <span className={`text-sm ${getThemeTextMuted()}`}>{progress}%</span>
+              <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">{message}</span>
+              <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{progress}%</span>
             </div>
-            <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-4`}>
-              <div className={`h-4 rounded-full transition-colors duration-150 ease-out ${
-                medicalMode
-                  ? 'bg-red-600'
-                  : getThemeGradient('ui')
+            <div className="w-full bg-subtle rounded-full h-4">
+              <div className={`h-4 rounded-full transition-all duration-150 ease-out ${
+                medicalMode ? 'bg-red-600' : 'bg-accent-gold'
               }`}
                 style={{ width: `${progress}%` }}
               ></div>
@@ -172,13 +169,13 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
 
           <div className="flex items-center justify-center space-x-3 py-8">
             <Loader2 className={`h-8 w-8 animate-spin ${
-              medicalMode ? 'text-red-500' : 'text-cyan-500'
+              medicalMode ? 'text-red-500' : 'text-accent-gold'
             }`} />
             <div className="text-center max-w-2xl">
-              <p className={`text-lg font-medium ${getThemeTextPrimary()} transition-opacity duration-500`}>
+              <p className="text-lg font-medium text-ink dark:text-ink-on-dark transition-opacity duration-500">
                 {facts[currentFactIndex]}
               </p>
-              <p className={`text-sm ${getThemeTextMuted()} mt-1`}>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
                 {medicalMode 
                   ? 'Analyzing clinical content with medical education focus'
                   : t('processing.processing_desc')
@@ -187,7 +184,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
             </div>
           </div>
         </div>
-      </div>
+      </ScholarCard>
     </div>
   );
 };
