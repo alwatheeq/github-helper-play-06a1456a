@@ -11,7 +11,6 @@ import { ErrorLogger } from '../../utils/errorLogger';
 export const AdminLogin: React.FC = () => {
   const navigate = useNavigate();
   const { signIn, signOut, user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
