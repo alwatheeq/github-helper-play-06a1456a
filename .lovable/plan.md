@@ -200,3 +200,116 @@ Same as Wave 3 — no new tokens. If a gap appears mid-wave, pause and add to `i
 - Visual polish of admin charts / tables.
 - Any admin-feature changes (data shape, columns, filters).
 
+**Wave 4 status: ✅ COMPLETE & verified clean.** All 15 files migrated, 0 legacy helpers, 0 banned literals, exports preserved, lazy boundaries intact, tsc clean, 0 lint errors (3 pre-existing warnings line-confirmed against backups).
+
+---
+
+# Wave 5 — Shell, Onboarding, Auth, Misc + small/medium Dashboard utilities
+
+Token-only refactor. Same locked Phase 4 token mapping, same precautions, same per-file procedure as Waves 1–4. Wave 5 covers entry-point UX shell + small/medium Dashboard utility components — every file ≤ ~334 lines and ≤ 28 calls. The heavy Dashboard pages (≥ 350 lines OR ≥ 31 calls) are deferred to Wave 6 to keep risk bounded per-wave.
+
+## Files (smallest-first execution order)
+
+| # | File | Lines | Legacy calls |
+|---|------|-------|---|
+| 1 | `NotFound.tsx` | 49 | 2 |
+| 2 | `Onboarding/TutorialStep.tsx` | 54 | 6 |
+| 3 | `Dashboard/BookMode/FreeFormToggle.tsx` | 61 | 2 |
+| 4 | `Dashboard/ReadAloud/ReadAloudButton.tsx` | 66 | 4 |
+| 5 | `Dashboard/AudioStudy/TranscriptView.tsx` | 70 | 9 |
+| 6 | `Dashboard/BrainRushMultiplayerWrapper.tsx` | 76 | 4 |
+| 7 | `Dashboard/AudioStudy/AudioTtsPlayer.tsx` | 80 | 6 |
+| 8 | `Dashboard/AudioStudy/AudioSummaryGenerator.tsx` | 80 | 10 |
+| 9 | `Dashboard/AudioStudy/AudioUpload.tsx` | 86 | 9 |
+| 10 | `Onboarding/LanguageChoicePage.tsx` | 96 | 6 |
+| 11 | `LanguageToggle.tsx` | 102 | 2 |
+| 12 | `Dashboard/FloatingVideo/MiniPlayer.tsx` | 124 | 2 |
+| 13 | `Dashboard/Academics/CourseTutor.tsx` | 137 | 11 |
+| 14 | `Dashboard/LikeButton.tsx` | 159 | 2 |
+| 15 | `Dashboard/PomodoroTimer.tsx` | 168 | 9 |
+| 16 | `Dashboard/Highlighting/HighlightLayer.tsx` | 174 | 1 |
+| 17 | `pages/ScholarPreview.tsx` | 176 | 1 |
+| 18 | `Onboarding/PageTutorial.tsx` | 183 | 7 |
+| 19 | `ShareView.tsx` | 222 | 6 |
+| 20 | `Auth/Auth.tsx` | 241 | 3 |
+| 21 | `Dashboard/NotificationCenter.tsx` | 243 | 22 |
+| 22 | `Dashboard/MindMap/MindMapView.tsx` | 252 | 8 |
+| 23 | `Dashboard/Academics/CourseAnalytics.tsx` | 253 | 22 |
+| 24 | `Onboarding/OnboardingWizard.tsx` | 263 | 14 |
+| 25 | `Dashboard/MultiplayerResults.tsx` | 263 | 12 |
+| 26 | `Dashboard/GameJoinPage.tsx` | 274 | 21 |
+| 27 | `Dashboard/BrainRushQuestionResults.tsx` | 282 | 19 |
+| 28 | `Dashboard/Academics/ExamScheduler.tsx` | 289 | 18 |
+| 29 | `Dashboard/Academics/SRSReviewPanel.tsx` | 302 | 16 |
+| 30 | `Dashboard/BookMode/BookModeViewer.tsx` | 306 | 9 |
+| 31 | `Dashboard/AchievementsPage.tsx` | 325 | 28 |
+| 32 | `Dashboard/AIQuestionGenerator.tsx` | 325 | 4 |
+| 33 | `Dashboard/ManualQuestionBuilder.tsx` | 334 | 2 |
+| 34 | `Dashboard/BookMode/WidgetContainer.tsx` | 334 | 14 |
+
+**34 files**, ~280 legacy calls. Cadence: 2–4 files per turn (user choice based on risk).
+
+## Deferred to Wave 6 (heavy hitters)
+
+`App.tsx` (413/8) — root, special care · `Dashboard/Social/GroupChat.tsx` (350/16) · `ChatAssistant/ChatAssistant.tsx` (378/7) · `Dashboard/BrainRushResults.tsx` (378/36) · `Dashboard/Social/FriendsPanel.tsx` (382/22) · `Dashboard/MultiplayerLobby.tsx` (458/2) · `Dashboard/Social/GroupsPanel.tsx` (491/27) · `Dashboard/CommentSection.tsx` (495/22) · `Dashboard/BookMode/NotesWidget.tsx` (571/23) · `Dashboard/InformationalPage.tsx` (604/114) · `Dashboard/MultiplayerGamePlay.tsx` (626/16) · `Dashboard/BrainRushGamePlay.tsx` (688/17) · `ChatAssistant/GlobalChatAssistant.tsx` (690/7) · `Dashboard/GoalsAndAchievementsPage.tsx` (949/31) · `Dashboard/Academics/AcademicsPage.tsx` (1000/59) · `Dashboard/EduPlayPage.tsx` (1105/39) · `Dashboard/StudyRoomsPage.tsx` (1314/43)
+
+## Token mapping (locked, identical to Waves 1–4)
+
+Same as Wave 4. No new tokens. If a gap appears, pause and add to `index.css` first.
+
+## Protected surfaces (do NOT touch)
+
+1. **Game / quiz semantic colors** (correct=green, wrong=red, neutral=blue) in BrainRush, Multiplayer, SRS Review, Quiz components — preserved.
+2. **Onboarding branded gradients** (welcome hero) — preserve dynamic palette logic; only migrate role-token surfaces.
+3. **Audio / video player chrome** (record-red, live-pulse) — preserved.
+4. **Notification severity colors** (info / success / warning / error palette in NotificationCenter) — preserved.
+5. **Highlight layer colors** (`HighlightLayer.tsx` user-content highlight palette) — preserved.
+6. **Pomodoro mode colors** (work / break / long-break) — preserved.
+7. **MindMap node colors** if data-driven — preserved.
+8. **All Supabase queries, RPC calls, edge-function invocations, useAuth checks, real-time subscriptions, Zegocloud handles** — untouched.
+
+## Cross-file integrity (verified before approval)
+
+- Public exports unchanged per file (named or default — match pre-edit).
+- Lazy boundaries unchanged: `App.tsx`, `Dashboard.tsx`, and any other lazy-loader keeps existing shape.
+- No new imports of `ThemeContext`; remove `useTheme` import + destructure when all helpers are removed (keep it only if `currentTheme`/`setTheme` are also consumed).
+- No prop / signature / hook-deps changes.
+
+## Per-file procedure (applied to each turn)
+
+1. Backup to `/tmp/<File>.bak.tsx`.
+2. Pre-scan: legacy calls, banned literals, dynamic-color logic flagged.
+3. Remove `useTheme` import + destructure (or trim destructure if other members retained).
+4. Run mechanical migration script.
+5. Run banned-literal cleanup for Wave 4 mapped pairs.
+6. Banned-literal recheck → must be 0 (mapped pairs).
+7. `tsc --noEmit -p tsconfig.app.json` → must be clean.
+8. `rg "^export "` matches pre-edit signature.
+9. Report: lines changed, helpers removed, tokens adopted, anomalies, preserved semantic colors.
+
+## Wave-level verification (after all 34 files)
+
+1. `rg "useTheme\(\)|getTheme[A-Z]\w*\("` across the 34 files → 0.
+2. Mapped banned literal pairs across the 34 → 0.
+3. `rg "ThemeContext"` against the 34 → 0 (with documented exceptions for files retaining `currentTheme`/`setTheme`).
+4. `tsc --noEmit` whole project → clean.
+5. `eslint` on the 34 → 0 new errors / 0 new warnings (pre-existing only).
+6. Cross-file consumer resolution intact.
+7. Public-export signatures match pre-edit.
+8. Runtime preview: every migrated route renders, no new console errors.
+
+## Precautions (carried over)
+
+- No backend / Supabase / RLS / edge-function / webhook / Zegocloud / real-time logic touches.
+- No router, route-guard, or `Suspense` boundary changes.
+- No i18n key changes; RTL spacing preserved.
+- No effect-deps "fixes"; no `any`-tightening; no unused-import removal beyond `useTheme`.
+- 1–4 files per turn — no drive-by refactors.
+- All semantic / branded / data-driven palettes preserved.
+
+## Out of scope (deferred to Wave 6 + Phase 6)
+
+- 17 heavy-hitter files listed above.
+- `ThemeContext` shim removal — happens in Phase 6 after Wave 6 finishes.
+- Achievement tier color differentiation (still TODO from Wave 3).
+
