@@ -21,7 +21,6 @@ interface RecentActivity {
 }
 
 export const OverviewPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const [stats, setStats] = useState<Stats>({
     totalUsers: 0,
     activeUsersThisMonth: 0,
