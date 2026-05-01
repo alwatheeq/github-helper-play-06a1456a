@@ -27,7 +27,6 @@ import type { FeatureType } from '../../contexts/PersistentModalContext';
 import { useSubscriptionUpsellGate } from '../../contexts/SubscriptionUpsellGateContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useSubscription } from '../../hooks/useSubscription';
-import { useTheme } from '../../contexts/ThemeContext';
 import { ScholarCard } from '../Scholar';
 import { GlobalChatAssistant } from '../ChatAssistant/GlobalChatAssistant';
 import { PageTutorial } from '../Onboarding/PageTutorial';
