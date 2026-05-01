@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { useTheme } from '../../contexts/ThemeContext';
 import { Loader2, AlertCircle } from 'lucide-react';
 import {
   PRICING,
@@ -16,7 +15,6 @@ import { verifySubscriptionCreditsAfterCheckout } from '../../utils/postSubscrib
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -410,19 +408,19 @@ export const CheckoutPage: React.FC = () => {
   if (error) {
     const mode = getCheckoutMode();
     return (
-      <div className={`min-h-screen ${getThemeGradient('bg')} flex items-center justify-center p-6`}>
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
+      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
+        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
               <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">
+          <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
             {mode === 'free' ? 'Activation Error' : 'Checkout Error'}
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-400 text-center mb-2">
+          <p className="text-secondary-ink dark:text-secondary-ink-on-dark text-center mb-2">
             {error}
           </p>
 
@@ -463,14 +461,14 @@ export const CheckoutPage: React.FC = () => {
                 setRetryCount(prev => prev + 1);
                 initiateCheckout();
               }}
-              className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200"
             >
               Try Again {retryCount > 0 && `(${retryCount})`}
             </button>
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200"
             >
               Return to Dashboard
             </button>
@@ -481,17 +479,17 @@ export const CheckoutPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${getThemeGradient('bg')} flex items-center justify-center p-6`}>
-      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
+      <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
         <div className="flex items-center justify-center mb-6">
           <Loader2 className="h-12 w-12 text-blue-600 dark:text-blue-400 animate-spin" />
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-4">
+        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
           {getCheckoutMode() === 'free' ? 'Activating Subscription' : 'Processing Checkout'}
         </h2>
 
-        <p className="text-gray-600 dark:text-gray-400 text-center mb-6">
+        <p className="text-secondary-ink dark:text-secondary-ink-on-dark text-center mb-6">
           {getCheckoutMode() === 'free'
             ? `Activating your ${planDetails.name}...`
             : 'Redirecting to secure checkout...'}
@@ -499,19 +497,19 @@ export const CheckoutPage: React.FC = () => {
 
         <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-700 dark:text-gray-300">Plan:</span>
-            <span className="font-semibold text-gray-900 dark:text-white">{planDetails.name}</span>
+            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">Plan:</span>
+            <span className="font-semibold text-ink dark:text-ink-on-dark">{planDetails.name}</span>
           </div>
           <div className="flex justify-between items-center mb-2">
-            <span className="text-gray-700 dark:text-gray-300">Price:</span>
-            <span className="font-semibold text-gray-900 dark:text-white">
+            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">Price:</span>
+            <span className="font-semibold text-ink dark:text-ink-on-dark">
               {formatCurrency(planDetails.price)}
             </span>
           </div>
         </div>
 
         {getCheckoutMode() === 'free' && (
-          <p className="text-xs text-gray-500 dark:text-gray-500 text-center">
+          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark text-center">
             No payment required - All tiers are currently free!
           </p>
         )}
