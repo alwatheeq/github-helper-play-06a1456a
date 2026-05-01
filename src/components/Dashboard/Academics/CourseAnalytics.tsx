@@ -185,7 +185,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
                   contentStyle={{
                     borderRadius: '8px',
                     fontSize: '12px',
-                    border: '1px solid var(--divider-light)',
+                    border: '1px solid var(--divider)',
                   }}
                 />
                 <Line
