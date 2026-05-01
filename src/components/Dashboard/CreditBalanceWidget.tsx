@@ -2,12 +2,11 @@ import React from 'react';
 import { Gauge } from 'lucide-react';
 import { useCredits } from '../../contexts/CreditContext';
 import { useSubscription } from '../../hooks/useSubscription';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard } from '../Scholar';
 
 export const CreditBalanceWidget: React.FC = () => {
   const { balance, loading } = useCredits();
   const { subscription } = useSubscription();
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextSecondary, getThemeSubtle } = useTheme();
 
   if (loading || !balance) {
     return null;
@@ -45,7 +44,7 @@ export const CreditBalanceWidget: React.FC = () => {
   };
 
   const getBarColor = () => {
-    if (percentage > 30) return 'bg-green-500';
+    if (percentage > 30) return 'bg-accent-gold';
     if (percentage > 10) return 'bg-yellow-500';
     return 'bg-red-500';
   };
@@ -55,14 +54,14 @@ export const CreditBalanceWidget: React.FC = () => {
   if (hasAiAddon) parts.push(`AI Chat: ${aiChatRemaining.toLocaleString()} / ${aiChatTotal.toLocaleString()}`);
 
   return (
-    <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} p-4`}>
+    <ScholarCard padding="sm" className="p-4">
       <div className="flex items-center justify-between mb-2">
         <div>
-          <p className={`text-sm ${getThemeTextSecondary()}`}>Credit Balance</p>
+          <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Credit Balance</p>
           <p className={`text-xl font-bold ${getColor()}`}>
             {combinedRemaining.toLocaleString()} / {combinedTotal.toLocaleString()}
           </p>
-          <p className={`text-xs ${getThemeTextSecondary()}`}>
+          <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">
             {parts.join(' · ')}
           </p>
         </div>
@@ -71,14 +70,14 @@ export const CreditBalanceWidget: React.FC = () => {
         </div>
       </div>
 
-      <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-2 mb-2`}>
+      <div className="w-full bg-subtle rounded-full h-2 mb-2">
         <div
-          className={`${getBarColor()} h-2 rounded-full transition-colors duration-150`}
+          className={`${getBarColor()} h-2 rounded-full transition-all duration-150`}
           style={{ width: `${Math.max(0, Math.min(100, percentage))}%` }}
         />
       </div>
 
-      <p className={`text-xs ${getThemeTextSecondary()}`}>
+      <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">
         {percentage.toFixed(0)}% remaining
         {balance.cycle_end && (
           <span className="ml-1">
@@ -86,6 +85,6 @@ export const CreditBalanceWidget: React.FC = () => {
           </span>
         )}
       </p>
-    </div>
+    </ScholarCard>
   );
 };
