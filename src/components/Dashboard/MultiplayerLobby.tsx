@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Users, Copy, Check, Play, Crown, Clock, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -44,8 +43,6 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   const { user } = useAuth();
   const navigate = useNavigate();
   const { error: showErrorToast } = useToast();
-  const { getThemeGradient } = useTheme();
-
   const [lobby, setLobby] = useState<GameLobby | null>(null);
   const [players, setPlayers] = useState<LobbyPlayer[]>([]);
   const [isHost, setIsHost] = useState(false);
@@ -347,7 +344,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="bg-white rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
-        <div className={`${getThemeGradient('ui')} p-6 text-white`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white`}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">{lobby.game_name}</h2>
             <button
