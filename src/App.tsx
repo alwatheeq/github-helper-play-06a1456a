@@ -35,6 +35,7 @@ const GameJoinPage = lazy(() => import('./components/Dashboard/GameJoinPage').th
 const AccountSuspended = lazy(() => import('./components/AccountSuspended').then(m => ({ default: m.AccountSuspended })));
 const ContentViewPage = lazy(() => import('./components/Dashboard/ContentViewPage').then(m => ({ default: m.ContentViewPage })));
 const OnboardingWizard = lazy(() => import('./components/Onboarding/OnboardingWizard').then(m => ({ default: m.OnboardingWizard })));
+const ScholarPreview = lazy(() => import('./pages/ScholarPreview'));
 
 // Internal component that uses hooks
 const AppContentInternal: React.FC = () => {
@@ -325,6 +326,11 @@ function App() {
                         <Route path="/payment/success" element={<PaymentSuccess />} />
                         <Route path="/payment/cancel" element={<PaymentCancel />} />
                         <Route path="/account/suspended" element={<AccountSuspended />} />
+                        <Route path="/scholar-preview" element={
+                          <ErrorBoundary fallbackMessage="Error loading scholar preview">
+                            <ScholarPreview />
+                          </ErrorBoundary>
+                        } />
                         <Route
                           path="/profile/subscription"
                           element={

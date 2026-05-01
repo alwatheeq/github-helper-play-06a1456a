@@ -301,20 +301,20 @@
   border-color: #4b5563;
 }
 
-/* Background Utilities */
-.bg-subtle {
+/* Background Utilities (legacy — renamed to avoid collision with Tailwind `bg-subtle` token utility) */
+.bg-legacy-subtle {
   background-color: #f9fafb;
 }
 
-.dark .bg-subtle {
+.dark .bg-legacy-subtle {
   background-color: #111827;
 }
 
-.bg-subtle-hover:hover {
+.bg-legacy-subtle-hover:hover {
   background-color: #f3f4f6;
 }
 
-.dark .bg-subtle-hover:hover {
+.dark .bg-legacy-subtle-hover:hover {
   background-color: #1f2937;
 }
 
