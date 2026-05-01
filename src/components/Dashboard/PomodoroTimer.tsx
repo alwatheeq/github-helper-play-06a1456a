@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw, Timer, Coffee, ChevronUp, ChevronDown } from 'lucide-react';
 import { usePomodoroStore } from '../../stores/usePomodoroStore';
 import { useI18n } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 
 function formatTime(seconds: number): string {
   const m = Math.floor(seconds / 60);
@@ -21,13 +20,6 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
   const isEmbedded = variant === 'embedded';
   const [expanded, setExpanded] = useState(isEmbedded);
   const { t } = useI18n();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeGradient,
-  } = useTheme();
 
   const {
     isRunning,

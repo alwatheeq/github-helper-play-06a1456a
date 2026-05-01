@@ -3,7 +3,6 @@ import { ThumbsUp } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface LikeButtonProps {
   itemId: string;
@@ -19,7 +18,6 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
   showCount = true
 }) => {
   const { user } = useAuth();
-  const { getThemeSubtle, getThemeTextSecondary } = useTheme();
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(initialCount);
   const [isLoading, setIsLoading] = useState(false);
@@ -140,8 +138,8 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
         ${buttonSizeClasses[size]}
         flex items-center space-x-1 rounded-lg transition-colors duration-150
         ${isLiked
-          ? 'bg-blue-100 text-blue-600 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800'
-          : `${getThemeSubtle('ui')} ${getThemeTextSecondary()} hover:opacity-60`
+          ? 'bg-accent-gold-soft/30 text-accent-gold hover:bg-accent-gold-soft/40'
+          : 'bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-60'
         }
         ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         ${isAnimating ? 'scale-110' : 'scale-100'}
