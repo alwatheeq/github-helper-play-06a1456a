@@ -5,7 +5,6 @@ import { BookOpen, Search, Eye, Share2, Trash2, Users, CheckCircle2, AlertCircle
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useUserPreferences } from '../../contexts/UserPreferencesContext';
 import { LikeButton } from './LikeButton';
 import { TopicsTagsModal } from './TopicsTagsModal';
@@ -80,7 +79,6 @@ export const LibraryPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { t, language } = useI18n();
-  const { getThemeGradient, getThemeText, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle, getThemeBorder, getThemeFocusRing } = useTheme();
   const { confirm, ConfirmModal } = useConfirm();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('library');
   const { preferences: _preferences } = useUserPreferences();
@@ -690,7 +688,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (initialLoading) {
     return (
       <div className="w-full">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
           <LoadingSkeleton type="page" count={5} />
         </div>
       </div>
@@ -700,11 +698,11 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (error) {
     return (
       <div className="w-full">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm ${getThemeCardBorder()}`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>{t('common.error_loading_library')}</h3>
-            <p className={`${getThemeTextSecondary()} mb-4`}>{error}</p>
+            <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
+            <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>{error}</p>
             <button
               onClick={() => fetchLibraryData()}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 mx-auto"
@@ -751,19 +749,19 @@ export const LibraryPage: React.FC = React.memo(() => {
           <div className="flex-1">
             {libraryViewMode === 'notebook' ? (
               <div>
-                <h2 className={`text-3xl font-bold mb-2 ${getThemeTextPrimary()}`}>
+                <h2 className={`text-3xl font-bold mb-2 text-ink dark:text-ink-on-dark`}>
                   {t('notebook.title') || 'My Notebook'}
                 </h2>
-                <p className={`text-lg ${getThemeTextSecondary()}`}>
+                <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
                   {t('notebook.subtitle') || 'Your personal notes and annotations'}
                 </p>
               </div>
             ) : (
               <div>
-                <h2 className={`text-3xl font-bold mb-2 ${getThemeTextPrimary()}`}>
+                <h2 className={`text-3xl font-bold mb-2 text-ink dark:text-ink-on-dark`}>
                   {t('library.my_library_title')}
                 </h2>
-                <p className={`text-lg ${getThemeTextSecondary()}`}>
+                <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
                   {t('library.my_library_desc')}
                 </p>
               </div>
@@ -771,7 +769,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           </div>
 
           {/* Toggle Switch */}
-          <div className={`flex items-center space-x-3 rounded-lg p-1 ${getThemeSubtle('ui')}`}>
+          <div className={`flex items-center space-x-3 rounded-lg p-1 bg-subtle dark:bg-subtle-on-dark`}>
             <button
               onClick={() => {
                 setLibraryViewMode('library');
@@ -779,8 +777,8 @@ export const LibraryPage: React.FC = React.memo(() => {
               }}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
                 libraryViewMode === 'library'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
               }`}
             >
               <BookOpen className="h-5 w-5 inline mr-2" />
@@ -793,8 +791,8 @@ export const LibraryPage: React.FC = React.memo(() => {
               }}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
                 libraryViewMode === 'notebook'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
               }`}
             >
               <FileText className="h-5 w-5 inline mr-2" />
@@ -807,20 +805,20 @@ export const LibraryPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-1 ml-4 mr-4 lg:ml-6 lg:mr-6">
-          <div className={`rounded-lg shadow-sm ${getThemeCardBorder()} ${
+          <div className={`rounded-lg shadow-sm border border-divider dark:border-divider-on-dark ${
             libraryViewMode === 'notebook' 
-              ? `${getThemeCardBg()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none` 
-              : `${getThemeCardBg()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none`
+              ? `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none` 
+              : `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none`
           }`}>
             {/* Controls Header */}
-            <div className={`p-5 border-b ${getThemeCardBorder()}`}>
+            <div className={`p-5 border-b border border-divider dark:border-divider-on-dark`}>
               <div className="flex flex-col space-y-3">
                 <div className="flex flex-col gap-3 w-full min-w-0">
                   {/* Expanded search: full-width row so it does not collide with filters */}
                   {isSearchExpanded && (
                     <div className="flex items-center gap-2 w-full min-w-0">
                       <div className="relative flex-1 min-w-0">
-                        <Search className={`h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none ${getThemeTextMuted()}`} />
+                        <Search className={`h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-muted-ink dark:text-muted-ink-on-dark`} />
                         <input
                           type="text"
                           value={searchQuery}
@@ -831,7 +829,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             }
                           }}
                           placeholder={t('library.search_library_placeholder')}
-                          className={`w-full pl-10 pr-10 py-2 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 ${getThemeFocusRing()} focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                           autoFocus
                         />
                         {searchLoading && (
@@ -846,10 +844,10 @@ export const LibraryPage: React.FC = React.memo(() => {
                           setSearchQuery('');
                           setIsSearchExpanded(false);
                         }}
-                        className={`shrink-0 p-2 rounded-lg border ${getThemeCardBorder()} ${getThemeSubtle('ui')} hover:opacity-80 transition-colors`}
+                        className={`shrink-0 p-2 rounded-lg border border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
                         aria-label={t('library.search_close_aria')}
                       >
-                        <X className={`h-4 w-4 ${getThemeTextMuted()}`} />
+                        <X className={`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
                       </button>
                     </div>
                   )}
@@ -860,17 +858,17 @@ export const LibraryPage: React.FC = React.memo(() => {
                         <button
                           type="button"
                           onClick={() => setIsSearchExpanded(true)}
-                          className={`shrink-0 flex items-center justify-center p-2 rounded-lg ${getThemeCardBorder()} ${getThemeSubtle('ui')} hover:opacity-80 transition-colors`}
+                          className={`shrink-0 flex items-center justify-center p-2 rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
                           aria-label={t('library.search_library_placeholder')}
                         >
-                          <Search className={`h-5 w-5 ${getThemeTextMuted()}`} />
+                          <Search className={`h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark`} />
                         </button>
                       )}
 
                       <select
                         value={viewFilter}
                         onChange={(e) => setViewFilter(e.target.value as 'all' | 'mine' | 'community' | 'liked')}
-                        className={`md:hidden w-full min-w-0 px-3 py-2 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 ${getThemeFocusRing()} focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.view_filter_aria')}
                       >
                         <option value="all">{t('library.all_items')}</option>
@@ -879,7 +877,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                         <option value="liked">{t('library.view_liked')}</option>
                       </select>
                       <div
-                        className={`hidden md:flex flex-nowrap overflow-x-auto items-center gap-1 rounded-lg p-1 -mx-1 px-1 min-w-0 max-w-full ${getThemeSubtle('ui')} border ${getThemeCardBorder()}`}
+                        className={`hidden md:flex flex-nowrap overflow-x-auto items-center gap-1 rounded-lg p-1 -mx-1 px-1 min-w-0 max-w-full bg-subtle dark:bg-subtle-on-dark border border border-divider dark:border-divider-on-dark`}
                         role="group"
                         aria-label={t('library.view_filter_aria')}
                       >
@@ -897,8 +895,8 @@ export const LibraryPage: React.FC = React.memo(() => {
                             onClick={() => setViewFilter(value)}
                             className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 ${
                               viewFilter === value
-                                ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-sm border ${getThemeCardBorder()}`
-                                : `${getThemeTextSecondary()} hover:opacity-80`
+                                ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-sm border border border-divider dark:border-divider-on-dark`
+                                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
                             }`}
                           >
                             <Icon className="h-4 w-4 shrink-0" aria-hidden />
@@ -913,7 +911,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
-                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 ${getThemeFocusRing()} focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.sort_by')}
                       >
                         <option value="created_at_desc">{t('library.sort_created_newest')}</option>
@@ -926,12 +924,12 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <button
                         type="button"
                         onClick={() => setShowTopicsTagsModal(true)}
-                        className={`flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-md transition-colors duration-150 whitespace-nowrap w-full sm:w-auto shrink-0 ${getThemeGradient('ui')} text-white hover:opacity-90`}
+                        className={`flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-md transition-colors duration-150 whitespace-nowrap w-full sm:w-auto shrink-0 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`}
                       >
                         <Filter className="h-4 w-4 shrink-0" aria-hidden />
                         <span>{t('library.topics_tags_heading')}</span>
                         {(selectedTags.length > 0 || selectedTopics.length > 0) && (
-                          <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getThemeSubtle('ui')} ${getThemeTextPrimary()}`}>
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-semibold bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
                             {selectedTags.length + selectedTopics.length}
                           </span>
                         )}
@@ -955,23 +953,23 @@ export const LibraryPage: React.FC = React.memo(() => {
                 {/* Active Filters */}
                 {getActiveFiltersCount() > 0 && (
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className={`text-sm ${getThemeTextMuted()}`}>{t('library.active_filters')}:</span>
+                    <span className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('library.active_filters')}:</span>
                     {searchQuery && (
-                      <span className={`px-2 py-1 text-xs rounded-full ${getThemeSubtle('bg')} ${getThemeTextPrimary()}`}>
+                      <span className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
                         Search: {searchQuery}
                       </span>
                     )}
                     {selectedTags.map(tagId => {
                       const tag = tags.find(t => t.id === tagId);
                       return tag ? (
-                        <span key={tagId} className={`px-2 py-1 text-xs rounded-full ${getThemeSubtle('bg')} ${getThemeTextPrimary()}`}>
+                        <span key={tagId} className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
                           <Tag className="h-3 w-3 inline mr-1" />
                           {tag.name}
                         </span>
                       ) : null;
                     })}
                     {selectedTopics.map(topic => (
-                      <span key={topic} className={`px-2 py-1 text-xs rounded-full ${getThemeSubtle('bg')} ${getThemeTextPrimary()}`}>
+                      <span key={topic} className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
                         <BookOpen className="h-3 w-3 inline mr-1" />
                         {topic}
                       </span>
@@ -981,8 +979,8 @@ export const LibraryPage: React.FC = React.memo(() => {
 
                 {/* Multi-select header */}
                 {selectMultipleMode && (
-                  <div className={`flex items-center justify-between p-3 ${getThemeSubtle('bg')} rounded-lg`}>
-                    <span className={`text-sm font-medium ${getThemeTextSecondary()}`}>
+                  <div className={`flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark rounded-lg`}>
+                    <span className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       {selectedItems.size > 0
                         ? t('library.items_selected', { count: selectedItems.size })
                         : t('library.select_multiple')
@@ -1015,8 +1013,8 @@ export const LibraryPage: React.FC = React.memo(() => {
                 <div>
                   <h3 className={`text-xl font-bold ${
                     libraryViewMode === 'notebook'
-                      ? `${getThemeText()}`
-                      : `${getThemeText()}`
+                      ? `text-ink dark:text-ink-on-dark`
+                      : `text-ink dark:text-ink-on-dark`
                   }`}>
                     {libraryViewMode === 'notebook'
                       ? (t('notebook.items_with_notes') || 'My Notes')
@@ -1024,8 +1022,8 @@ export const LibraryPage: React.FC = React.memo(() => {
                   </h3>
                   <p className={`text-sm mt-1 opacity-70 ${
                     libraryViewMode === 'notebook'
-                      ? `${getThemeText()}`
-                      : `${getThemeText()}`
+                      ? `text-ink dark:text-ink-on-dark`
+                      : `text-ink dark:text-ink-on-dark`
                   }`}>
                     {libraryViewMode === 'notebook'
                       ? (t('notebook.items_with_notes_count', { count: libraryItems.length }) || `${libraryItems.length} ${libraryItems.length === 1 ? 'item' : 'items'} with notes`)
@@ -1038,23 +1036,23 @@ export const LibraryPage: React.FC = React.memo(() => {
                 <div className="text-center py-12">
                   {libraryViewMode === 'notebook' ? (
                     <>
-                      <FileText className={`h-12 w-12 ${getThemeTextMuted()} mx-auto mb-4`} />
-                      <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>
+                      <FileText className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
                         {t('notebook.no_items_with_notes') || 'No Notes Yet'}
                       </h3>
-                      <p className={getThemeTextSecondary()}>
+                      <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
                         {t('notebook.add_notes_to_items') || 'Start adding notes to your library items. They will appear here for easy access.'}
                       </p>
                     </>
                   ) : (
                     <>
-                      <BookOpen className={`h-12 w-12 ${getThemeTextMuted()} mx-auto mb-4`} />
-                      <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>
+                      <BookOpen className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
                         {searchQuery || selectedTags.length > 0 
                           ? t('library.no_items_match_search') 
                           : t('library.no_library_items_yet')}
                       </h3>
-                      <p className={getThemeTextSecondary()}>
+                      <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
                         {searchQuery || selectedTags.length > 0 
                           ? t('library.adjust_search_filter') 
                           : t('library.process_to_build_library')}
@@ -1065,7 +1063,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               ) : (
                 <div className="space-y-4">
                   {libraryItems.map((item) => (
-                    <div key={item.id} className={`${getThemeCardBorder()} rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-all duration-150 dark:shadow-sm dark:hover:shadow ${getThemeCardBg()}`}>
+                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-all duration-150 dark:shadow-sm dark:hover:shadow bg-card-light dark:bg-card-dark`}>
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-3 flex-1">
                           {selectMultipleMode && (
@@ -1073,28 +1071,28 @@ export const LibraryPage: React.FC = React.memo(() => {
                               type="checkbox"
                               checked={selectedItems.has(item.id)}
                               onChange={() => handleSelectItem(item.id)}
-                              className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 ${getThemeCardBorder()} rounded`}
+                              className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border border-divider dark:border-divider-on-dark rounded`}
                             />
                           )}
 
-                          <div className={`${getThemeSubtle('ui')} p-2 rounded-md flex-shrink-0 ${getThemeCardBorder()}`}>
+                          <div className={`bg-subtle dark:bg-subtle-on-dark p-2 rounded-md flex-shrink-0 border border-divider dark:border-divider-on-dark`}>
                             {/\.(jpg|jpeg|png|webp|gif|bmp|tiff?)$/i.test(item.original_file_name ?? '') || item.topics?.includes('ocr')
-                              ? <ScanLine className={`h-4 w-4 ${getThemeTextPrimary()}`} />
-                              : <BookOpen className={`h-4 w-4 ${getThemeTextPrimary()}`} />
+                              ? <ScanLine className={`h-4 w-4 text-ink dark:text-ink-on-dark`} />
+                              : <BookOpen className={`h-4 w-4 text-ink dark:text-ink-on-dark`} />
                             }
                           </div>
 
                           <div className="flex-1">
                             <div className="flex items-center space-x-2 mb-1">
-                              <h4 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{item.title}</h4>
+                              <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{item.title}</h4>
                               {item.hasNotes && item.notesCount && item.notesCount > 0 && (
-                                <span className={`px-2 py-0.5 text-xs rounded-full flex items-center space-x-1 ${getThemeSubtle('ui')} ${getThemeTextSecondary()}`} title={t('notebook.notes_count', { count: item.notesCount }) || `${item.notesCount} notes`}>
+                                <span className={`px-2 py-0.5 text-xs rounded-full flex items-center space-x-1 bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`} title={t('notebook.notes_count', { count: item.notesCount }) || `${item.notesCount} notes`}>
                                   <FileText className="h-3 w-3" />
                                   <span>{item.notesCount}</span>
                                 </span>
                               )}
                               {item.user_id !== user?.id && (
-                                <span className={`px-2 py-0.5 text-xs rounded-full ${getThemeSubtle('ui')} ${getThemeTextSecondary()}`}>
+                                <span className={`px-2 py-0.5 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`}>
                                   Community
                                 </span>
                               )}
@@ -1102,7 +1100,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
                             {/* Creator Info for Community Items */}
                             {item.user_id !== user?.id && (
-                              <div className={`flex items-center space-x-1 text-sm ${getThemeTextSecondary()} mb-2`}>
+                              <div className={`flex items-center space-x-1 text-sm text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
                                 <Users className="h-3 w-3" />
                                 <span>Created by {item.creator_email}</span>
                               </div>
@@ -1119,7 +1117,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                               </div>
                             )}
 
-                            <div className={`flex items-center space-x-4 text-sm ${getThemeTextMuted()} mb-2`}>
+                            <div className={`flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark mb-2`}>
                               <div className="flex items-center">
                                 <Calendar className="h-4 w-4 mr-1" />
                                 {formatDate(item.created_at)}
@@ -1143,7 +1141,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                                       className={`px-2 py-1 text-xs rounded-full ${
                                         ['cardiology', 'neurology', 'medicine', 'clinical', 'pathology', 'anatomy', 'physiology', 'pharmacology'].some(med => topic.toLowerCase().includes(med))
                                           ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                                          : `${getThemeSubtle('bg')} ${getThemeTextPrimary()}`
+                                          : `bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`
                                       }`}
                                     >
                                       {topic}
@@ -1153,7 +1151,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                               </div>
                             )}
 
-                            <p className={`${getThemeTextSecondary()} text-sm mb-3`}>
+                            <p className={`text-secondary-ink dark:text-secondary-ink-on-dark text-sm mb-3`}>
                               {item.summary_text.length > 150
                                 ? item.summary_text.substring(0, 150) + '...'
                                 : item.summary_text
@@ -1222,22 +1220,22 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Delete Items Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow ${getThemeCardBorder()}`}>
-            <div className={`p-6 border-b ${getThemeCardBorder()}`}>
-              <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('library.delete_items_title')}</h3>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
+            <div className={`p-6 border-b border border-divider dark:border-divider-on-dark`}>
+              <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('library.delete_items_title')}</h3>
               <p className="text-sm text-red-600 mt-1 dark:text-red-400">{t('library.action_cannot_be_undone')}</p>
             </div>
             
             <div className="p-6">
-              <p className={getThemeTextSecondary()}>
+              <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
                 {t('library.confirm_bulk_delete', { count: selectedItems.size })}
               </p>
             </div>
             
-            <div className={`p-6 border-t ${getThemeCardBorder()} flex justify-end space-x-3`}>
+            <div className={`p-6 border-t border border-divider dark:border-divider-on-dark flex justify-end space-x-3`}>
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className={`px-4 py-2 text-sm ${getThemeTextSecondary()} hover:opacity-80 ${getThemeCardBorder()} rounded-lg ${getThemeSubtle('ui')} transition duration-150`}
+                className={`px-4 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 border border-divider dark:border-divider-on-dark rounded-lg bg-subtle dark:bg-subtle-on-dark transition duration-150`}
               >
                 {t('common.cancel')}
               </button>
