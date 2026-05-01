@@ -7,7 +7,7 @@ import { Shield, Search, UserPlus, UserX, UserCheck, Clock, Calendar, AlertCircl
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface AdminUser {
   id: string;
@@ -32,7 +32,6 @@ interface LoginAttempt {
 
 export const AdminUsersManagementPage: React.FC = React.memo(() => {
   const { user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const toast = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
@@ -288,7 +287,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Users Management</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Admin Users Management</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">Manage administrator access and permissions</p>
         </div>
         <button
@@ -302,7 +301,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Total Admins</p>
@@ -332,7 +331,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Recent Logins</p>
@@ -353,7 +352,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
               placeholder="Search admin users..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
         </div>
@@ -386,7 +385,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                     <div className="flex items-center">
                       <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
                       <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">
+                        <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                           {admin.email}
                         </div>
                         {admin.notes && (
@@ -409,12 +408,12 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                     )}
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-white">
+                    <div className="text-sm text-ink dark:text-ink-on-dark">
                       {admin.creator_email || 'System'}
                     </div>
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-white">
+                    <div className="text-sm text-ink dark:text-ink-on-dark">
                       {admin.last_login_at
                         ? new Date(admin.last_login_at).toLocaleString()
                         : 'Never'
@@ -466,7 +465,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-8">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Add Admin User</h3>
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Add Admin User</h3>
               <button
                 onClick={() => {
                   setShowAddModal(false);
@@ -481,7 +480,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
                   Email Address
                 </label>
                 <input
@@ -489,12 +488,12 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   value={newAdminEmail}
                   onChange={(e) => setNewAdminEmail(e.target.value)}
                   placeholder="admin@example.com"
-                  className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                  className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
                   Notes (Optional)
                 </label>
                 <textarea
@@ -502,7 +501,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   onChange={(e) => setNewAdminNotes(e.target.value)}
                   placeholder="Additional information about this admin..."
                   rows={3}
-                  className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                  className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
                 />
               </div>
 
@@ -543,7 +542,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
                 Login History - {selectedAdminEmail}
               </h3>
               <button
