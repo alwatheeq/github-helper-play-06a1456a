@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 import MultiplayerMenu from './MultiplayerMenu';
 import MultiplayerLobby from './MultiplayerLobby';
 import MultiplayerGamePlay from './MultiplayerGamePlay';
@@ -12,7 +11,6 @@ type MultiplayerView = 'menu' | 'lobby' | 'game' | 'results';
 export const BrainRushMultiplayerWrapper: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const { getBackgroundGradient, getThemeTextSecondary } = useTheme();
 
   const [currentView, setCurrentView] = useState<MultiplayerView>('menu');
   const [lobbyId, setLobbyId] = useState<string | null>(params.lobbyId || null);

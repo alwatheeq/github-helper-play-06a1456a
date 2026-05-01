@@ -1,7 +1,6 @@
 import React from 'react';
 import { FileText } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 
 export interface TranscriptViewProps {
   transcriptText: string;
@@ -22,7 +21,6 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
   isGenerating = false
 }) => {
   const { t } = useI18n();
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextSecondary, getThemeTextMuted, getThemeTextPrimary, getThemeGradient } = useTheme();
 
   const hasText = transcriptText.trim().length > 0;
 

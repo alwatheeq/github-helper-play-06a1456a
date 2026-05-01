@@ -1,6 +1,5 @@
 import React from 'react';
 import { Move } from 'lucide-react';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 
 interface FreeFormToggleProps {
@@ -14,7 +13,6 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
   onToggle,
   compact = false
 }) => {
-  const { getThemeTextSecondary } = useTheme();
   const { t } = useI18n();
 
   return (

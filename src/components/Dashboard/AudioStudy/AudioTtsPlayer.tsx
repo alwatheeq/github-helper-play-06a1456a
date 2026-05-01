@@ -1,7 +1,6 @@
 import React from 'react';
 import { Volume2, Pause, Square } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useTTS } from '../../../hooks/useTTS';
 
 export interface AudioTtsPlayerProps {
@@ -11,7 +10,6 @@ export interface AudioTtsPlayerProps {
 
 export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang = 'en-US' }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeTextMuted, getThemeCardBorder } = useTheme();
   const { speak, stop, pause, resume, isSpeaking, isPaused, error } = useTTS({ lang });
 
   const hasText = (textToPlay ?? '').trim().length > 0;

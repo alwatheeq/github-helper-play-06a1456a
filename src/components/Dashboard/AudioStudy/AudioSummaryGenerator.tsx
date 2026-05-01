@@ -1,7 +1,6 @@
 import React from 'react';
 import { Wand2, Sparkles } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 
 export interface AudioSummaryGeneratorProps {
   isGenerating: boolean;
@@ -24,7 +23,6 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
   generatedText
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBorder, getThemeTextMuted, getThemeTextSecondary, getThemeTextPrimary, getThemeCardBg } = useTheme();
 
   const canGenerate = hasTranscript && !isGenerating;
 

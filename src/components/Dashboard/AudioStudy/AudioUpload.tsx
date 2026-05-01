@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { Upload, Mic, FileAudio } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import type { AudioStudyStage } from './AudioStudyTypes';
 
 export interface AudioUploadProps {
@@ -18,7 +17,6 @@ export interface AudioUploadProps {
  */
 export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, onSelectFile }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBorder, getThemeTextSecondary, getThemeTextMuted } = useTheme();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { TutorialStep as TutorialStepType } from './tutorialConfigs';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface TutorialStepProps {
   step: TutorialStepType;
@@ -15,7 +14,6 @@ export const TutorialStep: React.FC<TutorialStepProps> = ({
   totalSteps,
   stepLabel,
 }) => {
-  const { getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSolid, getThemeSubtle } = useTheme();
   const progressText = stepLabel ?? `Step ${stepNumber} of ${totalSteps}`;
   return (
     <div className="space-y-4">

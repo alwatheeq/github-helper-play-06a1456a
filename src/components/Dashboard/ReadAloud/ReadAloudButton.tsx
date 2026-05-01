@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useTTS } from '../../../hooks/useTTS';
 import { sanitizeForTts } from './readAloudUtils';
 
@@ -23,7 +22,6 @@ export const ReadAloudButton: React.FC<ReadAloudButtonProps> = ({
   onRequestRead,
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBorder, getThemeTextMuted } = useTheme();
   const { speak, stop, isSpeaking } = useTTS({ lang });
 
   const safeText = sanitizeForTts(text);
