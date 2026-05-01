@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Users, FileText, MessageSquare, TrendingUp, Calendar } from 'lucide-react';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface Stats {
   totalUsers: number;
