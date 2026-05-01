@@ -1,5 +1,6 @@
 import React from 'react';
 import { X, AlertCircle } from 'lucide-react';
+import { ScholarCard, ScholarButton } from '../Scholar';
 
 interface InsufficientCreditsModalProps {
   isOpen: boolean;
@@ -39,11 +40,12 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-lg max-w-md w-full p-6 relative">
+        <ScholarCard variant="elevated" padding="md" className="max-w-md w-full relative">
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition"
+            className="absolute top-4 right-4 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
+            aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
@@ -56,41 +58,42 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-2">
+          <h2 className="text-2xl font-bold text-center text-ink dark:text-ink-on-dark mb-2">
             Insufficient Credits
           </h2>
 
           {/* Message */}
           <div className="text-center space-y-4 mb-6">
-            <p className="text-gray-700 dark:text-gray-300">
+            <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
               You don't have enough credits to complete this action.
             </p>
 
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">
                 Current Balance
               </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">
                 {creditsRemaining.toLocaleString()} credits
               </p>
             </div>
 
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
               Your credits will refresh on{' '}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-semibold text-ink dark:text-ink-on-dark">
                 {formatDate(cycleEnd)}
               </span>
             </p>
           </div>
 
-          {/* Close button */}
-          <button
+          <ScholarButton
+            type="button"
+            variant="primary"
             onClick={onClose}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200"
+            className="w-full"
           >
             Close
-          </button>
-        </div>
+          </ScholarButton>
+        </ScholarCard>
       </div>
     </>
   );
