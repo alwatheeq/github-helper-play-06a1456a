@@ -62,15 +62,7 @@ const THEME_OPTIONS: ThemeOption[] = [
 export const OnboardingWizard: React.FC = () => {
   const { user } = useAuth();
   const { language, setLanguage, t } = useI18n();
-  const {
-    currentTheme,
-    setTheme,
-    getThemeGradient,
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-  } = useTheme();
+  const { currentTheme, setTheme } = useTheme();
   const { updateColorTheme } = useUserPreferences();
 
   const [step, setStep] = useState(1);
@@ -110,7 +102,7 @@ export const OnboardingWizard: React.FC = () => {
 
   return (
     <div
-      className={`min-h-screen w-full flex flex-col items-center justify-center p-6 ${getThemeCardBg()}`}
+      className="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-card-light dark:bg-card-dark"
     >
       {/* Progress indicator */}
       <div className="w-full max-w-md mb-8 flex items-center justify-center gap-2">
@@ -119,14 +111,14 @@ export const OnboardingWizard: React.FC = () => {
             key={s}
             className={`h-2 rounded-full transition-all duration-300 ${
               s === step
-                ? 'w-8 bg-blue-500'
+                ? 'w-8 bg-accent-gold'
                 : s < step
-                  ? 'w-8 bg-blue-300'
-                  : 'w-4 bg-gray-300 dark:bg-gray-600'
+                  ? 'w-8 bg-accent-gold-soft'
+                  : 'w-4 bg-divider dark:bg-divider-on-dark'
             }`}
           />
         ))}
-        <span className={`ml-2 text-xs ${getThemeTextSecondary()}`}>{stepLabel}</span>
+        <span className="ml-2 text-xs text-secondary-ink dark:text-muted-ink-on-dark">{stepLabel}</span>
       </div>
 
       <div className="w-full max-w-md">
@@ -135,20 +127,20 @@ export const OnboardingWizard: React.FC = () => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <div className="flex justify-center">
-                <div className={`p-3 rounded-full ${getThemeGradient('ui')}`}>
+                <div className="p-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft">
                   <Globe className="h-10 w-10 text-white" />
                 </div>
               </div>
-              <h1 className={`text-2xl font-bold ${getThemeTextPrimary()}`}>
+              <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">
                 {t('onboarding.step_language')}
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                 {t('onboarding.step_language_sub')}
               </p>
             </div>
 
             <div
-              className={`rounded-lg border ${getThemeCardBorder()} overflow-hidden divide-y divide-gray-200 dark:divide-gray-700`}
+              className="rounded-lg border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark"
             >
               {LANGUAGES.map((lang) => (
                 <button
@@ -157,21 +149,21 @@ export const OnboardingWizard: React.FC = () => {
                   onClick={() => handleLangSelect(lang.code)}
                   className={`w-full flex items-center justify-between px-4 py-3 text-left transition-colors ${
                     selectedLang === lang.code
-                      ? `${getThemeGradient('bg')} text-blue-700 dark:text-blue-300`
-                      : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'
+                      ? 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
+                      : 'hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-xl leading-none" aria-hidden>
                       {lang.flag}
                     </span>
-                    <span className="font-semibold text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                    <span className="font-semibold text-xs bg-accent-gold-soft/30 px-2 py-1 rounded">
                       {lang.initials}
                     </span>
                     <span className="text-sm font-medium">{lang.name}</span>
                   </div>
                   {selectedLang === lang.code && (
-                    <Check className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0" />
+                    <Check className="h-5 w-5 text-accent-gold shrink-0" />
                   )}
                 </button>
               ))}
@@ -180,7 +172,7 @@ export const OnboardingWizard: React.FC = () => {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className={`w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white ${getThemeGradient('ui')} hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
             >
               {t('onboarding.next')}
               <ChevronRight className="h-4 w-4" />
@@ -191,14 +183,14 @@ export const OnboardingWizard: React.FC = () => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <div className="flex justify-center">
-                <div className={`p-3 rounded-full ${getThemeGradient('ui')}`}>
+                <div className="p-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft">
                   <Palette className="h-10 w-10 text-white" />
                 </div>
               </div>
-              <h1 className={`text-2xl font-bold ${getThemeTextPrimary()}`}>
+              <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">
                 {t('onboarding.step_theme')}
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                 {t('onboarding.step_theme_sub')}
               </p>
             </div>
@@ -211,8 +203,8 @@ export const OnboardingWizard: React.FC = () => {
                   onClick={() => handleThemeSelect(theme.id)}
                   className={`relative flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
                     selectedTheme === theme.id
-                      ? 'border-blue-500 shadow-md'
-                      : `${getThemeCardBorder()} hover:border-gray-400 dark:hover:border-gray-500`
+                      ? 'border-accent-gold shadow-md'
+                      : 'border-divider dark:border-divider-on-dark hover:border-accent-gold-soft'
                   }`}
                 >
                   {/* Color swatch */}
@@ -220,12 +212,12 @@ export const OnboardingWizard: React.FC = () => {
                     className="w-full h-10 rounded-md"
                     style={{ background: theme.swatch }}
                   />
-                  <span className={`text-xs font-semibold ${getThemeTextPrimary()}`}>
+                  <span className="text-xs font-semibold text-ink dark:text-ink-on-dark">
                     {theme.name}
                   </span>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">{theme.desc}</span>
+                  <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{theme.desc}</span>
                   {selectedTheme === theme.id && (
-                    <div className="absolute top-2 right-2 bg-blue-500 rounded-full p-0.5">
+                    <div className="absolute top-2 right-2 bg-accent-gold rounded-full p-0.5">
                       <Check className="h-3 w-3 text-white" />
                     </div>
                   )}
@@ -237,7 +229,7 @@ export const OnboardingWizard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className={`flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-medium border ${getThemeCardBorder()} bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 ${getThemeTextSecondary()} transition`}
+                className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-medium border border-divider dark:border-divider-on-dark bg-transparent hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark transition"
               >
                 <ChevronLeft className="h-4 w-4" />
                 {t('onboarding.back')}
@@ -246,7 +238,7 @@ export const OnboardingWizard: React.FC = () => {
                 type="button"
                 onClick={handleComplete}
                 disabled={completing}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white ${getThemeGradient('ui')} hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
               >
                 {completing ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />

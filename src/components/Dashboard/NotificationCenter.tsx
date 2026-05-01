@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { Bell, X, Check, AlertCircle, Info, CheckCircle, XCircle, Timer } from 'lucide-react';
 import { useNotifications } from '../../hooks/useNotifications';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../contexts/ThemeContext';
 import { PomodoroTimer } from './PomodoroTimer';
 
 type NotificationTab = 'alerts' | 'timer';
@@ -10,7 +9,6 @@ type NotificationTab = 'alerts' | 'timer';
 export const NotificationCenter: React.FC = () => {
   const navigate = useNavigate();
   const { notifications, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<NotificationTab>('alerts');
 
@@ -24,6 +22,7 @@ export const NotificationCenter: React.FC = () => {
     [visibleNotifications]
   );
 
+  // Severity colors preserved (semantic notification palette)
   const getNotificationIcon = (type: string) => {
     switch (type) {
       case 'payment_failed':
@@ -37,10 +36,11 @@ export const NotificationCenter: React.FC = () => {
       case 'admin_notification':
         return <Info className="h-5 w-5 text-purple-500" />;
       default:
-        return <Bell className={`h-5 w-5 ${getThemeTextMuted()}`} />;
+        return <Bell className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />;
     }
   };
 
+  // Severity colors preserved
   const _getNotificationColor = (type: string) => {
     switch (type) {
       case 'payment_failed':
@@ -54,7 +54,7 @@ export const NotificationCenter: React.FC = () => {
       case 'admin_notification':
         return 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800';
       default:
-        return `${getThemeSubtle('bg')} ${getThemeCardBorder()}`;
+        return 'bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark';
     }
   };
 
@@ -86,9 +86,9 @@ export const NotificationCenter: React.FC = () => {
           setIsOpen(!isOpen);
           if (!isOpen) setActiveTab('alerts');
         }}
-        className={`relative p-2 hover:opacity-60 rounded-lg transition duration-200`}
+        className="relative p-2 hover:opacity-60 rounded-lg transition duration-200"
       >
-        <Bell className={`h-6 w-6 ${getThemeTextSecondary()}`} />
+        <Bell className="h-6 w-6 text-secondary-ink dark:text-muted-ink-on-dark" />
         {visibleUnreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
             {visibleUnreadCount > 9 ? '9+' : visibleUnreadCount}
@@ -106,15 +106,15 @@ export const NotificationCenter: React.FC = () => {
           />
 
           {/* Dropdown Panel */}
-          <div className={`absolute right-0 mt-2 w-96 ${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg ${getThemeCardBorder()} z-50 max-h-[min(600px,80vh)] flex flex-col`}>
+          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-xl shadow-lg border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
             {/* Header */}
-            <div className={`p-4 border-b ${getThemeCardBorder()} space-y-3`}>
+            <div className="p-4 border-b border-divider dark:border-divider-on-dark space-y-3">
               <div className="flex items-center justify-between gap-2">
-                <h3 className={`text-lg font-bold ${getThemeTextPrimary()}`}>Notifications</h3>
+                <h3 className="text-lg font-bold text-ink dark:text-ink-on-dark">Notifications</h3>
                 {activeTab === 'alerts' && visibleUnreadCount > 0 && (
                   <button
                     onClick={markAllAsRead}
-                    className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium flex items-center space-x-1 shrink-0"
+                    className="text-sm text-accent-gold hover:opacity-80 font-medium flex items-center space-x-1 shrink-0"
                   >
                     <Check className="h-4 w-4" />
                     <span>Mark all read</span>
@@ -122,7 +122,7 @@ export const NotificationCenter: React.FC = () => {
                 )}
               </div>
               <div
-                className={`flex rounded-lg p-0.5 ${getThemeSubtle('bg')} border ${getThemeCardBorder()}`}
+                className="flex rounded-lg p-0.5 bg-accent-gold-soft/10 border border-divider dark:border-divider-on-dark"
                 role="tablist"
               >
                 <button
@@ -132,8 +132,8 @@ export const NotificationCenter: React.FC = () => {
                   onClick={() => setActiveTab('alerts')}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
                     activeTab === 'alerts'
-                      ? `${getThemeCardBg()} shadow-sm ${getThemeTextPrimary()}`
-                      : `${getThemeTextMuted()} hover:opacity-80`
+                      ? 'bg-card-light dark:bg-card-dark shadow-sm text-ink dark:text-ink-on-dark'
+                      : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >
                   <Bell className="h-4 w-4" />
@@ -146,8 +146,8 @@ export const NotificationCenter: React.FC = () => {
                   onClick={() => setActiveTab('timer')}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
                     activeTab === 'timer'
-                      ? `${getThemeCardBg()} shadow-sm ${getThemeTextPrimary()}`
-                      : `${getThemeTextMuted()} hover:opacity-80`
+                      ? 'bg-card-light dark:bg-card-dark shadow-sm text-ink dark:text-ink-on-dark'
+                      : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >
                   <Timer className="h-4 w-4" />
@@ -155,7 +155,7 @@ export const NotificationCenter: React.FC = () => {
                 </button>
               </div>
               {activeTab === 'alerts' && visibleUnreadCount > 0 && (
-                <p className={`text-sm ${getThemeTextMuted()}`}>{visibleUnreadCount} unread</p>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{visibleUnreadCount} unread</p>
               )}
             </div>
 
@@ -164,19 +164,19 @@ export const NotificationCenter: React.FC = () => {
                 <div className="flex-1 overflow-y-auto min-h-0">
                   {visibleNotifications.length === 0 ? (
                     <div className="p-8 text-center">
-                      <Bell className={`h-12 w-12 ${getThemeTextMuted()} mx-auto mb-3`} />
-                      <p className={getThemeTextMuted()}>No notifications</p>
-                      <p className={`text-sm ${getThemeTextMuted()} mt-1`}>
+                      <Bell className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-3" />
+                      <p className="text-muted-ink dark:text-muted-ink-on-dark">No notifications</p>
+                      <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
                         You're all caught up!
                       </p>
                     </div>
                   ) : (
-                    <div className="divide-y divide-gray-200 dark:divide-gray-700">
+                    <div className="divide-y divide-divider dark:divide-divider-on-dark">
                       {visibleNotifications.map((notification) => (
                         <div
                           key={notification.id}
                           className={`p-4 hover:opacity-60 transition cursor-pointer ${
-                            !notification.is_read ? 'bg-blue-50/30 dark:bg-blue-900/10' : ''
+                            !notification.is_read ? 'bg-accent-gold-soft/10' : ''
                           }`}
                           onClick={() => handleNotificationClick(notification)}
                         >
@@ -187,27 +187,27 @@ export const NotificationCenter: React.FC = () => {
                             <div className="flex-1 min-w-0">
                               <p className={`text-sm ${
                                 !notification.is_read
-                                  ? `font-semibold ${getThemeTextPrimary()}`
-                                  : getThemeTextSecondary()
+                                  ? 'font-semibold text-ink dark:text-ink-on-dark'
+                                  : 'text-secondary-ink dark:text-muted-ink-on-dark'
                               }`}>
                                 {notification.message}
                               </p>
-                              <p className={`text-xs ${getThemeTextMuted()} mt-1`}>
+                              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                                 {formatTimeAgo(notification.created_at)}
                               </p>
                             </div>
                             <div className="flex-shrink-0">
                               {!notification.is_read && (
-                                <div className="h-2 w-2 bg-blue-500 rounded-full" />
+                                <div className="h-2 w-2 bg-accent-gold rounded-full" />
                               )}
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   deleteNotification(notification.id);
                                 }}
-                                className={`ml-2 p-1 hover:opacity-60 rounded transition`}
+                                className="ml-2 p-1 hover:opacity-60 rounded transition"
                               >
-                                <X className={`h-4 w-4 ${getThemeTextMuted()}`} />
+                                <X className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                               </button>
                             </div>
                           </div>
@@ -218,12 +218,12 @@ export const NotificationCenter: React.FC = () => {
                 </div>
 
                 {visibleNotifications.length > 0 && (
-                  <div className={`p-3 border-t ${getThemeCardBorder()} text-center`}>
+                  <div className="p-3 border-t border-divider dark:border-divider-on-dark text-center">
                     <button
                       onClick={() => {
                         setIsOpen(false);
                       }}
-                      className={`text-sm ${getThemeTextSecondary()} hover:opacity-80`}
+                      className="text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80"
                     >
                       Close
                     </button>

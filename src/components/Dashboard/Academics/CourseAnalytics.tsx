@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
@@ -27,23 +26,14 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showErrorToast } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeTextMuted,
-    getThemeGradient,
-    getThemeSubtle,
-    getThemeAccent,
-  } = useTheme();
 
   const [quizScores, setQuizScores] = useState<QuizScorePoint[]>([]);
   const [masteryPct, setMasteryPct] = useState(0);
   const [totalStudyMinutes, setTotalStudyMinutes] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const accentColor = getThemeAccent().replace('bg-', '');
+  // Accent stroke (CSS var redefines per theme)
+  const accentStroke = 'var(--accent-gold)';
 
   const loadAnalytics = useCallback(async () => {
     if (!user) {
@@ -138,8 +128,8 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (loading) {
     return (
-      <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6`}>
-        <div className={`animate-pulse text-sm ${getThemeTextMuted()}`}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6">
+        <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('course_analytics.loading') || 'Loading analytics…'}
         </div>
       </div>
@@ -148,10 +138,10 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (!hasData) {
     return (
-      <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6`} dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6" dir={dir}>
         <div className="flex items-center gap-3">
-          <BarChart3 className={`h-5 w-5 ${getThemeTextMuted()}`} />
-          <span className={`text-sm ${getThemeTextMuted()}`}>
+          <BarChart3 className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
+          <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
             {t('course_analytics.no_data') || 'No analytics data yet'}
           </span>
         </div>
@@ -160,12 +150,12 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
   }
 
   return (
-    <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg p-6 space-y-6`} dir={dir}>
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6 space-y-6" dir={dir}>
       <div className="flex items-center gap-3">
-        <div className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white`}>
+        <div className="p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white">
           <BarChart3 className="h-5 w-5" />
         </div>
-        <h3 className={`font-semibold ${getThemeTextPrimary()}`}>
+        <h3 className="font-semibold text-ink dark:text-ink-on-dark">
           {t('course_analytics.title') || 'Course Analytics'}
         </h3>
       </div>
@@ -173,7 +163,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
       {/* Quiz scores chart */}
       {quizScores.length > 0 && (
         <div>
-          <h4 className={`text-sm font-medium ${getThemeTextSecondary()} mb-3`}>
+          <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-3">
             {t('course_analytics.quiz_scores') || 'Quiz Scores'}
           </h4>
           <div className="w-full h-48">
@@ -183,25 +173,25 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
                   dataKey="label"
                   tick={{ fontSize: 11 }}
                   stroke="currentColor"
-                  className={getThemeTextMuted()}
+                  className="text-muted-ink dark:text-muted-ink-on-dark"
                 />
                 <YAxis
                   domain={[0, 100]}
                   tick={{ fontSize: 11 }}
                   stroke="currentColor"
-                  className={getThemeTextMuted()}
+                  className="text-muted-ink dark:text-muted-ink-on-dark"
                 />
                 <Tooltip
                   contentStyle={{
                     borderRadius: '8px',
                     fontSize: '12px',
-                    border: '1px solid #e5e7eb',
+                    border: '1px solid var(--divider)',
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="score"
-                  stroke={`var(--theme-accent, ${accentColor})`}
+                  stroke={accentStroke}
                   strokeWidth={2}
                   dot={{ r: 4 }}
                   activeDot={{ r: 6 }}
@@ -216,32 +206,32 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
       <div>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Layers className={`h-4 w-4 ${getThemeTextSecondary()}`} />
-            <h4 className={`text-sm font-medium ${getThemeTextSecondary()}`}>
+            <Layers className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
+            <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
               {t('course_analytics.flashcard_mastery') || 'Flashcard Mastery'}
             </h4>
           </div>
-          <span className={`text-sm font-semibold ${getThemeTextPrimary()}`}>{masteryPct}%</span>
+          <span className="text-sm font-semibold text-ink dark:text-ink-on-dark">{masteryPct}%</span>
         </div>
-        <div className={`w-full h-3 rounded-full ${getThemeSubtle('bg')} overflow-hidden`}>
+        <div className="w-full h-3 rounded-full bg-accent-gold-soft/20 overflow-hidden">
           <div
-            className={`h-full rounded-full ${getThemeAccent()} transition-all duration-500`}
+            className="h-full rounded-full bg-accent-gold transition-all duration-500"
             style={{ width: `${masteryPct}%` }}
           />
         </div>
-        <p className={`text-xs ${getThemeTextMuted()} mt-1`}>
+        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
           {t('course_analytics.mastery_desc') || 'Cards with interval > 21 days'}
         </p>
       </div>
 
       {/* Study time */}
       <div className="flex items-center gap-3">
-        <Clock className={`h-4 w-4 ${getThemeTextSecondary()}`} />
+        <Clock className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
         <div>
-          <h4 className={`text-sm font-medium ${getThemeTextSecondary()}`}>
+          <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
             {t('course_analytics.study_time') || 'Study Time'}
           </h4>
-          <span className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+          <span className="text-lg font-semibold text-ink dark:text-ink-on-dark">
             {studyHours > 0
               ? `${studyHours}h ${studyMins}m`
               : `${studyMins}m`}

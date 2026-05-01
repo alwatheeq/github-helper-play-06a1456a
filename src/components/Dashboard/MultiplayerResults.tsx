@@ -4,7 +4,6 @@ import { Trophy, Medal, Award, TrendingUp, Clock, Target, Home } from 'lucide-re
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useTheme } from '../../contexts/ThemeContext';
 
 interface PlayerResult {
   user_id: string;
@@ -23,7 +22,6 @@ interface MultiplayerResultsProps {
 export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps) {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
 
   const [results, setResults] = useState<PlayerResult[]>([]);
   const [myResult, setMyResult] = useState<PlayerResult | null>(null);
@@ -88,19 +86,21 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
     }
   };
 
+  // Game podium colors preserved (semantic ranking palette)
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
         return <Trophy className="w-8 h-8 text-yellow-500" />;
       case 2:
-        return <Medal className={`w-8 h-8 ${getThemeTextMuted()}`} />;
+        return <Medal className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
       case 3:
         return <Medal className="w-8 h-8 text-orange-600" />;
       default:
-        return <Award className={`w-8 h-8 ${getThemeTextMuted()}`} />;
+        return <Award className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
     }
   };
 
+  // Game podium colors preserved
   const getRankBgColor = (rank: number) => {
     switch (rank) {
       case 1:
@@ -110,7 +110,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
       case 3:
         return 'bg-gradient-to-r from-orange-400 to-orange-600';
       default:
-        return getThemeSubtle('ui');
+        return 'bg-accent-gold-soft/20';
     }
   };
 
@@ -118,66 +118,67 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className={getThemeTextSecondary()}>Loading results...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark">Loading results...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen ${getBackgroundGradient()} p-6`}>
+    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2">Game Over!</h1>
-          <p className={`${getThemeTextSecondary()} text-lg`}>{gameName}</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-lg">{gameName}</p>
         </div>
 
         {myResult && (
-          <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-8 mb-8`}>
+          <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-divider dark:border-divider-on-dark p-8 mb-8">
             <h2 className="text-2xl font-bold mb-6 text-center">Your Performance</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {/* Stat tiles preserve game semantic colors */}
               <div className="text-center">
-                <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+                <div className="bg-blue-100 dark:bg-blue-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                   {getRankIcon(myResult.rank)}
                 </div>
-                <div className="text-3xl font-bold text-blue-600">#{myResult.rank}</div>
-                <div className={`text-sm ${getThemeTextSecondary()}`}>Rank</div>
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">#{myResult.rank}</div>
+                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Rank</div>
               </div>
 
               <div className="text-center">
-                <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <TrendingUp className="w-8 h-8 text-green-600" />
+                <div className="bg-green-100 dark:bg-green-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+                  <TrendingUp className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
-                <div className="text-3xl font-bold text-green-600">{myResult.total_score}</div>
-                <div className="text-sm text-gray-600">Points</div>
+                <div className="text-3xl font-bold text-green-600 dark:text-green-400">{myResult.total_score}</div>
+                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Points</div>
               </div>
 
               <div className="text-center">
-                <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <Target className="w-8 h-8 text-purple-600" />
+                <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+                  <Target className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                 </div>
-                <div className="text-3xl font-bold text-purple-600">
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
                   {myResult.correct_answers}/{myResult.total_questions}
                 </div>
-                <div className="text-sm text-gray-600">Correct</div>
+                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Correct</div>
               </div>
 
               <div className="text-center">
-                <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <Clock className="w-8 h-8 text-orange-600" />
+                <div className="bg-orange-100 dark:bg-orange-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
+                  <Clock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                 </div>
-                <div className="text-3xl font-bold text-orange-600">
+                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
                   {(myResult.average_time_ms / 1000).toFixed(1)}s
                 </div>
-                <div className="text-sm text-gray-600">Avg Time</div>
+                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Avg Time</div>
               </div>
             </div>
           </div>
         )}
 
-        <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow overflow-hidden`}>
-          <div className={`${getThemeGradient('ui')} p-6 text-white`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-divider dark:border-divider-on-dark overflow-hidden">
+          <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white">
             <h2 className="text-2xl font-bold flex items-center gap-2">
               <Trophy className="w-6 h-6" />
               Final Leaderboard
@@ -191,7 +192,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                   key={result.user_id}
                   className={`rounded-lg overflow-hidden transition-all ${
                     result.user_id === user?.id
-                      ? 'ring-2 ring-blue-500 shadow scale-[1.02]'
+                      ? 'ring-2 ring-accent-gold shadow scale-[1.02]'
                       : 'shadow'
                   }`}
                 >
@@ -199,7 +200,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                     className={`${
                       result.rank <= 3
                         ? getRankBgColor(result.rank) + ' text-white'
-                        : `${getThemeSubtle('bg')} ${getThemeTextPrimary()}`
+                        : 'bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark'
                     } p-4`}
                   >
                     <div className="flex items-center justify-between">
@@ -237,7 +238,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
         <div className="mt-8 flex justify-center gap-4">
           <button
             onClick={() => navigate('/dashboard/brain-rush')}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold flex items-center gap-2 transition-colors"
+            className="px-6 py-3 bg-accent-gold text-white rounded-lg hover:opacity-90 font-semibold flex items-center gap-2 transition-colors"
           >
             <Home className="w-5 h-5" />
             Back to Brain Rush
@@ -246,12 +247,12 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
 
         {results.length > 0 && results[0].user_id === user?.id && (
           <div className="mt-8 text-center">
-            <div className="inline-block bg-yellow-100 border-2 border-yellow-400 rounded-md p-6">
+            <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-400 rounded-md p-6">
               <Trophy className="w-16 h-16 text-yellow-600 mx-auto mb-3" />
-              <h3 className="text-2xl font-bold text-yellow-800 mb-2">
+              <h3 className="text-2xl font-bold text-yellow-800 dark:text-yellow-300 mb-2">
                 Congratulations!
               </h3>
-              <p className="text-yellow-700">
+              <p className="text-yellow-700 dark:text-yellow-400">
                 You won this game! 🎉
               </p>
             </div>
