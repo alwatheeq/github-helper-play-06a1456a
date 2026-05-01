@@ -572,7 +572,7 @@ export const UsersPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">User Management</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">User Management</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">View and manage all registered users</p>
         </div>
         <div className="flex items-center space-x-2">
@@ -650,7 +650,7 @@ export const UsersPage: React.FC = React.memo(() => {
               placeholder="Search users by email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
         </div>
@@ -733,7 +733,7 @@ export const UsersPage: React.FC = React.memo(() => {
                       </td>
                     )}
                     <td className="px-6 py-6 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">
+                      <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {user.email}
                       </div>
                     </td>
@@ -796,7 +796,7 @@ export const UsersPage: React.FC = React.memo(() => {
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
                         <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                        <span className="text-sm text-gray-900 dark:text-white">{user.monthly_usage}</span>
+                        <span className="text-sm text-ink dark:text-ink-on-dark">{user.monthly_usage}</span>
                       </div>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
@@ -897,7 +897,7 @@ export const UsersPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">User Details</h3>
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">User Details</h3>
               <button
                 onClick={handleCloseModal}
                 className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
@@ -912,7 +912,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Email Address
                   </label>
-                  <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedUser.email}</p>
+                  <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedUser.email}</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
@@ -951,7 +951,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Payment Date
                   </label>
-                  <p className="text-base text-gray-900 dark:text-white">
+                  <p className="text-base text-ink dark:text-ink-on-dark">
                     {selectedUser.payment_date ? new Date(selectedUser.payment_date).toLocaleString() : 'N/A'}
                   </p>
                 </div>
@@ -962,13 +962,13 @@ export const UsersPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Monthly Usage
                   </label>
-                  <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedUser.monthly_usage}</p>
+                  <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedUser.monthly_usage}</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Last Reset
                   </label>
-                  <p className="text-base text-gray-900 dark:text-white">
+                  <p className="text-base text-ink dark:text-ink-on-dark">
                     {new Date(selectedUser.last_reset).toLocaleString()}
                   </p>
                 </div>
@@ -979,7 +979,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Account Created
                   </label>
-                  <p className="text-base text-gray-900 dark:text-white">
+                  <p className="text-base text-ink dark:text-ink-on-dark">
                     {new Date(selectedUser.created_at).toLocaleString()}
                   </p>
                 </div>
@@ -987,7 +987,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     Last Updated
                   </label>
-                  <p className="text-base text-gray-900 dark:text-white">
+                  <p className="text-base text-ink dark:text-ink-on-dark">
                     {new Date(selectedUser.updated_at).toLocaleString()}
                   </p>
                 </div>
@@ -999,7 +999,7 @@ export const UsersPage: React.FC = React.memo(() => {
                 </div>
               ) : userStats && (
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Activity Statistics</h4>
+                  <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4">Activity Statistics</h4>
                   <div className="grid grid-cols-3 gap-6">
                     <div className="bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-blue-900/30 rounded-lg p-6 border border-blue-200 dark:border-blue-800">
                       <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">History Items</p>
@@ -1043,7 +1043,7 @@ export const UsersPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
                 Notes & Tags: {selectedUser.email}
               </h3>
               <button
@@ -1063,7 +1063,7 @@ export const UsersPage: React.FC = React.memo(() => {
               {/* Tags Section */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                  <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
                     <Tag className="h-5 w-5" />
                     <span>Tags</span>
                   </h4>
@@ -1142,7 +1142,7 @@ export const UsersPage: React.FC = React.memo(() => {
               {/* Notes Section */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                  <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
                     <FileText className="h-5 w-5" />
                     <span>Notes</span>
                   </h4>
@@ -1186,7 +1186,7 @@ export const UsersPage: React.FC = React.memo(() => {
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <p className="text-sm text-gray-900 dark:text-white">{note.note}</p>
+                          <p className="text-sm text-ink dark:text-ink-on-dark">{note.note}</p>
                           <div className="mt-2 flex items-center space-x-6 text-xs text-gray-500 dark:text-gray-400">
                             <span>By: {note.admin_email}</span>
                             <span>{new Date(note.created_at).toLocaleString()}</span>
