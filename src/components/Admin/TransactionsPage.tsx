@@ -28,7 +28,6 @@ interface TransactionStats {
 }
 
 export const TransactionsPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [stats, setStats] = useState<TransactionStats>({
     total_revenue: 0,
