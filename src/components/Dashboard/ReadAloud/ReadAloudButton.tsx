@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useTTS } from '../../../hooks/useTTS';
 import { sanitizeForTts } from './readAloudUtils';
 
@@ -23,7 +22,6 @@ export const ReadAloudButton: React.FC<ReadAloudButtonProps> = ({
   onRequestRead,
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBorder, getThemeTextMuted } = useTheme();
   const { speak, stop, isSpeaking } = useTTS({ lang });
 
   const safeText = sanitizeForTts(text);
@@ -52,9 +50,9 @@ export const ReadAloudButton: React.FC<ReadAloudButtonProps> = ({
       onClick={handleClick}
       className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-sm transition-opacity duration-150 ${
         canRead
-          ? `${getThemeGradient('ui')} text-white hover:opacity-90`
-          : `opacity-60 cursor-not-allowed ${getThemeTextMuted()}`
-      } ${getThemeCardBorder()} ${className || ''}`}
+          ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`
+          : `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
+      } border border-divider dark:border-divider-on-dark ${className || ''}`}
     >
       {isSpeaking ? (
         <VolumeX className="h-4 w-4" />

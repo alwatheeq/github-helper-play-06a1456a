@@ -1,7 +1,6 @@
 import React from 'react';
 import { Volume2, Pause, Square } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useTTS } from '../../../hooks/useTTS';
 
 export interface AudioTtsPlayerProps {
@@ -11,19 +10,18 @@ export interface AudioTtsPlayerProps {
 
 export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang = 'en-US' }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeTextMuted, getThemeCardBorder } = useTheme();
   const { speak, stop, pause, resume, isSpeaking, isPaused, error } = useTTS({ lang });
 
   const hasText = (textToPlay ?? '').trim().length > 0;
 
   return (
-    <div className={`flex items-center gap-3 p-3 border ${getThemeCardBorder()} rounded-lg`}>
+    <div className={`flex items-center gap-3 p-3 border border border-divider dark:border-divider-on-dark rounded-lg`}>
       {isSpeaking ? (
         <>
           <button
             type="button"
             onClick={pause}
-            className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 ${getThemeGradient('ui')} text-white hover:opacity-90`}
+            className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`}
             aria-label={t('audio_study.pause_audio') || 'Pause'}
             title={t('audio_study.pause_audio') || 'Pause'}
           >
@@ -54,8 +52,8 @@ export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang
           }}
           className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 ${
             !hasText
-              ? `opacity-60 cursor-not-allowed ${getThemeTextMuted()}`
-              : `${getThemeGradient('ui')} text-white hover:opacity-90`
+              ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
+              : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`
           }`}
           aria-label={isPaused ? (t('audio_study.resume_audio') || 'Resume') : (t('audio_study.play_audio') || 'Read aloud')}
           title={isPaused ? (t('audio_study.resume_audio') || 'Resume') : (t('audio_study.play_audio') || 'Read aloud')}
@@ -67,7 +65,7 @@ export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang
       {error ? (
         <div className="text-sm text-red-500 dark:text-red-400">{error}</div>
       ) : (
-        <div className={`text-sm ${getThemeTextMuted()}`}>
+        <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
           {isSpeaking
             ? t('audio_study.speaking') || 'Speaking…'
             : isPaused

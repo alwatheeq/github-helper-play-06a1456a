@@ -1,7 +1,6 @@
 import React from 'react';
 import { Wand2, Sparkles } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 
 export interface AudioSummaryGeneratorProps {
   isGenerating: boolean;
@@ -24,20 +23,19 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
   generatedText
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBorder, getThemeTextMuted, getThemeTextSecondary, getThemeTextPrimary, getThemeCardBg } = useTheme();
 
   const canGenerate = hasTranscript && !isGenerating;
 
   return (
-    <div className={`${getThemeCardBg()} border ${getThemeCardBorder()} rounded-lg`}>
+    <div className={`bg-card-light dark:bg-card-dark border border border-divider dark:border-divider-on-dark rounded-lg`}>
       <div className="p-4 border-b" style={{ borderColor: 'transparent' }}>
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Wand2 className="h-4 w-4" />
-            <h3 className={`font-semibold ${getThemeTextPrimary()}`}>{t('audio_study.generate_title') || 'Generate Study Tools'}</h3>
+            <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('audio_study.generate_title') || 'Generate Study Tools'}</h3>
           </div>
         </div>
-        <p className={`${getThemeTextMuted()} text-sm mt-1`}>
+        <p className={`text-muted-ink dark:text-muted-ink-on-dark text-sm mt-1`}>
           {t('audio_study.generate_desc') || 'Transcription -> summary/explanation (coming soon).'}
         </p>
       </div>
@@ -49,8 +47,8 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
           onClick={onGenerateRequestedContent}
           className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition duration-150 ${
             !canGenerate
-              ? `opacity-60 cursor-not-allowed ${getThemeTextMuted()}`
-              : `${getThemeGradient('ui')} text-white hover:opacity-90`
+              ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
+              : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`
           }`}
         >
           {isGenerating ? <Sparkles className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
@@ -61,14 +59,14 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
           <div className="mt-4">
             {generatedText.summaryText ? (
               <div className="mb-3">
-                <h4 className={`font-semibold ${getThemeTextPrimary()}`}>{t('audio_study.summary') || 'Summary'}</h4>
-                <div className={`text-sm whitespace-pre-wrap ${getThemeTextSecondary()}`}>{generatedText.summaryText}</div>
+                <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('audio_study.summary') || 'Summary'}</h4>
+                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-secondary-ink-on-dark`}>{generatedText.summaryText}</div>
               </div>
             ) : null}
             {generatedText.explanationText ? (
               <div>
-                <h4 className={`font-semibold ${getThemeTextPrimary()}`}>{t('audio_study.explanation') || 'Clearer Explanation'}</h4>
-                <div className={`text-sm whitespace-pre-wrap ${getThemeTextSecondary()}`}>{generatedText.explanationText}</div>
+                <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('audio_study.explanation') || 'Clearer Explanation'}</h4>
+                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-secondary-ink-on-dark`}>{generatedText.explanationText}</div>
               </div>
             ) : null}
           </div>

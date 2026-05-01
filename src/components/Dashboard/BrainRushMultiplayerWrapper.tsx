@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 import MultiplayerMenu from './MultiplayerMenu';
 import MultiplayerLobby from './MultiplayerLobby';
 import MultiplayerGamePlay from './MultiplayerGamePlay';
@@ -12,7 +11,6 @@ type MultiplayerView = 'menu' | 'lobby' | 'game' | 'results';
 export const BrainRushMultiplayerWrapper: React.FC = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const { getBackgroundGradient, getThemeTextSecondary } = useTheme();
 
   const [currentView, setCurrentView] = useState<MultiplayerView>('menu');
   const [lobbyId, setLobbyId] = useState<string | null>(params.lobbyId || null);
@@ -33,11 +31,11 @@ export const BrainRushMultiplayerWrapper: React.FC = () => {
 
   if (currentView === 'menu') {
     return (
-      <div className={`min-h-screen ${getBackgroundGradient()}`}>
+      <div className={`min-h-screen bg-page-light dark:bg-page-dark`}>
         <div className="p-4">
           <button
             onClick={handleBackToEduPlay}
-            className={`flex items-center gap-2 ${getThemeTextSecondary()} hover:opacity-80 transition-colors`}
+            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-colors`}
           >
             <ArrowLeft className="w-5 h-5" />
             Back to EduPlay
@@ -50,7 +48,7 @@ export const BrainRushMultiplayerWrapper: React.FC = () => {
 
   if (currentView === 'lobby' && lobbyId) {
     return (
-      <div className={`min-h-screen ${getBackgroundGradient()}`}>
+      <div className={`min-h-screen bg-page-light dark:bg-page-dark`}>
         <MultiplayerLobby lobbyId={lobbyId} onExit={handleExitLobby} />
       </div>
     );
