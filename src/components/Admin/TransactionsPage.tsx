@@ -177,7 +177,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Transaction History</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Transaction History</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">Monitor payment transactions and revenue</p>
         </div>
         <button
@@ -203,7 +203,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Successful</p>
@@ -223,7 +223,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Avg Amount</p>
@@ -246,7 +246,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
               placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
@@ -255,7 +255,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="succeeded">Succeeded</option>
@@ -271,7 +271,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -313,7 +313,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
               {filteredTransactions.map((trans) => (
                 <tr key={trans.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-white">
+                    <div className="text-sm text-ink dark:text-ink-on-dark">
                       {new Date(trans.created_at).toLocaleDateString()}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -321,7 +321,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
                     </div>
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                    <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                       {trans.user_email}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -329,12 +329,12 @@ export const TransactionsPage: React.FC = React.memo(() => {
                     </div>
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm font-bold text-gray-900 dark:text-white">
+                    <div className="text-sm font-bold text-ink dark:text-ink-on-dark">
                       {formatCurrency(trans.amount, trans.currency)}
                     </div>
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
-                    <div className="text-sm text-gray-900 dark:text-white">
+                    <div className="text-sm text-ink dark:text-ink-on-dark">
                       {trans.transaction_type.replace(/_/g, ' ')}
                     </div>
                   </td>
@@ -347,7 +347,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                       <CreditCard className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-900 dark:text-white">
+                      <span className="text-sm text-ink dark:text-ink-on-dark">
                         {trans.payment_method || 'N/A'}
                       </span>
                     </div>

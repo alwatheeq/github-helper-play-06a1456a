@@ -114,7 +114,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
   const getUsageColor = (percentage: number) => {
     if (percentage >= 90) return 'text-red-400 bg-red-500/20';
     if (percentage >= 80) return 'text-orange-400 bg-orange-500/20';
-    if (percentage >= 50) return 'text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700';
+    if (percentage >= 50) return 'text-gray-600 dark:text-gray-300 bg-subtle dark:bg-subtle-on-dark';
     return 'text-green-400 bg-green-500/20';
   };
 

@@ -215,7 +215,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Analytics Dashboard</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Analytics Dashboard</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">Track platform performance and growth metrics</p>
         </div>
         <select
@@ -226,7 +226,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
               setDateRange(value);
             }
           }}
-          className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+          className="px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
         >
           <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
@@ -236,7 +236,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Total Users</p>
@@ -276,7 +276,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm opacity-80">Active Subscriptions</p>
@@ -305,7 +305,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
       {/* User Growth Chart */}
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
           <Calendar className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
           User Growth
         </h3>
@@ -321,7 +321,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                 </div>
                 <div className="flex items-center space-x-6">
                   <div className="text-right">
-                    <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <div className="text-sm font-semibold text-ink dark:text-ink-on-dark">
                       +{data.new_users} new
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -347,7 +347,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue Breakdown */}
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
             <DollarSign className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" />
             Revenue Trend
           </h3>
@@ -360,7 +360,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                     {new Date(data.date).toLocaleDateString()}
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <div className="text-sm font-semibold text-ink dark:text-ink-on-dark">
                       {formatCurrency(data.revenue)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -377,7 +377,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
         {/* Subscription Distribution */}
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
             <BarChart3 className="h-5 w-5 mr-2 text-purple-600 dark:text-purple-400" />
             Subscription Distribution
           </h3>
@@ -389,7 +389,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                 return (
                   <div key={index} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-gray-900 dark:text-white">
+                      <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {getTierDisplayName(stat.tier)}
                       </span>
                       <span className="text-sm text-gray-600 dark:text-gray-400">
@@ -398,7 +398,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                     </div>
                     <div className="w-full bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-600 rounded-full h-2">
                       <div
-                        className={`${getThemeGradient('ui')} h-2 rounded-full`}
+                        className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft h-2 rounded-full`}
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
