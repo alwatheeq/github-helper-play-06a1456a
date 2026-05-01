@@ -6,7 +6,6 @@ import { useChatContext } from '../../contexts/ChatContext';
 import { useUserPreferences } from '../../contexts/UserPreferencesContext';
 import { supabase } from '../../lib/supabase';
 import { BookModeViewer } from './BookMode/BookModeViewer';
-import { useTheme } from '../../contexts/ThemeContext';
 
 type ViewSource = 'history' | 'library';
 
@@ -36,7 +35,6 @@ export const ContentViewPage: React.FC = () => {
   const { user } = useAuth();
   const { setChatContext, clearChatContext } = useChatContext();
   const { preferences } = useUserPreferences();
-  const { getThemeTextSecondary, getBackgroundGradient, getThemeCardBorder } = useTheme();
 
   const pathname = location.pathname || '';
   const source: ViewSource = pathname.startsWith('/view/history') ? 'history' : 'library';
@@ -151,16 +149,16 @@ export const ContentViewPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center p-6 ${getBackgroundGradient()}`}>
-        <div className={`text-lg ${getThemeTextSecondary()}`}>Loading...</div>
+      <div className="min-h-screen flex items-center justify-center p-6 bg-page-light dark:bg-page-dark">
+        <div className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">Loading...</div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className={`min-h-screen flex flex-col items-center justify-center p-6 gap-4 ${getBackgroundGradient()}`}>
-        <p className={`text-lg ${getThemeTextSecondary()}`}>
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 gap-4 bg-page-light dark:bg-page-dark">
+        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
           {error === 'Unauthorized'
             ? 'Please sign in to view this content.'
             : "Content not found or you do not have access."}
@@ -168,7 +166,7 @@ export const ContentViewPage: React.FC = () => {
         <button
           type="button"
           onClick={goBack}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeTextSecondary()} hover:opacity-80 transition-opacity`}
+          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           Go back
@@ -181,12 +179,12 @@ export const ContentViewPage: React.FC = () => {
     (data.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical'].some(med => topic.toLowerCase().includes(med))) ?? false);
 
   return (
-    <div className={`min-h-screen flex flex-col ${getBackgroundGradient()}`}>
-      <div className={`flex-shrink-0 p-4 border-b ${getThemeCardBorder()}`}>
+    <div className="min-h-screen flex flex-col bg-page-light dark:bg-page-dark">
+      <div className="flex-shrink-0 p-4 border-b border-divider dark:border-divider-on-dark">
         <button
           type="button"
           onClick={goBack}
-          className={`flex items-center gap-2 ${getThemeTextSecondary()} hover:opacity-80 transition-opacity`}
+          className="flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           <span>Go back</span>
