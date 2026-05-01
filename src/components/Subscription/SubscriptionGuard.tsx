@@ -74,7 +74,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
             variant="primary"
             onClick={() => navigate('/pricing')}
             className="w-full"
-            leadingIcon={<Crown className="h-5 w-5" />}
+            icon={<Crown className="h-5 w-5" />}
           >
             {hasExpired ? 'Renew Subscription' : 'View Plans & Pricing'}
           </ScholarButton>

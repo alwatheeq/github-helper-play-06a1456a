@@ -177,7 +177,8 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
               variant="primary"
               onClick={handleStartPractice}
               className="flex-1"
-              trailingIcon={<ChevronRight className="h-5 w-5" />}
+              icon={<ChevronRight className="h-5 w-5" />}
+              iconPosition="right"
             >
               Start Practice
             </ScholarButton>

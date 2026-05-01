@@ -91,7 +91,8 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
               variant="primary"
               onClick={handleViewPlans}
               className="w-full"
-              trailingIcon={<ArrowRight className="h-5 w-5" />}
+              icon={<ArrowRight className="h-5 w-5" />}
+              iconPosition="right"
             >
               View Plans &amp; Pricing
             </ScholarButton>
