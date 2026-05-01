@@ -16,7 +16,6 @@ import '@xyflow/react/dist/style.css';
 import dagre from 'dagre';
 import { Brain, Loader2, RefreshCw } from 'lucide-react';
 import { supabase } from '../../../lib/supabase';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 
 interface MindMapNode {
@@ -40,6 +39,13 @@ interface MindMapViewProps {
   text: string;
   title?: string;
 }
+
+// Card background (auto light/dark via CSS var redefinition)
+const CARD_BG = 'var(--bg-card-light)';
+// Mind-map accent (data-driven indigo — preserved per plan)
+const MM_ACCENT = '#6366f1';
+const MM_BORDER_SOFT = '#6366f140';
+const MM_BORDER_FAINT = '#6366f120';
 
 function layoutWithDagre(
   rawNodes: MindMapNode[],
@@ -74,14 +80,13 @@ function layoutWithDagre(
     target: e.target,
     label: e.label,
     animated: true,
-    style: { stroke: '#6366f1' },
+    style: { stroke: MM_ACCENT },
   }));
 
   return { nodes, edges };
 }
 
 function CustomNode({ data }: NodeProps) {
-  const { getThemeCardBg } = useTheme();
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
@@ -92,7 +97,7 @@ function CustomNode({ data }: NodeProps) {
       <Handle type="target" position={Position.Top} className="!bg-indigo-400" />
       <div
         className="rounded-lg border px-4 py-3 shadow-sm text-sm font-medium min-w-[140px] text-center transition-shadow hover:shadow-md"
-        style={{ background: getThemeCardBg(), borderColor: '#6366f140' }}
+        style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
       >
         {data.label as string}
       </div>
@@ -101,7 +106,7 @@ function CustomNode({ data }: NodeProps) {
       {showTooltip && (data.description as string) && (
         <div
           className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-lg border px-3 py-2 text-xs shadow-lg max-w-[220px] whitespace-pre-wrap"
-          style={{ background: getThemeCardBg(), borderColor: '#6366f140' }}
+          style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
         >
           {data.description as string}
         </div>
@@ -113,7 +118,6 @@ function CustomNode({ data }: NodeProps) {
 const nodeTypes = { mindMapNode: CustomNode };
 
 export default function MindMapView({ text, title }: MindMapViewProps) {
-  const { getThemeCardBg } = useTheme();
   const { t } = useI18n();
 
   const [loading, setLoading] = useState(false);
@@ -167,15 +171,15 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
   }, [text, t, setNodes, setEdges]);
 
   const flowStyles = useMemo(
-    () => ({ background: getThemeCardBg() }),
-    [getThemeCardBg],
+    () => ({ background: CARD_BG }),
+    [],
   );
 
   if (!generated) {
     return (
       <div
         className="rounded-lg border p-6 flex flex-col items-center gap-4"
-        style={{ background: getThemeCardBg(), borderColor: '#6366f120' }}
+        style={{ background: CARD_BG, borderColor: MM_BORDER_FAINT }}
       >
         <div className="flex items-center gap-2 text-lg font-semibold">
           <Brain className="w-5 h-5 text-indigo-500" />
@@ -215,11 +219,11 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
   return (
     <div
       className="rounded-lg border overflow-hidden"
-      style={{ borderColor: '#6366f120' }}
+      style={{ borderColor: MM_BORDER_FAINT }}
     >
       <div
         className="flex items-center gap-2 px-4 py-3 border-b"
-        style={{ background: getThemeCardBg(), borderColor: '#6366f120' }}
+        style={{ background: CARD_BG, borderColor: MM_BORDER_FAINT }}
       >
         <Brain className="w-5 h-5 text-indigo-500" />
         <span className="font-semibold">{title ?? t('mind_map.title')}</span>
@@ -243,7 +247,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
           <Controls />
           <MiniMap
             nodeStrokeWidth={3}
-            style={{ background: getThemeCardBg() }}
+            style={{ background: CARD_BG }}
           />
         </ReactFlow>
       </div>
