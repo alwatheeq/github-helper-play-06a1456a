@@ -33,7 +33,6 @@ interface AuditStats {
 }
 
 export const AuditLogPage: React.FC = React.memo(() => {
-  const { getThemeGradient } = useTheme();
   const toast = useToast();
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
   const [stats, setStats] = useState<AuditStats | null>(null);
