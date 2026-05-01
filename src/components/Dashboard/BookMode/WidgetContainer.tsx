@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { X, ChevronDown, ChevronUp } from 'lucide-react';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 
 export interface WidgetConfig {
@@ -34,7 +33,6 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
   canClose = true,
   freeFormMode = true
 }) => {
-  const { getThemeCardBg, getThemeCardBorder, getThemeText, getThemeTextSecondary, getThemeTextMuted } = useTheme();
   const { t } = useI18n();
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
@@ -235,16 +233,16 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
     <div
       ref={widgetRef}
       style={widgetStyle}
-      className={`${getThemeCardBg()} rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)] border ${getThemeCardBorder()} ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
+      className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)] border border-divider dark:border-divider-on-dark ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
       onMouseDown={handleMouseDown}
       onClick={freeFormMode ? handleBringToFront : undefined}
       data-widget={widget.id}
     >
       {/* Header */}
-      <div className={`flex items-center justify-between ${widget.isCollapsed ? 'px-3 py-2 min-w-0' : 'px-4 py-2.5'} border-b ${getThemeCardBorder()} ${widget.isCollapsed ? 'rounded-xl border-0' : 'rounded-t-xl'}`}>
+      <div className={`flex items-center justify-between ${widget.isCollapsed ? 'px-3 py-2 min-w-0' : 'px-4 py-2.5'} border-b border-divider dark:border-divider-on-dark ${widget.isCollapsed ? 'rounded-xl border-0' : 'rounded-t-xl'}`}>
         <div className="flex items-center space-x-2 min-w-0 flex-1">
           <h3
-            className={`font-medium uppercase tracking-widest opacity-50 ${widget.isCollapsed ? 'text-[10px] truncate' : 'text-[10px]'} ${getThemeText()}`}
+            className={`font-medium uppercase tracking-widest opacity-50 ${widget.isCollapsed ? 'text-[10px] truncate' : 'text-[10px]'} text-ink dark:text-ink-on-dark`}
             title={widget.isCollapsed ? title : undefined}
           >
             {title}
@@ -259,7 +257,7 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
                 e.stopPropagation();
                 handleToggleCollapse();
               }}
-              className={`p-1.5 rounded-full ${getThemeTextSecondary()} hover:bg-black/5 dark:hover:bg-white/5 transition-colors`}
+              className={`p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors`}
               title={widget.isCollapsed ? (t('book_mode.expand') || 'Expand') : (t('book_mode.collapse') || 'Collapse')}
             >
               {widget.isCollapsed ? <ChevronDown className="h-3 w-3" /> : <ChevronUp className="h-3 w-3" />}
@@ -273,7 +271,7 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
                 e.stopPropagation();
                 onRemove();
               }}
-              className={`p-1.5 rounded-full ${getThemeTextSecondary()} hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors`}
+              className={`p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors`}
               title={t('book_mode.close') || 'Close'}
             >
               <X className="h-3 w-3" />
@@ -294,36 +292,36 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
         <>
           {/* Corner handles */}
           <div
-            className={`absolute top-0 left-0 w-4 h-4 cursor-nwse-resize hover:opacity-60 rounded-tl-xl resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute top-0 left-0 w-4 h-4 cursor-nwse-resize hover:opacity-60 rounded-tl-xl resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'top-left')}
           />
           <div
-            className={`absolute top-0 right-0 w-4 h-4 cursor-nesw-resize hover:opacity-60 rounded-tr-xl resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute top-0 right-0 w-4 h-4 cursor-nesw-resize hover:opacity-60 rounded-tr-xl resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'top-right')}
           />
           <div
-            className={`absolute bottom-0 left-0 w-4 h-4 cursor-nesw-resize hover:opacity-60 rounded-bl-xl resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute bottom-0 left-0 w-4 h-4 cursor-nesw-resize hover:opacity-60 rounded-bl-xl resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'bottom-left')}
           />
           <div
-            className={`absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize hover:opacity-60 rounded-br-xl resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute bottom-0 right-0 w-4 h-4 cursor-nwse-resize hover:opacity-60 rounded-br-xl resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'bottom-right')}
           />
           {/* Edge handles */}
           <div
-            className={`absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'top')}
           />
           <div
-            className={`absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'bottom')}
           />
           <div
-            className={`absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'left')}
           />
           <div
-            className={`absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 ${getThemeTextMuted()}`}
+            className={`absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'right')}
           />
         </>
