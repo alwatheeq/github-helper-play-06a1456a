@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { Search, Filter, Download, DollarSign, TrendingUp, CreditCard, Calendar, CheckCircle, XCircle, Clock } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import { ErrorLogger } from '../../utils/errorLogger';
 
 interface Transaction {
