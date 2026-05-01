@@ -326,7 +326,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">User Activity Monitoring</h1>
+        <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">User Activity Monitoring</h1>
         <p className="text-gray-600 dark:text-gray-400 mt-1">Monitor user activity and engagement</p>
       </div>
 
@@ -337,7 +337,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <Users className="h-5 w-5 text-blue-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Users</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total_users}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.total_users}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -345,7 +345,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <Activity className="h-5 w-5 text-green-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Active Today</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.active_today}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.active_today}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -353,7 +353,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <Calendar className="h-5 w-5 text-purple-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Active This Week</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.active_this_week}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.active_this_week}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -361,7 +361,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <TrendingUp className="h-5 w-5 text-orange-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Active This Month</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.active_this_month}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.active_this_month}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -369,7 +369,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <Clock className="h-5 w-5 text-red-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Study Time</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{Math.round(stats.total_study_time / 60)}h</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{Math.round(stats.total_study_time / 60)}h</p>
         </div>
       </div>
 
@@ -382,7 +382,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
               placeholder="Search users by email or name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
             <Activity className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
           </div>
@@ -407,7 +407,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
                 <tr key={activity.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div>
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">{activity.email}</div>
+                      <div className="text-sm font-medium text-ink dark:text-ink-on-dark">{activity.email}</div>
                       {activity.display_name && (
                         <div className="text-xs text-gray-500 dark:text-gray-400">{activity.display_name}</div>
                       )}
@@ -418,16 +418,16 @@ export const UserActivityPage: React.FC = React.memo(() => {
                       ? new Date(activity.last_login_at).toLocaleString()
                       : 'Never'}
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {activity.total_sessions}
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {Math.round(activity.total_study_time / 60)}h {activity.total_study_time % 60}m
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {activity.recent_actions}
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {activity.library_items}
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
@@ -457,7 +457,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
                 Activity Details: {selectedUser.email}
               </h3>
               <button
@@ -479,13 +479,13 @@ export const UserActivityPage: React.FC = React.memo(() => {
               ) : userDetails && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Recent Study Sessions</h4>
+                    <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-3">Recent Study Sessions</h4>
                     <div className="space-y-2">
                       {userDetails.sessions.length > 0 ? (
                         userDetails.sessions.map((session: any) => (
                           <div key={session.id} className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg p-3">
                             <div className="flex justify-between">
-                              <span className="text-sm font-medium text-gray-900 dark:text-white">{session.session_type}</span>
+                              <span className="text-sm font-medium text-ink dark:text-ink-on-dark">{session.session_type}</span>
                               <span className="text-sm text-gray-600 dark:text-gray-400">{session.duration_minutes} min</span>
                             </div>
                             <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
@@ -500,12 +500,12 @@ export const UserActivityPage: React.FC = React.memo(() => {
                   </div>
 
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Recent History</h4>
+                    <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-3">Recent History</h4>
                     <div className="space-y-2">
                       {userDetails.history.length > 0 ? (
                         userDetails.history.map((item) => (
                           <div key={item.id} className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg p-3">
-                            <div className="text-sm text-gray-900 dark:text-white">{item.action_type || 'Action'}</div>
+                            <div className="text-sm text-ink dark:text-ink-on-dark">{item.action_type || 'Action'}</div>
                             <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                               {new Date(item.created_at).toLocaleString()}
                             </div>
@@ -518,12 +518,12 @@ export const UserActivityPage: React.FC = React.memo(() => {
                   </div>
 
                   <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Recent Library Items</h4>
+                    <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-3">Recent Library Items</h4>
                     <div className="space-y-2">
                       {userDetails.library.length > 0 ? (
                         userDetails.library.map((item) => (
                           <div key={item.id} className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg p-3">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">{item.title || 'Untitled'}</div>
+                            <div className="text-sm font-medium text-ink dark:text-ink-on-dark">{item.title || 'Untitled'}</div>
                             <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                               {new Date(item.created_at).toLocaleString()}
                             </div>

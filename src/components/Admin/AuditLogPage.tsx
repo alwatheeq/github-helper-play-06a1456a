@@ -179,7 +179,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark flex items-center">
             <Shield className="h-8 w-8 mr-3 text-blue-600 dark:text-blue-400" />
             Audit Log
           </h1>
@@ -199,7 +199,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
       {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-80">Total Actions</p>
@@ -219,7 +219,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className={`${getThemeGradient('ui')} text-white rounded-md p-6`}>
+          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm opacity-80">Most Active</p>
@@ -252,7 +252,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
               Search
             </label>
             <div className="relative">
@@ -262,19 +262,19 @@ export const AuditLogPage: React.FC = React.memo(() => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by admin or description..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
               Action Type
             </label>
             <select
               value={filterActionType}
               onChange={(e) => setFilterActionType(e.target.value)}
-              className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="">All Actions</option>
               <option value="CREATE">Create</option>
@@ -288,13 +288,13 @@ export const AuditLogPage: React.FC = React.memo(() => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
               Table
             </label>
             <select
               value={filterTable}
               onChange={(e) => setFilterTable(e.target.value)}
-              className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="">All Tables</option>
               {uniqueTables.map(table => (
@@ -304,7 +304,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
               Date Range
             </label>
             <select
@@ -315,7 +315,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
                   setDateRange(value);
                 }
               }}
-              className="w-full px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="today">Today</option>
               <option value="7days">Last 7 Days</option>
@@ -332,25 +332,25 @@ export const AuditLogPage: React.FC = React.memo(() => {
           <table className="w-full">
             <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Timestamp
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Admin
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Action
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Table
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Description
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   IP Address
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
                   Details
                 </th>
               </tr>
@@ -358,10 +358,10 @@ export const AuditLogPage: React.FC = React.memo(() => {
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {filteredLogs.map((log) => (
                 <tr key={log.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50 transition">
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {new Date(log.created_at).toLocaleString()}
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {log.admin_email}
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
@@ -404,22 +404,22 @@ export const AuditLogPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md max-w-2xl w-full max-h-[80vh] overflow-y-auto">
             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Audit Log Details</h3>
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Audit Log Details</h3>
             </div>
 
             <div className="p-6 space-y-6">
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Timestamp</label>
-                <p className="text-gray-900 dark:text-gray-100 mt-1">{new Date(selectedLog.created_at).toLocaleString()}</p>
+                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Timestamp</label>
+                <p className="text-ink dark:text-ink-on-dark mt-1">{new Date(selectedLog.created_at).toLocaleString()}</p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Admin</label>
-                <p className="text-gray-900 dark:text-gray-100 mt-1">{selectedLog.admin_email}</p>
+                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Admin</label>
+                <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.admin_email}</p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Action Type</label>
+                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Action Type</label>
                 <p className="mt-1">
                   <span className={`px-2 py-1 text-xs font-medium rounded-full ${getActionTypeColor(selectedLog.action_type)}`}>
                     {selectedLog.action_type}
@@ -429,21 +429,21 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.table_name && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Table</label>
-                  <p className="text-gray-900 dark:text-gray-100 mt-1">{selectedLog.table_name}</p>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Table</label>
+                  <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.table_name}</p>
                 </div>
               )}
 
               {selectedLog.description && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
-                  <p className="text-gray-900 dark:text-gray-100 mt-1">{selectedLog.description}</p>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Description</label>
+                  <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.description}</p>
                 </div>
               )}
 
               {selectedLog.old_values && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Old Values</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Old Values</label>
                   <pre className="text-xs bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 p-3 rounded mt-1 overflow-x-auto">
                     {JSON.stringify(selectedLog.old_values, null, 2)}
                   </pre>
@@ -452,7 +452,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.new_values && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">New Values</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">New Values</label>
                   <pre className="text-xs bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 p-3 rounded mt-1 overflow-x-auto">
                     {JSON.stringify(selectedLog.new_values, null, 2)}
                   </pre>
@@ -461,14 +461,14 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.ip_address && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">IP Address</label>
-                  <p className="text-gray-900 dark:text-gray-100 mt-1">{selectedLog.ip_address}</p>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">IP Address</label>
+                  <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.ip_address}</p>
                 </div>
               )}
 
               {selectedLog.user_agent && (
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">User Agent</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">User Agent</label>
                   <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{selectedLog.user_agent}</p>
                 </div>
               )}
