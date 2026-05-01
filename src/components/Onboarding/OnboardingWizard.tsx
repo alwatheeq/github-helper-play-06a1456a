@@ -62,15 +62,7 @@ const THEME_OPTIONS: ThemeOption[] = [
 export const OnboardingWizard: React.FC = () => {
   const { user } = useAuth();
   const { language, setLanguage, t } = useI18n();
-  const {
-    currentTheme,
-    setTheme,
-    getThemeGradient,
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-  } = useTheme();
+  const { currentTheme, setTheme } = useTheme();
   const { updateColorTheme } = useUserPreferences();
 
   const [step, setStep] = useState(1);
