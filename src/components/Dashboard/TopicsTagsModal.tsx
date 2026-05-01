@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Tag, BookOpen, CheckCircle2, Globe, Lock } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useI18n } from '../../contexts/I18nContext';
+import { ScholarCard, ScholarButton } from '../Scholar';
 
 interface UserTag {
   id: string;
@@ -32,7 +32,6 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
   onApply
 }) => {
   const { t } = useI18n();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [activeTab, setActiveTab] = useState<'topics' | 'tags'>('topics');
   const [localSelectedTags, setLocalSelectedTags] = useState<string[]>(selectedTags);
   const [localSelectedTopics, setLocalSelectedTopics] = useState<string[]>(selectedTopics);
@@ -76,27 +75,30 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
   });
 
   const tileBase = `relative p-3 rounded-md border transition-colors duration-150 text-left text-sm`;
-  const tileSelected = `border-2 ${getThemeCardBorder()} ${getThemeSubtle('ui')} shadow-sm`;
-  const tileUnselected = `border ${getThemeCardBorder()} hover:opacity-80`;
+  const tileSelected = `border-2 border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark shadow-sm`;
+  const tileUnselected = `border border-divider dark:border-divider-on-dark hover:opacity-80`;
+
+  const activeTabBtn = `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white shadow-md hover:opacity-90`;
+  const inactiveTabBtn = `bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col dark:shadow-none`}>
+      <ScholarCard variant="elevated" padding="none" className="max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className={`p-4 sm:p-5 border-b ${getThemeCardBorder()}`}>
+        <div className="p-4 sm:p-5 border-b border-divider dark:border-divider-on-dark">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
-              <h3 className={`text-lg sm:text-xl font-semibold ${getThemeTextPrimary()}`}>
+              <h3 className="text-lg sm:text-xl font-semibold text-ink dark:text-ink-on-dark">
                 {t(modalKey('title'))}
               </h3>
-              <p className={`text-sm ${getThemeTextMuted()} mt-1`}>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
                 {t(modalKey('subtitle'))}
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className={`shrink-0 p-2 ${getThemeTextMuted()} hover:opacity-80 rounded-lg transition duration-150`}
+              className="shrink-0 p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 rounded-lg transition duration-150"
               aria-label={t(modalKey('close_dialog'))}
             >
               <X className="h-5 w-5" />
@@ -109,9 +111,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
               type="button"
               onClick={() => setActiveTab('topics')}
               className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg font-medium text-sm transition-colors duration-150 ${
-                activeTab === 'topics'
-                  ? `${getThemeGradient('ui')} text-white shadow-md hover:opacity-90`
-                  : `${getThemeSubtle('ui')} ${getThemeTextSecondary()} hover:opacity-80`
+                activeTab === 'topics' ? activeTabBtn : inactiveTabBtn
               }`}
             >
               <BookOpen className="h-4 w-4 shrink-0" aria-hidden />
@@ -120,8 +120,8 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                 <span
                   className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
                     activeTab === 'topics'
-                      ? `${getThemeCardBg()} ${getThemeTextPrimary()}`
-                      : `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                      ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
+                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark'
                   }`}
                 >
                   {localSelectedTopics.length}
@@ -132,9 +132,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
               type="button"
               onClick={() => setActiveTab('tags')}
               className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg font-medium text-sm transition-colors duration-150 ${
-                activeTab === 'tags'
-                  ? `${getThemeGradient('ui')} text-white shadow-md hover:opacity-90`
-                  : `${getThemeSubtle('ui')} ${getThemeTextSecondary()} hover:opacity-80`
+                activeTab === 'tags' ? activeTabBtn : inactiveTabBtn
               }`}
             >
               <Tag className="h-4 w-4 shrink-0" aria-hidden />
@@ -143,8 +141,8 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                 <span
                   className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
                     activeTab === 'tags'
-                      ? `${getThemeCardBg()} ${getThemeTextPrimary()}`
-                      : `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                      ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
+                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark'
                   }`}
                 >
                   {localSelectedTags.length}
@@ -159,10 +157,10 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
           {activeTab === 'topics' && (
             <div>
               <div className="mb-3">
-                <h4 className={`text-sm font-semibold ${getThemeTextSecondary()} mb-1`}>
+                <h4 className="text-sm font-semibold text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
                   {t(modalKey('section_topics_title'))}
                 </h4>
-                <p className={`text-xs ${getThemeTextMuted()}`}>
+                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                   {t(modalKey('section_topics_desc'))}
                 </p>
               </div>
@@ -179,14 +177,14 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <BookOpen className={`h-4 w-4 shrink-0 ${isSelected ? getThemeTextPrimary() : getThemeTextMuted()}`} aria-hidden />
-                            <span className={`font-medium ${isSelected ? getThemeTextPrimary() : getThemeTextSecondary()}`}>
+                            <BookOpen className={`h-4 w-4 shrink-0 ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} aria-hidden />
+                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
                               {topic}
                             </span>
                           </div>
                         </div>
                         {isSelected && (
-                          <CheckCircle2 className={`h-5 w-5 shrink-0 ${getThemeTextPrimary()}`} aria-hidden />
+                          <CheckCircle2 className="h-5 w-5 shrink-0 text-ink dark:text-ink-on-dark" aria-hidden />
                         )}
                       </div>
                     </button>
@@ -194,8 +192,8 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                 })}
               </div>
               {predefinedTopics.length === 0 && (
-                <div className={`text-center py-10 ${getThemeTextMuted()}`}>
-                  <BookOpen className={`h-10 w-10 mx-auto mb-3 ${getThemeTextMuted()}`} aria-hidden />
+                <div className="text-center py-10 text-muted-ink dark:text-muted-ink-on-dark">
+                  <BookOpen className="h-10 w-10 mx-auto mb-3 text-muted-ink dark:text-muted-ink-on-dark" aria-hidden />
                   <p className="text-sm">{t(modalKey('empty_topics'))}</p>
                 </div>
               )}
@@ -205,10 +203,10 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
           {activeTab === 'tags' && (
             <div>
               <div className="mb-3">
-                <h4 className={`text-sm font-semibold ${getThemeTextSecondary()} mb-1`}>
+                <h4 className="text-sm font-semibold text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
                   {t(modalKey('section_tags_title'))}
                 </h4>
-                <p className={`text-xs ${getThemeTextMuted()}`}>
+                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                   {t(modalKey('section_tags_desc'))}
                 </p>
               </div>
@@ -225,25 +223,25 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <Tag className={`h-4 w-4 shrink-0 ${isSelected ? getThemeTextPrimary() : getThemeTextMuted()}`} aria-hidden />
-                            <span className={`font-medium ${isSelected ? getThemeTextPrimary() : getThemeTextSecondary()}`}>
+                            <Tag className={`h-4 w-4 shrink-0 ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} aria-hidden />
+                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
                               {tag.name}
                             </span>
                           </div>
                           {tag.is_public ? (
-                            <div className={`flex items-center gap-1 text-xs ${getThemeTextSecondary()}`}>
+                            <div className="flex items-center gap-1 text-xs text-secondary-ink dark:text-secondary-ink-on-dark">
                               <Globe className="h-3 w-3 shrink-0" aria-hidden />
                               <span>{t(modalKey('visibility_public'))}</span>
                             </div>
                           ) : (
-                            <div className={`flex items-center gap-1 text-xs ${getThemeTextMuted()}`}>
+                            <div className="flex items-center gap-1 text-xs text-muted-ink dark:text-muted-ink-on-dark">
                               <Lock className="h-3 w-3 shrink-0" aria-hidden />
                               <span>{t(modalKey('visibility_private'))}</span>
                             </div>
                           )}
                         </div>
                         {isSelected && (
-                          <CheckCircle2 className={`h-5 w-5 shrink-0 ${getThemeTextPrimary()}`} aria-hidden />
+                          <CheckCircle2 className="h-5 w-5 shrink-0 text-ink dark:text-ink-on-dark" aria-hidden />
                         )}
                       </div>
                     </button>
@@ -251,8 +249,8 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                 })}
               </div>
               {tags.length === 0 && (
-                <div className={`text-center py-10 ${getThemeTextMuted()}`}>
-                  <Tag className={`h-10 w-10 mx-auto mb-3 ${getThemeTextMuted()}`} aria-hidden />
+                <div className="text-center py-10 text-muted-ink dark:text-muted-ink-on-dark">
+                  <Tag className="h-10 w-10 mx-auto mb-3 text-muted-ink dark:text-muted-ink-on-dark" aria-hidden />
                   <p className="text-sm">{t(modalKey('empty_tags_title'))}</p>
                   <p className="text-xs mt-2">{t(modalKey('empty_tags_hint'))}</p>
                 </div>
@@ -262,9 +260,9 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className={`p-4 sm:p-5 border-t ${getThemeCardBorder()} ${getThemeSubtle('bg')}`}>
+        <div className="p-4 sm:p-5 border-t border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-            <div className={`text-sm ${getThemeTextSecondary()}`}>
+            <div className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
               {totalSelected === 1
                 ? t(modalKey('filters_selected_one'), { count: totalSelected })
                 : t(modalKey('filters_selected_other'), { count: totalSelected })}
@@ -280,23 +278,25 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
             )}
           </div>
           <div className="flex flex-col-reverse sm:flex-row gap-2 sm:gap-3">
-            <button
+            <ScholarButton
               type="button"
+              variant="secondary"
               onClick={onClose}
-              className={`flex-1 px-4 py-2.5 text-sm ${getThemeTextSecondary()} border ${getThemeCardBorder()} rounded-lg hover:opacity-80 transition duration-150`}
+              className="flex-1"
             >
               {t(modalKey('cancel'))}
-            </button>
-            <button
+            </ScholarButton>
+            <ScholarButton
               type="button"
+              variant="primary"
               onClick={handleApply}
-              className={`flex-1 px-4 py-2.5 text-sm text-white ${getThemeGradient('ui')} hover:opacity-90 rounded-lg transition duration-150 font-medium shadow-md`}
+              className="flex-1"
             >
               {t(modalKey('apply'))}
-            </button>
+            </ScholarButton>
           </div>
         </div>
-      </div>
+      </ScholarCard>
     </div>
   );
 };

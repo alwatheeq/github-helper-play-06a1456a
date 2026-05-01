@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Globe, Clock, FileQuestion, BookOpen, Target, Award, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../../contexts/ThemeContext';
+import { ScholarCard, ScholarButton } from '../Scholar';
 
 interface GlobalExam {
   id: string;
@@ -28,9 +28,8 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
   exam,
   isOpen,
   onClose
-  }) => {
-    const { getThemeGradient } = useTheme();
-    const navigate = useNavigate();
+}) => {
+  const navigate = useNavigate();
 
   if (!isOpen || !exam) return null;
 
@@ -56,14 +55,14 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
       case 'advanced':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
       default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
+        return 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark';
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-lg max-w-3xl w-full max-h-[90vh] overflow-hidden animate-scaleIn">
-        <div className={`${getThemeGradient('ui')} p-6 text-white relative`}>
+      <ScholarCard variant="elevated" padding="none" className="max-w-3xl w-full max-h-[90vh] overflow-hidden animate-scaleIn">
+        <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white relative">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition"
@@ -93,65 +92,65 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
 
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">About This Exam</h3>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{exam.description}</p>
+            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">About This Exam</h3>
+            <p className="text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed">{exam.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
               <div className="flex items-center space-x-3">
                 <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-lg">
                   <FileQuestion className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Total Questions</p>
-                  <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{exam.total_questions}</p>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Total Questions</p>
+                  <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">{exam.total_questions}</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
               <div className="flex items-center space-x-3">
                 <div className="bg-green-100 dark:bg-green-900 p-2 rounded-lg">
                   <Clock className="h-5 w-5 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Time Limit</p>
-                  <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{exam.time_limit_minutes} min</p>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Time Limit</p>
+                  <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">{exam.time_limit_minutes} min</p>
                 </div>
               </div>
             </div>
 
             {exam.subject && (
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
                 <div className="flex items-center space-x-3">
                   <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded-lg">
                     <BookOpen className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Subject</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{exam.subject}</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Subject</p>
+                    <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">{exam.subject}</p>
                   </div>
                 </div>
               </div>
             )}
 
             {exam.passing_score && (
-              <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
                 <div className="flex items-center space-x-3">
                   <div className="bg-yellow-100 dark:bg-yellow-900 p-2 rounded-lg">
                     <Target className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">Passing Score</p>
-                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{exam.passing_score}%</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Passing Score</p>
+                    <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">{exam.passing_score}%</p>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-6">
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-4 mb-6">
             <div className="flex items-start space-x-3">
               <Award className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
               <div>
@@ -165,24 +164,26 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
           </div>
         </div>
 
-        <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <div className="p-6 border-t border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark">
           <div className="flex flex-col sm:flex-row gap-3">
-            <button
+            <ScholarButton
+              variant="secondary"
               onClick={onClose}
-              className="flex-1 px-6 py-3 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+              className="flex-1"
             >
               Cancel
-            </button>
-            <button
+            </ScholarButton>
+            <ScholarButton
+              variant="primary"
               onClick={handleStartPractice}
-              className={`flex-1 px-6 py-3 ${getThemeGradient('ui')} text-white rounded-lg font-semibold hover:opacity-90 transition transform  shadow flex items-center justify-center space-x-2`}
+              className="flex-1"
+              trailingIcon={<ChevronRight className="h-5 w-5" />}
             >
-              <span>Start Practice</span>
-              <ChevronRight className="h-5 w-5" />
-            </button>
+              Start Practice
+            </ScholarButton>
           </div>
         </div>
-      </div>
+      </ScholarCard>
 
       <style>{`
         @keyframes fadeIn {

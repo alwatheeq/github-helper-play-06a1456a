@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useFeatureAccess, FeatureName } from '../../hooks/useFeatureAccess';
 import { useAuth } from '../../hooks/useAuth';
-import { useTheme } from '../../contexts/ThemeContext';
 import { Crown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ScholarCard, ScholarButton } from '../Scholar';
 
 interface SubscriptionGuardProps {
   children: ReactNode;
@@ -23,7 +23,6 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
   const { hasActiveSubscription, subscription, getTierDisplayName, getDaysRemaining: _getDaysRemaining } = useSubscription();
   const { canAccessFeature, getAccessMessage } = useFeatureAccess();
   const { user } = useAuth();
-  const { getThemeGradient } = useTheme();
 
   if (user?.role === 'admin') {
     return <>{children}</>;
@@ -47,18 +46,18 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
 
   return (
     <div className="flex items-center justify-center min-h-[400px] p-6">
-      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 text-center">
+      <ScholarCard variant="elevated" className="max-w-md w-full text-center">
         <div className="mb-6">
-          <div className={`${getThemeGradient('ui')} p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center`}>
+          <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
             <Crown className="h-10 w-10 text-white" />
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-3">
           {hasExpired ? 'Subscription Expired' : 'Upgrade Required'}
         </h2>
 
-        <p className="text-gray-600 dark:text-gray-400 mb-2">
+        <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
           {feature ? getAccessMessage(feature) : 'You need an active subscription to access this feature'}
         </p>
 
@@ -71,30 +70,32 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
         )}
 
         <div className="space-y-3">
-          <button
+          <ScholarButton
+            variant="primary"
             onClick={() => navigate('/pricing')}
-            className={`w-full ${getThemeGradient('ui')} hover:opacity-90 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center space-x-2`}
+            className="w-full"
+            leadingIcon={<Crown className="h-5 w-5" />}
           >
-            <Crown className="h-5 w-5" />
-            <span>{hasExpired ? 'Renew Subscription' : 'View Plans & Pricing'}</span>
-          </button>
+            {hasExpired ? 'Renew Subscription' : 'View Plans & Pricing'}
+          </ScholarButton>
 
           {!hasExpired && (
-            <button
+            <ScholarButton
+              variant="secondary"
               onClick={() => window.history.back()}
-              className="w-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full"
             >
               Go Back
-            </button>
+            </ScholarButton>
           )}
         </div>
 
-        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-xs text-gray-500 dark:text-gray-500">
+        <div className="mt-6 pt-6 border-t border-divider dark:border-divider-on-dark">
+          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
             Choose a Standard plan with flexible billing periods on the pricing page
           </p>
         </div>
-      </div>
+      </ScholarCard>
     </div>
   );
 };
