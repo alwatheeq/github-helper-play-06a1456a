@@ -13,7 +13,7 @@ import { ToastProvider } from './components/Toast/Toast';
 import { Auth } from './components/Auth/Auth';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { useAuth } from './hooks/useAuth';
-import { useTheme, ThemeContext } from './contexts/ThemeContext';
+import { ThemeContext } from './contexts/ThemeContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { EnvValidator } from './components/EnvValidator';
 import { SubscriptionRefreshListener } from './components/SubscriptionRefreshListener';
@@ -40,7 +40,6 @@ const ScholarPreview = lazy(() => import('./pages/ScholarPreview'));
 // Internal component that uses hooks
 const AppContentInternal: React.FC = () => {
   const { user, loading } = useAuth();
-  const { getBackgroundGradient } = useTheme();
   const [isBlocked, setIsBlocked] = useState<boolean>(false);
 
   // Per-user key so each account gets its own onboarding gate regardless of browser history
@@ -89,7 +88,7 @@ const AppContentInternal: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`min-h-screen w-full min-w-full overflow-x-auto ${getBackgroundGradient()} flex items-center justify-center`}>
+      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
@@ -103,7 +102,7 @@ const AppContentInternal: React.FC = () => {
   // Post-login onboarding gate: show wizard (language + theme) before any tutorials or services
   if (user && !onboardingDone) {
     return (
-      <div className={`min-h-screen w-full min-w-full overflow-x-auto ${getBackgroundGradient()}`}>
+      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
@@ -117,7 +116,7 @@ const AppContentInternal: React.FC = () => {
 
   // Regular users and non-authenticated users
   return (
-    <div className={`min-h-screen w-full min-w-full overflow-x-auto ${getBackgroundGradient()}`}>
+    <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
       {user ? <Dashboard /> : <Auth />}
     </div>
   );
@@ -174,7 +173,7 @@ const AppContentWithoutTheme: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
@@ -186,7 +185,7 @@ const AppContentWithoutTheme: React.FC = () => {
 
   if (user && !onboardingDone) {
     return (
-      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900">
+      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
@@ -199,7 +198,7 @@ const AppContentWithoutTheme: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
       {user ? <Dashboard /> : <Auth />}
     </div>
   );
@@ -216,59 +215,22 @@ function AppContent() {
   return <AppContentInternal />;
 }
 
-// Loading fallback component that can access theme
-const LoadingFallbackInternal: React.FC = () => {
-  const { getBackgroundGradient } = useTheme();
+// Loading fallback component
+const LoadingFallback: React.FC = () => {
   return (
-    <div className={`min-h-screen flex items-center justify-center ${getBackgroundGradient()}`}>
+    <div className="min-h-screen flex items-center justify-center bg-page-light dark:bg-page-dark">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
     </div>
   );
 };
 
-// Wrapper for LoadingFallback
-const LoadingFallback: React.FC = () => {
-  const themeContext = useContext(ThemeContext);
-  
-  if (!themeContext) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-  
-  return <LoadingFallbackInternal />;
-};
-
-// Internal ProtectedRoute that uses hooks
-const ProtectedRouteInternal: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, loading } = useAuth();
-  const { getBackgroundGradient } = useTheme();
-
-  if (loading) {
-    return (
-      <div className={`min-h-screen w-full min-w-full overflow-x-auto ${getBackgroundGradient()} flex items-center justify-center`}>
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <>{children}</>;
-};
-
-// Wrapper for ProtectedRoute - always call useAuth unconditionally
+// ProtectedRoute - always call useAuth unconditionally
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const themeContext = useContext(ThemeContext);
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
@@ -276,10 +238,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (!user) {
     return <Navigate to="/" replace />;
   }
-  if (!themeContext) {
-    return <>{children}</>;
-  }
-  return <ProtectedRouteInternal>{children}</ProtectedRouteInternal>;
+  return <>{children}</>;
 }
 
 function App() {
