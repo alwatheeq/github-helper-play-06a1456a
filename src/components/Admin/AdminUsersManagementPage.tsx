@@ -32,7 +32,6 @@ interface LoginAttempt {
 
 export const AdminUsersManagementPage: React.FC = React.memo(() => {
   const { user } = useAuth();
-  const { getThemeGradient } = useTheme();
   const toast = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
