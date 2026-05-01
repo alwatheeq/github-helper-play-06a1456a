@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { Download, Receipt, Calendar, CheckCircle, XCircle, Clock, ArrowLeft } from 'lucide-react';
-import { useTheme } from '../../contexts/ThemeContext';
 // html2pdf.js is dynamically imported on demand to keep it out of the initial bundle.
 import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
@@ -26,14 +25,6 @@ interface Transaction {
 export const BillingHistoryPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const {
-    getBackgroundGradient,
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeSubtle,
-  } = useTheme();
   const { error: showErrorToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -112,8 +103,8 @@ export const BillingHistoryPage: React.FC = () => {
         label: 'Pending'
       },
       refunded: {
-        bg: 'bg-gray-100 dark:bg-gray-700',
-        text: 'text-gray-800 dark:text-gray-300',
+        bg: 'bg-subtle dark:bg-subtle-on-dark',
+        text: 'text-secondary-ink dark:text-secondary-ink-on-dark',
         label: 'Refunded'
       }
     };
@@ -220,11 +211,11 @@ export const BillingHistoryPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`w-full min-h-0 ${getBackgroundGradient()} p-6`}>
+      <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
         <div className="flex items-center justify-center min-h-[40vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-sky-400" />
-            <p className={`mt-4 ${getThemeTextSecondary()}`}>Loading billing history...</p>
+            <p className={`mt-4 text-secondary-ink dark:text-secondary-ink-on-dark`}>Loading billing history...</p>
           </div>
         </div>
       </div>
@@ -233,27 +224,27 @@ export const BillingHistoryPage: React.FC = () => {
 
   if (transactions.length === 0) {
     return (
-      <div className={`w-full min-h-0 ${getBackgroundGradient()} p-6`}>
+      <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
         <div className="max-w-4xl mx-auto">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className={`flex items-center gap-2 ${getThemeTextSecondary()} hover:opacity-80 transition mb-6`}
+            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6`}
           >
             <ArrowLeft className="h-5 w-5" />
             <span>Go back</span>
           </button>
           <div
-            className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} border p-8`}
+            className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark border p-8`}
           >
             <div className="text-center">
-              <div className={`${getThemeSubtle('ui')} p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
-                <Receipt className={`h-12 w-12 ${getThemeTextSecondary()}`} />
+              <div className={`bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
+                <Receipt className={`h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark`} />
               </div>
 
-              <h2 className={`text-2xl font-bold ${getThemeTextPrimary()} mb-4`}>No Transactions Yet</h2>
+              <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>No Transactions Yet</h2>
 
-              <p className={`${getThemeTextSecondary()} mb-8`}>
+              <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-8`}>
                 You haven&apos;t made any payments yet. Your transaction history will appear here after a successful
                 checkout (Stripe webhook inserts rows).
               </p>
@@ -265,74 +256,74 @@ export const BillingHistoryPage: React.FC = () => {
   }
 
   return (
-    <div className={`w-full min-h-0 ${getBackgroundGradient()} p-6`}>
+    <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-6xl mx-auto">
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className={`flex items-center gap-2 ${getThemeTextSecondary()} hover:opacity-80 transition mb-6`}
+        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6`}
       >
         <ArrowLeft className="h-5 w-5" />
         <span>Go back</span>
       </button>
       <div className="mb-8">
-        <h1 className={`text-3xl font-bold ${getThemeTextPrimary()} mb-2`}>Billing History</h1>
-        <p className={getThemeTextSecondary()}>
+        <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Billing History</h1>
+        <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
           View and download receipts for all your transactions
         </p>
       </div>
 
       <div
-        className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} border overflow-hidden`}
+        className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark border overflow-hidden`}
       >
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className={getThemeSubtle('ui')}>
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className={`px-6 py-4 text-left text-xs font-medium ${getThemeTextSecondary()} uppercase tracking-wider`}>
+                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
                   Date
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium ${getThemeTextSecondary()} uppercase tracking-wider`}>
+                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
                   Description
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium ${getThemeTextSecondary()} uppercase tracking-wider`}>
+                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
                   Amount
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium ${getThemeTextSecondary()} uppercase tracking-wider`}>
+                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
                   Status
                 </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium ${getThemeTextSecondary()} uppercase tracking-wider`}>
+                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className={`divide-y ${getThemeCardBorder()}`}>
+            <tbody className={`divide-y border-divider dark:border-divider-on-dark`}>
               {transactions.map((transaction) => (
                 <tr key={transaction.id} className="hover:opacity-90 transition-opacity">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      <Calendar className={`h-4 w-4 ${getThemeTextSecondary()}`} />
-                      <span className={`text-sm ${getThemeTextPrimary()}`}>
+                      <Calendar className={`h-4 w-4 text-secondary-ink dark:text-secondary-ink-on-dark`} />
+                      <span className={`text-sm text-ink dark:text-ink-on-dark`}>
                         {new Date(transaction.created_at).toLocaleDateString()}
                       </span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
                     <div>
-                      <p className="text-sm font-medium text-gray-900 dark:text-white">
+                      <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {transaction.transaction_type === 'subscription_payment'
                           ? 'Subscription Payment'
                           : transaction.transaction_type === 'trial_conversion'
                           ? 'Trial Conversion'
                           : 'Payment'}
                       </p>
-                      <p className={`text-xs ${getThemeTextSecondary()}`}>
+                      <p className={`text-xs text-secondary-ink dark:text-secondary-ink-on-dark`}>
                         {transaction.payment_method === 'card' ? 'Credit Card' : transaction.payment_method}
                       </p>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`text-sm font-semibold ${getThemeTextPrimary()}`}>
+                    <span className={`text-sm font-semibold text-ink dark:text-ink-on-dark`}>
                       {formatCurrency(transaction.amount, transaction.currency.toUpperCase())}
                     </span>
                   </td>
@@ -370,9 +361,9 @@ export const BillingHistoryPage: React.FC = () => {
         </div>
       </div>
 
-      <div className={`mt-6 ${getThemeSubtle('ui')} rounded-lg p-4 ${getThemeCardBorder()} border`}>
-        <p className={`text-sm ${getThemeTextSecondary()}`}>
-          <strong className={getThemeTextPrimary()}>Note:</strong> Receipts are generated on demand. Successful Stripe
+      <div className={`mt-6 bg-subtle dark:bg-subtle-on-dark rounded-lg p-4 border-divider dark:border-divider-on-dark border`}>
+        <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+          <strong className="text-ink dark:text-ink-on-dark">Note:</strong> Receipts are generated on demand. Successful Stripe
           payments are recorded here for your account.
         </p>
       </div>
