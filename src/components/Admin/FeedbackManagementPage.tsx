@@ -210,7 +210,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Feedback Management</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Feedback Management</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">Review and manage user feedback and suggestions</p>
         </div>
         <button
@@ -231,7 +231,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
               placeholder="Search feedback..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
@@ -240,7 +240,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>
@@ -254,7 +254,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Types</option>
               <option value="feedback">Feedback</option>
@@ -296,7 +296,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                 {filteredFeedbacks.map((feedback) => (
                   <tr key={feedback.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
                     <td className="px-6 py-6 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900 dark:text-white">
+                      <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {feedback.user_email}
                       </div>
                     </td>
@@ -306,7 +306,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                       </span>
                     </td>
                     <td className="px-6 py-6">
-                      <div className="text-sm text-gray-900 dark:text-white max-w-xs truncate">
+                      <div className="text-sm text-ink dark:text-ink-on-dark max-w-xs truncate">
                         {feedback.feedback_text}
                       </div>
                       {feedback.media_urls.length > 0 && (
@@ -367,7 +367,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white">Feedback Details</h3>
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Feedback Details</h3>
               <button
                 onClick={() => setSelectedFeedback(null)}
                 className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
@@ -382,7 +382,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                     User Email
                   </label>
-                  <p className="text-base font-semibold text-gray-900 dark:text-white">{selectedFeedback.user_email}</p>
+                  <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedFeedback.user_email}</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
@@ -398,7 +398,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                 <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
                   Submission Date
                 </label>
-                <p className="text-base text-gray-900 dark:text-white">
+                <p className="text-base text-ink dark:text-ink-on-dark">
                   {new Date(selectedFeedback.created_at).toLocaleString()}
                 </p>
               </div>
@@ -414,7 +414,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                   <select
                     value={selectedFeedback.status}
                     onChange={(e) => updateFeedbackStatus(selectedFeedback.id, e.target.value as 'pending' | 'reviewed' | 'resolved')}
-                    className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                    className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-lg text-sm focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
                   >
                     <option value="pending">Pending</option>
                     <option value="reviewed">Reviewed</option>
@@ -428,7 +428,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                   Feedback Message
                 </label>
                 <div className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
-                  <p className="text-gray-900 dark:text-white whitespace-pre-wrap">{selectedFeedback.feedback_text}</p>
+                  <p className="text-ink dark:text-ink-on-dark whitespace-pre-wrap">{selectedFeedback.feedback_text}</p>
                 </div>
               </div>
 
