@@ -4,7 +4,7 @@ import { useToast } from '../Toast/Toast';
 import { Shield, Search, Download, Calendar, User, Activity, Eye } from 'lucide-react';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface AuditLog {
   id: string;
