@@ -1,7 +1,6 @@
 import React, { useRef, useState, useCallback, useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { useHighlights, Highlight } from '../../../hooks/useHighlights';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 import HighlightMenu from './HighlightMenu';
 
@@ -24,7 +23,6 @@ const HighlightLayer: React.FC<HighlightLayerProps> = ({ text, itemId, children,
   const containerRef = useRef<HTMLDivElement>(null);
   const { highlights, addHighlight, removeHighlight } = useHighlights(itemId);
   const { t } = useI18n();
-  const _theme = useTheme();
 
   const [menuPos, setMenuPos] = useState<{ x: number; y: number } | null>(null);
   const [pendingRange, setPendingRange] = useState<{ start: number; end: number } | null>(null);
