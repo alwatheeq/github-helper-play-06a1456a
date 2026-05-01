@@ -1,145 +1,183 @@
-## Phase 3 Verification — PASS
+# Phase 4 Verification — PASS
 
-Confirmed clean:
-- `Sidebar.tsx`, `Header.tsx`, `AdminSidebar.tsx`, `AdminHeader.tsx`: zero `useTheme()` / `getTheme*()` calls.
-- 66 references to new role tokens (`bg-sidebar`, `accent-gold`, `bg-card-light/dark`, `border-divider`, `text-secondary-ink`, `text-muted-ink-on-dark`).
-- No leftover legacy literals in chrome except the **subscription tier badge palette** in `Header.tsx` lines 68–73 (intentional plan-tier identity).
-- Inverse-surface affordances (`hover:bg-white/5`, `text-ink-on-dark`) consistent across both sidebars.
-- Phase 2 fixes (removed `dark:root`, renamed `.bg-legacy-subtle`) still in place — no cross-file leakage.
+Confirmed clean across all 7 in-scope files (`Modal.tsx`, `UsernameSetupModal.tsx`, `Dashboard.tsx`, `InputForm.tsx`, `ProcessingStatus.tsx`, `SummaryDisplay.tsx`, `CreditBalanceWidget.tsx`):
+- Zero `useTheme()` / `getTheme*()` calls remain (only one harmless comment reference in `SummaryDisplay.tsx`).
+- 135 references to new Scholar primitives / role tokens (`ScholarCard`, `text-ink`, `accent-gold`, `bg-card-light`, `border-divider`, `bg-subtle`, `ring-focus`).
+- No stray legacy literals (`cyan-500`, `blue-500/50`, raw `gray-*`).
+- `previewMode` prop on `InputForm` confirmed as a clean opt-in — no behavioral change for production callers.
+- Phase 1–3 fixes (token definitions, sidebar/header chrome) intact, no regressions.
 
-Phase 3 ships clean.
+Ships clean.
 
 ---
 
-## Phase 4 — Dashboard Landing & Core Content Surfaces
+# Phase 5 — Sub-Pages & Remaining Modals
 
-**Goal:** Migrate the visually dominant, always-on-screen dashboard surfaces off `useTheme()` helpers and onto Scholar tokens / primitives, so the user sees the new system on the home page. Sub-pages (Library, Quiz, EduPlay, Academics, Social, BookMode, AudioStudy, MindMap, etc.) are deferred to Phase 5.
+**Goal:** Bring the rest of the user-facing routes onto Scholar tokens. After Phase 5 the only remaining `useTheme()` consumers should be `ThemeContext.tsx` itself (kept for backward compat shim) and a handful of niche overlays we'll close out in Phase 6.
 
-### Decisions locked in
-- Cards use `ScholarCard` **directly** (no routing through legacy `Card.tsx`).
-- Subscription tier badge palette **kept as-is** (plan identity, not theme).
-- `/scholar-preview` harness mounts InputForm in **preview-only** mode (no submission, no Supabase calls).
+**Scope:** ~70 files, ~1,500 helper calls. Run in **6 waves**, each independently shippable so you can review/approve mid-flight without leaving the app in a half-broken state.
 
-### Scope (8 files)
+### Hard precautions (apply to every wave)
 
-| # | File | Helper calls | Action |
-|---|------|--------------|--------|
-| 1 | `src/components/Common/Modal.tsx` | 4 | Shared modal shell — migrated first (foundation) |
-| 2 | `src/components/Dashboard/UsernameSetupModal.tsx` | 14 | Standalone modal mirroring same pattern |
-| 3 | `src/components/Dashboard/Dashboard.tsx` | 17 | Shell wrapper, empty state, welcome block, result containers |
-| 4 | `src/components/Dashboard/InputForm.tsx` | 51 | Tabs, dropzones, textarea, options panel — heaviest file |
-| 5 | `src/components/Dashboard/ProcessingStatus.tsx` | 14 | Progress card, stage labels |
-| 6 | `src/components/Dashboard/SummaryDisplay.tsx` | 45 | Summary card, action toolbar, tabs |
-| 7 | `src/components/Dashboard/CreditBalanceWidget.tsx` | 6 | Inline credit pill |
-| 8 | `src/components/Dashboard/LowCreditBanner.tsx` + `LowCreditWarning.tsx` | TBD | Warning surfaces |
+- **No backend touch.** Zero changes to Supabase queries, RPCs, RLS, edge functions, schema, or auth. Token-only refactor.
+- **Public prop APIs unchanged.** Every component keeps the same exports, props, return shape, ref forwarding, and i18n keys.
+- **No behavior changes.** No state-machine edits, no effect rewrites, no event-handler logic edits, no router changes.
+- **Tier badge palette preserved** (`Header.tsx` lines 68–73 exception — same rule as Phases 3–4).
+- **i18n / RTL preserved.** All `t()` keys, `dir`, and conditional spacing classes left untouched.
+- **Subscription/credit gating preserved.** Don't touch `useSubscription`, `SubscriptionGuard`, `PersistentSubscriptionModal` logic — only their visual surfaces.
+- **Lazy-loading preserved.** Don't change any `React.lazy` boundary or `Suspense` fallback structure.
+- **One file, one commit-equivalent edit.** No drive-by refactors of unrelated logic in the same file.
+- **Token mapping = same as Phase 4** (locked source of truth, reproduced below — no new tokens introduced).
 
-### Token mapping (single source of truth for Phase 4)
+### Token mapping (reused from Phase 4, do not extend)
 
 ```text
-getThemeCardBg()         -> use <ScholarCard>  (or bg-card-light dark:bg-card-dark)
+getThemeCardBg()         -> <ScholarCard>  | bg-card-light dark:bg-card-dark
 getThemeCardBorder()     -> border-divider dark:border-divider-on-dark
 getThemeTextPrimary()    -> text-ink dark:text-ink-on-dark
 getThemeTextSecondary()  -> text-secondary-ink dark:text-secondary-ink-on-dark
 getThemeTextMuted()      -> text-muted-ink dark:text-muted-ink-on-dark
-getThemeSubtle('bg')     -> bg-subtle dark:bg-subtle-on-dark
-getThemeSubtle('ui')     -> bg-subtle dark:bg-subtle-on-dark
+getThemeSubtle('bg'|'ui')-> bg-subtle dark:bg-subtle-on-dark
 getThemeAccent()         -> text-accent-gold
-getThemeGradient()       -> from-accent-gold to-accent-gold-soft (CTA only)
+getThemeGradient('ui')   -> from-accent-gold to-accent-gold-soft (CTA only)
 focus:ring-cyan-500      -> focus:ring-focus
 focus:ring-blue-500/50   -> focus:ring-focus
 text-cyan-600 (form)     -> text-accent-gold
 ```
 
-Tier badge color map in `Header.tsx` is the established exception — not generalized here.
+Any token gap discovered mid-wave: stop, define it in `index.css`/`tailwind.config.ts` first, then resume — never inline a new color.
 
-### Step-by-step
+---
 
-**Step 1 — Token audit (read-only).**
-Re-open `src/index.css` / `tailwind.config.ts` and confirm every token in the mapping exists from Phase 1. If `bg-subtle-on-dark`, `ring-focus`, or `bg-page-on-dark` is missing, define it before any component edit. No new color values introduced — only fill gaps.
+### Wave 1 — Shared modals (foundation, blocks other waves)
 
-**Step 2 — Migrate `Common/Modal.tsx` (foundation).**
-- Replace shell with `<ScholarCard variant="elevated">`. Public prop API (`title`, `footer`, `maxWidth`, `onClose`, `children`) stays byte-identical.
-- Header/footer dividers → `border-divider dark:border-divider-on-dark`.
-- Title → `text-ink dark:text-ink-on-dark`.
-- Why first: `InsufficientCreditsModal`, `TopicsTagsModal`, `GlobalExamDetailModal` and other consumers ride on this shell.
+These are reused by many sub-pages, so they go first to avoid a second pass.
 
-**Step 3 — Migrate `UsernameSetupModal.tsx`.**
-- Outer card → `<ScholarCard variant="elevated">`.
-- Subtle background block → `bg-subtle dark:bg-subtle-on-dark`.
-- `@` prefix slot preserved; input → `<ScholarInput>` keeping pl-8 / pr-10 spacing for prefix and validity icon.
-- Save CTA → `<ScholarButton variant="primary">` (built-in gold gradient — drop the inline `bg-gradient-to-r ${getThemeGradient()}`).
-- Accent icon → `text-accent-gold`.
+| File | calls |
+|---|---|
+| `Common/Modal.tsx` consumers cleanup verify | — |
+| `Dashboard/InsufficientCreditsModal.tsx` | low (already partially clean) |
+| `Dashboard/GlobalExamDetailModal.tsx` | medium |
+| `Dashboard/TopicsTagsModal.tsx` | 36 |
+| `Subscription/PersistentSubscriptionModal.tsx` | medium |
+| `Subscription/SubscriptionGuard.tsx` | low |
 
-**Step 4 — Migrate `Dashboard.tsx` shell.**
-- Outer wrapper → `bg-page dark:bg-page-on-dark` (verify token in Step 1).
-- Result containers (summary view, flashcard preview, empty state, welcome block) → `<ScholarCard>`.
-- Helper text → role tokens.
-- Remove `useTheme` import once unused.
-- Untouched: routing, lazy-load wiring, processing state machine, Supabase calls, persistent-modal logic, tutorial logic, every effect, every i18n key.
+Pattern: outer chrome → `<ScholarCard variant="elevated">`, CTAs → `<ScholarButton>`, divider/text → role tokens.
 
-**Step 5 — Migrate `InputForm.tsx` (highest-risk, 51 calls).**
-- Outer card → `<ScholarCard>` (drop inline `shadow-[0_1px_3px_…]` literal — `ScholarCard` provides `--scholar-shadow-sm`).
-- Tab strip (lines ~416–445): track `bg-subtle`, active tab `bg-card-light dark:bg-card-dark text-ink shadow-[var(--scholar-shadow-sm)]`, inactive `text-secondary-ink hover:opacity-80`.
-- Dropzones: border `border-divider`, hover `hover:border-accent-gold/40 hover:bg-accent-gold/5`, disabled `opacity-60`.
-- Paste textarea → `<ScholarTextarea>`; flashcard count → `<ScholarInput type="number">`.
-- Radios: `text-cyan-600 focus:ring-cyan-500` → `text-accent-gold focus:ring-focus`.
-- Generation options panel → `<ScholarCard variant="subtle">` (or `bg-subtle` block) with `border-divider`.
-- Preserve verbatim: i18n keys, RTL classes (`me-*`/`ms-*`/`start-*`/`end-*`), file-validation, OCR toggle, generation-prefs persistence, character-count guards, drop handlers, multi-file selection.
+### Wave 2 — Primary content pages (most-trafficked)
 
-**Step 6 — Migrate `ProcessingStatus.tsx`.**
-- Container → `<ScholarCard>`. Stage label colors → role tokens. Progress bar fill → `bg-accent-gold`, track → `bg-subtle dark:bg-subtle-on-dark`. Spinner → `<ScholarSpinner>`.
+| File | calls |
+|---|---|
+| `Dashboard/LibraryPage.tsx` | 65 |
+| `Dashboard/QuizPage.tsx` | 97 |
+| `Dashboard/QuizTakingComponent.tsx` | TBD |
+| `Dashboard/HistoryPage.tsx` | 27 |
+| `Dashboard/FlashcardViewer.tsx` | 46 |
+| `Dashboard/ContentViewPage.tsx` | TBD |
 
-**Step 7 — Migrate `SummaryDisplay.tsx` (45 calls).**
-- Article card → `<ScholarCard>`.
-- Action toolbar buttons (Copy, Download, Refresh, Open) → `<ScholarIconButton>` with same `aria-label` / tooltip text and same handlers.
-- Tabs (Summary / Flashcards) reuse the InputForm segmented-control pattern.
-- Keep `prose` typography classes intact; only swap surface and text-role classes around them.
-- Inline edit and copy/download flows untouched.
+Cards/list rows → `<ScholarCard>`, filter chips → `<ScholarBadge>`, CTAs → `<ScholarButton>`. Preserve every selection/persistence/effect.
 
-**Step 8 — Migrate credit surfaces.**
-- `CreditBalanceWidget.tsx`: pill → `<ScholarBadge>` with `accent-gold-soft` background; numeric text `text-ink`.
-- `LowCreditBanner.tsx` / `LowCreditWarning.tsx`: → `<ScholarAlert variant="warning">` (already gold-themed in Phase 2). Keep CTA `<ScholarButton variant="primary" size="sm">`.
+### Wave 3 — Account & billing surfaces
 
-**Step 9 — Cleanup pass.**
-- Remove unused `useTheme` imports from each touched file.
-- Verification greps (must all return zero):
-  - `rg "useTheme\(\)" <touched files>`
-  - `rg "getTheme[A-Za-z]+\(" <touched files>`
-  - `rg "bg-(slate|gray|sky|emerald|violet|cyan)-\d|text-cyan-600|focus:ring-cyan-500|focus:ring-blue-500" <touched files>`
+| File | calls |
+|---|---|
+| `Dashboard/ProfilePage.tsx` | 55 |
+| `Dashboard/SubscriptionManagementPage.tsx` | 58 |
+| `Dashboard/BillingHistoryPage.tsx` | 26 |
+| `Pricing/PricingPage.tsx` | 41 |
+| `Pricing/CheckoutPage.tsx` | TBD |
+| `Pricing/PaymentSuccess.tsx` / `PaymentCancel.tsx` | low |
+| `Dashboard/FeedbackPage.tsx` | 21 |
 
-**Step 10 — Visual QA via `/scholar-preview`.**
-- Extend the preview page with a "Dashboard Surfaces" section:
-  - `<InputForm>` mounted in **preview-only** mode (a `previewMode` prop short-circuits submit handlers and disables the primary CTA — no Supabase, no upload, no edge-function calls).
-  - `<ProcessingStatus>` fed mock state.
-  - `<SummaryDisplay>` fed mock content.
-- Cycle all 6 themes × {light, dark} = 12 combinations and confirm contrast, borders, focus rings, and hover states.
-- Then manually verify on `/dashboard`.
+Tier badge palette inside SubscriptionManagement preserved (matches Header rule). Stripe/Paddle webhooks untouched.
 
-### Cross-file precautions
+### Wave 4 — Learning modes & games
 
-1. **Modal API compatibility.** `Common/Modal.tsx` is consumed by 7+ files. Prop names, defaults, and `footer` slot stay identical. No behavior changes.
-2. **Phase 2 adapters untouched.** `Card.tsx` already delegates to `ScholarCard` — leave alone. `LoadingButton.tsx` already routes to `ScholarButton` — leave alone. No double migration.
-3. **`ThemeContext` stays alive.** We are NOT removing `ThemeContext` or `useTheme` yet — out-of-scope files (Library, Quiz, ~74 others) still depend on it. We just stop using it in Phase 4 files. **Memory rule respected:** `getThemeGradient` utility itself remains exported for the rest of the app.
-4. **Subscription tier palette in `Header.tsx`** stays exactly as-is.
-5. **Toast (Phase 2)** already migrated; not retouched.
-6. **i18n & RTL.** All `dir`-aware classes (`me-*`, `ms-*`, `start-*`, `end-*`) preserved verbatim. Only color/surface tokens change.
-7. **Focus ring.** Replace ad-hoc `focus:ring-cyan-500 / blue-500/50` with `focus:ring-focus` consistently — accessibility regression risk if missed.
-8. **Lazy-loaded sub-pages.** `SummaryDisplay` is in scope (lazy-imported but a Phase 4 target). Do **not** touch other lazy-imported pages (Library, Quiz, EduPlay, Academics, Profile, Feedback, Informational, History, StudyRooms).
-9. **Supabase / backend.** Zero changes to schema, RLS, edge functions, hooks, client config — pure UI token swap (per Core memory rule).
-10. **TypeScript relaxed config.** No new strict-mode violations introduced; unused-locals tolerance preserved (per Core memory rule).
-11. **Supabase SDK quirks.** No RPC or `order()` calls touched, so `.then(null)` and `nullsFirst: false` patterns remain untouched.
-12. **`previewMode` for InputForm.** Adding the prop must be opt-in and default `false`. Real `/dashboard` mounts behave exactly as today.
+| File | calls |
+|---|---|
+| `Dashboard/EduPlayPage.tsx` | 39 |
+| `Dashboard/Academics/AcademicsPage.tsx` | 59 |
+| `Dashboard/Academics/CourseAnalytics.tsx` | 22 |
+| `Dashboard/Academics/CourseTutor.tsx` | 11 |
+| `Dashboard/Academics/ExamScheduler.tsx` | 18 |
+| `Dashboard/Academics/SRSReviewPanel.tsx` | 16 |
+| `Dashboard/AudioStudy/*` (4 files) | ~37 total |
+| `Dashboard/BookMode/*` (5 files) | ~63 total |
+| `Dashboard/MindMap/MindMapView.tsx` | 8 |
+| `Dashboard/ReadAloud/ReadAloudButton.tsx` | low |
+| `Dashboard/Highlighting/HighlightLayer.tsx` | low |
+| `Dashboard/FloatingVideo/MiniPlayer.tsx` | low |
 
-### Out of scope (Phase 5+ candidates)
+Audio waveforms, mind-map canvas, book reader controls — visual chrome only, no engine changes.
 
-Library, Quiz, EduPlay, Academics, Social, BookMode, AudioStudy, MindMap, Highlighting, ReadAloud, FloatingVideo, Onboarding, Pricing, Auth, Admin pages (Overview/Analytics/Audit/Transactions/Users), ChatAssistant, NotificationCenter, Pomodoro, Achievements, BillingHistory, ProfilePage, Subscription modals, ShareView. ~74 files remain after Phase 4.
+### Wave 5 — Multiplayer & social
 
-### Acceptance criteria
+| File | calls |
+|---|---|
+| `Dashboard/BrainRush*` (4 files) | ~72 total |
+| `Dashboard/MultiplayerGamePlay.tsx` / `Lobby` / `Results` / `MultiplayerMenu` / `Wrapper` | ~26 total |
+| `Dashboard/GameJoinPage.tsx` | 19 |
+| `Dashboard/StudyRoomsPage.tsx` | 42 |
+| `Dashboard/Social/FriendsPanel.tsx` | 22 |
+| `Dashboard/Social/GroupsPanel.tsx` | 27 |
+| `Dashboard/Social/GroupChat.tsx` | 16 |
+| `Dashboard/CommentSection.tsx` | 22 |
+| `Dashboard/LikeButton.tsx` / `FavoriteButton.tsx` | low |
+| `Dashboard/ZegoVideoRoom.tsx` | low |
 
-- 8 listed files: zero `useTheme()` / `getTheme*()` calls.
-- All 6 themes × {light, dark} render Dashboard root + InputForm + ProcessingStatus + SummaryDisplay + credit surfaces without color mismatches, blown contrast, or missing borders.
-- No regressions in: file upload, OCR toggle, paste flow, generation-options persistence, processing progress, summary actions, credit pill, low-credit banner, modal open/close, username setup.
-- `/scholar-preview` extended harness renders all pieces in preview-only mode across all themes.
-- No Supabase, edge-function, or backend code touched.
+Realtime channels, presence, Zego SDK init — all untouched. Only shell/card/button visuals migrate.
 
-Ready to execute on approval.
+### Wave 6 — Onboarding, auth, ancillary
+
+| File | calls |
+|---|---|
+| `Auth/Auth.tsx` | TBD |
+| `Onboarding/OnboardingWizard.tsx` | 14 |
+| `Onboarding/PageTutorial.tsx` / `TutorialStep.tsx` / `LanguageChoicePage.tsx` | low |
+| `ChatAssistant/ChatAssistant.tsx` + `GlobalChatAssistant.tsx` | medium |
+| `Dashboard/NotificationCenter.tsx` | 22 |
+| `Dashboard/AchievementsPage.tsx` | 27 |
+| `Dashboard/GoalsAndAchievementsPage.tsx` | 30 |
+| `Dashboard/StudyGoalsPage.tsx` | TBD |
+| `Dashboard/InformationalPage.tsx` | 114 |
+| `Dashboard/PomodoroTimer.tsx` | 9 |
+| `Dashboard/AIQuestionGenerator.tsx` / `ManualQuestionBuilder.tsx` | medium |
+| `LanguageToggle.tsx` / `NotFound.tsx` / `ShareView.tsx` / `App.tsx` | low |
+
+`InformationalPage.tsx` is repetitive but mechanical — bulk replace.
+
+### Defer to Phase 6 (out of scope here)
+
+- Admin pages (`Admin/AdminLogin.tsx`, `OverviewPage`, `AnalyticsPage`, `AuditLogPage`, `TransactionsPage`, `AdminUsersManagementPage`) — admin chrome already migrated in Phase 3, contents stay as-is until UI parity confirmed.
+- `contexts/ThemeContext.tsx` — leave the `getTheme*` shims in place as no-op fallbacks until zero callers remain across the app, then delete in Phase 6.
+- `pages/ScholarPreview.tsx` — extend the preview harness in Phase 6 with the migrated sub-pages.
+
+### Per-wave checklist (apply to every wave before declaring done)
+
+1. `rg "useTheme|getTheme[A-Z]"` against the wave's files returns 0.
+2. `rg "cyan-[456]00|blue-[456]00/50|from-cyan|to-blue|text-gray-[789]00 dark:"` against wave's files returns 0 (excludes tier badges).
+3. New token adoption count > legacy call count baseline.
+4. No new imports of `ThemeContext` introduced; `useTheme` import removed once unused.
+5. Smoke-check the wave's primary route in light + dark, default theme, plus one non-default (e.g. `forest`/`ocean`).
+6. RTL spot-check on one Arabic-localized page per wave.
+7. No console errors / no new network requests vs. baseline.
+
+### Order of execution & approval gates
+
+Wave 1 → review → Wave 2 → review → … → Wave 6 → final sweep.
+Each wave is shippable on its own. If a token gap appears, pause the wave, patch tokens, then resume.
+
+### Out-of-scope confirmations (won't change)
+
+- Supabase schema, RLS, edge functions, RPCs.
+- `useSubscription`, credit logic, polling cadence.
+- Realtime/presence/Zego/Stripe/Paddle integrations.
+- Routing, lazy-loading boundaries, `Suspense` fallbacks.
+- i18n keys, RTL direction logic, language toggle behavior.
+- Tier badge color palette in `Header.tsx`/`SubscriptionManagementPage.tsx`.
+
+---
+
+**Recommended start:** Wave 1 (shared modals) — smallest, unblocks everything else, ~5 files.
+
+Reply "start wave 1" (or pick a different wave) and I'll execute with the precautions above.
