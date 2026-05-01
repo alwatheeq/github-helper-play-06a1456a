@@ -232,7 +232,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Credit Management</h1>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Credit Management</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-1">View and manage user credits</p>
         </div>
         <button
@@ -251,7 +251,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
             <Coins className="h-5 w-5 text-blue-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Credits</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total_credits.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.total_credits.toLocaleString()}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -259,7 +259,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
             <TrendingUp className="h-5 w-5 text-green-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Users with Credits</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.users_with_credits}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.users_with_credits}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -267,7 +267,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
             <Minus className="h-5 w-5 text-orange-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Low Credits (&lt;100)</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.users_low_credits}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.users_low_credits}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
@@ -275,7 +275,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
             <Coins className="h-5 w-5 text-purple-500" />
           </div>
           <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Users</h3>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.total_users}</p>
+          <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.total_users}</p>
         </div>
       </div>
 
@@ -289,7 +289,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
               placeholder="Search users by email or name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
         </div>
@@ -313,7 +313,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
                   <tr key={user.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div>
-                        <div className="text-sm font-medium text-gray-900 dark:text-white">{user.email}</div>
+                        <div className="text-sm font-medium text-ink dark:text-ink-on-dark">{user.email}</div>
                         {user.display_name && (
                           <div className="text-xs text-gray-500 dark:text-gray-400">{user.display_name}</div>
                         )}
@@ -321,12 +321,12 @@ export const CreditManagementPage: React.FC = React.memo(() => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <span className={`text-sm font-semibold ${
-                        isLow ? 'text-red-600 dark:text-red-400' : 'text-gray-900 dark:text-white'
+                        isLow ? 'text-red-600 dark:text-red-400' : 'text-ink dark:text-ink-on-dark'
                       }`}>
                         {creditsRemaining.toLocaleString()}
                       </span>
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                       {(user.credits_total || 0).toLocaleString()}
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
