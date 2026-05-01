@@ -51,7 +51,7 @@ export const ProfilePage: React.FC = React.memo(() => {
   const navigate = useNavigate();
   const { balance: creditBalance, refreshBalance } = useCredits();
   const { preferences, updateSidebarMode, updateTtsHoverEnabled } = useUserPreferences();
-  const { currentTheme, setTheme, getThemeGradient, getThemeBorder, getThemeFocusRing, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
+  const { currentTheme, setTheme } = useTheme();
   const { theme: darkMode } = useI18n();
   const {
     subscription,
