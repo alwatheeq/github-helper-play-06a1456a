@@ -5,6 +5,8 @@ import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
+import { RecentVolumesRail } from './RecentVolumesRail';
+import { PageHeader } from '../Scholar';
 // Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.
 const SummaryDisplay = lazy(() => import('./SummaryDisplay').then(m => ({ default: m.SummaryDisplay })));
 const HistoryPage = lazy(() => import('./HistoryPage').then(m => ({ default: m.HistoryPage })));
