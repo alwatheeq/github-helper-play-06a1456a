@@ -17,6 +17,7 @@ import { useFloatingVideoStore } from '../../stores/useFloatingVideoStore';
 import { FriendsPanel } from './Social/FriendsPanel';
 import { GroupsPanel } from './Social/GroupsPanel';
 import { GroupChat } from './Social/GroupChat';
+import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 
 interface StudyRoom {
   id: string;
@@ -1047,71 +1048,43 @@ export const StudyRoomsPage: React.FC = () => {
     );
   }
 
+  const studyRoomsTabs: SectionTab[] = [
+    { id: 'browse', label: t('study_rooms.browse') },
+    { id: 'my-rooms', label: t('study_rooms.my_rooms'), count: myRooms.length },
+    { id: 'create', label: t('study_rooms.create') },
+    { id: 'friends', label: (<><Heart className="h-3.5 w-3.5 inline me-1.5" aria-hidden />{t('social.tab_friends')}</>) },
+    { id: 'groups', label: (<><UsersRound className="h-3.5 w-3.5 inline me-1.5" aria-hidden />{t('social.tab_groups')}</>) },
+  ];
+
+  const handleStudyRoomsTabChange = (id: string) => {
+    if (id === 'friends' || id === 'groups') {
+      handleSocialTabClick(id);
+    } else {
+      setActiveTab(id as typeof activeTab);
+    }
+  };
+
+  // For tab-active styling, treat 'group-chat' as 'groups'.
+  const activeStudyRoomsTabId = activeTab === 'group-chat' ? 'groups' : activeTab;
+
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-6xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
-          <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
-            <div className="flex items-center space-x-3">
-              <Users className={`h-8 w-8 text-ink dark:text-ink-on-dark`} />
-              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('study_rooms.title')}</h1>
-            </div>
-          </div>
+        <PageHeader
+          eyebrow={t('study_rooms.eyebrow') || 'Collaboration'}
+          title={t('study_rooms.title')}
+          descriptor={t('study_rooms.page_description') || 'Collaborate with others in real-time'}
+          className="mb-6"
+          hideRule
+        />
 
-          <div className={`inline-flex items-center space-x-3 rounded-lg p-1 bg-accent-gold-soft/20`}>
-            <button
-              onClick={() => setActiveTab('browse')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'browse'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {t('study_rooms.browse')}
-            </button>
-            <button
-              onClick={() => setActiveTab('my-rooms')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'my-rooms'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {t('study_rooms.my_rooms')} ({myRooms.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('create')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'create'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {t('study_rooms.create')}
-            </button>
-            <button
-              onClick={() => handleSocialTabClick('friends')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium flex items-center gap-1.5 ${
-                activeTab === 'friends'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              <Heart className="h-3.5 w-3.5" />
-              {t('social.tab_friends')}
-            </button>
-            <button
-              onClick={() => handleSocialTabClick('groups')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium flex items-center gap-1.5 ${
-                activeTab === 'groups' || activeTab === 'group-chat'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              <UsersRound className="h-3.5 w-3.5" />
-              {t('social.tab_groups')}
-            </button>
-          </div>
+        <div className="mb-6">
+          <SectionTabs
+            tabs={studyRoomsTabs}
+            activeId={activeStudyRoomsTabId}
+            onChange={handleStudyRoomsTabChange}
+            ariaLabel={t('study_rooms.title')}
+          />
         </div>
 
         {activeTab === 'create' && (

@@ -942,7 +942,8 @@
     "create_first_room": "Create your first study room to collaborate with others",
     "room_full": "Room is full",
     "room_expired": "Room has expired",
-    "expires_in": "Expires in"
+    "expires_in": "Expires in",
+    "eyebrow": "Collaboration"
   },
   "chat": {
     "open_assistant": "Open AI Assistant",
@@ -1321,7 +1322,8 @@
     "quiz_types_count": "{count} quiz types",
     "generation_none_selected": "Nothing selected",
     "missing_generation_options_column": "Apply the migration that adds course generation settings (content_generation_options), then reload. Saving preferences requires that column.",
-    "db_not_migrated": "Database not migrated: apply academics migrations (e.g. supabase db push), then reload."
+    "db_not_migrated": "Database not migrated: apply academics migrations (e.g. supabase db push), then reload.",
+    "eyebrow": "Studies"
   },
   "read_aloud": {
     "read_aloud": "Read aloud",
