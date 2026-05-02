@@ -177,7 +177,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </span>
                           )}
                         </div>
-                        <div className={`text-xs ${isActive ? 'text-accent-gold/80' : 'text-muted-ink-on-dark'}`}>
+                        <div className={`text-[10px] uppercase tracking-[0.12em] mt-0.5 ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
                           {item.description}
                         </div>
                       </div>
