@@ -697,7 +697,12 @@
     "submit": "Gönder",
     "your_answer_fill_blank": "Yanıtınız (boşluk doldurma)",
     "your_answer_open": "Yanıtınız (açık uçlu)",
-    "type_your_answer": "Yanıtınızı buraya yazın"
+    "type_your_answer": "Yanıtınızı buraya yazın",
+    "eyebrow": "Sınavlar",
+    "descriptor": "Yeni bir quiz oluşturun, küresel bir sınava girin veya önceki denemelerinizi gözden geçirin.",
+    "view_mode": "Görünüm modu",
+    "sections": "Quiz bölümleri",
+    "explore": "Keşfet"
   },
   "book_mode": {
     "title": "Kitap Modu",
@@ -1571,5 +1576,21 @@
     "close": "Kapat",
     "leave_room": "Odadan Ayrıl",
     "video_preview": "Video önizleme"
+  },
+  "feedback": {
+    "eyebrow": "Editörlerden",
+    "title": "Geri bildirim ve öneriler",
+    "descriptor": "Düşüncelerinizi ve fikirlerinizi paylaşarak gelişmemize yardımcı olun.",
+    "sections": "Geri bildirim bölümleri",
+    "tab_feedback": "Geri bildirim",
+    "tab_suggestion": "Öneri",
+    "required_field": "Zorunlu alan",
+    "submitting": "Gönderiliyor...",
+    "submit_feedback": "Geri bildirim gönder",
+    "submit_suggestion": "Öneri gönder",
+    "next_title": "Bundan sonra ne olacak.",
+    "next_item_1": "Gönderiminiz ekibimiz tarafından incelenecek",
+    "next_item_2": "Uygulamayı iyileştirmek için tüm geri bildirimleri takdir ediyoruz",
+    "next_item_3": "Ek bilgiye ihtiyaç duyarsak sizinle iletişime geçebiliriz"
   }
 }
