@@ -478,54 +478,52 @@ export const FeedbackPage: React.FC = React.memo(() => {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex items-center justify-between pt-4 border-t border-divider dark:border-divider-on-dark">
             <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-              <span className="text-red-500">*</span> Required field
+              <span className="text-red-500">*</span> {t('feedback.required_field') || 'Required field'}
             </p>
             <button
               type="submit"
               disabled={isSubmitting || !feedbackText.trim()}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition duration-150 ${
-                activeTab === 'feedback'
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 dark:bg-blue-700 dark:hover:bg-blue-800'
-                  : 'bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 dark:bg-green-700 dark:hover:bg-green-800'
-              }`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] text-sm font-medium transition-colors bg-ink text-ink-on-dark hover:bg-ink/90 dark:bg-card-light dark:text-ink dark:hover:bg-card-light/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Submitting...</span>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                  <span>{t('feedback.submitting') || 'Submitting...'}</span>
                 </>
               ) : (
                 <>
-                  <Send className="h-5 w-5" />
-                  <span>Submit {activeTab === 'feedback' ? 'Feedback' : 'Suggestion'}</span>
+                  <Send className="h-4 w-4" />
+                  <span>{activeTab === 'feedback'
+                    ? (t('feedback.submit_feedback') || 'Submit feedback')
+                    : (t('feedback.submit_suggestion') || 'Submit suggestion')}</span>
                 </>
               )}
             </button>
           </div>
         </form>
-      </div>
+      </EditorialCard>
 
-      <div className="mt-6 bg-blue-50 rounded-md p-6 dark:bg-blue-900">
-        <h3 className="text-lg font-semibold text-blue-900 mb-2 dark:text-blue-300">
-          What happens next?
+      <EditorialCard variant="accent" className="mt-6">
+        <h3 className="font-display text-xl mb-3">
+          {t('feedback.next_title') || 'What happens next.'}
         </h3>
-        <ul className="space-y-2 text-blue-800 text-sm dark:text-blue-200">
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>Your {activeTab} will be reviewed by our team</span>
+        <ul className="space-y-2 text-sm">
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_1') || `Your ${activeTab} will be reviewed by our team`}</span>
           </li>
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>We appreciate all feedback and suggestions to improve the app</span>
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_2') || 'We appreciate all feedback and suggestions to improve the app'}</span>
           </li>
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>You may receive a follow-up if we need additional information</span>
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_3') || 'You may receive a follow-up if we need additional information'}</span>
           </li>
         </ul>
-      </div>
+      </EditorialCard>
 
       {/* Feedback Tutorial */}
       {tutorialConfig && (
