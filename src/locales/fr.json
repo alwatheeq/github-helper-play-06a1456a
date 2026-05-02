@@ -163,7 +163,8 @@
     "quiz_type_true_false": "Vrai / faux",
     "quiz_type_fill_in_blank": "À trous",
     "quiz_type_open_ended": "Question ouverte",
-    "summary_disabled_hint": "Le résumé est désactivé : les fiches utilisent le texte intégral extrait."
+    "summary_disabled_hint": "Le résumé est désactivé : les fiches utilisent le texte intégral extrait.",
+    "eyebrow": "Espace de travail"
   },
   "processing": {
     "fast_processing": "Traitement rapide",
@@ -407,7 +408,9 @@
     "delete_items_title": "Supprimer les éléments",
     "action_cannot_be_undone": "Cette action ne peut pas être annulée",
     "confirm_bulk_delete": "Êtes-vous sûr de vouloir supprimer {count} élément{count, plural, one {} other {s}} sélectionné{count, plural, one {} other {s}} ? Cela supprimera définitivement l'{count, plural, one {élément} other {éléments}} et toutes les données associées.",
-    "delete_items_button": "Supprimer les éléments"
+    "delete_items_button": "Supprimer les éléments",
+    "eyebrow": "Collection",
+    "view_mode": "Mode d'affichage"
   },
   "informational": {
     "how_to_use": "Comment utiliser MeshFahem",
@@ -731,7 +734,8 @@
     "no_items_with_notes": "Aucune Note pour le Moment",
     "add_notes_to_items": "Commencez à ajouter des notes à vos éléments de bibliothèque. Ils apparaîtront ici pour un accès facile.",
     "items_with_notes": "Mes Notes",
-    "items_with_notes_count": "{count} {count, plural, one {élément} other {éléments}} avec notes"
+    "items_with_notes_count": "{count} {count, plural, one {élément} other {éléments}} avec notes",
+    "eyebrow": "Personnel"
   },
   "free_form": {
     "available": "Mode Libre Disponible",
@@ -973,111 +977,291 @@
     "dashboard": {
       "title": "Vue d'ensemble du tableau de bord",
       "steps": [
-        { "title": "Bienvenue sur votre tableau de bord", "content": "Bienvenue ! Voici votre espace de travail principal pour traiter des documents, générer des résumés et créer des fiches. Explorons les fonctionnalités clés." },
-        { "title": "Télécharger des documents", "content": "Cliquez sur «Télécharger un fichier» pour traiter des PDF, DOCX ou PPTX. Fichiers jusqu'à 400 pages. Votre document sera converti en résumés et fiches." },
-        { "title": "Coller du texte directement", "content": "Vous pouvez aussi coller du texte directement dans la zone de texte. Idéal pour des résumés rapides de notes, articles ou tout contenu textuel." },
-        { "title": "Options de traitement", "content": "Avant de traiter, personnalisez : nombre de fiches (5-50), mode médical pour contenu médical, et sélection de langue pour les traductions." },
-        { "title": "Voir vos résultats", "content": "Après le traitement, vous verrez votre résumé et vos fiches. Vous pouvez voir les fiches, les publier dans votre bibliothèque ou recommencer." },
-        { "title": "Barre latérale de navigation", "content": "Utilisez la barre latérale pour naviguer entre les pages : Bibliothèque, Quiz, EduPlay, Salles d'étude, Historique, et plus. Survolez pour développer." },
-        { "title": "Assistant IA", "content": "Recherchez le bouton de l'assistant IA flottant. Il fournit une aide contextuelle selon votre contenu actuel. Faites-le glisser et redimensionnez-le." },
-        { "title": "Système de crédits", "content": "Votre solde de crédits s'affiche dans l'en-tête. Les crédits servent à traiter le contenu et les fonctionnalités IA. Ils se renouvellent mensuellement." },
-        { "title": "Vous êtes prêt !", "content": "Vous connaissez les bases ! Commencez par télécharger un document ou coller du texte pour créer votre premier résumé. Bonne étude !" }
+        {
+          "title": "Bienvenue sur votre tableau de bord",
+          "content": "Bienvenue ! Voici votre espace de travail principal pour traiter des documents, générer des résumés et créer des fiches. Explorons les fonctionnalités clés."
+        },
+        {
+          "title": "Télécharger des documents",
+          "content": "Cliquez sur «Télécharger un fichier» pour traiter des PDF, DOCX ou PPTX. Fichiers jusqu'à 400 pages. Votre document sera converti en résumés et fiches."
+        },
+        {
+          "title": "Coller du texte directement",
+          "content": "Vous pouvez aussi coller du texte directement dans la zone de texte. Idéal pour des résumés rapides de notes, articles ou tout contenu textuel."
+        },
+        {
+          "title": "Options de traitement",
+          "content": "Avant de traiter, personnalisez : nombre de fiches (5-50), mode médical pour contenu médical, et sélection de langue pour les traductions."
+        },
+        {
+          "title": "Voir vos résultats",
+          "content": "Après le traitement, vous verrez votre résumé et vos fiches. Vous pouvez voir les fiches, les publier dans votre bibliothèque ou recommencer."
+        },
+        {
+          "title": "Barre latérale de navigation",
+          "content": "Utilisez la barre latérale pour naviguer entre les pages : Bibliothèque, Quiz, EduPlay, Salles d'étude, Historique, et plus. Survolez pour développer."
+        },
+        {
+          "title": "Assistant IA",
+          "content": "Recherchez le bouton de l'assistant IA flottant. Il fournit une aide contextuelle selon votre contenu actuel. Faites-le glisser et redimensionnez-le."
+        },
+        {
+          "title": "Système de crédits",
+          "content": "Votre solde de crédits s'affiche dans l'en-tête. Les crédits servent à traiter le contenu et les fonctionnalités IA. Ils se renouvellent mensuellement."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Vous connaissez les bases ! Commencez par télécharger un document ou coller du texte pour créer votre premier résumé. Bonne étude !"
+        }
       ]
     },
     "library": {
       "title": "Ma Bibliothèque",
       "steps": [
-        { "title": "Votre bibliothèque de contenu", "content": "Votre bibliothèque stocke tous vos résumés traités et vos fiches. Tout ce que vous publiez depuis le tableau de bord est sauvegardé ici." },
-        { "title": "Rechercher dans votre bibliothèque", "content": "Utilisez l'icône de recherche pour trouver du contenu spécifique. Cliquez pour développer la barre de recherche et tapez des mots-clés." },
-        { "title": "Filtrer et trier", "content": "Utilisez le menu déroulant pour trier par : Date, Titre, Plus aimés ou Sujets. Cela vous aide à trouver rapidement le contenu dont vous avez besoin." },
-        { "title": "Voir les détails du contenu", "content": "Cliquez sur un élément pour voir son résumé complet, ses fiches, le texte original et les sujets. Vous pouvez aussi modifier, partager ou supprimer." },
-        { "title": "Organiser votre contenu", "content": "Utilisez des dossiers et des étiquettes pour organiser votre bibliothèque. Créez des dossiers pour différentes matières ou sujets." },
-        { "title": "Partager le contenu", "content": "Partagez vos résumés avec d'autres en générant des liens partageables. Les autres peuvent voir votre contenu sans avoir besoin d'un compte." },
-        { "title": "Actions de la bibliothèque", "content": "Chaque élément a des boutons d'action : Voir, Modifier, Partager, Supprimer. Utilisez-les pour gérer efficacement votre contenu." },
-        { "title": "Vous êtes prêt !", "content": "Votre bibliothèque est votre base de connaissances. Gardez-la organisée et utilisez la recherche pour trouver rapidement ce dont vous avez besoin." }
+        {
+          "title": "Votre bibliothèque de contenu",
+          "content": "Votre bibliothèque stocke tous vos résumés traités et vos fiches. Tout ce que vous publiez depuis le tableau de bord est sauvegardé ici."
+        },
+        {
+          "title": "Rechercher dans votre bibliothèque",
+          "content": "Utilisez l'icône de recherche pour trouver du contenu spécifique. Cliquez pour développer la barre de recherche et tapez des mots-clés."
+        },
+        {
+          "title": "Filtrer et trier",
+          "content": "Utilisez le menu déroulant pour trier par : Date, Titre, Plus aimés ou Sujets. Cela vous aide à trouver rapidement le contenu dont vous avez besoin."
+        },
+        {
+          "title": "Voir les détails du contenu",
+          "content": "Cliquez sur un élément pour voir son résumé complet, ses fiches, le texte original et les sujets. Vous pouvez aussi modifier, partager ou supprimer."
+        },
+        {
+          "title": "Organiser votre contenu",
+          "content": "Utilisez des dossiers et des étiquettes pour organiser votre bibliothèque. Créez des dossiers pour différentes matières ou sujets."
+        },
+        {
+          "title": "Partager le contenu",
+          "content": "Partagez vos résumés avec d'autres en générant des liens partageables. Les autres peuvent voir votre contenu sans avoir besoin d'un compte."
+        },
+        {
+          "title": "Actions de la bibliothèque",
+          "content": "Chaque élément a des boutons d'action : Voir, Modifier, Partager, Supprimer. Utilisez-les pour gérer efficacement votre contenu."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Votre bibliothèque est votre base de connaissances. Gardez-la organisée et utilisez la recherche pour trouver rapidement ce dont vous avez besoin."
+        }
       ]
     },
     "quiz": {
       "title": "Générateur de Quiz",
       "steps": [
-        { "title": "Créer des quiz depuis votre contenu", "content": "La page Quiz vous permet de créer et de passer des quiz à partir de votre contenu traité. Testez vos connaissances et suivez vos progrès." },
-        { "title": "Choisir la source des questions", "content": "Sélectionnez la source des questions : votre bibliothèque (contenu sauvegardé), votre historique (traitements récents) ou créez des questions manuellement." },
-        { "title": "Génération de questions par IA", "content": "Cliquez sur «Générer des questions» pour créer des questions IA depuis votre contenu. Choisissez le niveau de difficulté et les types de questions." },
-        { "title": "Passer un quiz", "content": "Sélectionnez un quiz et cliquez sur «Démarrer le quiz». Répondez aux questions dans le temps imparti et suivez votre score en temps réel." },
-        { "title": "Voir les résultats du quiz", "content": "Après le quiz, examinez vos résultats : bonnes réponses, mauvaises réponses, temps pris et score global. Apprenez de vos erreurs." },
-        { "title": "Organiser les dossiers de quiz", "content": "Créez des dossiers pour organiser vos quiz par matière ou sujet. Cela facilite la recherche et la gestion de votre collection." },
-        { "title": "Paramètres du quiz", "content": "Personnalisez les paramètres : limites de temps, nombre de questions, niveau de difficulté. Ajustez selon vos préférences d'étude." },
-        { "title": "Vous êtes prêt !", "content": "Commencez à créer des quiz pour tester vos connaissances. La pratique régulière renforce ce que vous avez appris !" }
+        {
+          "title": "Créer des quiz depuis votre contenu",
+          "content": "La page Quiz vous permet de créer et de passer des quiz à partir de votre contenu traité. Testez vos connaissances et suivez vos progrès."
+        },
+        {
+          "title": "Choisir la source des questions",
+          "content": "Sélectionnez la source des questions : votre bibliothèque (contenu sauvegardé), votre historique (traitements récents) ou créez des questions manuellement."
+        },
+        {
+          "title": "Génération de questions par IA",
+          "content": "Cliquez sur «Générer des questions» pour créer des questions IA depuis votre contenu. Choisissez le niveau de difficulté et les types de questions."
+        },
+        {
+          "title": "Passer un quiz",
+          "content": "Sélectionnez un quiz et cliquez sur «Démarrer le quiz». Répondez aux questions dans le temps imparti et suivez votre score en temps réel."
+        },
+        {
+          "title": "Voir les résultats du quiz",
+          "content": "Après le quiz, examinez vos résultats : bonnes réponses, mauvaises réponses, temps pris et score global. Apprenez de vos erreurs."
+        },
+        {
+          "title": "Organiser les dossiers de quiz",
+          "content": "Créez des dossiers pour organiser vos quiz par matière ou sujet. Cela facilite la recherche et la gestion de votre collection."
+        },
+        {
+          "title": "Paramètres du quiz",
+          "content": "Personnalisez les paramètres : limites de temps, nombre de questions, niveau de difficulté. Ajustez selon vos préférences d'étude."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Commencez à créer des quiz pour tester vos connaissances. La pratique régulière renforce ce que vous avez appris !"
+        }
       ]
     },
     "eduplay": {
       "title": "Jeux EduPlay",
       "steps": [
-        { "title": "Jeux éducatifs", "content": "EduPlay propose des jeux éducatifs interactifs pour rendre l'apprentissage amusant. Jouez seul ou affrontez d'autres joueurs en multijoueur." },
-        { "title": "Jeu Brain Rush", "content": "Brain Rush est un jeu de quiz rapide. Répondez vite pour marquer des points. Plus vite vous répondez correctement, plus votre score est élevé." },
-        { "title": "Configuration du jeu", "content": "Avant de commencer, choisissez la source des questions, le niveau de difficulté et configurez les limites de temps selon vos préférences." },
-        { "title": "Jeux multijoueurs", "content": "Rejoignez ou créez des sessions multijoueurs. Affrontez des amis ou d'autres utilisateurs en temps réel. Consultez les classements." },
-        { "title": "Résultats du jeu", "content": "Après chaque partie, consultez vos résultats : score, précision, temps et classement. Révisez les questions incorrectes pour vous améliorer." },
-        { "title": "Vous êtes prêt !", "content": "Commencez à jouer à Brain Rush pour rendre l'apprentissage engageant et compétitif. Défiez-vous et défiez les autres !" }
+        {
+          "title": "Jeux éducatifs",
+          "content": "EduPlay propose des jeux éducatifs interactifs pour rendre l'apprentissage amusant. Jouez seul ou affrontez d'autres joueurs en multijoueur."
+        },
+        {
+          "title": "Jeu Brain Rush",
+          "content": "Brain Rush est un jeu de quiz rapide. Répondez vite pour marquer des points. Plus vite vous répondez correctement, plus votre score est élevé."
+        },
+        {
+          "title": "Configuration du jeu",
+          "content": "Avant de commencer, choisissez la source des questions, le niveau de difficulté et configurez les limites de temps selon vos préférences."
+        },
+        {
+          "title": "Jeux multijoueurs",
+          "content": "Rejoignez ou créez des sessions multijoueurs. Affrontez des amis ou d'autres utilisateurs en temps réel. Consultez les classements."
+        },
+        {
+          "title": "Résultats du jeu",
+          "content": "Après chaque partie, consultez vos résultats : score, précision, temps et classement. Révisez les questions incorrectes pour vous améliorer."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Commencez à jouer à Brain Rush pour rendre l'apprentissage engageant et compétitif. Défiez-vous et défiez les autres !"
+        }
       ]
     },
     "study-rooms": {
       "title": "Salles d'étude",
       "steps": [
-        { "title": "Espaces d'étude collaboratifs", "content": "Les salles d'étude vous permettent d'étudier ensemble en temps réel. Créez ou rejoignez des salles pour collaborer sur des supports d'apprentissage." },
-        { "title": "Rejoindre des salles", "content": "Parcourez les salles publiques disponibles ou rejoignez des salles privées avec un code. Filtrez par matière, sujet ou nombre de participants." },
-        { "title": "Créer des salles", "content": "Cliquez sur «Créer une salle» pour démarrer votre propre salle d'étude. Définissez le nom, la description, les paramètres de confidentialité et les matériaux." },
-        { "title": "Fonctionnalités de collaboration", "content": "Dans une salle d'étude, partagez du contenu, discutez et travaillez ensemble sur des fiches ou des quiz avec des mises à jour en temps réel." },
-        { "title": "Gestion de la salle", "content": "En tant que créateur de la salle, gérez les participants, modifiez les paramètres et contrôlez le contenu. Quittez ou supprimez les salles que vous avez créées." },
-        { "title": "Vous êtes prêt !", "content": "Commencez à collaborer ! Créez une salle pour votre groupe d'étude ou rejoignez des salles existantes pour apprendre ensemble." }
+        {
+          "title": "Espaces d'étude collaboratifs",
+          "content": "Les salles d'étude vous permettent d'étudier ensemble en temps réel. Créez ou rejoignez des salles pour collaborer sur des supports d'apprentissage."
+        },
+        {
+          "title": "Rejoindre des salles",
+          "content": "Parcourez les salles publiques disponibles ou rejoignez des salles privées avec un code. Filtrez par matière, sujet ou nombre de participants."
+        },
+        {
+          "title": "Créer des salles",
+          "content": "Cliquez sur «Créer une salle» pour démarrer votre propre salle d'étude. Définissez le nom, la description, les paramètres de confidentialité et les matériaux."
+        },
+        {
+          "title": "Fonctionnalités de collaboration",
+          "content": "Dans une salle d'étude, partagez du contenu, discutez et travaillez ensemble sur des fiches ou des quiz avec des mises à jour en temps réel."
+        },
+        {
+          "title": "Gestion de la salle",
+          "content": "En tant que créateur de la salle, gérez les participants, modifiez les paramètres et contrôlez le contenu. Quittez ou supprimez les salles que vous avez créées."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Commencez à collaborer ! Créez une salle pour votre groupe d'étude ou rejoignez des salles existantes pour apprendre ensemble."
+        }
       ]
     },
     "history": {
       "title": "Historique des traitements",
       "steps": [
-        { "title": "Votre historique de traitement", "content": "La page Historique affiche tous vos traitements de documents passés. Tout ce que vous avez traité est sauvegardé ici." },
-        { "title": "Consulter l'historique", "content": "Parcourez votre historique chronologiquement. Chaque entrée affiche le nom du fichier, la date de traitement et le type de contenu." },
-        { "title": "Revoir le contenu", "content": "Cliquez sur un élément pour voir son résumé, ses fiches et le texte original. Vous pouvez republier dans votre bibliothèque ou le retraiter." },
-        { "title": "Actions de l'historique", "content": "Depuis les éléments d'historique : voir le contenu complet, publier dans la bibliothèque, supprimer d'anciennes entrées, ou exporter. Gérez efficacement." },
-        { "title": "Vous êtes prêt !", "content": "Utilisez l'historique pour revoir vos traitements passés. Rien n'est perdu !" }
+        {
+          "title": "Votre historique de traitement",
+          "content": "La page Historique affiche tous vos traitements de documents passés. Tout ce que vous avez traité est sauvegardé ici."
+        },
+        {
+          "title": "Consulter l'historique",
+          "content": "Parcourez votre historique chronologiquement. Chaque entrée affiche le nom du fichier, la date de traitement et le type de contenu."
+        },
+        {
+          "title": "Revoir le contenu",
+          "content": "Cliquez sur un élément pour voir son résumé, ses fiches et le texte original. Vous pouvez republier dans votre bibliothèque ou le retraiter."
+        },
+        {
+          "title": "Actions de l'historique",
+          "content": "Depuis les éléments d'historique : voir le contenu complet, publier dans la bibliothèque, supprimer d'anciennes entrées, ou exporter. Gérez efficacement."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Utilisez l'historique pour revoir vos traitements passés. Rien n'est perdu !"
+        }
       ]
     },
     "informational": {
       "title": "Aide et Informations",
       "steps": [
-        { "title": "Ressources d'aide", "content": "Cette page contient des informations utiles sur l'utilisation de l'application. Trouvez des guides, des conseils et des réponses aux questions courantes." },
-        { "title": "Trouver des informations", "content": "Parcourez les sujets et catégories pour trouver les informations dont vous avez besoin. Utilisez la recherche pour localiser rapidement des sujets spécifiques." },
-        { "title": "Vous êtes prêt !", "content": "Consultez cette page à tout moment pour obtenir de l'aide ou en apprendre davantage sur les fonctionnalités. Nous sommes là pour vous aider !" }
+        {
+          "title": "Ressources d'aide",
+          "content": "Cette page contient des informations utiles sur l'utilisation de l'application. Trouvez des guides, des conseils et des réponses aux questions courantes."
+        },
+        {
+          "title": "Trouver des informations",
+          "content": "Parcourez les sujets et catégories pour trouver les informations dont vous avez besoin. Utilisez la recherche pour localiser rapidement des sujets spécifiques."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Consultez cette page à tout moment pour obtenir de l'aide ou en apprendre davantage sur les fonctionnalités. Nous sommes là pour vous aider !"
+        }
       ]
     },
     "feedback": {
       "title": "Commentaires et Suggestions",
       "steps": [
-        { "title": "Partagez vos idées", "content": "Vos retours nous aident à nous améliorer ! Partagez vos pensées, signalez des problèmes ou suggérez de nouvelles fonctionnalités. Nous valorisons votre contribution." },
-        { "title": "Soumettre des commentaires", "content": "Remplissez le formulaire avec votre message, sélectionnez le type (rapport de bug, demande de fonctionnalité, commentaire général) et envoyez." },
-        { "title": "Demandes de fonctionnalités", "content": "Vous avez une idée ? Soumettez-la ici ! Vous pouvez aussi voter sur les demandes existantes d'autres utilisateurs." },
-        { "title": "Vous êtes prêt !", "content": "Nous apprécions vos retours ! Vos suggestions aident à améliorer l'application pour tous. Merci !" }
+        {
+          "title": "Partagez vos idées",
+          "content": "Vos retours nous aident à nous améliorer ! Partagez vos pensées, signalez des problèmes ou suggérez de nouvelles fonctionnalités. Nous valorisons votre contribution."
+        },
+        {
+          "title": "Soumettre des commentaires",
+          "content": "Remplissez le formulaire avec votre message, sélectionnez le type (rapport de bug, demande de fonctionnalité, commentaire général) et envoyez."
+        },
+        {
+          "title": "Demandes de fonctionnalités",
+          "content": "Vous avez une idée ? Soumettez-la ici ! Vous pouvez aussi voter sur les demandes existantes d'autres utilisateurs."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Nous apprécions vos retours ! Vos suggestions aident à améliorer l'application pour tous. Merci !"
+        }
       ]
     },
     "profile": {
       "title": "Profil et Paramètres",
       "steps": [
-        { "title": "Votre profil", "content": "Gérez les paramètres de votre compte, vos préférences et votre abonnement depuis la page Profil. Personnalisez votre expérience ici." },
-        { "title": "Paramètres du compte", "content": "Mettez à jour vos informations de profil, votre adresse e-mail et votre mot de passe. Gardez votre compte sécurisé et à jour." },
-        { "title": "Préférences", "content": "Personnalisez votre expérience : choisissez des thèmes de couleur, définissez les préférences de langue et configurez le comportement de la barre latérale." },
-        { "title": "Gestion de l'abonnement", "content": "Consultez votre statut d'abonnement, vos informations de facturation et les options de mise à niveau. Gérez votre abonnement et vos moyens de paiement." },
-        { "title": "Crédits et utilisation", "content": "Surveillez votre solde de crédits, vos statistiques d'utilisation et l'historique des crédits. Voir quand vos crédits se renouvellent." },
-        { "title": "Vous êtes prêt !", "content": "Votre profil est votre centre de contrôle. Personnalisez les paramètres selon vos préférences et gérez votre compte facilement." }
+        {
+          "title": "Votre profil",
+          "content": "Gérez les paramètres de votre compte, vos préférences et votre abonnement depuis la page Profil. Personnalisez votre expérience ici."
+        },
+        {
+          "title": "Paramètres du compte",
+          "content": "Mettez à jour vos informations de profil, votre adresse e-mail et votre mot de passe. Gardez votre compte sécurisé et à jour."
+        },
+        {
+          "title": "Préférences",
+          "content": "Personnalisez votre expérience : choisissez des thèmes de couleur, définissez les préférences de langue et configurez le comportement de la barre latérale."
+        },
+        {
+          "title": "Gestion de l'abonnement",
+          "content": "Consultez votre statut d'abonnement, vos informations de facturation et les options de mise à niveau. Gérez votre abonnement et vos moyens de paiement."
+        },
+        {
+          "title": "Crédits et utilisation",
+          "content": "Surveillez votre solde de crédits, vos statistiques d'utilisation et l'historique des crédits. Voir quand vos crédits se renouvellent."
+        },
+        {
+          "title": "Vous êtes prêt !",
+          "content": "Votre profil est votre centre de contrôle. Personnalisez les paramètres selon vos préférences et gérez votre compte facilement."
+        }
       ]
     },
     "academics": {
       "title": "Académique",
       "steps": [
-        { "title": "Votre hub d'étude", "content": "Académique sert à organiser vos cours, transformer des documents en outils d'étude et voir une progression simple par sujet." },
-        { "title": "Créer des cours", "content": "Utilisez « Créer un cours » pour un nom, un code optionnel et un sujet. Choisissez un sujet existant ou saisissez-en un nouveau." },
-        { "title": "Générer depuis des fichiers", "content": "Dans un cours, téléchargez un PDF, DOCX ou PPTX. L'application peut générer résumé, fiches et quiz liés à partir du même texte." },
-        { "title": "Analytique", "content": "Les scores par sujet combinent quiz et signaux de révision des fiches. Le score du cours se concentre sur les quiz liés." },
-        { "title": "C'est parti", "content": "Commencez par créer un cours, puis téléchargez du contenu quand vous voulez des outils structurés." }
+        {
+          "title": "Votre hub d'étude",
+          "content": "Académique sert à organiser vos cours, transformer des documents en outils d'étude et voir une progression simple par sujet."
+        },
+        {
+          "title": "Créer des cours",
+          "content": "Utilisez « Créer un cours » pour un nom, un code optionnel et un sujet. Choisissez un sujet existant ou saisissez-en un nouveau."
+        },
+        {
+          "title": "Générer depuis des fichiers",
+          "content": "Dans un cours, téléchargez un PDF, DOCX ou PPTX. L'application peut générer résumé, fiches et quiz liés à partir du même texte."
+        },
+        {
+          "title": "Analytique",
+          "content": "Les scores par sujet combinent quiz et signaux de révision des fiches. Le score du cours se concentre sur les quiz liés."
+        },
+        {
+          "title": "C'est parti",
+          "content": "Commencez par créer un cours, puis téléchargez du contenu quand vous voulez des outils structurés."
+        }
       ]
     }
   },
