@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BookOpen, Target, TrendingUp, Plus, Sparkles, Upload, BarChart3, ChevronDown } from 'lucide-react';
+import { Target, TrendingUp, Plus, Sparkles, Upload, BarChart3, ChevronDown } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { usePageTutorial } from '../../../hooks/usePageTutorial';
