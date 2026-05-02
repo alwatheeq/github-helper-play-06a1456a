@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BookOpen, Target, TrendingUp, Plus, Sparkles, Upload, BarChart3, ChevronDown } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { usePageTutorial } from '../../../hooks/usePageTutorial';
 import { PageTutorial } from '../../Onboarding/PageTutorial';
@@ -115,16 +114,6 @@ export const AcademicsPage: React.FC = React.memo(() => {
     config: tutorialConfig
   } = usePageTutorial('academics');
   const { success: showSuccessToast, error: showErrorToast } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeTextMuted,
-    getThemeGradient,
-    getThemeSubtle
-  } = useTheme();
-
   const [loading, setLoading] = useState(true);
   const [topics, setTopics] = useState<Topic[]>([]);
   const [courses, setCourses] = useState<Course[]>([]);
@@ -649,18 +638,18 @@ export const AcademicsPage: React.FC = React.memo(() => {
     <>
       <div className="space-y-6">
       <div
-        className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} p-8`}
+        className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark p-8`}
       >
         <div className="flex items-start justify-between gap-6 flex-wrap">
           <div className="flex items-start gap-3">
-            <div className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white`}>
+            <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
               <BookOpen className="h-5 w-5" />
             </div>
             <div>
-              <h1 className={`text-3xl font-bold ${getThemeTextPrimary()}`}>
+              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>
                 {t('academics.tab_title') || 'Academics'}
               </h1>
-              <p className={`${getThemeTextSecondary()} mt-2 text-base max-w-2xl`}>
+              <p className={`text-secondary-ink dark:text-muted-ink-on-dark mt-2 text-base max-w-2xl`}>
                 {t('academics.tab_desc') ||
                   'Create courses, turn uploaded content into study tools, and track progress by topic.'}
               </p>
@@ -673,7 +662,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               migrationErrorToastShownRef.current = false;
               setShowCreateCourse(true);
             }}
-            className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg ${getThemeGradient('ui')} text-white`}
+            className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
           >
             <Plus className="h-4 w-4" />
             <span>{t('academics.create_course') || 'Create course'}</span>
@@ -684,14 +673,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
           {shellStats.map((s, idx) => {
             const Icon = s.icon;
             return (
-              <div key={idx} className={`p-4 rounded-lg ${getThemeSubtle('bg')} ${getThemeCardBorder()}`}>
+              <div key={idx} className={`p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark`}>
                 <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg ${getThemeGradient('ui')} text-white`}>
+                  <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                <div className={`font-semibold ${getThemeTextPrimary()}`}>{s.label}</div>
-                    <div className={`text-sm ${getThemeTextMuted()} mt-1`}>{s.desc}</div>
+                <div className={`font-semibold text-ink dark:text-ink-on-dark`}>{s.label}</div>
+                    <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>{s.desc}</div>
                   </div>
                 </div>
               </div>
@@ -699,14 +688,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
           })}
         </div>
 
-        <div className={`mt-6 p-4 rounded-lg ${getThemeSubtle('bg')} ${getThemeCardBorder()}`}>
+        <div className={`mt-6 p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center gap-3">
-            <Sparkles className={`h-5 w-5 ${getThemeTextSecondary()}`} />
+            <Sparkles className={`h-5 w-5 text-secondary-ink dark:text-muted-ink-on-dark`} />
             <div>
-              <div className={`font-semibold ${getThemeTextPrimary()}`}>
+              <div className={`font-semibold text-ink dark:text-ink-on-dark`}>
                 {t('academics.shell_hint_title') || 'What you can do next'}
               </div>
-              <div className={`text-sm ${getThemeTextMuted()} mt-1`}>
+              <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
                 {t('academics.shell_hint_desc') ||
                   'Later phases will let you create courses, upload documents, generate summaries/flashcards/quizzes, and view topic-based analytics.'}
               </div>
@@ -715,11 +704,11 @@ export const AcademicsPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <div className={`${getThemeCardBg()} rounded-lg ${getThemeCardBorder()} p-6`}>
-        <h2 className={`text-xl font-semibold ${getThemeTextPrimary()}`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg border-divider dark:border-divider-on-dark p-6`}>
+        <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark`}>
           {t('academics.courses_section_title') || 'Your courses'}
         </h2>
-        <p className={`text-sm ${getThemeTextMuted()} mt-2`}>
+        <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-2`}>
           {t('academics.courses_section_desc') ||
             'Course list will appear here once course scaffolding and generation are wired up.'}
         </p>
@@ -727,7 +716,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-1 space-y-2">
             {courses.length === 0 ? (
-              <div className={`p-4 rounded-lg ${getThemeSubtle('bg')} ${getThemeCardBorder()} text-sm ${getThemeTextSecondary()}`}>
+              <div className={`p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 {t('academics.courses_empty_state') || 'No courses yet.'}
               </div>
             ) : (
@@ -736,12 +725,12 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   key={course.id}
                   type="button"
                   onClick={() => setSelectedCourseId(course.id)}
-                  className={`w-full text-left p-3 rounded-lg border ${getThemeCardBorder()} ${
-                    selectedCourseId === course.id ? getThemeSubtle('ui') : ''
+                  className={`w-full text-left p-3 rounded-lg border border-divider dark:border-divider-on-dark ${
+                    selectedCourseId === course.id ? "bg-accent-gold-soft/20" : ''
                   }`}
                 >
-                  <div className={`font-semibold ${getThemeTextPrimary()}`}>{course.course_name}</div>
-                  <div className={`text-xs ${getThemeTextMuted()} mt-1`}>
+                  <div className={`font-semibold text-ink dark:text-ink-on-dark`}>{course.course_name}</div>
+                  <div className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
                     {course.course_code ? `${course.course_code} • ` : ''}
                     {course.academics_topics?.name || t('academics.topic_label')}
                   </div>
@@ -751,28 +740,28 @@ export const AcademicsPage: React.FC = React.memo(() => {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            <div className={`p-4 rounded-lg border ${getThemeCardBorder()}`}>
-              <h3 className={`font-semibold ${getThemeTextPrimary()}`}>
+            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
+              <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
                 {selectedCourse?.course_name || t('academics.select_course')}
               </h3>
-              <p className={`text-sm ${getThemeTextMuted()} mt-1`}>
+              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
                 {t('academics.upload_section_desc')}
               </p>
               {selectedCourse ? (
                 <details
-                  className={`group mt-3 rounded-lg border ${getThemeCardBorder()} ${getThemeSubtle('bg')} overflow-hidden`}
+                  className={`group mt-3 rounded-lg border border-divider dark:border-divider-on-dark bg-accent-gold-soft/10 overflow-hidden`}
                 >
                   <summary
-                    className={`flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden ${getThemeTextPrimary()}`}
+                    className={`flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark`}
                   >
                     <span className={`text-sm font-medium`}>{t('academics.generation_for_upload_title')}</span>
-                    <span className={`flex min-w-0 flex-1 items-center justify-end gap-2 text-xs ${getThemeTextMuted()}`}>
+                    <span className={`flex min-w-0 flex-1 items-center justify-end gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark`}>
                       <span className="truncate text-right">{generationSettingsLine}</span>
                       <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden />
                     </span>
                   </summary>
-                  <div className={`space-y-3 border-t px-3 py-3 ${getThemeCardBorder()}`}>
-                    <label className={`flex items-center gap-2 text-sm ${getThemeTextSecondary()}`}>
+                  <div className={`space-y-3 border-t px-3 py-3 border-divider dark:border-divider-on-dark`}>
+                    <label className={`flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                       <input
                         type="checkbox"
                         checked={workingGenPrefs.includeSummary}
@@ -781,7 +770,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                       />
                       {t('academics.include_summary')}
                     </label>
-                    <label className={`flex items-center gap-2 text-sm ${getThemeTextSecondary()}`}>
+                    <label className={`flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                       <input
                         type="checkbox"
                         checked={workingGenPrefs.includeFlashcards}
@@ -790,10 +779,10 @@ export const AcademicsPage: React.FC = React.memo(() => {
                       />
                       {t('academics.include_flashcards')}
                     </label>
-                    <p className={`text-xs font-medium ${getThemeTextMuted()}`}>{t('academics.quiz_types_label')}</p>
+                    <p className={`text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.quiz_types_label')}</p>
                     <div className="flex flex-wrap gap-3">
                       {ALL_QUIZ_QUESTION_TYPES.map((qt) => (
-                        <label key={qt} className={`flex items-center gap-1.5 text-xs ${getThemeTextSecondary()}`}>
+                        <label key={qt} className={`flex items-center gap-1.5 text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>
                           <input
                             type="checkbox"
                             checked={workingGenPrefs.quizQuestionTypes.includes(qt)}
@@ -805,7 +794,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                       ))}
                     </div>
                     {!canPersistGenerationPrefsToDb && (
-                      <p className={`text-xs leading-relaxed ${getThemeTextMuted()}`}>
+                      <p className={`text-xs leading-relaxed text-muted-ink dark:text-muted-ink-on-dark`}>
                         {t('academics.missing_generation_options_column')}
                       </p>
                     )}
@@ -813,14 +802,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                       type="button"
                       onClick={() => void saveWorkingGenPrefs()}
                       disabled={savingGenPrefs || uploading || !canPersistGenerationPrefsToDb}
-                      className={`text-sm px-3 py-1.5 rounded-lg border ${getThemeCardBorder()} ${getThemeTextSecondary()}`}
+                      className={`text-sm px-3 py-1.5 rounded-lg border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark`}
                     >
                       {savingGenPrefs ? t('academics.saving_prefs') : t('academics.save_generation_prefs')}
                     </button>
                   </div>
                 </details>
               ) : (
-                <p className={`mt-3 text-sm ${getThemeTextMuted()}`}>{t('academics.select_course_first')}</p>
+                <p className={`mt-3 text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.select_course_first')}</p>
               )}
               <div className="mt-3 flex flex-col gap-2">
                 <input
@@ -834,13 +823,13 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   className="text-sm"
                 />
                 {selectedFiles.length > 0 && (
-                  <ul className={`text-xs space-y-1 ${getThemeTextMuted()}`}>
+                  <ul className={`text-xs space-y-1 text-muted-ink dark:text-muted-ink-on-dark`}>
                     {selectedFiles.map((f, idx) => (
                       <li key={`${f.name}-${idx}`} className="flex items-center justify-between gap-2">
                         <span className="truncate">{f.name}</span>
                         <button
                           type="button"
-                          className={`shrink-0 ${getThemeTextSecondary()} underline`}
+                          className={`shrink-0 text-secondary-ink dark:text-muted-ink-on-dark underline`}
                           onClick={() => setSelectedFiles((prev) => prev.filter((_, j) => j !== idx))}
                         >
                           {t('academics.remove_file')}
@@ -850,7 +839,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   </ul>
                 )}
                 {uploadProgress && (
-                  <p className={`text-xs ${getThemeTextSecondary()}`}>{uploadProgress}</p>
+                  <p className={`text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>{uploadProgress}</p>
                 )}
                 <div className="flex items-center gap-3 flex-wrap">
                   <button
@@ -859,8 +848,8 @@ export const AcademicsPage: React.FC = React.memo(() => {
                     onClick={() => void handleGenerateContentForCourse()}
                     className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${
                       !selectedCourse || selectedFiles.length === 0 || uploading
-                        ? `${getThemeSubtle('bg')} ${getThemeTextMuted()} cursor-not-allowed`
-                        : `${getThemeGradient('ui')} text-white`
+                        ? `bg-accent-gold-soft/10 text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed`
+                        : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
                     }`}
                   >
                     <Upload className="h-4 w-4" />
@@ -870,19 +859,19 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg border ${getThemeCardBorder()}`}>
+            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
               <div className="flex items-center gap-2 mb-3">
                 <BarChart3 className="h-4 w-4" />
-                <h4 className={`font-semibold ${getThemeTextPrimary()}`}>{t('academics.analytics_heading')}</h4>
+                <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.analytics_heading')}</h4>
               </div>
-              <div className={`text-sm ${getThemeTextSecondary()}`}>
+              <div className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 {t('academics.course_score')} <span className="font-semibold">{courseScore}%</span>
               </div>
               <div className="mt-2 space-y-1">
                 {topicScores.slice(0, 8).map((entry) => (
                   <div key={entry.topic} className="flex items-center justify-between text-sm">
-                    <span className={getThemeTextSecondary()}>{entry.topic}</span>
-                    <span className={getThemeTextPrimary()}>{entry.score}%</span>
+                    <span className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{entry.topic}</span>
+                    <span className={"text-ink dark:text-ink-on-dark"}>{entry.score}%</span>
                   </div>
                 ))}
               </div>
@@ -906,21 +895,21 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </>
             )}
 
-            <div className={`p-4 rounded-lg border ${getThemeCardBorder()}`}>
-              <h4 className={`font-semibold ${getThemeTextPrimary()} mb-2`}>{t('academics.generated_content_heading')}</h4>
+            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
+              <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('academics.generated_content_heading')}</h4>
               <div className="space-y-2">
                 {courseItems.map((item) => (
-                  <div key={item.id} className={`p-2 rounded ${getThemeSubtle('bg')} text-sm ${getThemeTextSecondary()}`}>
+                  <div key={item.id} className={`p-2 rounded bg-accent-gold-soft/10 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                     {item.user_library_items?.title || item.item_id}
                   </div>
                 ))}
                 {courseQuizzes.map((quiz) => (
-                  <div key={quiz.id} className={`p-2 rounded ${getThemeSubtle('bg')} text-sm ${getThemeTextSecondary()}`}>
+                  <div key={quiz.id} className={`p-2 rounded bg-accent-gold-soft/10 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                     {quiz.quiz_sessions?.quiz_title || quiz.quiz_session_id}
                   </div>
                 ))}
                 {courseItems.length === 0 && courseQuizzes.length === 0 ? (
-                  <div className={`text-sm ${getThemeTextMuted()}`}>{t('academics.no_generated_content')}</div>
+                  <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.no_generated_content')}</div>
                 ) : null}
               </div>
             </div>
@@ -930,25 +919,25 @@ export const AcademicsPage: React.FC = React.memo(() => {
 
       {showCreateCourse ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className={`${getThemeCardBg()} rounded-lg ${getThemeCardBorder()} w-full max-w-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>{t('academics.create_course') || 'Create course'}</h3>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg border-divider dark:border-divider-on-dark w-full max-w-lg p-6`}>
+            <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.create_course') || 'Create course'}</h3>
             <div className="space-y-3 mt-4">
               <input
                 value={newCourseName}
                 onChange={(e) => setNewCourseName(e.target.value)}
                 placeholder={t('academics.placeholder_course_name')}
-                className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
               <input
                 value={newCourseCode}
                 onChange={(e) => setNewCourseCode(e.target.value)}
                 placeholder={t('academics.placeholder_course_code')}
-                className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
               <select
                 value={selectedTopicId}
                 onChange={(e) => setSelectedTopicId(e.target.value)}
-                className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               >
                 <option value="">{t('academics.select_existing_topic')}</option>
                 {topics.map((topic) => (
@@ -961,14 +950,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
                 placeholder={t('academics.placeholder_new_topic')}
-                className={`w-full px-3 py-2 rounded-lg border ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
             </div>
             <div className="mt-5 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setShowCreateCourse(false)}
-                className={`px-4 py-2 rounded-lg ${getThemeSubtle('bg')} ${getThemeTextSecondary()}`}
+                className={`px-4 py-2 rounded-lg bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark`}
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -976,7 +965,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 type="button"
                 disabled={creatingCourse}
                 onClick={handleCreateCourse}
-                className={`px-4 py-2 rounded-lg ${getThemeGradient('ui')} text-white`}
+                className={`px-4 py-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
               >
                 {creatingCourse ? t('academics.creating') : (t('common.save') || 'Save')}
               </button>

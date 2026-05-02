@@ -5,7 +5,6 @@ import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useSubscription } from '../../hooks/useSubscription';
-import { useTheme } from '../../contexts/ThemeContext';
 import { getGameJoinUrl } from '../../utils/getBaseUrl';
 import { ManualQuestionBuilder } from './ManualQuestionBuilder';
 import { AIQuestionGenerator } from './AIQuestionGenerator';
@@ -72,7 +71,6 @@ type QuestionSource = 'auto_generated' | 'manual' | 'saved_set' | 'quiz_session'
 export const EduPlayPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const { error: showErrorToast } = useToast();
-  const { getThemeGradient, getThemeBorder, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('eduplay');
   const [searchParams] = useSearchParams();
   const [viewMode, setViewMode] = useState<ViewMode>('menu');
@@ -587,14 +585,14 @@ export const EduPlayPage: React.FC = React.memo(() => {
   const renderMenu = () => (
     <div className="w-full">
       <div className="mb-12 text-center">
-        <Gamepad2 className={`h-20 w-20 ${getThemeTextPrimary()} mx-auto mb-4`} />
-        <h2 className={`text-5xl font-bold ${getThemeTextPrimary()} mb-4`}>EduPlay</h2>
+        <Gamepad2 className={`h-20 w-20 text-ink dark:text-ink-on-dark mx-auto mb-4`} />
+        <h2 className={`text-5xl font-bold text-ink dark:text-ink-on-dark mb-4`}>EduPlay</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <button
           onClick={() => setViewMode('game-selection')}
-          className={`group ${getThemeGradient('ui')} hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
+          className={`group bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
         >
           <div className="bg-white/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Target className="h-12 w-12 text-white" />
@@ -604,15 +602,15 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <div className="mt-4 text-sm text-white/80">Compete in real-time!</div>
         </button>
 
-        <div className={`${getThemeSubtle('ui')} rounded-lg p-8 border-2 border-dashed ${getThemeBorder()} opacity-50 flex flex-col items-center justify-center opacity-60`}>
-          <div className={`${getThemeSubtle('ui')} rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
-            <Trophy className={`h-12 w-12 ${getThemeTextMuted()}`} />
+        <div className={`bg-accent-gold-soft/20 rounded-lg p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60`}>
+          <div className={`bg-accent-gold-soft/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
+            <Trophy className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark`} />
           </div>
-          <h3 className={`text-xl font-bold mb-2 ${getThemeTextSecondary()}`}>Coming Soon</h3>
-          <p className={`text-sm ${getThemeTextMuted()} text-center`}>More exciting games on the way!</p>
+          <h3 className={`text-xl font-bold mb-2 text-secondary-ink dark:text-muted-ink-on-dark`}>Coming Soon</h3>
+          <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>More exciting games on the way!</p>
         </div>
 
-        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 border-2 border-dashed ${getThemeBorder()} opacity-50 flex flex-col items-center justify-center opacity-60">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
           <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Clock className="h-12 w-12 text-gray-400" />
           </div>
@@ -627,7 +625,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="w-full max-w-4xl mx-auto">
       <button
         onClick={() => setViewMode('menu')}
-        className={`mb-6 flex items-center space-x-2 ${getThemeTextSecondary()} hover:opacity-80 transition`}
+        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -635,13 +633,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <span>Back to Games</span>
       </button>
 
-      <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-8`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-8`}>
         <div className="text-center mb-8">
-          <div className={`${getThemeGradient('ui')} rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
+          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
             <Target className="h-16 w-16 text-white" />
           </div>
-          <h2 className={`text-4xl font-bold ${getThemeTextPrimary()} mb-2`}>Brain Rush</h2>
-          <p className={`text-lg ${getThemeTextSecondary()}`}>
+          <h2 className={`text-4xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Brain Rush</h2>
+          <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
             Fast-paced multiplayer quiz game with 4-choice questions
           </p>
         </div>
@@ -649,7 +647,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <button
             onClick={() => setViewMode('question-source')}
-            className={`${getThemeGradient('ui')} hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
+            className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
           >
             <Crown className="h-12 w-12 mx-auto mb-4 text-white" />
             <h3 className="text-2xl font-bold mb-2 text-white">Host a Game</h3>
@@ -667,7 +665,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
           <button
             onClick={() => setViewMode('multiplayer-menu')}
-            className={`${getThemeGradient('ui')} hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
+            className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white rounded-lg p-8 shadow-sm hover:shadow-lg transition-all transform `}
           >
             <Users className="h-12 w-12 mx-auto mb-4 text-white" />
             <h3 className="text-2xl font-bold mb-2 text-white">Multiplayer</h3>
@@ -676,12 +674,12 @@ export const EduPlayPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <div className={`${getThemeGradient('bg')} rounded-md p-6`}>
-        <h4 className={`font-bold ${getThemeTextPrimary()} mb-3 flex items-center space-x-2`}>
+      <div className={`bg-accent-gold-soft/20 rounded-md p-6`}>
+        <h4 className={`font-bold text-ink dark:text-ink-on-dark mb-3 flex items-center space-x-2`}>
           <Trophy className="h-5 w-5 text-purple-600 dark:text-purple-400" />
           <span>How to Play</span>
         </h4>
-        <ul className={`space-y-2 ${getThemeTextSecondary()}`}>
+        <ul className={`space-y-2 text-secondary-ink dark:text-muted-ink-on-dark`}>
           <li className="flex items-start space-x-2">
             <span className="text-purple-600 dark:text-purple-400 font-bold">1.</span>
             <span>Answer 4-choice questions as fast as you can</span>
@@ -703,7 +701,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="w-full max-w-4xl mx-auto">
       <button
         onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 ${getThemeTextSecondary()} hover:opacity-80 transition`}
+        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -712,8 +710,8 @@ export const EduPlayPage: React.FC = React.memo(() => {
       </button>
 
       <div className="mb-6 text-center">
-        <h2 className={`text-3xl font-bold ${getThemeTextPrimary()} mb-2`}>Choose Question Source</h2>
-        <p className={getThemeTextSecondary()}>How would you like to create your questions?</p>
+        <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Choose Question Source</h2>
+        <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -722,13 +720,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('auto_generated');
             setViewMode('ai-generate');
           }}
-          className={`${getThemeCardBg()} rounded-lg p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
+          className={`bg-card-light dark:bg-card-dark rounded-lg p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
         >
-          <div className={`${getThemeGradient('bg')} rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
+          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Sparkles className="h-8 w-8 text-purple-600 dark:text-purple-400" />
           </div>
-          <h3 className={`text-xl font-bold ${getThemeTextPrimary()} mb-2`}>AI Generate</h3>
-          <p className={getThemeTextSecondary()}>Let AI create questions about any topic</p>
+          <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-2`}>AI Generate</h3>
+          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
         </button>
 
         <button
@@ -736,9 +734,9 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('manual');
             setViewMode('manual-build');
           }}
-          className={`${getThemeCardBg()} rounded-lg p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:${getThemeBorder()}`}
+          className={`bg-card-light dark:bg-card-dark rounded-lg p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
         >
-          <div className={`${getThemeGradient('bg')} rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
+          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Edit className="h-8 w-8 text-blue-600 dark:text-blue-400" />
           </div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Manual Build</h3>
@@ -763,7 +761,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               value={gameTitle}
               onChange={(e) => setGameTitle(e.target.value)}
               placeholder="e.g., Biology Quiz Battle"
-              className={`w-full px-4 py-3 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -776,7 +774,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 type="number"
                 value={questionCount}
                 disabled
-                className={`w-full px-4 py-3 border ${getThemeBorder()} rounded-lg ${getThemeSubtle('bg')} ${getThemeTextPrimary()}`}
+                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark`}
               />
             </div>
             <div>
@@ -789,7 +787,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 onChange={(e) => setQuestionTimer(Number(e.target.value))}
                 min="5"
                 max="60"
-                className={`w-full px-4 py-3 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
             </div>
           </div>
@@ -797,14 +795,14 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <div className="flex space-x-3 pt-4">
             <button
               onClick={() => setViewMode('question-source')}
-              className={`flex-1 px-6 py-3 border ${getThemeBorder()} ${getThemeTextSecondary()} rounded-lg hover:opacity-60 transition`}
+              className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-lg hover:opacity-60 transition`}
             >
               Back
             </button>
             <button
               onClick={handleCreateGame}
               disabled={creating || !gameTitle.trim()}
-              className={`flex-1 px-6 py-3 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+              className={`flex-1 px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
             >
               <Play className="h-5 w-5" />
               <span>{creating ? 'Creating...' : 'Create Game'}</span>
@@ -819,7 +817,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="max-w-md mx-auto">
       <button
         onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 ${getThemeTextSecondary()} hover:opacity-80 transition`}
+        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -841,7 +839,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 6-digit code"
               maxLength={6}
-              className={`w-full px-4 py-3 text-2xl text-center font-bold tracking-widest border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-100`}
+              className={`w-full px-4 py-3 text-2xl text-center font-bold tracking-widest border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-100`}
             />
           </div>
 
@@ -855,7 +853,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your display name"
               maxLength={50}
-              className={`w-full px-4 py-3 border ${getThemeBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -888,7 +886,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             {/* Game Code and QR Code Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Game Code */}
-              <div className={`${getThemeGradient('bg')} rounded-md p-6 border-2 ${getThemeBorder()} opacity-50`}>
+              <div className={`bg-accent-gold-soft/20 rounded-md p-6 border-2 border-divider dark:border-divider-on-dark opacity-50`}>
                 <div className="flex items-center justify-center space-x-2 mb-3">
                   <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Game Code</span>
                 </div>
@@ -973,7 +971,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="flex space-x-3">
           <button
             onClick={handleLeaveGame}
-            className={`flex-1 px-6 py-3 border ${getThemeBorder()} text-gray-700 rounded-lg hover:bg-gray-50 transition dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
+            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-gray-700 rounded-lg hover:bg-gray-50 transition dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
           >
             <LogOut className="h-5 w-5" />
             <span>Leave Game</span>
