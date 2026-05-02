@@ -42,7 +42,7 @@ interface UserAchievement {
 export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
+  
   const { success: showSuccessToast, error: showErrorToast } = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const [activeTab, setActiveTab] = useState<'goals' | 'achievements'>('goals');
