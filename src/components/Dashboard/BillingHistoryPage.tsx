@@ -8,6 +8,8 @@ import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
+import { PageHeader, EditorialCard } from '../Scholar';
+import { useI18n } from '../../contexts/I18nContext';
 
 interface Transaction {
   id: string;
