@@ -1747,42 +1747,7 @@ export const Dashboard: React.FC = () => {
               </div>
             )}
 
-                <SummaryDisplay 
-                  summaryChunks={processingState.summaryChunks}
-                  flashcards={processingState.flashcards}
-                  originalText={processingState.originalText}
-                  topics={processingState.topics}
-                  medicalMode={processingState.medicalMode}
-                  medicalScore={processingState.medicalScore}
-                  onPublishToLibrary={handlePublishToLibrary}
-                  onReset={resetProcessing}
-                  onActionBarData={setActionBarData}
-                />
-              </div>
-            )}
 
-            {currentView === 'main' && processingState.stage === 'error' && (
-              <div className="text-center py-12">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
-                  <h3 className="text-lg font-semibold text-red-800 mb-2 dark:text-red-300">
-                    {processingState.medicalMode ? '🏥 Medical Processing Error' : 'Processing Error'}
-                  </h3>
-                  <p className="text-red-700 mb-4 dark:text-red-300">
-                    {processingState.error || 'An error occurred during processing. Please try again.'}
-                  </p>
-                  <button
-                    onClick={resetProcessing}
-                    className={`px-4 py-2 text-white rounded-lg transition duration-150 ${
-                      processingState.medicalMode
-                        ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
-                        : 'bg-red-600 hover:bg-red-700'
-                    }`}
-                  >
-                    {processingState.medicalMode ? '🔄 Retry Medical Processing' : 'Try Again'}
-                  </button>
-                </div>
-              </div>
-            )}
             </Suspense>
           </div>
         </main>
