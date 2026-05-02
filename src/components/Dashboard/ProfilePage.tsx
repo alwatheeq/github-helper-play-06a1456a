@@ -15,6 +15,7 @@ import { PageTutorial } from '../Onboarding/PageTutorial';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { getToolsCreditsPlanCap } from '../../utils/subscriptionHelpers';
+import { PageHeader } from '../Scholar';
 
 interface UserStats {
   level: number;
@@ -983,59 +984,49 @@ export const ProfilePage: React.FC = React.memo(() => {
   return (
     <div className="w-full min-h-0 p-4 sm:p-6">
       <div className="w-full space-y-6">
-        {/* Subscription Status Card */}
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft rounded-lg shadow p-6 text-white`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="bg-white bg-opacity-20 dark:bg-gray-900 dark:bg-opacity-20 p-3 rounded-lg">
-                <Crown className="h-8 w-8" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold">{t('profile.subscription_status')}</h2>
-                {hasActiveSubscription() ? (
-                  <>
-                    <p className="text-white dark:text-gray-900 text-opacity-90 dark:text-opacity-90 mt-1">
-                      {t('profile.current_plan')}: <span className="font-semibold">{getTierDisplayName()}</span>
-                    </p>
-                    {isTrialUser() && (
-                      <p className="text-white dark:text-gray-900 text-sm mt-1">
-                        {t('profile.trial_expires', { days: getDaysRemaining() })}
-                      </p>
-                    )}
-                    {isPaidUser() && subscription && (
-                      <p className="text-white dark:text-gray-900 text-opacity-80 dark:text-opacity-80 text-sm mt-1">
-                        {subscription.auto_renew ? t('profile.renews_on') : t('profile.expires_on')} {new Date(subscription.end_date).toLocaleDateString()}
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-white dark:text-gray-900 text-opacity-90 dark:text-opacity-90 mt-1">
-                    {t('profile.no_subscription')}
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              {hasActiveSubscription() && !isTrialUser() ? (
-                <button
-                  onClick={() => navigate('/profile/subscription')}
-                  className={`px-6 py-3 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark rounded-lg hover:opacity-80 font-semibold transition flex items-center space-x-2`}
-                >
-                  <CreditCard className="h-5 w-5" />
-                  <span>{t('profile.manage_subscription')}</span>
-                </button>
-              ) : (
-                <button
-                  onClick={() => navigate('/pricing')}
-                  className={`px-6 py-3 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark rounded-lg hover:opacity-80 font-semibold transition flex items-center space-x-2`}
-                >
-                  <Crown className="h-5 w-5" />
-                  <span>{isTrialUser() ? t('profile.upgrade_plan') : t('profile.subscribe_now')}</span>
-                </button>
-              )}
-            </div>
+        {/* Editorial header */}
+        <PageHeader
+          eyebrow={t('profile.eyebrow')}
+          title={t('profile.subscription_status')}
+          descriptor={
+            hasActiveSubscription()
+              ? `${t('profile.current_plan')}: ${getTierDisplayName()}`
+              : t('profile.no_subscription')
+          }
+          actions={
+            hasActiveSubscription() && !isTrialUser() ? (
+              <button
+                onClick={() => navigate('/profile/subscription')}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-[6px] border border-ink dark:border-ink-on-dark text-sm font-medium text-ink dark:text-ink-on-dark hover:bg-ink hover:text-ink-on-dark dark:hover:bg-ink-on-dark dark:hover:text-ink transition-colors"
+              >
+                <CreditCard className="h-4 w-4" />
+                <span>{t('profile.manage_subscription')}</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/pricing')}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-[6px] bg-ink text-ink-on-dark dark:bg-ink-on-dark dark:text-ink text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                <Crown className="h-4 w-4" />
+                <span>{isTrialUser() ? t('profile.upgrade_plan') : t('profile.subscribe_now')}</span>
+              </button>
+            )
+          }
+        />
+        {/* Subscription meta line */}
+        {hasActiveSubscription() && (
+          <div className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark -mt-2">
+            {isTrialUser() && (
+              <span>{t('profile.trial_expires', { days: getDaysRemaining() })}</span>
+            )}
+            {isPaidUser() && subscription && (
+              <span>
+                {subscription.auto_renew ? t('profile.renews_on') : t('profile.expires_on')}{' '}
+                {new Date(subscription.end_date).toLocaleDateString()}
+              </span>
+            )}
           </div>
-        </div>
+        )}
 
         {/* Credits: summary + expandable breakdown (matches header dropdown) */}
         {creditBalance && (
