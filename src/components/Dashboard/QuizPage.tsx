@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Upload, BookOpen, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
+import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useDebounce } from '../../hooks/useDebounce';
