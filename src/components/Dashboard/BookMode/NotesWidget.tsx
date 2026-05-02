@@ -404,7 +404,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
   return (
     <div className="flex flex-col h-full bg-amber-50/80 dark:bg-amber-950/20">
       {/* Header Actions */}
-      <div className={`px-5 py-2.5 border-b ${getThemeCardBorder()} border-amber-200/60 dark:border-amber-800/40`}>
+      <div className={`px-5 py-2.5 border-b border-divider dark:border-divider-on-dark border-amber-200/60 dark:border-amber-800/40`}>
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -413,7 +413,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
             setNoteContent('');
             setNoteType('page');
           }}
-          className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm ${getThemeGradient('ui')} text-white hover:opacity-90 transition-opacity`}
+          className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90 transition-opacity`}
         >
           <Plus className="h-4 w-4" />
           <span>{t('notebook.add_note') || 'Add Note'}</span>
@@ -422,7 +422,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
 
       {/* Add/Edit Note Form */}
       {showAddNote && (
-        <div className={`p-4 border-b ${getThemeCardBorder()} ${getThemeSubtle('bg')} shadow-[0_2px_8px_rgba(0,0,0,0.08)]`}>
+        <div className={`p-4 border-b border-divider dark:border-divider-on-dark bg-accent-gold-soft/20 shadow-[0_2px_8px_rgba(0,0,0,0.08)]`}>
           <div className="space-y-3">
             <div className="flex flex-wrap gap-2">
               <div className="flex space-x-2">
@@ -430,8 +430,8 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   onClick={() => setNoteType('page')}
                   className={`px-3 py-1 text-xs rounded ${
                     noteType === 'page'
-                      ? `${getThemeGradient('ui')} text-white`
-                      : `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                      ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
+                      : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
                   }`}
                 >
                   {t('notebook.page_note') || 'Page Note'}
@@ -440,8 +440,8 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   onClick={() => setNoteType('book')}
                   className={`px-3 py-1 text-xs rounded ${
                     noteType === 'book'
-                      ? `${getThemeGradient('ui')} text-white`
-                      : `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                      ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
+                      : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
                   }`}
                 >
                   {t('notebook.book_note') || 'Book Note'}
@@ -449,13 +449,13 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
               </div>
               {noteType === 'page' && totalPages > 0 && (
                 <div className="flex items-center gap-2">
-                  <label className={`text-xs ${getThemeTextSecondary()}`}>
+                  <label className={`text-xs text-ink dark:text-ink-on-dark`}>
                     {t('book_mode.page') || 'Page'}:
                   </label>
                   <select
                     value={selectedPageIndex}
                     onChange={(e) => setSelectedPageIndex(parseInt(e.target.value, 10))}
-                    className={`px-2 py-1 text-xs rounded ${getThemeCardBorder()} ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                    className={`px-2 py-1 text-xs rounded border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                   >
                     {Array.from({ length: totalPages }, (_, i) => (
                       <option key={i} value={i}>
@@ -470,14 +470,14 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
               value={noteContent}
               onChange={(e) => setNoteContent(e.target.value)}
               placeholder={t('notebook.add_note') || 'Write your note...'}
-              className={`w-full px-3 py-2 ${getThemeCardBorder()} rounded-lg ${getThemeCardBg()} shadow-[0_2px_8px_rgba(0,0,0,0.08)] ${getThemeTextPrimary()} resize-none`}
+              className={`w-full px-3 py-2 border-divider dark:border-divider-on-dark rounded-lg bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark resize-none`}
               rows={4}
             />
             <div className="flex space-x-2">
               <button
                 onClick={handleSaveNote}
                 disabled={!noteContent.trim()}
-                className={`flex-1 px-5 py-2.5 rounded-lg text-sm ${getThemeGradient('ui')} text-white hover:opacity-90 disabled:opacity-50 transition-opacity`}
+                className={`flex-1 px-5 py-2.5 rounded-lg text-sm bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90 disabled:opacity-50 transition-opacity`}
               >
                 {editingNoteId ? (t('notebook.edit_note') || 'Update') : (t('notebook.add_note') || 'Save')}
               </button>
@@ -487,7 +487,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   setEditingNoteId(null);
                   setNoteContent('');
                 }}
-                className={`px-5 py-2.5 rounded-lg text-sm ${getThemeSubtle('ui')} shadow-[0_2px_8px_rgba(0,0,0,0.08)] ${getThemeTextSecondary()} hover:opacity-60 transition-colors`}
+                className={`px-5 py-2.5 rounded-lg text-sm bg-accent-gold-soft/20 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark hover:opacity-60 transition-colors`}
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -500,12 +500,12 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
       <div className="flex-1 overflow-y-auto p-4">
         {loading ? (
           <div className="text-center py-8">
-            <p className={getThemeTextSecondary()}>{t('common.loading') || 'Loading notes...'}</p>
+            <p className={'text-ink dark:text-ink-on-dark'}>{t('common.loading') || 'Loading notes...'}</p>
           </div>
         ) : notes.length === 0 ? (
           <div className="text-center py-8">
-            <BookOpen className={`h-12 w-12 ${getThemeTextMuted()} mx-auto mb-4`} />
-            <p className={getThemeTextSecondary()}>{t('notebook.no_notes') || 'No notes yet'}</p>
+            <BookOpen className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+            <p className={'text-ink dark:text-ink-on-dark'}>{t('notebook.no_notes') || 'No notes yet'}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -524,11 +524,11 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center space-x-2 min-w-0 flex-1">
                       {note.note_type === 'page' ? (
-                        <FileText className={`h-4 w-4 flex-shrink-0 ${getThemeTextMuted()}`} />
+                        <FileText className={`h-4 w-4 flex-shrink-0 text-muted-ink dark:text-muted-ink-on-dark`} />
                       ) : (
-                        <BookOpen className={`h-4 w-4 flex-shrink-0 ${getThemeTextMuted()}`} />
+                        <BookOpen className={`h-4 w-4 flex-shrink-0 text-muted-ink dark:text-muted-ink-on-dark`} />
                       )}
-                      <span className={`text-xs truncate ${getThemeTextMuted()}`}>
+                      <span className={`text-xs truncate text-muted-ink dark:text-muted-ink-on-dark`}>
                         {note.note_type === 'page' && note.page_index !== null
                           ? `${t('book_mode.page') || 'Page'} ${note.page_index + 1}`
                           : t('notebook.book_note') || 'Book Note'}
@@ -537,25 +537,25 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                     <div className="flex space-x-1 flex-shrink-0" onClick={(e) => e.stopPropagation()}>
                       <button
                         onClick={() => handleEditNote(note)}
-                        className={`p-1 ${getThemeTextSecondary()} hover:text-blue-600 dark:hover:text-blue-400 rounded transition-colors`}
+                        className={`p-1 text-ink dark:text-ink-on-dark hover:text-blue-600 dark:hover:text-blue-400 rounded transition-colors`}
                         title={t('notebook.edit_note') || 'Edit'}
                       >
                         <Edit2 className="h-3 w-3" />
                       </button>
                       <button
                         onClick={() => handleDeleteNote(note.id)}
-                        className={`p-1 ${getThemeTextSecondary()} hover:text-red-600 dark:hover:text-red-400 rounded transition-colors`}
+                        className={`p-1 text-ink dark:text-ink-on-dark hover:text-red-600 dark:hover:text-red-400 rounded transition-colors`}
                         title={t('notebook.delete_note') || 'Delete'}
                       >
                         <Trash2 className="h-3 w-3" />
                       </button>
                     </div>
                   </div>
-                  <p className={`text-sm ${getThemeText()} whitespace-pre-wrap mt-1 ${isExpanded ? 'line-clamp-4' : 'line-clamp-1'}`}>
+                  <p className={`text-sm text-ink dark:text-ink-on-dark whitespace-pre-wrap mt-1 ${isExpanded ? 'line-clamp-4' : 'line-clamp-1'}`}>
                     {note.content}
                   </p>
                   {isExpanded && (
-                    <p className={`text-xs ${getThemeTextMuted()} mt-2`}>
+                    <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-2`}>
                       {new Date(note.updated_at || note.created_at).toLocaleDateString()}
                     </p>
                   )}
