@@ -93,19 +93,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark shadow-[var(--scholar-shadow-sm)] transition-all duration-300 ease-in-out z-20 ${
+      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark transition-all duration-300 ease-in-out z-20 ${
         isMobile && !isSidebarOpen ? (isRtl ? 'translate-x-full' : '-translate-x-full') : ''
       } ${shouldBeOpen ? 'w-64' : 'w-16'}`}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
       onMouseLeave={() => !isMobile && setIsHovered(false)}
     >
       <div className="flex flex-col h-full">
-        {/* Sidebar Header */}
+        {/* Sidebar Header — wordmark */}
         <div className="p-4 border-b border-divider-on-dark">
           <div className="flex items-center justify-between">
             {shouldBeOpen && (
-              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-300 ease-in-out">
-                {t('sidebar.navigation')}
+              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-300 ease-in-out tracking-tight">
+                {t('app_name')}<span className="text-accent-gold">.</span>
               </h2>
             )}
             {isMobile ? (
@@ -147,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const stateClasses = isDisabled
                 ? 'opacity-50 cursor-not-allowed text-muted-ink-on-dark'
                 : isActive
-                ? `bg-accent-gold/15 text-accent-gold ${
+                ? `text-ink-on-dark bg-white/[0.03] ${
                     shouldBeOpen ? (isRtl ? 'border-r-2 border-accent-gold' : 'border-l-2 border-accent-gold') : ''
                   }`
                 : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5';
@@ -177,7 +177,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </span>
                           )}
                         </div>
-                        <div className={`text-xs ${isActive ? 'text-accent-gold/80' : 'text-muted-ink-on-dark'}`}>
+                        <div className={`text-[10px] uppercase tracking-[0.12em] mt-0.5 ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
                           {item.description}
                         </div>
                       </div>
