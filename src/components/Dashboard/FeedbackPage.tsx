@@ -319,44 +319,42 @@ export const FeedbackPage: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>
-          Feedback & Suggestions
-        </h2>
-        <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
-          Help us improve by sharing your thoughts and ideas
-        </p>
-      </div>
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
+      <PageHeader
+        eyebrow={t('feedback.eyebrow') || 'From the editors'}
+        title={t('feedback.title') || 'Feedback & suggestions'}
+        descriptor={t('feedback.descriptor') || 'Help us improve by sharing your thoughts and ideas.'}
+        className="mb-6"
+        hideRule
+      />
 
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden dark:shadow-none`}>
-        <div className={`flex border-b border border-divider dark:border-divider-on-dark`}>
-          <button
-            onClick={() => setActiveTab('feedback')}
-            className={`flex-1 px-6 py-4 text-sm font-medium transition-colors ${
-              activeTab === 'feedback'
-                ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600 dark:bg-blue-900 dark:text-blue-300'
-                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 hover:opacity-60`
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <MessageSquare className="h-5 w-5" />
-              <span>Feedback</span>
-            </div>
-          </button>
-          <button
-            onClick={() => setActiveTab('suggestion')}
-            className={`flex-1 px-6 py-4 text-sm font-medium transition-colors ${
-              activeTab === 'suggestion'
-                ? 'bg-green-50 text-green-700 border-b-2 border-green-600 dark:bg-green-900 dark:text-green-300'
-                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 hover:opacity-60`
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <Lightbulb className="h-5 w-5" />
-              <span>Suggestion</span>
-            </div>
-          </button>
+      <EditorialCard padding="none" className="overflow-hidden">
+        <div className="px-6 pt-4">
+          <SectionTabs
+            ariaLabel={t('feedback.sections') || 'Feedback sections'}
+            activeId={activeTab}
+            onChange={(id) => setActiveTab(id as 'feedback' | 'suggestion')}
+            tabs={[
+              {
+                id: 'feedback',
+                label: (
+                  <span className="inline-flex items-center gap-2">
+                    <MessageSquare className="h-4 w-4" />
+                    {t('feedback.tab_feedback') || 'Feedback'}
+                  </span>
+                ),
+              },
+              {
+                id: 'suggestion',
+                label: (
+                  <span className="inline-flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4" />
+                    {t('feedback.tab_suggestion') || 'Suggestion'}
+                  </span>
+                ),
+              },
+            ] as SectionTab[]}
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
