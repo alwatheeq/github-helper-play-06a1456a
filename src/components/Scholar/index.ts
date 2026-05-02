@@ -21,3 +21,25 @@ export { ScholarSkeleton } from './ScholarSkeleton';
 
 export { ScholarIconButton } from './ScholarIconButton';
 export type { ScholarIconButtonSize, ScholarIconButtonVariant } from './ScholarIconButton';
+
+// Wave 8 — Editorial layout primitives
+export { Eyebrow } from './Eyebrow';
+export { PageHeader } from './PageHeader';
+export { SectionTabs } from './SectionTabs';
+export type { SectionTab } from './SectionTabs';
+export { EditorialCard } from './EditorialCard';
+export type { EditorialCardVariant, EditorialCardPadding } from './EditorialCard';
+export { EditorialTable } from './EditorialTable';
+export type { EditorialColumn } from './EditorialTable';
+export { RightRail } from './RightRail';
+export { WeekStrip } from './WeekStrip';
+export type { WeekStripDay } from './WeekStrip';
+export { RoomCard } from './RoomCard';
+export type { RoomStatus } from './RoomCard';
+export { CourseCard } from './CourseCard';
+export { MasteryBar } from './MasteryBar';
+export { ChangelogList } from './ChangelogList';
+export type { ChangelogEntry } from './ChangelogList';
+export { NumberedList } from './NumberedList';
+export type { NumberedListItem } from './NumberedList';
+export { KeyValueRow } from './KeyValueRow';
