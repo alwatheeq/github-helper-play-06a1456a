@@ -93,19 +93,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark shadow-[var(--scholar-shadow-sm)] transition-all duration-300 ease-in-out z-20 ${
+      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark transition-all duration-300 ease-in-out z-20 ${
         isMobile && !isSidebarOpen ? (isRtl ? 'translate-x-full' : '-translate-x-full') : ''
       } ${shouldBeOpen ? 'w-64' : 'w-16'}`}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
       onMouseLeave={() => !isMobile && setIsHovered(false)}
     >
       <div className="flex flex-col h-full">
-        {/* Sidebar Header */}
+        {/* Sidebar Header — wordmark */}
         <div className="p-4 border-b border-divider-on-dark">
           <div className="flex items-center justify-between">
             {shouldBeOpen && (
-              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-300 ease-in-out">
-                {t('sidebar.navigation')}
+              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-300 ease-in-out tracking-tight">
+                {t('app_name')}<span className="text-accent-gold">.</span>
               </h2>
             )}
             {isMobile ? (
