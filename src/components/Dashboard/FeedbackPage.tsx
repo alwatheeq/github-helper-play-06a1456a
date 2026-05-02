@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Lightbulb, Upload, X, Video, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { PageHeader, SectionTabs, EditorialCard, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
