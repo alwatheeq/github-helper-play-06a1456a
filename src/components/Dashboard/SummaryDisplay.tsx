@@ -74,7 +74,6 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 }) => {
   const { user } = useAuth();
   const { t } = useI18n();
-  // Phase 4: Scholar tokens replace useTheme helpers in this file
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { setChatContext, clearChatContext } = useChatContext();
   const { preferences: _preferences, loading: preferencesLoading, updateFreeFormMode } = useUserPreferences();
