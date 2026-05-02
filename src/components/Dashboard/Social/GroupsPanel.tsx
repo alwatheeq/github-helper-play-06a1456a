@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Plus, Hash, Users, Crown, Trash2, Copy, Check, MessageSquare } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useI18n } from '../../../contexts/I18nContext';
-import { useTheme } from '../../../contexts/ThemeContext';
+
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
@@ -35,17 +35,6 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showError, success: showSuccess } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeTextMuted,
-    getThemeSubtle,
-    getThemeGradient,
-    getThemeAccent,
-  } = useTheme();
-
   const [groups, setGroups] = useState<StudyGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [newGroupName, setNewGroupName] = useState('');
@@ -287,8 +276,8 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
   return (
     <div dir={dir} className="space-y-6">
       {/* Create group */}
-      <div className={`rounded-xl p-4 border ${getThemeCardBg()} ${getThemeCardBorder()}`}>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 ${getThemeTextPrimary()}`}>
+      <div className={`rounded-xl p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
           <Plus className="w-4 h-4" />
           {t('social.create_group')}
         </h3>
@@ -299,13 +288,13 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setNewGroupName(e.target.value)}
             placeholder={t('social.group_name')}
             maxLength={100}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none transition-colors ${getThemeSubtle()} ${getThemeCardBorder()} ${getThemeTextPrimary()}`}
+            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
             onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           />
           <button
             onClick={handleCreate}
             disabled={creating || !newGroupName.trim()}
-            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 ${getThemeAccent()}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {creating ? '...' : t('social.create_group')}
           </button>
@@ -313,8 +302,8 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       </div>
 
       {/* Join group */}
-      <div className={`rounded-xl p-4 border ${getThemeCardBg()} ${getThemeCardBorder()}`}>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 ${getThemeTextPrimary()}`}>
+      <div className={`rounded-xl p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
           <Hash className="w-4 h-4" />
           {t('social.join_group')}
         </h3>
@@ -325,13 +314,13 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
             placeholder={t('social.group_code')}
             maxLength={6}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none font-mono tracking-widest uppercase transition-colors ${getThemeSubtle()} ${getThemeCardBorder()} ${getThemeTextPrimary()}`}
+            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none font-mono tracking-widest uppercase transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
             onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
           />
           <button
             onClick={handleJoin}
             disabled={joining || joinCode.trim().length !== 6}
-            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 ${getThemeAccent()}`}
+            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {joining ? '...' : t('social.join_group')}
           </button>
@@ -340,15 +329,15 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
 
       {/* My groups */}
       <div>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 ${getThemeTextPrimary()}`}>
+        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
           <Users className="w-4 h-4" />
           {t('social.my_groups')}
         </h3>
 
         {loading ? (
-          <div className={`text-sm ${getThemeTextMuted()} text-center py-8`}>...</div>
+          <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center py-8`}>...</div>
         ) : groups.length === 0 ? (
-          <div className={`text-sm ${getThemeTextMuted()} text-center py-8`}>
+          <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center py-8`}>
             {t('social.no_groups')}
           </div>
         ) : (
@@ -356,7 +345,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             {groups.map((group) => (
               <div
                 key={group.id}
-                className={`rounded-xl border overflow-hidden transition-all ${getThemeCardBg()} ${getThemeCardBorder()}`}
+                className={`rounded-xl border overflow-hidden transition-all bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
               >
                 {/* Group header */}
                 <button
@@ -365,10 +354,10 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <div className={`font-semibold text-sm truncate ${getThemeTextPrimary()}`}>
+                      <div className={`font-semibold text-sm truncate text-ink dark:text-ink-on-dark`}>
                         {group.name}
                       </div>
-                      <div className={`text-xs mt-1 flex items-center gap-3 ${getThemeTextMuted()}`}>
+                      <div className={`text-xs mt-1 flex items-center gap-3 text-muted-ink dark:text-muted-ink-on-dark`}>
                         <span className="flex items-center gap-1">
                           <Users className="w-3 h-3" />
                           {group.member_count}
@@ -387,10 +376,10 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           e.stopPropagation();
                           onOpenGroupChat(group.id, group.name);
                         }}
-                        className={`p-2 rounded-lg transition-colors ${getThemeSubtle('ui')}`}
+                        className={`p-2 rounded-lg transition-colors bg-accent-gold-soft/20`}
                         title={t('social.open_chat')}
                       >
-                        <MessageSquare className={`w-4 h-4 ${getThemeTextSecondary()}`} />
+                        <MessageSquare className={`w-4 h-4 text-ink dark:text-ink-on-dark`} />
                       </button>
                     </div>
                   </div>
@@ -398,26 +387,26 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
 
                 {/* Expanded content */}
                 {expandedGroupId === group.id && (
-                  <div className={`border-t px-4 pb-4 pt-3 space-y-4 ${getThemeCardBorder()}`}>
+                  <div className={`border-t px-4 pb-4 pt-3 space-y-4 border-divider dark:border-divider-on-dark`}>
                     {/* Group code + QR */}
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className={`text-xs mb-1 ${getThemeTextMuted()}`}>
+                        <div className={`text-xs mb-1 text-muted-ink dark:text-muted-ink-on-dark`}>
                           {t('social.group_code')}
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className={`font-mono text-lg font-bold tracking-widest ${getThemeTextPrimary()}`}>
+                          <span className={`font-mono text-lg font-bold tracking-widest text-ink dark:text-ink-on-dark`}>
                             {group.group_code}
                           </span>
                           <button
                             onClick={() => copyCode(group.group_code)}
-                            className={`p-1.5 rounded-md transition-colors ${getThemeSubtle('ui')}`}
+                            className={`p-1.5 rounded-md transition-colors bg-accent-gold-soft/20`}
                             title={t('social.copy_code')}
                           >
                             {copiedCode === group.group_code ? (
                               <Check className="w-3.5 h-3.5 text-green-500" />
                             ) : (
-                              <Copy className={`w-3.5 h-3.5 ${getThemeTextMuted()}`} />
+                              <Copy className={`w-3.5 h-3.5 text-muted-ink dark:text-muted-ink-on-dark`} />
                             )}
                           </button>
                         </div>
@@ -429,25 +418,25 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
 
                     {/* Members list */}
                     <div>
-                      <div className={`text-xs font-medium mb-2 ${getThemeTextSecondary()}`}>
+                      <div className={`text-xs font-medium mb-2 text-ink dark:text-ink-on-dark`}>
                         {t('social.members')} ({group.member_count})
                       </div>
                       {loadingMembers === group.id ? (
-                        <div className={`text-xs py-2 ${getThemeTextMuted()}`}>...</div>
+                        <div className={`text-xs py-2 text-muted-ink dark:text-muted-ink-on-dark`}>...</div>
                       ) : (
                         <div className="space-y-1.5">
                           {(members[group.id] || []).map((m) => (
                             <div
                               key={m.id}
-                              className={`flex items-center justify-between py-1.5 px-2 rounded-lg text-xs ${getThemeSubtle()}`}
+                              className={`flex items-center justify-between py-1.5 px-2 rounded-lg text-xs bg-accent-gold-soft/20`}
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <div
-                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0 ${getThemeGradient()}`}
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0 bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
                                 >
                                   {(m.username || m.display_name || '?')[0].toUpperCase()}
                                 </div>
-                                <span className={`truncate ${getThemeTextPrimary()}`}>
+                                <span className={`truncate text-ink dark:text-ink-on-dark`}>
                                   {m.username || m.display_name || m.user_id.slice(0, 8)}
                                 </span>
                                 {m.role === 'admin' && (

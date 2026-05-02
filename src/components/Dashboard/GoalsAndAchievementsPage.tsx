@@ -7,8 +7,6 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
-
 interface StudyGoal {
   id: string;
   goal_type: string;
@@ -44,7 +42,7 @@ interface UserAchievement {
 export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
+  
   const { success: showSuccessToast, error: showErrorToast } = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const [activeTab, setActiveTab] = useState<'goals' | 'achievements'>('goals');
@@ -413,7 +411,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className={`mt-4 ${getThemeTextSecondary()}`}>{t('common.loading')}</p>
+          <p className={`mt-4 text-ink dark:text-ink-on-dark`}>{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -421,28 +419,28 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
   return (
     <>
-    <div className={`min-h-screen ${getBackgroundGradient()} p-6`}>
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-7xl mx-auto">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
               <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
               <div>
-                <h1 className={`text-3xl font-bold ${getThemeTextPrimary()}`}>{t('sidebar.goals_achievements')}</h1>
-                <p className={`text-sm ${getThemeTextSecondary()} mt-1`}>
+                <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('sidebar.goals_achievements')}</h1>
+                <p className={`text-sm text-ink dark:text-ink-on-dark mt-1`}>
                   {t('sidebar.goals_achievements_desc')}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className={`flex space-x-2 border-b ${getThemeCardBorder()}`}>
+          <div className={`flex space-x-2 border-b border-divider dark:border-divider-on-dark`}>
             <button
               onClick={() => setActiveTab('goals')}
               className={`px-6 py-3 font-medium transition-colors relative ${
                 activeTab === 'goals'
                   ? 'text-blue-600 dark:text-blue-400'
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  : `text-ink dark:text-ink-on-dark hover:opacity-80`
               }`}
             >
               <div className="flex items-center space-x-2">
@@ -458,7 +456,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               className={`px-6 py-3 font-medium transition-colors relative ${
                 activeTab === 'achievements'
                   ? 'text-blue-600 dark:text-blue-400'
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  : `text-ink dark:text-ink-on-dark hover:opacity-80`
               }`}
             >
               <div className="flex items-center space-x-2">
@@ -474,12 +472,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
         {activeTab === 'goals' ? (
           <div>
-            <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 mb-6`}>
+            <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <h2 className={`text-xl font-bold ${getThemeTextPrimary()}`}>{t('goals.title')}</h2>
-                    <p className={`text-sm ${getThemeTextSecondary()} mt-1`}>
+                    <h2 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{t('goals.title')}</h2>
+                    <p className={`text-sm text-ink dark:text-ink-on-dark mt-1`}>
                       {t('goals.subtitle')}
                     </p>
                   </div>
@@ -495,24 +493,24 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
-                  <p className={`text-sm ${getThemeTextSecondary()} mb-2`}>{t('goals.active_goals')}</p>
+                  <p className={`text-sm text-ink dark:text-ink-on-dark mb-2`}>{t('goals.active_goals')}</p>
                   <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
                 </div>
               </div>
 
-              <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.completed')}</p>
                   <p className="text-4xl font-bold text-green-600 dark:text-green-400">{completedGoals.length}</p>
                 </div>
               </div>
 
-              <div className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.total_goals')}</p>
-                  <p className={`text-4xl font-bold ${getThemeTextPrimary()}`}>{goals.length}</p>
+                  <p className={`text-4xl font-bold text-ink dark:text-ink-on-dark`}>{goals.length}</p>
                 </div>
               </div>
             </div>
@@ -520,7 +518,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
             <div className="space-y-6">
               {activeGoals.length > 0 && (
                 <div>
-                  <h2 className={`text-xl font-semibold ${getThemeTextPrimary()} mb-4`}>{t('goals.active_goals')}</h2>
+                  <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-4`}>{t('goals.active_goals')}</h2>
                   <div className="space-y-4">
                     {activeGoals.map((goal) => {
                       const progress = calculateProgress(goal.current_value, goal.target_value);
@@ -529,7 +527,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                       return (
                         <div
                           key={goal.id}
-                          className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 ${
+                          className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 ${
                             isOverdue ? 'border-2 border-red-300 dark:border-red-700' : ''
                           }`}
                         >
@@ -539,15 +537,15 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                                 {getGoalTypeIcon(goal.goal_type)}
                               </div>
                               <div className="flex-1">
-                                <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+                                <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                                   {goal.goal_title}
                                 </h3>
                                 {goal.goal_description && (
-                                  <p className={`text-sm ${getThemeTextSecondary()} mt-1`}>
+                                  <p className={`text-sm text-ink dark:text-ink-on-dark mt-1`}>
                                     {goal.goal_description}
                                   </p>
                                 )}
-                                <div className={`flex items-center space-x-4 mt-2 text-sm ${getThemeTextMuted()}`}>
+                                <div className={`flex items-center space-x-4 mt-2 text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
                                   <span className="flex items-center">
                                     <Target className="h-4 w-4 mr-1" />
                                     {getGoalTypeLabel(goal.goal_type)}
@@ -581,12 +579,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
                           <div className="space-y-2">
                             <div className="flex items-center justify-between text-sm">
-                              <span className={getThemeTextSecondary()}>{t('goals.progress')}</span>
-                              <span className={`font-semibold ${getThemeTextPrimary()}`}>
+                              <span className={'text-ink dark:text-ink-on-dark'}>{t('goals.progress')}</span>
+                              <span className={`font-semibold text-ink dark:text-ink-on-dark`}>
                                 {goal.current_value} / {goal.target_value}
                               </span>
                             </div>
-                            <div className={`w-full ${getThemeSubtle('ui')} rounded-full h-3`}>
+                            <div className={`w-full bg-accent-gold-soft/20 rounded-full h-3`}>
                               <div
                                 className={`h-3 rounded-full transition-colors duration-150 ${
                                   progress >= 100
@@ -600,7 +598,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                                 style={{ width: `${progress}%` }}
                               ></div>
                             </div>
-                            <p className={`text-xs text-right ${getThemeTextMuted()}`}>
+                            <p className={`text-xs text-right text-muted-ink dark:text-muted-ink-on-dark`}>
                               {Math.round(progress)}% {t('goals.complete')}
                             </p>
                           </div>
@@ -613,12 +611,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
               {completedGoals.length > 0 && (
                 <div>
-                  <h2 className={`text-xl font-semibold ${getThemeTextPrimary()} mb-4`}>{t('goals.completed_goals')}</h2>
+                  <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-4`}>{t('goals.completed_goals')}</h2>
                   <div className="space-y-4">
                     {completedGoals.map((goal) => (
                       <div
                         key={goal.id}
-                        className={`${getThemeSubtle('bg')} rounded-xl shadow p-6 opacity-75`}
+                        className={`bg-accent-gold-soft/20 rounded-xl shadow p-6 opacity-75`}
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex items-start space-x-3 flex-1">
@@ -626,7 +624,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               <CheckCircle className="h-5 w-5" />
                             </div>
                             <div className="flex-1">
-                              <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+                              <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                                 {goal.goal_title}
                               </h3>
                               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
@@ -667,9 +665,9 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
           </div>
         ) : (
           <div>
-            <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 mb-6`}>
+            <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className={`${getThemeGradient('bg')} rounded-lg p-4`}>
+                <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-blue-600 dark:text-blue-300 font-medium">{t('achievements.unlocked')}</p>
