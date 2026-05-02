@@ -24,6 +24,7 @@ import { SRSReviewPanel } from './SRSReviewPanel';
 const CourseAnalytics = React.lazy(() => import('./CourseAnalytics').then(m => ({ default: m.CourseAnalytics })));
 import { ExamScheduler } from './ExamScheduler';
 import { CourseTutor } from './CourseTutor';
+import { PageHeader, EditorialCard } from '../../Scholar';
 
 /** Routed to Edge `usageChannel`; optional `ANTHROPIC_API_KEY_ACADEMICS` for a dedicated key later. */
 const ACADEMICS_AI_EXTRAS: HaikuEdgeInvokeExtras = { usageChannel: 'academics' };
@@ -637,72 +638,62 @@ export const AcademicsPage: React.FC = React.memo(() => {
   return (
     <>
       <div className="space-y-6">
-      <div
-        className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark p-8`}
-      >
-        <div className="flex items-start justify-between gap-6 flex-wrap">
-          <div className="flex items-start gap-3">
-            <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
-              <BookOpen className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>
-                {t('academics.tab_title') || 'Academics'}
-              </h1>
-              <p className={`text-secondary-ink dark:text-muted-ink-on-dark mt-2 text-base max-w-2xl`}>
-                {t('academics.tab_desc') ||
-                  'Create courses, turn uploaded content into study tools, and track progress by topic.'}
-              </p>
-            </div>
-          </div>
-
+      <PageHeader
+        eyebrow={t('academics.eyebrow') || 'Studies'}
+        title={t('academics.tab_title') || 'Academics'}
+        descriptor={
+          t('academics.tab_desc') ||
+          'Create courses, turn uploaded content into study tools, and track progress by topic.'
+        }
+        className="mb-2"
+        actions={
           <button
             type="button"
             onClick={() => {
               migrationErrorToastShownRef.current = false;
               setShowCreateCourse(true);
             }}
-            className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-[6px] border border-divider dark:border-divider-on-dark bg-sidebar text-ink-on-dark hover:opacity-90 transition-opacity text-sm font-medium"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-4 w-4" aria-hidden />
             <span>{t('academics.create_course') || 'Create course'}</span>
           </button>
-        </div>
+        }
+      />
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {shellStats.map((s, idx) => {
-            const Icon = s.icon;
-            return (
-              <div key={idx} className={`p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark`}>
-                <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                <div className={`font-semibold text-ink dark:text-ink-on-dark`}>{s.label}</div>
-                    <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>{s.desc}</div>
-                  </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {shellStats.map((s, idx) => {
+          const Icon = s.icon;
+          return (
+            <EditorialCard key={idx} padding="md">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-[4px] bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+                  <Icon className="h-5 w-5 text-accent-gold" aria-hidden />
+                </div>
+                <div className="min-w-0">
+                  <div className="font-semibold text-ink dark:text-ink-on-dark">{s.label}</div>
+                  <div className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">{s.desc}</div>
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </EditorialCard>
+          );
+        })}
+      </div>
 
-        <div className={`mt-6 p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark`}>
-          <div className="flex items-center gap-3">
-            <Sparkles className={`h-5 w-5 text-secondary-ink dark:text-muted-ink-on-dark`} />
-            <div>
-              <div className={`font-semibold text-ink dark:text-ink-on-dark`}>
-                {t('academics.shell_hint_title') || 'What you can do next'}
-              </div>
-              <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
-                {t('academics.shell_hint_desc') ||
-                  'Later phases will let you create courses, upload documents, generate summaries/flashcards/quizzes, and view topic-based analytics.'}
-              </div>
+      <EditorialCard variant="accent" padding="md">
+        <div className="flex items-start gap-3">
+          <Sparkles className="h-5 w-5 text-accent-gold flex-shrink-0 mt-0.5" aria-hidden />
+          <div className="min-w-0">
+            <div className="font-semibold">
+              {t('academics.shell_hint_title') || 'What you can do next'}
+            </div>
+            <div className="text-sm opacity-80 mt-1">
+              {t('academics.shell_hint_desc') ||
+                'Later phases will let you create courses, upload documents, generate summaries/flashcards/quizzes, and view topic-based analytics.'}
             </div>
           </div>
         </div>
-      </div>
+      </EditorialCard>
 
       <div className={`bg-card-light dark:bg-card-dark rounded-lg border-divider dark:border-divider-on-dark p-6`}>
         <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark`}>
