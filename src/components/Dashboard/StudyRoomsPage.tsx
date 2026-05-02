@@ -4,7 +4,6 @@ import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 const ZegoVideoRoom = React.lazy(() => import('./ZegoVideoRoom').then(m => ({ default: m.ZegoVideoRoom })));
 import { useI18n } from '../../contexts/I18nContext';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -45,7 +44,6 @@ interface RoomParticipant {
 export const StudyRoomsPage: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { confirm, ConfirmModal } = useConfirm();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('study-rooms');
@@ -1050,23 +1048,23 @@ export const StudyRoomsPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${getBackgroundGradient()} p-6`}>
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-6xl mx-auto">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
           <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
             <div className="flex items-center space-x-3">
-              <Users className={`h-8 w-8 ${getThemeTextPrimary()}`} />
-              <h1 className={`text-3xl font-bold ${getThemeTextPrimary()}`}>{t('study_rooms.title')}</h1>
+              <Users className={`h-8 w-8 text-ink dark:text-ink-on-dark`} />
+              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('study_rooms.title')}</h1>
             </div>
           </div>
 
-          <div className={`inline-flex items-center space-x-3 rounded-lg p-1 ${getThemeSubtle('ui')}`}>
+          <div className={`inline-flex items-center space-x-3 rounded-lg p-1 bg-accent-gold-soft/20`}>
             <button
               onClick={() => setActiveTab('browse')}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
                 activeTab === 'browse'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
               }`}
             >
               {t('study_rooms.browse')}
@@ -1075,8 +1073,8 @@ export const StudyRoomsPage: React.FC = () => {
               onClick={() => setActiveTab('my-rooms')}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
                 activeTab === 'my-rooms'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
               }`}
             >
               {t('study_rooms.my_rooms')} ({myRooms.length})
@@ -1085,8 +1083,8 @@ export const StudyRoomsPage: React.FC = () => {
               onClick={() => setActiveTab('create')}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
                 activeTab === 'create'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
               }`}
             >
               {t('study_rooms.create')}
@@ -1095,8 +1093,8 @@ export const StudyRoomsPage: React.FC = () => {
               onClick={() => handleSocialTabClick('friends')}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium flex items-center gap-1.5 ${
                 activeTab === 'friends'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
               }`}
             >
               <Heart className="h-3.5 w-3.5" />
@@ -1106,8 +1104,8 @@ export const StudyRoomsPage: React.FC = () => {
               onClick={() => handleSocialTabClick('groups')}
               className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium flex items-center gap-1.5 ${
                 activeTab === 'groups' || activeTab === 'group-chat'
-                  ? `${getThemeCardBg()} ${getThemeTextPrimary()} shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow`
-                  : `${getThemeTextSecondary()} hover:opacity-80`
+                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow`
+                  : `text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
               }`}
             >
               <UsersRound className="h-3.5 w-3.5" />
@@ -1117,12 +1115,12 @@ export const StudyRoomsPage: React.FC = () => {
         </div>
 
         {activeTab === 'create' && (
-          <div className={`${getThemeCardBg()} rounded-lg p-6`}>
-            <h2 className={`text-xl font-semibold ${getThemeTextPrimary()} mb-6`}>{t('study_rooms.create_new')}</h2>
+          <div className={`bg-card-light dark:bg-card-dark rounded-lg p-6`}>
+            <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-6`}>{t('study_rooms.create_new')}</h2>
 
             <div className="space-y-5">
               <div>
-                <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>
+                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                   {t('study_rooms.room_name')}
                 </label>
                 <input
@@ -1131,12 +1129,12 @@ export const StudyRoomsPage: React.FC = () => {
                   onChange={(e) => setRoomName(e.target.value)}
                   placeholder={t('study_rooms.room_name_placeholder')}
                   maxLength={100}
-                  className={`w-full px-4 py-2 input-clean ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>
+                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                   {t('study_rooms.description')}
                 </label>
                 <textarea
@@ -1145,12 +1143,12 @@ export const StudyRoomsPage: React.FC = () => {
                   placeholder={t('study_rooms.description_placeholder')}
                   maxLength={500}
                   rows={3}
-                  className={`w-full px-4 py-2 input-clean ${getThemeCardBorder()} rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
               <div>
-                <label className={`block text-sm font-medium ${getThemeTextSecondary()} mb-2`}>
+                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                   {t('study_rooms.max_participants')}
                 </label>
                 <input
@@ -1161,16 +1159,16 @@ export const StudyRoomsPage: React.FC = () => {
                   onChange={(e) => setMaxParticipants(Number(e.target.value))}
                   className="w-full"
                 />
-                <div className={`text-center mt-2 px-4 py-2 ${getThemeCardBorder()} rounded-lg ${getThemeSubtle('bg')}`}>
-                  <span className={`text-xl font-bold ${getThemeTextPrimary()}`}>{maxParticipants}</span>
-                  <span className={`text-sm ${getThemeTextSecondary()} ml-2`}>{t('study_rooms.participants')}</span>
+                <div className={`text-center mt-2 px-4 py-2 border-divider dark:border-divider-on-dark rounded-lg bg-accent-gold-soft/10`}>
+                  <span className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{maxParticipants}</span>
+                  <span className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark ml-2`}>{t('study_rooms.participants')}</span>
                 </div>
               </div>
 
               <button
                 onClick={handleCreateRoom}
                 disabled={creating || !roomName.trim()}
-                className={`w-full py-2.5 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 ${getThemeCardBorder()}`}
+                className={`w-full py-2.5 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
               >
                 {creating ? (
                   <>
@@ -1191,14 +1189,14 @@ export const StudyRoomsPage: React.FC = () => {
         {(activeTab === 'browse' || activeTab === 'my-rooms') && (
           <div className="space-y-4">
             {activeTab === 'browse' && (
-              <div className={`relative ${getThemeCardBg()} ${getThemeCardBorder()} border rounded-lg`}>
-                <Search className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 ${getThemeTextMuted()}`} aria-hidden />
+              <div className={`relative bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-lg`}>
+                <Search className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} aria-hidden />
                 <input
                   type="search"
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-transparent ${getThemeTextPrimary()} placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-transparent text-ink dark:text-ink-on-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>
@@ -1206,34 +1204,34 @@ export const StudyRoomsPage: React.FC = () => {
             {loading ? (
               <LoadingSkeleton type="card" count={3} />
             ) : browseSearchNoMatches ? (
-              <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-12 text-center`}>
-                <Search className={`h-16 w-16 ${getThemeTextMuted()} mx-auto mb-4`} />
-                <p className={`${getThemeTextSecondary()}`}>{t('study_rooms.browse_no_matches')}</p>
+              <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
+                <Search className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+                <p className={`text-secondary-ink dark:text-muted-ink-on-dark`}>{t('study_rooms.browse_no_matches')}</p>
               </div>
             ) : displayRoomList.length === 0 ? (
-              <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-12 text-center`}>
-                <Users className={`h-16 w-16 ${getThemeTextMuted()} mx-auto mb-4`} />
-                <p className={`${getThemeTextSecondary()} mb-2`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
+                <Users className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+                <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                   {activeTab === 'browse' ? t('study_rooms.no_active_rooms') : t('study_rooms.no_rooms_yet')}
                 </p>
-                <p className={`text-sm ${getThemeTextMuted()}`}>
+                <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
                   {activeTab === 'browse' ? t('study_rooms.create_to_start') : t('study_rooms.create_first_room')}
                 </p>
               </div>
             ) : (
               displayRoomList.map((room) => (
-                <div key={room.id} className={`${getThemeCardBg()} rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow p-6 hover:shadow transition-shadow`}>
+                <div key={room.id} className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 hover:shadow transition-shadow`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className={`text-lg font-semibold ${getThemeTextPrimary()} mb-2`}>
+                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
                         {room.room_name}
                       </h3>
                       {room.room_description && (
-                        <p className={`text-sm ${getThemeTextSecondary()} mb-3`}>
+                        <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-3`}>
                           {room.room_description}
                         </p>
                       )}
-                      <div className={`flex items-center space-x-4 text-sm ${getThemeTextSecondary()}`}>
+                      <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                         <span className="flex items-center">
                           <Users className="h-4 w-4 mr-1" />
                           {room.participant_count || 0}/{room.max_participants}
@@ -1242,7 +1240,7 @@ export const StudyRoomsPage: React.FC = () => {
                           <Clock className="h-4 w-4 mr-1" />
                           {formatExpiry(room.expires_at)}
                         </span>
-                        <span className={`font-mono text-xs ${getThemeSubtle('ui')} px-2 py-1 rounded`}>
+                        <span className={`font-mono text-xs bg-accent-gold-soft/20 px-2 py-1 rounded`}>
                           {room.room_code}
                         </span>
                       </div>
@@ -1250,7 +1248,7 @@ export const StudyRoomsPage: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleJoinRoom(room)}
-                        className={`px-4 py-2 ${getThemeGradient('ui')} text-white dark:text-gray-900 rounded-lg hover:opacity-90 flex items-center space-x-2`}
+                        className={`px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-lg hover:opacity-90 flex items-center space-x-2`}
                       >
                         <UserPlus className="h-4 w-4" />
                         <span>{t('study_rooms.join')}</span>
