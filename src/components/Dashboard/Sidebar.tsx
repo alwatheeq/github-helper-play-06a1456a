@@ -147,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const stateClasses = isDisabled
                 ? 'opacity-50 cursor-not-allowed text-muted-ink-on-dark'
                 : isActive
-                ? `bg-accent-gold/15 text-accent-gold ${
+                ? `text-ink-on-dark bg-white/[0.03] ${
                     shouldBeOpen ? (isRtl ? 'border-r-2 border-accent-gold' : 'border-l-2 border-accent-gold') : ''
                   }`
                 : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5';
