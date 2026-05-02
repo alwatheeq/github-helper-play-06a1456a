@@ -13,6 +13,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useCredits } from '../../contexts/CreditContext';
 import { useI18n } from '../../contexts/I18nContext';
+import { PageHeader, EditorialCard } from '../Scholar';
 
 export const SubscriptionManagementPage: React.FC = () => {
   const { user } = useAuth();
@@ -194,22 +195,19 @@ export const SubscriptionManagementPage: React.FC = () => {
         <ArrowLeft className="h-5 w-5" />
         <span>{t('subscription_management.go_back')}</span>
       </button>
+      {/* Editorial header */}
+      <PageHeader
+        eyebrow={t('subscription_management.eyebrow')}
+        title={tierInfo.name}
+        descriptor={tierInfo.description}
+        actions={
+          <span className={`text-[11px] font-semibold tracking-[0.14em] uppercase px-3 py-1.5 rounded-[4px] border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}>
+            {statusInfo.name}
+          </span>
+        }
+      />
       {/* Current Subscription Card */}
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark overflow-hidden`}>
-        <div className={`${tierInfo.bgColor} p-6`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="flex items-center space-x-3 mb-2">
-                <Crown className="h-8 w-8 text-white" />
-                <h1 className="text-3xl font-bold text-white">{tierInfo.name}</h1>
-              </div>
-              <p className="text-white opacity-90">{tierInfo.description}</p>
-            </div>
-            <div className={`${statusInfo.bgColor} px-4 py-2 rounded-lg`}>
-              <span className={`${statusInfo.color} font-semibold`}>{statusInfo.name}</span>
-            </div>
-          </div>
-        </div>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[6px] border border-divider dark:border-divider-on-dark overflow-hidden`}>
 
         <div className="p-6 space-y-6">
           {/* Trial Status */}

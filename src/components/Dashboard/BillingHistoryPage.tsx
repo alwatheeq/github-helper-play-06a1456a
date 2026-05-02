@@ -8,6 +8,8 @@ import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
+import { PageHeader, EditorialCard } from '../Scholar';
+import { useI18n } from '../../contexts/I18nContext';
 
 interface Transaction {
   id: string;
@@ -25,6 +27,7 @@ interface Transaction {
 export const BillingHistoryPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useI18n();
   const { error: showErrorToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -225,31 +228,33 @@ export const BillingHistoryPage: React.FC = () => {
   if (transactions.length === 0) {
     return (
       <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto space-y-6">
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6`}
+            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition`}
           >
             <ArrowLeft className="h-5 w-5" />
-            <span>Go back</span>
+            <span>{t('common.go_back') || 'Go back'}</span>
           </button>
-          <div
-            className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark border p-8`}
-          >
-            <div className="text-center">
-              <div className={`bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
-                <Receipt className={`h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark`} />
+          <PageHeader
+            eyebrow={t('billing.eyebrow')}
+            title={t('billing.title')}
+            descriptor={t('billing.descriptor')}
+          />
+          <EditorialCard padding="lg">
+            <div className="text-center py-8">
+              <div className="bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                <Receipt className="h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark" />
               </div>
-
-              <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>No Transactions Yet</h2>
-
-              <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-8`}>
-                You haven&apos;t made any payments yet. Your transaction history will appear here after a successful
-                checkout (Stripe webhook inserts rows).
+              <h2 className="font-display text-2xl text-ink dark:text-ink-on-dark mb-3">
+                {t('billing.empty_title')}
+              </h2>
+              <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark max-w-md mx-auto">
+                {t('billing.empty_desc')}
               </p>
             </div>
-          </div>
+          </EditorialCard>
         </div>
       </div>
     );
@@ -257,24 +262,23 @@ export const BillingHistoryPage: React.FC = () => {
 
   return (
     <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto space-y-6">
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6`}
+        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition`}
       >
         <ArrowLeft className="h-5 w-5" />
-        <span>Go back</span>
+        <span>{t('common.go_back') || 'Go back'}</span>
       </button>
-      <div className="mb-8">
-        <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Billing History</h1>
-        <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
-          View and download receipts for all your transactions
-        </p>
-      </div>
+      <PageHeader
+        eyebrow={t('billing.eyebrow')}
+        title={t('billing.title')}
+        descriptor={t('billing.descriptor')}
+      />
 
       <div
-        className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark border overflow-hidden`}
+        className={`bg-card-light dark:bg-card-dark rounded-[6px] border border-divider dark:border-divider-on-dark overflow-hidden`}
       >
         <div className="overflow-x-auto">
           <table className="w-full">

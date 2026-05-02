@@ -23,7 +23,8 @@
     "error_loading_library": "خطأ في تحميل المكتبة",
     "failed_to_load_library": "فشل في تحميل المكتبة",
     "try_again": "حاول مرة أخرى",
-    "generated_content": "المحتوى المُنشأ"
+    "generated_content": "المحتوى المُنشأ",
+    "go_back": "رجوع"
   },
   "language_choice": {
     "title": "اختر لغتك",
@@ -790,7 +791,8 @@
     "no_deadline": "لا يوجد موعد نهائي",
     "overdue": "متأخر",
     "goal_created": "تم إنشاء الهدف بنجاح",
-    "create_failed": "فشل في إنشاء الهدف"
+    "create_failed": "فشل في إنشاء الهدف",
+    "eyebrow": "التقدم"
   },
   "achievements": {
     "title": "الإنجازات",
@@ -879,7 +881,8 @@
     "best": "أفضل",
     "total_study_time": "إجمالي وقت الدراسة",
     "no_achievements": "لا توجد إنجازات بعد",
-    "start_studying": "ابدأ الدراسة لتحصل على أول إنجاز!"
+    "start_studying": "ابدأ الدراسة لتحصل على أول إنجاز!",
+    "eyebrow": "الحساب"
   },
   "subscription_tiers": {
     "monthly": "شهري",
@@ -1436,7 +1439,8 @@
     "canceling": "جاري الإلغاء...",
     "cancel_footer": "تحتاج مساعدة؟ تواصل مع الدعم بدلاً من الإلغاء",
     "toast_cancel_success": "تم إلغاء الاشتراك بنجاح",
-    "notification_canceled": "تم إلغاء اشتراكك. سيستمر وصولك حتى {date}."
+    "notification_canceled": "تم إلغاء اشتراكك. سيستمر وصولك حتى {date}.",
+    "eyebrow": "العضوية"
   },
   "onboarding": {
     "step_language": "اختر لغتك",
@@ -1592,5 +1596,12 @@
     "next_item_1": "سيراجع فريقنا ما أرسلته",
     "next_item_2": "نقدّر كل التعليقات والاقتراحات لتحسين التطبيق",
     "next_item_3": "قد نتواصل معك إذا احتجنا إلى معلومات إضافية"
+  },
+  "billing": {
+    "eyebrow": "الحساب",
+    "title": "سجل الفواتير",
+    "descriptor": "اعرض الإيصالات وقم بتنزيلها لجميع معاملاتك.",
+    "empty_title": "لا توجد معاملات بعد",
+    "empty_desc": "لم تقم بأي مدفوعات حتى الآن. سيظهر سجل معاملاتك هنا بعد إتمام عملية شراء ناجحة."
   }
 }
