@@ -13,6 +13,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useCredits } from '../../contexts/CreditContext';
 import { useI18n } from '../../contexts/I18nContext';
+import { PageHeader, EditorialCard } from '../Scholar';
 
 export const SubscriptionManagementPage: React.FC = () => {
   const { user } = useAuth();
