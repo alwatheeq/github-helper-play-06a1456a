@@ -27,6 +27,7 @@ interface Transaction {
 export const BillingHistoryPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useI18n();
   const { error: showErrorToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
