@@ -1048,7 +1048,7 @@ export const StudyRoomsPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${getBackgroundGradient()} p-6`}>
+    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-6xl mx-auto">
         <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
           <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
