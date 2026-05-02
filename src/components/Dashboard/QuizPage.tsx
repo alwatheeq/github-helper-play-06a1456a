@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Upload, BookOpen, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
+import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -908,105 +909,87 @@ export const QuizPage: React.FC = React.memo(() => {
     <div className="w-full min-h-0 p-4 sm:p-6">
       <div className="w-full">
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <FileQuestion className={`h-8 w-8 text-ink dark:text-ink-on-dark`} />
-              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('quiz.page_title') || t('quiz.quizzes_and_exams') || 'Quizzes & Exams'}</h1>
-            </div>
-            
-            {/* Toggle between Quizzes and Exams - always visible */}
-            <div className={`flex items-center space-x-3 bg-subtle dark:bg-subtle-on-dark rounded-lg p-1`}>
-              <button
-                onClick={() => {
-                  setQuizViewMode('quizzes');
-                  if (activeTab === 'exams') {
-                    setActiveTab('quizzes');
-                  }
-                }}
-                className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                  quizViewMode === 'quizzes'
-                    ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                    : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-                }`}
+          <PageHeader
+            eyebrow={t('quiz.eyebrow') || 'Examinations'}
+            title={t('quiz.page_title') || t('quiz.quizzes_and_exams') || 'Quizzes & Exams'}
+            descriptor={t('quiz.descriptor') || undefined}
+            actions={
+              <div
+                role="tablist"
+                aria-label={t('quiz.view_mode') || 'View mode'}
+                className="inline-flex border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
               >
-                <FileQuestion className="h-5 w-5 inline mr-2" />
-                {t('quiz.my_quizzes') || 'My Quizzes'}
-              </button>
-              <button
-                onClick={() => {
-                  setQuizViewMode('exams');
-                  if (activeTab === 'quizzes') {
-                    setActiveTab('explore');
-                  }
-                }}
-                className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                  quizViewMode === 'exams'
-                    ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                    : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-                }`}
-              >
-                <Globe className="h-5 w-5 inline mr-2" />
-                {t('quiz.global_exams') || 'Global Exams'}
-              </button>
-            </div>
-          </div>
+                <button
+                  role="tab"
+                  aria-selected={quizViewMode === 'quizzes'}
+                  onClick={() => {
+                    setQuizViewMode('quizzes');
+                    if (activeTab === 'exams') {
+                      setActiveTab('quizzes');
+                    }
+                  }}
+                  className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 ${
+                    quizViewMode === 'quizzes'
+                      ? 'bg-ink text-ink-on-dark dark:bg-card-light dark:text-ink'
+                      : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                  }`}
+                >
+                  <FileQuestion className="h-4 w-4" />
+                  {t('quiz.my_quizzes') || 'My Quizzes'}
+                </button>
+                <button
+                  role="tab"
+                  aria-selected={quizViewMode === 'exams'}
+                  onClick={() => {
+                    setQuizViewMode('exams');
+                    if (activeTab === 'quizzes') {
+                      setActiveTab('explore');
+                    }
+                  }}
+                  className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
+                    quizViewMode === 'exams'
+                      ? 'bg-ink text-ink-on-dark dark:bg-card-light dark:text-ink'
+                      : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                  }`}
+                >
+                  <Globe className="h-4 w-4" />
+                  {t('quiz.global_exams') || 'Global Exams'}
+                </button>
+              </div>
+            }
+            hideRule
+          />
 
-          <div className={`inline-flex items-center space-x-3 rounded-lg p-1 bg-subtle dark:bg-subtle-on-dark`}>
-            <button
-              onClick={() => setActiveTab('create')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'create'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {t('quiz.create_quiz')}
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab('quizzes');
-                if (quizViewMode !== 'exams') {
-                  setQuizViewMode('quizzes');
-                }
-              }}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'quizzes'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {quizViewMode === 'exams' 
-                ? `${t('quiz.my_exams') || 'My Exams'} (${incompleteExams.length})`
-                : `${t('quiz.my_quizzes')} (${quizSessions.length})`
+          <SectionTabs
+            className="mt-6"
+            ariaLabel={t('quiz.sections') || 'Quiz sections'}
+            activeId={activeTab}
+            onChange={(id) => {
+              const next = id as 'create' | 'quizzes' | 'explore' | 'history';
+              setActiveTab(next);
+              if (next === 'quizzes' && quizViewMode !== 'exams') {
+                setQuizViewMode('quizzes');
               }
-            </button>
-            <button
-              onClick={() => setActiveTab('explore')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'explore'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              <span className="flex items-center space-x-2">
-                <Folder className="h-4 w-4" />
-                <span>Explore</span>
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveTab('history')}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
-                activeTab === 'history'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              {quizViewMode === 'exams'
-                ? `${t('quiz.exam_history') || 'Exam History'} (${examAttempts.length})`
-                : `${t('quiz.history')} (${quizHistory.length})`
-              }
-            </button>
-          </div>
+            }}
+            tabs={[
+              { id: 'create', label: t('quiz.create_quiz') },
+              {
+                id: 'quizzes',
+                label: quizViewMode === 'exams'
+                  ? (t('quiz.my_exams') || 'My Exams')
+                  : (t('quiz.my_quizzes') || 'My Quizzes'),
+                count: quizViewMode === 'exams' ? incompleteExams.length : quizSessions.length,
+              },
+              { id: 'explore', label: t('quiz.explore') || 'Explore' },
+              {
+                id: 'history',
+                label: quizViewMode === 'exams'
+                  ? (t('quiz.exam_history') || 'Exam History')
+                  : (t('quiz.history') || 'History'),
+                count: quizViewMode === 'exams' ? examAttempts.length : quizHistory.length,
+              },
+            ] as SectionTab[]}
+          />
         </div>
 
         {activeTab === 'create' && (

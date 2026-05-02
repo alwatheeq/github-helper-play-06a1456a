@@ -697,7 +697,12 @@
     "submit": "Valider",
     "your_answer_fill_blank": "Votre réponse (à trous)",
     "your_answer_open": "Votre réponse (ouverte)",
-    "type_your_answer": "Saisissez votre réponse ici"
+    "type_your_answer": "Saisissez votre réponse ici",
+    "eyebrow": "Examens",
+    "descriptor": "Composez un nouveau quiz, passez un examen mondial ou revoyez vos tentatives précédentes.",
+    "view_mode": "Mode d'affichage",
+    "sections": "Sections du quiz",
+    "explore": "Explorer"
   },
   "book_mode": {
     "title": "Mode Livre",
@@ -1571,5 +1576,21 @@
     "close": "Fermer",
     "leave_room": "Quitter la salle",
     "video_preview": "Aperçu vidéo"
+  },
+  "feedback": {
+    "eyebrow": "De la rédaction",
+    "title": "Commentaires et suggestions",
+    "descriptor": "Aidez-nous à nous améliorer en partageant vos idées.",
+    "sections": "Sections de commentaires",
+    "tab_feedback": "Commentaire",
+    "tab_suggestion": "Suggestion",
+    "required_field": "Champ requis",
+    "submitting": "Envoi...",
+    "submit_feedback": "Envoyer le commentaire",
+    "submit_suggestion": "Envoyer la suggestion",
+    "next_title": "Et ensuite.",
+    "next_item_1": "Votre envoi sera examiné par notre équipe",
+    "next_item_2": "Nous apprécions tous les commentaires et suggestions",
+    "next_item_3": "Nous pourrons vous recontacter si nécessaire"
   }
 }

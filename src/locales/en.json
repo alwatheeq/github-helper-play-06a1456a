@@ -696,7 +696,12 @@
     "submit": "Submit",
     "your_answer_fill_blank": "Your answer (fill in the blank)",
     "your_answer_open": "Your answer (open ended)",
-    "type_your_answer": "Type your answer here"
+    "type_your_answer": "Type your answer here",
+    "eyebrow": "Examinations",
+    "descriptor": "Compose a new quiz, sit a global exam, or revisit your previous attempts.",
+    "view_mode": "View mode",
+    "sections": "Quiz sections",
+    "explore": "Explore"
   },
   "book_mode": {
     "title": "Book Mode",
@@ -1570,5 +1575,21 @@
     "close": "Close",
     "leave_room": "Leave Room",
     "video_preview": "Video preview"
+  },
+  "feedback": {
+    "eyebrow": "From the editors",
+    "title": "Feedback & suggestions",
+    "descriptor": "Help us improve by sharing your thoughts and ideas.",
+    "sections": "Feedback sections",
+    "tab_feedback": "Feedback",
+    "tab_suggestion": "Suggestion",
+    "required_field": "Required field",
+    "submitting": "Submitting...",
+    "submit_feedback": "Submit feedback",
+    "submit_suggestion": "Submit suggestion",
+    "next_title": "What happens next.",
+    "next_item_1": "Your submission will be reviewed by our team",
+    "next_item_2": "We appreciate all feedback and suggestions to improve the app",
+    "next_item_3": "You may receive a follow-up if we need additional information"
   }
 }

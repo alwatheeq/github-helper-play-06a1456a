@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Lightbulb, Upload, X, Video, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { PageHeader, SectionTabs, EditorialCard, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
@@ -17,7 +18,7 @@ interface UploadedFile {
 
 export const FeedbackPage: React.FC = React.memo(() => {
   const { user } = useAuth();
-  const { t: _t } = useI18n();
+  const { t } = useI18n();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('feedback');
   const [activeTab, setActiveTab] = useState<'feedback' | 'suggestion'>('feedback');
@@ -318,44 +319,42 @@ export const FeedbackPage: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>
-          Feedback & Suggestions
-        </h2>
-        <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
-          Help us improve by sharing your thoughts and ideas
-        </p>
-      </div>
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
+      <PageHeader
+        eyebrow={t('feedback.eyebrow') || 'From the editors'}
+        title={t('feedback.title') || 'Feedback & suggestions'}
+        descriptor={t('feedback.descriptor') || 'Help us improve by sharing your thoughts and ideas.'}
+        className="mb-6"
+        hideRule
+      />
 
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden dark:shadow-none`}>
-        <div className={`flex border-b border border-divider dark:border-divider-on-dark`}>
-          <button
-            onClick={() => setActiveTab('feedback')}
-            className={`flex-1 px-6 py-4 text-sm font-medium transition-colors ${
-              activeTab === 'feedback'
-                ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600 dark:bg-blue-900 dark:text-blue-300'
-                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 hover:opacity-60`
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <MessageSquare className="h-5 w-5" />
-              <span>Feedback</span>
-            </div>
-          </button>
-          <button
-            onClick={() => setActiveTab('suggestion')}
-            className={`flex-1 px-6 py-4 text-sm font-medium transition-colors ${
-              activeTab === 'suggestion'
-                ? 'bg-green-50 text-green-700 border-b-2 border-green-600 dark:bg-green-900 dark:text-green-300'
-                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 hover:opacity-60`
-            }`}
-          >
-            <div className="flex items-center justify-center space-x-2">
-              <Lightbulb className="h-5 w-5" />
-              <span>Suggestion</span>
-            </div>
-          </button>
+      <EditorialCard padding="none" className="overflow-hidden">
+        <div className="px-6 pt-4">
+          <SectionTabs
+            ariaLabel={t('feedback.sections') || 'Feedback sections'}
+            activeId={activeTab}
+            onChange={(id) => setActiveTab(id as 'feedback' | 'suggestion')}
+            tabs={[
+              {
+                id: 'feedback',
+                label: (
+                  <span className="inline-flex items-center gap-2">
+                    <MessageSquare className="h-4 w-4" />
+                    {t('feedback.tab_feedback') || 'Feedback'}
+                  </span>
+                ),
+              },
+              {
+                id: 'suggestion',
+                label: (
+                  <span className="inline-flex items-center gap-2">
+                    <Lightbulb className="h-4 w-4" />
+                    {t('feedback.tab_suggestion') || 'Suggestion'}
+                  </span>
+                ),
+              },
+            ] as SectionTab[]}
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -479,54 +478,52 @@ export const FeedbackPage: React.FC = React.memo(() => {
             </div>
           )}
 
-          <div className="flex items-center justify-between pt-4">
+          <div className="flex items-center justify-between pt-4 border-t border-divider dark:border-divider-on-dark">
             <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-              <span className="text-red-500">*</span> Required field
+              <span className="text-red-500">*</span> {t('feedback.required_field') || 'Required field'}
             </p>
             <button
               type="submit"
               disabled={isSubmitting || !feedbackText.trim()}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-medium transition duration-150 ${
-                activeTab === 'feedback'
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 dark:bg-blue-700 dark:hover:bg-blue-800'
-                  : 'bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 dark:bg-green-700 dark:hover:bg-green-800'
-              }`}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] text-sm font-medium transition-colors bg-ink text-ink-on-dark hover:bg-ink/90 dark:bg-card-light dark:text-ink dark:hover:bg-card-light/90 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                  <span>Submitting...</span>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
+                  <span>{t('feedback.submitting') || 'Submitting...'}</span>
                 </>
               ) : (
                 <>
-                  <Send className="h-5 w-5" />
-                  <span>Submit {activeTab === 'feedback' ? 'Feedback' : 'Suggestion'}</span>
+                  <Send className="h-4 w-4" />
+                  <span>{activeTab === 'feedback'
+                    ? (t('feedback.submit_feedback') || 'Submit feedback')
+                    : (t('feedback.submit_suggestion') || 'Submit suggestion')}</span>
                 </>
               )}
             </button>
           </div>
         </form>
-      </div>
+      </EditorialCard>
 
-      <div className="mt-6 bg-blue-50 rounded-md p-6 dark:bg-blue-900">
-        <h3 className="text-lg font-semibold text-blue-900 mb-2 dark:text-blue-300">
-          What happens next?
+      <EditorialCard variant="accent" className="mt-6">
+        <h3 className="font-display text-xl mb-3">
+          {t('feedback.next_title') || 'What happens next.'}
         </h3>
-        <ul className="space-y-2 text-blue-800 text-sm dark:text-blue-200">
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>Your {activeTab} will be reviewed by our team</span>
+        <ul className="space-y-2 text-sm">
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_1') || `Your ${activeTab} will be reviewed by our team`}</span>
           </li>
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>We appreciate all feedback and suggestions to improve the app</span>
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_2') || 'We appreciate all feedback and suggestions to improve the app'}</span>
           </li>
-          <li className="flex items-start">
-            <span className="mr-2">•</span>
-            <span>You may receive a follow-up if we need additional information</span>
+          <li className="flex items-start gap-2">
+            <span className="text-accent-gold">—</span>
+            <span>{t('feedback.next_item_3') || 'You may receive a follow-up if we need additional information'}</span>
           </li>
         </ul>
-      </div>
+      </EditorialCard>
 
       {/* Feedback Tutorial */}
       {tutorialConfig && (
