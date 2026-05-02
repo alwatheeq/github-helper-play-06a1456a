@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Clock, Zap, Trophy } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
-import { useTheme } from '../../contexts/ThemeContext';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -41,7 +40,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
   const { user } = useAuth();
   const navigate = useNavigate();
   const { error: showErrorToast } = useToast();
-  const { getThemeGradient, getBackgroundGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
