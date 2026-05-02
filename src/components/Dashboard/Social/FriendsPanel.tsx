@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, UserPlus, Check, X, Users, Loader2 } from 'lucide-react';
-import { useTheme } from '../../../contexts/ThemeContext';
+
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
@@ -24,7 +24,6 @@ interface FriendshipRow {
 }
 
 export const FriendsPanel: React.FC = () => {
-  const { getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle, getThemeGradient } = useTheme();
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showError, success: showSuccess } = useToast();
@@ -223,7 +222,7 @@ export const FriendsPanel: React.FC = () => {
   };
 
   const Avatar: React.FC<{ name: string | null; size?: string }> = ({ name, size = 'h-10 w-10' }) => (
-    <div className={`${size} rounded-full bg-gradient-to-br ${getThemeGradient()} flex items-center justify-center text-white font-semibold text-sm shrink-0`}>
+    <div className={`${size} rounded-full bg-gradient-to-br from-accent-gold to-accent-gold-soft flex items-center justify-center text-white font-semibold text-sm shrink-0`}>
       {(name || '?')[0].toUpperCase()}
     </div>
   );
@@ -231,15 +230,15 @@ export const FriendsPanel: React.FC = () => {
   return (
     <div className="space-y-6" dir={dir}>
       {/* Search */}
-      <div className={`p-4 rounded-xl border ${getThemeCardBorder()} ${getThemeCardBg()}`}>
+      <div className="p-4 rounded-xl border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
         <div className="relative">
-          <Search className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 ${getThemeTextMuted()}`} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
           <input
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder={t('social.search_friends')}
-            className={`w-full pl-10 pr-4 py-2.5 rounded-lg border ${getThemeCardBorder()} ${getThemeSubtle()} ${getThemeTextPrimary()} placeholder:${getThemeTextMuted()} focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-colors`}
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-colors"
           />
           {isSearching && (
             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-blue-400" />
@@ -251,23 +250,23 @@ export const FriendsPanel: React.FC = () => {
             {searchResults.map((profile) => (
               <div
                 key={profile.id}
-                className={`flex items-center justify-between p-3 rounded-lg ${getThemeSubtle()}`}
+                className="flex items-center justify-between p-3 rounded-lg bg-page-light dark:bg-page-dark"
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <Avatar name={profile.display_name} />
                   <div className="min-w-0">
-                    <p className={`font-medium truncate ${getThemeTextPrimary()}`}>
+                    <p className="font-medium truncate text-ink dark:text-ink-on-dark">
                       {profile.display_name || profile.username}
                     </p>
                     {profile.username && (
-                      <p className={`text-sm truncate ${getThemeTextMuted()}`}>@{profile.username}</p>
+                      <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
                     )}
                   </div>
                 </div>
                 <button
                   onClick={() => sendFriendRequest(profile.id)}
                   disabled={sendingRequest === profile.id}
-                  className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white bg-gradient-to-r ${getThemeGradient()} hover:opacity-90 transition-opacity disabled:opacity-50`}
+                  className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 transition-opacity disabled:opacity-50"
                 >
                   {sendingRequest === profile.id ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -282,14 +281,14 @@ export const FriendsPanel: React.FC = () => {
         )}
 
         {searchQuery.trim().length >= 2 && !isSearching && searchResults.length === 0 && (
-          <p className={`text-sm text-center mt-3 ${getThemeTextMuted()}`}>{t('social.no_results')}</p>
+          <p className="text-sm text-center mt-3 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_results')}</p>
         )}
       </div>
 
       {/* Pending Incoming Requests */}
       {pendingIncoming.length > 0 && (
-        <div className={`p-4 rounded-xl border ${getThemeCardBorder()} ${getThemeCardBg()}`}>
-          <h3 className={`text-sm font-semibold uppercase tracking-wide mb-3 ${getThemeTextSecondary()}`}>
+        <div className="p-4 rounded-xl border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+          <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 text-ink dark:text-ink-on-dark">
             {t('social.pending_requests')}
           </h3>
           <div className="space-y-2">
@@ -298,16 +297,16 @@ export const FriendsPanel: React.FC = () => {
               return (
                 <div
                   key={req.id}
-                  className={`flex items-center justify-between p-3 rounded-lg ${getThemeSubtle()}`}
+                  className="flex items-center justify-between p-3 rounded-lg bg-page-light dark:bg-page-dark"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <Avatar name={profile.display_name} />
                     <div className="min-w-0">
-                      <p className={`font-medium truncate ${getThemeTextPrimary()}`}>
+                      <p className="font-medium truncate text-ink dark:text-ink-on-dark">
                         {profile.display_name || profile.username}
                       </p>
                       {profile.username && (
-                        <p className={`text-sm truncate ${getThemeTextMuted()}`}>@{profile.username}</p>
+                        <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
                       )}
                     </div>
                   </div>
@@ -341,18 +340,18 @@ export const FriendsPanel: React.FC = () => {
       )}
 
       {/* Friends List */}
-      <div className={`p-4 rounded-xl border ${getThemeCardBorder()} ${getThemeCardBg()}`}>
-        <h3 className={`text-sm font-semibold uppercase tracking-wide mb-3 flex items-center gap-2 ${getThemeTextSecondary()}`}>
+      <div className="p-4 rounded-xl border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+        <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark">
           <Users className="h-4 w-4" />
           {t('social.friends_list')}
         </h3>
 
         {loadingFriends ? (
           <div className="flex justify-center py-8">
-            <Loader2 className={`h-6 w-6 animate-spin ${getThemeTextMuted()}`} />
+            <Loader2 className="h-6 w-6 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
           </div>
         ) : friends.length === 0 ? (
-          <p className={`text-sm text-center py-6 ${getThemeTextMuted()}`}>{t('social.no_friends')}</p>
+          <p className="text-sm text-center py-6 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_friends')}</p>
         ) : (
           <div className="space-y-2">
             {friends.map((row) => {
@@ -360,15 +359,15 @@ export const FriendsPanel: React.FC = () => {
               return (
                 <div
                   key={row.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg ${getThemeSubtle()}`}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-page-light dark:bg-page-dark"
                 >
                   <Avatar name={profile.display_name} />
                   <div className="min-w-0">
-                    <p className={`font-medium truncate ${getThemeTextPrimary()}`}>
+                    <p className="font-medium truncate text-ink dark:text-ink-on-dark">
                       {profile.display_name || profile.username}
                     </p>
                     {profile.username && (
-                      <p className={`text-sm truncate ${getThemeTextMuted()}`}>@{profile.username}</p>
+                      <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
                     )}
                   </div>
                 </div>

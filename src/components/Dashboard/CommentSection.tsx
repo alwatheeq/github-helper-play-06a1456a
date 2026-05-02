@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
+
 
 interface Comment {
   id: string;
@@ -29,7 +29,6 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
 }) => {
   const { user } = useAuth();
   const { confirm, ConfirmModal } = useConfirm();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
@@ -276,25 +275,25 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
     const isOwner = user?.id === comment.user_id;
 
     return (
-      <div className={`${depth > 0 ? `ml-8 pl-4 border-l-2 ${getThemeCardBorder()}` : ''}`}>
+      <div className={`${depth > 0 ? 'ml-8 pl-4 border-l-2 border-divider dark:border-divider-on-dark' : ''}`}>
         <div className="py-3">
           <div className="flex items-start space-x-3">
             <div className="flex-shrink-0">
-              <div className={`h-8 w-8 rounded-full ${getThemeGradient('ui')} flex items-center justify-center text-white text-sm font-medium`}>
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft flex items-center justify-center text-white text-sm font-medium">
                 {comment.user_email?.charAt(0).toUpperCase() || '?'}
               </div>
             </div>
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2 mb-1">
-                <span className={`text-sm font-medium ${getThemeTextPrimary()}`}>
+                <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                   {comment.user_email}
                 </span>
-                <span className={`text-xs ${getThemeTextMuted()}`}>
+                <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                   {formatDate(comment.created_at)}
                 </span>
                 {comment.is_edited && (
-                  <span className={`text-xs ${getThemeTextMuted()} italic`}>
+                  <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark italic">
                     (edited)
                   </span>
                 )}
@@ -306,7 +305,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                     maxLength={2000}
-                    className={`w-full px-3 py-2 ${getThemeCardBorder()} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={3}
                   />
                   <div className="flex items-center space-x-2">
@@ -322,7 +321,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                         setEditingComment(null);
                         setEditText('');
                       }}
-                      className={`px-3 py-1 ${getThemeSubtle('ui')} ${getThemeTextSecondary()} rounded-lg text-sm hover:opacity-60`}
+                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark rounded-lg text-sm hover:opacity-60"
                     >
                       Cancel
                     </button>
@@ -330,7 +329,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                 </div>
               ) : (
                 <>
-                  <p className={`text-sm ${getThemeTextSecondary()} whitespace-pre-wrap`}>
+                  <p className="text-sm text-ink dark:text-ink-on-dark whitespace-pre-wrap">
                     {comment.comment_text}
                   </p>
 
@@ -351,7 +350,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                             setEditingComment(comment.id);
                             setEditText(comment.comment_text);
                           }}
-                          className={`text-xs ${getThemeTextSecondary()} hover:opacity-80 font-medium`}
+                          className="text-xs text-ink dark:text-ink-on-dark hover:opacity-80 font-medium"
                         >
                           Edit
                         </button>
@@ -367,7 +366,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     {hasReplies && (
                       <button
                         onClick={() => toggleThread(comment.id)}
-                        className={`text-xs ${getThemeTextSecondary()} hover:opacity-80 font-medium flex items-center space-x-1`}
+                        className="text-xs text-ink dark:text-ink-on-dark hover:opacity-80 font-medium flex items-center space-x-1"
                       >
                         {isExpanded ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                         <span>{comment.replies!.length} {comment.replies!.length === 1 ? 'reply' : 'replies'}</span>
@@ -384,7 +383,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder="Write a reply..."
                     maxLength={2000}
-                    className={`w-full px-3 py-2 ${getThemeCardBorder()} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={2}
                   />
                   <div className="flex items-center space-x-2">
@@ -400,7 +399,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                         setReplyingTo(null);
                         setReplyText('');
                       }}
-                      className={`px-3 py-1 ${getThemeSubtle('ui')} ${getThemeTextSecondary()} rounded-lg text-sm hover:opacity-60`}
+                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark rounded-lg text-sm hover:opacity-60"
                     >
                       Cancel
                     </button>
@@ -424,8 +423,8 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
 
   if (!user) {
     return (
-      <div className={`border-t ${getThemeCardBorder()} pt-6 mt-6`}>
-        <div className={`flex items-center space-x-2 ${getThemeTextMuted()}`}>
+      <div className="border-t border-divider dark:border-divider-on-dark pt-6 mt-6">
+        <div className="flex items-center space-x-2 text-muted-ink dark:text-muted-ink-on-dark">
           <MessageSquare className="h-5 w-5" />
           <span className="text-sm">Sign in to view and post comments</span>
         </div>
@@ -434,11 +433,11 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
   }
 
   return (
-    <div className={`border-t ${getThemeCardBorder()} pt-6 mt-6`}>
+    <div className="border-t border-divider dark:border-divider-on-dark pt-6 mt-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
-          <MessageSquare className={`h-5 w-5 ${getThemeTextSecondary()}`} />
-          <h3 className={`text-lg font-semibold ${getThemeTextPrimary()}`}>
+          <MessageSquare className="h-5 w-5 text-ink dark:text-ink-on-dark" />
+          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
             Comments ({commentCount})
           </h3>
         </div>
@@ -446,7 +445,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
-          className={`px-3 py-1 text-sm ${getThemeCardBorder()} rounded-lg focus:ring-2 focus:ring-blue-500 ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+          className="px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
         >
           <option value="newest">Newest First</option>
           <option value="oldest">Oldest First</option>
@@ -459,11 +458,11 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Write a comment..."
           maxLength={2000}
-          className={`w-full px-4 py-3 ${getThemeCardBorder()} rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none ${getThemeCardBg()} ${getThemeTextPrimary()}`}
+          className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
           rows={3}
         />
         <div className="flex items-center justify-between mt-2">
-          <span className={`text-xs ${getThemeTextMuted()}`}>
+          <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
             {newComment.length}/2000
           </span>
           <button
@@ -479,7 +478,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
 
       <div className="space-y-1">
         {comments.length === 0 ? (
-          <div className={`text-center py-8 ${getThemeTextMuted()}`}>
+          <div className="text-center py-8 text-muted-ink dark:text-muted-ink-on-dark">
             <MessageSquare className="h-12 w-12 mx-auto mb-2 opacity-50" />
             <p>No comments yet. Be the first to comment!</p>
           </div>
