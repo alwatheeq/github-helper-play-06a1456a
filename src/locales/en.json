@@ -22,7 +22,8 @@
     "loading_library": "Loading your library...",
     "error_loading_library": "Error Loading Library",
     "failed_to_load_library": "Failed to load library",
-    "try_again": "Try Again"
+    "try_again": "Try Again",
+    "go_back": "Go back"
   },
   "language_choice": {
     "title": "Choose your language",
@@ -789,7 +790,8 @@
     "no_deadline": "No deadline",
     "overdue": "Overdue",
     "goal_created": "Goal created successfully",
-    "create_failed": "Failed to create goal"
+    "create_failed": "Failed to create goal",
+    "eyebrow": "Progress"
   },
   "achievements": {
     "title": "Achievements",
@@ -878,7 +880,8 @@
     "best": "Best",
     "total_study_time": "Total Study Time",
     "no_achievements": "No achievements yet",
-    "start_studying": "Start studying to earn your first achievement!"
+    "start_studying": "Start studying to earn your first achievement!",
+    "eyebrow": "Account"
   },
   "subscription_tiers": {
     "monthly": "Monthly",
@@ -1435,7 +1438,8 @@
     "canceling": "Canceling...",
     "cancel_footer": "Need help? Contact support instead of canceling",
     "toast_cancel_success": "Subscription canceled successfully",
-    "notification_canceled": "Your subscription has been canceled. You'll continue to have access until {date}."
+    "notification_canceled": "Your subscription has been canceled. You'll continue to have access until {date}.",
+    "eyebrow": "Membership"
   },
   "onboarding": {
     "step_language": "Choose Your Language",
@@ -1591,5 +1595,12 @@
     "next_item_1": "Your submission will be reviewed by our team",
     "next_item_2": "We appreciate all feedback and suggestions to improve the app",
     "next_item_3": "You may receive a follow-up if we need additional information"
+  },
+  "billing": {
+    "eyebrow": "Account",
+    "title": "Billing history",
+    "descriptor": "View and download receipts for all your transactions.",
+    "empty_title": "No transactions yet",
+    "empty_desc": "You haven't made any payments yet. Your transaction history will appear here after a successful checkout."
   }
 }

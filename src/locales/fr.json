@@ -23,7 +23,8 @@
     "error_loading_library": "Erreur lors du chargement de la bibliothèque",
     "failed_to_load_library": "Échec du chargement de la bibliothèque",
     "try_again": "Réessayer",
-    "generated_content": "Contenu Généré"
+    "generated_content": "Contenu Généré",
+    "go_back": "Retour"
   },
   "language_choice": {
     "title": "Choisissez votre langue",
@@ -790,7 +791,8 @@
     "no_deadline": "Pas de date limite",
     "overdue": "En retard",
     "goal_created": "Objectif créé avec succès",
-    "create_failed": "Échec de la création de l'objectif"
+    "create_failed": "Échec de la création de l'objectif",
+    "eyebrow": "Progression"
   },
   "achievements": {
     "title": "Succès",
@@ -879,7 +881,8 @@
     "best": "Meilleur",
     "total_study_time": "Temps d'étude total",
     "no_achievements": "Pas encore de succès",
-    "start_studying": "Commencez à étudier pour débloquer votre premier succès !"
+    "start_studying": "Commencez à étudier pour débloquer votre premier succès !",
+    "eyebrow": "Compte"
   },
   "subscription_tiers": {
     "monthly": "Mensuel",
@@ -1436,7 +1439,8 @@
     "canceling": "Annulation...",
     "cancel_footer": "Besoin d'aide ? Contactez le support plutôt que d'annuler",
     "toast_cancel_success": "Abonnement annulé avec succès",
-    "notification_canceled": "Votre abonnement a été annulé. Vous conservez l'accès jusqu'au {date}."
+    "notification_canceled": "Votre abonnement a été annulé. Vous conservez l'accès jusqu'au {date}.",
+    "eyebrow": "Abonnement"
   },
   "onboarding": {
     "step_language": "Choisissez votre langue",
@@ -1592,5 +1596,12 @@
     "next_item_1": "Votre envoi sera examiné par notre équipe",
     "next_item_2": "Nous apprécions tous les commentaires et suggestions",
     "next_item_3": "Nous pourrons vous recontacter si nécessaire"
+  },
+  "billing": {
+    "eyebrow": "Compte",
+    "title": "Historique de facturation",
+    "descriptor": "Consultez et téléchargez les reçus de toutes vos transactions.",
+    "empty_title": "Aucune transaction",
+    "empty_desc": "Vous n'avez encore effectué aucun paiement. Votre historique apparaîtra ici après un paiement réussi."
   }
 }

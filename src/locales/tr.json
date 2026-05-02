@@ -23,7 +23,8 @@
     "error_loading_library": "Kütüphane Yükleme Hatası",
     "failed_to_load_library": "Kütüphane yüklenemedi",
     "try_again": "Tekrar Dene",
-    "generated_content": "Oluşturulan İçerik"
+    "generated_content": "Oluşturulan İçerik",
+    "go_back": "Geri"
   },
   "language_choice": {
     "title": "Dilinizi seçin",
@@ -790,7 +791,8 @@
     "no_deadline": "Son tarih yok",
     "overdue": "Gecikmiş",
     "goal_created": "Hedef başarıyla oluşturuldu",
-    "create_failed": "Hedef oluşturulamadı"
+    "create_failed": "Hedef oluşturulamadı",
+    "eyebrow": "İlerleme"
   },
   "achievements": {
     "title": "Başarımlar",
@@ -879,7 +881,8 @@
     "best": "En İyi",
     "total_study_time": "Toplam Çalışma Süresi",
     "no_achievements": "Henüz başarı yok",
-    "start_studying": "İlk başarınızı kazanmak için çalışmaya başlayın!"
+    "start_studying": "İlk başarınızı kazanmak için çalışmaya başlayın!",
+    "eyebrow": "Hesap"
   },
   "subscription_tiers": {
     "monthly": "Aylık",
@@ -1436,7 +1439,8 @@
     "canceling": "İptal ediliyor...",
     "cancel_footer": "Yardıma mı ihtiyacınız var? İptal etmek yerine destekle iletişime geçin",
     "toast_cancel_success": "Abonelik başarıyla iptal edildi",
-    "notification_canceled": "Aboneliğiniz iptal edildi. {date} tarihine kadar erişiminiz devam eder."
+    "notification_canceled": "Aboneliğiniz iptal edildi. {date} tarihine kadar erişiminiz devam eder.",
+    "eyebrow": "Üyelik"
   },
   "onboarding": {
     "step_language": "Dilinizi Seçin",
@@ -1592,5 +1596,12 @@
     "next_item_1": "Gönderiminiz ekibimiz tarafından incelenecek",
     "next_item_2": "Uygulamayı iyileştirmek için tüm geri bildirimleri takdir ediyoruz",
     "next_item_3": "Ek bilgiye ihtiyaç duyarsak sizinle iletişime geçebiliriz"
+  },
+  "billing": {
+    "eyebrow": "Hesap",
+    "title": "Fatura geçmişi",
+    "descriptor": "Tüm işlemleriniz için makbuzları görüntüleyin ve indirin.",
+    "empty_title": "Henüz işlem yok",
+    "empty_desc": "Henüz herhangi bir ödeme yapmadınız. İşlem geçmişiniz başarılı bir ödemeden sonra burada görünecek."
   }
 }
