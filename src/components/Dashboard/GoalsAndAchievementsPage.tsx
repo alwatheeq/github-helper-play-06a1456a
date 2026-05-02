@@ -7,6 +7,7 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
+import { PageHeader, SectionTabs } from '../Scholar';
 interface StudyGoal {
   id: string;
   goal_type: string;
@@ -420,55 +421,21 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   return (
     <>
     <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
-      <div className="max-w-7xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
-              <div>
-                <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('sidebar.goals_achievements')}</h1>
-                <p className={`text-sm text-ink dark:text-ink-on-dark mt-1`}>
-                  {t('sidebar.goals_achievements_desc')}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className={`flex space-x-2 border-b border-divider dark:border-divider-on-dark`}>
-            <button
-              onClick={() => setActiveTab('goals')}
-              className={`px-6 py-3 font-medium transition-colors relative ${
-                activeTab === 'goals'
-                  ? 'text-blue-600 dark:text-blue-400'
-                  : `text-ink dark:text-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Target className="h-5 w-5" />
-                <span>{t('achievements.goals_tab')}</span>
-              </div>
-              {activeTab === 'goals' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"></div>
-              )}
-            </button>
-            <button
-              onClick={() => setActiveTab('achievements')}
-              className={`px-6 py-3 font-medium transition-colors relative ${
-                activeTab === 'achievements'
-                  ? 'text-blue-600 dark:text-blue-400'
-                  : `text-ink dark:text-ink-on-dark hover:opacity-80`
-              }`}
-            >
-              <div className="flex items-center space-x-2">
-                <Award className="h-5 w-5" />
-                <span>{t('achievements.achievements_tab')}</span>
-              </div>
-              {activeTab === 'achievements' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"></div>
-              )}
-            </button>
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto space-y-6">
+        <PageHeader
+          eyebrow={t('goals.eyebrow')}
+          title={t('sidebar.goals_achievements')}
+          descriptor={t('sidebar.goals_achievements_desc')}
+          hideRule
+        />
+        <SectionTabs
+          tabs={[
+            { id: 'goals', label: t('achievements.goals_tab') },
+            { id: 'achievements', label: t('achievements.achievements_tab') },
+          ]}
+          activeId={activeTab}
+          onChange={(id) => setActiveTab(id as 'goals' | 'achievements')}
+        />
 
         {activeTab === 'goals' ? (
           <div>
