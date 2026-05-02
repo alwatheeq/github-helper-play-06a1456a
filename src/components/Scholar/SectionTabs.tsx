@@ -29,7 +29,7 @@ export const SectionTabs: React.FC<SectionTabsProps> = ({
   segmented = false,
   ariaLabel,
 }) => {
-  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>, idx: number) => {
+  const handleKey = (e: React.KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
     e.preventDefault();
     const dir = e.key === 'ArrowRight' ? 1 : -1;
