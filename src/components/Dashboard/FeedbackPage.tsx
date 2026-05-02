@@ -18,7 +18,7 @@ interface UploadedFile {
 
 export const FeedbackPage: React.FC = React.memo(() => {
   const { user } = useAuth();
-  const { t: _t } = useI18n();
+  const { t } = useI18n();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('feedback');
   const [activeTab, setActiveTab] = useState<'feedback' | 'suggestion'>('feedback');
