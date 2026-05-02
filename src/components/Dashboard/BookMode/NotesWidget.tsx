@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, BookOpen, FileText } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 import { supabase } from '../../../lib/supabase';
 import { ErrorLogger } from '../../../utils/errorLogger';
@@ -49,7 +48,6 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
   onNotesChange
 }) => {
   const { user } = useAuth();
-  const { getThemeGradient, getThemeText, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const { t } = useI18n();
   const [notes, setNotes] = useState<Note[]>([]);
   const [loading, setLoading] = useState(true);

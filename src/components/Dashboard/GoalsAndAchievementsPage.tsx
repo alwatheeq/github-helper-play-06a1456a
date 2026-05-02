@@ -7,8 +7,6 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
-import { useTheme } from '../../contexts/ThemeContext';
-
 interface StudyGoal {
   id: string;
   goal_type: string;

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, FileText } from 'lucide-react';
-import { useTheme } from '../../../contexts/ThemeContext';
 import { useI18n } from '../../../contexts/I18nContext';
 import { PageBreakConfig, paginateSummary } from '../../../utils/bookModeHelpers';
 import HighlightLayer from '../Highlighting/HighlightLayer';
@@ -34,7 +33,6 @@ export const BookWidget: React.FC<BookWidgetProps> = ({
   notesForCurrentPage = [],
   highlightItemId = null,
 }) => {
-  const { getThemeText, getThemeCardBg, getThemeCardBorder, getThemeTextSecondary, getThemeTextMuted, getThemeSubtle } = useTheme();
   const { t } = useI18n();
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [expandedNoteId, setExpandedNoteId] = useState<string | null>(null);

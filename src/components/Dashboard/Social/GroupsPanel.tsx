@@ -35,17 +35,6 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
   const { t, dir } = useI18n();
   const { user } = useAuth();
   const { error: showError, success: showSuccess } = useToast();
-  const {
-    getThemeCardBg,
-    getThemeCardBorder,
-    getThemeTextPrimary,
-    getThemeTextSecondary,
-    getThemeTextMuted,
-    getThemeSubtle,
-    getThemeGradient,
-    getThemeAccent,
-  } = useTheme();
-
   const [groups, setGroups] = useState<StudyGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [newGroupName, setNewGroupName] = useState('');
