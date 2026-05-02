@@ -1,315 +1,53 @@
+# Wave 7 — Final Theme Token Migration
 
-# Wave 3 — Account & Billing Surfaces
+This is the closing wave. After it, no component will call `getTheme*` helpers, and `ThemeContext` will be reduced to its single legitimate responsibility: persisting the user's selected palette (`currentTheme` / `setTheme`) so CSS variables in `index.css` resolve to the right Scholar palette.
 
-Token-only refactor of 8 files. Same locked Phase 4 token mapping as Waves 1–2. No backend, props, or behavior changes.
+## Scope (5 files)
 
-## Files (smallest-first execution order)
+### 1. `src/components/Dashboard/StudyRoomsPage.tsx` (heavy)
+- 44 legacy calls across 7 helpers: `getThemeCardBg`, `getThemeCardBorder`, `getThemeGradient`, `getThemeSubtle`, `getThemeTextPrimary`, `getThemeTextSecondary`, `getThemeTextMuted`.
+- Apply the same token map used in waves 5–6:
+  - `getThemeCardBg()` → `bg-card-light dark:bg-card-dark`
+  - `getThemeCardBorder()` → `border-divider dark:border-divider-on-dark`
+  - `getThemeTextPrimary()` → `text-ink dark:text-ink-on-dark`
+  - `getThemeTextSecondary()` → `text-secondary-ink dark:text-muted-ink-on-dark`
+  - `getThemeTextMuted()` → `text-muted-ink dark:text-muted-ink-on-dark`
+  - `getThemeGradient('ui')` → `bg-gradient-to-r from-accent-gold to-accent-gold-soft`
+  - `getThemeGradient('bg')` → `bg-accent-gold-soft/20`
+  - `getThemeSubtle('ui')` → `bg-accent-gold-soft/20`
+  - `getThemeSubtle('bg')` → `bg-accent-gold-soft/10`
+- Remove `useTheme` import + destructuring.
 
-| # | File | Lines | Legacy calls | Banned literals |
-|---|------|-------|---|---|
-| 1 | `Pricing/PaymentCancel.tsx` | 65 | 2 | 4 |
-| 2 | `Pricing/PaymentSuccess.tsx` | 124 | 3 | 7 |
-| 3 | `Dashboard/FeedbackPage.tsx` | 545 | 21 | 0 |
-| 4 | `Dashboard/BillingHistoryPage.tsx` | 382 | 26 | 2 |
-| 5 | `Pricing/PricingPage.tsx` | 311 | 41 | 0 |
-| 6 | `Pricing/CheckoutPage.tsx` | 521 | 3 | 8 |
-| 7 | `Dashboard/SubscriptionManagementPage.tsx` | 564 | 58 | 0 |
-| 8 | `Dashboard/ProfilePage.tsx` | 1646 | 55 | 22 |
+### 2. `src/components/Dashboard/SummaryDisplay.tsx` (cosmetic only)
+- Single stale comment on line 77 referencing `useTheme`. No code changes; just delete or refresh the comment so the file is clean of legacy mentions.
 
-Each file is shipped as its own turn. After every file: `tsc --noEmit` + the per-wave checklist must pass before moving on.
+### 3. `src/components/Dashboard/ProfilePage.tsx` (keep — palette switcher)
+- Uses `useTheme()` only to read `currentTheme` and call `setTheme(...)` for the user's palette picker. This is the **legitimate** runtime use of `ThemeContext` and must stay.
+- Verify no `getTheme*` styling helpers are used (already confirmed: 0). No code changes; documented as out-of-scope-by-design.
 
-## Token mapping (locked, identical to Waves 1–2)
+### 4. `src/components/Onboarding/OnboardingWizard.tsx` (keep — palette switcher)
+- Same situation: only `currentTheme` + `setTheme`. No styling helpers. No changes.
 
-```text
-getThemeCardBg()         -> bg-card-light dark:bg-card-dark
-getThemeCardBorder()     -> border border-divider dark:border-divider-on-dark
-getThemeBorder()         -> border-divider dark:border-divider-on-dark
-getThemeTextPrimary()    -> text-ink dark:text-ink-on-dark
-getThemeTextSecondary()  -> text-secondary-ink dark:text-secondary-ink-on-dark
-getThemeTextMuted()      -> text-muted-ink dark:text-muted-ink-on-dark
-getThemeText()           -> text-ink dark:text-ink-on-dark
-getThemeFocusRing()      -> focus:ring-focus
-getThemeSubtle('ui'|'bg')-> bg-subtle dark:bg-subtle-on-dark
-getThemeGradient('ui')   -> bg-gradient-to-r from-accent-gold to-accent-gold-soft
+### 5. `src/pages/ScholarPreview.tsx` (keep — palette previewer)
+- Dev/preview page that swaps `currentTheme` to demo palettes. Legitimate use. No changes.
 
-Pre-existing raw gray pairs cleaned in-place:
-text-gray-900 dark:text-gray-100   -> text-ink dark:text-ink-on-dark
-text-gray-900 dark:text-white      -> text-ink dark:text-ink-on-dark
-text-gray-700 dark:text-gray-300   -> text-secondary-ink dark:text-secondary-ink-on-dark
-text-gray-800 dark:text-gray-300   -> text-secondary-ink dark:text-secondary-ink-on-dark
-bg-gray-100 dark:bg-gray-700       -> bg-subtle dark:bg-subtle-on-dark
-border-gray-300 dark:border-gray-600 -> border-divider dark:border-divider-on-dark
-bg-white dark:bg-gray-800          -> bg-card-light dark:bg-card-dark
-```
+### App.tsx (keep)
+- Retains `ThemeProvider` wrapper and `ThemeContext` guard in `AppContent`. Required so `currentTheme` is available to the 3 palette-switcher consumers above. No changes.
 
-No new tokens introduced. If a gap appears mid-wave, pause and add to `index.css` first.
+## Verification
 
-## Protected surfaces (do NOT touch)
+After edits:
+1. `rg -n "getTheme[A-Z]|getBackgroundGradient" src` → must return zero matches anywhere in `src/`.
+2. The only remaining `useTheme` consumers must be: `ProfilePage.tsx`, `OnboardingWizard.tsx`, `ScholarPreview.tsx` (palette switchers) and `ThemeContext.tsx` itself.
+3. `tsc --noEmit` → 0 errors.
+4. `eslint` on the 5 files → no new errors; pre-existing `react-hooks/exhaustive-deps` warnings are legacy debt and remain untouched.
+5. Quick visual sanity check on `/dashboard/study-rooms` route via console logs to confirm no runtime errors.
 
-1. **Subscription tier palette** in `SubscriptionManagementPage.tsx`:
-   - `tierInfo.bgColor` from `getTierDisplayInfo()` helper (lines 209, 218) — hardcoded gradient/colors stay.
-   - The `text-white` over `tierInfo.bgColor` stays as-is (white-on-tier-bg is the intended palette).
-   - Same rule as Header tier badges from Phases 3–4.
+## Out of scope (deferred / by design)
 
-2. **Achievement tier badges** in `ProfilePage.tsx` lines 1599–1606 (bronze/silver/gold/platinum): per user's deferred decision, **migrate them to role tokens** (`bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark`) for now since all four cases were already visually identical. Will leave a TODO comment in the file noting "differentiate per tier in Phase 6 polish" so it isn't lost.
+- Removing `getTheme*` helper functions from `ThemeContext.tsx`. They are no longer called anywhere after this wave, but deleting them is a separate cleanup PR (Wave 8 candidate) so this wave stays focused on consumers.
+- Removing the legacy color tokens from `tailwind.config.js` safelist — also deferred to a dedicated cleanup pass.
 
-3. **Status / outcome semantic colors** (success-green, danger-red, warn-yellow) for payment confirmations, error states, suspended badges, and verification states — preserved.
+## Cadence
 
-4. **Stripe / Paddle / payment-flow logic** — `useSubscription`, checkout session creation, Stripe redirect URLs, webhook listeners, polling cadence, currency formatting — all untouched.
-
-## Cross-file integrity (verified before approval)
-
-- **Public exports unchanged** (verified per file):
-  - `PricingPage` keeps `export default` (App.tsx imports it without `.then`).
-  - All 7 others keep their named exports (`PaymentCancel`, `PaymentSuccess`, `FeedbackPage`, `BillingHistoryPage`, `CheckoutPage`, `SubscriptionManagementPage`, `ProfilePage`).
-- **Lazy boundaries unchanged**: `App.tsx` (lines 28–33) and `Dashboard.tsx` (lines 13–14) keep their existing `lazy(() => import(...).then(m => ({ default: m.X })))` shape.
-- **Routing unchanged**: `/pricing`, `/checkout`, `/payment/success`, `/payment/cancel`, `/dashboard/billing`, `/dashboard/subscription` all keep their current `<Route>` definitions and lazy boundaries.
-- **No new imports** of `ThemeContext` introduced anywhere.
-
-## Per-file procedure (applied to each turn)
-
-1. Backup to `/tmp/<File>.bak.tsx`.
-2. Remove `useTheme` import + the destructure.
-3. Run mechanical interpolation + plain replacements (same Python script as Wave 2).
-4. Run gray-pair cleanup pass for any banned literals listed in that file's pre-scan.
-5. Run banned-literal recheck — must be 0 (except SubscriptionManagementPage tier palette).
-6. Run `tsc --noEmit -p tsconfig.app.json` — must be clean.
-7. Run `eslint <file>` — only pre-existing warnings allowed; 0 new errors/warnings.
-8. Confirm `rg "^export "` output matches the pre-edit signature.
-9. Report: lines changed, helpers removed, tokens adopted, any anomalies.
-
-## Wave-level verification (after all 8 files)
-
-Run the same verification I ran for Wave 2:
-
-1. `rg "useTheme\(\)|getTheme[A-Z]\w*\("` across all 8 → 0 (allow only the destructure-removed lines being absent).
-2. `rg "cyan-[456]00|blue-[456]00/50|from-cyan|to-blue|text-gray-[789]00 dark:"` → 0 (with the SubscriptionManagementPage tier-bg whitelist documented).
-3. `rg "ThemeContext"` against the 8 files → none.
-4. `tsc --noEmit` whole project → clean.
-5. `eslint` on all 8 → 0 errors.
-6. Cross-file: `rg "ProfilePage|SubscriptionManagementPage|BillingHistoryPage|PricingPage|CheckoutPage|PaymentSuccess|PaymentCancel|FeedbackPage" -g '*.ts' -g '*.tsx'` → all consumers still resolve.
-7. Public-export signatures match pre-edit.
-8. Runtime preview console → no new errors (only DEBUG subscription polling).
-
-## Precautions (carried over from Phase 5 plan)
-
-- No backend / Supabase / RLS / edge-function / webhook touches.
-- No `useSubscription`, `useFeatureAccess`, `useCredit` logic edits.
-- No router or `Suspense` boundary changes.
-- No i18n key changes; RTL spacing preserved.
-- No effect-deps "fixes" (existing exhaustive-deps warnings stay as-is).
-- One file per turn — no drive-by refactors.
-- Tier badge palette (subscription + payment-status semantic colors) preserved.
-
-## Out of scope (deferred to Phase 6)
-
-- Differentiating bronze/silver/gold/platinum achievement colors visually (TODO comment dropped in ProfilePage).
-- Any payment-provider migration (Stripe/Paddle BYOK vs built-in) — pure UI refactor, not relevant here.
-- `ThemeContext` shim removal — happens in Phase 6 after all callers gone.
-
-## Execution gate
-
-Reply **"start wave 3"** and I'll begin with `PaymentCancel.tsx` (smallest, 65 lines, 2 helpers). One file per turn; you approve each before I move to the next, identical to Wave 2's cadence.
-
-**Wave 3 status: ✅ COMPLETE & verified clean.** All 8 files migrated, 0 legacy helpers, 0 banned literals, exports preserved, lazy boundaries intact, tsc clean.
-
----
-
-# Wave 4 — Admin Surfaces
-
-Token-only refactor of all Admin pages still carrying legacy helpers OR banned literal pairs from the locked Phase 4 map. Same procedure, same precautions, same locked token mapping as Waves 1–3. No backend, RLS, or admin-permission changes.
-
-## Files (smallest-first execution order)
-
-| # | File | Lines | Legacy calls | Banned literals |
-|---|------|-------|---|---|
-| 1 | `Admin/BlockUserModal.tsx` | 252 | 0 | 11 |
-| 2 | `Admin/OverviewPage.tsx` | 255 | 4 | 4 |
-| 3 | `Admin/AdminLogin.tsx` | 318 | 3 | 0 |
-| 4 | `Admin/TagsManagementPage.tsx` | 338 | 0 | 4 |
-| 5 | `Admin/FoldersManagementPage.tsx` | 346 | 0 | 4 |
-| 6 | `Admin/SubscriptionModal.tsx` | 362 | 0 | 11 |
-| 7 | `Admin/CreditManagementPage.tsx` | 370 | 0 | 9 |
-| 8 | `Admin/TransactionsPage.tsx` | 383 | 3 | 9 |
-| 9 | `Admin/TokenUsagePage.tsx` | 408 | 0 | 1 |
-| 10 | `Admin/AnalyticsPage.tsx` | 416 | 4 | 8 |
-| 11 | `Admin/FeedbackManagementPage.tsx` | 479 | 0 | 11 |
-| 12 | `Admin/AuditLogPage.tsx` | 490 | 3 | 33 |
-| 13 | `Admin/UserActivityPage.tsx` | 546 | 0 | 19 |
-| 14 | `Admin/AdminUsersManagementPage.tsx` | 616 | 3 | 11 |
-| 15 | `Admin/UsersPage.tsx` | 1239 | 0 | 16 |
-
-Excluded (already clean, 0 legacy + 0 banned): `AdminDashboard.tsx`, `AdminHeader.tsx`, `AdminRoute.tsx`, `AdminSidebar.tsx`, `AppSettingsPage.tsx`, `SubscriptionsManagementPage.tsx`.
-
-Cadence: ship 1–2 files per turn (user choice). After each turn: `tsc --noEmit` clean + per-file checklist passes.
-
-## Token mapping (locked, identical to Waves 1–3)
-
-Same as Wave 3 — no new tokens. If a gap appears mid-wave, pause and add to `index.css` first.
-
-## Protected surfaces (do NOT touch)
-
-1. **Status / outcome semantic colors** (success-green, danger-red, warn-yellow, info-blue) for admin badges (active / banned / suspended / payment-failed / refunded) — preserved.
-2. **Admin role badges** with explicit role colors (super_admin / admin / moderator) if any — preserved.
-3. **Admin auth / route guards** (`AdminRoute`, `useAuth`, role checks, RLS-bound queries) — untouched.
-4. **Supabase queries, RPC calls, edge-function invocations, audit-log writes** — untouched.
-5. **Pagination, sort, filter, search logic** — untouched.
-6. **Chart libraries** (recharts/chart.js color palettes if any) — preserved exactly.
-
-## Cross-file integrity (verified before approval)
-
-- Public exports unchanged (named exports for all 15 files).
-- Lazy boundaries unchanged: `App.tsx` admin routes (verified pre-flight) keep their existing `lazy(() => import(...).then(m => ({ default: m.X })))` shape.
-- No new imports of `ThemeContext` introduced anywhere; remove `useTheme` import + destructure from each migrated file.
-- No prop / signature / hook-deps changes.
-
-## Per-file procedure (applied to each turn)
-
-1. Backup to `/tmp/<File>.bak.tsx`.
-2. Remove `useTheme` import + destructure.
-3. Run mechanical interpolation + plain replacements (same Python script as Wave 3).
-4. Run gray-pair cleanup pass for banned literals listed in that file's pre-scan.
-5. Run banned-literal recheck — must be 0.
-6. Run `tsc --noEmit -p tsconfig.app.json` — must be clean.
-7. Confirm `rg "^export "` matches pre-edit signature.
-8. Report: lines changed, helpers removed, tokens adopted, anomalies.
-
-## Wave-level verification (after all 15 files)
-
-1. `rg "useTheme\(\)|getTheme[A-Z]\w*\("` across `src/components/Admin/` → 0.
-2. `rg` for the 7 banned literal pairs → 0 in `src/components/Admin/`.
-3. `rg "ThemeContext"` against the 15 files → 0.
-4. `tsc --noEmit` whole project → clean.
-5. Cross-file consumer resolution intact (admin routes still resolve in `App.tsx`).
-6. Public-export signatures match pre-edit.
-7. Runtime preview: admin pages render, no new console errors.
-
-## Precautions (carried over)
-
-- No backend / Supabase / RLS / edge-function / webhook / audit-log touches.
-- No admin permission / role-check logic edits.
-- No router or `Suspense` boundary changes.
-- No i18n key changes; RTL spacing preserved.
-- No effect-deps "fixes" (existing exhaustive-deps warnings stay as-is).
-- 1–2 files per turn — no drive-by refactors.
-- Status / role semantic colors preserved.
-
-## Out of scope (deferred to Phase 6)
-
-- `ThemeContext` shim removal — happens in Phase 6 after all callers gone.
-- Visual polish of admin charts / tables.
-- Any admin-feature changes (data shape, columns, filters).
-
-**Wave 4 status: ✅ COMPLETE & verified clean.** All 15 files migrated, 0 legacy helpers, 0 banned literals, exports preserved, lazy boundaries intact, tsc clean, 0 lint errors (3 pre-existing warnings line-confirmed against backups).
-
----
-
-# Wave 5 — Shell, Onboarding, Auth, Misc + small/medium Dashboard utilities
-
-Token-only refactor. Same locked Phase 4 token mapping, same precautions, same per-file procedure as Waves 1–4. Wave 5 covers entry-point UX shell + small/medium Dashboard utility components — every file ≤ ~334 lines and ≤ 28 calls. The heavy Dashboard pages (≥ 350 lines OR ≥ 31 calls) are deferred to Wave 6 to keep risk bounded per-wave.
-
-## Files (smallest-first execution order)
-
-| # | File | Lines | Legacy calls |
-|---|------|-------|---|
-| 1 | `NotFound.tsx` | 49 | 2 |
-| 2 | `Onboarding/TutorialStep.tsx` | 54 | 6 |
-| 3 | `Dashboard/BookMode/FreeFormToggle.tsx` | 61 | 2 |
-| 4 | `Dashboard/ReadAloud/ReadAloudButton.tsx` | 66 | 4 |
-| 5 | `Dashboard/AudioStudy/TranscriptView.tsx` | 70 | 9 |
-| 6 | `Dashboard/BrainRushMultiplayerWrapper.tsx` | 76 | 4 |
-| 7 | `Dashboard/AudioStudy/AudioTtsPlayer.tsx` | 80 | 6 |
-| 8 | `Dashboard/AudioStudy/AudioSummaryGenerator.tsx` | 80 | 10 |
-| 9 | `Dashboard/AudioStudy/AudioUpload.tsx` | 86 | 9 |
-| 10 | `Onboarding/LanguageChoicePage.tsx` | 96 | 6 |
-| 11 | `LanguageToggle.tsx` | 102 | 2 |
-| 12 | `Dashboard/FloatingVideo/MiniPlayer.tsx` | 124 | 2 |
-| 13 | `Dashboard/Academics/CourseTutor.tsx` | 137 | 11 |
-| 14 | `Dashboard/LikeButton.tsx` | 159 | 2 |
-| 15 | `Dashboard/PomodoroTimer.tsx` | 168 | 9 |
-| 16 | `Dashboard/Highlighting/HighlightLayer.tsx` | 174 | 1 |
-| 17 | `pages/ScholarPreview.tsx` | 176 | 1 |
-| 18 | `Onboarding/PageTutorial.tsx` | 183 | 7 |
-| 19 | `ShareView.tsx` | 222 | 6 |
-| 20 | `Auth/Auth.tsx` | 241 | 3 |
-| 21 | `Dashboard/NotificationCenter.tsx` | 243 | 22 |
-| 22 | `Dashboard/MindMap/MindMapView.tsx` | 252 | 8 |
-| 23 | `Dashboard/Academics/CourseAnalytics.tsx` | 253 | 22 |
-| 24 | `Onboarding/OnboardingWizard.tsx` | 263 | 14 |
-| 25 | `Dashboard/MultiplayerResults.tsx` | 263 | 12 |
-| 26 | `Dashboard/GameJoinPage.tsx` | 274 | 21 |
-| 27 | `Dashboard/BrainRushQuestionResults.tsx` | 282 | 19 |
-| 28 | `Dashboard/Academics/ExamScheduler.tsx` | 289 | 18 |
-| 29 | `Dashboard/Academics/SRSReviewPanel.tsx` | 302 | 16 |
-| 30 | `Dashboard/BookMode/BookModeViewer.tsx` | 306 | 9 |
-| 31 | `Dashboard/AchievementsPage.tsx` | 325 | 28 |
-| 32 | `Dashboard/AIQuestionGenerator.tsx` | 325 | 4 |
-| 33 | `Dashboard/ManualQuestionBuilder.tsx` | 334 | 2 |
-| 34 | `Dashboard/BookMode/WidgetContainer.tsx` | 334 | 14 |
-
-**34 files**, ~280 legacy calls. Cadence: 2–4 files per turn (user choice based on risk).
-
-## Deferred to Wave 6 (heavy hitters)
-
-`App.tsx` (413/8) — root, special care · `Dashboard/Social/GroupChat.tsx` (350/16) · `ChatAssistant/ChatAssistant.tsx` (378/7) · `Dashboard/BrainRushResults.tsx` (378/36) · `Dashboard/Social/FriendsPanel.tsx` (382/22) · `Dashboard/MultiplayerLobby.tsx` (458/2) · `Dashboard/Social/GroupsPanel.tsx` (491/27) · `Dashboard/CommentSection.tsx` (495/22) · `Dashboard/BookMode/NotesWidget.tsx` (571/23) · `Dashboard/InformationalPage.tsx` (604/114) · `Dashboard/MultiplayerGamePlay.tsx` (626/16) · `Dashboard/BrainRushGamePlay.tsx` (688/17) · `ChatAssistant/GlobalChatAssistant.tsx` (690/7) · `Dashboard/GoalsAndAchievementsPage.tsx` (949/31) · `Dashboard/Academics/AcademicsPage.tsx` (1000/59) · `Dashboard/EduPlayPage.tsx` (1105/39) · `Dashboard/StudyRoomsPage.tsx` (1314/43)
-
-## Token mapping (locked, identical to Waves 1–4)
-
-Same as Wave 4. No new tokens. If a gap appears, pause and add to `index.css` first.
-
-## Protected surfaces (do NOT touch)
-
-1. **Game / quiz semantic colors** (correct=green, wrong=red, neutral=blue) in BrainRush, Multiplayer, SRS Review, Quiz components — preserved.
-2. **Onboarding branded gradients** (welcome hero) — preserve dynamic palette logic; only migrate role-token surfaces.
-3. **Audio / video player chrome** (record-red, live-pulse) — preserved.
-4. **Notification severity colors** (info / success / warning / error palette in NotificationCenter) — preserved.
-5. **Highlight layer colors** (`HighlightLayer.tsx` user-content highlight palette) — preserved.
-6. **Pomodoro mode colors** (work / break / long-break) — preserved.
-7. **MindMap node colors** if data-driven — preserved.
-8. **All Supabase queries, RPC calls, edge-function invocations, useAuth checks, real-time subscriptions, Zegocloud handles** — untouched.
-
-## Cross-file integrity (verified before approval)
-
-- Public exports unchanged per file (named or default — match pre-edit).
-- Lazy boundaries unchanged: `App.tsx`, `Dashboard.tsx`, and any other lazy-loader keeps existing shape.
-- No new imports of `ThemeContext`; remove `useTheme` import + destructure when all helpers are removed (keep it only if `currentTheme`/`setTheme` are also consumed).
-- No prop / signature / hook-deps changes.
-
-## Per-file procedure (applied to each turn)
-
-1. Backup to `/tmp/<File>.bak.tsx`.
-2. Pre-scan: legacy calls, banned literals, dynamic-color logic flagged.
-3. Remove `useTheme` import + destructure (or trim destructure if other members retained).
-4. Run mechanical migration script.
-5. Run banned-literal cleanup for Wave 4 mapped pairs.
-6. Banned-literal recheck → must be 0 (mapped pairs).
-7. `tsc --noEmit -p tsconfig.app.json` → must be clean.
-8. `rg "^export "` matches pre-edit signature.
-9. Report: lines changed, helpers removed, tokens adopted, anomalies, preserved semantic colors.
-
-## Wave-level verification (after all 34 files)
-
-1. `rg "useTheme\(\)|getTheme[A-Z]\w*\("` across the 34 files → 0.
-2. Mapped banned literal pairs across the 34 → 0.
-3. `rg "ThemeContext"` against the 34 → 0 (with documented exceptions for files retaining `currentTheme`/`setTheme`).
-4. `tsc --noEmit` whole project → clean.
-5. `eslint` on the 34 → 0 new errors / 0 new warnings (pre-existing only).
-6. Cross-file consumer resolution intact.
-7. Public-export signatures match pre-edit.
-8. Runtime preview: every migrated route renders, no new console errors.
-
-## Precautions (carried over)
-
-- No backend / Supabase / RLS / edge-function / webhook / Zegocloud / real-time logic touches.
-- No router, route-guard, or `Suspense` boundary changes.
-- No i18n key changes; RTL spacing preserved.
-- No effect-deps "fixes"; no `any`-tightening; no unused-import removal beyond `useTheme`.
-- 1–4 files per turn — no drive-by refactors.
-- All semantic / branded / data-driven palettes preserved.
-
-## Out of scope (deferred to Wave 6 + Phase 6)
-
-- 17 heavy-hitter files listed above.
-- `ThemeContext` shim removal — happens in Phase 6 after Wave 6 finishes.
-- Achievement tier color differentiation (still TODO from Wave 3).
-
+Single batch — StudyRoomsPage is the only substantial file. The other 4 are zero- or one-line touch-ups. Reply **"go"** to execute.
