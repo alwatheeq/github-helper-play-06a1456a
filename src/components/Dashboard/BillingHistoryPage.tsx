@@ -262,24 +262,23 @@ export const BillingHistoryPage: React.FC = () => {
 
   return (
     <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto space-y-6">
       <button
         type="button"
         onClick={() => navigate(-1)}
-        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6`}
+        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition`}
       >
         <ArrowLeft className="h-5 w-5" />
-        <span>Go back</span>
+        <span>{t('common.go_back') || 'Go back'}</span>
       </button>
-      <div className="mb-8">
-        <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Billing History</h1>
-        <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
-          View and download receipts for all your transactions
-        </p>
-      </div>
+      <PageHeader
+        eyebrow={t('billing.eyebrow')}
+        title={t('billing.title')}
+        descriptor={t('billing.descriptor')}
+      />
 
       <div
-        className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark border overflow-hidden`}
+        className={`bg-card-light dark:bg-card-dark rounded-[6px] border border-divider dark:border-divider-on-dark overflow-hidden`}
       >
         <div className="overflow-x-auto">
           <table className="w-full">
