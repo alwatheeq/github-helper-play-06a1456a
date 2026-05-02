@@ -943,7 +943,8 @@
     "create_first_room": "أنشئ غرفة دراستك الأولى للتعاون مع الآخرين",
     "room_full": "الغرفة ممتلئة",
     "room_expired": "انتهت صلاحية الغرفة",
-    "expires_in": "تنتهي في"
+    "expires_in": "تنتهي في",
+    "eyebrow": "التعاون"
   },
   "chat": {
     "open_assistant": "فتح المساعد الذكي",
@@ -1322,7 +1323,8 @@
     "quiz_types_count": "{count} نوع اختبار",
     "generation_none_selected": "لا يوجد شيء محدد",
     "missing_generation_options_column": "طبّق الترحيل الذي يضيف إعدادات توليد المقرر (content_generation_options) ثم أعد التحميل. حفظ التفضيلات يحتاج هذا العمود.",
-    "db_not_migrated": "قاعدة البيانات غير محدثة: طبّق ترحيلات الأكاديميات (مثل supabase db push) ثم أعد التحميل."
+    "db_not_migrated": "قاعدة البيانات غير محدثة: طبّق ترحيلات الأكاديميات (مثل supabase db push) ثم أعد التحميل.",
+    "eyebrow": "الدراسات"
   },
   "read_aloud": {
     "read_aloud": "اقرأ بصوت عالٍ",

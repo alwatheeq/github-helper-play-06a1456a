@@ -943,7 +943,8 @@
     "create_first_room": "Başkalarıyla işbirliği yapmak için ilk çalışma odanızı oluşturun",
     "room_full": "Oda dolu",
     "room_expired": "Odanın süresi doldu",
-    "expires_in": "Süre bitiyor"
+    "expires_in": "Süre bitiyor",
+    "eyebrow": "İşbirliği"
   },
   "chat": {
     "open_assistant": "AI Asistanı Aç",
@@ -1322,7 +1323,8 @@
     "quiz_types_count": "{count} sınav türü",
     "generation_none_selected": "Hiçbiri seçilmedi",
     "missing_generation_options_column": "Ders üretim ayarlarını ekleyen migration’ı (content_generation_options) uygulayıp yenileyin. Tercihleri kaydetmek için bu sütun gerekir.",
-    "db_not_migrated": "Veritabanı taşınmadı: academics migration’larını uygulayın (ör. supabase db push), sonra yenileyin."
+    "db_not_migrated": "Veritabanı taşınmadı: academics migration’larını uygulayın (ör. supabase db push), sonra yenileyin.",
+    "eyebrow": "Akademik"
   },
   "read_aloud": {
     "read_aloud": "Sesli oku",
