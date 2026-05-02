@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
-import { ScholarCard } from '../Scholar';
+import { ScholarCard, PageHeader } from '../Scholar';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -411,21 +411,21 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     }`;
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center space-x-3 mb-4">
-          <h2 className="text-3xl font-bold text-ink dark:text-ink-on-dark">{t('dashboard.process_content')}</h2>
-          {medicalMode && (
-            <div className="bg-red-50 dark:bg-red-900/20 px-3 py-1 rounded-full flex items-center space-x-2 border border-red-200 dark:border-red-800">
-              <Stethoscope className="h-4 w-4 text-red-700 dark:text-red-400" />
-              <span className="text-red-700 dark:text-red-400 text-sm font-medium">{t('dashboard.med_student_mode_label')}</span>
-            </div>
-          )}
-        </div>
-        <p className="text-lg text-secondary-ink dark:text-muted-ink-on-dark">
-          {t('dashboard.process_desc')}
-        </p>
-      </div>
+   <div className="max-w-4xl mx-auto">
+      <PageHeader
+        eyebrow={t('dashboard.eyebrow') || 'Workspace'}
+        title={t('dashboard.process_content')}
+        descriptor={t('dashboard.process_desc')}
+        actions={medicalMode ? (
+          <div className="bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] flex items-center gap-2 border border-divider dark:border-divider-on-dark">
+            <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
+            <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
+              {t('dashboard.med_student_mode_label')}
+            </span>
+          </div>
+        ) : undefined}
+        className="mb-8"
+      />
 
       <ScholarCard padding="lg">
         {/* Notification */}

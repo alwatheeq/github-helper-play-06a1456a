@@ -16,6 +16,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { PerformanceMonitor } from '../../utils/performanceMonitor';
 import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 import { useConfirm } from '../../hooks/useConfirm';
+import { PageHeader } from '../Scholar';
 
 // GlobalExam interface removed - moved to QuizPage
 
@@ -744,63 +745,58 @@ export const LibraryPage: React.FC = React.memo(() => {
         </div>
       )}
 
-      <div className={`mb-8 ${libraryViewMode === 'notebook' ? '' : ''}`}>
-        <div className="flex items-center justify-between">
-          <div className="flex-1">
-            {libraryViewMode === 'notebook' ? (
-              <div>
-                <h2 className={`text-3xl font-bold mb-2 text-ink dark:text-ink-on-dark`}>
-                  {t('notebook.title') || 'My Notebook'}
-                </h2>
-                <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                  {t('notebook.subtitle') || 'Your personal notes and annotations'}
-                </p>
-              </div>
-            ) : (
-              <div>
-                <h2 className={`text-3xl font-bold mb-2 text-ink dark:text-ink-on-dark`}>
-                  {t('library.my_library_title')}
-                </h2>
-                <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                  {t('library.my_library_desc')}
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Toggle Switch */}
-          <div className={`flex items-center space-x-3 rounded-lg p-1 bg-subtle dark:bg-subtle-on-dark`}>
+      <PageHeader
+        eyebrow={libraryViewMode === 'notebook'
+          ? (t('notebook.eyebrow') || 'Personal')
+          : (t('library.eyebrow') || 'Collection')}
+        title={libraryViewMode === 'notebook'
+          ? (t('notebook.title') || 'My Notebook')
+          : t('library.my_library_title')}
+        descriptor={libraryViewMode === 'notebook'
+          ? (t('notebook.subtitle') || 'Your personal notes and annotations')
+          : t('library.my_library_desc')}
+        className="mb-8"
+        actions={
+          <div
+            role="tablist"
+            aria-label={t('library.view_mode') || 'View mode'}
+            className="inline-flex items-center border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
+          >
             <button
+              role="tab"
+              aria-selected={libraryViewMode === 'library'}
               onClick={() => {
                 setLibraryViewMode('library');
                 localStorage.setItem('library_view_mode', 'library');
               }}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
+              className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 ${
                 libraryViewMode === 'library'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
+                  ? 'bg-sidebar text-ink-on-dark'
+                  : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
               }`}
             >
-              <BookOpen className="h-5 w-5 inline mr-2" />
+              <BookOpen className="h-4 w-4" aria-hidden />
               {t('library.my_library_title') || 'My Library'}
             </button>
             <button
+              role="tab"
+              aria-selected={libraryViewMode === 'notebook'}
               onClick={() => {
                 setLibraryViewMode('notebook');
                 localStorage.setItem('library_view_mode', 'notebook');
               }}
-              className={`px-4 py-2 rounded-md transition-colors duration-150 font-medium ${
+              className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
                 libraryViewMode === 'notebook'
-                  ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow`
-                  : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
+                  ? 'bg-sidebar text-ink-on-dark'
+                  : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
               }`}
             >
-              <FileText className="h-5 w-5 inline mr-2" />
+              <FileText className="h-4 w-4" aria-hidden />
               {t('notebook.title') || 'Notebook'}
             </button>
           </div>
-        </div>
-      </div>
+        }
+      />
 
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
