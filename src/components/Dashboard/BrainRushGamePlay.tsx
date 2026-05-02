@@ -3,7 +3,7 @@ import { Clock, Trophy, Users, CheckCircle, XCircle, Loader2 } from 'lucide-reac
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { BrainRushQuestionResults } from './BrainRushQuestionResults';
-import { useTheme } from '../../contexts/ThemeContext';
+
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -61,7 +61,6 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   onGameEnd
 }) => {
   const { user } = useAuth();
-  const { getThemeGradient, getThemeCardBg, getThemeCardBorder, getThemeTextPrimary, getThemeTextSecondary, getThemeSubtle } = useTheme();
   const { error: showErrorToast } = useToast();
   const [currentQuestion, setCurrentQuestion] = useState<GameQuestion | null>(null);
   const [timeLeft, setTimeLeft] = useState(gameSession.question_timer_seconds);
@@ -453,9 +452,9 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   if (loading || !currentQuestion) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className={`${getThemeCardBg()} rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] ${getThemeCardBorder()} dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center">
           <Loader2 className="h-16 w-16 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-4" />
-          <p className={getThemeTextSecondary()}>Loading question...</p>
+          <p className="text-ink dark:text-ink-on-dark">Loading question...</p>
         </div>
       </div>
     );
@@ -489,7 +488,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <div className="bg-purple-100 dark:bg-purple-900 px-4 py-2 rounded-lg">
-                  <span className={`text-sm ${getThemeTextSecondary()}`}>Question</span>
+                  <span className="text-sm text-ink dark:text-ink-on-dark">Question</span>
                   <p className="text-lg font-bold text-purple-600 dark:text-purple-400">{questionProgress}</p>
                 </div>
                 <div className="bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-lg">
@@ -513,7 +512,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           {/* Question */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-4">
             <div className={`flex items-start gap-2 mb-8`}>
-              <h2 className={`text-2xl md:text-3xl font-bold ${getThemeTextPrimary()} text-center flex-1`}>
+              <h2 className="text-2xl md:text-3xl font-bold text-ink dark:text-ink-on-dark text-center flex-1">
                 {currentQuestion.question_text}
               </h2>
               <ReadAloudButton text={currentQuestion.question_text} />
@@ -526,7 +525,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                 const isCorrect = option === currentQuestion.correct_answer;
                 const showCorrectAnswer = hasAnswered;
 
-                let optionClass = `${getThemeCardBg()} border-2 ${getThemeCardBorder()} hover:border-purple-400 dark:hover:border-purple-500`;
+                let optionClass = 'bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:border-purple-400 dark:hover:border-purple-500';
 
                 if (showCorrectAnswer && isCorrect) {
                   optionClass = 'bg-green-100 dark:bg-green-900 border-2 border-green-500 dark:border-green-400';
@@ -546,7 +545,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                     className={`${optionClass} rounded-md p-6 text-left transition-all relative ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`text-lg font-medium ${getThemeTextPrimary()} flex-1`}>
+                      <span className="text-lg font-medium text-ink dark:text-ink-on-dark flex-1">
                         {option}
                       </span>
                       <div className="flex items-center gap-2">
@@ -605,7 +604,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-4">
               <button
                 onClick={handleNextQuestion}
-                className={`w-full px-6 py-3 ${getThemeGradient('ui')} text-white rounded-lg hover:opacity-90 transition font-semibold`}
+                className="w-full px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition font-semibold"
               >
                 {gameState.current_question_index + 1 >= gameState.total_questions ? 'Finish Game' : 'Next Question'}
               </button>
@@ -616,7 +615,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           {!isHost && hasAnswered && (
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 text-center">
               <Loader2 className="h-8 w-8 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-2" />
-              <p className={getThemeTextSecondary()}>Waiting for next question...</p>
+              <p className="text-ink dark:text-ink-on-dark">Waiting for next question...</p>
             </div>
           )}
         </div>
@@ -626,7 +625,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 sticky top-6">
             <div className="flex items-center space-x-2 mb-4">
               <Trophy className="h-6 w-6 text-yellow-500" />
-              <h3 className={`text-xl font-bold ${getThemeTextPrimary()}`}>Live Rankings</h3>
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Live Rankings</h3>
             </div>
 
             <div className="space-y-2">
@@ -639,7 +638,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                     className={`p-3 rounded-lg ${
                       myParticipant
                         ? 'bg-purple-100 dark:bg-purple-900 border-2 border-purple-500'
-                        : getThemeSubtle('bg')
+                        : 'bg-page-light dark:bg-page-dark'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -648,21 +647,21 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                           index === 0
                             ? 'bg-yellow-400 text-yellow-900'
                             : index === 1
-                            ? `${getThemeSubtle('ui')} ${getThemeTextPrimary()}`
+                            ? 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
                             : index === 2
                             ? 'bg-orange-400 text-orange-900'
-                            : `${getThemeSubtle('ui')} ${getThemeTextSecondary()}`
+                            : 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
                         }`}>
                           {index + 1}
                         </div>
                         <div>
-                          <p className={`font-medium ${getThemeTextPrimary()} text-sm`}>
+                          <p className="font-medium text-ink dark:text-ink-on-dark text-sm">
                             {participant.display_name}
                             {myParticipant && <span className="text-purple-600 dark:text-purple-400"> (You)</span>}
                           </p>
                         </div>
                       </div>
-                      <p className={`font-bold ${getThemeTextPrimary()}`}>
+                      <p className="font-bold text-ink dark:text-ink-on-dark">
                         {participant.score.toLocaleString()}
                       </p>
                     </div>
@@ -671,8 +670,8 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               })}
             </div>
 
-            <div className={`mt-4 pt-4 border-t ${getThemeCardBorder()}`}>
-              <div className={`flex items-center justify-between text-sm ${getThemeTextSecondary()}`}>
+            <div className="mt-4 pt-4 border-t border-divider dark:border-divider-on-dark">
+              <div className="flex items-center justify-between text-sm text-ink dark:text-ink-on-dark">
                 <div className="flex items-center space-x-1">
                   <Users className="h-4 w-4" />
                   <span>{participants.length} Players</span>
