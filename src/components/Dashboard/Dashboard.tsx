@@ -1498,199 +1498,254 @@ export const Dashboard: React.FC = () => {
               <ProfilePage key="profile" />
             )}
 
-            {currentView === 'main' && processingState.stage === 'idle' && (
-              <InputForm onProcessInput={handleProcessInputWrapper} />
-            )}
-
-            {currentView === 'main' && (processingState.stage === 'uploading' || processingState.stage === 'processing') && (
-              <ProcessingStatus 
-                stage={processingState.stage}
-                progress={processingState.progress}
-                message={processingState.message}
-                mode={processingState.mode}
-                medicalMode={processingState.medicalMode}
-                medicalScore={processingState.medicalScore}
-                extractionMethod={processingState.extractionMethod}
-                confidence={processingState.confidence}
-                onReset={resetProcessing}
-              />
-            )}
-
-            {currentView === 'main' && processingState.stage === 'completed' && (
+            {currentView === 'main' && (
               <div className="space-y-8">
-                {/* Language Selector */}
-                <ScholarCard padding="md">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="bg-accent-gold p-2 rounded-lg">
-                        <svg className="h-5 w-5 text-ink-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                        </svg>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">Content Language</h3>
-                        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                          {processingState.translating ? 'Translating content...' : 'Choose a language for your summary and flashcards'}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center space-x-4">
-                      <select
-                        value={processingState.selectedLanguage}
-                        onChange={(e) => handleLanguageChange(e.target.value)}
-                        disabled={processingState.translating}
-                        className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
-                      >
-                        {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
-                          <option key={lang.code} value={lang.code}>
-                            {lang.flag} {lang.name}
-                          </option>
-                        ))}
-                      </select>
-                      
-                      {processingState.translating && (
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-gold"></div>
-                      )}
-                    </div>
-                  </div>
-                </ScholarCard>
+                <PageHeader
+                  eyebrow="Studio · Compose"
+                  title="Process content"
+                  descriptor="Paste a passage, upload a document, or scan an image. Your summary and flashcards arrive in moments."
+                />
 
-                {/* Action Bar - positioned below Content Language card */}
-                {actionBarData && (
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    {/* Back to History - when viewing from history */}
-                    {loadedHistoryEntry && (
-                      <button
-                        onClick={handleBackToHistory}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors bg-card-light dark:bg-card-dark"
-                      >
-                        <ArrowLeft className="h-3.5 w-3.5" />
-                        <span>{t('history.back_to_history') || 'Back to History'}</span>
-                      </button>
+                <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="min-w-0 flex-1 space-y-8">
+                    {processingState.stage === 'idle' && (
+                      <InputForm onProcessInput={handleProcessInputWrapper} />
                     )}
-                    {/* Free-Form Mode Toggle - hidden until optimized */}
-                    {(() => {
-                      const showFreeFormToggle = false;
-                      return showFreeFormToggle && (
-                        <div className="flex items-center">
-                          <FreeFormToggle
-                            enabled={actionBarData.freeFormMode}
-                            onToggle={actionBarData.onFreeFormToggle}
-                            compact={false}
-                          />
-                        </div>
-                      );
-                    })()}
 
-                    {/* Actions Menu Button */}
-                    <div className="relative">
-                      <button
-                        onClick={() => setShowActionsMenu(!showActionsMenu)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-xl text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                      >
-                        <MoreVertical className="h-3.5 w-3.5" />
-                        <span>Actions</span>
-                      </button>
+                    {(processingState.stage === 'uploading' || processingState.stage === 'processing') && (
+                      <ProcessingStatus
+                        stage={processingState.stage}
+                        progress={processingState.progress}
+                        message={processingState.message}
+                        mode={processingState.mode}
+                        medicalMode={processingState.medicalMode}
+                        medicalScore={processingState.medicalScore}
+                        extractionMethod={processingState.extractionMethod}
+                        confidence={processingState.confidence}
+                        onReset={resetProcessing}
+                      />
+                    )}
 
-                      {/* Actions Dropdown Menu */}
-                      {showActionsMenu && (
-                        <>
-                          <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
-                          <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-xl shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
-                            <div className="p-1.5 space-y-0.5">
-                              {/* Copy All */}
-                              <button
-                                onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                    {processingState.stage === 'completed' && (
+                      <div className="space-y-8">
+                        {/* Language Selector */}
+                        <ScholarCard padding="md">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-3">
+                              <div className="bg-accent-gold p-2 rounded-lg">
+                                <svg className="h-5 w-5 text-ink-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                                </svg>
+                              </div>
+                              <div>
+                                <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">Content Language</h3>
+                                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                                  {processingState.translating ? 'Translating content...' : 'Choose a language for your summary and flashcards'}
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center space-x-4">
+                              <select
+                                value={processingState.selectedLanguage}
+                                onChange={(e) => handleLanguageChange(e.target.value)}
+                                disabled={processingState.translating}
+                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                               >
-                                {actionBarData.copiedIndex === -1 ? (
-                                  <Check className="h-3.5 w-3.5 text-emerald-600" />
-                                ) : (
-                                  <Copy className="h-3.5 w-3.5 opacity-60" />
-                                )}
-                                <span>{t('summary.copy_all')}</span>
-                              </button>
+                                {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
+                                  <option key={lang.code} value={lang.code}>
+                                    {lang.flag} {lang.name}
+                                  </option>
+                                ))}
+                              </select>
 
-                              {/* Dual-mode */}
-                              <button
-                                onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <FileSearch className="h-3.5 w-3.5 opacity-60" />
-                                <span>{t('summary.dual_mode')}</span>
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <Download className="h-3.5 w-3.5 opacity-60" />
-                                <span>{t('summary.export_txt')}</span>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <Download className="h-3.5 w-3.5 opacity-60" />
-                                <span>{t('summary.export_pdf')}</span>
-                              </button>
-
-                              {/* Divider before primary action */}
-                              <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
-
-                              {/* Publish to Library — highlighted */}
-                              <button
-                                onClick={() => { actionBarData.onPublish(); setShowActionsMenu(false); }}
-                                disabled={actionBarData.publishing || actionBarData.published}
-                                className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors disabled:opacity-50 ${
-                                  actionBarData.published
-                                    ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                    : processingState.medicalMode
-                                      ? 'text-red-700 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30'
-                                      : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:hover:bg-emerald-900/30'
-                                }`}
-                              >
-                                {actionBarData.publishing ? (
-                                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                                ) : actionBarData.published ? (
-                                  <Check className="h-3.5 w-3.5" />
-                                ) : processingState.medicalMode ? (
-                                  <GraduationCap className="h-3.5 w-3.5" />
-                                ) : (
-                                  <BookOpen className="h-3.5 w-3.5" />
-                                )}
-                                <span>
-                                  {actionBarData.published
-                                    ? t('summary.published')
-                                    : actionBarData.publishing
-                                      ? t('summary.publishing')
-                                      : processingState.medicalMode
-                                        ? 'Save to Medical Library'
-                                        : t('summary.publish_library')}
-                                </span>
-                              </button>
-
-                              {/* Divider before destructive */}
-                              <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
-
-                              {/* New Document */}
-                              <button
-                                onClick={() => { actionBarData.onNewDocument(); setShowActionsMenu(false); }}
-                                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <RefreshCw className="h-3.5 w-3.5 opacity-60" />
-                                <span>{t('summary.new_document')}</span>
-                              </button>
+                              {processingState.translating && (
+                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-gold"></div>
+                              )}
                             </div>
                           </div>
-                        </>
-                      )}
-                    </div>
+                        </ScholarCard>
+
+                        {/* Action Bar - positioned below Content Language card */}
+                        {actionBarData && (
+                          <div className="flex items-center justify-between flex-wrap gap-2">
+                            {/* Back to History - when viewing from history */}
+                            {loadedHistoryEntry && (
+                              <button
+                                onClick={handleBackToHistory}
+                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors bg-card-light dark:bg-card-dark"
+                              >
+                                <ArrowLeft className="h-3.5 w-3.5" />
+                                <span>{t('history.back_to_history') || 'Back to History'}</span>
+                              </button>
+                            )}
+                            {/* Free-Form Mode Toggle - hidden until optimized */}
+                            {(() => {
+                              const showFreeFormToggle = false;
+                              return showFreeFormToggle && (
+                                <div className="flex items-center">
+                                  <FreeFormToggle
+                                    enabled={actionBarData.freeFormMode}
+                                    onToggle={actionBarData.onFreeFormToggle}
+                                    compact={false}
+                                  />
+                                </div>
+                              );
+                            })()}
+
+                            {/* Actions Menu Button */}
+                            <div className="relative">
+                              <button
+                                onClick={() => setShowActionsMenu(!showActionsMenu)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-xl text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                              >
+                                <MoreVertical className="h-3.5 w-3.5" />
+                                <span>Actions</span>
+                              </button>
+
+                              {/* Actions Dropdown Menu */}
+                              {showActionsMenu && (
+                                <>
+                                  <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
+                                  <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-xl shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
+                                    <div className="p-1.5 space-y-0.5">
+                                      {/* Copy All */}
+                                      <button
+                                        onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }}
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                      >
+                                        {actionBarData.copiedIndex === -1 ? (
+                                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                        ) : (
+                                          <Copy className="h-3.5 w-3.5 opacity-60" />
+                                        )}
+                                        <span>{t('summary.copy_all')}</span>
+                                      </button>
+
+                                      {/* Dual-mode */}
+                                      <button
+                                        onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }}
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                      >
+                                        <FileSearch className="h-3.5 w-3.5 opacity-60" />
+                                        <span>{t('summary.dual_mode')}</span>
+                                      </button>
+
+                                      <button
+                                        type="button"
+                                        onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }}
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                      >
+                                        <Download className="h-3.5 w-3.5 opacity-60" />
+                                        <span>{t('summary.export_txt')}</span>
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }}
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                      >
+                                        <Download className="h-3.5 w-3.5 opacity-60" />
+                                        <span>{t('summary.export_pdf')}</span>
+                                      </button>
+
+                                      {/* Divider before primary action */}
+                                      <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
+
+                                      {/* Publish to Library — highlighted */}
+                                      <button
+                                        onClick={() => { actionBarData.onPublish(); setShowActionsMenu(false); }}
+                                        disabled={actionBarData.publishing || actionBarData.published}
+                                        className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors disabled:opacity-50 ${
+                                          actionBarData.published
+                                            ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'
+                                            : processingState.medicalMode
+                                              ? 'text-red-700 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30'
+                                              : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:hover:bg-emerald-900/30'
+                                        }`}
+                                      >
+                                        {actionBarData.publishing ? (
+                                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                                        ) : actionBarData.published ? (
+                                          <Check className="h-3.5 w-3.5" />
+                                        ) : processingState.medicalMode ? (
+                                          <GraduationCap className="h-3.5 w-3.5" />
+                                        ) : (
+                                          <BookOpen className="h-3.5 w-3.5" />
+                                        )}
+                                        <span>
+                                          {actionBarData.published
+                                            ? t('summary.published')
+                                            : actionBarData.publishing
+                                              ? t('summary.publishing')
+                                              : processingState.medicalMode
+                                                ? 'Save to Medical Library'
+                                                : t('summary.publish_library')}
+                                        </span>
+                                      </button>
+
+                                      {/* Divider before destructive */}
+                                      <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
+
+                                      {/* New Document */}
+                                      <button
+                                        onClick={() => { actionBarData.onNewDocument(); setShowActionsMenu(false); }}
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                      >
+                                        <RefreshCw className="h-3.5 w-3.5 opacity-60" />
+                                        <span>{t('summary.new_document')}</span>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        <SummaryDisplay
+                          summaryChunks={processingState.summaryChunks}
+                          flashcards={processingState.flashcards}
+                          originalText={processingState.originalText}
+                          topics={processingState.topics}
+                          medicalMode={processingState.medicalMode}
+                          medicalScore={processingState.medicalScore}
+                          onPublishToLibrary={handlePublishToLibrary}
+                          onReset={resetProcessing}
+                          onActionBarData={setActionBarData}
+                        />
+                      </div>
+                    )}
+
+                    {processingState.stage === 'error' && (
+                      <div className="text-center py-12">
+                        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
+                          <h3 className="text-lg font-semibold text-red-800 mb-2 dark:text-red-300">
+                            {processingState.medicalMode ? '🏥 Medical Processing Error' : 'Processing Error'}
+                          </h3>
+                          <p className="text-red-700 mb-4 dark:text-red-300">
+                            {processingState.error || 'An error occurred during processing. Please try again.'}
+                          </p>
+                          <button
+                            onClick={resetProcessing}
+                            className={`px-4 py-2 text-white rounded-lg transition duration-150 ${
+                              processingState.medicalMode
+                                ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
+                                : 'bg-red-600 hover:bg-red-700'
+                            }`}
+                          >
+                            {processingState.medicalMode ? '🔄 Retry Medical Processing' : 'Try Again'}
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+
+                  <RecentVolumesRail
+                    onNavigate={(view) => setCurrentView(view)}
+                  />
+                </div>
+              </div>
+            )}
 
                 <SummaryDisplay 
                   summaryChunks={processingState.summaryChunks}
