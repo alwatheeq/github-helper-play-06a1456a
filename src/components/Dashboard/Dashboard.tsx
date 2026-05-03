@@ -5,7 +5,7 @@ import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
-import { RecentVolumesRail } from './RecentVolumesRail';
+import { WorkshopPanel } from './WorkshopPanel';
 import { PageHeader } from '../Scholar';
 // Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.
 const SummaryDisplay = lazy(() => import('./SummaryDisplay').then(m => ({ default: m.SummaryDisplay })));
@@ -1501,16 +1501,17 @@ export const Dashboard: React.FC = () => {
             {currentView === 'main' && (
               <div className="space-y-8">
                 <PageHeader
-                  eyebrow="Studio · Compose"
-                  title="Process content"
-                  descriptor="Paste a passage, upload a document, or scan an image. Your summary and flashcards arrive in moments."
+                  eyebrow="The Workshop"
+                  title={t('dashboard.process_content') || 'Process your content'}
+                  descriptor={t('dashboard.process_desc')}
                 />
 
-                <div className="flex flex-col lg:flex-row gap-8">
-                  <div className="min-w-0 flex-1 space-y-8">
-                    {processingState.stage === 'idle' && (
-                      <InputForm onProcessInput={handleProcessInputWrapper} />
-                    )}
+                {processingState.stage === 'idle' && (
+                  <WorkshopPanel
+                    onProcessInput={handleProcessInputWrapper}
+                    onOpenHistory={() => setCurrentView('history')}
+                  />
+                )}
 
                     {(processingState.stage === 'uploading' || processingState.stage === 'processing') && (
                       <ProcessingStatus
