@@ -394,20 +394,20 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     onProcessInput(textInput, flashcardCount, fromSummary, medicalMode, false, generationPrefs);
   };
 
-  // Tab button helper for the segmented control
+  // Tab button helper — hairline tab strip, active = gold underline
   const tabBtnCls = (active: boolean) =>
-    `flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
+    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ${
       active
-        ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--scholar-shadow-sm)] border border-divider dark:border-divider-on-dark'
-        : 'text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80'
+        ? 'border-accent-gold text-ink dark:text-ink-on-dark'
+        : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container helper
+  // Dropzone container — hairline dashed, 6px radius, no shadow
   const dropzoneCls = (active: boolean) =>
-    `relative border-2 border-dashed rounded-lg p-12 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[6px] p-12 text-center transition-colors duration-150 ${
       active
-        ? 'border-accent-gold/50 bg-accent-gold/5'
-        : 'border-divider dark:border-divider-on-dark bg-subtle hover:border-accent-gold/40 hover:bg-accent-gold/5'
+        ? 'border-accent-gold bg-accent-gold/5'
+        : 'border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark hover:border-accent-gold/60'
     }`;
 
   return (
@@ -436,8 +436,8 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
         
-        {/* Tab Navigation */}
-        <div className="flex mb-6 bg-subtle rounded-lg p-1">
+        {/* Tab Navigation — hairline strip */}
+        <div className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark">
           <button onClick={() => setInputMode('file')} className={tabBtnCls(inputMode === 'file')}>
             <File className="h-4 w-4" />
             <span>{t('dashboard.upload_file')}</span>
