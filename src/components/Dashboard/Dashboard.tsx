@@ -1739,12 +1739,6 @@ export const Dashboard: React.FC = () => {
                         </div>
                       </div>
                     )}
-                  </div>
-
-                  <RecentVolumesRail
-                    onNavigate={(view) => setCurrentView(view)}
-                  />
-                </div>
               </div>
             )}
 
