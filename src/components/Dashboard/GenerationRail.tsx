@@ -1,37 +1,58 @@
 import React from 'react';
+import { FileText, Layers, ClipboardList, Network } from 'lucide-react';
 
-interface ToggleRowProps {
-  title: string;
-  meta: string;
+interface ToggleProps {
   on: boolean;
   disabled?: boolean;
   onToggle?: (next: boolean) => void;
+  label: string;
 }
 
-const ToggleRow: React.FC<ToggleRowProps> = ({ title, meta, on, disabled, onToggle }) => (
-  <div className="flex items-center justify-between py-3">
-    <div className="min-w-0">
-      <p className="font-display text-base text-ink-on-dark">{title}</p>
-      <p className="text-xs text-muted-ink-on-dark font-light mt-0.5">{meta}</p>
+const Toggle: React.FC<ToggleProps> = ({ on, disabled, onToggle, label }) => (
+  <button
+    type="button"
+    role="switch"
+    aria-checked={on}
+    aria-label={label}
+    disabled={disabled}
+    onClick={() => onToggle?.(!on)}
+    className={`relative h-4 w-[30px] rounded-full transition-colors duration-200 flex-shrink-0 ${
+      on ? 'bg-accent-gold' : 'bg-divider-on-dark'
+    } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+  >
+    <span
+      className={`absolute top-0.5 h-3 w-3 rounded-full bg-card-light transition-transform duration-200 ${
+        on ? 'translate-x-[15px]' : 'translate-x-0.5'
+      }`}
+    />
+  </button>
+);
+
+interface RowProps {
+  icon: React.ReactNode;
+  name: string;
+  description: string;
+  on: boolean;
+  onToggle: (next: boolean) => void;
+  isLast?: boolean;
+}
+
+const Row: React.FC<RowProps> = ({ icon, name, description, on, onToggle, isLast }) => (
+  <div
+    className={`flex items-center justify-between py-2.5 ${
+      isLast ? '' : 'border-b border-divider-on-dark'
+    }`}
+  >
+    <div className="flex items-start gap-2.5 min-w-0">
+      <span className="text-muted-ink-on-dark mt-0.5 flex-shrink-0">{icon}</span>
+      <div className="min-w-0">
+        <p className="text-[13px] font-semibold text-ink-on-dark leading-tight">{name}</p>
+        <p className="text-[11px] font-light text-muted-ink-on-dark mt-0.5 leading-tight">
+          {description}
+        </p>
+      </div>
     </div>
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      disabled={disabled}
-      onClick={() => onToggle?.(!on)}
-      className={`relative h-6 w-11 rounded-[4px] border transition-colors duration-150 flex-shrink-0 ${
-        on
-          ? 'bg-accent-gold border-accent-gold'
-          : 'bg-transparent border-divider-on-dark'
-      } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-    >
-      <span
-        className={`absolute top-0.5 h-4 w-4 rounded-[2px] transition-transform duration-150 ${
-          on ? 'translate-x-6 bg-sidebar' : 'translate-x-0.5 bg-muted-ink-on-dark'
-        }`}
-      />
-    </button>
+    <Toggle on={on} onToggle={onToggle} label={name} />
   </div>
 );
 
@@ -40,79 +61,85 @@ interface GenerationRailProps {
   includeFlashcards: boolean;
   onToggleSummary?: (next: boolean) => void;
   onToggleFlashcards?: (next: boolean) => void;
-  /** Placeholder; TODO: connect cost estimator */
-  estimatedCredits?: number;
-  /** Visual-only Generate button for v1; submit still happens from the workspace form. */
-  onGenerate?: () => void;
-  generateDisabled?: boolean;
 }
 
 /**
- * Right-rail "What to generate" panel. Dark surface, hairline borders.
- * Examination & Mind map toggles are visual-only with TODO: connect.
+ * The single dark feature card on the Dashboard. 300px column, 22px padding.
+ * Examination & Mind map are visual-only (TODO: connect).
  */
 export const GenerationRail: React.FC<GenerationRailProps> = ({
   includeSummary,
   includeFlashcards,
   onToggleSummary,
   onToggleFlashcards,
-  estimatedCredits = 35,
-  onGenerate,
-  generateDisabled = true,
 }) => {
   // TODO: connect — Examination & Mind map outputs not implemented yet
   const [exam, setExam] = React.useState(false);
   const [mindMap, setMindMap] = React.useState(false);
 
+  // TODO: connect cost estimator
+  const cost = 8;
+
   return (
-    <section className="bg-sidebar text-ink-on-dark border border-divider-on-dark rounded-[6px] p-6">
-      <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-accent-gold mb-4">
+    <section
+      className="bg-card-dark text-ink-on-dark rounded-[6px]"
+      style={{ padding: '22px' }}
+    >
+      <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold mb-1">
         What to generate
       </div>
+      <h3 className="font-display text-[22px] font-semibold text-ink-on-dark mb-4 leading-tight">
+        Outputs.
+      </h3>
+      <hr className="border-divider-on-dark mb-3" />
 
-      <div className="divide-y divide-divider-on-dark">
-        <ToggleRow
-          title="Summary"
-          meta="concise notes"
+      <div>
+        <Row
+          icon={<FileText size={14} strokeWidth={1.5} />}
+          name="Summary"
+          description="Concise notes from the source"
           on={includeSummary}
-          onToggle={onToggleSummary}
+          onToggle={(v) => onToggleSummary?.(v)}
         />
-        <ToggleRow
-          title="Flashcards"
-          meta="for spaced review"
+        <Row
+          icon={<Layers size={14} strokeWidth={1.5} />}
+          name="Flashcards"
+          description="For spaced review"
           on={includeFlashcards}
-          onToggle={onToggleFlashcards}
+          onToggle={(v) => onToggleFlashcards?.(v)}
         />
-        <ToggleRow
-          title="Examination"
-          meta="twenty questions"
+        <Row
+          icon={<ClipboardList size={14} strokeWidth={1.5} />}
+          name="Examination"
+          description="Quiz from the content"
           on={exam}
           onToggle={setExam}
         />
-        <ToggleRow
-          title="Mind map"
-          meta="visual outline"
+        <Row
+          icon={<Network size={14} strokeWidth={1.5} />}
+          name="Mind map"
+          description="Visual outline"
           on={mindMap}
           onToggle={setMindMap}
+          isLast
         />
       </div>
 
-      <hr className="border-divider-on-dark my-5" />
-
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-muted-ink-on-dark font-light">
-          {estimatedCredits} credits
+      <div className="mt-4 flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-[1.5px] text-muted-ink-on-dark">
+          Cost
         </span>
-        <button
-          type="button"
-          onClick={onGenerate}
-          disabled={generateDisabled}
-          title={generateDisabled ? 'Use the workspace below to generate' : undefined}
-          className="inline-flex items-center gap-2 px-5 py-2 bg-accent-gold text-sidebar rounded-[6px] text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
-        >
-          Generate <span aria-hidden>→</span>
-        </button>
+        <span className="text-[13px] font-semibold text-accent-gold">{cost} credits</span>
       </div>
+
+      <button
+        type="button"
+        disabled
+        title="Use the form on the left to generate"
+        className="mt-3 w-full bg-accent-gold text-card-dark text-[13px] font-bold rounded-[4px] py-3 disabled:opacity-90 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
+      >
+        Generate <span aria-hidden>→</span>
+      </button>
     </section>
   );
 };

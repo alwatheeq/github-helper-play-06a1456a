@@ -5,6 +5,10 @@ import { supabase } from '../../lib/supabase';
 interface HistoryRow {
   id: string;
   original_file_name: string | null;
+  original_input_type: string | null;
+  summary_text: string | null;
+  flashcards_json: Array<{ front: string; back: string }> | null;
+  topics: string[] | null;
   created_at: string;
 }
 
@@ -13,8 +17,9 @@ interface RecentlyProcessedListProps {
 }
 
 /**
- * In-column "Recently processed" list. Numeric markers (01/02/03) — no Roman numerals.
- * Hairline dividers between rows. Reads up to 3 latest entries from user_history.
+ * Five-column hairline list under the body grid. Numeric markers (01./02./...)
+ * — no Roman numerals, no italics. Reads up to 5 latest user_history rows.
+ * Subject code derives from topics[0] if available; otherwise an em-dash.
  */
 export const RecentlyProcessedList: React.FC<RecentlyProcessedListProps> = ({ onOpenHistory }) => {
   const { user } = useAuth();
@@ -23,13 +28,12 @@ export const RecentlyProcessedList: React.FC<RecentlyProcessedListProps> = ({ on
   useEffect(() => {
     if (!user) return;
     let alive = true;
-    // TODO: connect to richer history hook when one exists
     supabase
       .from('user_history')
-      .select('id, original_file_name, created_at')
+      .select('id, original_file_name, original_input_type, summary_text, flashcards_json, topics, created_at')
       .eq('user_id', user.id)
       .order('created_at', { ascending: false, nullsFirst: false })
-      .limit(3)
+      .limit(5)
       .then(({ data }) => {
         if (alive) setRows((data as HistoryRow[]) ?? []);
       });
@@ -46,46 +50,73 @@ export const RecentlyProcessedList: React.FC<RecentlyProcessedListProps> = ({ on
     const h = Math.round(m / 60);
     if (h < 24) return `${h} hr ago`;
     const d = Math.round(h / 24);
-    return `${d} d ago`;
+    if (d < 7) return `${d} d ago`;
+    return new Date(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  };
+
+  const deriveSubjectCode = (row: HistoryRow): string => {
+    // TODO: connect — replace with a real subject-code field once schema supports it
+    const topic = row.topics?.[0];
+    if (!topic) return '—';
+    return topic.slice(0, 6).toUpperCase().replace(/\s+/g, '');
+  };
+
+  const deriveOutputType = (row: HistoryRow): string => {
+    const cards = row.flashcards_json?.length ?? 0;
+    const summaryWords = row.summary_text
+      ? row.summary_text.trim().split(/\s+/).filter(Boolean).length
+      : 0;
+    if (cards > 0 && summaryWords > 0) return `Summary · ${summaryWords} words`;
+    if (cards > 0) return `Flashcards · ${cards} cards`;
+    if (summaryWords > 0) return `Summary · ${summaryWords} words`;
+    return '—';
   };
 
   return (
-    <section aria-labelledby="recently-processed-title" className="mt-10">
+    <section aria-labelledby="recently-processed-title" style={{ marginTop: '36px' }}>
+      <div className="text-[11px] font-bold tracking-[2px] uppercase text-accent-gold">
+        Recently processed
+      </div>
       <h2
         id="recently-processed-title"
-        className="text-[11px] font-semibold tracking-[0.16em] uppercase text-accent-gold mb-4"
+        className="font-display text-xl font-semibold text-ink mt-1"
       >
-        Recently processed
+        From the workshop.
       </h2>
+      <hr className="border-divider mt-3" />
 
       {rows === null ? (
-        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-light">Loading…</p>
+        <p className="text-sm text-muted-ink font-light py-3">Loading…</p>
       ) : rows.length === 0 ? (
-        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-light">
+        <p className="text-sm text-muted-ink font-light py-3">
           Your processed passages will appear here.
         </p>
       ) : (
-        <ul className="divide-y divide-divider dark:divide-divider-on-dark border-y border-divider dark:border-divider-on-dark">
+        <ul>
           {rows.map((row, idx) => (
-            <li key={row.id} className="flex items-center gap-4 py-4">
-              <span className="text-xs font-semibold tracking-[0.12em] text-accent-gold tabular-nums w-7">
-                {String(idx + 1).padStart(2, '0')}
+            <li
+              key={row.id}
+              onClick={onOpenHistory}
+              className={`grid items-center gap-4 py-3 cursor-pointer hover:bg-subtle/40 transition-colors ${
+                idx === rows.length - 1 ? '' : 'border-b border-divider'
+              }`}
+              style={{ gridTemplateColumns: '28px minmax(0, 1fr) 110px 200px 80px' }}
+            >
+              <span className="font-display text-[12px] font-medium text-accent-gold tabular-nums">
+                {String(idx + 1).padStart(2, '0')}.
               </span>
-              <div className="min-w-0 flex-1">
-                <p className="font-display text-base text-ink dark:text-ink-on-dark truncate">
-                  {row.original_file_name?.trim() || 'Untitled volume'}
-                </p>
-                <p className="text-[11px] uppercase tracking-[0.12em] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
-                  {formatRelative(row.created_at)}
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={onOpenHistory}
-                className="text-sm text-ink dark:text-ink-on-dark border border-divider dark:border-divider-on-dark rounded-[6px] px-4 py-1.5 hover:border-accent-gold transition-colors"
-              >
-                Open
-              </button>
+              <span className="font-display text-sm font-semibold text-ink truncate">
+                {row.original_file_name?.trim() || 'Untitled volume'}
+              </span>
+              <span className="text-[11px] tracking-[1.5px] font-bold uppercase text-secondary-ink truncate">
+                {deriveSubjectCode(row)}
+              </span>
+              <span className="font-light text-[12.5px] text-muted-ink truncate">
+                {deriveOutputType(row)}
+              </span>
+              <span className="font-light text-[12px] text-muted-ink text-right">
+                {formatRelative(row.created_at)}
+              </span>
             </li>
           ))}
         </ul>

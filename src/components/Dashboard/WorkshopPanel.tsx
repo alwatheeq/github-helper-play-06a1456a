@@ -2,8 +2,6 @@ import React from 'react';
 import { InputForm } from './InputForm';
 import { RecentlyProcessedList } from './RecentlyProcessedList';
 import { GenerationRail } from './GenerationRail';
-import { QuoteCard } from './QuoteCard';
-import { RightRail } from '../Scholar';
 import type { AcademicsGenerationPreferences } from '../../utils/academicsGenerationPreferences';
 
 interface WorkshopPanelProps {
@@ -19,32 +17,37 @@ interface WorkshopPanelProps {
 }
 
 /**
- * Two-column workshop area for the idle Dashboard view.
- * Primary column: input form + recently-processed list.
- * Right rail (320px, sticky, hidden < lg): generation toggles + quote card.
+ * Idle Dashboard layout — strict editorial spec.
+ * Two-column grid: 1fr (input card) + 300px (dark feature card).
+ * Recently-processed list sits below, full-width.
+ * No nested cards, no horizontal scroll on a 1366px laptop.
  */
 export const WorkshopPanel: React.FC<WorkshopPanelProps> = ({ onProcessInput, onOpenHistory }) => {
-  // Mirror of InputForm's internal generation prefs for the rail toggles.
-  // v1: rail toggles are display-only and Examination/Mind map don't drive logic yet.
+  // v1: rail toggles are visual only; submit happens via InputForm CTAs.
   const [includeSummary, setIncludeSummary] = React.useState(true);
   const [includeFlashcards, setIncludeFlashcards] = React.useState(true);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      <div className="min-w-0 flex-1">
-        <InputForm onProcessInput={onProcessInput} />
-        <RecentlyProcessedList onOpenHistory={onOpenHistory} />
+    <>
+      <div
+        className="grid gap-8"
+        style={{ gridTemplateColumns: 'minmax(0, 1fr) 300px' }}
+      >
+        <div className="min-w-0">
+          <InputForm onProcessInput={onProcessInput} />
+        </div>
+        <div className="min-w-0">
+          <GenerationRail
+            includeSummary={includeSummary}
+            includeFlashcards={includeFlashcards}
+            onToggleSummary={setIncludeSummary}
+            onToggleFlashcards={setIncludeFlashcards}
+          />
+        </div>
       </div>
-      <RightRail className="hidden lg:block" sticky>
-        <GenerationRail
-          includeSummary={includeSummary}
-          includeFlashcards={includeFlashcards}
-          onToggleSummary={setIncludeSummary}
-          onToggleFlashcards={setIncludeFlashcards}
-        />
-        <QuoteCard />
-      </RightRail>
-    </div>
+
+      <RecentlyProcessedList onOpenHistory={onOpenHistory} />
+    </>
   );
 };
 
