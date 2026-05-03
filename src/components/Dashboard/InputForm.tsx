@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
-import { ScholarCard, PageHeader } from '../Scholar';
+import { ScholarCard } from '../Scholar';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -394,38 +394,32 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     onProcessInput(textInput, flashcardCount, fromSummary, medicalMode, false, generationPrefs);
   };
 
-  // Tab button helper for the segmented control
+  // Tab button helper — hairline tab strip, active = gold underline
   const tabBtnCls = (active: boolean) =>
-    `flex-1 flex items-center justify-center space-x-2 px-4 py-2 rounded-md transition duration-150 ${
+    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ${
       active
-        ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--scholar-shadow-sm)] border border-divider dark:border-divider-on-dark'
-        : 'text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80'
+        ? 'border-accent-gold text-ink dark:text-ink-on-dark'
+        : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container helper
+  // Dropzone container — hairline dashed, 6px radius, no shadow
   const dropzoneCls = (active: boolean) =>
-    `relative border-2 border-dashed rounded-lg p-12 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[6px] p-12 text-center transition-colors duration-150 ${
       active
-        ? 'border-accent-gold/50 bg-accent-gold/5'
-        : 'border-divider dark:border-divider-on-dark bg-subtle hover:border-accent-gold/40 hover:bg-accent-gold/5'
+        ? 'border-accent-gold bg-accent-gold/5'
+        : 'border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark hover:border-accent-gold/60'
     }`;
 
   return (
-   <div className="max-w-4xl mx-auto">
-      <PageHeader
-        eyebrow={t('dashboard.eyebrow') || 'Workspace'}
-        title={t('dashboard.process_content')}
-        descriptor={t('dashboard.process_desc')}
-        actions={medicalMode ? (
-          <div className="bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] flex items-center gap-2 border border-divider dark:border-divider-on-dark">
-            <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
-            <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
-              {t('dashboard.med_student_mode_label')}
-            </span>
-          </div>
-        ) : undefined}
-        className="mb-8"
-      />
+   <div className="w-full">
+      {medicalMode && (
+        <div className="mb-4 inline-flex items-center gap-2 bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] border border-divider dark:border-divider-on-dark">
+          <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
+          <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
+            {t('dashboard.med_student_mode_label')}
+          </span>
+        </div>
+      )}
 
       <ScholarCard padding="lg">
         {/* Notification */}
@@ -442,8 +436,8 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
         
-        {/* Tab Navigation */}
-        <div className="flex mb-6 bg-subtle rounded-lg p-1">
+        {/* Tab Navigation — hairline strip */}
+        <div className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark">
           <button onClick={() => setInputMode('file')} className={tabBtnCls(inputMode === 'file')}>
             <File className="h-4 w-4" />
             <span>{t('dashboard.upload_file')}</span>
@@ -478,20 +472,27 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
             />
 
             <div className="space-y-4">
-              <div className="mx-auto w-16 h-16 bg-subtle rounded-full flex items-center justify-center border border-divider dark:border-divider-on-dark">
-                <Upload className="h-8 w-8 text-ink dark:text-ink-on-dark" />
+              <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-accent-gold">
+                Drop zone
               </div>
 
               <div>
-                <p className="text-xl font-semibold text-ink dark:text-ink-on-dark mb-2">{t('dashboard.drop_file')}</p>
-                <p className="text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
-                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">You can select multiple files at once</p>
+                <p className="font-display text-2xl text-ink dark:text-ink-on-dark mb-1">{t('dashboard.drop_file')}</p>
+                <p className="font-light text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
               </div>
 
-              <div className="flex justify-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PDF</div>
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PPTX</div>
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />DOCX</div>
+              <div className="flex justify-center gap-4 text-xs uppercase tracking-[0.12em] text-muted-ink dark:text-muted-ink-on-dark">
+                <span>PDF</span>
+                <span aria-hidden>·</span>
+                <span>PPTX</span>
+                <span aria-hidden>·</span>
+                <span>DOCX</span>
+              </div>
+
+              <div className="pt-2">
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-sidebar text-ink-on-dark rounded-[6px] text-sm font-medium border border-divider-on-dark">
+                  Choose a file <span className="text-accent-gold">→</span>
+                </span>
               </div>
             </div>
           </div>

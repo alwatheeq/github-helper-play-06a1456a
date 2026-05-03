@@ -43,6 +43,4 @@ export type { ChangelogEntry } from './ChangelogList';
 export { NumberedList } from './NumberedList';
 export type { NumberedListItem } from './NumberedList';
 export { KeyValueRow } from './KeyValueRow';
-export { RomanList } from './RomanList';
-export type { RomanListItem } from './RomanList';
 export { FeatureDarkCard } from './FeatureDarkCard';
