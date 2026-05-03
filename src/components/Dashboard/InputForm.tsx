@@ -472,20 +472,27 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
             />
 
             <div className="space-y-4">
-              <div className="mx-auto w-16 h-16 bg-subtle rounded-full flex items-center justify-center border border-divider dark:border-divider-on-dark">
-                <Upload className="h-8 w-8 text-ink dark:text-ink-on-dark" />
+              <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-accent-gold">
+                Drop zone
               </div>
 
               <div>
-                <p className="text-xl font-semibold text-ink dark:text-ink-on-dark mb-2">{t('dashboard.drop_file')}</p>
-                <p className="text-muted-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
-                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">You can select multiple files at once</p>
+                <p className="font-display text-2xl text-ink dark:text-ink-on-dark mb-1">{t('dashboard.drop_file')}</p>
+                <p className="font-light text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
               </div>
 
-              <div className="flex justify-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PDF</div>
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />PPTX</div>
-                <div className="flex items-center"><FileText className="h-4 w-4 mr-1" />DOCX</div>
+              <div className="flex justify-center gap-4 text-xs uppercase tracking-[0.12em] text-muted-ink dark:text-muted-ink-on-dark">
+                <span>PDF</span>
+                <span aria-hidden>·</span>
+                <span>PPTX</span>
+                <span aria-hidden>·</span>
+                <span>DOCX</span>
+              </div>
+
+              <div className="pt-2">
+                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-sidebar text-ink-on-dark rounded-[6px] text-sm font-medium border border-divider-on-dark">
+                  Choose a file <span className="text-accent-gold">→</span>
+                </span>
               </div>
             </div>
           </div>
