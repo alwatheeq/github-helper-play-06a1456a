@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
-import { ScholarCard, PageHeader } from '../Scholar';
+import { ScholarCard } from '../Scholar';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -411,21 +411,15 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     }`;
 
   return (
-   <div className="max-w-4xl mx-auto">
-      <PageHeader
-        eyebrow={t('dashboard.eyebrow') || 'Workspace'}
-        title={t('dashboard.process_content')}
-        descriptor={t('dashboard.process_desc')}
-        actions={medicalMode ? (
-          <div className="bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] flex items-center gap-2 border border-divider dark:border-divider-on-dark">
-            <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
-            <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
-              {t('dashboard.med_student_mode_label')}
-            </span>
-          </div>
-        ) : undefined}
-        className="mb-8"
-      />
+   <div className="w-full">
+      {medicalMode && (
+        <div className="mb-4 inline-flex items-center gap-2 bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] border border-divider dark:border-divider-on-dark">
+          <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
+          <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
+            {t('dashboard.med_student_mode_label')}
+          </span>
+        </div>
+      )}
 
       <ScholarCard padding="lg">
         {/* Notification */}
