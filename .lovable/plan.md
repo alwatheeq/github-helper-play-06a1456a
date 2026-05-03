@@ -1,91 +1,151 @@
-# Page 1 — Dashboard / Process Content (editorial integration, design-first)
 
-Build every visual surface the spec defines for this page, even when the underlying feature isn't wired up yet. Stub data sources behind a `TODO: connect` comment so we can hook real data later without re-doing the layout. No backend, route, or i18n-string rewrites. Italic ban stays; substitute italics with muted small-caps or lighter weight.
+# Page 1 — Dashboard / Process Content (rebuild, no Roman numerals)
 
----
+The current preview shows two stacked headers ("Process content." then "Process Your Content."), and a generic right rail. We rebuild Page 1 in place — same files, same logic, same i18n keys, same processing pipeline — to match reference image 2. Only markup/styling changes.
 
-## Adopted from spec (visual + structural)
-
-- Two-column body grid: primary flex column + 320px right rail (stacks on mobile).
-- Header block: eyebrow (small-caps) → 48px serif title with trailing period → muted sub-caption → hairline rule.
-- Hairline-bordered cards, 6px radius, no shadows, no gradients, no glassmorphism.
-- Gold (`--accent-gold`) reserved for: active nav state, primary CTA, key numerals, progress fill.
-- Roman-numeral ranked lists (`i. ii. iii.`) in right-rail rankings.
-- Editorial sidebar visual language: serif label, gold left-border on active, hairline section dividers, "Meshfahem." wordmark, avatar block at bottom.
-- 64px topbar: hairline bottom, credits pill (gold ring + bold numeral, no fill), language toggle, avatar.
-- Inverted dark feature card primitive for hero/CTA blocks.
-- Bottom-hairline-only inputs with gold underline on focus.
-
-## Adapted (not discarded)
-
-- **Italic sub-captions / numerals / placeholders** → render upright using `text-xs uppercase tracking-wide text-muted-ink` for eyebrows or `font-light text-sm text-muted-ink` for sub-text. Italic ban remains in `src/index.css`.
-- **Literary verb copy** ("Compose", "Bring in", "Open the volume") → not applied. Existing i18n labels stay; only their visual treatment changes.
-- **Sidebar fixed-220px requirement** → keep current pinnable/proximity behavior; restyle the open state to match spec.
-- **Sidebar sub-labels under each nav item** → render the sub-label slot in the markup using a muted small-caps line; if a route has no sub-label content yet, leave the slot empty and add `TODO: connect` so we can fill it later without re-layout.
-
-## Design surfaces built even if feature not wired
-
-| Surface | Data source today | Placeholder strategy |
-|---|---|---|
-| `RecentVolumesRail` (right rail, ranked Roman list) | existing history hook if available, else empty | render 3 ghost rows with muted text + `TODO: connect to history query` |
-| Credits pill in Topbar | `useCredits` if present, else `—` | numeral slot renders `—` when undefined |
-| Tips block in right rail | static array for now | inline content with `TODO: drive from CMS / personalization` |
-| `FeatureDarkCard` "Today's volume" hero (if present in spec) | none | static editorial copy with `TODO: connect` |
-| Sidebar avatar block | existing auth user | unchanged |
+This revision **drops every spec element we previously agreed to skip** and substitutes safe equivalents.
 
 ---
 
-## Layout target
+## Substitutions for skipped spec items
+
+| Spec item (skipped) | Replacement we use instead |
+|---|---|
+| Roman-numeral list (i. ii. iii.) for "Recently processed" | Plain numeric counter `01 / 02 / 03` in muted small-caps gold, OR a simple bullet-less stacked list with hairline dividers between rows. We go with the **hairline-divided stacked list** — cleaner, already in the codebase via `EditorialTable` patterns. |
+| Roman-numeral list in any other rail (tips, rankings) | Removed. Tips/quotes render as a single editorial card with the quote + attribution, no list. |
+| Italic sub-captions ("or click to browse.") | Upright `font-light` text in muted ink. |
+| Literary verb copy ("Compose", "Bring in", "Open the volume") | Existing i18n labels stay verbatim. No copy rewrites. |
+| Sidebar fixed-220px requirement | Existing pinnable / proximity behavior preserved. |
+| New `RomanList` primitive | **Delete** `src/components/Scholar/RomanList.tsx` and remove its export. Nothing else uses it. |
+| `RecentVolumesRail` (the right-rail pile we built last pass) | **Delete**. Splits into in-column "Recently processed" + topbar credits + new `GenerationRail` + `QuoteCard`. |
+
+---
+
+## Root cause of the duplicated header
+
+- `Dashboard.tsx` renders `<PageHeader title="Process content" …>` at the top of the `main` view.
+- `InputForm.tsx` *also* renders its own `<PageHeader title={t('dashboard.process_content')} …>` inside the same view.
+
+**Fix**: `InputForm` becomes header-less. The page header lives in `Dashboard.tsx` only.
+
+---
+
+## Target layout (matches reference image 2, sans Roman numerals)
 
 ```text
-┌─ Sidebar (existing pin/proximity) ┬──── Topbar 64px, hairline ─────┐
-│ Meshfahem.                        ├──────────────────────────────────┤
-│                                   │ STUDIO · COMPOSE                 │
-│ ▌ Dashboard   (gold left bar)     │ Process content.                 │
-│   sub-label slot                  │ Paste, upload, or scan a passage.│
-│                                   │ ─────────────────── hairline ────│
-│   Library                         │                                  │
-│   Academics                       │ ┌─ primary col ─┐ ┌─ rail 320 ─┐ │
-│   Examinations                    │ │ EditorialCard │ │ Recent      │ │
-│   Study rooms                     │ │  InputForm    │ │  i.  …      │ │
-│   Feedback                        │ │   tabs hairln │ │  ii. …      │ │
-│   Profile                         │ │   gold CTA    │ │  iii. …     │ │
-│                                   │ │               │ │ ─────       │ │
-│ ── avatar block ──                │ │ ProcessingSt. │ │ Credits     │ │
-└───────────────────────────────────┘ │  hairline bar │ │  bold gold  │ │
-                                      │  gold fill    │ │ ─────       │ │
-                                      │               │ │ FeatureDark │ │
-                                      │ SummaryDisplay│ │  card       │ │
-                                      │  in Editorial │ │ ─────       │ │
-                                      │  Card         │ │ Tips Roman  │ │
-                                      └───────────────┘ └─────────────┘
+┌─ Sidebar ───────────────┬─ Topbar (Header.tsx, 64px, hairline bottom) ───────────┐
+│ Meshfahem.              │ wordmark · tagline · CREDITS pill · bell · avatar      │
+│                         ├─────────────────────────────────────────────────────────┤
+│ ▌Dashboard              │  THE WORKSHOP                                           │
+│  process & today        │  Process your content.                                  │
+│                         │  bring in a document, paste text, or scan a page —     │
+│  My Library             │  we'll do the rest.                                     │
+│  saved works            │  ─────────────────────────────────── hairline ─────────│
+│  Study Rooms            │                                                         │
+│  live with peers        │  [ File ] [ Text ] [ Scan ]   ← hairline tab strip,    │
+│  Academics              │                                  active = gold underline│
+│  courses & progress     │                                                         │
+│  Examinations           │  ┌─ primary col ───────────┐  ┌─ rail 320 (sticky) ──┐ │
+│  quizzes & exams        │  │ ┌─ EditorialCard ────┐ │  │ FeatureDarkCard       │ │
+│  EduPlay                │  │ │   DROP ZONE        │ │  │  WHAT TO GENERATE     │ │
+│  play & learn           │  │ │   Drop your file   │ │  │  Summary       [▢]   │ │
+│  History                │  │ │   here, or click   │ │  │  Flashcards    [▢]   │ │
+│  recent activity        │  │ │   to browse.       │ │  │  Examination   [▢]   │ │
+│  About                  │  │ │   PDF · PPTX · DOCX│ │  │  Mind map      [▢]   │ │
+│  the project            │  │ │   [ Choose file → ]│ │  │  ─── hairline ───    │ │
+│  Feedback               │  │ └────────────────────┘ │  │  35 credits  Generate│ │
+│  write to us            │  │                        │  └───────────────────────┘ │
+│                         │  │  RECENTLY PROCESSED    │  ┌─ Quote card ──────────┐ │
+│ ── avatar block ──      │  │   01  Microeconomics…  │  │ "The shortest pencil…"│ │
+│                         │  │   ──────────────────   │  │  — a tip from MeshFahem│ │
+│ "Read with the pen…"    │  │   02  Anatomy-Lecture  │  └───────────────────────┘ │
+│ © 2026 MeshFahem        │  │   ──────────────────   │                            │
+│                         │  │   03  Cell-signaling   │                            │
+│                         │  └────────────────────────┘                            │
+└─────────────────────────┴─────────────────────────────────────────────────────────┘
 ```
 
-## Files touched
-
-1. `src/components/Dashboard/Dashboard.tsx` — page wrapper, `PageHeader`, two-column grid, mount right rail. Keep all state/effects/conditional rendering.
-2. `src/components/Dashboard/Sidebar.tsx` — restyle: serif labels, gold left-border on active, hairline dividers, wordmark top, avatar block bottom, sub-label slot per item. Pin/proximity behavior unchanged.
-3. `src/components/Dashboard/Header.tsx` — restyle to 64px editorial topbar with hairline, credits pill, language toggle, avatar.
-4. `src/components/Dashboard/InputForm.tsx` — re-skin: hairline tab strip, hairline textarea / dropzone, gold primary CTA, outline secondary. No logic changes.
-5. `src/components/Dashboard/ProcessingStatus.tsx` — re-skin: 2px hairline track + gold fill, muted small-caps stage caption.
-6. `src/components/Dashboard/SummaryDisplay.tsx` — wrap in `EditorialCard`, small `PageHeader` variant for section title. Logic untouched.
-7. **New** `src/components/Scholar/RomanList.tsx` — ordered list with `i. ii. iii.` markers in muted ink.
-8. **New** `src/components/Scholar/FeatureDarkCard.tsx` — inverted-surface card primitive.
-9. **New** `src/components/Dashboard/RecentVolumesRail.tsx` — right rail composed of `RomanList`, credits block, `FeatureDarkCard`, tips block. Placeholder data with `TODO: connect` comments. Hidden < `lg`.
-
-## Files explicitly NOT touched
-
-- `src/index.css` (italic ban stays).
-- Auth, subscription, credit, onboarding, modal, processing pipeline logic.
-- Routes, query keys, Supabase calls, edge functions.
-- Admin sidebar/header.
-- Other dashboard subpages (Library, Academics, Examinations, Study rooms, Feedback, Profile).
-- i18n JSON files.
+The "Recently processed" list uses **`01 / 02 / 03` markers in muted small-caps gold + hairline dividers** — no Roman numerals.
 
 ---
 
-## After Page 1
+## What changes, file by file
 
-You preview, flag anything off, we calibrate. Once Page 1 reads right, same extraction process for Page 2. Later page descriptions plug into the same primitives.
+### 1. `src/components/Dashboard/Dashboard.tsx`
+- Keep all state, effects, processing logic, and view routing exactly as is.
+- In the `currentView === 'main'` branch:
+  - Render **one** `PageHeader` (`eyebrow="The Workshop"`, `title="Process your content"`, descriptor from i18n).
+  - Below it, render the new `<WorkshopPanel />` for the idle state and existing `<ProcessingStatus />` / `<SummaryDisplay />` for the other stages — unchanged.
+- Remove the previous `flex-row gap-8` wrapper. The workshop panel owns its internal grid.
+- Remove the import + usage of `RecentVolumesRail`.
 
-Reply **"go"** to execute Page 1.
+### 2. `src/components/Dashboard/InputForm.tsx`
+- Remove the inner `PageHeader` block (lines ~415–428). Keep all inputs, validation, settings, medical-mode logic, drag/drop, OCR, and the `onProcessInput` contract.
+- Replace the outer `<ScholarCard padding="lg">` wrapper so the workshop panel can compose the layout.
+- Re-skin the tab strip: hairline-bottom row of three buttons (`File`, `Text`, `Scan`); active tab = 2px gold bottom border + ink label; inactive = muted ink. No pill background.
+- Re-skin the dropzone: hairline 1px dashed border, 6px radius, "DROP ZONE" eyebrow (gold uppercase tracked), serif title, lighter upright caption (no italics), file-type meta line, dark-surface CTA `Choose a file →` with gold arrow. All existing drop handlers stay.
+- The "Process Text" full-width gold button stays inside the Text tab (it's the primary submit when the user pastes content). Generation prefs wiring stays internal — the rail's Generate button is documented below as visual-only for v1.
+- Settings drawer stays, restyled as a hairline-bordered "Processing settings" disclosure.
+
+### 3. New `src/components/Dashboard/WorkshopPanel.tsx`
+- Two-column grid:
+  - **Primary column (flex)**: `InputForm` → `RecentlyProcessedList` (in-column, not in rail).
+  - **Right rail (320px, hidden < lg, sticky)**: `<GenerationRail />` + `<QuoteCard />`.
+
+### 4. New `src/components/Dashboard/RecentlyProcessedList.tsx`
+- Reads up to 3 rows from `user_history` (existing query — `eq user_id`, order desc by `created_at`, `nullsFirst: false`, limit 3).
+- Renders eyebrow `RECENTLY PROCESSED` (gold uppercase tracked).
+- Each row: `01` / `02` / `03` muted-gold marker on the left, file name (serif), meta line (muted small-caps: cards drawn / processing / time-ago), and an `Open` link on the right that dispatches to history view.
+- Rows separated by hairlines. Empty state: muted single-line placeholder + `TODO: connect to richer history hook`.
+- **No Roman numerals.**
+
+### 5. New `src/components/Dashboard/GenerationRail.tsx`
+- Dark surface using existing `FeatureDarkCard` shell, eyebrow `WHAT TO GENERATE`.
+- Four toggle rows: **Summary** / concise notes, **Flashcards** / for spaced review, **Examination** / twenty questions, **Mind map** / visual outline. Square gold ON / muted OFF switch on the right.
+- Hairline divider, then `35 credits` placeholder text (`TODO: connect cost estimator`) + gold `Generate →` button.
+- v1 wiring: Summary / Flashcards toggles mirror the values inside `InputForm`'s settings drawer (read-only display). Examination / Mind map are visual-only with `TODO: connect`. The `Generate →` button is disabled with a tooltip "Use the workspace below" for now — actual submission still happens from the form's existing CTA. This avoids re-plumbing the submit path in this wave.
+
+### 6. New `src/components/Dashboard/QuoteCard.tsx`
+- Light hairline-bordered card under the rail. Serif quote (upright, medium weight), em-dash attribution in muted small caps. Static content with `TODO: connect to CMS / rotation`.
+
+### 7. `src/components/Dashboard/RecentVolumesRail.tsx`
+- **Delete.** Remove its import from `Dashboard.tsx`.
+
+### 8. `src/components/Scholar/RomanList.tsx`
+- **Delete.** Remove its export from `src/components/Scholar/index.ts` and its `RomanListItem` type. Confirmed no other consumers via search.
+
+### 9. `src/components/Dashboard/Header.tsx` (Topbar)
+- Already 64px + hairline. Two cosmetic tweaks:
+  - Replace the icon-tile + `FileText` logo with the wordmark `Meshfahem` + gold period.
+  - Credits pill: gold ring + bold numeral, transparent fill. Existing dropdown logic untouched.
+
+### 10. `src/components/Dashboard/Sidebar.tsx`
+- Already restyled (wordmark, gold left border, sub-labels). Add:
+  - Avatar block above the © footer: avatar + display name + tier badge, read-only. `useAuth` already provides this.
+- No new behavior; visual only.
+
+### 11. `src/components/Scholar/index.ts`
+- Remove `RomanList` / `RomanListItem` re-exports. Keep `FeatureDarkCard`, `RightRail`, `PageHeader`, `Eyebrow`, etc.
+
+---
+
+## Constraints honored
+
+- Italic ban in `src/index.css` stays — substitute with `font-light` upright.
+- No Roman numerals anywhere.
+- All existing i18n keys drive copy. No string rewrites.
+- No backend, schema, edge function, or route changes.
+- Existing pinnable / proximity sidebar logic preserved.
+- Processing pipeline untouched.
+- No parallel "demo" or "preview" page is created. Everything renders inside the live `/` Dashboard.
+
+---
+
+## Out of scope for this wave
+
+- Re-plumbing submission through the rail's `Generate` button.
+- Real cost estimator for "35 credits".
+- Examination / Mind map outputs.
+- Library, Academics, History, Profile sub-pages.
+
+Reply **"go"** to execute.
