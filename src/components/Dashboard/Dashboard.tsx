@@ -1460,7 +1460,7 @@ export const Dashboard: React.FC = () => {
             </button>
           )}
 
-          <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+          <div className="w-full pt-8 pr-10 pb-10 pl-10">
             <Suspense fallback={
               <div className="flex items-center justify-center py-16">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
@@ -1503,7 +1503,7 @@ export const Dashboard: React.FC = () => {
                 <PageHeader
                   eyebrow="The Workshop"
                   title={t('dashboard.process_content') || 'Process your content'}
-                  descriptor={t('dashboard.process_desc')}
+                  descriptor="Bring in a file, paste text, or scan a page — we'll do the rest."
                 />
 
                 {processingState.stage === 'idle' && (

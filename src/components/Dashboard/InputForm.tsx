@@ -402,12 +402,12 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container — hairline dashed, 6px radius, no shadow
+  // Dropzone container — hairline dashed, 6px radius, transparent (the outer ScholarCard is the white surface)
   const dropzoneCls = (active: boolean) =>
-    `relative border border-dashed rounded-[6px] p-12 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[6px] py-10 px-8 text-center transition-colors duration-150 ${
       active
         ? 'border-accent-gold bg-accent-gold/5'
-        : 'border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark hover:border-accent-gold/60'
+        : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-accent-gold/60'
     }`;
 
   return (
@@ -471,31 +471,32 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
             />
 
-            <div className="space-y-4">
-              <div className="text-[11px] font-semibold tracking-[0.16em] uppercase text-accent-gold">
-                Drop zone
-              </div>
-
-              <div>
-                <p className="font-display text-2xl text-ink dark:text-ink-on-dark mb-1">{t('dashboard.drop_file')}</p>
-                <p className="font-light text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.supported_files')}</p>
-              </div>
-
-              <div className="flex justify-center gap-4 text-xs uppercase tracking-[0.12em] text-muted-ink dark:text-muted-ink-on-dark">
-                <span>PDF</span>
-                <span aria-hidden>·</span>
-                <span>PPTX</span>
-                <span aria-hidden>·</span>
-                <span>DOCX</span>
-              </div>
-
-              <div className="pt-2">
-                <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-sidebar text-ink-on-dark rounded-[6px] text-sm font-medium border border-divider-on-dark">
-                  Choose a file <span className="text-accent-gold">→</span>
-                </span>
-              </div>
+            <div className="flex flex-col items-center">
+              <Upload size={32} strokeWidth={1.5} className="text-accent-gold" aria-hidden />
+              <p className="font-display text-xl font-semibold text-ink dark:text-ink-on-dark mt-2">
+                {t('dashboard.drop_file')}
+              </p>
+              <p className="font-light text-[13px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">
+                Or click to browse — PDF, DOCX, PPTX up to 25 MB
+              </p>
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-sidebar text-ink-on-dark rounded-[4px] text-[13px] font-semibold mt-4">
+                Choose a file <span aria-hidden>→</span>
+              </span>
             </div>
           </div>
+        )}
+
+        {/* Meta row — shown only in file mode, below the dashed box */}
+        {inputMode === 'file' && (
+          <>
+            <hr className="border-divider dark:border-divider-on-dark mt-4" />
+            <div className="flex flex-wrap gap-6 mt-3 text-[11px] font-light text-muted-ink dark:text-muted-ink-on-dark">
+              {/* TODO: connect — replace with live processing/storage stats */}
+              <span>Average processing time — 12s</span>
+              <span>Last upload — 2 hours ago</span>
+              <span>Storage used — 142 / 500 MB</span>
+            </div>
+          </>
         )}
 
         {/* OCR Scan Mode */}
