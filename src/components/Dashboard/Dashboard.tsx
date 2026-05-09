@@ -1504,7 +1504,10 @@ export const Dashboard: React.FC = () => {
                   eyebrow={
                     <span className="inline-flex items-center gap-1.5">
                       The Workshop
-                      <span aria-hidden="true" className="text-[12px] leading-none text-red-600">🚩</span>
+                      <svg aria-hidden="true" width="10" height="12" viewBox="0 0 10 12" className="text-green-600">
+                        <path d="M1 0v12" stroke="currentColor" strokeWidth="1" />
+                        <path d="M1 1h7l-2 2.5L8 6H1z" fill="currentColor" />
+                      </svg>
                     </span>
                   }
                   title={t('dashboard.process_content') || 'Process your content'}
