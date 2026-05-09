@@ -1505,6 +1505,7 @@ export const Dashboard: React.FC = () => {
                     <span className="inline-flex items-center gap-1.5">
                       The Workshop
                       <span aria-hidden="true" className="text-[12px] leading-none text-red-600">🚩</span>
+                      <span aria-hidden="true" className="text-[12px] leading-none" style={{ color: '#8b5cf6' }}>🚩</span>
                     </span>
                   }
                   title={t('dashboard.process_content') || 'Process your content'}
