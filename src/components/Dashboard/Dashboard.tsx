@@ -1501,7 +1501,12 @@ export const Dashboard: React.FC = () => {
             {currentView === 'main' && (
               <div className="space-y-8">
                 <PageHeader
-                  eyebrow="The Workshop"
+                  eyebrow={
+                    <span className="inline-flex items-center gap-1.5">
+                      The Workshop
+                      <span aria-hidden="true" className="text-[12px] leading-none text-red-600">🚩</span>
+                    </span>
+                  }
                   title={t('dashboard.process_content') || 'Process your content'}
                   descriptor="Bring in a file, paste text, or scan a page — we'll do the rest."
                 />
