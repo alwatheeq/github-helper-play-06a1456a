@@ -1505,6 +1505,7 @@ export const Dashboard: React.FC = () => {
                     <span className="inline-flex items-center gap-1.5">
                       The Workshop
                       <span aria-hidden="true" className="text-[12px] leading-none text-red-600">🚩</span>
+                      <svg aria-hidden="true" width="10" height="12" viewBox="0 0 10 12" fill="none" stroke="#8b5cf6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 11V1" /><path d="M2 1.5h6l-1.5 2L8 5.5H2" fill="#8b5cf6" /></svg>
                     </span>
                   }
                   title={t('dashboard.process_content') || 'Process your content'}
