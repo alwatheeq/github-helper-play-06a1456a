@@ -234,13 +234,13 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
       {/* Video container - always mounted */}
       <div
         ref={containerRef}
-        className="w-full h-full rounded-lg overflow-hidden bg-gray-900"
+        className="w-full h-full rounded-[var(--s4-radius-card)] overflow-hidden bg-gray-900"
         style={{ minHeight: '400px' }}
       />
 
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-50 rounded-lg">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-50 rounded-[var(--s4-radius-card)]">
           <div className="text-center">
             <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
             <p className="text-white text-lg">Connecting to video room...</p>
@@ -251,8 +251,8 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
 
       {/* Error overlay */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-50 rounded-lg p-6">
-          <div className="bg-red-900/20 border border-red-800 rounded-lg p-6 max-w-md">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900 z-50 rounded-[var(--s4-radius-card)] p-6">
+          <div className="bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md">
             <h3 className="text-lg font-semibold text-red-200 mb-2">
               Video Connection Error
             </h3>
@@ -279,7 +279,7 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
             </div>
             <button
               onClick={onDisconnect}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors"
             >
               Go Back
             </button>
