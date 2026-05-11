@@ -10,6 +10,7 @@ import { OnboardingProvider } from './contexts/OnboardingContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ChatProvider } from './contexts/ChatContext';
 import { ToastProvider } from './components/Toast/Toast';
+import { TodoToastListener } from './components/Scholar/TodoToastListener';
 import { Auth } from './components/Auth/Auth';
 import { Dashboard } from './components/Dashboard/Dashboard';
 import { useAuth } from './hooks/useAuth';
@@ -256,6 +257,7 @@ function App() {
                       <SubscriptionUpsellGateProvider>
                       <PersistentModalProvider>
                         <ToastProvider>
+                      <TodoToastListener />
                       <SubscriptionRefreshListener />
                   <ErrorBoundary fallbackMessage="Authentication Error">
                     <Suspense fallback={
