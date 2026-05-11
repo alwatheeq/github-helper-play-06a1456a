@@ -70,12 +70,12 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
 
       {/* Tutorial Modal */}
-      <div className="relative bg-card-light dark:bg-card-dark rounded-lg shadow-lg max-w-2xl w-full overflow-hidden animate-scaleIn">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={handleSkip}
-            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors duration-150 group"
+            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
             aria-label={t('tutorial.skip')}
           >
             <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
@@ -116,7 +116,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {!isFirstStep && (
                 <button
                   onClick={handlePrevious}
-                  className="flex items-center space-x-2 px-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-ink dark:text-ink-on-dark"
+                  className="flex items-center space-x-2 px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-ink dark:text-ink-on-dark"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   <span>{t('tutorial.previous')}</span>
@@ -126,7 +126,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {/* Next/Close Button */}
               <button
                 onClick={handleNext}
-                className="flex items-center space-x-2 px-6 py-2 bg-accent-gold text-white rounded-lg hover:opacity-80 transition-opacity font-semibold shadow-sm"
+                className="flex items-center space-x-2 px-6 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-80 transition-opacity font-semibold shadow-sm"
               >
                 <span>{isLastStep ? t('tutorial.close') : t('tutorial.next')}</span>
                 {!isLastStep && <ChevronRight className="h-4 w-4" />}
