@@ -1,7 +1,8 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
+import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan, Globe } from 'lucide-react';
 import { ScholarCard } from '../Scholar';
+import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -44,7 +45,8 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     includeFlashcards: DEFAULT_ACADEMICS_GENERATION_PREFERENCES.includeFlashcards,
     quizQuestionTypes: [...DEFAULT_ACADEMICS_GENERATION_PREFERENCES.quizQuestionTypes],
   }));
-  const [inputMode, setInputMode] = useState<'file' | 'text' | 'ocr'>('file');
+  const [inputMode, setInputMode] = useState<'file' | 'text' | 'ocr' | 'url'>('file');
+  const [urlInput, setUrlInput] = useState('');
   const ocrFileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
   const [textInput, setTextInput] = useState('');
@@ -396,19 +398,24 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
   // Tab button helper — hairline tab strip, active = gold underline
   const tabBtnCls = (active: boolean) =>
-    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ${
+    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 whitespace-nowrap ${
       active
         ? 'border-accent-gold text-ink dark:text-ink-on-dark'
         : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container — hairline dashed, 6px radius, transparent (the outer ScholarCard is the white surface)
+  // Dropzone container — hairline dashed, v4 radius token, 220px min-height (v4 spec)
   const dropzoneCls = (active: boolean) =>
-    `relative border border-dashed rounded-[6px] py-10 px-8 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[var(--s4-radius-card)] min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-150 ${
       active
         ? 'border-accent-gold bg-accent-gold/5'
         : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-accent-gold/60'
     }`;
+
+  const handleUrlSubmit = () => {
+    // TODO #18 — URL import has no edge function yet. Stub via todo() toast.
+    todo(t('workshop.url_cta') || 'URL import');
+  };
 
   return (
    <div className="w-full">
