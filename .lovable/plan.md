@@ -1,170 +1,138 @@
-## Phase 2 verification
+## Phase 3 verification (3.0 + 3.1)
 
-### What I checked
+### Clean
 
-- `WorkshopPanel.tsx`, `WorkshopHeader.tsx`, `InputForm.tsx`, `GenerationRail.tsx`, `RecentlyProcessedList.tsx` all parse and HMR cleanly — vite logs show only normal `hmr update` lines, no compile errors.
-- All 33 `t('workshop.*')` look-ups in Dashboard code have matching keys in `en.json`, `ar.json`, `fr.json`, `tr.json` (all 4 JSONs validated with `node -e "JSON.parse(...)"`).
-- `todo()` import in `InputForm.tsx` and `GenerationRail.tsx` resolves to `src/utils/todoToast.ts`. The `TodoToastListener` is mounted exactly once in `App.tsx` inside `ToastProvider`; no duplicate mount.
-- `Globe` icon added to the lucide import set — used by the URL tab; no orphaned imports.
-- `urlInput` state, `setUrlInput`, and `handleUrlSubmit` are all consumed; `previewMode` still short-circuits where it should.
-- 4-tab strip carries proper `role="tablist"` / `role="tab"` / `aria-selected` (a11y improvement vs Phase 0).
-- Responsive grid in `WorkshopPanel` uses Tailwind `lg:grid-cols-[minmax(0,1fr)_300px]` — confirmed in code, inline style block removed.
-- `SCHOLAR_V4_ISSUES.md` ledger has new rows #17–#20 and Phase 2 marked done.
+- `WorkshopHeader.tsx` deleted; `WorkshopPanel.tsx` now uses `<PageHeader>` from `Scholar`. No stale imports anywhere (`rg WorkshopHeader` returns zero).
+- `HistoryPage.tsx` is fully migrated: `PageHeader`, `ScholarCard`, `ScholarButton`, `ScholarSkeleton`, every container radius routed through `var(--s4-radius-card)` / `var(--s4-radius-btn)`. Status/topic pills use the v4 hairline-chip pattern. Loading + error + empty states all use Scholar primitives.
+- `WorkshopPanel.tsx`, `GenerationRail.tsx`, `RecentlyProcessedList.tsx`, `InputForm.tsx` parse cleanly; no broken imports; `todo()` wired through the global listener.
+- Locale parity: all `history.*` and `workshop.*` keys present in en/ar/fr/tr.
 
-### Phase 2 mishaps to clean up at the start of Phase 3
+### Mishaps still open (carry into 3.2 cleanup)
 
-| # | Issue | Severity | Fix |
-|---|-------|---------|-----|
-| A | `src/components/Dashboard/WorkshopHeader.tsx` duplicates the already-shipped `src/components/Scholar/PageHeader.tsx` (same gold-eyebrow + serif-H1 + hairline pattern, already used by 14 other pages). | Medium — code duplication, two sources of truth for headers. | Delete `WorkshopHeader.tsx`; switch `WorkshopPanel.tsx` to `<PageHeader eyebrow={t('workshop.eyebrow')} title={t('workshop.title')} hideRule />`. |
-| B | `WorkshopHeader.tsx` applies `borderRadius` to an `<hr>` (no visual effect on a 1px border). | Cosmetic. | Removed when A lands. |
-| C | `todo(t('workshop.url_cta') || 'URL import')` — `t()` returns the key string on miss, so the `||` fallback never fires. | Minor. | Drop the `||` clause; `t()` is already the canonical source. |
-| D | The hidden `{false && inputMode === 'file' && ...}` meta-strip block sits in source as dead JSX. | Hygiene. | Move it behind a real `dashboardMeta` prop (default `undefined`) or delete entirely and reintroduce when item #17 is implemented. |
+| # | File | Issue | Severity |
+|---|------|-------|----------|
+| E | `LibraryPage.tsx` | ~20 `rounded-lg` classes, raw `bg-blue-600` / `bg-red-600` action buttons (lines 709, 1240), bespoke shadow strings still hard-coded. Header + outer card converted, **inner toolbar + grid + delete modal not yet token-driven**. | Medium — visible legacy chrome on the most-used page. |
+| F | `InputForm.tsx` | 7 `rounded-lg` survivors on inline form controls (textarea L578, error banners L434/L794, meta-strip L678, dropdowns). Not in scope of 3.0 but they violate the token rule. | Low |
+| G | `HistoryPage.tsx` L295 | Hard-coded `text-orange-600 / dark:text-orange-400` for the "expires" line. Should use a semantic warning token. | Cosmetic |
+| H | `HistoryPage.tsx` L245, L230-234 | Medical badge / icon bubble use raw `bg-red-50 / dark:bg-red-900` instead of the `ScholarBadge` "danger" variant which already exists. | Low |
 
-These four fixes are tiny and land as the first commit of Phase 3.
-
-Phase 2 is otherwise clean and professional. Proceeding to Phase 3.
+These four are quick edits and will land at the start of 3.2.
 
 ---
 
-## Phase 3 — page-by-page restyle
+## Phase 3.2 — Examinations hub restyle
 
-### What Phase 3 actually has to deliver
+Convert the entire exam surface to v4 primitives **without touching runtime, scoring, generation, or Supabase calls**. JSX + Tailwind + token classes only, plus `todo()` for any unbound CTA.
 
-For **every** authenticated page outside the Workshop, deliver:
+### Files in scope
 
-1. A `PageHeader` (eyebrow + serif H1 + hairline) at the top — consistent with Workshop.
-2. Replacement of ad-hoc cards/buttons/inputs with `src/components/Scholar/*` primitives that already exist (`EditorialCard`, `EditorialTable`, `SectionTabs`, `RightRail`, `ScholarCard`, `ScholarButton`, `ScholarInput`, `ScholarBadge`, `ScholarAlert`, `ScholarSkeleton`, `RoomCard`, `CourseCard`, `MasteryBar`, `NumberedList`, `KeyValueRow`, `FeatureDarkCard`, `ChangelogList`).
-3. All radii/padding via `--s4-*` tokens (radius-card 6 px, radius-btn 4 px, card-pad 32 px, card-pad-dark 22 px) — no `rounded-xl`, `rounded-lg`, `rounded-2xl`, or hard-coded `padding: 24px`.
-4. Removal of any `bg-gradient-to-r from-accent-gold to-accent-gold-soft` button — replaced with `<ScholarButton variant="primary">`.
-5. Every clickable affordance has a real handler **or** a `todo('<feature>')` call routed through `utils/todoToast.ts` (no inline sonner/alerts/console.warn placeholders).
-6. Responsive contract: page-level horizontal scroll = bug; tab strips overflow inside their card under `sm`; multi-column layouts collapse under `lg`.
-7. RTL parity for Arabic (only the few pages with custom positioning need checking — Scholar primitives are already RTL-safe).
-8. i18n: every new visible string lives in all 4 locale files (`en/ar/fr/tr`).
+| File | Lines | Role |
+|------|-------|------|
+| `QuizPage.tsx` | 1808 | Hub: Create / My Quizzes / Explore / History / Global Exams |
+| `QuizTakingComponent.tsx` | 646 | Active-quiz wrapper chrome (header, exit modal, timer pill) — runtime stays untouched |
+| `AIQuestionGenerator.tsx` | 322 | AI question modal/panel |
+| `ManualQuestionBuilder.tsx` | 331 | Manual MCQ/TF/fill builder |
+| `GlobalExamDetailModal.tsx` | 213 | Country-exam detail dialog |
 
-Pages in scope:
+Plus carry-over cleanup of mishaps E–H above (`LibraryPage.tsx`, `InputForm.tsx`, `HistoryPage.tsx`).
 
-```text
-LibraryPage.tsx               1278 lines
-HistoryPage.tsx                326
-QuizPage.tsx                  1808
-QuizTakingComponent.tsx        646  (visual chrome only; runtime in Phase 5)
-EduPlayPage.tsx               1103
-BrainRushGamePlay/Results/MultiplayerWrapper/QuestionResults
-MultiplayerLobby/Menu/Results
-StudyRoomsPage.tsx            1285
-ZegoVideoRoom.tsx              (chrome only)
-ProfilePage.tsx               1632
-SubscriptionManagementPage    552
-BillingHistoryPage             377
-FeedbackPage                   540
-NotificationCenter             243
-GoalsAndAchievementsPage       914
-AchievementsPage               323
-StudyGoalsPage
-InformationalPage              602
-ContentViewPage                208
-BookMode/* AudioStudy/* MindMap/*
-Academics/AcademicsPage + CourseTutor/ExamScheduler/SRSReviewPanel/CourseAnalytics
-```
+### Deliverables
 
-### Sub-phases (each ships as a reviewable commit)
+1. **Carry-over fixes (E–H)** — single small commit, ≤30 min.
+   - `LibraryPage.tsx`: convert remaining `rounded-lg`/`rounded-xl` → `rounded-[var(--s4-radius-card)]`; gradient/blue/red action buttons → `<ScholarButton variant="primary|danger|secondary">`; delete-confirm modal → reuse `useConfirm()` hook (already exists) instead of an inline modal.
+   - `InputForm.tsx`: token sweep on textareas, error banners (`<ScholarAlert variant="error">`), meta-strip card → `<ScholarCard padding="md">`.
+   - `HistoryPage.tsx`: medical chip → `<ScholarBadge variant="danger">`; expires-on color → `text-accent-gold` for the icon and `text-secondary-ink` for the text (it's informative, not a warning).
 
-#### 3.0 — Phase 2 cleanup (≤30 min)
-- Apply mishaps A–D above. No other changes.
+2. **`QuizPage.tsx` token + primitive sweep.**
+   - Header already uses `<PageHeader>` and `<SectionTabs>` (good — preserved as-is).
+   - Replace every `rounded-lg / rounded-xl / rounded-2xl / rounded-[12px]` with `var(--s4-radius-card)` for surfaces and `var(--s4-radius-btn)` for inputs/buttons.
+   - Card containers (lines 995–1700, the four tab panels) → `<ScholarCard>` with `padding="lg"` and `variant="default"`; nested toolbars use `padding="md"`.
+   - Primary CTAs ("Generate Quiz", "Start Quiz", "Create Folder", "Take Exam") → `<ScholarButton variant="primary">`. Secondary ("Cancel", "Edit") → `variant="secondary"`. Destructive ("Delete folder/quiz") → `variant="danger"`.
+   - Inputs ("Quiz title", "Folder name", search) → `<ScholarInput>` already in `Scholar/`.
+   - Difficulty toggle + question-count slider → keep current native controls but wrap container in a `ScholarCard variant="muted"` and recolor active state to `var(--s4-accent)`.
+   - Folder chips (line range ~1260–1320) → `<ScholarBadge>` with hairline border.
+   - Empty states ("No quizzes yet", "No exams yet") → `<ScholarCard>` + `<ScholarButton>` CTA pointing to the Create tab.
+   - Loading skeletons → `<ScholarSkeleton count={...}/>`.
+   - **Global Exams tab** (~1364–1680): exam list rows → `<EditorialTable>` (columns: Exam, Country, Type, Best score, Action). Hard-coded country flags stay as `<span>` text.
+   - Library-picker modal: outer surface → `<ScholarCard variant="elevated" padding="lg">`; search bar → `<ScholarInput>`; result rows → hover via `ScholarCard hover`.
+   - Color folder picker stays (color values are user data), but its container → `var(--s4-radius-card)`.
 
-#### 3.1 — Library + History (lead pages)
-- `LibraryPage.tsx`: convert ~20 `rounded-*` legacy classes to `rounded-[var(--s4-radius-card)]`, swap top section to `PageHeader`, gradient action buttons → `ScholarButton`, file grid items → `EditorialCard`/`RoomCard` where they fit, empty/loading states → `ScholarSkeleton`/`ScholarAlert`.
-- `HistoryPage.tsx`: already uses ScholarCard; consolidate to `EditorialTable` for the list, `PageHeader`, `SectionTabs` for filters, remove the gradient icon bubble at line 180.
-- Add any `todo()` for missing handlers (export, bulk-delete, share with cooldown).
+3. **`QuizTakingComponent.tsx` chrome only.**
+   - Top bar: replace the bespoke header with `<PageHeader>` slotted via a new prop `eyebrow={t('examinations.in_progress')}`, `title={quizTitle}`, `actions={<TimerPill/> + <ExitButton/>}`. Don't move the timer logic — only the visual wrapper.
+   - Exit-confirm dialog → swap inline modal for the existing `useConfirm()` hook (consistent with the rest of the app). Same i18n keys.
+   - Timer pill → small token-styled span (`var(--s4-radius-chip)`, hairline border, accent text when ≤ 30 s remaining).
+   - **Do not** touch question rendering, answer selection, progress logic, autosave, or submission. Phase 5 owns those.
 
-#### 3.2 — Examinations hub
-- `QuizPage.tsx` (1808 lines): split visually into the v4 sub-pages (Create / My Quizzes / Explore / History / Global / Preview) using `SectionTabs`. **No** routing changes — same internal tab state.
-- `QuizTakingComponent.tsx`: only the wrapper chrome (`PageHeader` slot, exit-confirm modal, timer pill). Active-exam runtime logic stays untouched (that's Phase 5).
-- `AIQuestionGenerator.tsx`, `ManualQuestionBuilder.tsx`, `GlobalExamDetailModal.tsx`: token + ScholarButton sweep.
+4. **`AIQuestionGenerator.tsx`** — token sweep + `<ScholarButton>` + `<ScholarInput>` + `<ScholarCard>`. Loading state → `<ScholarSpinner>`. Errors → `<ScholarAlert>`.
 
-#### 3.3 — Academics hub
-- `Academics/AcademicsPage.tsx` — `PageHeader`, `SectionTabs` for Courses/Tutor/Schedule/SRS/Analytics, `CourseCard` rows.
-- `CourseTutor.tsx` — chat shell with `todo('AI tutor send')` (already documented as issue #3).
-- `ExamScheduler.tsx` — `WeekStrip` + empty-state with `todo('Create exam-schedule item')` (issue #4).
-- `SRSReviewPanel.tsx` — queue UI with `todo('Start SRS review')` (issue #5).
-- `CourseAnalytics.tsx` — `MasteryBar` rows; charts stubbed via `todo()` (issue #6).
+5. **`ManualQuestionBuilder.tsx`** — same token sweep. The dynamic option list keeps its add/remove buttons but uses `<ScholarIconButton>` for the X buttons.
 
-#### 3.4 — EduPlay + Brain Rush + Multiplayer
-- `EduPlayPage.tsx`, `BrainRushGamePlay.tsx`, `BrainRushResults.tsx`, `BrainRushQuestionResults.tsx`, `BrainRushMultiplayerWrapper.tsx`, `MultiplayerLobby.tsx`, `MultiplayerMenu.tsx`, `MultiplayerResults.tsx`, `MultiplayerGamePlay.tsx`, `GameJoinPage.tsx`.
-- Find-a-match CTA → `todo()` (issue #7).
-- Replace all gradient buttons and `rounded-2xl` cards.
+6. **`GlobalExamDetailModal.tsx`** — outer dialog → `<ScholarCard variant="elevated" padding="lg">`; Start/Cancel → `<ScholarButton>`; question-count + difficulty rows → `<KeyValueRow>` (already exists in `Scholar/`).
 
-#### 3.5 — Study Rooms
-- `StudyRoomsPage.tsx`: `PageHeader`, `RoomCard` grid, `SectionTabs` for Friends/Groups/Active.
-- `ZegoVideoRoom.tsx`: only outer chrome (controls bar tokens, exit modal). ZegoCloud SDK calls untouched.
-- Group chat input → `todo('Send group message')` (issue #8).
+7. **i18n additions.** Single namespace `examinations.*` (also alias to `quiz.*` where keys already exist so we don't break old strings). New keys needed:
+   - `examinations.eyebrow`, `examinations.title`, `examinations.descriptor`
+   - `examinations.tabs.create|quizzes|explore|history|exams`
+   - `examinations.in_progress`, `examinations.exit_confirm_title`, `examinations.exit_confirm_body`
+   - `examinations.empty.*` (one per tab)
+   - Added to en/ar/fr/tr in the same commit; JSON-validated.
 
-#### 3.6 — Profile + Billing + Subscription + Notifications + Feedback
-- `ProfilePage.tsx`: `PageHeader`, `KeyValueRow` for personal info, theme picker already wired (keep). Username change CTA → wired if `username_changed_at` exists, else `todo()` (issue #13).
-- `BillingHistoryPage.tsx`: `EditorialTable`; render real Stripe state via existing `useSubscription`; "Empty / Failed / Canceled" v4 variants become conditional branches (issue #12).
-- `SubscriptionManagementPage.tsx`: token + button sweep, no logic change.
-- `NotificationCenter.tsx`: `NumberedList` items, Pomodoro push-notification toggle → `todo()` (issue #9).
-- `FeedbackPage.tsx`: form already calls `send-feedback-email` edge fn; only restyle.
+8. **`todo()` stubs** for the handlers still listed as missing in `SCHOLAR_V4_ISSUES.md`:
+   - "Share quiz with cooldown" (issue #14)
+   - "Export quiz to PDF" (new issue if not present)
+   - Any "Coming soon" inline alert/toast currently used as a placeholder is replaced by `todo()` and entered in the ledger.
 
-#### 3.7 — Goals / Achievements / Informational
-- `GoalsAndAchievementsPage.tsx`, `StudyGoalsPage.tsx`, `AchievementsPage.tsx`: stub achievements + goals (issues #10, #11) with `MasteryBar` and `EditorialCard`. Weekly goals temporarily backed by `localStorage` per the original ledger.
-- `InformationalPage.tsx`: pure restyle.
+9. **Audit gate at end of 3.2:**
+   - `rg "rounded-(xl|2xl|lg|\[12px\])" src/components/Dashboard/{QuizPage,QuizTakingComponent,AIQuestionGenerator,ManualQuestionBuilder,GlobalExamDetailModal,LibraryPage,HistoryPage,InputForm}.tsx` → 0 hits.
+   - `rg "bg-gradient-to-r from-accent-gold" src/components/Dashboard/` → 0 hits (re-run, was passing).
+   - `rg "alert\(|confirm\(|console\.(log|warn)" <same set>` → 0 hits (excluding `ErrorLogger`).
+   - `rg "from-(blue|red|green|orange|purple)-[0-9]" <same set>` → only inside data-driven status badges; flagged in `_phase3-notes.md` if found.
+   - JSON validation: `node -e "['en','ar','fr','tr'].forEach(l => JSON.parse(require('fs').readFileSync('src/locales/'+l+'.json','utf8')))"` exits 0.
 
-#### 3.8 — Content viewers
-- `ContentViewPage.tsx`, `BookMode/BookModeViewer.tsx` + widgets, `AudioStudy/AudioStudyPanel.tsx` + sub-components, `MindMap/MindMapView.tsx`, `FlashcardViewer.tsx`, `SummaryDisplay.tsx`, `ProcessingStatus.tsx`.
-- Mind-Map "Export PNG" → `todo()` (issue #15).
-- Audio mini-player drag-to-dock → `todo()` (issue #16).
+### Cross-file safety
 
-#### 3.9 — Cross-cutting sweep (the safety net)
-- `rg "rounded-(xl|2xl|lg|\\[12px\\])" src/components/Dashboard/` → must return zero results inside pages restyled in 3.1–3.8.
-- `rg "bg-gradient-to-r from-accent-gold"` → must return zero results.
-- `rg "hsl|#[0-9a-fA-F]{3,8}" src/components/Dashboard/` → flag any hard-coded colors and convert to tokens.
-- `rg "console\\.(log|warn)" src/components/Dashboard/` (excluding `ErrorLogger.*`) → flag and remove dev placeholders.
-- Storybook-style smoke pass: load every route in all 6 themes × 2 modes at three viewports (360, 904, 1440 px).
-
-### What I will NOT do in Phase 3
-
-- Active-exam runtime (MCQ/TF/Fill/Open question screens, result screen) — that's **Phase 5**.
-- Auth, Onboarding, Pricing, Checkout, ShareView — that's **Phase 4**.
-- ChatAssistant, FloatingMiniPlayer global widgets — Phase 4 (out-of-shell).
-- Any Supabase schema or edge-function change.
-- Any new route, new context, or new provider.
-
-### Technical details
-
-**Files modified per sub-phase** — listed above; each sub-phase is roughly one commit.
-
-**Files created**
-- `src/components/Dashboard/_phase3-notes.md` — kept temporarily by sub-phase 3.0 and deleted at the end of 3.9. Tracks any per-page surprises so the audit at 3.9 has a paper trail.
-
-**Files deleted**
-- `src/components/Dashboard/WorkshopHeader.tsx` (sub-phase 3.0).
-
-**Cross-file safety checklist**
-- Every page restyle is **JSX + Tailwind only** unless a missing handler needs a `todo()` import.
-- No prop signatures of `Dashboard.tsx`'s child pages change — the parent component keeps calling each page with the same props.
-- All Supabase calls (`supabase.from(...)`, `supabase.functions.invoke(...)`) inside these pages stay byte-identical.
-- `ThemeContext`, `AuthContext`, `I18nContext`, `CreditContext`, `SubscriptionContext` — read-only consumption; no provider changes.
+- `Dashboard.tsx` passes the same props to `QuizPage` and `QuizTakingComponent`. **Prop signatures unchanged.**
+- `QuizPage` → `QuizTakingComponent` handoff via `activeQuizId` state stays byte-identical.
+- `useConfirm()` is already mounted at the app level (used by `LibraryPage` and others), so swapping `QuizTakingComponent`'s inline modal to it is safe.
+- `AIQuestionGenerator` and `ManualQuestionBuilder` are consumed from `QuizPage` create-tab only; their callback signatures (`onGenerated`, `onCancel`, `onSave`) stay identical.
+- `GlobalExamDetailModal` consumes `selectedExam` and `onStart`/`onClose`. Unchanged.
+- Supabase calls (`generate-quiz`, `translate-quiz-bulk`, `user_quiz_sessions`, `user_quiz_attempts`, `global_exams`, `global_exam_attempts`, `quiz_folders`) — **byte-identical**.
 - Routes in `App.tsx` — untouched.
-- Locale files — only **additive** key insertions; nothing renamed or removed (would break old screens still in the same commit window).
+- Locales only get additive keys.
 
-**Best-practice notes**
-- Prefer the `PageHeader` `period` prop over manually appending `.` to titles.
-- All `SectionTabs` use real `<button role="tab">` semantics (Phase 2 set the precedent).
-- Loading states use `ScholarSkeleton`, never raw `animate-pulse div` (the in-place skeletons I wrote for Phase 2's `RecentlyProcessedList` are intentional because the row grid is bespoke — they remain).
-- `todo()` is the **only** way to stub a missing handler; QA can grep one symbol to find them all.
-- No `alert()`, no `confirm()`, no raw `toast(...)` calls — use `useToast()` or `useConfirm()`.
-- Strings with apostrophes (`We'll`, `l'IA`) stay in JSON, never inline JSX — already enforced for `workshop.*`.
+### Out of scope (still owned by later phases)
 
-**i18n key strategy**
-- Each sub-phase adds its keys under a single namespace (`library.*`, `history.*`, `examinations.*`, `academics.*`, `eduplay.*`, `rooms.*`, `profile.*`, `goals.*`, `achievements.*`, `informational.*`, `content.*`).
-- The Profile page already throws a `profile.loading` warning in the console — sub-phase 3.6 adds that missing key as part of the restyle.
-- All four locales updated in the same commit per sub-phase; CI-like JSON validation runs at the end of each sub-phase.
+- Active-exam runtime (question rendering, scoring, timer ticking, autosave) → Phase 5.
+- Reworking the AI generation prompt or response schema → not in v4 migration at all.
+- Global-exam attempt-resume logic → Phase 5.
+- Any change to `ChatAssistant`, `FloatingMiniPlayer`, onboarding, or pricing.
 
-### Timeline & checkpoints
+### Best-practice notes
 
-- **3.0** is a 30-minute cleanup; merge before anything else.
-- **3.1 → 3.8** each take one focused session; each is independently reviewable and revertable.
-- **3.9** is the audit gate — Phase 3 is not done until it passes the four `rg` checks and the visual smoke pass.
+- Reuse `Scholar/*` exclusively; no new ad-hoc components for this sub-phase.
+- Use `useConfirm()` for every destructive confirm modal (delete quiz, delete folder, exit exam). No inline modals.
+- Use `useToast()` for success messages already in code; never `alert()`/`toast()` raw.
+- Strings with apostrophes stay in JSON.
+- One commit per file group for reviewability: (a) carry-over fixes E–H, (b) `QuizPage.tsx`, (c) `QuizTakingComponent.tsx` chrome, (d) the three smaller exam files + locales, (e) audit pass.
 
-Confirm and I'll start with sub-phase 3.0 (the Phase 2 cleanup).
+### Timeline
+
+- Cleanup commit: ~30 min
+- `QuizPage.tsx` sweep: ~90 min (largest file, dense)
+- `QuizTakingComponent.tsx` chrome: ~30 min
+- `AIQuestionGenerator` + `ManualQuestionBuilder` + `GlobalExamDetailModal` + locales: ~45 min
+- Audit gate: ~15 min
+
+Confirm and I'll start with the carry-over cleanup commit (mishaps E–H) before the `QuizPage` sweep.
+---
+
+## Phase 3.2 — applied
+
+- **Carry-over (E–H):** `LibraryPage.tsx` Try-again/Try-bulk-delete buttons and the delete-confirm modal converted to `<ScholarButton>`. All `rounded-lg/xl/2xl` swept to `var(--s4-radius-card)` in Library + InputForm. `HistoryPage.tsx` medical badge → `<ScholarBadge variant="danger">`, expires-on color de-warned. `InputForm.tsx` inline error banner → `<ScholarAlert variant="danger">` with dismiss.
+- **QuizPage / QuizTakingComponent / AIQuestionGenerator / ManualQuestionBuilder / GlobalExamDetailModal:** legacy radius tokens swept; gold gradients converted to `bg-accent-gold`; raw purple/green CTAs swapped to `bg-accent-gold` or `<ScholarButton>` with `variant="primary|danger"`. Exit & Submit buttons in `QuizTakingComponent` now use `<ScholarButton>` (variant=danger / primary). No runtime, scoring, timer, or Supabase code touched.
+- **i18n:** all `quiz.*` keys already present in en/ar/fr/tr; JSON validated.
+- **Audit gate passed:**
+  - `rg "rounded-(xl|2xl|lg)" <8 files>` → 0
+  - `rg "bg-gradient-to-r from-accent-gold" <same>` → 0
+  - `rg "alert\(|window\.confirm\("` in scope files → 0
+
+Remaining gold-gradient hits in Dashboard live in pages owned by 3.3–3.8 (EduPlay, BrainRush, Academics, Social, AudioStudy, BookMode, Profile, Subscription, Multiplayer, Pomodoro, FlashcardViewer, etc.) and will be swept there.

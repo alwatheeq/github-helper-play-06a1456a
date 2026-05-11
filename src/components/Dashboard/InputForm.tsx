@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan, Globe } from 'lucide-react';
-import { ScholarCard } from '../Scholar';
+import { ScholarCard, ScholarAlert } from '../Scholar';
 import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
@@ -431,15 +431,13 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
       <ScholarCard padding="lg">
         {/* Notification */}
         {notification.show && (
-          <div className="mb-6 p-4 rounded-lg flex items-center space-x-3 bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200">
-            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-            <span className="text-sm font-medium flex-1">{notification.message}</span>
-            <button
-              onClick={() => setNotification(prev => ({ ...prev, show: false }))}
-              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200"
+          <div className="mb-6">
+            <ScholarAlert
+              variant="danger"
+              onDismiss={() => setNotification(prev => ({ ...prev, show: false }))}
             >
-              <X className="h-4 w-4" />
-            </button>
+              {notification.message}
+            </ScholarAlert>
           </div>
         )}
         
@@ -575,7 +573,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 placeholder={t('dashboard.paste_placeholder')}
-                className="w-full h-64 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full h-64 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
             </div>
             
@@ -610,7 +608,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
             {/* Medical Validation Feedback */}
             {medicalMode && medicalValidation && textInput.trim().length > 100 && (
-              <div className={`mt-3 p-3 rounded-lg border text-sm ${
+              <div className={`mt-3 p-3 rounded-[var(--s4-radius-card)] border text-sm ${
                 medicalValidation.isValid
                   ? 'bg-green-50 border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
                   : 'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-900 dark:border-orange-700 dark:text-orange-200'
@@ -675,14 +673,14 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         </div>
 
         {showSettings && (
-          <div className="mt-6 p-6 bg-subtle rounded-lg space-y-4 border border-divider dark:border-divider-on-dark">
+          <div className="mt-6 p-6 bg-subtle rounded-[var(--s4-radius-card)] space-y-4 border border-divider dark:border-divider-on-dark">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('dashboard.flashcard_count')}</label>
                 <select
                   value={flashcardCount}
                   onChange={(e) => setFlashcardCount(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                  className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                 >
                   <option value={10}>10 {t('dashboard.cards')}</option>
                   <option value={20}>20 {t('dashboard.cards')}</option>
@@ -762,7 +760,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               </div>
             </div>
 
-            <div className={`text-sm rounded-lg p-3 ${
+            <div className={`text-sm rounded-[var(--s4-radius-card)] p-3 ${
               medicalMode
                 ? 'bg-red-50 border border-red-200 text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
                 : 'bg-accent-gold/10 border border-accent-gold/30 text-secondary-ink dark:text-muted-ink-on-dark'
@@ -791,7 +789,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         )}
 
         {/* Medical Mode Toggle - Compact Version */}
-        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg dark:bg-red-900/20 dark:border-red-800">
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] dark:bg-red-900/20 dark:border-red-800">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded-md border border-red-200 dark:border-red-800">
