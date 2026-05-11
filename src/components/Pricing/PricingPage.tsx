@@ -81,7 +81,7 @@ export const PricingPage: React.FC = () => {
       <div className="max-w-2xl mx-auto mt-20">
         {/* Hero */}
         <div className="text-center mb-10">
-          <h1 className={`text-4xl font-bold text-ink dark:text-ink-on-dark mb-3`}>
+          <h1 className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-3`}>
             {t('pricing.standard_title')}
           </h1>
           <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
@@ -138,7 +138,7 @@ export const PricingPage: React.FC = () => {
               <option value={6}>{t('pricing.billing_every_6')}</option>
             </select>
             <div className="flex items-baseline gap-2 flex-wrap">
-              <span className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>
+              <span className={`s4-h1 text-ink dark:text-ink-on-dark`}>
                 {formatCurrency(basePrice)}
               </span>
               <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>

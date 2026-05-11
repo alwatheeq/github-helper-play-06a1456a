@@ -682,7 +682,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
         {studySessionComplete ? (
           <div className="text-center py-12">
             <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4 dark:text-green-400" />
-            <h3 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('flashcards.session_complete')}</h3>
+            <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>{t('flashcards.session_complete')}</h3>
             <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
               {studiedCards.size === 1 ? t('flashcards.reviewed_cards', { count: studiedCards.size }) : t('flashcards.reviewed_cards_plural', { count: studiedCards.size })}
             </p>

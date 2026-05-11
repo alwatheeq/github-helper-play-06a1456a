@@ -997,7 +997,7 @@ export const QuizPage: React.FC = React.memo(() => {
             {quizViewMode === 'exams' ? (
               <div className="text-center py-12">
                 <Globe className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-2`}>
+                <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>
                   {t('quiz.exams_cannot_be_created') || 'Global exams cannot be created'}
                 </h2>
                 <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
@@ -1012,7 +1012,7 @@ export const QuizPage: React.FC = React.memo(() => {
               </div>
             ) : (
               <>
-                <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-5`}>{t('quiz.create_new')}</h2>
+                <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-5`}>{t('quiz.create_new')}</h2>
 
             <div className="space-y-4">
               {/* Quiz Title */}
@@ -1436,7 +1436,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       <div key={exam.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 cursor-pointer`}>
                         <div className="flex items-start justify-between mb-4">
                           <div>
-                            <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-1`}>{exam.exam_name}</h3>
+                            <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-1`}>{exam.exam_name}</h3>
                             <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{exam.exam_code}</p>
                           </div>
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
@@ -1591,7 +1591,7 @@ export const QuizPage: React.FC = React.memo(() => {
             <div className="lg:col-span-3">
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-semibold text-ink dark:text-ink-on-dark">
+                  <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">
                     {selectedFolder === 'all' ? 'All Quizzes' :
                      selectedFolder === 'uncategorized' ? 'Uncategorized Quizzes' :
                      quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
@@ -1725,7 +1725,7 @@ export const QuizPage: React.FC = React.memo(() => {
                               <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
                             </div>
                           </div>
-                          <div className="text-3xl font-bold text-ink dark:text-ink-on-dark">
+                          <div className="s4-h1 text-ink dark:text-ink-on-dark">
                             {attempt.score_percentage.toFixed(0)}%
                           </div>
                         </div>
@@ -1771,7 +1771,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
                           </div>
                         </div>
-                        <div className="text-3xl font-bold text-ink dark:text-ink-on-dark">
+                        <div className="s4-h1 text-ink dark:text-ink-on-dark">
                           {attempt.score_percentage.toFixed(0)}%
                         </div>
                       </div>

@@ -74,7 +74,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </div>
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 text-center mb-4">
+            <h1 className="s4-h2 text-gray-900 text-center mb-4">
               {this.props.fallbackMessage || 'Something went wrong'}
             </h1>
 

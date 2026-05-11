@@ -119,7 +119,7 @@ export const ShareView: React.FC = () => {
                 <FileText className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
+                <h1 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('share.shared_content')}</p>
               </div>
             </div>
@@ -151,7 +151,7 @@ export const ShareView: React.FC = () => {
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-2">{item.title}</h2>
+                <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-2">{item.title}</h2>
                 <div className="flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
                   <span>{t('common.created', { date: formatDate(item.created_at) })}</span>
                   <span>•</span>

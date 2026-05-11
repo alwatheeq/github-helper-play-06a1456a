@@ -443,7 +443,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div>
-                    <h2 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{t('goals.title')}</h2>
+                    <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark`}>{t('goals.title')}</h2>
                     <p className={`text-sm text-ink dark:text-ink-on-dark mt-1`}>
                       {t('goals.subtitle')}
                     </p>
@@ -463,21 +463,21 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
                   <p className={`text-sm text-ink dark:text-ink-on-dark mb-2`}>{t('goals.active_goals')}</p>
-                  <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
+                  <p className="s4-h1 text-[36px] text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
                 </div>
               </div>
 
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.completed')}</p>
-                  <p className="text-4xl font-bold text-green-600 dark:text-green-400">{completedGoals.length}</p>
+                  <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
                 </div>
               </div>
 
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.total_goals')}</p>
-                  <p className={`text-4xl font-bold text-ink dark:text-ink-on-dark`}>{goals.length}</p>
+                  <p className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark`}>{goals.length}</p>
                 </div>
               </div>
             </div>
@@ -485,7 +485,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
             <div className="space-y-6">
               {activeGoals.length > 0 && (
                 <div>
-                  <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-4`}>{t('goals.active_goals')}</h2>
+                  <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4`}>{t('goals.active_goals')}</h2>
                   <div className="space-y-4">
                     {activeGoals.map((goal) => {
                       const progress = calculateProgress(goal.current_value, goal.target_value);
@@ -578,7 +578,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
               {completedGoals.length > 0 && (
                 <div>
-                  <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-4`}>{t('goals.completed_goals')}</h2>
+                  <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4`}>{t('goals.completed_goals')}</h2>
                   <div className="space-y-4">
                     {completedGoals.map((goal) => (
                       <div
@@ -638,7 +638,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-blue-600 dark:text-blue-300 font-medium">{t('achievements.unlocked')}</p>
-                      <p className="text-3xl font-bold text-blue-700 dark:text-blue-200 mt-1">
+                      <p className="s4-h1 text-blue-700 dark:text-blue-200 mt-1">
                         {earnedCount}
                       </p>
                       <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
@@ -653,7 +653,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-yellow-600 dark:text-yellow-300 font-medium">{t('achievements.total_xp')}</p>
-                      <p className="text-3xl font-bold text-yellow-700 dark:text-yellow-200 mt-1">
+                      <p className="s4-h1 text-yellow-700 dark:text-yellow-200 mt-1">
                         {totalXPEarned}
                       </p>
                       <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
@@ -668,7 +668,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-green-600 dark:text-green-300 font-medium">{t('achievements.completion')}</p>
-                      <p className="text-3xl font-bold text-green-700 dark:text-green-200 mt-1">
+                      <p className="s4-h1 text-green-700 dark:text-green-200 mt-1">
                         {Math.round((earnedCount / allAchievements.length) * 100)}%
                       </p>
                       <p className="text-xs text-green-600 dark:text-green-400 mt-1">
@@ -802,7 +802,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{t('goals.create_new_goal')}</h2>
+              <h2 className="s4-h2 text-gray-900 dark:text-gray-100">{t('goals.create_new_goal')}</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
                 className="p-2 text-gray-500 hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"

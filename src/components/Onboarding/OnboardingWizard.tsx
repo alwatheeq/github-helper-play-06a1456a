@@ -131,7 +131,7 @@ export const OnboardingWizard: React.FC = () => {
                   <Globe className="h-10 w-10 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">
+              <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
                 {t('onboarding.step_language')}
               </h1>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
@@ -187,7 +187,7 @@ export const OnboardingWizard: React.FC = () => {
                   <Palette className="h-10 w-10 text-white" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">
+              <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
                 {t('onboarding.step_theme')}
               </h1>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">

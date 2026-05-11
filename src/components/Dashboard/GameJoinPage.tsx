@@ -146,7 +146,7 @@ export const GameJoinPage: React.FC = () => {
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
           <AlertCircle className="h-16 w-16 text-red-600 dark:text-red-400 mx-auto mb-4" />
-          <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Unable to Join Game</h2>
+          <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-2`}>Unable to Join Game</h2>
           <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>{error}</p>
           <button
             onClick={() => navigate('/dashboard?view=eduplay')}
@@ -167,7 +167,7 @@ export const GameJoinPage: React.FC = () => {
           <div className={`bg-accent-gold rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
             <Gamepad2 className="h-12 w-12 text-white" />
           </div>
-          <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Join Game</h2>
+          <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Join Game</h2>
           {gameInfo && (
             <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>{gameInfo.game_title}</p>
           )}
@@ -180,7 +180,7 @@ export const GameJoinPage: React.FC = () => {
               Game Code
             </label>
             <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-[var(--s4-radius-card)]">
-              <span className="text-3xl font-bold text-blue-600 dark:text-blue-400 tracking-wider">
+              <span className="s4-h1 text-blue-600 dark:text-blue-400 tracking-wider">
                 {gameCode?.toUpperCase()}
               </span>
             </div>
@@ -231,7 +231,7 @@ export const GameJoinPage: React.FC = () => {
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-lg p-8 max-w-md w-full">
-            <h3 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
             <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
               Choose how you'd like to join this game:
             </p>

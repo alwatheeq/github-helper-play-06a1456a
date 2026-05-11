@@ -149,7 +149,7 @@ export const AchievementsPage: React.FC = () => {
           <div className="flex items-center space-x-3 mb-6">
             <Award className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
             <div>
-              <h1 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>{t('achievements.title')}</h1>
+              <h1 className={`s4-h1 text-ink dark:text-ink-on-dark`}>{t('achievements.title')}</h1>
               <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-1`}>
                 {t('achievements.subtitle')}
               </p>
@@ -161,7 +161,7 @@ export const AchievementsPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className={`text-sm text-ink dark:text-ink-on-dark font-medium`}>{t('achievements.unlocked')}</p>
-                  <p className={`text-3xl font-bold text-ink dark:text-ink-on-dark mt-1`}>
+                  <p className={`s4-h1 text-ink dark:text-ink-on-dark mt-1`}>
                     {earnedCount}
                   </p>
                   <p className={`text-xs text-ink dark:text-ink-on-dark mt-1`}>
@@ -176,7 +176,7 @@ export const AchievementsPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-yellow-600 dark:text-yellow-300 font-medium">{t('achievements.total_xp')}</p>
-                  <p className="text-3xl font-bold text-yellow-700 dark:text-yellow-200 mt-1">
+                  <p className="s4-h1 text-yellow-700 dark:text-yellow-200 mt-1">
                     {totalXPEarned}
                   </p>
                   <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
@@ -191,7 +191,7 @@ export const AchievementsPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-green-600 dark:text-green-300 font-medium">{t('achievements.completion')}</p>
-                  <p className="text-3xl font-bold text-green-700 dark:text-green-200 mt-1">
+                  <p className="s4-h1 text-green-700 dark:text-green-200 mt-1">
                     {Math.round((earnedCount / allAchievements.length) * 100)}%
                   </p>
                   <p className="text-xs text-green-600 dark:text-green-400 mt-1">

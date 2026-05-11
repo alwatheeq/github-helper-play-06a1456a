@@ -129,20 +129,20 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
     <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">Game Over!</h1>
+          <h1 className="s4-h1 text-[36px] mb-2">Game Over!</h1>
           <p className="text-secondary-ink dark:text-muted-ink-on-dark text-lg">{gameName}</p>
         </div>
 
         {myResult && (
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8 mb-8">
-            <h2 className="text-2xl font-bold mb-6 text-center">Your Performance</h2>
+            <h2 className="s4-h2 mb-6 text-center">Your Performance</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {/* Stat tiles preserve game semantic colors */}
               <div className="text-center">
                 <div className="bg-blue-100 dark:bg-blue-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                   {getRankIcon(myResult.rank)}
                 </div>
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">#{myResult.rank}</div>
+                <div className="s4-h1 text-blue-600 dark:text-blue-400">#{myResult.rank}</div>
                 <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Rank</div>
               </div>
 
@@ -150,7 +150,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                 <div className="bg-green-100 dark:bg-green-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                   <TrendingUp className="w-8 h-8 text-green-600 dark:text-green-400" />
                 </div>
-                <div className="text-3xl font-bold text-green-600 dark:text-green-400">{myResult.total_score}</div>
+                <div className="s4-h1 text-green-600 dark:text-green-400">{myResult.total_score}</div>
                 <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Points</div>
               </div>
 
@@ -158,7 +158,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                 <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                   <Target className="w-8 h-8 text-purple-600 dark:text-purple-400" />
                 </div>
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                <div className="s4-h1 text-purple-600 dark:text-purple-400">
                   {myResult.correct_answers}/{myResult.total_questions}
                 </div>
                 <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Correct</div>
@@ -168,7 +168,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                 <div className="bg-orange-100 dark:bg-orange-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                   <Clock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                 </div>
-                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
+                <div className="s4-h1 text-orange-600 dark:text-orange-400">
                   {(myResult.average_time_ms / 1000).toFixed(1)}s
                 </div>
                 <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Avg Time</div>
@@ -179,7 +179,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
 
         <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark overflow-hidden">
           <div className="bg-accent-gold p-6 text-white">
-            <h2 className="text-2xl font-bold flex items-center gap-2">
+            <h2 className="s4-h2 flex items-center gap-2">
               <Trophy className="w-6 h-6" />
               Final Leaderboard
             </h2>
@@ -207,7 +207,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                       <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                           {getRankIcon(result.rank)}
-                          <span className="text-2xl font-bold">#{result.rank}</span>
+                          <span className="s4-h2">#{result.rank}</span>
                         </div>
                         <div>
                           <div className="font-bold text-lg">
@@ -224,7 +224,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                       </div>
 
                       <div className="text-right">
-                        <div className="text-3xl font-bold">{result.total_score}</div>
+                        <div className="s4-h1">{result.total_score}</div>
                         <div className="text-sm opacity-90">points</div>
                       </div>
                     </div>
@@ -249,7 +249,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
           <div className="mt-8 text-center">
             <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-400 rounded-md p-6">
               <Trophy className="w-16 h-16 text-yellow-600 mx-auto mb-3" />
-              <h3 className="text-2xl font-bold text-yellow-800 dark:text-yellow-300 mb-2">
+              <h3 className="s4-h2 text-yellow-800 dark:text-yellow-300 mb-2">
                 Congratulations!
               </h3>
               <p className="text-yellow-700 dark:text-yellow-400">

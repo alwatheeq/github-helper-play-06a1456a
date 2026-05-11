@@ -22,7 +22,7 @@ export const InformationalPage: React.FC = React.memo(() => {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-8">
-        <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>{t('informational.how_to_use')}</h2>
+        <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>{t('informational.how_to_use')}</h2>
         <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
           {t('informational.complete_guide')}
         </p>
@@ -35,7 +35,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Info className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
           </div>
           
           <div className="prose prose-lg max-w-none dark:prose-invert">
@@ -69,7 +69,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <BarChart3 className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
           </div>
           <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mb-4`}>{t('informational.last_updated')}</p>
           <ul className={`list-disc pl-5 space-y-2 text-secondary-ink dark:text-muted-ink-on-dark`}>
@@ -89,7 +89,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[var(--s4-radius-card)] dark:from-green-600 dark:to-emerald-700">
               <Upload className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.getting_started')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.getting_started')}</h3>
           </div>
           
           <div className="space-y-6">
@@ -182,7 +182,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
           </div>
           
           <div className="space-y-6">
@@ -280,7 +280,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
           </div>
 
           <div className="space-y-4">
@@ -324,7 +324,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Globe className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
           </div>
           
           <div className="space-y-4">
@@ -358,7 +358,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[var(--s4-radius-card)] dark:from-orange-600 dark:to-red-700">
               <BookOpen className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.managing_content')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.managing_content')}</h3>
           </div>
           
           <div className="space-y-6">
@@ -453,7 +453,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <User className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
           </div>
           
           <div className="space-y-6">
@@ -529,7 +529,7 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
             </div>
-            <h3 className={`text-2xl font-semibold text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
+            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -566,7 +566,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Support Section */}
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 border-2 border-divider dark:border-divider-on-dark dark:shadow-none`}>
           <div className="text-center">
-            <h3 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-4`}>{t('informational.need_help')}</h3>
+            <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4`}>{t('informational.need_help')}</h3>
             <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
               {t('informational.contact_support')}
             </p>

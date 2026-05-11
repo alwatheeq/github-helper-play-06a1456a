@@ -16,7 +16,7 @@ export const NotFound: React.FC = () => {
 
         <h1 className="text-6xl font-bold text-ink dark:text-ink-on-dark mb-4">404</h1>
 
-        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-4">
+        <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-4">
           Page Not Found
         </h2>
 

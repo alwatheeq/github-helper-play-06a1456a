@@ -142,7 +142,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 <Crown className={`h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark`} />
               </div>
 
-              <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-4`}>
+              <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-4`}>
                 {t('subscription_management.no_active_title')}
               </h2>
 
@@ -276,7 +276,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
+                    <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
                     <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       / {toolPlanCap.toLocaleString()} {t('subscription_management.credits_plan_cap_suffix')}
                     </p>
@@ -305,7 +305,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
+                      <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
                       <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
                     </div>
                   </div>
@@ -334,7 +334,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>{aiChatCreditsUsed}</p>
+                      <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{aiChatCreditsUsed}</p>
                       <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: aiChatCreditsTotal })}</p>
                     </div>
                   </div>
@@ -480,7 +480,7 @@ export const SubscriptionManagementPage: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg border border-divider dark:border-divider-on-dark max-w-md w-full p-6`}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{t('subscription_management.cancel_modal_title')}</h3>
+              <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark`}>{t('subscription_management.cancel_modal_title')}</h3>
               <button
                 type="button"
                 onClick={() => setShowCancelModal(false)}

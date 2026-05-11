@@ -930,7 +930,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         <div className="text-center max-w-md mx-auto p-6">
           <div className="mb-4">
             <User className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-            <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-2`}>
+            <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>
               {t('profile.load_error') || 'Unable to Load Profile'}
             </h2>
             <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
@@ -1042,7 +1042,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   aria-expanded={creditsDetailOpen}
                 >
                   <div>
-                    <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark mb-1`}>
+                    <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-1`}>
                       {t('profile.credits_summary_title')}
                     </h2>
                     <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('profile.credits_summary_subtitle')}</p>
@@ -1054,7 +1054,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                 </button>
 
                 <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1 mt-4 mb-2">
-                  <span className={`text-4xl font-bold text-ink dark:text-ink-on-dark`}>{toolRem.toLocaleString()}</span>
+                  <span className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark`}>{toolRem.toLocaleString()}</span>
                   <span className={`text-xl text-muted-ink dark:text-muted-ink-on-dark`}>
                     / {toolPlanCap.toLocaleString()}
                   </span>
@@ -1140,7 +1140,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               <Settings className={`h-6 w-6 text-secondary-ink dark:text-secondary-ink-on-dark`} />
             </div>
             <div>
-              <h2 className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>Settings</h2>
+              <h2 className={`s4-h2 text-ink dark:text-ink-on-dark`}>Settings</h2>
               <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                 Customize your application preferences
               </p>
@@ -1347,7 +1347,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className={`flex items-start justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
             <div className={`flex items-center space-x-6 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div className="relative">
-                <div className={`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-gray-900 text-3xl font-bold`}>
+                <div className={`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-gray-900 s4-h1`}>
                   {(stats.display_name || user?.email)?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-gray-600 to-gray-800 text-white px-3 py-1 rounded-full text-sm font-bold shadow">
@@ -1377,7 +1377,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   </div>
                 ) : (
                   <>
-                    <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">
+                    <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
                       {stats.display_name || user?.email}
                     </h1>
                     {stats.bio && (
@@ -1482,7 +1482,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.current_streak')}</p>
-                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">
+                <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.study_streak_current}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
@@ -1499,7 +1499,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.items_published')}</p>
-                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">
+                <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.items_published_count}
                 </p>
               </div>
@@ -1513,7 +1513,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.flashcards_studied')}</p>
-                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">
+                <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.total_flashcards_studied}
                 </p>
               </div>
@@ -1527,7 +1527,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.quizzes_completed')}</p>
-                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">
+                <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.total_quizzes_completed}
                 </p>
               </div>
@@ -1541,7 +1541,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.total_study_time')}</p>
-                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">
+                <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {formatStudyTime(stats.total_study_time_minutes)}
                 </p>
               </div>
@@ -1556,7 +1556,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
           <div className={`flex items-center space-x-3 rtl:space-x-reverse mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}>
             <Award className="h-6 w-6 text-ink dark:text-ink-on-dark" />
-            <h2 className="text-xl font-bold text-ink dark:text-ink-on-dark">
+            <h2 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">
               {t('profile.recent_achievements')} ({achievements.length})
             </h2>
           </div>

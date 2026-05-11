@@ -53,7 +53,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-3">
+        <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-3">
           {hasExpired ? 'Subscription Expired' : 'Upgrade Required'}
         </h2>
 

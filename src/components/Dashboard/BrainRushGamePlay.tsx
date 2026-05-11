@@ -512,7 +512,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           {/* Question */}
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-4">
             <div className={`flex items-start gap-2 mb-8`}>
-              <h2 className="text-2xl md:text-3xl font-bold text-ink dark:text-ink-on-dark text-center flex-1">
+              <h2 className="s4-h2 md:text-3xl text-ink dark:text-ink-on-dark text-center flex-1">
                 {currentQuestion.question_text}
               </h2>
               <ReadAloudButton text={currentQuestion.question_text} />
@@ -625,7 +625,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 sticky top-6">
             <div className="flex items-center space-x-2 mb-4">
               <Trophy className="h-6 w-6 text-yellow-500" />
-              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Live Rankings</h3>
+              <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">Live Rankings</h3>
             </div>
 
             <div className="space-y-2">

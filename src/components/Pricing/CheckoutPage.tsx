@@ -416,7 +416,7 @@ export const CheckoutPage: React.FC = () => {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
+          <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
             {mode === 'free' ? 'Activation Error' : 'Checkout Error'}
           </h2>
 
@@ -485,7 +485,7 @@ export const CheckoutPage: React.FC = () => {
           <Loader2 className="h-12 w-12 text-blue-600 dark:text-blue-400 animate-spin" />
         </div>
 
-        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
+        <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
           {getCheckoutMode() === 'free' ? 'Activating Subscription' : 'Processing Checkout'}
         </h2>
 

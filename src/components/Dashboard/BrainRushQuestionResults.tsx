@@ -132,31 +132,31 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-[var(--s4-radius-card)] shadow-sm p-8 border-2 border-green-500 dark:border-green-600">
         <div className="flex items-center justify-center space-x-3 mb-4">
           <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
-          <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>Correct Answer</h2>
+          <h2 className={`s4-h1 text-ink dark:text-ink-on-dark`}>Correct Answer</h2>
         </div>
-        <p className="text-2xl font-bold text-green-700 dark:text-green-300 text-center">
+        <p className="s4-h2 text-green-700 dark:text-green-300 text-center">
           {correctAnswer}
         </p>
       </div>
 
       {/* Statistics */}
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
-        <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
+        <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Target className="h-6 w-6 text-blue-600" />
           <span>Question Statistics</span>
         </h3>
 
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="bg-green-50 dark:bg-green-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-            <p className="text-3xl font-bold text-green-600 dark:text-green-400">{correctCount}</p>
+            <p className="s4-h1 text-green-600 dark:text-green-400">{correctCount}</p>
             <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Correct</p>
           </div>
           <div className="bg-red-50 dark:bg-red-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-            <p className="text-3xl font-bold text-red-600 dark:text-red-400">{incorrectCount}</p>
+            <p className="s4-h1 text-red-600 dark:text-red-400">{incorrectCount}</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Incorrect</p>
           </div>
           <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 text-center`}>
-            <p className={`text-3xl font-bold text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
+            <p className={`s4-h1 text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
             <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>No Answer</p>
           </div>
         </div>
@@ -174,7 +174,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
 
       {/* Player Results */}
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
-        <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
+        <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Trophy className="h-6 w-6 text-yellow-600" />
           <span>Player Results</span>
         </h3>
@@ -239,7 +239,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                   <div className="text-right">
                     {result.answer && (
                       <>
-                        <p className={`text-2xl font-bold text-ink dark:text-ink-on-dark`}>
+                        <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>
                           +{result.answer.points_earned}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">points</p>

@@ -64,7 +64,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
       </div>
 
       <div className="text-center">
-        <p className="text-4xl font-mono font-bold text-ink dark:text-ink-on-dark">{formatTime(timeRemaining)}</p>
+        <p className="s4-h1 text-[36px] font-mono text-ink dark:text-ink-on-dark">{formatTime(timeRemaining)}</p>
       </div>
 
       <p className="text-center text-xs text-secondary-ink dark:text-muted-ink-on-dark">
@@ -96,9 +96,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <div className={`fixed inset-0 ${breakOverlayZ} flex items-center justify-center bg-black/30 backdrop-blur-lg`}>
           <div className="text-center space-y-4">
             <Coffee className="mx-auto h-16 w-16 text-white animate-pulse" />
-            <h2 className="text-3xl font-bold text-white">{t('pomodoro.take_a_break')}</h2>
+            <h2 className="s4-h1 text-white">{t('pomodoro.take_a_break')}</h2>
             <p className="text-lg text-white/80">{t('pomodoro.break_message')}</p>
-            <p className="text-5xl font-mono font-bold text-white">{formatTime(timeRemaining)}</p>
+            <p className="s4-h1 text-[40px] font-mono text-white">{formatTime(timeRemaining)}</p>
             <button
               type="button"
               onClick={pause}
