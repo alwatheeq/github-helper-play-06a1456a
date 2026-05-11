@@ -1005,7 +1005,7 @@ export const QuizPage: React.FC = React.memo(() => {
                 </p>
                 <button
                   onClick={() => setQuizViewMode('quizzes')}
-                  className={`px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all font-medium`}
+                  className={`px-6 py-3 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all font-medium`}
                 >
                   {t('quiz.switch_to_quizzes') || 'Switch to My Quizzes'}
                 </button>
@@ -1224,7 +1224,7 @@ export const QuizPage: React.FC = React.memo(() => {
               <button
                 onClick={handleGenerateQuiz}
                 disabled={generating || !quizTitle.trim()}
-                className={`w-full py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 text-sm`}
+                className={`w-full py-2 bg-accent-gold text-white rounded-md hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 text-sm`}
               >
                 {generating ? (
                   <>
@@ -1279,7 +1279,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleStartQuiz(quiz.id)}
-                            className={`px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                            className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                           >
                             <Play className="h-4 w-4" />
                             <span>{t('quiz.start')}</span>
@@ -1336,7 +1336,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             </div>
                             <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mb-2`}>
                               <div 
-                                className={`h-2 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+                                className={`h-2 rounded-full bg-accent-gold`}
                                 style={{ width: `${progress}%` }}
                               ></div>
                             </div>
@@ -1345,7 +1345,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => setSelectedExam(exam)}
-                              className={`px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                              className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                             >
                               <Play className="h-4 w-4" />
                               <span>{t('quiz.continue_exam') || 'Continue Exam'}</span>
@@ -1474,7 +1474,7 @@ export const QuizPage: React.FC = React.memo(() => {
 
                         <button
                           onClick={() => setSelectedExam(exam)}
-                          className={`w-full px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all flex items-center justify-center space-x-2`}
+                          className={`w-full px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all flex items-center justify-center space-x-2`}
                         >
                           <Play className="h-4 w-4" />
                           <span>Start Practice</span>
@@ -1521,7 +1521,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       />
                       <button
                         onClick={handleCreateFolder}
-                        className={`flex-1 px-3 py-1 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 text-sm rounded-[var(--s4-radius-card)] hover:opacity-90 transition`}
+                        className={`flex-1 px-3 py-1 bg-accent-gold text-white dark:text-gray-900 text-sm rounded-[var(--s4-radius-card)] hover:opacity-90 transition`}
                       >
                         Create
                       </button>
@@ -1649,7 +1649,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             </select>
                             <button
                               onClick={() => handleStartQuiz(quiz.id)}
-                              className={`px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition flex items-center space-x-2`}
+                              className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition flex items-center space-x-2`}
                             >
                               <Play className="h-4 w-4" />
                               <span>Start</span>

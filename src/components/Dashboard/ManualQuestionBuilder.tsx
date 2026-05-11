@@ -287,7 +287,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
         <button
           onClick={handleFinish}
           disabled={questions.length === 0}
-          className={`px-8 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
+          className={`px-8 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
         >
           <Save className="h-5 w-5" />
           <span>Finish & Create Game</span>

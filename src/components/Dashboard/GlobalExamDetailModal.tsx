@@ -62,7 +62,7 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <ScholarCard variant="elevated" padding="none" className="max-w-3xl w-full max-h-[90vh] overflow-hidden animate-scaleIn">
-        <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white relative">
+        <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition"
