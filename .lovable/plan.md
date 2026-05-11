@@ -78,3 +78,15 @@ Replace remaining legacy radius/gradient tokens with Scholar v4 design tokens ac
 - `docs/SCHOLAR_V4_ISSUES.md` updated with 3.10 exemptions
 - Audit gate green
 - Estimated time: ~8 min
+
+---
+
+## Phase 3.10 — RESULT (executed)
+
+- **Files edited:** 12 (FlashcardViewer, ShareView, BookModeViewer, NotesWidget, WidgetContainer, MindMapView, AudioUpload, TranscriptView, AudioSummaryGenerator, AudioTtsPlayer, ReadAloudButton, ContentViewPage).
+- **Substitutions:** 60 new `rounded-[var(--s4-radius-card)]` tokens + all `bg-accent-gold` gradient subs.
+- **Audit gate:** ✓ 0 gold gradients, 0 unexpected legacy radii. Remaining legacy hits are the 4 planned exemptions (2× FlashcardViewer flip-card `rounded-2xl`, HighlightMenu `rounded-xl`, FreeFormToggle `rounded-xl`).
+- **Cross-file:** No imports, hooks, Supabase calls, prop contracts, or error-logger sites touched.
+- **Follow-up flagged:** `NotesWidget.tsx:316` native `confirm()` — defer to UX pass.
+
+**Next:** Phase 3.11 (Informational / Feedback / Onboarding / Common modals & buttons, ~85 hits across ~12 files).
