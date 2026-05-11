@@ -1,176 +1,295 @@
-## Remaining sweep — Phases 3.18 → 3.20 (Admin parked)
+## Phase 4 — Scholar v4 Visual Parity Sweep (non-Admin)
 
-After Phase 3.17, **10 files** remain on the non-Admin side: 8 require code edits, 2 CSS files are audit-only (false positives). Grouped into three small, semantically-coherent phases.
+Goal: bring the live app to 1:1 visual parity with `design/templates/Scholar-v4.jsx` (8393-line reference, 40+ pages × 6 palette families × light/dark) across the **9 token families** still unaddressed after Phase 3. Phase 3 normalized only radius + gold gradient — Phase 4 closes the rest with the same disciplined, allowlist-gated, regression-guarded approach.
+
+### Decisions baked into this plan (resolved up-front)
+1. **Each sub-phase = one phase.** No pre-splitting 4.4 colour. If audit surfaces ~600+ hits, the *implementation* of 4.4 may run in sequential commits, but it stays one logical phase with one approval, one allowlist append, one verification gate.
+2. **`<ScholarButton>` variant API review (Phase 4.5)** runs inline as the audit step of 4.5 — same approval model as every other phase, no separate ceremony.
+3. **Dark-mode screenshots (Phase 4.8)** are generated but *not committed* — stored in `/tmp/parity-shots/`, findings summarized in the plan results block.
+4. **Nothing is skipped.** Admin (17 files) remains parked per existing project rule.
 
 ---
 
-## Phase 3.18 — Auth + top-level error/empty states (5 files, 22 radius + 2 gold gradients)
+## Operating principles (apply to every sub-phase)
 
-### Inventory (pcre2-confirmed)
+1. **Audit-first, edit-second.** Each sub-phase opens with a pcre2 inventory across `src/components/**` + `src/pages/**` (Admin excluded), producing a frozen file list before any edit.
+2. **One token family per sub-phase.** Keeps blast radius surgical and review trivial.
+3. **Extend `scripts/check-token-regressions.cjs`.** Each sub-phase adds one `FORBIDDEN` rule (where mechanically detectable) + appends swept files to `SWEPT_FILES`. Once allowlisted for a category a file stays clean forever.
+4. **Token-only edits.** No prop/API changes, no behavioral logic, no Supabase, no routes, no i18n keys, no animation-timing changes outside the motion sub-phase, no shadow changes outside the shadow sub-phase, etc.
+5. **Theme-aware.** Every replacement must resolve correctly under all 6 `[data-theme]` palettes × light/dark. Hardcoded values that have no existing token get a new token added to `index.css` + `scholarV4.css` alias layer **first**, then sweep.
+6. **Cross-file safety gates after every sub-phase:**
+   ```
+   npm run check:tokens
+   npx tsc -p tsconfig.app.json --noEmit
+   npx eslint <touched files>
+   bunx vitest run        (73-test baseline)
+   ```
+   Zero new errors. Pre-existing warnings (`I18nContext.tsx` × 3) tolerated.
+7. **Admin parked.** The 17 Admin files skipped in every sub-phase.
+8. **One approval gate per sub-phase.** Plan → approve → audit + edit + verify → results block → next sub-phase.
 
-| File | legacy radius | gold gradient | `rounded-full` (exempt) | `rounded-md` (exempt) |
+---
+
+## Phase 4.0 — Parity Audit (read-only, 0 code edits)
+
+Produces `docs/SCHOLAR_V4_PARITY_AUDIT.md` — the authoritative gap inventory that drives 4.1–4.9.
+
+**Inputs**
+- `design/templates/Scholar-v4.jsx` (source of truth — `T` palette object, type scale, spacing constants, shadow recipes, icon stroke values, motion timings)
+- `design/Scholar v4.html` (canvas wrapper)
+- `src/styles/scholarV4.css` (alias layer, currently 68 lines)
+- `src/index.css` (per-theme palette + base tokens, 642 lines, 6 themes × light/dark already wired)
+- `tailwind.config.js` (utility surface)
+- Live app screenshots: 15 major routes at 1280×820
+
+**Method**
+1. Extract reference token tables from `Scholar-v4.jsx` (`T.navy_light`, `T.navy_dark`, … through `T.mono_dark`). Diff against existing `--s4-*` aliases.
+2. Map each token to its current implementation:
+   - `--s4-*` alias hit → OK
+   - Hardcoded Tailwind utility (`text-[18px]`, `shadow-md`, `p-6`) → flagged
+   - Missing token entirely → flagged + queued for 4.1 prep step
+3. Per-route screenshot diff at 1280×820 (v4 artboard) and 904×583 (current preview). Routes: `/auth`, `/`, `/dashboard`, `/library`, `/study-rooms`, `/academics`, `/quiz`, `/eduplay`, `/history`, `/content/:id` (read + book + audio), `/pricing`, `/feedback`, `/share/:id`, `/account-suspended`, `/404`. Admin skipped.
+4. Build file-level inventory per sub-phase. Each row: `file_path | line | current value | target token | risk note`.
+
+**Deliverable**
+`docs/SCHOLAR_V4_PARITY_AUDIT.md` with 9 sections (one per sub-phase) — file count, edit count, cross-file dependency notes, frozen file list.
+
+**Exit gate** — 0 file edits. Audit doc reviewed; 4.1 file list approved before any edits.
+
+---
+
+## Phase 4.1 — Typography parity
+
+**Scope** — migrate ad-hoc text sizing/weight/family to v4 scale: Fraunces serif headlines, Inter body, weight ladder 300/400/500/600/700, sizes h1 32 / h2 24 / h3 18 / body 14 / small 12 / eyebrow 10 (uppercase, tracking 0.18em).
+
+**Prep**
+Add to `src/styles/scholarV4.css`:
+```
+.s4-h2     { font-family:'Fraunces',Georgia,serif; font-size:24px; line-height:1.2; font-weight:600; letter-spacing:-.015em; color:var(--s4-ink); }
+.s4-h3     { font-family:'Fraunces',Georgia,serif; font-size:18px; line-height:1.3; font-weight:600; color:var(--s4-ink); }
+.s4-body   { font-family:Inter,sans-serif; font-size:14px; line-height:1.55; color:var(--s4-body); }
+.s4-small  { font-size:12px; line-height:1.45; color:var(--s4-muted); }
+.s4-numeric{ font-variant-numeric:tabular-nums; }
+```
+`.s4-h1` and `.s4-eyebrow` already exist.
+
+**Sweep** — replace `text-[Npx]` / `text-xl|2xl|3xl|4xl` / explicit `font-serif|font-bold|font-semibold` / `tracking-*` combos that match v4 recipes. Preserve `text-sm`/`text-base` for utilitarian UI (tooltips, badge counts).
+
+**Regression rule**
+```js
+{ id: 'serif-direct', re: /\bfont-serif\b/g, hint: 'Use .s4-h1/.s4-h2 helper classes' }
+```
+
+**Cross-file watch** — `LanguageToggle`, `Header`, `Sidebar` (typography drives icon vertical centering — re-screenshot after font swap). RTL: `Amiri` fallback in `--font-family-serif` must stay.
+
+**Estimated** — ~28 files, ~120 edits.
+
+---
+
+## Phase 4.2 — Spacing & layout grid
+
+**Scope** — 8pt-grid alignment per v4 spec: card padding 32 (light) / 22 (dark), `--s4-shell-gap 32px`, rail width 300, consistent section gaps.
+
+**Approach** — audit `p-*`, `gap-*`, `space-y-*`, `m-*` against v4 patterns (card 32, dense list 16, section 32, hero 48). Promote raw values to token utilities (`p-[var(--s4-card-pad)]`) only where v4 prescribes the exact value; preserve component-local micro-tuning.
+
+**Regression rule**
+```js
+{ id: 'arbitrary-padding', re: /(?<![-\w])p-\[(?:24|32|48)px\](?![-\w])/g, hint: 'Use var(--s4-card-pad) tokens' }
+```
+
+**Cross-file watch** — `Dashboard.tsx` shell sets the grid all child panels inherit; edit last. `BookMode/WidgetContainer.tsx` uses CSS Grid — screenshot before/after.
+
+**Estimated** — ~22 files, ~80 edits.
+
+---
+
+## Phase 4.3 — Shadows & elevation
+
+**Scope** — replace `shadow-sm|md|lg|xl|2xl` with v4 elevation tokens (subtle 1px hairlines + ambient + directional, not Tailwind's default ramp).
+
+**Token prep** — add to `scholarV4.css`:
+```
+--s4-shadow-hairline: 0 0 0 1px var(--s4-rule);
+--s4-shadow-card:     0 1px 2px rgb(0 0 0 / 0.04), 0 4px 12px rgb(0 0 0 / 0.04);
+--s4-shadow-modal:    0 8px 32px rgb(0 0 0 / 0.12);
+--s4-shadow-floating: 0 12px 40px rgb(0 0 0 / 0.16);
+```
+
+**Map** — `shadow-sm`→hairline, `shadow-md`→card, `shadow-lg|xl`→modal, `shadow-2xl`→floating. On-hover elevation deferred to 4.7 motion (translateY micro-lift).
+
+**Regression rule**
+```js
+{ id: 'tailwind-shadow', re: /(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g, hint: 'Use shadow-[var(--s4-shadow-*)]' }
+```
+
+**Cross-file watch** — `Modal`, `ConfirmationModal`, `PromptModal` already swept for radius; re-open carefully, shadow-only edit. `Toast.tsx` elevation matters for z-stack — verify.
+
+**Estimated** — ~30 files, ~60 edits.
+
+---
+
+## Phase 4.4 — Color surfaces & ink hierarchy (single phase, sequential commits)
+
+**Scope** — eliminate hardcoded `text-gray-*`, `bg-white|black`, `text-black`, `border-gray-*`, `bg-slate-*`, etc. Promote to semantic ink / surface tokens.
+
+**Mapping** (built and locked in 4.0 audit doc)
+```
+text-gray-900  → text-ink dark:text-ink-on-dark
+text-gray-600  → text-secondary-ink dark:text-muted-ink-on-dark
+text-gray-400  → text-muted-ink dark:text-muted-ink-on-dark
+bg-white       → bg-card-light dark:bg-card-dark
+border-gray-200→ border-divider dark:border-divider-on-dark
+```
+
+**Critical preservation** — semantic state colors (`red|green|yellow|blue-*` for error/success/warn/info) are state, not theme. The 4.0 audit produces an explicit allowlist of state-vs-decoration hits before any edit.
+
+**Regression rule**
+```js
+{ id: 'raw-neutral', re: /(?<![-\w])(text|bg|border|ring|divide|placeholder)-(gray|slate|zinc|neutral|stone)-\d+(?![-\w])/g, hint: 'Use semantic ink/surface tokens' }
+```
+
+**Execution** — one logical phase, but implementation runs in three sequential commits inside this phase (text → backgrounds → borders) for review sanity. All three commits land before the phase's verification gate; allowlist appended once at phase end.
+
+**Cross-file watch** — highest-volume phase (~600 hits expected). `tailwind.config.js` keeps gray scale available — do not remove until sweep complete.
+
+**Estimated** — ~80 files, ~600 edits.
+
+---
+
+## Phase 4.5 — Component shells (button / input / badge / chip)
+
+**Scope** — replace bespoke `<button className="px-4 py-2 bg-... rounded-... border-...">` with `<ScholarButton>` / `<ScholarInput>` / `<ScholarBadge>` primitives (already exist in `src/components/Scholar/`).
+
+**Audit step (inline — no separate approval)**
+1. Catalog every bespoke button/input pattern; classify variant (`primary|secondary|ghost|danger|link`) and size (`sm|md|lg`).
+2. List any v4 variant the current `ScholarButton.tsx` doesn't cover.
+3. Extend `ScholarButton.tsx` variant API with the missing variants in a single prep commit *inside* this phase. Existing call-sites unchanged (additive API).
+4. Then sweep.
+
+**Cross-file watch** — `type="submit"`, `disabled`, `aria-*`, `name`, `form` attributes must transfer 1:1. `ScholarButton` must `React.forwardRef` for `<Tooltip>` + `<form>` usage — verify in prep commit. Run `vitest run` after every 5 swept files (highest behavioural-regression risk in the whole phase).
+
+**Regression rule** — none mechanical; rely on grep audit (bespoke `<button` with className containing `px-` AND `rounded-` should approach zero in swept files).
+
+**Estimated** — ~45 files, ~150 edits + 1 primitive prep commit.
+
+---
+
+## Phase 4.6 — Iconography stroke + size normalization
+
+**Scope** — v4 uses 1.6/1.7 stroke-width on 14/16/18/20px icons with round caps + joins. Current code uses lucide-react defaults (stroke 2.0, varied size).
+
+**Approach**
+1. Add `<ScholarIcon>` wrapper in `src/components/Scholar/icons/` applying v4 stroke/size defaults to any lucide icon (additive — no existing call-site breaks).
+2. Sweep `<Icon className="h-N w-N">` → `<ScholarIcon icon={Icon} size={N} />`.
+3. Custom inline SVGs (already used in `ScholarIconButton`) untouched.
+
+**Cross-file watch** — `lucide-react` is in `optimizeDeps.exclude` (vite.config.ts) — leave config alone. `Header.tsx` icons tightly aligned with text baseline — verify after change.
+
+**Estimated** — ~40 files, ~200 edits.
+
+---
+
+## Phase 4.7 — Motion & micro-interactions
+
+**Scope** — standardize transition timing; replace ad-hoc `transition-all duration-150|200|300` with token utilities. Card hover lifts (`hover:-translate-y-px`), keyboard-only focus rings (`focus-visible:` not `focus:`).
+
+**Token prep** — add to `scholarV4.css`:
+```
+--s4-ease:     cubic-bezier(0.4, 0, 0.2, 1);
+--s4-dur-fast: 120ms;
+--s4-dur-base: 200ms;
+--s4-dur-slow: 320ms;
+```
+
+**Regression rule**
+```js
+{ id: 'transition-all', re: /\btransition-all\b/g, hint: 'Specify props or use var(--s4-ease)' }
+```
+
+**Cross-file watch** — animation-driven components (`BrainRush*`, `FlashcardViewer`, `ScholarSkeleton`) — preserve `animate-*` keyframe utilities, touch `transition-*` only. `@media (prefers-reduced-motion)` block in `index.css` must still suppress after sweep.
+
+**Estimated** — ~35 files, ~80 edits.
+
+---
+
+## Phase 4.8 — Dark-mode parity audit
+
+**Scope** — verify every swept file renders correctly under `.dark[data-theme="<family>"]` for all 6 palettes. Catch hardcoded light-only colors that escaped 4.4.
+
+**Approach**
+1. Browser screenshot loop: 15 routes × 6 themes × {light, dark} = 180 captures → `/tmp/parity-shots/` (not committed).
+2. Diff against `Scholar-v4.jsx` reference panels visually.
+3. Per discrepancy: locate offending file/class, fix, re-screenshot.
+4. Append `--s4-bg-on-dark` style overrides to `scholarV4.css` if a class needs a different value under `.dark`.
+
+**Cross-file watch** — `ThemeContext.tsx` controls `data-theme` on `<html>`; behavior unchanged. `mem://style/theme-system`: use `getThemeGradient` utility — do not bypass.
+
+**Deliverable** — findings summary in plan results block; screenshots discarded.
+
+**Estimated** — 0–10 file edits (mostly verification after 4.4 + 4.7 leave the codebase clean).
+
+---
+
+## Phase 4.9 — Page-level composition (final polish)
+
+**Scope** — page-shell anatomy: hero placement, section spacing, rail layouts, sticky headers, footer alignment. "Feel" phase — composition not tokens.
+
+**Approach** — per major route, compare live screenshot against v4 reference at 1280×820. Adjust grid templates, max-widths, column gaps, sticky positioning. **No new tokens, no new utilities** — composition only.
+
+**Cross-file watch** — route-level changes can ripple into children. Edit page shell first, verify children still render; only touch children if v4 explicitly differs.
+
+**Estimated** — ~15 files (`Dashboard.tsx`, `LibraryPage.tsx`, `Academics/`, `EduPlayPage.tsx`, `ContentViewPage.tsx`, `HistoryPage.tsx`, `PricingPage.tsx`, `Auth.tsx`, `ShareView.tsx`, `FeedbackPage.tsx`, `Onboarding/`, `NotFound.tsx`), ~40 edits.
+
+---
+
+## Cross-phase guardrails
+
+- Each sub-phase opens with a planning note in `.lovable/plan.md` (frozen file list) and closes with a `docs/SCHOLAR_V4_ISSUES.md` results appendix.
+- `scripts/check-token-regressions.cjs` grows by **at most 1 rule + N files per sub-phase**. Never remove rules or files.
+- Admin allowlist stays empty across all 9 sub-phases.
+- Supabase / edge-functions / database schema untouched (mem core rule).
+- No prop API changes to existing Scholar primitives without an explicit prep commit inside the sub-phase (only 4.5 and 4.6 introduce additive APIs).
+
+---
+
+## Verification protocol (run after every sub-phase, blocking)
+
+```
+npm run check:tokens                       # extended regression guard
+npx tsc -p tsconfig.app.json --noEmit      # 0 errors required
+npx eslint <touched files>                 # 0 errors; 3 pre-existing warnings tolerated
+bunx vitest run                            # 73/73 tests required
+```
+
+Phase exit also requires the results block to record: files touched, edits applied, regression-guard delta (new rule + N allowlisted files), screenshots reviewed for visual regression, and a one-line cross-file safety statement.
+
+---
+
+## Estimated effort & sequencing
+
+| Phase | Files | Edits | Effort | Risk |
 |---|---:|---:|---:|---:|
-| `src/components/Auth/Auth.tsx` | 7 (L114, 116, 132, 142, 173, 188, 198) | **2** (L104, L198) | 1 | 1 |
-| `src/components/AccountSuspended.tsx` | 5 (L76, 91, 107, 126, 137) | 0 | 2 | 0 |
-| `src/components/NotFound.tsx` | 3 (L10, 30, 38) | 0 | 1 | 0 |
-| `src/components/ErrorBoundary.tsx` | 4 (L70, 86, 102, 110) | 0 | 1 | 0 |
-| `src/components/EnvValidator.tsx` | 3 (L11, 26, 34) | 0 | 1 | 0 |
-| **Totals** | **22** | **2** | **6** | **1** |
+| 4.0 audit | 0 | 0 | 30 min | none |
+| 4.1 typography | 28 | ~120 | 25 min | low |
+| 4.2 spacing | 22 | ~80 | 20 min | low |
+| 4.3 shadows | 30 | ~60 | 15 min | low |
+| 4.4 colour (one phase, 3 commits) | 80 | ~600 | 90 min | high |
+| 4.5 component shells | 45 | ~150 | 60 min | high |
+| 4.6 icons | 40 | ~200 | 30 min | medium |
+| 4.7 motion | 35 | ~80 | 20 min | low |
+| 4.8 dark-mode | 0–10 | ~20 | 40 min | medium |
+| 4.9 composition | 15 | ~40 | 60 min | medium |
+| **total** | **~150 unique** | **~1350** | **~6 h** | — |
 
-### Substitutions
-
-1. **Radius (all 22 hits)** — `rounded-lg` / `rounded-xl` → `rounded-[var(--s4-radius-card)]`.
-2. **Gold gradient L104 (`Auth.tsx`)** — logo badge:
-   ```diff
-   - <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-3 rounded-md">
-   + <div className="bg-accent-gold p-3 rounded-md">
-   ```
-   `rounded-md` preserved (exempt).
-3. **Gold gradient L198 (`Auth.tsx`)** — primary submit button. Both the gradient AND the radius change on this single line:
-   ```diff
-   - className="... rounded-lg text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 ..."
-   + className="... rounded-[var(--s4-radius-card)] text-white bg-accent-gold hover:opacity-90 ..."
-   ```
-
-Solid `bg-accent-gold` is the canonical replacement used in earlier social/pricing sweeps (3.10–3.13) — keeps the brand colour token, drops only the gradient stop pair.
-
-### Cross-file safety
-
-- **Auth.tsx** — auth flow (Supabase `signInWithOAuth`, `signUp`, `signInWithPassword`, redirect URLs, error/success state machine) **NOT TOUCHED**. Only className strings mutate.
-- **AccountSuspended.tsx, NotFound.tsx** — consumed by router (`App.tsx` routes) — no props/exports change.
-- **ErrorBoundary.tsx** — top-level boundary wrapping the app tree. The `componentDidCatch` / `getDerivedStateFromError` / `ErrorLogger` integration is untouched; only the fallback-UI className strings change.
-- **EnvValidator.tsx** — Supabase env-var placeholder UI per `mem://tech/supabase-initialization`. No env-var detection logic changes.
-- All semantic state palettes (`bg-red-50/900`, `bg-green-50/900`, `bg-blue-50/900`, `bg-gray-50/800`, dark variants, border colors) preserved verbatim — they encode state, not radius.
-- Focus-ring utilities (`focus:ring-accent-gold`, `focus:ring-2`) preserved.
-
-### Audit gate
-
-```text
-1. legacy radius / directional / gold-gradient on all 5 files                → 0 / 0 / 0
-2. rounded-full preserved                                                    → 6
-3. rounded-md preserved (Auth L104)                                          → 1
-4. npm run check:tokens                                                      → 36 swept file(s) clean
-5. Visual smoke: /auth route renders, OAuth + email-password forms intact,
-   404 + suspended + env-missing fallbacks render correctly with new radius.
-6. git diff --stat                                                           → exactly 6 files
-```
-
-### Allowlist append
-
-```js
-// Phase 3.18 (auth + top-level fallbacks)
-'src/components/Auth/Auth.tsx',
-'src/components/AccountSuspended.tsx',
-'src/components/NotFound.tsx',
-'src/components/ErrorBoundary.tsx',
-'src/components/EnvValidator.tsx',
-```
+Serial execution in the order above: typography first (spacing/shadows depend on type metrics); component shells later (consume token decisions from 4.1–4.4); composition (4.9) last.
 
 ---
 
-## Phase 3.19 — Misc primitives + i18n confirmation modal (3 files, 6 radius)
+## Final state after Phase 4
 
-### Inventory
+- Allowlist: ~150 files across 9 token-family regression rules.
+- Non-Admin codebase: **1:1 parity** with `Scholar-v4.jsx` reference across all 6 palettes × light/dark.
+- New tokens added to `scholarV4.css`: typography helpers, shadow tokens, motion tokens.
+- Admin (17 files) remains the only outstanding cluster, parked for its own design pass.
 
-| File | legacy radius | gold | `rounded-full` (exempt) |
-|---|---:|---:|---:|
-| `src/components/LanguageToggle.tsx` | 2 (L44, 64) | 0 | 0 |
-| `src/components/Scholar/ScholarSkeleton.tsx` | 1 (L16, inside `roundedMap`) | 0 | 1 |
-| `src/contexts/I18nContext.tsx` | 3 (L151, 161, 171) | 0 | 0 |
-| **Totals** | **6** | 0 | **1** |
-
-### Substitutions
-
-1. **`LanguageToggle.tsx` L44 (trigger button) + L64 (dropdown panel)** — `rounded-lg` → `rounded-[var(--s4-radius-card)]`. Pure className edits.
-
-2. **`ScholarSkeleton.tsx` L16** — value inside an internal `roundedMap`:
-   ```diff
-     const roundedMap = {
-       none: 'rounded-none',
-       sm: 'rounded-[4px]',
-       md: 'rounded-[6px]',
-   -   lg: 'rounded-lg',
-   +   lg: 'rounded-[var(--s4-radius-card)]',
-       full: 'rounded-full',
-     };
-   ```
-   **The `lg` key stays** — public prop API (`rounded?: 'none'|'sm'|'md'|'lg'|'full'`) is unchanged. Callers (`ScholarPreview.tsx`, `HistoryPage.tsx`) pass no `rounded` prop today (default `md`), but any future caller passing `rounded="lg"` still works.
-
-3. **`I18nContext.tsx` L151/161/171** — language-confirmation modal (dialog, cancel button, confirm button). All three `rounded-lg` → `rounded-[var(--s4-radius-card)]`.
-   - **Critical**: only className strings inside the modal JSX change. The provider value, the `t()` function, the `LanguageContext` exports, language detection logic, and the localStorage persistence are **NOT TOUCHED**.
-
-### Cross-file safety
-
-- **LanguageToggle** consumed in header surfaces — props (`compact`, default) unchanged.
-- **ScholarSkeleton** — `roundedMap` is a module-private const. Only its `lg` value mutates; the key and the public prop type stay identical. Verified callers do not depend on the literal class name string.
-- **I18nContext** — provider/context/`useI18n` hook signature unchanged. The `bg-blue-600` confirm button is semantic state colour (modal primary action) — preserved.
-- No Supabase, no edge functions, no routes, no business logic, no animation classes touched.
-
-### Audit gate
-
-```text
-1. legacy / directional / gold on all 3 files     → 0 / 0 / 0
-2. rounded-full preserved                          → 1 (ScholarSkeleton)
-3. npm run check:tokens                            → 39 swept file(s) clean
-4. Visual smoke:
-   - LanguageToggle trigger + dropdown render with new radius
-   - Skeleton placeholders in HistoryPage / ScholarPreview render unchanged
-     (default size=md uses rounded-[6px], not affected)
-   - Language confirmation modal opens with new radius on card + both buttons
-5. git diff --stat                                 → exactly 4 files
-```
-
-### Allowlist append
-
-```js
-// Phase 3.19 (language toggle / skeleton primitive / i18n modal)
-'src/components/LanguageToggle.tsx',
-'src/components/Scholar/ScholarSkeleton.tsx',
-'src/contexts/I18nContext.tsx',
-```
-
----
-
-## Phase 3.20 — CSS audit (verification-only, 0 edits expected)
-
-### Files
-
-| File | matches | action |
-|---|---|---|
-| `src/index.css` | L358 `border-radius: 0.75rem; /* rounded-xl by default */`, L365 `border-radius: 0.5rem; /* rounded-lg */` | **No edit** — matches are inside CSS comments documenting the rem values of legacy Tailwind utility classes. Confirm the surrounding rule sets the token (`--s4-radius-*` or scoped element) and not a `.rounded-lg`/`.rounded-xl` utility override. |
-| `src/styles/designSystem.css` | L45, L72, L98 — all `border-radius: 0.75rem;` with `/* rounded-xl */` comments | **No edit** — these are **token definitions** (the design-system source of truth that defines what `--s4-radius-*` equals). Sweeping them would be circular. |
-
-### Procedure (verification only)
-
-1. Open each file at the cited line numbers.
-2. Confirm each `rounded-(lg|xl)` match is inside a `/* … */` CSS comment, not inside a selector or rule body that would emit utility classes.
-3. If any match is **not** a comment, escalate as a Phase 3.20-edit (currently expected zero).
-4. **Strengthen the regression guard**: extend `scripts/check-token-regressions.cjs` to optionally ignore CSS comment lines so future `npm run check:tokens` runs on these files don't generate noise if/when they're added to the allowlist. *Do not allowlist the CSS files unless the guard is comment-aware* — naively allowlisting would silence real future regressions in the same files.
-
-### Deliverable
-
-- Add a short "CSS audit findings" appendix in `docs/SCHOLAR_V4_ISSUES.md` documenting that the 5 CSS matches are intentional comment annotations on token definitions, with line numbers and verification timestamp.
-- No source-file edits expected. If the guard is extended to be comment-aware, that script change is the **only** code change in 3.20.
-
----
-
-## Global precautions (apply to all three phases)
-
-- **Edits only via `code--line_replace`** — one className substitution per line. No file rewrites.
-- **Never touch**: Supabase calls, RLS reasoning, edge functions, routes, `ErrorLogger`, i18n key strings, `t()` calls, business logic, animation/transition classes, semantic state colours (red/green/blue/gray tints), focus-ring utilities, shadow utilities, `dark:` variants.
-- **Allowlist ordering**: append new files in the same order they appear in each phase's table so the audit log reads sequentially.
-- **Each phase produces 4 deliverables**: source edits, `scripts/check-token-regressions.cjs` block, `docs/SCHOLAR_V4_ISSUES.md` appendix, `.lovable/plan.md` RESULTS block.
-- **Admin cluster (17 files, 6 gold gradients) remains parked** until the Admin pages are designed.
-
-## Final state after 3.20
-
-- Allowlist: **39 files** (31 currently + 5 from 3.18 + 3 from 3.19).
-- Non-Admin codebase: **0 legacy radius, 0 gold gradients, 0 directional legacy**.
-- CSS token-definition files documented as intentionally exempt.
-- Regression guard runs green on every commit.
-
-## Estimated effort
-
-- Phase 3.18: ~6 min (22 line edits across 5 files + 2 gradient cleanups).
-- Phase 3.19: ~3 min (6 edits across 3 files, one inside an object literal).
-- Phase 3.20: ~2 min (read-only audit + doc appendix; optional guard enhancement +5 min).
+Awaiting approval to begin **Phase 4.0 — Parity Audit** (read-only, 0 edits).
