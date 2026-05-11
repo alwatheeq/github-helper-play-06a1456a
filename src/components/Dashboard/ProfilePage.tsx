@@ -1031,7 +1031,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         {/* Credits: summary + expandable breakdown (matches header dropdown) */}
         {creditBalance && (
           <div
-            className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-divider dark:border-divider-on-dark`}
+            className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark`}
           >
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
               <div className="flex-1 min-w-0">
@@ -1303,7 +1303,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       disabled={savingSettings}
                       className={`relative p-4 border-2 rounded-[var(--s4-radius-card)] transition-all cursor-pointer hover:shadow ${
                         isSelected
-                          ? `border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20 shadow-md`
+                          ? `border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20 shadow-[var(--s4-shadow-card)]`
                           : `border-divider dark:border-divider-on-dark opacity-50 hover:border-gray-300 dark:hover:border-gray-600`
                       } ${savingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
@@ -1478,7 +1478,7 @@ export const ProfilePage: React.FC = React.memo(() => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.current_streak')}</p>
@@ -1495,7 +1495,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.items_published')}</p>
@@ -1509,7 +1509,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.flashcards_studied')}</p>
@@ -1523,7 +1523,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.quizzes_completed')}</p>
@@ -1537,7 +1537,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.total_study_time')}</p>
@@ -1574,7 +1574,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               {achievements.map((achievement) => (
                 <div
                   key={achievement.id}
-                  className={`border border-divider dark:border-divider-on-dark opacity-50 rounded-[var(--s4-radius-card)] p-4 hover:shadow-md transition-shadow`}
+                  className={`border border-divider dark:border-divider-on-dark opacity-50 rounded-[var(--s4-radius-card)] p-4 hover:shadow-[var(--s4-shadow-card)] transition-shadow`}
                 >
                   <div className={`flex items-start space-x-3 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
                     <div className={`bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)} p-2 rounded-[var(--s4-radius-card)] flex-shrink-0`}>

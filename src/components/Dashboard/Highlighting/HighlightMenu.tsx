@@ -30,7 +30,7 @@ const HighlightMenu: React.FC<HighlightMenuProps> = ({
 
   return (
     <div
-      className="bg-gray-900 text-white rounded-[var(--s4-radius-card)] py-2 px-3 shadow-xl flex items-center gap-2"
+      className="bg-gray-900 text-white rounded-[var(--s4-radius-card)] py-2 px-3 shadow-[var(--s4-shadow-modal)] flex items-center gap-2"
       style={{
         position: 'fixed',
         left: position.x,

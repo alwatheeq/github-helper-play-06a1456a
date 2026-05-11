@@ -134,7 +134,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
         </div>
 
         {myResult && (
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8 mb-8">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8 mb-8">
             <h2 className="s4-h2 mb-6 text-center">Your Performance</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {/* Stat tiles preserve game semantic colors */}
@@ -177,7 +177,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
           </div>
         )}
 
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark overflow-hidden">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark overflow-hidden">
           <div className="bg-accent-gold p-6 text-white">
             <h2 className="s4-h2 flex items-center gap-2">
               <Trophy className="w-6 h-6" />

@@ -104,7 +104,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center`}>
           <div className="animate-spin h-12 w-12 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
         </div>
@@ -150,7 +150,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       </div>
 
       {/* Winner Podium */}
-      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-6">
         <div className="flex items-end justify-center space-x-4 mb-8">
           {/* 2nd Place */}
           {participantStats[1] && (
@@ -174,7 +174,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
           {winner && (
             <div className="text-center">
               <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-2 animate-bounce" />
-              <div className="bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full w-28 h-28 flex items-center justify-center mx-auto mb-3 shadow-lg">
+              <div className="bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full w-28 h-28 flex items-center justify-center mx-auto mb-3 shadow-[var(--s4-shadow-modal)]">
                 <span className="s4-h1 text-[40px] text-yellow-900">1</span>
               </div>
               <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900 dark:to-yellow-800 rounded-[var(--s4-radius-card)] p-4 min-w-[160px]">
@@ -217,7 +217,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       </div>
 
       {/* Full Leaderboard */}
-      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-6">
         <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-6 flex items-center space-x-2`}>
           <TrendingUp className="h-6 w-6 text-purple-600" />
           <span>Final Standings</span>
@@ -326,7 +326,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
 
       {/* Your Performance (if you played) */}
       {myStats && (
-        <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
           <h3 className={`font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
             <Medal className="h-6 w-6 text-purple-600" />
             <span>Your Performance</span>

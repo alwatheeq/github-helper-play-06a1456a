@@ -106,7 +106,7 @@ export const NotificationCenter: React.FC = () => {
           />
 
           {/* Dropdown Panel */}
-          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
+          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
             {/* Header */}
             <div className="p-4 border-b border-divider dark:border-divider-on-dark space-y-3">
               <div className="flex items-center justify-between gap-2">
@@ -132,7 +132,7 @@ export const NotificationCenter: React.FC = () => {
                   onClick={() => setActiveTab('alerts')}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
                     activeTab === 'alerts'
-                      ? 'bg-card-light dark:bg-card-dark shadow-sm text-ink dark:text-ink-on-dark'
+                      ? 'bg-card-light dark:bg-card-dark shadow-[var(--s4-shadow-hairline)] text-ink dark:text-ink-on-dark'
                       : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >
@@ -146,7 +146,7 @@ export const NotificationCenter: React.FC = () => {
                   onClick={() => setActiveTab('timer')}
                   className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
                     activeTab === 'timer'
-                      ? 'bg-card-light dark:bg-card-dark shadow-sm text-ink dark:text-ink-on-dark'
+                      ? 'bg-card-light dark:bg-card-dark shadow-[var(--s4-shadow-hairline)] text-ink dark:text-ink-on-dark'
                       : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >

@@ -133,7 +133,7 @@ const HighlightLayer: React.FC<HighlightLayerProps> = ({ text, itemId, children,
             <button
               onClick={(e) => { e.stopPropagation(); removeHighlight(hl.id); }}
               title={t('highlights.remove')}
-              className="absolute -top-3 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow-md hover:bg-red-600 transition-colors"
+              className="absolute -top-3 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow-[var(--s4-shadow-card)] hover:bg-red-600 transition-colors"
               style={{ zIndex: 10 }}
             >
               <X size={10} />

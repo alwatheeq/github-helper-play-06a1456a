@@ -1026,7 +1026,7 @@ export const StudyRoomsPage: React.FC = () => {
           )}
 
           {/* Full-screen ZegoCloud video interface */}
-          <div className="bg-black rounded-md overflow-hidden shadow-lg" style={{ height: 'calc(100vh - 140px)' }}>
+          <div className="bg-black rounded-md overflow-hidden shadow-[var(--s4-shadow-modal)]" style={{ height: 'calc(100vh - 140px)' }}>
             <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" /></div>}>
               <ZegoVideoRoom
                 roomId={selectedRoom.room_code}

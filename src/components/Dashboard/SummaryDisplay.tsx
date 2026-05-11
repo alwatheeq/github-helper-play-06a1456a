@@ -836,7 +836,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)]`}>
         <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -909,7 +909,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         />
       </div>
     ) : (
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border-divider dark:border-divider-on-dark`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border-divider dark:border-divider-on-dark`}>
       <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -1103,7 +1103,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     {/* Publish to Library Modal */}
     {showPublishModal && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-floating)] max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
 
           <div className={`px-5 pt-5 pb-4 border-b border-divider dark:border-divider-on-dark flex-shrink-0`}>
             <div className="flex items-start justify-between">

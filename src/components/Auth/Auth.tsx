@@ -111,7 +111,7 @@ export const Auth: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8">
           {error && (
             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)]">
               <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
@@ -139,7 +139,7 @@ export const Auth: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50"
+              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-[var(--s4-shadow-hairline)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -170,7 +170,7 @@ export const Auth: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
                 disabled={loading}
                 placeholder={t('auth.enter_email')}
               />
@@ -185,7 +185,7 @@ export const Auth: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
                 disabled={loading}
                 placeholder={t('auth.enter_password')}
               />

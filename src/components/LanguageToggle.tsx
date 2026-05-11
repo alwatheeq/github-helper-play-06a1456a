@@ -41,7 +41,7 @@ export const LanguageToggle: React.FC = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition-colors duration-150 shadow-sm hover:shadow-md"
+        className="flex items-center space-x-2 px-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition-colors duration-150 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-card)]"
         aria-label="Select language"
       >
         <Globe className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
@@ -61,7 +61,7 @@ export const LanguageToggle: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-lg overflow-hidden z-50 animate-fadeIn">
+        <div className="absolute right-0 mt-2 w-48 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] overflow-hidden z-50 animate-fadeIn">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}

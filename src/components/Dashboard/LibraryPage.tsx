@@ -689,7 +689,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (initialLoading) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark`}>
           <LoadingSkeleton type="page" count={5} />
         </div>
       </div>
@@ -699,7 +699,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (error) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark`}>
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
@@ -798,7 +798,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-1 ml-4 mr-4 lg:ml-6 lg:mr-6">
-          <div className={`rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark ${
+          <div className={`rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark ${
             libraryViewMode === 'notebook' 
               ? `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none` 
               : `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none`
@@ -888,7 +888,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             onClick={() => setViewFilter(value)}
                             className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 ${
                               viewFilter === value
-                                ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-sm border border border-divider dark:border-divider-on-dark`
+                                ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--s4-shadow-hairline)] border border border-divider dark:border-divider-on-dark`
                                 : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
                             }`}
                           >
@@ -1057,7 +1057,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               ) : (
                 <div className="space-y-4">
                   {libraryItems.map((item) => (
-                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-all duration-150 dark:shadow-sm dark:hover:shadow bg-card-light dark:bg-card-dark`}>
+                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-all duration-150 dark:shadow-[var(--s4-shadow-hairline)] dark:hover:shadow bg-card-light dark:bg-card-dark`}>
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-3 flex-1">
                           {selectMultipleMode && (
