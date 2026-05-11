@@ -525,15 +525,15 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
 
-        {/* Meta row — shown only in file mode, below the dashed box */}
-        {inputMode === 'file' && (
+        {/* Meta row — file mode only. TODO #17: replace with live processing/storage stats.
+            Hidden by default until real data is wired so we don't ship mocked numbers. */}
+        {false && inputMode === 'file' && (
           <>
             <hr className="border-divider dark:border-divider-on-dark mt-4" />
             <div className="flex flex-wrap gap-6 mt-3 text-[11px] font-light text-muted-ink dark:text-muted-ink-on-dark">
-              {/* TODO: connect — replace with live processing/storage stats */}
-              <span>Average processing time — 12s</span>
-              <span>Last upload — 2 hours ago</span>
-              <span>Storage used — 142 / 500 MB</span>
+              <span>Average processing time — —</span>
+              <span>Last upload — —</span>
+              <span>Storage used — —</span>
             </div>
           </>
         )}
