@@ -166,7 +166,7 @@ export const ContentViewPage: React.FC = () => {
         <button
           type="button"
           onClick={goBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           Go back

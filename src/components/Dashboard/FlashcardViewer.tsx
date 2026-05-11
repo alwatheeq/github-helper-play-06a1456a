@@ -500,14 +500,14 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
 
   if (showAll) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
         <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-lg ${
+              <div className={`p-2 rounded-[var(--s4-radius-card)] ${
                 medicalMode
                   ? 'bg-red-50 dark:bg-red-900/20 dark:from-red-600 dark:to-pink-700'
-                  : 'bg-gradient-to-r from-accent-gold to-accent-gold-soft'
+                  : 'bg-accent-gold'
               }`}>
                 {medicalMode ? (
                   <Stethoscope className="h-5 w-5 text-white" />
@@ -538,7 +538,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
         <div className="p-6 max-h-96 overflow-y-auto">
           <div className="space-y-4">
             {flashcards.map((card, index) => (
-              <div key={index} className={`border border-divider dark:border-divider-on-dark rounded-lg p-4`}>
+              <div key={index} className={`border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4`}>
                 <div className="flex justify-between items-start mb-2">
                   <span className={`text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark`}>{t('flashcards.card')} {index + 1}</span>
                 </div>
@@ -561,14 +561,14 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
   }
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`}>
+    <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`}>
       <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-lg ${
+            <div className={`p-2 rounded-[var(--s4-radius-card)] ${
               medicalMode
                 ? 'bg-red-50 dark:bg-red-900/20 dark:from-red-600 dark:to-pink-700'
-                : 'bg-gradient-to-r from-accent-gold to-accent-gold-soft'
+                : 'bg-accent-gold'
             }`}>
               {medicalMode ? (
                 <Stethoscope className="h-5 w-5 text-white" />
@@ -639,17 +639,17 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <span>{t('flashcards.export')}</span>
               </button>
 
-              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-10`}>
+              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-10`}>
                 <div className="p-1">
                   <button
                     onClick={exportAsCSV}
-                    className={`w-full text-left px-3 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                    className={`w-full text-left px-3 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors`}
                   >
                     {medicalMode ? 'Export for Anki' : t('flashcards.export_csv')}
                   </button>
                   <button
                     onClick={exportAsTxt}
-                    className={`w-full text-left px-3 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                    className={`w-full text-left px-3 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors`}
                   >
                     {medicalMode ? 'Export Study Guide' : t('flashcards.export_txt')}
                   </button>
@@ -708,7 +708,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             
             <button
               onClick={() => setCurrentStudyMode('flip')}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+              className="px-6 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               {t('flashcards.return_flashcards')}
             </button>
@@ -833,7 +833,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     value={typedAnswer}
                     onChange={(e) => setTypedAnswer(e.target.value)}
                     placeholder={medicalMode ? 'Type your clinical answer...' : t('flashcards.type_answer_here')}
-                    className={`w-full h-24 px-4 py-3 border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                    className={`w-full h-24 px-4 py-3 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                     disabled={showAnswer}
                   />
                   
@@ -841,7 +841,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkTypeAnswer}
                       disabled={!typedAnswer.trim()}
-                      className={`w-full py-3 px-4 text-white rounded-lg focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ${
+                      className={`w-full py-3 px-4 text-white rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ${
                         medicalMode
                           ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800'
                           : 'bg-purple-600 hover:bg-purple-700 focus:ring-focus dark:bg-purple-700 dark:hover:bg-purple-800'
@@ -851,7 +851,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     </button>
                   ) : (
                     <div className="space-y-4">
-                      <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
+                      <div className={`p-4 rounded-[var(--s4-radius-card)] ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
                         <p className={`font-medium ${isCorrect ? 'text-green-800 dark:text-green-300' : 'text-red-800 dark:text-red-300'}`}>
                           {feedbackMessage}
                         </p>
@@ -869,7 +869,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                           )}
                           {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
                           {explanation && (
-                            <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">
+                            <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">
                               {explanation}
                             </div>
                           )}
@@ -877,7 +877,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -902,7 +902,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                         key={index}
                         onClick={() => setSelectedOption(option)}
                         disabled={showAnswer}
-                        className={`p-4 text-left border rounded-lg transition duration-150 ${
+                        className={`p-4 text-left border rounded-[var(--s4-radius-card)] transition duration-150 ${
                           selectedOption === option
                             ? 'border-green-500 bg-green-50 text-green-800 dark:border-green-700 dark:bg-green-900 dark:text-green-300'
                             : `border-divider dark:border-divider-on-dark hover:opacity-60 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`
@@ -924,13 +924,13 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkMultipleChoice}
                       disabled={!selectedOption}
-                      className="w-full py-3 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-green-700 dark:hover:bg-green-800"
+                      className="w-full py-3 px-4 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-green-700 dark:hover:bg-green-800"
                     >
                       {t('flashcards.submit_answer')}
                     </button>
                   ) : (
                     <div className="space-y-4">
-                      <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
+                      <div className={`p-4 rounded-[var(--s4-radius-card)] ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
                         <p className={`font-medium ${isCorrect ? 'text-green-800 dark:text-green-300' : 'text-red-800 dark:text-red-300'}`}>
                           {feedbackMessage}
                         </p>
@@ -943,12 +943,12 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                             </button>
                           )}
                           {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
-                          {explanation && <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
+                          {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -967,7 +967,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 </div>
                 
                 <div className="space-y-4">
-                  <div className={`bg-subtle dark:bg-subtle-on-dark rounded-lg p-4`}>
+                  <div className={`bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4`}>
                     <h4 className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>{t('flashcards.fill_blank')}</h4>
                     <p className={`text-lg text-ink dark:text-ink-on-dark`}>{blankedText}</p>
                   </div>
@@ -977,7 +977,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     value={typedAnswer}
                     onChange={(e) => setTypedAnswer(e.target.value)}
                     placeholder={t('flashcards.enter_missing_word')}
-                    className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                    className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                     disabled={showAnswer}
                   />
                   
@@ -985,13 +985,13 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkFillInBlanks}
                       disabled={!typedAnswer.trim()}
-                      className="w-full py-3 px-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-orange-700 dark:hover:bg-orange-800"
+                      className="w-full py-3 px-4 bg-orange-600 text-white rounded-[var(--s4-radius-card)] hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-orange-700 dark:hover:bg-orange-800"
                     >
                       {t('flashcards.check_answer')}
                     </button>
                   ) : (
                     <div className="space-y-4">
-                      <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
+                      <div className={`p-4 rounded-[var(--s4-radius-card)] ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
                         <p className={`font-medium ${isCorrect ? 'text-green-800 dark:text-green-300' : 'text-red-800 dark:text-red-300'}`}>
                           {feedbackMessage}
                         </p>
@@ -1004,12 +1004,12 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                             </button>
                           )}
                           {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
-                          {explanation && <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
+                          {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -1032,20 +1032,20 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <div className="grid grid-cols-2 gap-4">
                       <button
                         onClick={() => checkTrueFalse(true)}
-                        className="py-4 px-6 bg-green-600 text-white rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 font-medium dark:bg-green-700 dark:hover:bg-green-800"
+                        className="py-4 px-6 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-150 font-medium dark:bg-green-700 dark:hover:bg-green-800"
                       >
                         {t('flashcards.true')}
                       </button>
                       <button
                         onClick={() => checkTrueFalse(false)}
-                        className="py-4 px-6 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 font-medium dark:bg-red-700 dark:hover:bg-red-800"
+                        className="py-4 px-6 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition duration-150 font-medium dark:bg-red-700 dark:hover:bg-red-800"
                       >
                         {t('flashcards.false')}
                       </button>
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className={`p-4 rounded-lg ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
+                      <div className={`p-4 rounded-[var(--s4-radius-card)] ${isCorrect ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700' : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'}`}>
                         <p className={`font-medium ${isCorrect ? 'text-green-800 dark:text-green-300' : 'text-red-800 dark:text-red-300'}`}>
                           {feedbackMessage}
                         </p>
@@ -1058,12 +1058,12 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                             </button>
                           )}
                           {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
-                          {explanation && <div className="p-3 rounded-lg bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
+                          {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -1117,7 +1117,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
       {/* Notification */}
       {showNotification && (
         <div className="fixed bottom-4 right-4 z-50">
-          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow flex items-center space-x-3 animate-pulse dark:bg-green-600">
+          <div className="bg-green-500 text-white px-6 py-3 rounded-[var(--s4-radius-card)] shadow flex items-center space-x-3 animate-pulse dark:bg-green-600">
             <CheckCircle className="h-5 w-5" />
             <span className="font-medium">{notificationMessage}</span>
           </div>

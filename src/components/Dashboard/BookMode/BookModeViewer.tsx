@@ -237,7 +237,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       <button
         type="button"
         onClick={() => setMindMapOpen(true)}
-        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white bg-accent-gold`}
         title={t('mind_map.title') || 'Mind map'}
       >
         <Brain className="h-5 w-5" />
@@ -255,20 +255,20 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
           <button
             type="button"
             onClick={() => setAddWidgetMenuOpen(prev => !prev)}
-            className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white`}
+            className={`bg-accent-gold rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white`}
             title={t('book_mode.add_widget') || 'Add Widget'}
           >
             <Plus className="h-5 w-5" />
           </button>
 
           {/* Widget type menu */}
-          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-xl shadow-xl border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
+          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-xl border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
             <div className="p-1.5 space-y-0.5">
               {!widgets.some(w => w.type === 'book') && (
                 <button
                   type="button"
                   onClick={() => { addWidget('book'); setAddWidgetMenuOpen(false); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors`}
                 >
                   <BookOpen className="h-4 w-4 opacity-60" />
                   <span>{t('book_mode.book_widget') || 'Book'}</span>
@@ -278,7 +278,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => { addWidget('flashcards'); setAddWidgetMenuOpen(false); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors`}
                 >
                   <CreditCard className="h-4 w-4 opacity-60" />
                   <span>{t('book_mode.flashcards_widget') || 'Flashcards'}</span>
@@ -288,7 +288,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
                 <button
                   type="button"
                   onClick={() => { addWidget('notes'); setAddWidgetMenuOpen(false); }}
-                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors`}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors`}
                 >
                   <StickyNote className="h-4 w-4 opacity-60" />
                   <span>{t('book_mode.notes_widget') || 'Notes'}</span>

@@ -74,7 +74,7 @@ export const ShareView: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold mr-3"></div>
             <span className="text-secondary-ink dark:text-muted-ink-on-dark">{t('common.loading')}</span>
@@ -87,7 +87,7 @@ export const ShareView: React.FC = () => {
   if (error || !item) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('share.content_not_available')}</h3>
@@ -96,7 +96,7 @@ export const ShareView: React.FC = () => {
             </p>
             <a
               href="/"
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-lg hover:opacity-90 transition duration-150"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition duration-150"
             >
               <ExternalLink className="h-4 w-4" />
               <span>{t('share.visit_meshfahem')}</span>
@@ -115,7 +115,7 @@ export const ShareView: React.FC = () => {
           <div className="flex items-center h-16">
             {/* Left: Logo + Meshfahem */}
             <div className="flex items-center space-x-3 flex-shrink-0">
-              <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-2 rounded-lg">
+              <div className="bg-accent-gold p-2 rounded-[var(--s4-radius-card)]">
                 <FileText className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -135,7 +135,7 @@ export const ShareView: React.FC = () => {
             <div className="flex-shrink-0">
               <a
                 href="/"
-                className="flex items-center space-x-2 px-4 py-2 text-accent-gold hover:opacity-80 border border-accent-gold/40 rounded-lg hover:bg-accent-gold-soft/10 transition duration-150 text-sm"
+                className="flex items-center space-x-2 px-4 py-2 text-accent-gold hover:opacity-80 border border-accent-gold/40 rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition duration-150 text-sm"
               >
                 <ExternalLink className="h-4 w-4" />
                 <span>{t('share.get_meshfahem')}</span>
@@ -148,7 +148,7 @@ export const ShareView: React.FC = () => {
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-divider dark:border-divider-on-dark p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-2">{item.title}</h2>
@@ -206,7 +206,7 @@ export const ShareView: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2 text-muted-ink dark:text-muted-ink-on-dark">
-              <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-1 rounded">
+              <div className="bg-accent-gold p-1 rounded">
                 <FileText className="h-4 w-4 text-white" />
               </div>
               <span className="text-sm">
