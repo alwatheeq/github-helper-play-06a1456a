@@ -1,122 +1,164 @@
-## Goal
 
-Rebuild the idle Dashboard so it fits a 1366×768 viewport with the 220px sidebar — no horizontal scroll — and matches the editorial spec exactly (sizes, paddings, the single dark feature card, hairlines). Preserve all logic (Supabase, processing pipeline, i18n, subscription gates). Honor the global bans: no italics (substitute upright `font-light` muted text) and no Roman numerals (substitute `01./02./03.` numeric markers).
+# Scholar v4 — Full App Integration
 
-## What's wrong now
+Scholar v4 is a static design canvas: ~8,400 lines of inline-styled JSX with 6 color families × light/dark × ~70 fixed-1280×820 artboards, no real wiring. The good news: your `ThemeContext` already names the same 6 palettes (`navy-gold`, `oxblood-cream`, `forest-parchment`, `ink-blush`, `copper-charcoal`, `monochrome`) and writes `data-theme="…"` on `<html>`. So the integration is mostly: lift v4 tokens into CSS variables, rebuild the shell + every page as responsive Tailwind components wired to existing handlers, and stub anything that has no backend yet.
 
-- Right rail is 340px and content doesn't constrain → horizontal scroll on 904px preview and even on 1146px laptop column.
-- Tabs (File / Text / Scan) sit on `bg-page` with no white card — they should sit inside the white left card per spec.
-- Dropzone padding/min-height not aligned to spec (uses `p-12`, no min-height, no inner browse button styling).
-- Recently-processed list lacks the 5-column grid (numeral · title · subject code · output type · time-ago).
-- No "What to generate" feature card on the right with the exact 4 toggle rows + cost footer + Generate button as specified.
+This is a large initiative. Trying to land it in one shot guarantees regressions. The plan below is **phased** — each phase ships a usable app and is independently reviewable.
 
-## Approach
+---
 
-Strict, single-page rebuild of the idle view. Logic is untouched — only markup/classes inside `WorkshopPanel`, `InputForm`, `GenerationRail`, `RecentlyProcessedList`, plus tightening `Dashboard.tsx` paddings.
+## Scope summary
 
-### 1. Page shell — `Dashboard.tsx`
+- **6 themes × 2 modes** all selectable from Profile (already partly wired) — every component must read from CSS variables, not hardcoded colors.
+- **~50 pages** to rebuild visually to match v4 while preserving current business logic and Supabase wiring.
+- **Responsive** from ~360 px up; v4's fixed 1280-wide proportions become a design target, not a hard min-width.
+- **Stub policy**: any v4 control that doesn't map to existing functionality renders, but `onClick` fires a `toast("TODO: <feature> — not implemented yet")`. Every stub is logged in the issues report.
+- **Out of scope**: Supabase schema changes, edge-function changes, new features, new routes (only stubbing existing-but-missing UI).
 
-- Set the main content padding to `pt-8 pr-10 pb-10 pl-10` (32 / 40 / 40 / 40).
-- Remove any `max-w-*` / centering on the workspace container so it fills the column edge-to-edge.
-- Keep the existing `PageHeader` call but pass:
-  - eyebrow = `THE WORKSHOP`
-  - title = `Process your content` (period auto-added)
-  - descriptor = upright muted-ink line: "Bring in a file, paste text, or scan a page — we'll do the rest." (no italic — replaces the spec's italic caption per ban).
-- Header rule stays (the built-in hairline below).
+---
 
-### 2. Workshop two-column grid — `WorkshopPanel.tsx`
+## Phase 0 — Foundation (no visual change yet)
 
-Replace the current flex layout with a strict CSS grid:
+1. **Design tokens** → `src/styles/scholarV4.css`
+   - For each `data-theme="<family>"` (light) and `data-theme="<family>".dark` (dark), emit the 12 palette variables from v4's `T` object as CSS custom properties: `--s4-bg, --s4-panel, --s4-panel2, --s4-ink, --s4-body, --s4-muted, --s4-accent, --s4-accent-soft, --s4-rule, --s4-chip, --s4-sb, --s4-sb-ink, --s4-sb-muted, --s4-sb-active`.
+   - Add HSL equivalents so Tailwind utilities like `bg-[hsl(var(--s4-panel))]` work.
+2. **Tailwind config** → extend `colors` with `scholar.*` aliases pointing at the variables; extend `fontFamily` with `serif: ['Fraunces', …]` and ensure Inter is the sans default.
+3. **Fonts** → load Fraunces + Inter in `index.html` (preconnect to fonts.googleapis.com).
+4. **Icon set** → port v4's inline `Ic.*` SVGs to `src/components/Scholar/icons/` as small React components that accept `className`/`color`. We do **not** replace lucide-react globally; we use Scholar icons only inside the new shell and v4-rebuilt pages.
+5. **Smoke test**: load app on every theme/mode combo, verify no visual regression (variables exist but nothing consumes them yet).
 
-```text
-grid-template-columns: minmax(0, 1fr) 300px
-gap: 32px
+Deliverable: tokens live, app looks identical to today.
+
+## Phase 1 — App shell (visible change)
+
+Rebuild the chrome that wraps every authenticated route:
+
+- `Header4` → new `src/components/Layout/AppHeader.tsx` (logo monogram, tagline, credits chip, bell, avatar+plan). Wired to existing `useAuth`, `useCredits`, `NotificationCenter`.
+- `Side4` → new `src/components/Layout/AppSidebar.tsx` using shadcn `Sidebar` primitives, `collapsible="icon"`, themed sidebar background from `--s4-sb`. Items: Dashboard, My Library, Study Rooms, Academics, Examinations, EduPlay, History, Feedback. Active route via `NavLink`. Mobile: `offcanvas` via existing `SidebarTrigger`.
+- `Shell4` wrapper in `App.tsx` replacing the current dashboard layout container.
+- Mobile: header collapses logo+tagline → just logo+monogram; sidebar slides as a sheet under 1024 px.
+
+Deliverable: every existing page now sits inside the v4 shell. Page bodies still old; that's fine.
+
+## Phase 2 — Dashboard / Workshop (lead page, full fidelity)
+
+Rebuild `WorkshopPanel` and children to exact v4 spec (the one you wrote earlier — Workshop eyebrow, 32 px gap, 300 px right rail, 6 px card radius, 4 tabs File/Text/Scan/URL with 2 px bottom indicator, dropzone, dark feature card, recently-processed list with 12 px row padding).
+
+- Tabs: File (works), Text (works), Scan/OCR (works, gated by feature flag), **URL** (no backend → stub toast).
+- Right rail: Summary + Flashcards toggles already wired; the rotating tip from v4 → port verbatim.
+- Recently-processed → reuse existing `RecentlyProcessedList` but restyle.
+- Responsive: at <1024 px the right rail drops below the input card; at <640 px tabs become a horizontal scroller — never a horizontal page scroll.
+
+Deliverable: Dashboard matches v4 in all 12 theme×mode combos, fully functional on a 360 px phone and a 1920 px desktop.
+
+## Phase 3 — High-traffic pages
+
+In this order, each as one PR-sized change:
+
+1. **My Library** — restyle existing `LibraryPage`. All existing CRUD preserved.
+2. **History / The Ledger** — restyle `HistoryPage`.
+3. **Examinations hub** (Create / My Quizzes / Explore / History / Global / Preview) — restyle existing pages. *Active exam screens (MCQ / TF / Fill / Open) come in Phase 5.*
+4. **Academics** hub — restyle. **Tutor / Exam Schedule / SRS Review / Analytics** sub-pages are mostly stubs in v4 → ship the layouts, wire what exists (course list), toast-stub the rest.
+5. **EduPlay** hub + Brain Rush lobby/active/leaderboard/result/multiplayer — restyle existing Brain Rush + Multiplayer pages.
+6. **Study Rooms** + Create/Friends/Groups/Active — restyle existing Rooms pages, including the ZegoCloud video tile.
+7. **Profile** + Edit / Subscription / Billing / Username variants — restyle existing pages; the v4 "states" (canceled, failed, cooldown, empty billing) become real conditional renders driven by existing subscription state.
+8. **Feedback**, **Notifications**, **Goals**, **Achievements**, **Informational** — straight restyles.
+9. **Content viewers**: Read / Book Mode / Audio / Mind Map / Flashcard Study → restyle existing viewers.
+
+For each page: same routes, same data hooks, same handlers — only JSX + Tailwind classes change. Any control without a backing handler gets a `toast("TODO: <name>")`.
+
+## Phase 4 — Auth & out-of-shell pages
+
+`Auth`, `OnboardingLang`, `OnboardingTheme`, `Pricing`, `Checkout`, `PaymentSuccess`, `PaymentCancel`, `AccountSuspended`, `ShareView`, `NotFound`, `Tutorial`, `InsufficientCredits`, `LowCreditBanner`, `ChatAssistant`, `FloatingMiniPlayer` — these live outside the main shell. Restyle in place.
+
+## Phase 5 — Active exam runtime & modals
+
+The four active-exam screens (MCQ, TF, Fill, Open) and the result screen. These re-use `QuizTakingComponent` — the logic stays, the wrapper gets the v4 chrome (timer pill, question chip strip, exit-with-confirm modal).
+
+## Phase 6 — Cleanup & polish
+
+- Remove dead files: legacy `Card.tsx` paths that no one renders anymore, `designSystem.css` rules superseded by Scholar tokens.
+- Delete `design/` source artboards from the build (they're dev-only, but `src/pages/ScholarPreview.tsx` should point at v4 templates or be removed).
+- Final pass on dark-mode contrast (Oxblood and Ink palettes have low-contrast risk per v4 values; audit `--s4-muted` against `--s4-bg`).
+
+---
+
+## Issues report — what's already known to be missing
+
+You asked for "all issues — missing functions for buttons, etc." Based on a static read of v4 vs the current codebase, here's the up-front list. The full list grows during implementation; I'll keep `docs/SCHOLAR_V4_ISSUES.md` as a living checklist.
+
+### Missing or stubbed functionality (will toast "TODO")
+
+| v4 element | Page | Status |
+| --- | --- | --- |
+| **URL tab** in Workshop dropzone | Dashboard | No edge function to fetch+extract from a URL. Stub. |
+| **Scan / OCR** for handwritten | Dashboard | Edge fn `ocr-scan` exists for images — works for printed; handwriting quality is uncontrolled. |
+| **AI Tutor** chat surface | Academics · Tutor | No dedicated edge fn; could reuse `chat-assistant`. Stub initially. |
+| **Exam Schedule** with calendar | Academics · Exams | No `exam_schedule` table. Stub. |
+| **SRS Review** queue | Academics · SRS | `srsAlgorithm.ts` util exists; no `srs_cards` table. Stub queue UI. |
+| **Academics Analytics** charts | Academics · Analytics | Some studyTracking exists but no aggregation endpoint. Stub charts with mock until backend lands. |
+| **Find a Match** matchmaking | EduPlay · Find Match | No matchmaking edge fn; current multiplayer is invite-code only. Stub. |
+| **Group Chat** (room-wide text) | Rooms · Groups / GroupChat | No `room_messages` table. Stub. |
+| **Pomodoro notifications** | Notifications | `usePomodoroStore` exists locally; no push wiring. Stub the "enable push" CTA. |
+| **Achievements** badges | Achievements | No `achievements` table. Stub progress bars with static data. |
+| **Goals & Targets** weekly goals | Goals | No `user_goals` table. Stub with localStorage placeholder. |
+| **Billing History** entries | Profile · Billing | Exists via Stripe but the v4 "empty state", "failed", "canceled" variants need state-driven rendering — wire to existing subscription status. |
+| **Username cooldown** timer | Profile · Username | No `username_changed_at` timestamp on profiles. Stub timer. |
+| **ShareView** rich preview | /share/:id | Exists; v4 adds reactions/comments — stub. |
+| **Mind Map** export PNG | ContentView · MindMap | Library `html-to-image` not installed. Stub. |
+| **Floating MiniPlayer** dock controls | Audio Study | `useFloatingVideoStore` exists, drag-to-dock is new. Stub drag. |
+
+### Likely visual regressions to watch
+
+- v4 uses **Fraunces** (serif) for headings everywhere — currently project uses Inter throughout. Long Arabic strings in Fraunces fall back to system serif (Fraunces has no Arabic). Need a `font-family: Fraunces, 'IBM Plex Sans Arabic', …` stack.
+- v4 sidebar background is the brand-dark color (`--s4-sb`) regardless of light/dark mode. Current sidebar follows page background. Big visual change; intentional.
+- v4 dropzone is 220 px tall and the right rail is 300 px wide — at viewports under ~1080 px these don't fit side-by-side. Phase 2 stacks them.
+- Card radius drops from 12 px (current `rounded-xl`) to 6 px (v4). Will look "sharper / more editorial" — confirm this is desired across the app, not just Workshop.
+- Button radius drops from 12 px to 4 px. Same note.
+
+### Risky migrations
+
+- `designSystem.css` defines `.btn-soft-primary`, `.card-subtle`, etc. with hardcoded hex. Many pages use these classes. Phase 6 maps them to v4 tokens; if a page is rebuilt in Phase 3 it can drop the class entirely.
+- `tailwind.config.js` likely has color tokens that conflict with the new `scholar.*` namespace — will audit on Phase 0.
+- The 6 theme palettes in `ThemeContext.tsx` currently emit **Tailwind class strings** (e.g. `bg-amber-100`) via `getThemeAccent()` etc. Anything calling these helpers keeps working but will look "off" until that page is rebuilt to consume CSS vars instead. Helpers stay for back-compat; new code uses vars.
+
+---
+
+## Technical details
+
+**Files created**
+- `src/styles/scholarV4.css` — 6 families × 2 modes × ~14 vars.
+- `src/components/Scholar/icons/*.tsx` — ~30 icons from v4's `Ic` object.
+- `src/components/Layout/AppHeader.tsx`, `AppSidebar.tsx`, `AppShell.tsx`.
+- `src/components/Dashboard/v4/*.tsx` for the rebuilt Workshop pieces, then progressively under `Library/v4`, `Rooms/v4`, etc. (or in-place replacement once a page is fully ported).
+- `docs/SCHOLAR_V4_ISSUES.md` — running stub/issue ledger.
+
+**Files modified**
+- `tailwind.config.js`, `index.html`, `src/App.tsx`, `src/contexts/ThemeContext.tsx` (adds CSS-var emission, keeps helper API).
+
+**Files deleted (Phase 6 only, after all pages migrated)**
+- legacy palette code paths in `designSystem.css`, the old `Header.tsx`/`Sidebar.tsx` once replaced, and the dev-only `design/*` artboards from the build.
+
+**Stub helper**
+```ts
+// src/utils/todoToast.ts
+import { toast } from "sonner";
+export const todo = (feature: string) =>
+  toast(`${feature} — not implemented yet`, { description: "Coming soon" });
 ```
 
-- Right rail width pinned to **300px** (down from 340) so total fits in 1066px inner width.
-- Below `lg`, collapse to single column (rail moves below).
-- Drop `QuoteCard` entirely from this page (not in spec, and it pushes the rail over budget visually).
-- Move `RecentlyProcessedList` out of the left column and render it **below the grid** (spans full width, 36px top margin) — matches "below the body grid".
+**Responsive contract**
+- Page-level horizontal scroll is a bug; flag any `min-w-[…px]` discovered.
+- Below 768 px: sidebar offcanvas, right rails stack under main column, tab strips become horizontal scroll inside their card.
+- Use a single content `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` rhythm everywhere.
 
-### 3. Left card — `InputForm.tsx` rebuild (visual only)
+---
 
-The whole tabs + dropzone area becomes the single white card:
+## Timeline & checkpoints
 
-- Outer wrapper: `bg-card-light border border-divider rounded-[6px] p-8 min-h-[320px]` (this is the card the user said is missing white background — tabs now live inside it).
-- Tabs row inside the card, `flex gap-7 mb-6`, no background pills, hairline only on the active tab (2px gold underline). Icon 14px + 6px gap + label 13px/500.
-- Active = `text-ink` + `border-b-2 border-accent-gold`. Inactive = `text-muted-ink` + `border-b-2 border-transparent`.
-- File mode body — dashed dropzone:
-  - `border border-dashed border-divider rounded-[6px] py-10 px-8 text-center` (40/32 padding).
-  - Icon: `Upload` 32px, `text-accent-gold`, strokeWidth 1.5, centered.
-  - 8px gap → headline "Drop your file here." (`font-display text-xl font-semibold text-ink`).
-  - 6px gap → sub-line "Or click to browse — PDF, DOCX, images up to 25 MB" (upright `font-light text-[13px] text-muted-ink` — replaces italic per ban).
-  - 18px gap → button `Choose a file →`, `bg-sidebar text-ink-on-dark text-[13px] font-semibold rounded-[4px] px-5 py-2.5`.
-- Below dashed box: 16px gap → 1px hairline → 12px gap → flex row `gap-6` of three small upright `text-[11px] text-muted-ink` meta labels: "Average processing time — 12s", "Last upload — 2 hours ago", "Storage used — 142 / 500 MB" (substituting upright for the spec's italic; values are static placeholders since live data isn't wired — `TODO: connect`).
-- Text mode and OCR mode bodies keep their existing logic but adopt the same inner sizing (textarea inside the same card; no nested cards).
+- **Phase 0+1** (foundation + shell): biggest commit, visible everywhere. Show me before continuing.
+- **Phase 2** (Workshop only): second checkpoint — sign-off here locks the visual language.
+- **Phase 3** ships page-by-page; each page is its own commit so you can review and revert atomically.
+- After Phase 3 the issues doc is finalized and we tackle stubs in priority order you choose.
 
-### 4. Right card — `GenerationRail.tsx` rebuild
-
-Single dark feature card, 300px column-fill, `p-[22px]`:
-
-- Eyebrow `WHAT TO GENERATE` (10px / 700 / 2px tracking / `accent-gold`, mb-1).
-- Title `Outputs.` (`font-display text-[22px] font-semibold text-ink-on-dark`, mb-4).
-- 1px `divider-on-dark` hairline, mb-3.
-- 4 generator rows, each `flex justify-between items-center py-2.5 border-b border-divider-on-dark` (no border on last):
-  - Left: 14px icon (lucide) + 10px gap + two-line text — line 1 `text-[13px] font-semibold text-ink-on-dark`, line 2 upright `font-light text-[11px] text-muted-ink-on-dark` (replaces italic).
-  - Right: toggle 30×16, `rounded-full`, knob 12px, OFF `bg-divider-on-dark`, ON `bg-accent-gold`.
-  - Rows: Summary (ON), Flashcards (ON), Examination (OFF), Mind map (OFF). Examination/Mind map remain `TODO: connect` — visual only.
-- 16px gap → footer:
-  - Caption row flex space-between: left `COST` (10px caps, 1.5px tracking, muted-light); right `8 credits` (13px / 600 / accent-gold). Cost is currently hard-coded `35` — change to `8` per spec; `TODO: connect cost estimator` comment stays.
-  - 12px gap → full-width `Generate →` button, `bg-accent-gold text-sidebar text-[13px] font-bold rounded-[4px] py-3`. Stays disabled (visual only — submit still happens via the InputForm CTAs); tooltip preserved.
-
-### 5. Recently processed — `RecentlyProcessedList.tsx` rebuild
-
-Full-width section under the grid, 36px top margin:
-
-- Eyebrow `RECENTLY PROCESSED` (11px / 700 / 2px / accent-gold).
-- Section title `From the workshop.` (`font-display text-xl font-semibold text-ink`, mt-1).
-- 1px hairline, mt-3.
-- List as a CSS grid row:
-
-```text
-grid-template-columns: 28px minmax(0,1fr) 110px 200px 80px
-gap: 16px
-padding: 12px 0
-border-bottom: 1px solid divider (none on last)
-```
-
-Columns:
-
-1. **Numeric marker** `01.`, `02.`, `03.` — upright `font-display text-[12px] font-medium text-accent-gold tabular-nums` (replaces Roman numerals per ban).
-2. **Title** — `font-display text-sm font-semibold text-ink truncate`.
-3. **Subject code** — `text-[11px] tracking-[1.5px] font-bold uppercase text-secondary-ink` (e.g. `ECN101`).
-4. **Output type** — upright `font-light text-[12.5px] text-muted-ink` (e.g. "Summary · 240 words").
-5. **Time-ago** — upright `font-light text-[12px] text-muted-ink text-right`.
-
-Real data wiring: continue to read up to 5 rows from `user_history` (limit raised from 3 → 5). Fields the table doesn't have (subject code, output type, word/card count) are derived loosely from existing columns or shown as `—`/best-effort labels with a `TODO: connect` comment. No schema changes.
-
-### 6. Cleanup
-
-- Delete `src/components/Dashboard/QuoteCard.tsx` and remove its export — not on this page per spec.
-- Remove `RightRail` usage from `WorkshopPanel` (replaced by the explicit grid).
-- Keep `FeatureDarkCard` available for other pages but stop using it here (the rail card is hand-built to match the exact 22px padding / row layout).
-
-## Constraints honored
-
-- **No horizontal scroll**: rail fixed at 300px; left column uses `minmax(0, 1fr)` so it can shrink; everything stays inside the 1066px inner content area on a 1366px laptop.
-- **No italics**: every italic call in the spec → upright `font-light` muted text.
-- **No Roman numerals**: `01./02./03.` markers in muted gold.
-- **No backend / schema changes**: only `user_history` reads, with a higher limit.
-- **No nested cards**: tabs + dropzone live inside the single left white card; right column is the single dark card; "Recently processed" is bare on `bg-page` (hairlines only).
-- Radii limited to 4px (buttons) and 6px (cards / dropzone).
-
-## Files touched
-
-- `src/components/Dashboard/Dashboard.tsx` — paddings + descriptor text only.
-- `src/components/Dashboard/WorkshopPanel.tsx` — grid rewrite, drop QuoteCard/RightRail, move RecentlyProcessedList below grid.
-- `src/components/Dashboard/InputForm.tsx` — wrap tabs + body in the white card, resize dropzone, restyle browse button + meta row.
-- `src/components/Dashboard/GenerationRail.tsx` — exact spec rewrite (sizes, cost=8, footer, Generate button).
-- `src/components/Dashboard/RecentlyProcessedList.tsx` — 5-column grid, numeric markers, limit 5.
-- Delete `src/components/Dashboard/QuoteCard.tsx`.
-
-Reply "go" to implement.
+Confirm the phasing (especially the Phase 0+1 checkpoint) and I'll start.
