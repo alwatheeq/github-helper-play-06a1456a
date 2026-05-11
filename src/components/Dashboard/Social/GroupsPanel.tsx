@@ -276,7 +276,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
   return (
     <div dir={dir} className="space-y-6">
       {/* Create group */}
-      <div className={`rounded-xl p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+      <div className={`rounded-[var(--s4-radius-card)] p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
         <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
           <Plus className="w-4 h-4" />
           {t('social.create_group')}
@@ -288,13 +288,13 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setNewGroupName(e.target.value)}
             placeholder={t('social.group_name')}
             maxLength={100}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
+            className={`flex-1 rounded-[var(--s4-radius-card)] px-3 py-2 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
             onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           />
           <button
             onClick={handleCreate}
             disabled={creating || !newGroupName.trim()}
-            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
+            className={`px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {creating ? '...' : t('social.create_group')}
           </button>
@@ -302,7 +302,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       </div>
 
       {/* Join group */}
-      <div className={`rounded-xl p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+      <div className={`rounded-[var(--s4-radius-card)] p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
         <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
           <Hash className="w-4 h-4" />
           {t('social.join_group')}
@@ -314,13 +314,13 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
             placeholder={t('social.group_code')}
             maxLength={6}
-            className={`flex-1 rounded-lg px-3 py-2 text-sm border outline-none font-mono tracking-widest uppercase transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
+            className={`flex-1 rounded-[var(--s4-radius-card)] px-3 py-2 text-sm border outline-none font-mono tracking-widest uppercase transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
             onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
           />
           <button
             onClick={handleJoin}
             disabled={joining || joinCode.trim().length !== 6}
-            className={`px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
+            className={`px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {joining ? '...' : t('social.join_group')}
           </button>
@@ -345,7 +345,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             {groups.map((group) => (
               <div
                 key={group.id}
-                className={`rounded-xl border overflow-hidden transition-all bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
+                className={`rounded-[var(--s4-radius-card)] border overflow-hidden transition-all bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
               >
                 {/* Group header */}
                 <button
@@ -376,7 +376,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           e.stopPropagation();
                           onOpenGroupChat(group.id, group.name);
                         }}
-                        className={`p-2 rounded-lg transition-colors bg-accent-gold-soft/20`}
+                        className={`p-2 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20`}
                         title={t('social.open_chat')}
                       >
                         <MessageSquare className={`w-4 h-4 text-ink dark:text-ink-on-dark`} />
@@ -411,7 +411,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           </button>
                         </div>
                       </div>
-                      <div className="bg-white p-2 rounded-lg">
+                      <div className="bg-white p-2 rounded-[var(--s4-radius-card)]">
                         <QRCodeSVG value={group.group_code} size={64} />
                       </div>
                     </div>
@@ -428,11 +428,11 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           {(members[group.id] || []).map((m) => (
                             <div
                               key={m.id}
-                              className={`flex items-center justify-between py-1.5 px-2 rounded-lg text-xs bg-accent-gold-soft/20`}
+                              className={`flex items-center justify-between py-1.5 px-2 rounded-[var(--s4-radius-card)] text-xs bg-accent-gold-soft/20`}
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <div
-                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0 bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0 bg-accent-gold`}
                                 >
                                   {(m.username || m.display_name || '?')[0].toUpperCase()}
                                 </div>
