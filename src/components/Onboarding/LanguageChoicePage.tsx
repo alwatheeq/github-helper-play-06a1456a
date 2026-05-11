@@ -43,7 +43,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
       <div className="w-full max-w-md mx-auto flex flex-col gap-6">
         <div className="text-center space-y-2 pt-8">
           <div className="flex justify-center">
-            <div className="p-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft">
+            <div className="p-3 rounded-full bg-accent-gold">
               <Globe className="h-10 w-10 text-white" />
             </div>
           </div>
@@ -55,7 +55,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
           </p>
         </div>
 
-        <div className="rounded-lg border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark">
+        <div className="rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}
@@ -84,7 +84,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
         <button
           type="button"
           onClick={handleContinue}
-          className="w-full py-2.5 rounded-lg text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark hover:bg-accent-gold-soft/10 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+          className="w-full py-2.5 rounded-[var(--s4-radius-card)] text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark hover:bg-accent-gold-soft/10 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
         >
           {getConfirmLabel(selectedLang)}
         </button>

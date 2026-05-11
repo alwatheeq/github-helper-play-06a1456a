@@ -127,7 +127,7 @@ export const OnboardingWizard: React.FC = () => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <div className="flex justify-center">
-                <div className="p-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft">
+                <div className="p-3 rounded-full bg-accent-gold">
                   <Globe className="h-10 w-10 text-white" />
                 </div>
               </div>
@@ -140,7 +140,7 @@ export const OnboardingWizard: React.FC = () => {
             </div>
 
             <div
-              className="rounded-lg border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark"
+              className="rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark"
             >
               {LANGUAGES.map((lang) => (
                 <button
@@ -172,7 +172,7 @@ export const OnboardingWizard: React.FC = () => {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
             >
               {t('onboarding.next')}
               <ChevronRight className="h-4 w-4" />
@@ -183,7 +183,7 @@ export const OnboardingWizard: React.FC = () => {
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <div className="flex justify-center">
-                <div className="p-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft">
+                <div className="p-3 rounded-full bg-accent-gold">
                   <Palette className="h-10 w-10 text-white" />
                 </div>
               </div>
@@ -201,7 +201,7 @@ export const OnboardingWizard: React.FC = () => {
                   key={theme.id}
                   type="button"
                   onClick={() => handleThemeSelect(theme.id)}
-                  className={`relative flex flex-col items-center gap-2 p-3 rounded-lg border-2 transition-all ${
+                  className={`relative flex flex-col items-center gap-2 p-3 rounded-[var(--s4-radius-card)] border-2 transition-all ${
                     selectedTheme === theme.id
                       ? 'border-accent-gold shadow-md'
                       : 'border-divider dark:border-divider-on-dark hover:border-accent-gold-soft'
@@ -229,7 +229,7 @@ export const OnboardingWizard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-medium border border-divider dark:border-divider-on-dark bg-transparent hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark transition"
+                className="flex items-center justify-center gap-1 px-4 py-3 rounded-[var(--s4-radius-card)] text-sm font-medium border border-divider dark:border-divider-on-dark bg-transparent hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark transition"
               >
                 <ChevronLeft className="h-4 w-4" />
                 {t('onboarding.back')}
@@ -238,7 +238,7 @@ export const OnboardingWizard: React.FC = () => {
                 type="button"
                 onClick={handleComplete}
                 disabled={completing}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
               >
                 {completing ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />

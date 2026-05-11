@@ -371,7 +371,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                   ? 'Tell us about your experience, report bugs, or share what you think...'
                   : 'Share your ideas for new features or improvements...'
               }
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               rows={8}
               maxLength={2000}
               disabled={isSubmitting}
@@ -395,7 +395,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              className={`border-2 border-dashed rounded-[var(--s4-radius-card)] p-8 text-center transition-colors ${
                 isDragging
                   ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900'
                   : `border border-divider dark:border-divider-on-dark hover:opacity-60`
@@ -422,7 +422,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
               />
               <label
                 htmlFor="file-upload"
-                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer transition duration-150"
+                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 cursor-pointer transition duration-150"
               >
                 Browse Files
               </label>
@@ -432,7 +432,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
               <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
                 {uploadedFiles.map((fileData, index) => (
                   <div key={index} className="relative group">
-                    <div className={`aspect-square rounded-lg overflow-hidden bg-subtle dark:bg-subtle-on-dark`}>
+                    <div className={`aspect-square rounded-[var(--s4-radius-card)] overflow-hidden bg-subtle dark:bg-subtle-on-dark`}>
                       {fileData.type === 'image' ? (
                         <img
                           src={fileData.preview}
@@ -463,14 +463,14 @@ export const FeedbackPage: React.FC = React.memo(() => {
           </div>
 
           {errorMessage && (
-            <div className="flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-lg dark:bg-red-900 dark:border-red-700">
+            <div className="flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] dark:bg-red-900 dark:border-red-700">
               <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-300" />
               <p className="text-red-700 text-sm dark:text-red-300">{errorMessage}</p>
             </div>
           )}
 
           {submitStatus === 'success' && (
-            <div className="flex items-center space-x-2 p-4 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900 dark:border-green-700">
+            <div className="flex items-center space-x-2 p-4 bg-green-50 border border-green-200 rounded-[var(--s4-radius-card)] dark:bg-green-900 dark:border-green-700">
               <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-300" />
               <p className="text-green-700 text-sm dark:text-green-300">
                 Thank you! Your {activeTab} has been submitted successfully.
