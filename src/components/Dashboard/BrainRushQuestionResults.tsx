@@ -118,7 +118,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
           <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
         </div>
@@ -132,7 +132,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-[var(--s4-radius-card)] shadow-sm p-8 border-2 border-green-500 dark:border-green-600">
         <div className="flex items-center justify-center space-x-3 mb-4">
           <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
-          <h2 className=`s4-h1 text-ink dark:text-ink-on-dark`}>Correct Answer</h2>
+          <h2 className={`s4-h1 text-ink dark:text-ink-on-dark`}>Correct Answer</h2>
         </div>
         <p className="s4-h2 text-green-700 dark:text-green-300 text-center">
           {correctAnswer}
@@ -141,7 +141,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
 
       {/* Statistics */}
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
-        <h3 className=`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
+        <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Target className="h-6 w-6 text-blue-600" />
           <span>Question Statistics</span>
         </h3>
@@ -149,20 +149,20 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="bg-green-50 dark:bg-green-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
             <p className="s4-h1 text-green-600 dark:text-green-400">{correctCount}</p>
-            <p className=`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Correct</p>
+            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Correct</p>
           </div>
           <div className="bg-red-50 dark:bg-red-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
             <p className="s4-h1 text-red-600 dark:text-red-400">{incorrectCount}</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Incorrect</p>
           </div>
-          <div className=`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 text-center`}>
-            <p className=`s4-h1 text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
-            <p className=`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>No Answer</p>
+          <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 text-center`}>
+            <p className={`s4-h1 text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
+            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>No Answer</p>
           </div>
         </div>
 
         {/* Percentage Bar */}
-        <div className=`bg-accent-gold-soft/20 rounded-full h-6 overflow-hidden`}>
+        <div className={`bg-accent-gold-soft/20 rounded-full h-6 overflow-hidden`}>
           <div
             className="bg-gradient-to-r from-green-500 to-emerald-500 h-full flex items-center justify-center text-white text-sm font-bold transition-colors duration-150"
             style={{ width: `${correctPercentage}%` }}
@@ -174,7 +174,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
 
       {/* Player Results */}
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
-        <h3 className=`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
+        <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Trophy className="h-6 w-6 text-yellow-600" />
           <span>Player Results</span>
         </h3>
@@ -209,11 +209,11 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                     </div>
 
                     <div className="flex-1">
-                      <p className=`font-bold text-ink dark:text-ink-on-dark`}>
+                      <p className={`font-bold text-ink dark:text-ink-on-dark`}>
                         {result.display_name}
                         {isCurrentUser && <span className="text-blue-600 dark:text-blue-400 ml-2">(You)</span>}
                       </p>
-                      <div className=`flex items-center space-x-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-1`}>
+                      <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-1`}>
                         {result.answer ? (
                           <>
                             <span className="flex items-center space-x-1">
@@ -239,7 +239,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                   <div className="text-right">
                     {result.answer && (
                       <>
-                        <p className=`s4-h2 text-ink dark:text-ink-on-dark`}>
+                        <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>
                           +{result.answer.points_earned}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">points</p>
@@ -258,7 +258,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
         {isHost ? (
           <button
             onClick={onNextQuestion}
-            className=`w-full px-6 py-4 bg-accent-gold text-white rounded-md hover:opacity-90 transition font-semibold flex items-center justify-center space-x-2 text-lg`}
+            className={`w-full px-6 py-4 bg-accent-gold text-white rounded-md hover:opacity-90 transition font-semibold flex items-center justify-center space-x-2 text-lg`}
           >
             <span>Next Question</span>
             <ChevronRight className="h-6 w-6" />

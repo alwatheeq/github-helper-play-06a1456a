@@ -918,7 +918,7 @@ export const ProfilePage: React.FC = React.memo(() => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-divider dark:border-divider-on-dark mx-auto"></div>
-          <p className=`mt-4 text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('profile.loading')}</p>
+          <p className={`mt-4 text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('profile.loading')}</p>
         </div>
       </div>
     );
@@ -929,11 +929,11 @@ export const ProfilePage: React.FC = React.memo(() => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center max-w-md mx-auto p-6">
           <div className="mb-4">
-            <User className=`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-            <h2 className=`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>
+            <User className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
+            <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>
               {t('profile.load_error') || 'Unable to Load Profile'}
             </h2>
-            <p className=`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
+            <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
               We couldn't load your profile data. This might be a temporary issue.
             </p>
           </div>
@@ -947,11 +947,11 @@ export const ProfilePage: React.FC = React.memo(() => {
                 }
               }}
               disabled={loading}
-              className=`px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium`}
+              className={`px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium`}
             >
               {loading ? 'Loading...' : 'Retry'}
             </button>
-            <p className=`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-4`}>
+            <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-4`}>
               If this problem persists, please try logging out and back in, or contact support.
             </p>
           </div>
@@ -1031,7 +1031,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         {/* Credits: summary + expandable breakdown (matches header dropdown) */}
         {creditBalance && (
           <div
-            className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-divider dark:border-divider-on-dark`}
+            className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 border border-divider dark:border-divider-on-dark`}
           >
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
               <div className="flex-1 min-w-0">
@@ -1042,10 +1042,10 @@ export const ProfilePage: React.FC = React.memo(() => {
                   aria-expanded={creditsDetailOpen}
                 >
                   <div>
-                    <h2 className=`s4-h2 text-ink dark:text-ink-on-dark mb-1`}>
+                    <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-1`}>
                       {t('profile.credits_summary_title')}
                     </h2>
-                    <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('profile.credits_summary_subtitle')}</p>
+                    <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('profile.credits_summary_subtitle')}</p>
                   </div>
                   <ChevronDown
                     className={`h-6 w-6 shrink-0 text-secondary-ink dark:text-secondary-ink-on-dark transition-transform ${creditsDetailOpen ? 'rotate-180' : ''}`}
@@ -1054,22 +1054,22 @@ export const ProfilePage: React.FC = React.memo(() => {
                 </button>
 
                 <div className="flex items-baseline flex-wrap gap-x-2 gap-y-1 mt-4 mb-2">
-                  <span className=`s4-h1 text-[36px] text-ink dark:text-ink-on-dark`}>{toolRem.toLocaleString()}</span>
-                  <span className=`text-xl text-muted-ink dark:text-muted-ink-on-dark`}>
+                  <span className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark`}>{toolRem.toLocaleString()}</span>
+                  <span className={`text-xl text-muted-ink dark:text-muted-ink-on-dark`}>
                     / {toolPlanCap.toLocaleString()}
                   </span>
-                  <span className=`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('profile.credits_tools_label')}</span>
+                  <span className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('profile.credits_tools_label')}</span>
                 </div>
 
-                <div className=`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3 mb-2`}>
+                <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3 mb-2`}>
                   <div
-                    className=`h-3 rounded-full transition-colors duration-150 bg-emerald-500 dark:bg-emerald-600`}
+                    className={`h-3 rounded-full transition-colors duration-150 bg-emerald-500 dark:bg-emerald-600`}
                     style={{ width: `${toolBarPct}%` }}
                   />
                 </div>
 
                 {creditBalance.cycle_end && (
-                  <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                  <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                     {t('profile.credits_refresh_on', { date: new Date(creditBalance.cycle_end).toLocaleDateString() })}
                   </p>
                 )}
@@ -1088,24 +1088,24 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
 
             {creditsDetailOpen && (
-              <div className=`mt-6 pt-6 border-t border border-divider dark:border-divider-on-dark space-y-5`}>
+              <div className={`mt-6 pt-6 border-t border border-divider dark:border-divider-on-dark space-y-5`}>
                 <div>
-                  <p className=`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
+                  <p className={`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
                     {t('header.credits_tools_services')}
                   </p>
-                  <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                  <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                     {toolRem.toLocaleString()} / {toolPlanCap.toLocaleString()}
                   </p>
                 </div>
                 <div>
-                  <p className=`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
+                  <p className={`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
                     {t('header.credits_study_room')}
                   </p>
-                  <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                  <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                     {zegoTot > 0 ? `${zegoRem.toLocaleString()} / ${zegoTot.toLocaleString()}` : '0'}
                   </p>
                   {zegoTot > 0 && (
-                    <div className=`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mt-2 max-w-xs`}>
+                    <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mt-2 max-w-xs`}>
                       <div
                         className="h-2 rounded-full bg-sky-500 dark:bg-sky-600"
                         style={{
@@ -1116,16 +1116,16 @@ export const ProfilePage: React.FC = React.memo(() => {
                   )}
                 </div>
                 <div>
-                  <p className=`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
+                  <p className={`text-xs font-bold uppercase tracking-wide text-ink dark:text-ink-on-dark`}>
                     {t('header.credits_ai_assistant')}
                   </p>
-                  <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                  <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                     {hasAiAddonProfile && aiChatCreditsTotalProfile > 0
                       ? `${aiChatCreditsRemainingProfile.toLocaleString()} / ${aiChatCreditsTotalProfile.toLocaleString()}`
                       : '0'}
                   </p>
                   {!hasAiAddonProfile && (
-                    <p className=`text-xs mt-1 text-muted-ink dark:text-muted-ink-on-dark`}>{t('header.credits_ai_addon_hint')}</p>
+                    <p className={`text-xs mt-1 text-muted-ink dark:text-muted-ink-on-dark`}>{t('header.credits_ai_addon_hint')}</p>
                   )}
                 </div>
               </div>
@@ -1134,14 +1134,14 @@ export const ProfilePage: React.FC = React.memo(() => {
         )}
 
         {/* Settings Section */}
-        <div className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
           <div className="flex items-center space-x-3 mb-6">
-            <div className=`bg-subtle dark:bg-subtle-on-dark p-3 rounded-[var(--s4-radius-card)]`}>
-              <Settings className=`h-6 w-6 text-secondary-ink dark:text-secondary-ink-on-dark`} />
+            <div className={`bg-subtle dark:bg-subtle-on-dark p-3 rounded-[var(--s4-radius-card)]`}>
+              <Settings className={`h-6 w-6 text-secondary-ink dark:text-secondary-ink-on-dark`} />
             </div>
             <div>
-              <h2 className=`s4-h2 text-ink dark:text-ink-on-dark`}>Settings</h2>
-              <p className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+              <h2 className={`s4-h2 text-ink dark:text-ink-on-dark`}>Settings</h2>
+              <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                 Customize your application preferences
               </p>
             </div>
@@ -1347,7 +1347,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className={`flex items-start justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
             <div className={`flex items-center space-x-6 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div className="relative">
-                <div className=`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-gray-900 s4-h1`}>
+                <div className={`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-gray-900 s4-h1`}>
                   {(stats.display_name || user?.email)?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-gray-600 to-gray-800 text-white px-3 py-1 rounded-full text-sm font-bold shadow">
@@ -1364,7 +1364,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       onChange={(e) => setEditedName(e.target.value)}
                       placeholder={t('profile.display_name')}
                       maxLength={50}
-                      className=`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
                     />
                     <textarea
                       value={editedBio}
@@ -1372,7 +1372,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       placeholder={t('profile.bio_placeholder')}
                       maxLength={500}
                       rows={3}
-                      className=`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
                     />
                   </div>
                 ) : (
@@ -1391,11 +1391,11 @@ export const ProfilePage: React.FC = React.memo(() => {
                   <div className="mt-3 space-y-2">
                     {username && (
                       <div className="flex items-center gap-2">
-                        <AtSign className=`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
-                        <span className=`font-medium text-ink dark:text-ink-on-dark`}>@{username}</span>
+                        <AtSign className={`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
+                        <span className={`font-medium text-ink dark:text-ink-on-dark`}>@{username}</span>
                         <button
                           onClick={() => handleCopyField(`@${username}`, 'username')}
-                          className=`p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-muted-ink dark:text-muted-ink-on-dark`}
+                          className={`p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-muted-ink dark:text-muted-ink-on-dark`}
                         >
                           {copiedField === 'username' ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                         </button>
@@ -1403,12 +1403,12 @@ export const ProfilePage: React.FC = React.memo(() => {
                     )}
                     {publicUserId && (
                       <div className="flex items-center gap-2">
-                        <Hash className=`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
-                        <span className=`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{publicUserId}</span>
-                        <span className=`text-xs text-muted-ink dark:text-muted-ink-on-dark`}>({t('social.your_id')})</span>
+                        <Hash className={`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
+                        <span className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{publicUserId}</span>
+                        <span className={`text-xs text-muted-ink dark:text-muted-ink-on-dark`}>({t('social.your_id')})</span>
                         <button
                           onClick={() => handleCopyField(publicUserId, 'user-id')}
-                          className=`p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-muted-ink dark:text-muted-ink-on-dark`}
+                          className={`p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 text-muted-ink dark:text-muted-ink-on-dark`}
                         >
                           {copiedField === 'user-id' ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                         </button>
@@ -1417,7 +1417,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     {username && (
                       <button
                         onClick={() => setShowUsernameModal(true)}
-                        className=`text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:underline`}
+                        className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:underline`}
                       >
                         {t('social.change_username')}
                       </button>
@@ -1432,7 +1432,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                     <div
-                      className=`bg-accent-gold h-3 rounded-full transition-colors duration-150`}
+                      className={`bg-accent-gold h-3 rounded-full transition-colors duration-150`}
                       style={{ width: `${progress}%` }}
                     ></div>
                   </div>
@@ -1574,7 +1574,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               {achievements.map((achievement) => (
                 <div
                   key={achievement.id}
-                  className=`border border-divider dark:border-divider-on-dark opacity-50 rounded-[var(--s4-radius-card)] p-4 hover:shadow-md transition-shadow`}
+                  className={`border border-divider dark:border-divider-on-dark opacity-50 rounded-[var(--s4-radius-card)] p-4 hover:shadow-md transition-shadow`}
                 >
                   <div className={`flex items-start space-x-3 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
                     <div className={`bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)} p-2 rounded-[var(--s4-radius-card)] flex-shrink-0`}>

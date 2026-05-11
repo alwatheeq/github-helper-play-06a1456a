@@ -511,7 +511,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
           {/* Question */}
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-4">
-            <div className=`flex items-start gap-2 mb-8`}>
+            <div className={`flex items-start gap-2 mb-8`}>
               <h2 className="s4-h2 md:text-3xl text-ink dark:text-ink-on-dark text-center flex-1">
                 {currentQuestion.question_text}
               </h2>
