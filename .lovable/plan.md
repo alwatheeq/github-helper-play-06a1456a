@@ -123,3 +123,16 @@ Plus carry-over cleanup of mishaps E–H above (`LibraryPage.tsx`, `InputForm.ts
 - Audit gate: ~15 min
 
 Confirm and I'll start with the carry-over cleanup commit (mishaps E–H) before the `QuizPage` sweep.
+---
+
+## Phase 3.2 — applied
+
+- **Carry-over (E–H):** `LibraryPage.tsx` Try-again/Try-bulk-delete buttons and the delete-confirm modal converted to `<ScholarButton>`. All `rounded-lg/xl/2xl` swept to `var(--s4-radius-card)` in Library + InputForm. `HistoryPage.tsx` medical badge → `<ScholarBadge variant="danger">`, expires-on color de-warned. `InputForm.tsx` inline error banner → `<ScholarAlert variant="danger">` with dismiss.
+- **QuizPage / QuizTakingComponent / AIQuestionGenerator / ManualQuestionBuilder / GlobalExamDetailModal:** legacy radius tokens swept; gold gradients converted to `bg-accent-gold`; raw purple/green CTAs swapped to `bg-accent-gold` or `<ScholarButton>` with `variant="primary|danger"`. Exit & Submit buttons in `QuizTakingComponent` now use `<ScholarButton>` (variant=danger / primary). No runtime, scoring, timer, or Supabase code touched.
+- **i18n:** all `quiz.*` keys already present in en/ar/fr/tr; JSON validated.
+- **Audit gate passed:**
+  - `rg "rounded-(xl|2xl|lg)" <8 files>` → 0
+  - `rg "bg-gradient-to-r from-accent-gold" <same>` → 0
+  - `rg "alert\(|window\.confirm\("` in scope files → 0
+
+Remaining gold-gradient hits in Dashboard live in pages owned by 3.3–3.8 (EduPlay, BrainRush, Academics, Social, AudioStudy, BookMode, Profile, Subscription, Multiplayer, Pomodoro, FlashcardViewer, etc.) and will be swept there.
