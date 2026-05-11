@@ -138,7 +138,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
           className="mb-8"
         />
         <ScholarCard variant="default" padding="lg">
-          <ScholarSkeleton lines={4} />
+          <ScholarSkeleton count={4} height="1.25rem" />
         </ScholarCard>
       </div>
     );
