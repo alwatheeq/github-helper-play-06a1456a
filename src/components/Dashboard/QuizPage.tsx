@@ -1428,7 +1428,7 @@ export const QuizPage: React.FC = React.memo(() => {
                   <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
                     <Globe className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
                     <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>No exams found</h3>
-                    <p className='text-secondary-ink dark:text-secondary-ink-on-dark'}>Try adjusting your filters</p>
+                    <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>Try adjusting your filters</p>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

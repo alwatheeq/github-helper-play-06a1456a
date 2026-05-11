@@ -141,7 +141,7 @@ export const PricingPage: React.FC = () => {
               <span className={`s4-h1 text-ink dark:text-ink-on-dark`}>
                 {formatCurrency(basePrice)}
               </span>
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark"}>
+              <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>
                 {billingMonths === 1 ? t('pricing.per_month') : t('pricing.per_billing_period')}
               </span>
             </div>
@@ -265,20 +265,20 @@ export const PricingPage: React.FC = () => {
         >
             <div className="space-y-2 mb-6">
             <div className="flex justify-between text-sm">
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('pricing.base_price_label')}</span>
-              <span className="text-ink dark:text-ink-on-dark"}>
+              <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('pricing.base_price_label')}</span>
+              <span className={"text-ink dark:text-ink-on-dark"}>
                 {formatCurrency(basePrice)}
               </span>
             </div>
             {addonsTotal > 0 && (
               <div className="flex justify-between text-sm">
-                <span className="text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('pricing.addons_label')}</span>
-                <span className="text-ink dark:text-ink-on-dark"}>{formatCurrency(addonsTotal)}</span>
+                <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('pricing.addons_label')}</span>
+                <span className={"text-ink dark:text-ink-on-dark"}>{formatCurrency(addonsTotal)}</span>
               </div>
             )}
             <div className="flex justify-between font-semibold pt-2 border-t border-divider dark:border-divider-on-dark">
-              <span className="text-ink dark:text-ink-on-dark"}>{t('pricing.total_per_billing_period')}</span>
-              <span className="text-ink dark:text-ink-on-dark"}>
+              <span className={"text-ink dark:text-ink-on-dark"}>{t('pricing.total_per_billing_period')}</span>
+              <span className={"text-ink dark:text-ink-on-dark"}>
                 {formatCurrency(totalPrice)}
                 {!isStripeEnabled() && (
                   <span className="ml-1 text-sm font-normal"> ({t('pricing.no_payment_required')})</span>

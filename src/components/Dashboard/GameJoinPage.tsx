@@ -135,7 +135,7 @@ export const GameJoinPage: React.FC = () => {
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
           <Loader2 className="h-16 w-16 text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
-          <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Validating game code...</p>
+          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Validating game code...</p>
         </div>
       </div>
     );

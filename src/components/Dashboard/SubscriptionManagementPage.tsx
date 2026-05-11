@@ -357,7 +357,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           {subscription.billing_cycle_end && (
             <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 border-t border border-divider dark:border-divider-on-dark`}>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('subscription_management.billing_resets_in')}</span>
+                <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('subscription_management.billing_resets_in')}</span>
                 <span className={`font-semibold text-ink dark:text-ink-on-dark`}>
                   {t('subscription_management.days_left', { count: daysRemainingInCycle })}
                 </span>
@@ -409,12 +409,12 @@ export const SubscriptionManagementPage: React.FC = () => {
                   {subscription.payment_method_saved ? (
                     <>
                       <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      <span className="text-ink dark:text-ink-on-dark"}>{t('subscription_management.card_on_file')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.card_on_file')}</span>
                     </>
                   ) : (
                     <>
                       <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-                      <span className="text-ink dark:text-ink-on-dark"}>{t('subscription_management.no_card_saved')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.no_card_saved')}</span>
                     </>
                   )}
                 </div>
@@ -429,12 +429,12 @@ export const SubscriptionManagementPage: React.FC = () => {
                   {subscription.auto_renew ? (
                     <>
                       <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                      <span className="text-ink dark:text-ink-on-dark"}>{t('subscription_management.enabled')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.enabled')}</span>
                     </>
                   ) : (
                     <>
                       <XCircle className="h-5 w-5 text-orange-600 dark:text-orange-400" />
-                      <span className="text-ink dark:text-ink-on-dark"}>{t('subscription_management.disabled')}</span>
+                      <span className={"text-ink dark:text-ink-on-dark"}>{t('subscription_management.disabled')}</span>
                     </>
                   )}
                 </div>
@@ -491,7 +491,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             </div>
 
             <div className="space-y-4 mb-6">
-              <p className="text-secondary-ink dark:text-secondary-ink-on-dark"}>
+              <p className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>
                 {t('subscription_management.cancel_modal_body')}
               </p>
 

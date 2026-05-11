@@ -545,11 +545,11 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <div className="space-y-2">
                   <div>
                     <span className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>Q: </span>
-                    <span className='text-ink dark:text-ink-on-dark'}>{card.front}</span>
+                    <span className={'text-ink dark:text-ink-on-dark'}>{card.front}</span>
                   </div>
                   <div>
                     <span className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>A: </span>
-                    <span className='text-ink dark:text-ink-on-dark'}>{card.back}</span>
+                    <span className={'text-ink dark:text-ink-on-dark'}>{card.back}</span>
                   </div>
                 </div>
               </div>

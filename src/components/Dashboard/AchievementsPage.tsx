@@ -314,7 +314,7 @@ export const AchievementsPage: React.FC = () => {
         {filteredAchievements.length === 0 && (
           <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
             <Award className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-            <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>{t('achievements.no_achievements')}</p>
+            <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{t('achievements.no_achievements')}</p>
           </div>
         )}
       </div>

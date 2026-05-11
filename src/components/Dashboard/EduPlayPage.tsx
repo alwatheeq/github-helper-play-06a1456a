@@ -711,7 +711,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
       <div className="mb-6 text-center">
         <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Choose Question Source</h2>
-        <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
+        <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -726,7 +726,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             <Sparkles className="h-8 w-8 text-purple-600 dark:text-purple-400" />
           </div>
           <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>AI Generate</h3>
-          <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
+          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
         </button>
 
         <button

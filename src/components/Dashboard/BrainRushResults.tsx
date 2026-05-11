@@ -106,7 +106,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       <div className="max-w-6xl mx-auto">
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
           <div className="animate-spin h-12 w-12 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
+          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
         </div>
       </div>
     );
@@ -282,7 +282,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
                 <div className={`pt-3 border-t border-divider dark:border-divider-on-dark`}>
                   <div className="grid grid-cols-3 gap-4 text-center text-sm">
                     <div>
-                      <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Correct</p>
+                      <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Correct</p>
                       <p className="font-bold text-green-600 dark:text-green-400">{stats.correctAnswers}</p>
                     </div>
                     <div>

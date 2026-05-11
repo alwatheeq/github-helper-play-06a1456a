@@ -546,7 +546,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
                           <div className="space-y-2">
                             <div className="flex items-center justify-between text-sm">
-                              <span className='text-ink dark:text-ink-on-dark'}>{t('goals.progress')}</span>
+                              <span className={'text-ink dark:text-ink-on-dark'}>{t('goals.progress')}</span>
                               <span className={`font-semibold text-ink dark:text-ink-on-dark`}>
                                 {goal.current_value} / {goal.target_value}
                               </span>
