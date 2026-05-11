@@ -239,3 +239,19 @@ Each phase exits with:
 Estimated combined edits: ~1,000 className mutations across ~110 unique files (some files touched in multiple phases), + 1 CSS token file, + 1 ScholarButton verification, + 1 regression script update per phase.
 
 Awaiting approval to begin Phase 4.3.
+
+---
+
+## Phase 4.3 — RESULTS (2026-05-11)
+
+**Status:** ✅ Complete.
+
+- Prep commit landed: 4 shadow tokens added to `src/styles/scholarV4.css` `:root`, dark-mode overrides under `.dark` (×2–×3 alpha). `--s4-shadow-hairline` references `var(--s4-rule)` directly (divider tokens are hex, not HSL triplets).
+- Mechanical sweep: **47 files / 134 className edits** across `src/components/**`. 0 deferrals — no `shadow-inner` or coloured-shadow hits in scope.
+- Reconciliation vs audit: audit projected 53 files / 132 hits; the 6 missing files (`Toast.tsx`, `Header.tsx`, `Dashboard.tsx`, `Scholar/ScholarAlert.tsx`, `Scholar/ScholarCard.tsx`, `InputForm.tsx`) all already used the legacy `--scholar-shadow-*` token chain — already token-driven, regression rule does not flag them.
+- Regression-guard delta: added `tailwind-shadow` rule (`/(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g`). Discovered one pre-existing residual in `src/contexts/I18nContext.tsx` (`shadow-xl`) from Phase 3.19 — fixed in-line. Allowlist now **133 files** (86 + 47).
+- Verification gate: `check:tokens` ✓ 133 clean, `tsc --noEmit` ✓ 0 errors, `vitest` ✓ 73/73.
+
+**Files changed:** `src/styles/scholarV4.css`, `scripts/check-token-regressions.cjs`, `src/contexts/I18nContext.tsx`, + 47 swept components.
+
+Awaiting approval to begin Phase 4.4 — Colour.
