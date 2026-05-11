@@ -1,129 +1,176 @@
-## 1. Phase 3.16 verification — RESULTS (clean)
+## Remaining sweep — Phases 3.18 → 3.20 (Admin parked)
 
-- `npm run check:tokens` → `✓ 28 swept file(s) clean.`
-- Cluster audit (pcre2) on `Dashboard.tsx`, `SummaryDisplay.tsx`, `FlashcardViewer.tsx`:
-  - legacy radius / directional legacy / gold-gradient → **0 / 0 / 0** in all three
-- Exemptions intact: 25× `rounded-full`, 6× `rounded-md` (matches plan).
-- Cross-file: no hook signatures, contexts, Supabase queries, edge-function payloads, routes, locale keys, business logic, SRS algorithm, or flip-animation classes touched. Exactly 4 files changed.
-
-Phase 3.16 is clean — no linter issues, no cross-file drift, no mishaps.
+After Phase 3.17, **10 files** remain on the non-Admin side: 8 require code edits, 2 CSS files are audit-only (false positives). Grouped into three small, semantically-coherent phases.
 
 ---
 
-## 2. Phase 3.17 — BookMode / Highlighting / Tooltip cluster
+## Phase 3.18 — Auth + top-level error/empty states (5 files, 22 radius + 2 gold gradients)
 
-### Why this scope
+### Inventory (pcre2-confirmed)
 
-Three small floating-overlay components (one tooltip, one selection-toolbar, one floating-popover) share the same visual primitive: a dark `bg-gray-900` chip with `rounded-xl`. Sweeping them together is correct because:
+| File | legacy radius | gold gradient | `rounded-full` (exempt) | `rounded-md` (exempt) |
+|---|---:|---:|---:|---:|
+| `src/components/Auth/Auth.tsx` | 7 (L114, 116, 132, 142, 173, 188, 198) | **2** (L104, L198) | 1 | 1 |
+| `src/components/AccountSuspended.tsx` | 5 (L76, 91, 107, 126, 137) | 0 | 2 | 0 |
+| `src/components/NotFound.tsx` | 3 (L10, 30, 38) | 0 | 1 | 0 |
+| `src/components/ErrorBoundary.tsx` | 4 (L70, 86, 102, 110) | 0 | 1 | 0 |
+| `src/components/EnvValidator.tsx` | 3 (L11, 26, 34) | 0 | 1 | 0 |
+| **Totals** | **22** | **2** | **6** | **1** |
 
-1. They are all secondary, on-canvas overlays — same "chip / pill / tooltip" radius family.
-2. Each file has exactly **one** legacy hit (3 total), making the diff trivial and unambiguous.
-3. Their nearest siblings (`BookModeViewer.tsx`, `BookWidget.tsx`, `FlashcardsWidget.tsx`, `NotesWidget.tsx`, `WidgetContainer.tsx`, `HighlightLayer.tsx`) were independently verified to have **0 legacy hits** — so the cluster boundary is honest, not arbitrary.
+### Substitutions
 
-### Files in scope and inventory (pcre2-confirmed)
+1. **Radius (all 22 hits)** — `rounded-lg` / `rounded-xl` → `rounded-[var(--s4-radius-card)]`.
+2. **Gold gradient L104 (`Auth.tsx`)** — logo badge:
+   ```diff
+   - <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-3 rounded-md">
+   + <div className="bg-accent-gold p-3 rounded-md">
+   ```
+   `rounded-md` preserved (exempt).
+3. **Gold gradient L198 (`Auth.tsx`)** — primary submit button. Both the gradient AND the radius change on this single line:
+   ```diff
+   - className="... rounded-lg text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 ..."
+   + className="... rounded-[var(--s4-radius-card)] text-white bg-accent-gold hover:opacity-90 ..."
+   ```
 
-| File | legacy radius | directional | gold gradient | `rounded-full` (exempt) | `rounded-md` (exempt) |
-|---|---:|---:|---:|---:|---:|
-| `src/components/Dashboard/BookMode/FreeFormToggle.tsx` | 1 (L48 `rounded-xl`) | 0 | 0 | 2 | 0 |
-| `src/components/Dashboard/Highlighting/HighlightMenu.tsx` | 1 (L33 `rounded-xl`) | 0 | 0 | 1 | 0 |
-| `src/components/Common/Tooltip.tsx` | 1 (L25 `rounded-xl`) | 0 | 0 | 0 | 0 |
-| **Totals** | **3** | **0** | **0** | **3** | **0** |
+Solid `bg-accent-gold` is the canonical replacement used in earlier social/pricing sweeps (3.10–3.13) — keeps the brand colour token, drops only the gradient stop pair.
 
-### Exact substitutions
+### Cross-file safety
 
-All three hits are the same shape: `rounded-xl` on a dark-chip overlay surface (`bg-gray-900 text-white …`). Canonical mapping:
+- **Auth.tsx** — auth flow (Supabase `signInWithOAuth`, `signUp`, `signInWithPassword`, redirect URLs, error/success state machine) **NOT TOUCHED**. Only className strings mutate.
+- **AccountSuspended.tsx, NotFound.tsx** — consumed by router (`App.tsx` routes) — no props/exports change.
+- **ErrorBoundary.tsx** — top-level boundary wrapping the app tree. The `componentDidCatch` / `getDerivedStateFromError` / `ErrorLogger` integration is untouched; only the fallback-UI className strings change.
+- **EnvValidator.tsx** — Supabase env-var placeholder UI per `mem://tech/supabase-initialization`. No env-var detection logic changes.
+- All semantic state palettes (`bg-red-50/900`, `bg-green-50/900`, `bg-blue-50/900`, `bg-gray-50/800`, dark variants, border colors) preserved verbatim — they encode state, not radius.
+- Focus-ring utilities (`focus:ring-accent-gold`, `focus:ring-2`) preserved.
 
-```
-rounded-xl  →  rounded-[var(--s4-radius-card)]
-```
-
-- `FreeFormToggle.tsx` L48 — hover-help popover anchored under the toggle button.
-- `HighlightMenu.tsx` L33 — floating action toolbar over a text selection.
-- `Tooltip.tsx` L25 — the reusable tooltip primitive used across the app.
-
-These are the **complete** sweep — no other lines in the three files match any forbidden pattern.
-
-### Exemptions to preserve verbatim
-
-- `FreeFormToggle.tsx` 2× `rounded-full` — circular toggle pill geometry.
-- `HighlightMenu.tsx` 1× `rounded-full` — circular icon-button affordance.
-- The `bg-gray-900 text-white` dark-chip palette on all three overlays — **deliberate** dark-on-light tooltip aesthetic, not a theming bug, and not in scope for a radius/gradient phase. Migrating these to semantic tokens is a separate concern owned by the design-token phase, not this regression sweep.
-- Shadow utilities (`shadow-lg`, `shadow-xl`) — preserved.
-
-### Cross-file safety checks (must hold)
-
-1. **`Tooltip.tsx` is a primitive used widely** — confirm the component **public API** (`title`/`children`/`position` props, default `position="top"`, the `positionClasses` map, the `group`-hover trigger pattern) is unchanged. Only the className string mutates.
-2. **`HighlightMenu.tsx`** is consumed by `Highlighting/HighlightLayer.tsx` and the `useHighlights` hook — props (`onHighlight`, `onCopy`, `onDelete`, position coords) and event handlers untouched.
-3. **`FreeFormToggle.tsx`** is consumed by `Dashboard.tsx` (already swept in 3.16) and `SummaryDisplay.tsx` (already swept in 3.16) via the `enabled` / `onToggle` / `compact` props — none of those props change.
-4. **No hooks, contexts, Supabase reads, edge functions, routes, locale keys, or business logic** referenced by any of the three files.
-5. **No animation classes** (`transition-all`, `opacity-0`, `invisible`, `group-hover:*`) are touched — the hover/visibility behaviour is identical post-edit.
-6. **`ErrorLogger`** — not referenced.
-7. **Sibling files in BookMode/ and Highlighting/** were pre-scanned and have **0 legacy hits** — no hidden adjacent work is being skipped.
-
-### Regression-guard extension
-
-Append to `SWEPT_FILES` in `scripts/check-token-regressions.cjs` under a new block:
-
-```js
-// Phase 3.17 (book-mode toggle / highlight menu / tooltip overlays)
-'src/components/Dashboard/BookMode/FreeFormToggle.tsx',
-'src/components/Dashboard/Highlighting/HighlightMenu.tsx',
-'src/components/Common/Tooltip.tsx',
-```
-
-Order: largest functional surface first (FreeFormToggle), then the selection toolbar (HighlightMenu), then the shared primitive (Tooltip).
-
-### Audit gate (must all pass before marking 3.17 done)
+### Audit gate
 
 ```text
-1. rg --pcre2 "(?<![-\w])rounded-(xl|2xl|lg|\[12px\])(?![-\w])" <3 files>   → 0
-2. rg "from-accent-gold to-accent-gold-soft" <3 files>                       → 0
-3. rg "rounded-(t|b|l|r|tl|tr|bl|br)-(xl|2xl|lg)" <3 files>                  → 0
-4. rg "rounded-full" <3 files>                                               → 3 (2 + 1 + 0)
-5. rg "rounded-md" <3 files>                                                 → 0
-6. npm run check:tokens                                                      → 31 swept file(s) clean
-7. Visual smoke at /preview (904x583):
-   - Hover the free-form toggle → dark help popover renders with new card radius
-   - Select text in a summary → HighlightMenu toolbar renders with new radius
-   - Hover any tooltip-bearing icon → tooltip renders with new radius
-   - Toggle animation, selection-menu positioning, and tooltip placement unchanged
-8. git diff --stat                                                           → exactly 4 files changed
-   (FreeFormToggle.tsx, HighlightMenu.tsx, Tooltip.tsx, check-token-regressions.cjs)
+1. legacy radius / directional / gold-gradient on all 5 files                → 0 / 0 / 0
+2. rounded-full preserved                                                    → 6
+3. rounded-md preserved (Auth L104)                                          → 1
+4. npm run check:tokens                                                      → 36 swept file(s) clean
+5. Visual smoke: /auth route renders, OAuth + email-password forms intact,
+   404 + suspended + env-missing fallbacks render correctly with new radius.
+6. git diff --stat                                                           → exactly 6 files
 ```
 
-### Deliverables
+### Allowlist append
 
-1. `src/components/Dashboard/BookMode/FreeFormToggle.tsx` — 1 radius substitution (L48).
-2. `src/components/Dashboard/Highlighting/HighlightMenu.tsx` — 1 radius substitution (L33).
-3. `src/components/Common/Tooltip.tsx` — 1 radius substitution (L25).
-4. `scripts/check-token-regressions.cjs` — append 3 files under Phase 3.17 block.
-5. `docs/SCHOLAR_V4_ISSUES.md` — Phase 3.17 section: file inventory (3 hits), exemption rationale (`rounded-full` circular toggles + dark-chip palette out of scope), cross-file checks, audit gate results.
-6. `.lovable/plan.md` — Phase 3.17 RESULTS block.
-
-### Best-practice notes
-
-- Use `code--line_replace` for each of the 3 hits — never rewrite whole files. Each edit is a single class-string substitution on a single line.
-- Do **not** consolidate the dark-chip styling into a shared `<Chip>` primitive in this phase — that is a design-system refactor with its own cross-file blast radius, not a regression sweep.
-- Do **not** migrate `bg-gray-900` → semantic tokens in this phase. That belongs to a future "dark-chip tokenization" phase covering all overlay surfaces consistently.
-
-### Estimated effort
-
-~2 minutes: 3 line-replace edits, 1 allowlist edit, 2 doc appends, 1 guard run, 1 visual smoke.
+```js
+// Phase 3.18 (auth + top-level fallbacks)
+'src/components/Auth/Auth.tsx',
+'src/components/AccountSuspended.tsx',
+'src/components/NotFound.tsx',
+'src/components/ErrorBoundary.tsx',
+'src/components/EnvValidator.tsx',
+```
 
 ---
 
-## 3. Downstream phases (deferred — for continuity, not in scope of 3.17)
+## Phase 3.19 — Misc primitives + i18n confirmation modal (3 files, 6 radius)
 
-- **Phase 3.18 — Auth + top-level error/empty states**: `Auth/Auth.tsx` (7 radius + **2 gold gradients** at L104, L198, requires `bg-gradient-to-r` prefix removal), `AccountSuspended.tsx` (5), `NotFound.tsx` (3), `ErrorBoundary.tsx` (4), `EnvValidator.tsx` (3).
-- **Phase 3.19 — Misc primitives**: `LanguageToggle.tsx` (2), `Scholar/ScholarSkeleton.tsx` (1).
-- **Phase 3.20+ — Admin cluster**: `src/components/Admin/**`, multi-phase.
+### Inventory
+
+| File | legacy radius | gold | `rounded-full` (exempt) |
+|---|---:|---:|---:|
+| `src/components/LanguageToggle.tsx` | 2 (L44, 64) | 0 | 0 |
+| `src/components/Scholar/ScholarSkeleton.tsx` | 1 (L16, inside `roundedMap`) | 0 | 1 |
+| `src/contexts/I18nContext.tsx` | 3 (L151, 161, 171) | 0 | 0 |
+| **Totals** | **6** | 0 | **1** |
+
+### Substitutions
+
+1. **`LanguageToggle.tsx` L44 (trigger button) + L64 (dropdown panel)** — `rounded-lg` → `rounded-[var(--s4-radius-card)]`. Pure className edits.
+
+2. **`ScholarSkeleton.tsx` L16** — value inside an internal `roundedMap`:
+   ```diff
+     const roundedMap = {
+       none: 'rounded-none',
+       sm: 'rounded-[4px]',
+       md: 'rounded-[6px]',
+   -   lg: 'rounded-lg',
+   +   lg: 'rounded-[var(--s4-radius-card)]',
+       full: 'rounded-full',
+     };
+   ```
+   **The `lg` key stays** — public prop API (`rounded?: 'none'|'sm'|'md'|'lg'|'full'`) is unchanged. Callers (`ScholarPreview.tsx`, `HistoryPage.tsx`) pass no `rounded` prop today (default `md`), but any future caller passing `rounded="lg"` still works.
+
+3. **`I18nContext.tsx` L151/161/171** — language-confirmation modal (dialog, cancel button, confirm button). All three `rounded-lg` → `rounded-[var(--s4-radius-card)]`.
+   - **Critical**: only className strings inside the modal JSX change. The provider value, the `t()` function, the `LanguageContext` exports, language detection logic, and the localStorage persistence are **NOT TOUCHED**.
+
+### Cross-file safety
+
+- **LanguageToggle** consumed in header surfaces — props (`compact`, default) unchanged.
+- **ScholarSkeleton** — `roundedMap` is a module-private const. Only its `lg` value mutates; the key and the public prop type stay identical. Verified callers do not depend on the literal class name string.
+- **I18nContext** — provider/context/`useI18n` hook signature unchanged. The `bg-blue-600` confirm button is semantic state colour (modal primary action) — preserved.
+- No Supabase, no edge functions, no routes, no business logic, no animation classes touched.
+
+### Audit gate
+
+```text
+1. legacy / directional / gold on all 3 files     → 0 / 0 / 0
+2. rounded-full preserved                          → 1 (ScholarSkeleton)
+3. npm run check:tokens                            → 39 swept file(s) clean
+4. Visual smoke:
+   - LanguageToggle trigger + dropdown render with new radius
+   - Skeleton placeholders in HistoryPage / ScholarPreview render unchanged
+     (default size=md uses rounded-[6px], not affected)
+   - Language confirmation modal opens with new radius on card + both buttons
+5. git diff --stat                                 → exactly 4 files
+```
+
+### Allowlist append
+
+```js
+// Phase 3.19 (language toggle / skeleton primitive / i18n modal)
+'src/components/LanguageToggle.tsx',
+'src/components/Scholar/ScholarSkeleton.tsx',
+'src/contexts/I18nContext.tsx',
+```
+
 ---
 
-## Phase 3.17 — RESULTS (DONE)
+## Phase 3.20 — CSS audit (verification-only, 0 edits expected)
 
-- `npm run check:tokens` → ✓ 31 swept file(s) clean.
-- 3 substitutions applied (FreeFormToggle L48, HighlightMenu L33, Tooltip L25), all `rounded-xl` → `rounded-[var(--s4-radius-card)]`.
-- Audit gate: legacy=0, directional=0, gold=0, rounded-full=3 (exempt), rounded-md=0.
-- Cross-file: Tooltip public API + consumer props of HighlightMenu/FreeFormToggle unchanged.
-- Files changed: 4 (3 source + `scripts/check-token-regressions.cjs`).
-- Next: Phase 3.18 (Auth + top-level error/empty states — includes 2 gold-gradient removals in Auth.tsx).
+### Files
+
+| File | matches | action |
+|---|---|---|
+| `src/index.css` | L358 `border-radius: 0.75rem; /* rounded-xl by default */`, L365 `border-radius: 0.5rem; /* rounded-lg */` | **No edit** — matches are inside CSS comments documenting the rem values of legacy Tailwind utility classes. Confirm the surrounding rule sets the token (`--s4-radius-*` or scoped element) and not a `.rounded-lg`/`.rounded-xl` utility override. |
+| `src/styles/designSystem.css` | L45, L72, L98 — all `border-radius: 0.75rem;` with `/* rounded-xl */` comments | **No edit** — these are **token definitions** (the design-system source of truth that defines what `--s4-radius-*` equals). Sweeping them would be circular. |
+
+### Procedure (verification only)
+
+1. Open each file at the cited line numbers.
+2. Confirm each `rounded-(lg|xl)` match is inside a `/* … */` CSS comment, not inside a selector or rule body that would emit utility classes.
+3. If any match is **not** a comment, escalate as a Phase 3.20-edit (currently expected zero).
+4. **Strengthen the regression guard**: extend `scripts/check-token-regressions.cjs` to optionally ignore CSS comment lines so future `npm run check:tokens` runs on these files don't generate noise if/when they're added to the allowlist. *Do not allowlist the CSS files unless the guard is comment-aware* — naively allowlisting would silence real future regressions in the same files.
+
+### Deliverable
+
+- Add a short "CSS audit findings" appendix in `docs/SCHOLAR_V4_ISSUES.md` documenting that the 5 CSS matches are intentional comment annotations on token definitions, with line numbers and verification timestamp.
+- No source-file edits expected. If the guard is extended to be comment-aware, that script change is the **only** code change in 3.20.
+
+---
+
+## Global precautions (apply to all three phases)
+
+- **Edits only via `code--line_replace`** — one className substitution per line. No file rewrites.
+- **Never touch**: Supabase calls, RLS reasoning, edge functions, routes, `ErrorLogger`, i18n key strings, `t()` calls, business logic, animation/transition classes, semantic state colours (red/green/blue/gray tints), focus-ring utilities, shadow utilities, `dark:` variants.
+- **Allowlist ordering**: append new files in the same order they appear in each phase's table so the audit log reads sequentially.
+- **Each phase produces 4 deliverables**: source edits, `scripts/check-token-regressions.cjs` block, `docs/SCHOLAR_V4_ISSUES.md` appendix, `.lovable/plan.md` RESULTS block.
+- **Admin cluster (17 files, 6 gold gradients) remains parked** until the Admin pages are designed.
+
+## Final state after 3.20
+
+- Allowlist: **39 files** (31 currently + 5 from 3.18 + 3 from 3.19).
+- Non-Admin codebase: **0 legacy radius, 0 gold gradients, 0 directional legacy**.
+- CSS token-definition files documented as intentionally exempt.
+- Regression guard runs green on every commit.
+
+## Estimated effort
+
+- Phase 3.18: ~6 min (22 line edits across 5 files + 2 gradient cleanups).
+- Phase 3.19: ~3 min (6 edits across 3 files, one inside an object literal).
+- Phase 3.20: ~2 min (read-only audit + doc appendix; optional guard enhancement +5 min).
