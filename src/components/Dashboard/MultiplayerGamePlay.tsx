@@ -504,14 +504,14 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       <div className="max-w-6xl mx-auto">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="bg-card-light dark:bg-card-dark rounded-lg px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow flex items-center gap-2">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow flex items-center gap-2">
               <Clock className="w-5 h-5 text-blue-600" />
               <span className={`text-2xl font-bold ${timeLeft <= 5 ? 'text-red-600 animate-pulse' : 'text-ink dark:text-ink-on-dark'}`}>
                 {timeLeft}s
               </span>
             </div>
 
-            <div className="bg-card-light dark:bg-card-dark rounded-lg px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow">
               <span className="text-sm text-ink dark:text-ink-on-dark">Question {currentQuestionIndex + 1} / {questions.length}</span>
             </div>
           </div>
@@ -519,11 +519,11 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
 
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8">
               <div className="mb-6">
                 <div className="h-2 bg-accent-gold-soft/20 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-accent-gold to-accent-gold-soft transition-colors duration-150"
+                    className="h-full bg-accent-gold transition-colors duration-150"
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
@@ -539,7 +539,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                   const isCorrect = option === currentQuestion.correct_answer;
                   const showResult = hasAnswered;
 
-                  let buttonClass = 'w-full p-4 rounded-lg border-2 text-left font-medium transition-all ';
+                  let buttonClass = 'w-full p-4 rounded-[var(--s4-radius-card)] border-2 text-left font-medium transition-all ';
 
                   if (showResult) {
                     if (isCorrect) {
@@ -574,7 +574,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 sticky top-6">
+            <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 sticky top-6">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-yellow-500" />
                 Live Leaderboard
@@ -584,7 +584,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                 {playerScores.map((player, index) => (
                   <div
                     key={player.user_id}
-                    className={`p-3 rounded-lg flex items-center justify-between ${
+                    className={`p-3 rounded-[var(--s4-radius-card)] flex items-center justify-between ${
                       player.user_id === user?.id
                         ? 'bg-blue-50 border-2 border-blue-300'
                         : 'bg-page-light dark:bg-page-dark'
