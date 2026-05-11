@@ -305,8 +305,8 @@ export const StudyGoalsPage: React.FC = () => {
             <div className="flex items-center space-x-3">
               <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
               <div>
-                <h1 className="s4-h1 text-gray-900 dark:text-gray-100">{t('goals.title')}</h1>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <h1 className="s4-h1 text-ink dark:text-muted-ink-on-dark">{t('goals.title')}</h1>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                   {t('goals.subtitle')}
                 </p>
               </div>
@@ -324,22 +324,22 @@ export const StudyGoalsPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.active_goals')}</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.active_goals')}</p>
               <p className="s4-h1 text-[36px] text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
             </div>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.completed')}</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.completed')}</p>
               <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
             </div>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.total_goals')}</p>
-              <p className="s4-h1 text-[36px] text-gray-900 dark:text-gray-100">{goals.length}</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.total_goals')}</p>
+              <p className="s4-h1 text-[36px] text-ink dark:text-muted-ink-on-dark">{goals.length}</p>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@ export const StudyGoalsPage: React.FC = () => {
         <div className="space-y-6">
           {activeGoals.length > 0 && (
             <div>
-              <h2 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">{t('goals.active_goals')}</h2>
+              <h2 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">{t('goals.active_goals')}</h2>
               <div className="space-y-4">
                 {activeGoals.map((goal) => {
                   const progress = calculateProgress(goal.current_value, goal.target_value);
@@ -366,15 +366,15 @@ export const StudyGoalsPage: React.FC = () => {
                             {getGoalTypeIcon(goal.goal_type)}
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark">
                               {goal.goal_title}
                             </h3>
                             {goal.goal_description && (
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                              <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                                 {goal.goal_description}
                               </p>
                             )}
-                            <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                            <div className="flex items-center space-x-4 mt-2 text-sm text-muted-ink dark:text-muted-ink-on-dark">
                               <span className="flex items-center">
                                 <Target className="h-4 w-4 mr-1" />
                                 {getGoalTypeLabel(goal.goal_type)}
@@ -408,8 +408,8 @@ export const StudyGoalsPage: React.FC = () => {
 
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600 dark:text-gray-400">{t('goals.progress')}</span>
-                          <span className="font-semibold text-gray-900 dark:text-gray-100">
+                          <span className="text-secondary-ink dark:text-muted-ink">{t('goals.progress')}</span>
+                          <span className="font-semibold text-ink dark:text-muted-ink-on-dark">
                             {goal.current_value} / {goal.target_value}
                           </span>
                         </div>
@@ -427,7 +427,7 @@ export const StudyGoalsPage: React.FC = () => {
                             style={{ width: `${progress}%` }}
                           ></div>
                         </div>
-                        <p className="text-xs text-right text-gray-500">
+                        <p className="text-xs text-right text-muted-ink dark:text-muted-ink-on-dark">
                           {Math.round(progress)}% {t('goals.complete')}
                         </p>
                       </div>
@@ -440,7 +440,7 @@ export const StudyGoalsPage: React.FC = () => {
 
           {completedGoals.length > 0 && (
             <div>
-              <h2 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">{t('goals.completed_goals')}</h2>
+              <h2 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">{t('goals.completed_goals')}</h2>
               <div className="space-y-4">
                 {completedGoals.map((goal) => (
                   <div
@@ -453,10 +453,10 @@ export const StudyGoalsPage: React.FC = () => {
                           <CheckCircle className="h-5 w-5" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                          <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark">
                             {goal.goal_title}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                          <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                             {t('goals.completed_on')} {formatDate(goal.completed_at)}
                           </p>
                         </div>
@@ -477,9 +477,9 @@ export const StudyGoalsPage: React.FC = () => {
 
           {goals.length === 0 && !loading && (
             <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
-              <Target className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400 mb-2">No goals yet</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
+              <Target className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+              <p className="text-secondary-ink dark:text-muted-ink mb-2">No goals yet</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink mb-4">
                 Create your first study goal to start tracking your progress!
               </p>
               <button
@@ -497,10 +497,10 @@ export const StudyGoalsPage: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="s4-h2 text-gray-900 dark:text-gray-100">Create New Goal</h2>
+              <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark">Create New Goal</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 text-gray-500 hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
+                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -508,13 +508,13 @@ export const StudyGoalsPage: React.FC = () => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_type')}
                 </label>
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -525,7 +525,7 @@ export const StudyGoalsPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_title')}
                 </label>
                 <input
@@ -534,12 +534,12 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder="e.g., Study 30 minutes daily"
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_description')}
                 </label>
                 <textarea
@@ -548,12 +548,12 @@ export const StudyGoalsPage: React.FC = () => {
                   placeholder="Describe your goal..."
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Target Value
                 </label>
                 <input
@@ -562,15 +562,15 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   Set the target number to achieve your goal
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Deadline (Optional)
                 </label>
                 <input
@@ -578,7 +578,7 @@ export const StudyGoalsPage: React.FC = () => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 

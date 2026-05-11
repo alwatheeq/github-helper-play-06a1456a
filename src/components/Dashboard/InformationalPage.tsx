@@ -33,7 +33,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <Info className="h-6 w-6 text-white" />
+              <Info className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
           </div>
@@ -67,7 +67,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-4">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <BarChart3 className="h-6 w-6 text-white" />
+              <BarChart3 className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
           </div>
@@ -87,7 +87,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[var(--s4-radius-card)] dark:from-green-600 dark:to-emerald-700">
-              <Upload className="h-6 w-6 text-white" />
+              <Upload className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.getting_started')}</h3>
           </div>
@@ -108,8 +108,8 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </ul>
                   </div>
                   <div className="border border-gray-200 rounded-[var(--s4-radius-card)] p-4 dark:border-gray-700">
-                    <h5 className="font-medium text-gray-900 mb-2 dark:text-gray-100">📝 {t('informational.text_input_title')}</h5>
-                    <ul className="text-sm text-gray-600 space-y-1 dark:text-gray-300">
+                    <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">📝 {t('informational.text_input_title')}</h5>
+                    <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• <strong>{t('informational.text_input_min')}</strong></li>
                       <li>• <strong>{t('informational.text_input_max')}</strong></li>
                       <li>• {t('informational.text_input_perfect_for')}</li>
@@ -180,7 +180,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <Brain className="h-6 w-6 text-white" />
+              <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
           </div>
@@ -200,8 +200,8 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-900 mb-2 dark:text-gray-100">{t('informational.summary_actions')}</h5>
-                    <ul className="text-sm text-gray-600 space-y-1 dark:text-gray-300">
+                    <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">{t('informational.summary_actions')}</h5>
+                    <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• {t('informational.summary_publish')}</li>
                       <li>• {t('informational.summary_new_doc')}</li>
                       <li>• {t('informational.summary_translation')}</li>
@@ -234,30 +234,30 @@ export const InformationalPage: React.FC = React.memo(() => {
                     <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
                         <List className="h-4 w-4 text-green-600 dark:text-green-300" />
-                        <span className="font-medium text-sm dark:text-gray-100">{t('informational.multiple_choice_mode')}</span>
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.multiple_choice_mode')}</span>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('informational.multiple_choice_desc')}</p>
+                      <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.multiple_choice_desc')}</p>
                     </div>
                     <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
                         <FileText className="h-4 w-4 text-orange-600 dark:text-orange-300" />
-                        <span className="font-medium text-sm dark:text-gray-100">{t('informational.fill_blanks_mode')}</span>
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.fill_blanks_mode')}</span>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('informational.fill_blanks_desc')}</p>
+                      <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.fill_blanks_desc')}</p>
                     </div>
                     <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
                         <HelpCircle className="h-4 w-4 text-red-600 dark:text-red-300" />
-                        <span className="font-medium text-sm dark:text-gray-100">{t('informational.true_false_mode')}</span>
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.true_false_mode')}</span>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('informational.true_false_desc')}</p>
+                      <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.true_false_desc')}</p>
                     </div>
                     <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <Eye className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                        <span className="font-medium text-sm dark:text-gray-100">{t('informational.view_all_mode')}</span>
+                        <Eye className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.view_all_mode')}</span>
                       </div>
-                      <p className="text-xs text-gray-600 dark:text-gray-300">{t('informational.view_all_desc')}</p>
+                      <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.view_all_desc')}</p>
                     </div>
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <Brain className="h-6 w-6 text-white" />
+              <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
           </div>
@@ -322,7 +322,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <Globe className="h-6 w-6 text-white" />
+              <Globe className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
           </div>
@@ -356,7 +356,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[var(--s4-radius-card)] dark:from-orange-600 dark:to-red-700">
-              <BookOpen className="h-6 w-6 text-white" />
+              <BookOpen className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.managing_content')}</h3>
           </div>
@@ -377,8 +377,8 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-900 mb-2 dark:text-gray-100">{t('informational.library_share_features')}</h5>
-                    <ul className="text-sm text-gray-600 space-y-1 dark:text-gray-300">
+                    <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">{t('informational.library_share_features')}</h5>
+                    <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• <Share2 className="h-3 w-3 inline mr-1" />{t('informational.library_share_1')}</li>
                       <li>• {t('informational.library_share_2')}</li>
                       <li>• {t('informational.library_share_3')}</li>
@@ -407,7 +407,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </ul>
                   </div>
                   <div>
-                    <h6 className="font-medium text-gray-900 text-sm mb-2 dark:text-gray-100">Community Features:</h6>
+                    <h6 className="font-medium text-ink text-sm mb-2 dark:text-muted-ink-on-dark">Community Features:</h6>
                     <ul className="text-sm text-blue-700 space-y-1 dark:text-blue-200">
                       <li>• See creator email on community items</li>
                       <li>• Items are clearly labeled with "Community" badge</li>
@@ -434,8 +434,8 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </ul>
                   </div>
                   <div>
-                    <h5 className="font-medium text-gray-900 mb-2 dark:text-gray-100">{t('informational.history_data_retention')}</h5>
-                    <ul className="text-sm text-gray-600 space-y-1 dark:text-gray-300">
+                    <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">{t('informational.history_data_retention')}</h5>
+                    <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• <strong>{t('informational.history_retention_1')}</strong></li>
                       <li>• {t('informational.history_retention_2')}</li>
                       <li>• {t('informational.history_retention_3')}</li>
@@ -451,7 +451,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <User className="h-6 w-6 text-white" />
+              <User className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
           </div>
@@ -481,15 +481,15 @@ export const InformationalPage: React.FC = React.memo(() => {
                     <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
                       <History className="h-5 w-5 text-orange-600 dark:text-orange-300" />
                       <div>
-                        <span className="font-medium text-sm dark:text-gray-100">{t('sidebar.history')}</span>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('sidebar.history_desc')}</p>
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.history')}</span>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.history_desc')}</p>
                       </div>
                     </div>
                     <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
                       <Info className="h-5 w-5 text-purple-600 dark:text-purple-300" />
                       <div>
-                        <span className="font-medium text-sm dark:text-gray-100">{t('sidebar.informational')}</span>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">{t('sidebar.info_desc')}</p>
+                        <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.informational')}</span>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.info_desc')}</p>
                       </div>
                     </div>
                   </div>
@@ -527,7 +527,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
-              <Brain className="h-6 w-6 text-white" />
+              <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
           </div>

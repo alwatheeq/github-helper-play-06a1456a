@@ -84,7 +84,7 @@ export const BillingHistoryPage: React.FC = () => {
       case 'pending':
         return <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />;
       default:
-        return <Clock className="h-5 w-5 text-gray-600 dark:text-gray-400" />;
+        return <Clock className="h-5 w-5 text-secondary-ink dark:text-muted-ink" />;
     }
   };
 

@@ -333,7 +333,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
         </div>
         <button
           onClick={onExit}
-          className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-[var(--s4-radius-card)] hover:bg-gray-700"
+          className="mt-4 px-4 py-2 bg-gray-600 text-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-700"
         >
           Go Back
         </button>
@@ -400,7 +400,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
                   )}
                   <span className="font-medium">{player.display_name}</span>
                   {player.user_id === user?.id && (
-                    <span className="text-sm text-gray-500">(You)</span>
+                    <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">(You)</span>
                   )}
                 </div>
 
@@ -411,7 +411,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             ))}
 
             {lobby.current_players < lobby.max_players && (
-              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-gray-300 text-center text-gray-500">
+              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-gray-300 text-center text-muted-ink dark:text-muted-ink-on-dark">
                 Waiting for more players...
               </div>
             )}
@@ -421,7 +421,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             <h4 className="font-semibold mb-3">Game Settings</h4>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-500" />
+                <Clock className="w-4 h-4 text-muted-ink dark:text-muted-ink-on-dark" />
                 <span>Time per question: {lobby.game_config.timePerQuestion || 30}s</span>
               </div>
               <div className="flex items-center gap-2">

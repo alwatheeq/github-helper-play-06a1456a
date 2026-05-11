@@ -610,7 +610,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                       <div className="font-bold text-lg text-blue-600">
                         {player.score}
                       </div>
-                      <div className="text-xs text-gray-500">pts</div>
+                      <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">pts</div>
                     </div>
                   </div>
                 ))}

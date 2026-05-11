@@ -49,7 +49,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
       <ScholarCard variant="elevated" className="max-w-md w-full text-center">
         <div className="mb-6">
           <div className="bg-accent-gold p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
-            <Crown className="h-10 w-10 text-white" />
+            <Crown className="h-10 w-10 text-ink-on-dark" />
           </div>
         </div>
 

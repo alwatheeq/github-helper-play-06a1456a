@@ -165,7 +165,7 @@ export const GameJoinPage: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <div className={`bg-accent-gold rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
-            <Gamepad2 className="h-12 w-12 text-white" />
+            <Gamepad2 className="h-12 w-12 text-ink-on-dark" />
           </div>
           <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Join Game</h2>
           {gameInfo && (

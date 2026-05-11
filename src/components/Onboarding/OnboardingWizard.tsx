@@ -128,7 +128,7 @@ export const OnboardingWizard: React.FC = () => {
             <div className="text-center space-y-2">
               <div className="flex justify-center">
                 <div className="p-3 rounded-full bg-accent-gold">
-                  <Globe className="h-10 w-10 text-white" />
+                  <Globe className="h-10 w-10 text-ink-on-dark" />
                 </div>
               </div>
               <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
@@ -184,7 +184,7 @@ export const OnboardingWizard: React.FC = () => {
             <div className="text-center space-y-2">
               <div className="flex justify-center">
                 <div className="p-3 rounded-full bg-accent-gold">
-                  <Palette className="h-10 w-10 text-white" />
+                  <Palette className="h-10 w-10 text-ink-on-dark" />
                 </div>
               </div>
               <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
@@ -218,7 +218,7 @@ export const OnboardingWizard: React.FC = () => {
                   <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{theme.desc}</span>
                   {selectedTheme === theme.id && (
                     <div className="absolute top-2 right-2 bg-accent-gold rounded-full p-0.5">
-                      <Check className="h-3 w-3 text-white" />
+                      <Check className="h-3 w-3 text-ink-on-dark" />
                     </div>
                   )}
                 </button>

@@ -153,7 +153,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
           </div>
           <div className="bg-red-50 dark:bg-red-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
             <p className="s4-h1 text-red-600 dark:text-red-400">{incorrectCount}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Incorrect</p>
+            <p className="text-sm text-secondary-ink dark:text-muted-ink">Incorrect</p>
           </div>
           <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 text-center`}>
             <p className={`s4-h1 text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
@@ -242,7 +242,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                         <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>
                           +{result.answer.points_earned}
                         </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">points</p>
+                        <p className="text-sm text-secondary-ink dark:text-muted-ink">points</p>
                       </>
                     )}
                   </div>

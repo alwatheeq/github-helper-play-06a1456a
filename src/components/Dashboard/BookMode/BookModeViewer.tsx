@@ -200,7 +200,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center`}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-white">{t('common.loading') || 'Loading Book Mode...'}</p>
+          <p className="text-ink-on-dark">{t('common.loading') || 'Loading Book Mode...'}</p>
         </div>
       </div>
     );

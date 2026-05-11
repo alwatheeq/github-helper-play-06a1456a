@@ -57,7 +57,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             )}
             <div className="flex-1">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
                   {title}
                 </h3>
                 <button
@@ -66,10 +66,10 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                   aria-label="Close"
                   disabled={isLoading}
                 >
-                  <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <X className="h-5 w-5 text-muted-ink dark:text-muted-ink" />
                 </button>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 {message}
               </p>
             </div>
@@ -79,17 +79,17 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>
             <button
               onClick={handleConfirm}
               disabled={isLoading}
-              className={`px-5 py-2.5 text-sm font-medium text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`px-5 py-2.5 text-sm font-medium text-ink-on-dark rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                 isDestructive
                   ? 'bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700'
-                  : 'bg-gray-900 hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200'
+                  : 'bg-gray-900 hover:bg-gray-800 dark:bg-gray-100 dark:text-ink dark:hover:bg-gray-200'
               }`}
             >
               {isLoading ? 'Processing...' : confirmText}

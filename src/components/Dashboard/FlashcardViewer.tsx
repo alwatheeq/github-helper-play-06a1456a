@@ -510,9 +510,9 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                   : 'bg-accent-gold'
               }`}>
                 {medicalMode ? (
-                  <Stethoscope className="h-5 w-5 text-white" />
+                  <Stethoscope className="h-5 w-5 text-ink-on-dark" />
                 ) : (
-                  <Eye className="h-5 w-5 text-white" />
+                  <Eye className="h-5 w-5 text-ink-on-dark" />
                 )}
               </div>
               <div>
@@ -571,9 +571,9 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 : 'bg-accent-gold'
             }`}>
               {medicalMode ? (
-                <Stethoscope className="h-5 w-5 text-white" />
+                <Stethoscope className="h-5 w-5 text-ink-on-dark" />
               ) : (
-                React.createElement(getStudyModeIcon(currentStudyMode), { className: "h-5 w-5 text-white" })
+                React.createElement(getStudyModeIcon(currentStudyMode), { className: "h-5 w-5 text-ink-on-dark" })
               )}
             </div>
             <div> {/* Apply dark mode classes to header text */}
@@ -815,7 +815,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             {/* Type Answer Mode */}
             {currentStudyMode === 'type_answer' && (
               <div className="space-y-6">
-                <div className={`rounded-md p-6 text-white ${
+                <div className={`rounded-md p-6 text-ink-on-dark ${
                   medicalMode
                     ? 'bg-gradient-to-br from-red-600 to-pink-700 dark:from-red-700 dark:to-pink-800'
                     : 'bg-gradient-to-br from-purple-500 to-indigo-600 dark:from-purple-700 dark:to-indigo-800'
@@ -841,7 +841,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkTypeAnswer}
                       disabled={!typedAnswer.trim()}
-                      className={`w-full py-3 px-4 text-white rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ${
+                      className={`w-full py-3 px-4 text-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ${
                         medicalMode
                           ? 'bg-red-600 hover:bg-red-700 focus:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800'
                           : 'bg-purple-600 hover:bg-purple-700 focus:ring-focus dark:bg-purple-700 dark:hover:bg-purple-800'
@@ -867,7 +867,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                               {t('flashcard_explain.why')}
                             </button>
                           )}
-                          {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
+                          {loadingExplanation && <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('flashcard_explain.loading')}</p>}
                           {explanation && (
                             <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">
                               {explanation}
@@ -942,7 +942,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                               <MessageCircleQuestion className="h-4 w-4" />{t('flashcard_explain.why')}
                             </button>
                           )}
-                          {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
+                          {loadingExplanation && <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('flashcard_explain.loading')}</p>}
                           {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}
@@ -1003,7 +1003,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                               <MessageCircleQuestion className="h-4 w-4" />{t('flashcard_explain.why')}
                             </button>
                           )}
-                          {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
+                          {loadingExplanation && <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('flashcard_explain.loading')}</p>}
                           {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}
@@ -1057,7 +1057,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                               <MessageCircleQuestion className="h-4 w-4" />{t('flashcard_explain.why')}
                             </button>
                           )}
-                          {loadingExplanation && <p className="text-sm text-gray-500">{t('flashcard_explain.loading')}</p>}
+                          {loadingExplanation && <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('flashcard_explain.loading')}</p>}
                           {explanation && <div className="p-3 rounded-[var(--s4-radius-card)] bg-blue-50 border border-blue-200 dark:bg-blue-900/50 dark:border-blue-700 text-sm text-blue-800 dark:text-blue-200">{explanation}</div>}
                         </div>
                       )}

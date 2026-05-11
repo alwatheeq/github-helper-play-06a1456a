@@ -595,11 +595,11 @@ export const EduPlayPage: React.FC = React.memo(() => {
           className={`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
         >
           <div className="bg-white/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-            <Target className="h-12 w-12 text-white" />
+            <Target className="h-12 w-12 text-ink-on-dark" />
           </div>
-          <h3 className="s4-h2 mb-2 text-white">Brain Rush</h3>
-          <p className="text-white/90">Fast-paced 4-choice quiz battles</p>
-          <div className="mt-4 text-sm text-white/80">Compete in real-time!</div>
+          <h3 className="s4-h2 mb-2 text-ink-on-dark">Brain Rush</h3>
+          <p className="text-ink-on-dark/90">Fast-paced 4-choice quiz battles</p>
+          <div className="mt-4 text-sm text-ink-on-dark/80">Compete in real-time!</div>
         </button>
 
         <div className={`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60`}>
@@ -612,10 +612,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
         <div className="bg-gray-100 dark:bg-gray-800 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
           <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-            <Clock className="h-12 w-12 text-gray-400" />
+            <Clock className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark" />
           </div>
-          <h3 className="s4-h3 text-[20px] mb-2 text-gray-600 dark:text-gray-400">Coming Soon</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-500 text-center">More exciting games on the way!</p>
+          <h3 className="s4-h3 text-[20px] mb-2 text-secondary-ink dark:text-muted-ink">Coming Soon</h3>
+          <p className="text-sm text-muted-ink dark:text-muted-ink text-center">More exciting games on the way!</p>
         </div>
       </div>
     </div>
@@ -636,7 +636,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-8`}>
         <div className="text-center mb-8">
           <div className={`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
-            <Target className="h-16 w-16 text-white" />
+            <Target className="h-16 w-16 text-ink-on-dark" />
           </div>
           <h2 className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-2`}>Brain Rush</h2>
           <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
@@ -649,9 +649,9 @@ export const EduPlayPage: React.FC = React.memo(() => {
             onClick={() => setViewMode('question-source')}
             className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
           >
-            <Crown className="h-12 w-12 mx-auto mb-4 text-white" />
-            <h3 className="s4-h2 mb-2 text-white">Host a Game</h3>
-            <p className="text-white/90">Create your own Brain Rush game</p>
+            <Crown className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
+            <h3 className="s4-h2 mb-2 text-ink-on-dark">Host a Game</h3>
+            <p className="text-ink-on-dark/90">Create your own Brain Rush game</p>
           </button>
 
           <button
@@ -667,9 +667,9 @@ export const EduPlayPage: React.FC = React.memo(() => {
             onClick={() => setViewMode('multiplayer-menu')}
             className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
           >
-            <Users className="h-12 w-12 mx-auto mb-4 text-white" />
-            <h3 className="s4-h2 mb-2 text-white">Multiplayer</h3>
-            <p className="text-white/90">Real-time competitive mode</p>
+            <Users className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
+            <h3 className="s4-h2 mb-2 text-ink-on-dark">Multiplayer</h3>
+            <p className="text-ink-on-dark/90">Real-time competitive mode</p>
           </button>
         </div>
       </div>
@@ -739,8 +739,8 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Edit className="h-8 w-8 text-blue-600 dark:text-blue-400" />
           </div>
-          <h3 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-2">Manual Build</h3>
-          <p className="text-gray-600 dark:text-gray-400">Create your own custom questions</p>
+          <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-2">Manual Build</h3>
+          <p className="text-secondary-ink dark:text-muted-ink">Create your own custom questions</p>
         </button>
       </div>
     </div>
@@ -749,11 +749,11 @@ export const EduPlayPage: React.FC = React.memo(() => {
   const renderGameSettings = () => (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
-        <h2 className="s4-h2 text-gray-900 dark:text-gray-100 mb-6">Game Settings</h2>
+        <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-6">Game Settings</h2>
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Game Title
             </label>
             <input
@@ -767,7 +767,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Questions
               </label>
               <input
@@ -778,7 +778,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Timer (seconds)
               </label>
               <input
@@ -826,11 +826,11 @@ export const EduPlayPage: React.FC = React.memo(() => {
       </button>
 
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
-        <h2 className="s4-h2 text-gray-900 dark:text-gray-100 mb-6 text-center">Join Game</h2>
+        <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-6 text-center">Join Game</h2>
 
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Game Code
             </label>
             <input
@@ -839,12 +839,12 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 6-digit code"
               maxLength={6}
-              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-100`}
+              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Your Name
             </label>
             <input
@@ -876,10 +876,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
       <div className="max-w-5xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
           <div className="text-center mb-8">
-            <h2 className="s4-h1 text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">
               {currentGame?.game_title}
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-secondary-ink dark:text-muted-ink mb-6">
               {currentGame?.total_questions} questions • {currentGame?.question_timer_seconds}s per question
             </p>
 
@@ -888,7 +888,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               {/* Game Code */}
               <div className={`bg-accent-gold-soft/20 rounded-md p-6 border-2 border-divider dark:border-divider-on-dark opacity-50`}>
                 <div className="flex items-center justify-center space-x-2 mb-3">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Game Code</span>
+                  <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink">Game Code</span>
                 </div>
                 <div className="flex items-center justify-center space-x-3 mb-3">
                   <span className="s4-h1 text-[40px] text-blue-600 dark:text-blue-400 tracking-wider">
@@ -917,7 +917,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-md p-6 border-2 border-green-300 dark:border-green-700">
                 <div className="flex items-center justify-center space-x-2 mb-3">
                   <QrCode className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Scan to Join</span>
+                  <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink">Scan to Join</span>
                 </div>
                 <div className="flex justify-center">
                   <div className="bg-white p-4 rounded-[var(--s4-radius-card)] inline-block">
@@ -935,7 +935,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center space-x-2">
+            <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark flex items-center space-x-2">
               <Users className="h-5 w-5" />
               <span>Players ({participants.length})</span>
             </h3>
@@ -951,7 +951,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                   {index + 1}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                  <p className="font-medium text-ink dark:text-muted-ink-on-dark truncate">
                     {participant.display_name}
                     {participant.is_host && <Crown className="h-4 w-4 inline ml-1 text-yellow-500" />}
                   </p>
@@ -961,7 +961,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
           </div>
 
           {participants.length === 0 && (
-            <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            <div className="text-center py-12 text-muted-ink dark:text-muted-ink">
               <Users className="h-16 w-16 mx-auto mb-4 opacity-50" />
               <p>Waiting for players to join...</p>
             </div>
@@ -971,7 +971,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="flex space-x-3">
           <button
             onClick={handleLeaveGame}
-            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
+            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:text-muted-ink-on-dark dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
           >
             <LogOut className="h-5 w-5" />
             <span>Leave Game</span>

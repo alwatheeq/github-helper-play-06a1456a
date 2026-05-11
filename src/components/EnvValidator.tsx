@@ -15,17 +15,17 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
             </div>
           </div>
 
-          <h1 className="s4-h2 text-gray-900 text-center mb-4">
+          <h1 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
             Configuration Error
           </h1>
 
-          <p className="text-gray-600 text-center mb-6">
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-center mb-6">
             The application is missing required environment variables.
           </p>
 
           <div className="bg-gray-50 rounded-[var(--s4-radius-card)] p-4 mb-6">
-            <h2 className="font-semibold text-gray-900 mb-2">Missing Variables:</h2>
-            <ul className="space-y-1 text-sm text-gray-600">
+            <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-2">Missing Variables:</h2>
+            <ul className="space-y-1 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
               {!supabaseUrl && <li>• VITE_SUPABASE_URL</li>}
               {!supabaseAnonKey && <li>• VITE_SUPABASE_ANON_KEY</li>}
             </ul>

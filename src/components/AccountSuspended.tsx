@@ -78,10 +78,10 @@ export const AccountSuspended: React.FC = () => {
           <div className="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
             <Ban className="h-8 w-8 text-red-600 dark:text-red-400" />
           </div>
-          <h1 className="s4-h1 text-gray-900 dark:text-white mb-2">
+          <h1 className="s4-h1 text-ink dark:text-ink-on-dark mb-2">
             Account Suspended
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-secondary-ink dark:text-muted-ink">
             Your account has been suspended and you cannot access the website.
           </p>
         </div>
@@ -124,7 +124,7 @@ export const AccountSuspended: React.FC = () => {
 
           {blockInfo.isPermanent && (
             <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-[var(--s4-radius-card)] p-4">
-              <p className="text-sm text-gray-700 dark:text-gray-300">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 This is a permanent suspension. If you believe this is an error, please contact support.
               </p>
             </div>
@@ -134,14 +134,14 @@ export const AccountSuspended: React.FC = () => {
         <div className="space-y-3">
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-[var(--s4-radius-card)] transition"
+            className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gray-600 hover:bg-gray-700 text-ink-on-dark rounded-[var(--s4-radius-card)] transition"
           >
             <LogOut className="h-5 w-5" />
             <span>Sign Out</span>
           </button>
 
           <div className="text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-muted-ink dark:text-muted-ink">
               Need help? Contact support at{' '}
               <a 
                 href="mailto:support@example.com" 

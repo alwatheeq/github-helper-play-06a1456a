@@ -102,7 +102,7 @@ export const Auth: React.FC = () => {
         <div className="text-center">
           <div className="flex justify-center items-center space-x-2 mb-4">
             <div className="bg-accent-gold p-3 rounded-md">
-              <FileText className="h-8 w-8 text-white" /> 
+              <FileText className="h-8 w-8 text-ink-on-dark" /> 
             </div>
             <h1 className="s4-h1 text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
           </div>

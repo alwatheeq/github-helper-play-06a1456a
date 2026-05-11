@@ -69,15 +69,15 @@ const MiniPlayer: React.FC = () => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >
-        <GripVertical className="w-3 h-3 text-white/70 shrink-0" />
-        <span className="text-[10px] text-white font-medium truncate flex-1">
+        <GripVertical className="w-3 h-3 text-ink-on-dark/70 shrink-0" />
+        <span className="text-[10px] text-ink-on-dark font-medium truncate flex-1">
           {activeRoom.name}
         </span>
       </div>
 
       {/* Video preview placeholder */}
       <div className="flex-1 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-        <span className="text-[9px] text-gray-500">
+        <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">
           {t('floating_video.video_preview') || 'Video Preview'}
         </span>
       </div>
@@ -93,7 +93,7 @@ const MiniPlayer: React.FC = () => {
           {isMuted ? (
             <MicOff className="w-3.5 h-3.5 text-red-400" />
           ) : (
-            <Mic className="w-3.5 h-3.5 text-white" />
+            <Mic className="w-3.5 h-3.5 text-ink-on-dark" />
           )}
         </button>
 
@@ -103,7 +103,7 @@ const MiniPlayer: React.FC = () => {
           className="p-1 rounded hover:bg-white/20 transition-colors"
           title={t('floating_video.expand') || 'Expand'}
         >
-          <Maximize2 className="w-3.5 h-3.5 text-white" />
+          <Maximize2 className="w-3.5 h-3.5 text-ink-on-dark" />
         </button>
 
         <button

@@ -44,7 +44,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
         <div className="text-center space-y-2 pt-8">
           <div className="flex justify-center">
             <div className="p-3 rounded-full bg-accent-gold">
-              <Globe className="h-10 w-10 text-white" />
+              <Globe className="h-10 w-10 text-ink-on-dark" />
             </div>
           </div>
           <h1 className="s4-h2 text-ink dark:text-ink-on-dark">

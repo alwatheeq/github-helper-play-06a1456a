@@ -74,22 +74,22 @@ export class ErrorBoundary extends Component<Props, State> {
               </div>
             </div>
 
-            <h1 className="s4-h2 text-gray-900 text-center mb-4">
+            <h1 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
               {this.props.fallbackMessage || 'Something went wrong'}
             </h1>
 
-            <p className="text-gray-600 text-center mb-6">
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark text-center mb-6">
               The application encountered an unexpected error. This has been logged for review.
             </p>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
               <div className="bg-gray-50 rounded-[var(--s4-radius-card)] p-4 mb-6 max-h-64 overflow-auto">
-                <h2 className="font-semibold text-gray-900 mb-2">Error Details:</h2>
+                <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-2">Error Details:</h2>
                 <pre className="text-xs text-red-600 whitespace-pre-wrap">
                   {this.state.error.toString()}
                 </pre>
                 {this.state.errorInfo && (
-                  <pre className="text-xs text-gray-600 mt-2 whitespace-pre-wrap">
+                  <pre className="text-xs text-secondary-ink dark:text-muted-ink-on-dark mt-2 whitespace-pre-wrap">
                     {this.state.errorInfo.componentStack}
                   </pre>
                 )}
@@ -107,7 +107,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-300 transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-300 transition duration-150"
               >
                 <Home className="h-5 w-5" />
                 <span>Go Home</span>

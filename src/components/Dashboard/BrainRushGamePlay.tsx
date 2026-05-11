@@ -492,7 +492,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                   <p className="text-lg font-bold text-purple-600 dark:text-purple-400">{questionProgress}</p>
                 </div>
                 <div className="bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-[var(--s4-radius-card)]">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">Difficulty</span>
+                  <span className="text-sm text-secondary-ink dark:text-muted-ink">Difficulty</span>
                   <p className="text-lg font-bold text-blue-600 dark:text-blue-400 capitalize">{currentQuestion.difficulty}</p>
                 </div>
               </div>

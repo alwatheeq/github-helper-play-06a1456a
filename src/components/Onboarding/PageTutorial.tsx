@@ -83,7 +83,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
 
           <div className="pr-12">
             <h2 className="s4-h2 mb-1">{config.title}</h2>
-            <p className="text-white/90 text-sm">
+            <p className="text-ink-on-dark/90 text-sm">
               {t('tutorial.learn_this_page')}
             </p>
           </div>
