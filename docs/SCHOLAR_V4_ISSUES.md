@@ -183,3 +183,24 @@ All four files were already fully tokenized in earlier passes but were never on 
 
 ### Why "Folders" is not a separate file
 Folder management is composed inside `LibraryPage.tsx` — there is no standalone user-facing Folders component. Admin's `FoldersManagementPage.tsx` is part of a separate Admin cluster (to be addressed in a later phase).
+
+## Phase 3.16 — core dashboard surfaces (Dashboard / SummaryDisplay / FlashcardViewer)
+
+**Scope**: trio of central dashboard surfaces, ~30 legacy radius hits.
+
+**Substitutions** (30 total):
+- `src/components/Dashboard/Dashboard.tsx` — 12 plain radius (`rounded-lg` / `rounded-xl` → `rounded-[var(--s4-radius-card)]`) on icon badge, language selector, action menu trigger, dropdown panel, six menu items, error card, error CTA button (L1542, 1560, 1607, 1617, 1622, 1635, 1644, 1652, 1665, 1699, 1728, 1737).
+- `src/components/Dashboard/SummaryDisplay.tsx` — 15 plain + 1 directional. Plain: card shells, action buttons, language/format pickers, modal shell `rounded-2xl`, modal inputs. Directional: L1078 `rounded-r-lg` → `rounded-r-[var(--s4-radius-card)]` on medical-mode error notice strip.
+- `src/components/Dashboard/FlashcardViewer.tsx` — 2 plain (`rounded-2xl` on flashcard front L727 and back L757 faces). Flip-animation classes (`backface-hidden`, `rotate-y-180`, `transform-style-preserve-3d`) preserved.
+
+**Exemptions preserved verbatim** (31 total):
+- `rounded-full` (25): avatars, status dots, spinner rings, circular action buttons, progress pills, tag chips — circular by design.
+- `rounded-md` (6): SummaryDisplay icon backdrops (L843, L916) + FlashcardViewer rating cards (L818, L893, L964, L1025). Chip/sub-element radius, distinct from `--s4-radius-card`. Same convention as Phases 3.11 and 3.14.
+- Semantic state colors (red/green/orange/indigo/purple/emerald tints) on error notices, action buttons, rating cards — affordance/intent.
+- Non-gold gradients on FlashcardViewer accent bars (`from-red-400 to-pink-500`, `from-blue-400 to-indigo-500`, `from-emerald-400 to-teal-500`) — not the forbidden gold-gradient pair.
+
+**Cross-file safety**: no edits to hooks (`useAuth`, `useSubscription`, `useCredits`, `useFeatureAccess`, `useNotifications`, `useOnboarding`, `usePageTutorial`, `useBookMode`, `useHighlights`), contexts (Chat, PersistentModal, Theme, SubscriptionUpsellGate), Supabase queries, edge-function payloads (`generate-summary-and-flashcards`, `generate-share-link`, `translate-text`, `translate-quiz-bulk`), routes, i18n keys, ErrorLogger calls, or shared components.
+
+**Regression guard**: 3 files added under `// Phase 3.16 (core dashboard surfaces)` in `scripts/check-token-regressions.cjs`.
+
+**Audit gate**: `npm run check:tokens` → `✓ 28 swept file(s) clean.`; all forbidden-pattern greps return 0; exemption counts match plan (25 `rounded-full`, 6 `rounded-md`); exactly 4 source files changed.

@@ -121,3 +121,24 @@ The remaining candidate files have confirmed legacy hits and will be sequenced a
 - **Phase 3.20+** — Admin cluster (`src/components/Admin/**`) as its own multi-phase sweep.
 
 Calling these out here so they are not forgotten when 3.16 lands.
+---
+
+## Phase 3.16 — RESULTS
+
+**Substitutions applied**: 30 total
+- `Dashboard.tsx`: 12 plain radius (`rounded-lg` / `rounded-xl` → `rounded-[var(--s4-radius-card)]`)
+- `SummaryDisplay.tsx`: 15 plain + 1 directional (`rounded-r-lg` L1078 → `rounded-r-[var(--s4-radius-card)]`)
+- `FlashcardViewer.tsx`: 2 plain (`rounded-2xl` on flashcard front/back faces)
+
+**Regression guard extended**: 3 files appended under `// Phase 3.16 (core dashboard surfaces)`.
+
+**Audit gate**:
+- `npm run check:tokens` → `✓ 28 swept file(s) clean.`
+- legacy radius / directional legacy / gold-gradient → 0 across all 3 files
+- `rounded-full` exemptions preserved: 25 (4 + 11 + 10), matches plan
+- `rounded-md` exemptions preserved: 6 (0 + 2 + 4), matches plan
+- Token uses: Dashboard 12, SummaryDisplay 16, FlashcardViewer 33 (existing tokens + 2 new) → 30 new + 31 pre-existing
+
+**Cross-file safety**: no hook signatures, contexts, Supabase queries, edge-function payloads, routes, locale keys, business logic, SRS algorithm, flip-animation classes, or shared component imports modified. Exactly 4 source files changed (Dashboard.tsx, SummaryDisplay.tsx, FlashcardViewer.tsx, scripts/check-token-regressions.cjs).
+
+**Next**: Phase 3.17 — BookMode / Highlighting / Tooltip cluster (FreeFormToggle 1, HighlightMenu 1, Tooltip 1).
