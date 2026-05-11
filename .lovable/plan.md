@@ -1,72 +1,94 @@
-## Phase 3.6 — Profile cluster
+## Phase 3.6 — Verification
 
-Same conservative token-sweep methodology proven in Phases 3.3 / 3.4 / 3.5. **Layout, JSX, copy, props, hooks, Supabase queries, RPC calls (`check_username_available`), and `username_changed_at` cooldown logic — byte-identical.** Only class-string substitutions.
+- `rg "rounded-(xl|2xl|lg|\[12px\])|bg-gradient-to-r from-accent-gold|alert\(|window\.confirm\("` on the 2 in-scope files → **0 hits**
+- `Dashboard.tsx` lazy import + mount of `ProfilePage` byte-identical
+- `UsernameSetupModal` props / RPC / `username_changed_at` cooldown logic untouched
+- Locale JSON (en/ar/fr/tr) valid
+- Data-driven exemptions preserved as documented
+
+Result: Phase 3.6 is clean. No linter, runtime, or cross-file regressions.
+
+---
+
+## Phase 3.7 — Billing / Subscription / Pricing cluster
+
+Same conservative token-sweep methodology as 3.3 → 3.6. **Layout, JSX, copy, props, hooks, Stripe edge-function calls (`create-checkout-session`, `stripe-webhook`), `useSubscription` / `useCreditStore` state, and `SubscriptionGuard` gating logic — byte-identical.** Only class-string substitutions.
 
 ### Files in scope
 
 | File | Lines | Legacy hits | Role |
 |------|-------|-------------|------|
-| `src/components/Dashboard/ProfilePage.tsx` | 1632 | 28 | Profile hub: avatar, info form, preferences, theme, stats, achievements |
-| `src/components/Dashboard/UsernameSetupModal.tsx` | 269 | 3 | Username picker w/ availability check + 10-day cooldown |
+| `src/components/Dashboard/BillingHistoryPage.tsx` | 377 | 1 | In-shell billing invoice list |
+| `src/components/Dashboard/SubscriptionManagementPage.tsx` | 552 | 21 | In-shell plan / status / cancel |
+| `src/components/Pricing/PricingPage.tsx` | 302 | 13 | Out-of-shell plans grid |
+| `src/components/Pricing/CheckoutPage.tsx` | 519 | 8 | Out-of-shell checkout wrapper |
+| `src/components/Pricing/PaymentSuccess.tsx` | 122 | 4 | Stripe success redirect landing |
+| `src/components/Pricing/PaymentCancel.tsx` | 63 | 4 | Stripe cancel redirect landing |
+| `src/components/Subscription/PersistentSubscriptionModal.tsx` | 139 | 2 | Global upsell modal (rendered from `PersistentModalContext`) |
+| `src/components/Subscription/SubscriptionGuard.tsx` | 101 | 2 | Route-level paywall wrapper |
 
-Indirectly touched (verify only — no edits): `Dashboard.tsx` lazy mount of `ProfilePage`, `useAuth`, `useSubscription`, `useToast`, `useI18n`, `useTheme`/`ThemeContext` (theme gradient consumers), Supabase tables `user_profiles` / `user_preferences` / `achievements` (read-only here), and the `check_username_available` RPC.
+**Total: 8 files, ~55 hits.**
+
+Indirectly touched (verify only — no edits): `App.tsx` routes for `/pricing`, `/checkout`, `/payment-success`, `/payment-cancel`; `Dashboard.tsx` mount of `BillingHistoryPage` + `SubscriptionManagementPage`; `useSubscription` hook; `useCreditStore`; `PersistentModalContext`; `SubscriptionUpsellGateContext`; `SubscriptionRefreshListener`; edge functions (`create-checkout-session`, `stripe-webhook`, `get-credit-balance`).
 
 ### Deliverables
 
-1. **Scripted token sweep** (identical regex to 3.3 / 3.4 / 3.5):
-   - `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold` (4 hits: lines 950, 1350, 1435 in ProfilePage; +brand button on line 1082 stays GREEN gradient — see exemptions)
+1. **Scripted token sweep** (identical regex to 3.3 – 3.6):
+   - `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`
    - `rounded-2xl` / `rounded-xl` / `rounded-lg` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]`
-   - **No** other class-string changes. **No** JSX restructuring. **No** primitive swaps. **No** copy / a11y / handler edits.
+   - **No** other class-string changes. **No** JSX restructuring. **No** primitive swaps (`<ScholarCard>`/`<ScholarButton>`). **No** copy / a11y / handler edits. **No** new imports.
 
 2. **Inventory data-driven color exemptions** (preserve as-is, document in `docs/SCHOLAR_V4_ISSUES.md`):
-   - Line 1082 — `from-green-500 to-emerald-600` "Save" CTA: semantic success color, intentional contrast against the gold primary above. Leave.
-   - Lines 1321 / 1325 / 1580 — `bg-gradient-to-br ${bgGradient}` / `${uiGradient}` / `${getBadgeColor(tier)}`: data-driven theme + achievement-tier swatches. Leave.
-   - Lines 1492 / 1506 / 1520 / 1534 / 1548 — stat-card accent backgrounds (`bg-orange-100`, `bg-green-100`, `bg-subtle`, `bg-purple-100`, `bg-indigo-100`): semantic per-stat color coding. Leave.
-   - Lines 1449 / 1460 / 1469 — paginator buttons (`bg-gray-700` / `bg-gray-300` / `bg-gray-100`): legacy neutrals, **leave** (not in approved sweep regex; would risk visual drift).
+   - Plan-tier accent colors on `PricingPage` cards (Free / Pro / Business gradients) — data-driven per `plan.color`, leave
+   - "Most popular" highlight ring + badge — semantic emphasis, leave
+   - Invoice status pills on `BillingHistoryPage` (paid = green, failed = red, refunded = gray) — semantic, leave
+   - Subscription status badges on `SubscriptionManagementPage` (active / past_due / canceled / trialing) — semantic, leave
+   - Stripe success ✓ green icon, cancel ✗ red icon on landing pages — semantic, leave
 
 3. **Cross-file safety checks** (must hold true post-edit):
-   - `Dashboard.tsx` import + lazy mount of `ProfilePage` unchanged
-   - `UsernameSetupModal` props `{ isOpen, onClose, onComplete }` + `onComplete(username)` signature unchanged
-   - `check_username_available` RPC call + `COOLDOWN_DAYS = 10` + `username_changed_at` update logic unchanged
-   - `useAuth` / `useSubscription` / `useToast` / `useI18n` call sites identical
-   - `ScholarCard` / `ScholarButton` imports + variants in `UsernameSetupModal` unchanged
-   - No new imports
+   - `App.tsx` routes (`/pricing`, `/checkout`, `/payment-success`, `/payment-cancel`) unchanged
+   - `Dashboard.tsx` lazy mounts of `BillingHistoryPage` / `SubscriptionManagementPage` unchanged
+   - `useSubscription` / `useCreditStore` / `useAuth` call sites identical
+   - `PersistentModalContext` + `SubscriptionUpsellGateContext` consumers unchanged
+   - `create-checkout-session` invoke payload (`priceId`, `mode`, `successUrl`, `cancelUrl`) byte-identical
+   - `stripe-webhook` not touched (server-side, out of scope)
+   - `postSubscribeCredits` utility call site unchanged
+   - `SubscriptionGuard` gating logic + fallback render unchanged
+   - No new imports anywhere
 
-4. **Audit gate at end of 3.6:**
-   - `rg "rounded-(xl|2xl|lg|\[12px\])"` on the 2 files → **0 hits**
-   - `rg "bg-gradient-to-r from-accent-gold"` on the 2 files → **0 hits**
-   - `rg "alert\(|window\.confirm\("` → **0 hits** (already 0)
+4. **Audit gate at end of 3.7:**
+   - `rg "rounded-(xl|2xl|lg|\[12px\])"` on the 8 files → **0 hits**
+   - `rg "bg-gradient-to-r from-accent-gold"` on the 8 files → **0 hits**
+   - `rg "alert\(|window\.confirm\("` on the 8 files → **0 hits**
    - Locale JSON parse (en/ar/fr/tr) → exit 0
-   - Manual smoke (preview): Profile tab → avatar + info form + theme picker + stats + achievements render; open username modal → availability check debounces, cooldown banner shows when applicable, save succeeds.
+   - Manual smoke (preview):
+     - In-shell: Billing tab → invoice list renders; Subscription tab → status card + plan switcher + cancel modal render
+     - Out-of-shell: `/pricing` → 3 plan cards render; click → `/checkout` mounts; success/cancel landing pages render
 
-### Cross-file step deliberately carried forward from 3.5
+### Cross-file step deliberately carried forward from 3.6
 
-Re-verify `useFloatingVideoStore` is untouched (Profile doesn't consume it, but the audit boundary must remain stable across cluster transitions). Confirm `Dashboard.tsx` is byte-identical from Phase 3.5 → 3.6.
+Re-verify `Dashboard.tsx` byte-identical (no drift across phase transitions). Confirm `useSubscription` not mutated (Profile relies on it for tier display — Phase 3.6 boundary integrity).
 
 ### Out of scope (deferred)
 
-- Billing / Subscription (3.7), Notifications / Pomodoro (3.8), Goals / Achievements pages (3.9 — note: `AchievementsPage.tsx` is separate from the stat card on `ProfilePage`), Feedback (3.10), Content viewers (3.11), Share (3.12)
-- Issue #13 cooldown timer backend wiring — already live in this modal via `username_changed_at`; ledger row can be flipped to 🟢 in Phase 5 review
+- Notifications / Pomodoro / Credit widgets (3.8) — `LowCreditBanner`, `LowCreditWarning`, `InsufficientCreditsModal`, `CreditBalanceWidget`, `NotificationCenter`, `PomodoroTimer`
+- Goals / Achievements (3.9), Feedback / Informational (3.10), Content viewers (3.11), Share (3.12)
+- Stripe webhook / edge function changes — backend wiring, owned by Phase 5
+- Issue #12 ledger row "Empty / Failed / Canceled" billing variants — UI already covers these states; ledger flip to 🟢 deferred to Phase 5 review
 - Any layout / spacing / color-palette change — **explicitly forbidden by user**
 
 ### Best-practice notes
 
-- Single scripted commit (proven safe in 3.3 / 3.4 / 3.5)
-- No `<ScholarCard>` swaps for ProfilePage's 1632-line dense grid — pixel-drift risk too high for a token-only phase
-- Update `.lovable/plan.md` "Phase 3.6 — applied" with hit counts per file
-- Update `docs/SCHOLAR_V4_ISSUES.md` exemptions section with the 4 categories above
+- Single scripted commit (proven safe in 3.3 – 3.6)
+- No `<ScholarCard>` swaps on PricingPage / CheckoutPage — Stripe-redirect flow has tight visual contract with Stripe-hosted pages; even semantic-equivalent swaps risk pixel drift
+- 8 files in one sweep is the largest batch yet, but mechanics are identical and proven; risk is sub-linear
+- Update `.lovable/plan.md` "Phase 3.7 — applied" with hit counts per file
+- Update `docs/SCHOLAR_V4_ISSUES.md` exemptions section with the 5 categories above
 
 ### Timeline
 
 - Scripted sweep: ~3 min
-- Audit + smoke: ~7 min
-- Total: ~10 min
+- Audit + smoke (2 surfaces — in-shell + out-of-shell): ~10 min
+- Total: ~13 min
 
 Confirm and I'll run the sweep.
----
-
-## Phase 3.6 — applied
-Token sweep across 2 Profile files. Hits: ProfilePage 28, UsernameSetupModal 3. Total 31 substitutions.
-Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. 0 alert/confirm. Locale JSON valid.
-Cross-file: Dashboard.tsx mount, UsernameSetupModal props/RPC/cooldown logic, useAuth/useSubscription/useToast/useI18n call sites all unchanged. No new imports.
-Data-driven exemptions preserved: green Save CTA (line 1082), theme gradient swatches (1321/1325), badge-tier swatch (1580), stat-card accent backgrounds (1492/1506/1520/1534/1548), paginator neutrals (1449/1460/1469).

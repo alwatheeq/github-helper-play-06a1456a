@@ -48,7 +48,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
     <div className="flex items-center justify-center min-h-[400px] p-6">
       <ScholarCard variant="elevated" className="max-w-md w-full text-center">
         <div className="mb-6">
-          <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
+          <div className="bg-accent-gold p-4 rounded-full w-20 h-20 mx-auto flex items-center justify-center">
             <Crown className="h-10 w-10 text-white" />
           </div>
         </div>
@@ -62,7 +62,7 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
         </p>
 
         {hasExpired && (
-          <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4 mb-6">
+          <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
             <p className="text-sm text-orange-800 dark:text-orange-300">
               Your {getTierDisplayName()} subscription expired. Renew now to continue using all features.
             </p>
