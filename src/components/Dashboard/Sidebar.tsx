@@ -189,13 +189,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </ul>
         </nav>
 
-        {/* Sidebar Footer */}
+        {/* Sidebar Footer — v4 pull-quote */}
         {shouldBeOpen && (
           <div className="p-4 border-t border-divider-on-dark">
-            <div className="text-[11px] text-muted-ink-on-dark text-center leading-relaxed">
-              <p>© 2025 {t('app_name')}</p>
-              <p className="opacity-70">{t('app_tagline')}</p>
-            </div>
+            <p className="font-display italic text-[11.5px] leading-snug text-ink-on-dark/90">
+              "Read with the pen, write with the mind."
+            </p>
+            <p className="text-[10px] font-semibold tracking-wider mt-2 text-muted-ink-on-dark">
+              © 2026 {t('app_name')}
+            </p>
           </div>
         )}
       </div>
