@@ -443,19 +443,51 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
         
-        {/* Tab Navigation — hairline strip */}
-        <div className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark">
-          <button onClick={() => setInputMode('file')} className={tabBtnCls(inputMode === 'file')}>
+        {/* Tab Navigation — hairline strip, horizontally scrollable on small viewports */}
+        <div
+          role="tablist"
+          aria-label="Input source"
+          className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
+        >
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'file'}
+            onClick={() => setInputMode('file')}
+            className={tabBtnCls(inputMode === 'file')}
+          >
             <File className="h-4 w-4" />
             <span>{t('dashboard.upload_file')}</span>
           </button>
-          <button onClick={() => setInputMode('text')} className={tabBtnCls(inputMode === 'text')}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'text'}
+            onClick={() => setInputMode('text')}
+            className={tabBtnCls(inputMode === 'text')}
+          >
             <Type className="h-4 w-4" />
             <span>{t('dashboard.paste_text')}</span>
           </button>
-          <button onClick={() => setInputMode('ocr')} className={tabBtnCls(inputMode === 'ocr')}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'ocr'}
+            onClick={() => setInputMode('ocr')}
+            className={tabBtnCls(inputMode === 'ocr')}
+          >
             <Scan className="h-4 w-4" />
             <span>{t('dashboard.ocr_scan')}</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'url'}
+            onClick={() => setInputMode('url')}
+            className={tabBtnCls(inputMode === 'url')}
+          >
+            <Globe className="h-4 w-4" />
+            <span>{t('workshop.url_tab')}</span>
           </button>
         </div>
 
