@@ -2,6 +2,8 @@ import React from 'react';
 import { InputForm } from './InputForm';
 import { RecentlyProcessedList } from './RecentlyProcessedList';
 import { GenerationRail } from './GenerationRail';
+import { WorkshopHeader } from './WorkshopHeader';
+import { useI18n } from '../../contexts/I18nContext';
 import type { AcademicsGenerationPreferences } from '../../utils/academicsGenerationPreferences';
 
 interface WorkshopPanelProps {
@@ -17,22 +19,27 @@ interface WorkshopPanelProps {
 }
 
 /**
- * Idle Dashboard layout — strict editorial spec.
- * Two-column grid: 1fr (input card) + 300px (dark feature card).
- * Recently-processed list sits below, full-width.
- * No nested cards, no horizontal scroll on a 1366px laptop.
+ * Scholar v4 Workshop — idle Dashboard state.
+ * Layout:
+ *   ≥1024 px: two-column grid, input card + 300 px dark feature rail
+ *   <1024 px: single column, rail stacks under input card
+ * The recently-processed list sits below, full-width.
  */
 export const WorkshopPanel: React.FC<WorkshopPanelProps> = ({ onProcessInput, onOpenHistory }) => {
-  // v1: rail toggles are visual only; submit happens via InputForm CTAs.
+  const { t } = useI18n();
+
+  // Visual-only rail toggles; real submission lives inside InputForm CTAs.
   const [includeSummary, setIncludeSummary] = React.useState(true);
   const [includeFlashcards, setIncludeFlashcards] = React.useState(true);
 
   return (
     <>
-      <div
-        className="grid gap-8"
-        style={{ gridTemplateColumns: 'minmax(0, 1fr) 300px' }}
-      >
+      <WorkshopHeader
+        eyebrow={t('workshop.eyebrow')}
+        title={t('workshop.title')}
+      />
+
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
         <div className="min-w-0">
           <InputForm onProcessInput={onProcessInput} />
         </div>
