@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan, Globe } from 'lucide-react';
-import { ScholarCard } from '../Scholar';
+import { ScholarCard, ScholarAlert } from '../Scholar';
 import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
@@ -431,15 +431,13 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
       <ScholarCard padding="lg">
         {/* Notification */}
         {notification.show && (
-          <div className="mb-6 p-4 rounded-[var(--s4-radius-card)] flex items-center space-x-3 bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200">
-            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-            <span className="text-sm font-medium flex-1">{notification.message}</span>
-            <button
-              onClick={() => setNotification(prev => ({ ...prev, show: false }))}
-              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200"
+          <div className="mb-6">
+            <ScholarAlert
+              variant="danger"
+              onDismiss={() => setNotification(prev => ({ ...prev, show: false }))}
             >
-              <X className="h-4 w-4" />
-            </button>
+              {notification.message}
+            </ScholarAlert>
           </div>
         )}
         
