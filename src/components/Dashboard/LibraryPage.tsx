@@ -920,12 +920,12 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <button
                         type="button"
                         onClick={() => setShowTopicsTagsModal(true)}
-                        className={`flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-md transition-colors duration-150 whitespace-nowrap w-full sm:w-auto shrink-0 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`}
+                        className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-[var(--s4-radius-btn)] transition-colors duration-150 whitespace-nowrap w-full sm:w-auto shrink-0 bg-accent-gold text-ink-on-dark hover:opacity-90"
                       >
                         <Filter className="h-4 w-4 shrink-0" aria-hidden />
                         <span>{t('library.topics_tags_heading')}</span>
                         {(selectedTags.length > 0 || selectedTopics.length > 0) && (
-                          <span className={`px-2 py-0.5 rounded-full text-xs font-semibold bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
+                          <span className="px-2 py-0.5 rounded-[var(--s4-radius-btn)] text-xs font-semibold bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark">
                             {selectedTags.length + selectedTopics.length}
                           </span>
                         )}
