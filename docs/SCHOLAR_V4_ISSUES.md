@@ -56,3 +56,10 @@ or no existing handler gets a row here. As they are wired up, mark them
 - [ ] Phase 4 — Auth & out-of-shell pages.
 - [ ] Phase 5 — Active exam runtime & modals.
 - [ ] Phase 6 — Cleanup (drop legacy `designSystem.css` rules, remove old shell files).
+
+## Phase 3.8 — Data-driven exemptions preserved
+- Notification severity pills (info/warning/error/success) — `rounded-full` retained
+- Pomodoro phase colors (work=accent, short-break=green, long-break=blue) — retained
+- Low-credit banner severity ramp (>30% neutral, 10–30% amber, <10% red) — retained
+- Mini-player drag-handle and close affordances — `rounded-full` retained
+- Admin credit-ops status badges (granted/revoked/expired) — retained

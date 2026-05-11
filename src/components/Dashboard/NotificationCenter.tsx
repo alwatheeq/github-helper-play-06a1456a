@@ -86,7 +86,7 @@ export const NotificationCenter: React.FC = () => {
           setIsOpen(!isOpen);
           if (!isOpen) setActiveTab('alerts');
         }}
-        className="relative p-2 hover:opacity-60 rounded-lg transition duration-200"
+        className="relative p-2 hover:opacity-60 rounded-[var(--s4-radius-card)] transition duration-200"
       >
         <Bell className="h-6 w-6 text-secondary-ink dark:text-muted-ink-on-dark" />
         {visibleUnreadCount > 0 && (
@@ -106,7 +106,7 @@ export const NotificationCenter: React.FC = () => {
           />
 
           {/* Dropdown Panel */}
-          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-xl shadow-lg border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
+          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
             {/* Header */}
             <div className="p-4 border-b border-divider dark:border-divider-on-dark space-y-3">
               <div className="flex items-center justify-between gap-2">
@@ -122,7 +122,7 @@ export const NotificationCenter: React.FC = () => {
                 )}
               </div>
               <div
-                className="flex rounded-lg p-0.5 bg-accent-gold-soft/10 border border-divider dark:border-divider-on-dark"
+                className="flex rounded-[var(--s4-radius-card)] p-0.5 bg-accent-gold-soft/10 border border-divider dark:border-divider-on-dark"
                 role="tablist"
               >
                 <button

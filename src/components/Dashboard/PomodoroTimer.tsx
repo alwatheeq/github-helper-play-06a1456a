@@ -45,7 +45,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
 
   const timerCard = (
     <div
-      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-2xl shadow-lg border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
+      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-[var(--s4-radius-card)] shadow-lg border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-ink dark:text-ink-on-dark">
@@ -75,7 +75,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <button
           type="button"
           onClick={isRunning ? pause : start}
-          className="p-2.5 rounded-full text-white transition bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90"
+          className="p-2.5 rounded-full text-white transition bg-accent-gold hover:opacity-90"
         >
           {isRunning ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         </button>

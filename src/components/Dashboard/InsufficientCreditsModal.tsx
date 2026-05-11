@@ -68,7 +68,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
               You don't have enough credits to complete this action.
             </p>
 
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4">
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">
                 Current Balance
               </p>
