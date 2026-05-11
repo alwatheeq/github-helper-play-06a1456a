@@ -117,3 +117,13 @@ Order: largest functional surface first (FreeFormToggle), then the selection too
 - **Phase 3.18 — Auth + top-level error/empty states**: `Auth/Auth.tsx` (7 radius + **2 gold gradients** at L104, L198, requires `bg-gradient-to-r` prefix removal), `AccountSuspended.tsx` (5), `NotFound.tsx` (3), `ErrorBoundary.tsx` (4), `EnvValidator.tsx` (3).
 - **Phase 3.19 — Misc primitives**: `LanguageToggle.tsx` (2), `Scholar/ScholarSkeleton.tsx` (1).
 - **Phase 3.20+ — Admin cluster**: `src/components/Admin/**`, multi-phase.
+---
+
+## Phase 3.17 — RESULTS (DONE)
+
+- `npm run check:tokens` → ✓ 31 swept file(s) clean.
+- 3 substitutions applied (FreeFormToggle L48, HighlightMenu L33, Tooltip L25), all `rounded-xl` → `rounded-[var(--s4-radius-card)]`.
+- Audit gate: legacy=0, directional=0, gold=0, rounded-full=3 (exempt), rounded-md=0.
+- Cross-file: Tooltip public API + consumer props of HighlightMenu/FreeFormToggle unchanged.
+- Files changed: 4 (3 source + `scripts/check-token-regressions.cjs`).
+- Next: Phase 3.18 (Auth + top-level error/empty states — includes 2 gold-gradient removals in Auth.tsx).

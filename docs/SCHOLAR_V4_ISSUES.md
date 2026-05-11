@@ -204,3 +204,20 @@ Folder management is composed inside `LibraryPage.tsx` — there is no standalon
 **Regression guard**: 3 files added under `// Phase 3.16 (core dashboard surfaces)` in `scripts/check-token-regressions.cjs`.
 
 **Audit gate**: `npm run check:tokens` → `✓ 28 swept file(s) clean.`; all forbidden-pattern greps return 0; exemption counts match plan (25 `rounded-full`, 6 `rounded-md`); exactly 4 source files changed.
+
+## Phase 3.17 — BookMode / Highlighting / Tooltip overlays (DONE)
+
+**Files swept (3):**
+- `src/components/Dashboard/BookMode/FreeFormToggle.tsx` — L48 `rounded-xl` → `rounded-[var(--s4-radius-card)]`
+- `src/components/Dashboard/Highlighting/HighlightMenu.tsx` — L33 `rounded-xl` → `rounded-[var(--s4-radius-card)]`
+- `src/components/Common/Tooltip.tsx` — L25 `rounded-xl` → `rounded-[var(--s4-radius-card)]`
+
+**Substitutions:** 3 plain radius (all dark-chip overlay surfaces). 0 directional, 0 gold gradients.
+
+**Exemptions preserved:** 3× `rounded-full` (2 in FreeFormToggle circular pill, 1 in HighlightMenu icon-button). Dark-chip `bg-gray-900` palette intentionally retained — out of scope for radius sweep.
+
+**Cross-file safety:** Tooltip public API (`title`/`children`/`position`) unchanged; HighlightMenu/FreeFormToggle consumer props unchanged; no hooks, contexts, Supabase, edge functions, routes, locale keys, animations, or business logic touched.
+
+**Regression guard:** 3 files appended to `SWEPT_FILES` under `// Phase 3.17` block. `npm run check:tokens` → ✓ 31 swept file(s) clean.
+
+**Audit gate:** legacy=0, directional=0, gold=0, rounded-full=3, rounded-md=0. Exactly 4 files changed.
