@@ -79,3 +79,14 @@ Replace remaining legacy radius/gradient tokens with Scholar v4 design tokens ac
 
 ## Next after this
 Phase 3.12 — Social cluster (GroupsPanel, FriendsPanel, GroupChat, CommentSection, LikeButton, FavoriteButton, ~6 files, ~39 hits).
+
+---
+
+## Phase 3.11 — RESULT (executed)
+
+- **Files edited:** 8 (InformationalPage, OnboardingWizard, FeedbackPage, PageTutorial, LanguageChoicePage, Common/Modal, Common/ConfirmationModal, Common/PromptModal).
+- **Substitutions:** 69 new `rounded-[var(--s4-radius-card)]` tokens + 8 `bg-accent-gold` gradient flattenings.
+- **Audit gate:** ✓ 0 gold gradients across all 9 in-scope files, only the planned `Common/Tooltip.tsx:25` dark-popover line remains as legacy `rounded-xl`. Non-gold semantic gradients in InformationalPage (lines 89, 358) preserved with radius substituted. All 4 locale JSONs parse OK.
+- **Cross-file:** No imports, props, hooks (`useConfirm`, `usePrompt`, `usePageTutorial`), contexts (`OnboardingContext`), Supabase calls, or error-logger sites touched.
+
+**Next:** Phase 3.12 (Social cluster — GroupsPanel, FriendsPanel, GroupChat, CommentSection, LikeButton, FavoriteButton, ~6 files, ~39 hits).
