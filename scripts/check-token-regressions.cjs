@@ -61,6 +61,10 @@ const SWEPT_FILES = [
   'src/components/Dashboard/ContentViewPage.tsx',
   'src/components/Dashboard/HistoryPage.tsx',
   'src/components/ShareView.tsx',
+  // Phase 3.16 (core dashboard surfaces)
+  'src/components/Dashboard/Dashboard.tsx',
+  'src/components/Dashboard/SummaryDisplay.tsx',
+  'src/components/Dashboard/FlashcardViewer.tsx',
 ];
 
 const repoRoot = path.resolve(__dirname, '..');
