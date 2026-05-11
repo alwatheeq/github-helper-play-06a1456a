@@ -305,7 +305,7 @@ export const StudyGoalsPage: React.FC = () => {
             <div className="flex items-center space-x-3">
               <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{t('goals.title')}</h1>
+                <h1 className="s4-h1 text-gray-900 dark:text-gray-100">{t('goals.title')}</h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {t('goals.subtitle')}
                 </p>
@@ -325,21 +325,21 @@ export const StudyGoalsPage: React.FC = () => {
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.active_goals')}</p>
-              <p className="text-4xl font-bold text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
+              <p className="s4-h1 text-[36px] text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
             </div>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.completed')}</p>
-              <p className="text-4xl font-bold text-green-600 dark:text-green-400">{completedGoals.length}</p>
+              <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
             </div>
           </div>
 
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.total_goals')}</p>
-              <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">{goals.length}</p>
+              <p className="s4-h1 text-[36px] text-gray-900 dark:text-gray-100">{goals.length}</p>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@ export const StudyGoalsPage: React.FC = () => {
         <div className="space-y-6">
           {activeGoals.length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">{t('goals.active_goals')}</h2>
+              <h2 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">{t('goals.active_goals')}</h2>
               <div className="space-y-4">
                 {activeGoals.map((goal) => {
                   const progress = calculateProgress(goal.current_value, goal.target_value);
@@ -440,7 +440,7 @@ export const StudyGoalsPage: React.FC = () => {
 
           {completedGoals.length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">{t('goals.completed_goals')}</h2>
+              <h2 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">{t('goals.completed_goals')}</h2>
               <div className="space-y-4">
                 {completedGoals.map((goal) => (
                   <div
@@ -497,7 +497,7 @@ export const StudyGoalsPage: React.FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Create New Goal</h2>
+              <h2 className="s4-h2 text-gray-900 dark:text-gray-100">Create New Goal</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
                 className="p-2 text-gray-500 hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"

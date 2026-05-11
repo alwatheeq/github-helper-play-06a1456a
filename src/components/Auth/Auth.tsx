@@ -104,7 +104,7 @@ export const Auth: React.FC = () => {
             <div className="bg-accent-gold p-3 rounded-md">
               <FileText className="h-8 w-8 text-white" /> 
             </div>
-            <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
+            <h1 className="s4-h1 text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
           </div>
           <p className="text-secondary-ink dark:text-muted-ink-on-dark">
             {t('auth.title')}

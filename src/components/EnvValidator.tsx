@@ -15,7 +15,7 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
             </div>
           </div>
 
-          <h1 className="text-2xl font-bold text-gray-900 text-center mb-4">
+          <h1 className="s4-h2 text-gray-900 text-center mb-4">
             Configuration Error
           </h1>
 

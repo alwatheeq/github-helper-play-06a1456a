@@ -47,7 +47,7 @@ export const PaymentSuccess: React.FC = () => {
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
+        <h1 className="s4-h1 text-ink dark:text-ink-on-dark text-center mb-4">
           Welcome Aboard!
         </h1>
 

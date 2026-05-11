@@ -585,36 +585,36 @@ export const EduPlayPage: React.FC = React.memo(() => {
   const renderMenu = () => (
     <div className="w-full">
       <div className="mb-12 text-center">
-        <Gamepad2 className={`h-20 w-20 text-ink dark:text-ink-on-dark mx-auto mb-4`} />
-        <h2 className={`text-5xl font-bold text-ink dark:text-ink-on-dark mb-4`}>EduPlay</h2>
+        <Gamepad2 className=`h-20 w-20 text-ink dark:text-ink-on-dark mx-auto mb-4`} />
+        <h2 className=`s4-h1 text-[40px] text-ink dark:text-ink-on-dark mb-4`}>EduPlay</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <button
           onClick={() => setViewMode('game-selection')}
-          className={`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
+          className=`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
         >
           <div className="bg-white/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Target className="h-12 w-12 text-white" />
           </div>
-          <h3 className="text-2xl font-bold mb-2 text-white">Brain Rush</h3>
+          <h3 className="s4-h2 mb-2 text-white">Brain Rush</h3>
           <p className="text-white/90">Fast-paced 4-choice quiz battles</p>
           <div className="mt-4 text-sm text-white/80">Compete in real-time!</div>
         </button>
 
-        <div className={`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60`}>
-          <div className={`bg-accent-gold-soft/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
-            <Trophy className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark`} />
+        <div className=`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60`}>
+          <div className=`bg-accent-gold-soft/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
+            <Trophy className=`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark`} />
           </div>
-          <h3 className={`text-xl font-bold mb-2 text-secondary-ink dark:text-muted-ink-on-dark`}>Coming Soon</h3>
-          <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>More exciting games on the way!</p>
+          <h3 className=`s4-h3 text-[20px] mb-2 text-secondary-ink dark:text-muted-ink-on-dark`}>Coming Soon</h3>
+          <p className=`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>More exciting games on the way!</p>
         </div>
 
         <div className="bg-gray-100 dark:bg-gray-800 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
           <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Clock className="h-12 w-12 text-gray-400" />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-600 dark:text-gray-400">Coming Soon</h3>
+          <h3 className="s4-h3 text-[20px] mb-2 text-gray-600 dark:text-gray-400">Coming Soon</h3>
           <p className="text-sm text-gray-500 dark:text-gray-500 text-center">More exciting games on the way!</p>
         </div>
       </div>
@@ -625,7 +625,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="w-full max-w-4xl mx-auto">
       <button
         onClick={() => setViewMode('menu')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
+        className=`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -633,13 +633,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <span>Back to Games</span>
       </button>
 
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-8`}>
+      <div className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-8`}>
         <div className="text-center mb-8">
-          <div className={`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
+          <div className=`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
             <Target className="h-16 w-16 text-white" />
           </div>
-          <h2 className={`text-4xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Brain Rush</h2>
-          <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
+          <h2 className=`s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-2`}>Brain Rush</h2>
+          <p className=`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
             Fast-paced multiplayer quiz game with 4-choice questions
           </p>
         </div>
@@ -647,10 +647,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <button
             onClick={() => setViewMode('question-source')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
+            className=`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
           >
             <Crown className="h-12 w-12 mx-auto mb-4 text-white" />
-            <h3 className="text-2xl font-bold mb-2 text-white">Host a Game</h3>
+            <h3 className="s4-h2 mb-2 text-white">Host a Game</h3>
             <p className="text-white/90">Create your own Brain Rush game</p>
           </button>
 
@@ -659,27 +659,27 @@ export const EduPlayPage: React.FC = React.memo(() => {
             className="bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform "
           >
             <Users className="h-12 w-12 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-2">Join a Game</h3>
+            <h3 className="s4-h2 mb-2">Join a Game</h3>
             <p className="text-green-100">Enter a code to join a game</p>
           </button>
 
           <button
             onClick={() => setViewMode('multiplayer-menu')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
+            className=`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-sm hover:shadow-lg transition-all transform `}
           >
             <Users className="h-12 w-12 mx-auto mb-4 text-white" />
-            <h3 className="text-2xl font-bold mb-2 text-white">Multiplayer</h3>
+            <h3 className="s4-h2 mb-2 text-white">Multiplayer</h3>
             <p className="text-white/90">Real-time competitive mode</p>
           </button>
         </div>
       </div>
 
-      <div className={`bg-accent-gold-soft/20 rounded-md p-6`}>
-        <h4 className={`font-bold text-ink dark:text-ink-on-dark mb-3 flex items-center space-x-2`}>
+      <div className=`bg-accent-gold-soft/20 rounded-md p-6`}>
+        <h4 className=`font-bold text-ink dark:text-ink-on-dark mb-3 flex items-center space-x-2`}>
           <Trophy className="h-5 w-5 text-purple-600 dark:text-purple-400" />
           <span>How to Play</span>
         </h4>
-        <ul className={`space-y-2 text-secondary-ink dark:text-muted-ink-on-dark`}>
+        <ul className=`space-y-2 text-secondary-ink dark:text-muted-ink-on-dark`}>
           <li className="flex items-start space-x-2">
             <span className="text-purple-600 dark:text-purple-400 font-bold">1.</span>
             <span>Answer 4-choice questions as fast as you can</span>
@@ -701,7 +701,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="w-full max-w-4xl mx-auto">
       <button
         onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
+        className=`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -710,8 +710,8 @@ export const EduPlayPage: React.FC = React.memo(() => {
       </button>
 
       <div className="mb-6 text-center">
-        <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark mb-2`}>Choose Question Source</h2>
-        <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
+        <h2 className=`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Choose Question Source</h2>
+        <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -720,13 +720,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('auto_generated');
             setViewMode('ai-generate');
           }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
+          className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
         >
-          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
+          <div className=`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Sparkles className="h-8 w-8 text-purple-600 dark:text-purple-400" />
           </div>
-          <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-2`}>AI Generate</h3>
-          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
+          <h3 className=`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>AI Generate</h3>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
         </button>
 
         <button
@@ -734,12 +734,12 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('manual');
             setViewMode('manual-build');
           }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
+          className=`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
         >
-          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
+          <div className=`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Edit className="h-8 w-8 text-blue-600 dark:text-blue-400" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Manual Build</h3>
+          <h3 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-2">Manual Build</h3>
           <p className="text-gray-600 dark:text-gray-400">Create your own custom questions</p>
         </button>
       </div>
@@ -749,7 +749,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
   const renderGameSettings = () => (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Game Settings</h2>
+        <h2 className="s4-h2 text-gray-900 dark:text-gray-100 mb-6">Game Settings</h2>
 
         <div className="space-y-6">
           <div>
@@ -761,7 +761,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               value={gameTitle}
               onChange={(e) => setGameTitle(e.target.value)}
               placeholder="e.g., Biology Quiz Battle"
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className=`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -774,7 +774,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 type="number"
                 value={questionCount}
                 disabled
-                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark`}
+                className=`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark`}
               />
             </div>
             <div>
@@ -787,7 +787,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 onChange={(e) => setQuestionTimer(Number(e.target.value))}
                 min="5"
                 max="60"
-                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className=`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
             </div>
           </div>
@@ -795,14 +795,14 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <div className="flex space-x-3 pt-4">
             <button
               onClick={() => setViewMode('question-source')}
-              className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition`}
+              className=`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition`}
             >
               Back
             </button>
             <button
               onClick={handleCreateGame}
               disabled={creating || !gameTitle.trim()}
-              className={`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+              className=`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
             >
               <Play className="h-5 w-5" />
               <span>{creating ? 'Creating...' : 'Create Game'}</span>
@@ -817,7 +817,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     <div className="max-w-md mx-auto">
       <button
         onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
+        className=`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
       >
         <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -826,7 +826,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       </button>
 
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">Join Game</h2>
+        <h2 className="s4-h2 text-gray-900 dark:text-gray-100 mb-6 text-center">Join Game</h2>
 
         <div className="space-y-6">
           <div>
@@ -839,7 +839,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 6-digit code"
               maxLength={6}
-              className={`w-full px-4 py-3 text-2xl text-center font-bold tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-100`}
+              className=`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-100`}
             />
           </div>
 
@@ -853,7 +853,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your display name"
               maxLength={50}
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className=`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -876,7 +876,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       <div className="max-w-5xl mx-auto">
         <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="s4-h1 text-gray-900 dark:text-gray-100 mb-2">
               {currentGame?.game_title}
             </h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
@@ -886,12 +886,12 @@ export const EduPlayPage: React.FC = React.memo(() => {
             {/* Game Code and QR Code Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {/* Game Code */}
-              <div className={`bg-accent-gold-soft/20 rounded-md p-6 border-2 border-divider dark:border-divider-on-dark opacity-50`}>
+              <div className=`bg-accent-gold-soft/20 rounded-md p-6 border-2 border-divider dark:border-divider-on-dark opacity-50`}>
                 <div className="flex items-center justify-center space-x-2 mb-3">
                   <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Game Code</span>
                 </div>
                 <div className="flex items-center justify-center space-x-3 mb-3">
-                  <span className="text-5xl font-bold text-blue-600 dark:text-blue-400 tracking-wider">
+                  <span className="s4-h1 text-[40px] text-blue-600 dark:text-blue-400 tracking-wider">
                     {currentGame?.game_code}
                   </span>
                 </div>
@@ -971,7 +971,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="flex space-x-3">
           <button
             onClick={handleLeaveGame}
-            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
+            className=`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:text-gray-300 dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
           >
             <LogOut className="h-5 w-5" />
             <span>Leave Game</span>

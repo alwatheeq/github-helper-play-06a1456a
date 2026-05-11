@@ -529,7 +529,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold mb-8 text-ink dark:text-ink-on-dark">
+              <h2 className="s4-h2 mb-8 text-ink dark:text-ink-on-dark">
                 {currentQuestion.question}
               </h2>
 

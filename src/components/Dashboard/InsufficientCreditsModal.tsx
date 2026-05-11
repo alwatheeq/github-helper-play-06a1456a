@@ -58,7 +58,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
           </div>
 
           {/* Title */}
-          <h2 className="text-2xl font-bold text-center text-ink dark:text-ink-on-dark mb-2">
+          <h2 className="s4-h2 text-center text-ink dark:text-ink-on-dark mb-2">
             Insufficient Credits
           </h2>
 
@@ -72,7 +72,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">
                 Current Balance
               </p>
-              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">
+              <p className="s4-h1 text-ink dark:text-ink-on-dark">
                 {creditsRemaining.toLocaleString()} credits
               </p>
             </div>

@@ -408,7 +408,7 @@ export const CheckoutPage: React.FC = () => {
   if (error) {
     const mode = getCheckoutMode();
     return (
-      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
+      <div className=`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
         <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
@@ -416,7 +416,7 @@ export const CheckoutPage: React.FC = () => {
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
+          <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
             {mode === 'free' ? 'Activation Error' : 'Checkout Error'}
           </h2>
 
@@ -479,13 +479,13 @@ export const CheckoutPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
+    <div className=`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
       <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
         <div className="flex items-center justify-center mb-6">
           <Loader2 className="h-12 w-12 text-blue-600 dark:text-blue-400 animate-spin" />
         </div>
 
-        <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark text-center mb-4">
+        <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
           {getCheckoutMode() === 'free' ? 'Activating Subscription' : 'Processing Checkout'}
         </h2>
 

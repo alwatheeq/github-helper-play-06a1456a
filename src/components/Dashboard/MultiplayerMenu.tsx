@@ -186,7 +186,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
     return (
       <div className="max-w-2xl mx-auto p-6">
         <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
-          <h2 className="text-2xl font-bold mb-6">Create Multiplayer Game</h2>
+          <h2 className="s4-h2 mb-6">Create Multiplayer Game</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm">
@@ -283,7 +283,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
     return (
       <div className="max-w-md mx-auto p-6">
         <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
-          <h2 className="text-2xl font-bold mb-6">Join Game</h2>
+          <h2 className="s4-h2 mb-6">Join Game</h2>
 
           {error && (
             <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm">
@@ -302,7 +302,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                 placeholder="Enter 6-digit code"
                 maxLength={6}
-                className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] text-center text-2xl font-bold tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -342,7 +342,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         </button>
       )}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold mb-2">Multiplayer Brain Rush</h1>
+        <h1 className="s4-h1 mb-2">Multiplayer Brain Rush</h1>
         <p className="text-gray-600">Compete with friends in real-time quiz battles!</p>
       </div>
 
@@ -355,7 +355,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
               <Plus className="w-10 h-10 text-blue-600" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Create Game</h3>
+            <h3 className="s4-h3 text-[20px] mb-2">Create Game</h3>
             <p className="text-gray-600 mb-4">
               Host a new game and invite friends to join
             </p>
@@ -374,7 +374,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
               <Users className="w-10 h-10 text-green-600" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Join Game</h3>
+            <h3 className="s4-h3 text-[20px] mb-2">Join Game</h3>
             <p className="text-gray-600 mb-4">
               Enter a game code to join an existing game
             </p>

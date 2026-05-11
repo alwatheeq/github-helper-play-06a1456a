@@ -179,7 +179,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">AI Question Generator</h2>
+        <h2 className="s4-h1 text-gray-900 dark:text-gray-100 mb-2">AI Question Generator</h2>
         <p className="text-gray-600 dark:text-gray-400">Let AI create questions about any topic</p>
       </div>
 
@@ -257,7 +257,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <button
                 onClick={handleGenerate}
                 disabled={!topic.trim() || topic.trim().length < 3}
-                className={`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+                className=`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
               >
                 <Sparkles className="h-5 w-5" />
                 <span>Generate Questions</span>
@@ -270,7 +270,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <Loader2 className="h-16 w-16 text-accent-gold dark:text-accent-gold animate-spin" />
               <Sparkles className="h-8 w-8 text-pink-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h3 className="s4-h2 text-gray-900 dark:text-gray-100 mb-2">
               Generating Questions...
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
@@ -281,7 +281,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="max-w-md mx-auto mb-4">
               <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <div
-                  className={`h-full bg-accent-gold transition-colors duration-150 ease-out`}
+                  className=`h-full bg-accent-gold transition-colors duration-150 ease-out`}
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -296,7 +296,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
 
       {/* Tips Section */}
       {!generating && (
-        <div className={`mt-6 bg-page-light dark:bg-page-dark rounded-md p-6`}>
+        <div className=`mt-6 bg-page-light dark:bg-page-dark rounded-md p-6`}>
           <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-3 flex items-center space-x-2">
             <Sparkles className="h-5 w-5 text-accent-gold dark:text-accent-gold" />
             <span>Tips for Better Questions</span>

@@ -76,7 +76,7 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
               <Globe className="h-8 w-8" />
             </div>
             <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-1">{exam.exam_name}</h2>
+              <h2 className="s4-h2 mb-1">{exam.exam_name}</h2>
               <p className="text-white text-opacity-90 text-sm mb-2">{exam.exam_code}</p>
               <div className="flex items-center space-x-2">
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getDifficultyColor(exam.difficulty_level)}`}>

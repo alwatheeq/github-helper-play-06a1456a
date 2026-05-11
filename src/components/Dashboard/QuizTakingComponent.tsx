@@ -377,7 +377,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               <div className={`text-6xl font-bold mb-4 ${getScoreColor(results.scorePercentage)}`}>
                 {Math.round(results.scorePercentage)}%
               </div>
-              <h2 className="text-2xl font-bold text-ink dark:text-ink-on-dark mb-2">
+              <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-2">
                 {t('quiz.complete')}
               </h2>
               <p className="text-secondary-ink dark:text-secondary-ink-on-dark">{quizTitle}</p>
@@ -386,19 +386,19 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="bg-green-50 dark:bg-green-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
                 <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-300 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-green-600 dark:text-green-300">{results.correctCount}</p>
+                <p className="s4-h2 text-green-600 dark:text-green-300">{results.correctCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.correct')}</p>
               </div>
 
               <div className="bg-red-50 dark:bg-red-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
                 <XCircle className="h-8 w-8 text-red-600 dark:text-red-300 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-red-600 dark:text-red-300">{results.incorrectCount}</p>
+                <p className="s4-h2 text-red-600 dark:text-red-300">{results.incorrectCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.incorrect')}</p>
               </div>
 
               <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 text-center">
                 <AlertCircle className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-2" />
-                <p className="text-2xl font-bold text-secondary-ink dark:text-secondary-ink-on-dark">{results.unansweredCount}</p>
+                <p className="s4-h2 text-secondary-ink dark:text-secondary-ink-on-dark">{results.unansweredCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.unanswered')}</p>
               </div>
             </div>
@@ -491,7 +491,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
         <ScholarCard className="mb-4" padding="md">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-xl font-bold text-ink dark:text-ink-on-dark">{quizTitle}</h2>
+              <h2 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">{quizTitle}</h2>
               <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
                 {t('quiz.question_progress', { current: currentQuestionIndex + 1, total: questions.length })}
               </p>
@@ -531,7 +531,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
 
         <ScholarCard padding="lg">
           <div className="flex items-start gap-2 mb-6">
-            <h3 className="text-xl font-semibold text-ink dark:text-ink-on-dark flex-1">
+            <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark flex-1">
               {currentQuestion.question}
             </h3>
             <ReadAloudButton text={currentQuestion.question} />

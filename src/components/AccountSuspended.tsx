@@ -78,7 +78,7 @@ export const AccountSuspended: React.FC = () => {
           <div className="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
             <Ban className="h-8 w-8 text-red-600 dark:text-red-400" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="s4-h1 text-gray-900 dark:text-white mb-2">
             Account Suspended
           </h1>
           <p className="text-gray-600 dark:text-gray-400">

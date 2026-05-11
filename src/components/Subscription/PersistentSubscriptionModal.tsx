@@ -55,7 +55,7 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
               <Crown className="h-8 w-8" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold">Upgrade to Premium</h2>
+              <h2 className="s4-h2">Upgrade to Premium</h2>
               <p className="text-white text-opacity-90 text-sm">Unlock unlimited access</p>
             </div>
           </div>
