@@ -101,3 +101,34 @@ Plus: **run `npm run check:tokens`** (the new guard from step 2) — must exit 0
 6. `.lovable/plan.md` — Phase 3.13 results block (counts, audit gate including `check:tokens` pass, exemptions, next: 3.14)
 
 Estimated ~8 min (5 for guard + 3 for sweep).
+
+---
+
+## Phase 3.12 verification + regression guard + Phase 3.13 — RESULTS
+
+### 3.12 verification (re-audit)
+- 6 social-cluster files: 0 legacy radius hits, 0 gold-gradient hits.
+- `rounded-full` preserved (4), semantic affordances preserved (`bg-blue-600`×3, `bg-green-500/10`, `bg-red-500/10`, `bg-white` QR).
+- No cross-file, hook, Supabase, locale, or error-logger drift.
+
+### Regression guard (the missing 3.12 step, now landed)
+- `scripts/check-token-regressions.cjs` (new) — Node, zero deps. Greps forbidden patterns against an allowlist of all swept files.
+- `package.json` — added `check:tokens`; prepended to `quality` and `quality:quick`.
+- Run: `✓ Token regression guard: 16 swept file(s) clean.`
+
+### 3.13 sweep (executed)
+Files: `ChatAssistant/ChatAssistant.tsx`, `ChatAssistant/GlobalChatAssistant.tsx`.
+
+| Audit | Result |
+|---|---|
+| Legacy `rounded-(xl\|2xl\|lg\|[12px])` | 0 |
+| `from-accent-gold to-accent-gold-soft` | 0 |
+| `rounded-full` preserved | 2 ✓ |
+| `rounded-t-[var(--s4-radius-card)]` (header) | 2 ✓ |
+| Resize-handle directional `rounded-(tl\|tr\|bl\|br)-lg` preserved | 4 ✓ |
+| `npm run check:tokens` (16 swept files) | PASS |
+
+Hook, Supabase, event-dispatch, drag/resize handlers, locale JSONs — byte-identical.
+
+### Next
+Phase 3.14 — pricing / subscription / checkout cluster (`PricingPage`, `CheckoutPage`, `PaymentSuccess`, `PaymentCancel`, `PersistentSubscriptionModal`).
