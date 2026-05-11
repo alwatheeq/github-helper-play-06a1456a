@@ -1005,7 +1005,7 @@ export const QuizPage: React.FC = React.memo(() => {
                 </p>
                 <button
                   onClick={() => setQuizViewMode('quizzes')}
-                  className={`px-6 py-3 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all font-medium`}
+                  className={`px-6 py-3 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all font-medium`}
                 >
                   {t('quiz.switch_to_quizzes') || 'Switch to My Quizzes'}
                 </button>
@@ -1279,7 +1279,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleStartQuiz(quiz.id)}
-                            className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                            className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                           >
                             <Play className="h-4 w-4" />
                             <span>{t('quiz.start')}</span>
@@ -1345,7 +1345,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => setSelectedExam(exam)}
-                              className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                              className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                             >
                               <Play className="h-4 w-4" />
                               <span>{t('quiz.continue_exam') || 'Continue Exam'}</span>
@@ -1409,7 +1409,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           placeholder="Search exams..."
-                          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                          className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                         />
                         {loading && (
                           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -1451,21 +1451,21 @@ export const QuizPage: React.FC = React.memo(() => {
                         <p className={`text-secondary-ink dark:text-secondary-ink-on-dark text-sm mb-4 line-clamp-2`}>{exam.description}</p>
 
                         <div className="space-y-2 mb-4">
-                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
                             <Globe className="h-4 w-4 mr-2" />
                             <span>{exam.country}</span>
                             {exam.region && <span className="ml-2">• {exam.region}</span>}
                           </div>
-                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
                             <FileQuestion className="h-4 w-4 mr-2" />
                             <span>{exam.total_questions} questions</span>
                           </div>
-                          <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
                             <Clock className="h-4 w-4 mr-2" />
                             <span>{exam.time_limit_minutes} minutes</span>
                           </div>
                           {exam.subject && (
-                            <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
                               <BookOpen className="h-4 w-4 mr-2" />
                               <span>{exam.subject}</span>
                             </div>
@@ -1474,7 +1474,7 @@ export const QuizPage: React.FC = React.memo(() => {
 
                         <button
                           onClick={() => setSelectedExam(exam)}
-                          className={`w-full px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all flex items-center justify-center space-x-2`}
+                          className={`w-full px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all flex items-center justify-center space-x-2`}
                         >
                           <Play className="h-4 w-4" />
                           <span>Start Practice</span>
@@ -1510,7 +1510,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       value={newFolderName}
                       onChange={(e) => setNewFolderName(e.target.value)}
                       placeholder="Folder name"
-                      className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
                     />
                     <div className="flex items-center space-x-2">
                       <input
@@ -1521,13 +1521,13 @@ export const QuizPage: React.FC = React.memo(() => {
                       />
                       <button
                         onClick={handleCreateFolder}
-                        className={`flex-1 px-3 py-1 bg-accent-gold text-white dark:text-gray-900 text-sm rounded-[var(--s4-radius-card)] hover:opacity-90 transition`}
+                        className={`flex-1 px-3 py-1 bg-accent-gold text-white dark:text-ink text-sm rounded-[var(--s4-radius-card)] hover:opacity-90 transition`}
                       >
                         Create
                       </button>
                       <button
                         onClick={() => setShowCreateFolder(false)}
-                        className="px-3 py-1 bg-gray-300 text-gray-700 text-sm rounded-[var(--s4-radius-card)] hover:bg-gray-400 transition dark:bg-gray-600 dark:text-gray-200"
+                        className="px-3 py-1 bg-gray-300 text-secondary-ink text-sm rounded-[var(--s4-radius-card)] hover:bg-gray-400 transition dark:bg-gray-600 dark:text-muted-ink-on-dark"
                       >
                         Cancel
                       </button>
@@ -1541,7 +1541,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     className={`w-full text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
                       selectedFolder === 'all'
                         ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                        : 'text-secondary-ink hover:bg-gray-100 dark:text-muted-ink-on-dark dark:hover:bg-gray-700'
                     }`}
                   >
                     All Quizzes
@@ -1551,7 +1551,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     className={`w-full text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
                       selectedFolder === 'uncategorized'
                         ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                        : 'text-secondary-ink hover:bg-gray-100 dark:text-muted-ink-on-dark dark:hover:bg-gray-700'
                     }`}
                   >
                     Uncategorized
@@ -1564,7 +1564,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         className={`flex-1 text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
                           selectedFolder === folder.id
                             ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                            : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                            : 'text-secondary-ink hover:bg-gray-100 dark:text-muted-ink-on-dark dark:hover:bg-gray-700'
                         }`}
                       >
                         <div className="flex items-center space-x-2">
@@ -1597,13 +1597,13 @@ export const QuizPage: React.FC = React.memo(() => {
                      quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
                   </h3>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                     <input
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search quizzes..."
-                      className={`pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
                     />
                   </div>
                 </div>
@@ -1638,7 +1638,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             <select
                               onChange={(e) => handleMoveQuizToFolder(quiz.id, e.target.value || null)}
                               value={quiz.folder_id || ''}
-                              className={`px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                              className={`px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
                               onClick={(e) => e.stopPropagation()}
                             >
                               <option value="">Move to...</option>
@@ -1649,7 +1649,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             </select>
                             <button
                               onClick={() => handleStartQuiz(quiz.id)}
-                              className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 transition flex items-center space-x-2`}
+                              className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition flex items-center space-x-2`}
                             >
                               <Play className="h-4 w-4" />
                               <span>Start</span>
@@ -1666,8 +1666,8 @@ export const QuizPage: React.FC = React.memo(() => {
                   return quiz.folder_id === selectedFolder;
                 }).length === 0 && (
                   <div className="text-center py-12">
-                    <Folder className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-600 dark:text-gray-400">No quizzes in this folder</p>
+                    <Folder className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+                    <p className="text-secondary-ink dark:text-muted-ink">No quizzes in this folder</p>
                   </div>
                 )}
               </div>
@@ -1686,9 +1686,9 @@ export const QuizPage: React.FC = React.memo(() => {
                   <LoadingSkeleton type="card" count={3} />
                 ) : examAttempts.length === 0 ? (
                   <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
-                    <Trophy className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">{t('quiz.no_exam_attempts') || 'No exam attempts yet'}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">{t('quiz.complete_exam_first') || 'Complete an exam to see your history'}</p>
+                    <Trophy className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+                    <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('quiz.no_exam_attempts') || 'No exam attempts yet'}</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink">{t('quiz.complete_exam_first') || 'Complete an exam to see your history'}</p>
                   </div>
                 ) : (
                   examAttempts
@@ -1714,7 +1714,7 @@ export const QuizPage: React.FC = React.memo(() => {
                                 {attempt.incorrect_count} {t('quiz.exam_incorrect') || 'Incorrect'}
                               </span>
                               {attempt.unanswered_count > 0 && (
-                                <span className="text-gray-600 dark:text-gray-400">
+                                <span className="text-secondary-ink dark:text-muted-ink">
                                   {attempt.unanswered_count} {t('quiz.exam_unanswered') || 'Unanswered'}
                                 </span>
                               )}
@@ -1741,9 +1741,9 @@ export const QuizPage: React.FC = React.memo(() => {
                   <LoadingSkeleton type="card" count={3} />
                 ) : quizHistory.length === 0 ? (
                   <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
-                    <Trophy className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                    <p className="text-gray-600 dark:text-gray-400 mb-2">{t('quiz.no_attempts')}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">{t('quiz.complete_first')}</p>
+                    <Trophy className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+                    <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('quiz.no_attempts')}</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink">{t('quiz.complete_first')}</p>
                   </div>
                 ) : (
                   quizHistory.map((attempt) => (

@@ -469,14 +469,14 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.completed')}</p>
+                  <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.completed')}</p>
                   <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
                 </div>
               </div>
 
               <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6`}>
                 <div className="text-center">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t('goals.total_goals')}</p>
+                  <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.total_goals')}</p>
                   <p className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark`}>{goals.length}</p>
                 </div>
               </div>
@@ -594,7 +594,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
                                 {goal.goal_title}
                               </h3>
-                              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                              <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                                 {t('goals.completed_on')} {formatDate(goal.completed_at)}
                               </p>
                             </div>
@@ -615,9 +615,9 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
               {goals.length === 0 && !loading && (
                 <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
-                  <Target className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                  <p className="text-gray-600 dark:text-gray-400 mb-2">{t('goals.no_goals_yet')}</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500 mb-4">
+                  <Target className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+                  <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('goals.no_goals_yet')}</p>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink mb-4">
                     {t('goals.create_first_goal')}
                   </p>
                   <button
@@ -690,7 +690,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                     className={`px-4 py-2 rounded-[var(--s4-radius-card)] font-medium transition-colors flex items-center space-x-2 ${
                       selectedCategory === category.id
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                        : 'bg-gray-100 dark:bg-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-gray-200 dark:hover:bg-gray-600'
                     }`}
                   >
                     {category.icon}
@@ -723,9 +723,9 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                         }`}
                       >
                         {isUnlocked ? (
-                          <Award className="h-8 w-8 text-white" />
+                          <Award className="h-8 w-8 text-ink-on-dark" />
                         ) : (
-                          <Lock className="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                          <Lock className="h-8 w-8 text-muted-ink dark:text-muted-ink" />
                         )}
                       </div>
                       <div className="flex flex-col items-end">
@@ -734,7 +734,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                             achievement.badge_tier === 'bronze'
                               ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300'
                               : achievement.badge_tier === 'silver'
-                              ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                              ? 'bg-gray-100 text-ink dark:bg-gray-700 dark:text-muted-ink-on-dark'
                               : achievement.badge_tier === 'gold'
                               ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
                               : achievement.badge_tier === 'platinum'
@@ -744,7 +744,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                         >
                           {achievement.badge_tier.toUpperCase()}
                         </span>
-                        <span className="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center">
+                        <span className="text-xs text-muted-ink dark:text-muted-ink mt-1 flex items-center">
                           <Zap className="h-3 w-3 mr-1" />
                           {achievement.xp_reward} XP
                         </span>
@@ -753,22 +753,22 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
                     <h3 className={`text-lg font-bold mb-2 ${
                       isUnlocked
-                        ? 'text-gray-900 dark:text-gray-100'
-                        : 'text-gray-600 dark:text-gray-400'
+                        ? 'text-ink dark:text-muted-ink-on-dark'
+                        : 'text-secondary-ink dark:text-muted-ink'
                     }`}>
                       {achievement.title}
                     </h3>
 
                     <p className={`text-sm mb-3 ${
                       isUnlocked
-                        ? 'text-gray-600 dark:text-gray-400'
-                        : 'text-gray-500 dark:text-gray-500'
+                        ? 'text-secondary-ink dark:text-muted-ink'
+                        : 'text-muted-ink dark:text-muted-ink'
                     }`}>
                       {achievement.description}
                     </p>
 
                     <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
-                      <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center space-x-2 text-xs text-muted-ink dark:text-muted-ink">
                         {getCategoryIcon(achievement.category)}
                         <span className="capitalize">{achievement.category}</span>
                       </div>
@@ -778,7 +778,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                         </span>
                       )}
                       {!isUnlocked && (
-                        <span className="text-xs text-gray-400 dark:text-gray-600 font-medium">
+                        <span className="text-xs text-muted-ink dark:text-secondary-ink font-medium">
                           {t('achievements.locked')}
                         </span>
                       )}
@@ -790,8 +790,8 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
             {filteredAchievements.length === 0 && (
               <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
-                <Award className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-                <p className="text-gray-600 dark:text-gray-400">{t('achievements.no_achievements')}</p>
+                <Award className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+                <p className="text-secondary-ink dark:text-muted-ink">{t('achievements.no_achievements')}</p>
               </div>
             )}
           </div>
@@ -802,10 +802,10 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="s4-h2 text-gray-900 dark:text-gray-100">{t('goals.create_new_goal')}</h2>
+              <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark">{t('goals.create_new_goal')}</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 text-gray-500 hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
+                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -813,13 +813,13 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_type')}
                 </label>
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -830,7 +830,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_title')}
                 </label>
                 <input
@@ -839,12 +839,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder={t('goals.goal_title_placeholder')}
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.goal_description')}
                 </label>
                 <textarea
@@ -853,12 +853,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   placeholder={t('goals.description_placeholder')}
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.target_value')}
                 </label>
                 <input
@@ -867,15 +867,15 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   {t('goals.target_value_help')}
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   {t('goals.deadline_optional')}
                 </label>
                 <input
@@ -883,7 +883,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 

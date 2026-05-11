@@ -278,7 +278,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
               type="button"
               disabled={rating}
               onClick={() => handleRate(btn.key)}
-              className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-white text-sm font-medium ${btn.color} disabled:opacity-50`}
+              className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-ink-on-dark text-sm font-medium ${btn.color} disabled:opacity-50`}
             >
               {t(`srs.${btn.key}`) || btn.key}
             </button>

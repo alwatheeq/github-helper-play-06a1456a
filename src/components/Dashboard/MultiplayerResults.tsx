@@ -199,7 +199,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                   <div
                     className={`${
                       result.rank <= 3
-                        ? getRankBgColor(result.rank) + ' text-white'
+                        ? getRankBgColor(result.rank) + ' text-ink-on-dark'
                         : 'bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark'
                     } p-4`}
                   >

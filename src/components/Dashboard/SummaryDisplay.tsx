@@ -841,7 +841,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className={`bg-subtle p-2 rounded-md border-divider dark:border-divider-on-dark`}>
-                <FileSearch className="h-5 w-5 text-white" />
+                <FileSearch className="h-5 w-5 text-ink-on-dark" />
               </div>
               <div>
                 <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('summary.original_text')}</h3>
@@ -1305,7 +1305,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           )}
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
-                              ? 'bg-gray-700 border-gray-700 text-white dark:bg-gray-200 dark:border-gray-200 dark:text-gray-900'
+                              ? 'bg-gray-700 border-gray-700 text-ink-on-dark dark:bg-gray-200 dark:border-gray-200 dark:text-ink'
                               : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >

@@ -89,7 +89,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
       <div className="relative bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] max-w-md w-full overflow-hidden animate-scaleIn border border-gray-100 dark:border-gray-700">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
               {title}
             </h3>
             <button
@@ -98,12 +98,12 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               aria-label="Close"
               disabled={isLoading}
             >
-              <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+              <X className="h-5 w-5 text-muted-ink dark:text-muted-ink" />
             </button>
           </div>
 
           {message && (
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               {message}
             </p>
           )}
@@ -120,7 +120,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isLoading}
-              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
                 error
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600'
@@ -137,14 +137,14 @@ export const PromptModal: React.FC<PromptModalProps> = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>
             <button
               onClick={handleConfirm}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-white bg-gray-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-gray-800 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-200 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium text-ink-on-dark bg-gray-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-gray-800 dark:bg-gray-100 dark:text-ink dark:hover:bg-gray-200 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Processing...' : confirmText}
             </button>

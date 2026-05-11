@@ -13,7 +13,7 @@ const sizeClasses: Record<string, string> = {
 };
 
 const variantClasses: Record<string, string> = {
-  default: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+  default: 'bg-gray-100 text-secondary-ink dark:bg-gray-700 dark:text-muted-ink-on-dark',
   success: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
   warning: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
   error: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',

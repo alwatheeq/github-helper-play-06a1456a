@@ -1162,7 +1162,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-3">
                 Sidebar Behavior
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-4">
                 Choose how you want the sidebar to behave on desktop
               </p>
 
@@ -1185,7 +1185,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     <div className="font-medium text-ink dark:text-ink-on-dark">
                       Auto-collapse Sidebar (Default)
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    <div className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                       The sidebar automatically shows when you move your mouse near the left edge and hides when you move away. Perfect for maximizing screen space.
                     </div>
                   </div>
@@ -1209,7 +1209,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     <div className="font-medium text-ink dark:text-ink-on-dark">
                       Pin/Unpin Sidebar
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    <div className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                       Manually control the sidebar with a pin button. Click to pin it open or unpin to collapse it. The sidebar stays in your chosen state.
                     </div>
                   </div>
@@ -1222,7 +1222,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">
                 {t('profile.tts_hover_label')}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-3">
                 {t('profile.tts_hover_desc')}
               </p>
               <label className="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer select-none">
@@ -1247,7 +1247,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-3">
                 {t('profile.theme_picker_title')}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-4">
                 {t('profile.theme_picker_desc')}
               </p>
 
@@ -1309,7 +1309,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     >
                       {isSelected && (
                         <div className="absolute top-2 right-2">
-                          <div className="bg-gray-700 dark:bg-gray-200 text-white dark:text-gray-900 rounded-full p-1">
+                          <div className="bg-gray-700 dark:bg-gray-200 text-ink-on-dark dark:text-ink rounded-full p-1">
                             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
@@ -1319,18 +1319,18 @@ export const ProfilePage: React.FC = React.memo(() => {
                       <div className="space-y-3">
                         {/* Background Preview */}
                         <div className={`h-12 rounded-[var(--s4-radius-card)] bg-gradient-to-br ${bgGradient} flex items-center justify-center border border-divider dark:border-divider-on-dark opacity-50`}>
-                          <span className="text-xs text-gray-600 dark:text-gray-400 font-medium">Background</span>
+                          <span className="text-xs text-secondary-ink dark:text-muted-ink font-medium">Background</span>
                         </div>
                         {/* UI Elements Preview */}
                         <div className={`h-12 rounded-[var(--s4-radius-card)] bg-gradient-to-r ${uiGradient} flex items-center justify-center border border-divider dark:border-divider-on-dark opacity-50`}>
-                          <span className="text-xs text-white font-medium">UI Elements</span>
+                          <span className="text-xs text-ink-on-dark font-medium">UI Elements</span>
                         </div>
                         <div className="text-center">
                           <div className="font-medium text-ink dark:text-ink-on-dark">
                             {t(`profile.theme_${theme.replace(/-/g, '_')}`)}
                           </div>
                           {theme === 'navy-gold' && (
-                            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{t('profile.theme_default_badge')}</div>
+                            <div className="text-xs text-muted-ink dark:text-muted-ink mt-1">{t('profile.theme_default_badge')}</div>
                           )}
                         </div>
                       </div>
@@ -1347,7 +1347,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className={`flex items-start justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
             <div className={`flex items-center space-x-6 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div className="relative">
-                <div className={`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-gray-900 s4-h1`}>
+                <div className={`h-24 w-24 rounded-full bg-accent-gold flex items-center justify-center text-white dark:text-ink s4-h1`}>
                   {(stats.display_name || user?.email)?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-gray-600 to-gray-800 text-white px-3 py-1 rounded-full text-sm font-bold shadow">
@@ -1364,7 +1364,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       onChange={(e) => setEditedName(e.target.value)}
                       placeholder={t('profile.display_name')}
                       maxLength={50}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
                     />
                     <textarea
                       value={editedBio}
@@ -1372,7 +1372,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       placeholder={t('profile.bio_placeholder')}
                       maxLength={500}
                       rows={3}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-gray-100`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
                     />
                   </div>
                 ) : (
@@ -1381,7 +1381,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       {stats.display_name || user?.email}
                     </h1>
                     {stats.bio && (
-                      <p className="text-gray-600 dark:text-gray-400 mt-1">{stats.bio}</p>
+                      <p className="text-secondary-ink dark:text-muted-ink mt-1">{stats.bio}</p>
                     )}
                   </>
                 )}
@@ -1426,7 +1426,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                 )}
 
                 <div className="mt-4">
-                  <div className={`flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-1 ${isRtl ? 'flex-row-reverse' : ''}`}>
+                  <div className={`flex items-center justify-between text-sm text-secondary-ink dark:text-muted-ink mb-1 ${isRtl ? 'flex-row-reverse' : ''}`}>
                     <span>{t('profile.level')} {currentLevel}</span>
                     <span>{stats.experience_points} / {xpForNextLevel} {t('profile.xp')}</span>
                   </div>
@@ -1446,7 +1446,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   <button
                     onClick={handleSaveProfile}
                     disabled={saving}
-                    className="p-2 bg-gray-700 dark:bg-gray-200 text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:bg-gray-600 dark:hover:bg-gray-300 disabled:opacity-50"
+                    className="p-2 bg-gray-700 dark:bg-gray-200 text-ink-on-dark dark:text-ink rounded-[var(--s4-radius-card)] hover:bg-gray-600 dark:hover:bg-gray-300 disabled:opacity-50"
                     title="Save"
                   >
                     <Save className="h-5 w-5" />
@@ -1457,7 +1457,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       setEditedName(stats.display_name || '');
                       setEditedBio(stats.bio || '');
                     }}
-                    className="p-2 bg-gray-300 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-400 dark:bg-gray-600 dark:text-gray-200"
+                    className="p-2 bg-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-400 dark:bg-gray-600 dark:text-muted-ink-on-dark"
                     title="Cancel"
                   >
                     <X className="h-5 w-5" />
@@ -1466,7 +1466,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               ) : (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="p-2 bg-gray-100 text-gray-600 rounded-[var(--s4-radius-card)] hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300"
+                  className="p-2 bg-gray-100 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-200 dark:bg-gray-700 dark:text-muted-ink-on-dark"
                   title="Edit Profile"
                 >
                   <Edit2 className="h-5 w-5" />
@@ -1481,11 +1481,11 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.current_streak')}</p>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.current_streak')}</p>
                 <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.study_streak_current}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                <p className="text-xs text-muted-ink dark:text-muted-ink mt-1">
                   {t('profile.best')}: {stats.study_streak_longest} {t('profile.days')}
                 </p>
               </div>
@@ -1498,7 +1498,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.items_published')}</p>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.items_published')}</p>
                 <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.items_published_count}
                 </p>
@@ -1512,7 +1512,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.flashcards_studied')}</p>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.flashcards_studied')}</p>
                 <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.total_flashcards_studied}
                 </p>
@@ -1526,7 +1526,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.quizzes_completed')}</p>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.quizzes_completed')}</p>
                 <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {stats.total_quizzes_completed}
                 </p>
@@ -1540,7 +1540,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{t('profile.total_study_time')}</p>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.total_study_time')}</p>
                 <p className="s4-h1 text-ink dark:text-ink-on-dark mt-1">
                   {formatStudyTime(stats.total_study_time_minutes)}
                 </p>
@@ -1563,9 +1563,9 @@ export const ProfilePage: React.FC = React.memo(() => {
 
           {achievements.length === 0 ? (
             <div className="text-center py-12">
-              <Award className="h-16 w-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" />
-              <p className="text-gray-600 dark:text-gray-400">{t('profile.no_achievements')}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+              <Award className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
+              <p className="text-secondary-ink dark:text-muted-ink">{t('profile.no_achievements')}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink mt-2">
                 {t('profile.start_studying')}
               </p>
             </div>
@@ -1578,13 +1578,13 @@ export const ProfilePage: React.FC = React.memo(() => {
                 >
                   <div className={`flex items-start space-x-3 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
                     <div className={`bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)} p-2 rounded-[var(--s4-radius-card)] flex-shrink-0`}>
-                      <Award className="h-6 w-6 text-white" />
+                      <Award className="h-6 w-6 text-ink-on-dark" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-ink dark:text-ink-on-dark">
                         {achievement.title}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                      <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
                         {achievement.description}
                       </p>
                       <div className="flex items-center justify-between mt-2">
@@ -1593,7 +1593,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                           {achievement.badge_tier.toUpperCase()}
                         </span>
                         {achievement.earned_at && (
-                          <span className="text-xs text-gray-500 dark:text-gray-500">
+                          <span className="text-xs text-muted-ink dark:text-muted-ink">
                             {formatDate(achievement.earned_at)}
                           </span>
                         )}

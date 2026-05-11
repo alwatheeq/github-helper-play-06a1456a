@@ -77,12 +77,12 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             </div>
             <div className="flex-1">
               <h2 className="s4-h2 mb-1">{exam.exam_name}</h2>
-              <p className="text-white text-opacity-90 text-sm mb-2">{exam.exam_code}</p>
+              <p className="text-ink-on-dark text-opacity-90 text-sm mb-2">{exam.exam_code}</p>
               <div className="flex items-center space-x-2">
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getDifficultyColor(exam.difficulty_level)}`}>
                   {exam.difficulty_level}
                 </span>
-                <span className="text-white text-opacity-90 text-sm">
+                <span className="text-ink-on-dark text-opacity-90 text-sm">
                   {exam.country}{exam.region && ` • ${exam.region}`}
                 </span>
               </div>

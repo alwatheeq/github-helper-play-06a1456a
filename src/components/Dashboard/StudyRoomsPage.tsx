@@ -990,17 +990,17 @@ export const StudyRoomsPage: React.FC = () => {
           <div className="mb-4 flex justify-between items-center bg-gray-800 rounded-[var(--s4-radius-card)] p-4 shadow">
             <div className="flex items-center space-x-4">
               <div>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-bold text-ink-on-dark">
                   {selectedRoom.room_name}
                 </h2>
-                <div className="flex items-center space-x-3 mt-1 text-sm text-gray-400">
+                <div className="flex items-center space-x-3 mt-1 text-sm text-muted-ink dark:text-muted-ink-on-dark">
                   <span className="flex items-center">
                     <Users className="h-4 w-4 mr-1" />
                     {participants.length}/{selectedRoom.max_participants}
                   </span>
                   <button
                     onClick={() => copyRoomCode(selectedRoom.room_code)}
-                    className="flex items-center space-x-1 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                    className="flex items-center space-x-1 hover:text-secondary-ink dark:text-muted-ink-on-dark dark:hover:text-muted-ink-on-dark transition-colors"
                   >
                     {copiedCode ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                     <span className="font-mono">{selectedRoom.room_code}</span>
@@ -1169,7 +1169,7 @@ export const StudyRoomsPage: React.FC = () => {
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>
@@ -1221,7 +1221,7 @@ export const StudyRoomsPage: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleJoinRoom(room)}
-                        className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                        className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                       >
                         <UserPlus className="h-4 w-4" />
                         <span>{t('study_rooms.join')}</span>

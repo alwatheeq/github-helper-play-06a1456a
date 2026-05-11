@@ -106,20 +106,20 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
   return (
     <div className="max-w-6xl mx-auto">
       <div className="mb-6">
-        <h2 className="s4-h1 text-gray-900 dark:text-gray-100 mb-2">Build Your Questions</h2>
-        <p className="text-gray-600 dark:text-gray-400">Create custom questions for your Brain Rush game ({questions.length} questions)</p>
+        <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">Build Your Questions</h2>
+        <p className="text-secondary-ink dark:text-muted-ink">Create custom questions for your Brain Rush game ({questions.length} questions)</p>
       </div>
 
       {/* Question Form */}
       <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
-        <h3 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">
+        <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">
           {editingIndex !== null ? 'Edit Question' : 'Add New Question'}
         </h3>
 
         <div className="space-y-4">
           {/* Question Text */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Question
             </label>
             <textarea
@@ -127,7 +127,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               onChange={(e) => setCurrentQuestion(e.target.value)}
               placeholder="Enter your question here..."
               rows={3}
-              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
             />
           </div>
 
@@ -135,7 +135,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[0, 1, 2, 3].map((idx) => (
               <div key={idx} className="relative">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Option {idx + 1}
                   {correctAnswer === idx && (
                     <span className="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">Correct</span>
@@ -151,7 +151,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       setCurrentOptions(newOptions);
                     }}
                     placeholder={`Enter option ${idx + 1}...`}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
                   />
                   <button
                     type="button"
@@ -159,7 +159,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                     className={`px-4 py-2 rounded-[var(--s4-radius-card)] transition ${
                       correctAnswer === idx
                         ? 'bg-green-600 text-white'
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                        : 'bg-gray-200 text-secondary-ink hover:bg-gray-300 dark:bg-gray-700 dark:text-muted-ink-on-dark dark:hover:bg-gray-600'
                     }`}
                   >
                     <Check className="h-5 w-5" />
@@ -171,7 +171,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
 
           {/* Difficulty */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Difficulty
             </label>
             <div className="flex space-x-3">
@@ -183,7 +183,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                   className={`px-6 py-2 rounded-[var(--s4-radius-card)] font-medium transition ${
                     difficulty === level
                       ? 'bg-accent-gold text-ink-on-dark'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
+                      : 'bg-gray-100 text-secondary-ink hover:bg-gray-200 dark:bg-gray-700 dark:text-muted-ink-on-dark dark:hover:bg-gray-600'
                   }`}
                 >
                   {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -198,7 +198,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="px-6 py-3 border border-gray-300 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 flex items-center space-x-2"
+                className="px-6 py-3 border border-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-muted-ink-on-dark dark:hover:bg-gray-700 flex items-center space-x-2"
               >
                 <X className="h-5 w-5" />
                 <span>Cancel Edit</span>
@@ -220,7 +220,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
       {/* Questions List */}
       {questions.length > 0 && (
         <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
-          <h3 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">
+          <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">
             Questions ({questions.length})
           </h3>
           <div className="space-y-3">
@@ -235,11 +235,11 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-sm font-bold px-2 py-1 rounded">
                         Q{index + 1}
                       </span>
-                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded">
+                      <span className="text-xs bg-gray-100 dark:bg-gray-700 text-secondary-ink dark:text-muted-ink px-2 py-1 rounded">
                         {q.difficulty}
                       </span>
                     </div>
-                    <p className="font-medium text-gray-900 dark:text-gray-100 mb-2">{q.question}</p>
+                    <p className="font-medium text-ink dark:text-muted-ink-on-dark mb-2">{q.question}</p>
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {q.options.map((opt, optIdx) => (
                         <div
@@ -247,7 +247,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                           className={`px-3 py-2 rounded ${
                             optIdx === q.correct_answer
                               ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-medium'
-                              : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                              : 'bg-gray-50 dark:bg-gray-700 text-secondary-ink dark:text-muted-ink-on-dark'
                           }`}
                         >
                           {opt}
@@ -280,7 +280,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
       <div className="flex justify-between space-x-4">
         <button
           onClick={onCancel}
-          className="px-6 py-3 border border-gray-300 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          className="px-6 py-3 border border-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-muted-ink-on-dark dark:hover:bg-gray-700"
         >
           Cancel
         </button>
@@ -298,8 +298,8 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
       {showSaveDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[var(--s4-shadow-modal)] p-6 max-w-md w-full">
-            <h3 className="s4-h3 text-[20px] text-gray-900 dark:text-gray-100 mb-4">Save Question Set?</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">Save Question Set?</h3>
+            <p className="text-secondary-ink dark:text-muted-ink mb-4">
               Would you like to save these questions for future use?
             </p>
             <input
@@ -307,12 +307,12 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               value={saveSetName}
               onChange={(e) => setSaveSetName(e.target.value)}
               placeholder="Enter a name for this question set..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 mb-4"
+              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark mb-4"
             />
             <div className="flex space-x-3">
               <button
                 onClick={() => handleSaveAndFinish(false)}
-                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="flex-1 px-4 py-2 border border-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-muted-ink-on-dark dark:hover:bg-gray-700"
               >
                 Don't Save
               </button>

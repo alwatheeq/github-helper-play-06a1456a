@@ -270,7 +270,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                   <div className={`flex gap-2 max-w-[80%] ${own ? 'flex-row-reverse' : 'flex-row'}`}>
                     {/* Avatar */}
                     <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0 ${
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-ink-on-dark shrink-0 ${
                         own ? "bg-accent-gold hover:bg-accent-gold-soft" : "bg-accent-gold"
                       }`}
                     >

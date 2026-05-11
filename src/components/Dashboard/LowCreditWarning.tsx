@@ -128,7 +128,7 @@ export const LowCreditWarning: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={() => navigate('/pricing')}
-                className={`${style.button} text-white px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium transition flex items-center space-x-2`}
+                className={`${style.button} text-ink-on-dark px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium transition flex items-center space-x-2`}
               >
                 <CreditCard className="h-4 w-4" />
                 <span>Upgrade Plan</span>

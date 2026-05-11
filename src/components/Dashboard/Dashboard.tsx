@@ -1734,7 +1734,7 @@ export const Dashboard: React.FC = () => {
                           </p>
                           <button
                             onClick={resetProcessing}
-                            className={`px-4 py-2 text-white rounded-[var(--s4-radius-card)] transition duration-150 ${
+                            className={`px-4 py-2 text-ink-on-dark rounded-[var(--s4-radius-card)] transition duration-150 ${
                               processingState.medicalMode
                                 ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
                                 : 'bg-red-600 hover:bg-red-700'

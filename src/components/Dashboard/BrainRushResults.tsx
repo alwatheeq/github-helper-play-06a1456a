@@ -141,7 +141,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       {/* Header */}
       <div className="text-center mb-8">
         <div className={`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
-          <Trophy className="h-16 w-16 text-white" />
+          <Trophy className="h-16 w-16 text-ink-on-dark" />
         </div>
         <h1 className={`s4-h1 text-[36px] md:text-5xl text-ink dark:text-ink-on-dark mb-2`}>
           Game Complete!
@@ -202,7 +202,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
                 <p className="s4-h3 text-[20px] text-orange-700 dark:text-orange-300">
                   {participantStats[2].participant.score.toLocaleString()}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">points</p>
+                <p className="text-xs text-muted-ink dark:text-muted-ink">points</p>
               </div>
             </div>
           )}
@@ -274,7 +274,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
                     <p className={`s4-h1 text-ink dark:text-ink-on-dark`}>
                       {stats.participant.score.toLocaleString()}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">points</p>
+                    <p className="text-sm text-secondary-ink dark:text-muted-ink">points</p>
                   </div>
                 </div>
 
@@ -286,11 +286,11 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
                       <p className="font-bold text-green-600 dark:text-green-400">{stats.correctAnswers}</p>
                     </div>
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400">Incorrect</p>
+                      <p className="text-secondary-ink dark:text-muted-ink">Incorrect</p>
                       <p className="font-bold text-red-600 dark:text-red-400">{stats.totalAnswers - stats.correctAnswers}</p>
                     </div>
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400">Accuracy</p>
+                      <p className="text-secondary-ink dark:text-muted-ink">Accuracy</p>
                       <p className="font-bold text-blue-600 dark:text-blue-400">{stats.accuracy.toFixed(0)}%</p>
                     </div>
                   </div>
@@ -333,25 +333,25 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-purple-50 dark:bg-purple-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Rank</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Rank</p>
               <p className="s4-h1 text-purple-600 dark:text-purple-400">
                 #{participantStats.findIndex(s => s.participant.user_id === user?.id) + 1}
               </p>
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Score</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Score</p>
               <p className="s4-h1 text-blue-600 dark:text-blue-400">
                 {myStats.participant.score.toLocaleString()}
               </p>
             </div>
             <div className="bg-green-50 dark:bg-green-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Accuracy</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Accuracy</p>
               <p className="s4-h1 text-green-600 dark:text-green-400">
                 {myStats.accuracy.toFixed(0)}%
               </p>
             </div>
             <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg Time</p>
+              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Avg Time</p>
               <p className="s4-h1 text-yellow-600 dark:text-yellow-400">
                 {myStats.avgTimeSeconds.toFixed(1)}s
               </p>

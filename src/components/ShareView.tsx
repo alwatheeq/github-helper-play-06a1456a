@@ -116,7 +116,7 @@ export const ShareView: React.FC = () => {
             {/* Left: Logo + Meshfahem */}
             <div className="flex items-center space-x-3 flex-shrink-0">
               <div className="bg-accent-gold p-2 rounded-[var(--s4-radius-card)]">
-                <FileText className="h-6 w-6 text-white" />
+                <FileText className="h-6 w-6 text-ink-on-dark" />
               </div>
               <div>
                 <h1 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
@@ -207,7 +207,7 @@ export const ShareView: React.FC = () => {
           <div className="flex items-center justify-center">
             <div className="flex items-center space-x-2 text-muted-ink dark:text-muted-ink-on-dark">
               <div className="bg-accent-gold p-1 rounded">
-                <FileText className="h-4 w-4 text-white" />
+                <FileText className="h-4 w-4 text-ink-on-dark" />
               </div>
               <span className="text-sm">
                 {t('share.powered_by')} <strong>{t('app_name')}</strong> - {t('share.ai_powered_learning')}

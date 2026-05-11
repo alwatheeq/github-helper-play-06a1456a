@@ -95,14 +95,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
       {mode === 'break' && isRunning && (
         <div className={`fixed inset-0 ${breakOverlayZ} flex items-center justify-center bg-black/30 backdrop-blur-lg`}>
           <div className="text-center space-y-4">
-            <Coffee className="mx-auto h-16 w-16 text-white animate-pulse" />
-            <h2 className="s4-h1 text-white">{t('pomodoro.take_a_break')}</h2>
-            <p className="text-lg text-white/80">{t('pomodoro.break_message')}</p>
-            <p className="s4-h1 text-[40px] font-mono text-white">{formatTime(timeRemaining)}</p>
+            <Coffee className="mx-auto h-16 w-16 text-ink-on-dark animate-pulse" />
+            <h2 className="s4-h1 text-ink-on-dark">{t('pomodoro.take_a_break')}</h2>
+            <p className="text-lg text-ink-on-dark/80">{t('pomodoro.break_message')}</p>
+            <p className="s4-h1 text-[40px] font-mono text-ink-on-dark">{formatTime(timeRemaining)}</p>
             <button
               type="button"
               onClick={pause}
-              className="mt-4 px-6 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white transition"
+              className="mt-4 px-6 py-2 rounded-full bg-white/20 hover:bg-white/30 text-ink-on-dark transition"
             >
               {t('pomodoro.pause')}
             </button>

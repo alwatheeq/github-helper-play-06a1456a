@@ -246,7 +246,7 @@ export const AchievementsPage: React.FC = () => {
                     }`}
                   >
                     {isUnlocked ? (
-                      <Award className="h-8 w-8 text-white" />
+                      <Award className="h-8 w-8 text-ink-on-dark" />
                     ) : (
                       <Lock className={`h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark`} />
                     )}

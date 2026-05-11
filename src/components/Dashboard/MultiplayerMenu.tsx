@@ -196,7 +196,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Game Name
               </label>
               <input
@@ -210,7 +210,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Max Players
                 </label>
                 <select
@@ -225,7 +225,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Questions
                 </label>
                 <select
@@ -241,7 +241,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Time per Question (seconds)
               </label>
               <select
@@ -269,7 +269,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 setShowCreateForm(false);
                 setError(null);
               }}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-300 font-semibold transition-colors"
+              className="px-6 py-3 bg-gray-200 text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-300 font-semibold transition-colors"
             >
               Cancel
             </button>
@@ -293,7 +293,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Game Code
               </label>
               <input
@@ -320,7 +320,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 setShowJoinForm(false);
                 setError(null);
               }}
-              className="px-6 py-3 bg-gray-200 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-300 font-semibold transition-colors"
+              className="px-6 py-3 bg-gray-200 text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-300 font-semibold transition-colors"
             >
               Cancel
             </button>
@@ -335,7 +335,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
       {onBack && (
         <button
           onClick={onBack}
-          className="mb-6 flex items-center gap-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+          className="mb-6 flex items-center gap-2 text-secondary-ink hover:text-ink dark:text-muted-ink dark:hover:text-muted-ink-on-dark transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
           Back
@@ -343,7 +343,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
       )}
       <div className="text-center mb-8">
         <h1 className="s4-h1 mb-2">Multiplayer Brain Rush</h1>
-        <p className="text-gray-600">Compete with friends in real-time quiz battles!</p>
+        <p className="text-secondary-ink dark:text-muted-ink-on-dark">Compete with friends in real-time quiz battles!</p>
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -356,7 +356,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               <Plus className="w-10 h-10 text-blue-600" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Create Game</h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               Host a new game and invite friends to join
             </p>
             <div className="flex items-center text-blue-600 font-medium">
@@ -375,7 +375,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               <Users className="w-10 h-10 text-green-600" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Join Game</h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               Enter a game code to join an existing game
             </p>
             <div className="flex items-center text-green-600 font-medium">
@@ -388,7 +388,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
       <div className="mt-12 bg-blue-50 rounded-md p-6">
         <h3 className="font-semibold mb-3">How it works:</h3>
-        <ol className="space-y-2 text-sm text-gray-700">
+        <ol className="space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
           <li className="flex gap-2">
             <span className="font-bold text-blue-600">1.</span>
             <span>Create a game or join using a code shared by a friend</span>
