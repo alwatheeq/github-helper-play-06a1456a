@@ -91,3 +91,23 @@ Append the five files to `SWEPT_FILES` in `scripts/check-token-regressions.cjs` 
 - Keeps the phase honest — 3.14 is documented as "sweep + guard" rather than overstating the substitution count.
 
 **Estimate:** ~3 min. **Next phase:** 3.15 (Library / Folders / ShareView cluster — to be scoped after 3.14 lands).
+---
+
+## Phase 3.14 — RESULTS
+
+**Substitutions applied**: 1
+- `src/components/Pricing/PricingPage.tsx:126` — `rounded-t-2xl` → `rounded-t-[var(--s4-radius-card)]`
+
+**Regression guard extended**: 5 files appended to `SWEPT_FILES` (PricingPage, CheckoutPage, PaymentSuccess, PaymentCancel, PersistentSubscriptionModal).
+
+**Audit gate**:
+- `npm run check:tokens` → `✓ 21 swept file(s) clean.`
+- legacy radius (rounded-(xl|2xl|lg|[12px])) across 5 files → 0
+- `from-accent-gold to-accent-gold-soft` across 5 files → 0
+- directional `rounded-(t|b|l|r)-(xl|2xl|lg)` across 5 files → 0
+- `rounded-full` exemptions → 4 (icon halos + theme toggle)
+- `rounded-md` exemption → 1 (PersistentSubscriptionModal icon backdrop)
+
+**Cross-file safety**: no hook signatures, contexts, edge-function payloads, routes, locale keys, or business logic modified. Only 2 files changed (PricingPage.tsx, check-token-regressions.cjs) + 2 docs (this file, SCHOLAR_V4_ISSUES.md).
+
+**Next**: Phase 3.15 — Library / Folders / ShareView cluster (to be scoped).
