@@ -63,3 +63,10 @@ Re-verify `useFloatingVideoStore` is untouched (Profile doesn't consume it, but 
 - Total: ~10 min
 
 Confirm and I'll run the sweep.
+---
+
+## Phase 3.6 — applied
+Token sweep across 2 Profile files. Hits: ProfilePage 28, UsernameSetupModal 3. Total 31 substitutions.
+Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. 0 alert/confirm. Locale JSON valid.
+Cross-file: Dashboard.tsx mount, UsernameSetupModal props/RPC/cooldown logic, useAuth/useSubscription/useToast/useI18n call sites all unchanged. No new imports.
+Data-driven exemptions preserved: green Save CTA (line 1082), theme gradient swatches (1321/1325), badge-tier swatch (1580), stat-card accent backgrounds (1492/1506/1520/1534/1548), paginator neutrals (1449/1460/1469).
