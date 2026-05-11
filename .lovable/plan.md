@@ -82,3 +82,8 @@ The Rooms cluster is self-contained at the route boundary. `CommentSection.tsx` 
 - Total: ~10 min
 
 Confirm and I'll run the sweep.
+---
+
+## Phase 3.5 — applied
+Token sweep across 2 Rooms files. Hits: StudyRoomsPage 17, ZegoVideoRoom 5. Total 22 substitutions.
+Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. No JSX, prop, hook, ZegoCloud config, or Supabase channel changes. Data-driven role/state colors preserved.
