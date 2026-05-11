@@ -1,134 +1,93 @@
-# Phase 3.12 verification + regression guard + Phase 3.13 plan
+## 1. Phase 3.13 verification — RESULTS (clean)
 
-## 1. Phase 3.12 verification — PASS
+Regression guard already in place (`scripts/check-token-regressions.cjs`, wired into `npm run check:tokens` + `quality` + `quality:quick`) and **covers the social cluster** (Phase 3.12 files are already on the allowlist alongside Phase 3.11 and 3.13 files). So the "automated regression checks to prevent legacy radius or gold gradients from reappearing in the social cluster files" is already done — no additional work needed there.
 
-Re-ran the audit gate against all 6 social-cluster files:
+Audit re-run for Phase 3.13:
 
-| Check | Result |
-|---|---|
-| Legacy `rounded-(xl\|2xl\|lg\|[12px])` in 6 files | **0 hits** |
-| `from-accent-gold to-accent-gold-soft` in 6 files | **0 hits** |
-| `rounded-full` preserved (gold avatars + add-friend button) | 4 hits (GroupsPanel, GroupChat, CommentSection, FriendsPanel) ✓ |
-| Semantic affordances preserved | `bg-blue-600`×3 in CommentSection, `bg-green-500/10` + `bg-red-500/10` in FriendsPanel ✓ |
-| Cross-file contracts | No exported style constants, no `className` props consumed by parents — leaf components only |
-| Hook / Supabase / error-logger call-sites | Byte-identical (no logic touched) |
+| File | legacy radius | gold gradient | rounded-full (exempt) | rounded-t-* (preserved) | directional corners (preserved) |
+|---|---:|---:|---:|---:|---:|
+| `ChatAssistant/ChatAssistant.tsx` | 0 | 0 | 1 (FAB) | 1 | 2 (resize handle `tl`/`tr`) |
+| `ChatAssistant/GlobalChatAssistant.tsx` | 0 | 0 | 1 (FAB) | 1 | 2 (resize handle) |
 
-No linter / TS / cross-file issues introduced. Phase 3.12 is clean.
+- `npm run check:tokens` → `✓ 16 swept file(s) clean.`
+- No cross-file contracts (`ChatContext`, `useChatStore`, props, locale keys, edge-function payloads) were touched.
+- No logic, hook order, Supabase call, or error-logger drift.
+- Semantic affordances preserved (`focus:ring-accent-gold`, `bg-blue-500` hover tints, `text-white` on gold).
 
-## 2. Regression guard (the step that belongs to 3.12 and must not be skipped)
-
-Add an automated check so legacy radius or gold gradients can never silently re-enter the social cluster (or any already-swept file).
-
-### 2a. Script `scripts/check-token-regressions.cjs`
-
-Single Node script (no new deps). For each entry in a `SWEPT_FILES` allowlist (currently the 6 social files + 3.10/3.11 files already swept), it greps for:
-
-- `\brounded-(xl|2xl|lg|\[12px\])\b`
-- `from-accent-gold to-accent-gold-soft`
-
-Exits non-zero with a per-file report on any hit. Reads files via `fs.readFileSync`, no external runtime.
-
-### 2b. Wire into `package.json`
-
-```
-"check:tokens": "node scripts/check-token-regressions.cjs",
-"quality": "npm run check:tokens && npm run lint && npx tsc --noEmit && ..."
-```
-
-Inserts `check:tokens` as the first step in `quality` and `quality:quick` so CI / local `npm run quality` blocks regressions before lint/build.
-
-### 2c. Document in `docs/SCHOLAR_V4_ISSUES.md`
-
-Add a short "Token regression guard" section pointing to the script and explaining the allowlist contract (each completed phase appends its file paths).
-
-No source files change in step 2 — guard-only.
-
-## 3. Phase 3.13 — ChatAssistant cluster
-
-### Scope (17 hits, 2 files)
-
-Confirmed via `rg`:
-
-| File | radius hits | gold-gradient hits | `rounded-full` (exempt) |
-|---|---:|---:|---:|
-| `ChatAssistant/ChatAssistant.tsx` | 6 | 4 | 1 (FAB) |
-| `ChatAssistant/GlobalChatAssistant.tsx` | 5 | 4 | 1 (FAB) |
-| **Total** | **11** | **8** | 2 |
-
-Hit locations (verified):
-- `ChatAssistant.tsx`: FAB (gold gradient + `rounded-full`, gradient-only flatten), header bar (`rounded-t-lg` + gold gradient), suggestion buttons (`rounded-lg`), user-bubble (`rounded-lg` + gold gradient), assistant-bubble (`rounded-lg`), loading bubble (`rounded-lg`), input (`rounded-lg`), send button (`rounded-lg` + gold gradient), outer panel (`rounded-lg`).
-- `GlobalChatAssistant.tsx`: FAB (line 496, gold gradient + `rounded-full`), panel (line 512, `rounded-lg`), header (line 523, `rounded-t-lg` + gold gradient), user-bubble (lines 620–622, `rounded-lg` + gold gradient), loading bubble (line 632, `rounded-lg`), input (line 651, `rounded-lg`), send (line 658, `rounded-lg` + gold gradient).
-
-### Substitution rules (identical to 3.10–3.12)
-
-- `rounded-xl` / `rounded-2xl` / `rounded-lg` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]`
-- `rounded-t-lg` (header) → `rounded-t-[var(--s4-radius-card)]` (preserves directional rounding pattern used in 3.11 modals)
-- `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`
-- `rounded-full` (FABs) → **untouched**, flatten the gradient only (same exemption as 3.11 OnboardingWizard avatars and 3.12 GroupsPanel/GroupChat/CommentSection)
-
-### Exemptions (to record in `docs/SCHOLAR_V4_ISSUES.md`)
-
-1. Two FAB buttons keep `rounded-full` (pill affordance), gradient flattens to `bg-accent-gold`.
-2. Header bars keep directional `rounded-t-*` (top-only rounding); only the radius value swaps to the token.
-3. CSS file `ChatAssistant.css` and `GlobalChatAssistant.css` are out of scope (animation keyframes, drag/resize handles — no color/radius tokens to migrate). Verified: no `rounded-*` or gold-gradient classes inside them.
-
-### Cross-file safety
-
-- `ChatAssistant` is consumed by `SummaryView` / `LibraryItemView` / `ShareView` / `HistoryItemView` — props are `summaryText`, `originalText`, `topics`, `medicalMode`, `contextType`, `contextId`; no `className` pass-through, no exported style constants. Visual change only.
-- `GlobalChatAssistant` is mounted from `Dashboard.tsx` / `App.tsx` and reads from `ChatContext`; same prop contract analysis — no style API to break.
-- No changes to: Supabase edge-function call (`chat-assistant`), `useAuth`, `useI18n`, `useToast`, `ErrorLogger`, `creditUpdated` event dispatch, draggable/resizable handlers, locale JSONs.
-- Sed scoped to exactly 2 file paths.
-
-### Audit gate
-
-Against the 2 ChatAssistant files:
-- `rg "rounded-(xl|2xl|lg|\[12px\])"` → **0 hits**
-- `rg "from-accent-gold to-accent-gold-soft"` → **0 hits**
-- `rounded-full` count unchanged (2)
-- `rounded-t-lg` → `rounded-t-[var(--s4-radius-card)]` count: 2
-- Hook / Supabase / event-dispatch / drag-handler call-sites byte-identical
-- 4 locale JSONs parse OK
-
-Plus: **run `npm run check:tokens`** (the new guard from step 2) — must exit 0 against the freshly-extended allowlist that now includes the 2 ChatAssistant files.
-
-### Deliverables
-
-1. `scripts/check-token-regressions.cjs` (new)
-2. `package.json` — add `check:tokens` script, prepend to `quality` + `quality:quick`
-3. `docs/SCHOLAR_V4_ISSUES.md` — token-regression-guard section + 3.13 exemption notes
-4. `src/components/ChatAssistant/ChatAssistant.tsx` — radius + gradient flatten
-5. `src/components/ChatAssistant/GlobalChatAssistant.tsx` — radius + gradient flatten
-6. `.lovable/plan.md` — Phase 3.13 results block (counts, audit gate including `check:tokens` pass, exemptions, next: 3.14)
-
-Estimated ~8 min (5 for guard + 3 for sweep).
+Phase 3.13 is clean.
 
 ---
 
-## Phase 3.12 verification + regression guard + Phase 3.13 — RESULTS
+## 2. Phase 3.14 — pricing / subscription / checkout cluster
 
-### 3.12 verification (re-audit)
-- 6 social-cluster files: 0 legacy radius hits, 0 gold-gradient hits.
-- `rounded-full` preserved (4), semantic affordances preserved (`bg-blue-600`×3, `bg-green-500/10`, `bg-red-500/10`, `bg-white` QR).
-- No cross-file, hook, Supabase, locale, or error-logger drift.
+### Files in scope
 
-### Regression guard (the missing 3.12 step, now landed)
-- `scripts/check-token-regressions.cjs` (new) — Node, zero deps. Greps forbidden patterns against an allowlist of all swept files.
-- `package.json` — added `check:tokens`; prepended to `quality` and `quality:quick`.
-- Run: `✓ Token regression guard: 16 swept file(s) clean.`
+| File | legacy radius hits | gold gradient hits | already-tokenized | rounded-full (exempt) | rounded-md (exempt) |
+|---|---:|---:|---:|---:|---:|
+| `src/components/Pricing/PricingPage.tsx` | 1 (`rounded-t-2xl` line 126) | 0 | 16+ | 1 (theme toggle) | 0 |
+| `src/components/Pricing/CheckoutPage.tsx` | 0 | 0 | ~8 | 1 (error icon) | 0 |
+| `src/components/Pricing/PaymentSuccess.tsx` | 0 | 0 | 4 | 1 (success icon) | 0 |
+| `src/components/Pricing/PaymentCancel.tsx` | 0 | 0 | 4 | 1 (cancel icon) | 0 |
+| `src/components/Subscription/PersistentSubscriptionModal.tsx` | 0 | 0 | 1 | 0 | 1 (close-affordance pill) |
 
-### 3.13 sweep (executed)
-Files: `ChatAssistant/ChatAssistant.tsx`, `ChatAssistant/GlobalChatAssistant.tsx`.
+**The cluster was largely swept in earlier passes.** Only one substitution remains. The bulk of Phase 3.14 work is **closing the regression-guard gap**: these five files are currently *not* on the `SWEPT_FILES` allowlist, so they aren't protected against re-introduction of legacy patterns.
 
-| Audit | Result |
-|---|---|
-| Legacy `rounded-(xl\|2xl\|lg\|[12px])` | 0 |
-| `from-accent-gold to-accent-gold-soft` | 0 |
-| `rounded-full` preserved | 2 ✓ |
-| `rounded-t-[var(--s4-radius-card)]` (header) | 2 ✓ |
-| Resize-handle directional `rounded-(tl\|tr\|bl\|br)-lg` preserved | 4 ✓ |
-| `npm run check:tokens` (16 swept files) | PASS |
+### Substitution rule (single hit)
 
-Hook, Supabase, event-dispatch, drag/resize handlers, locale JSONs — byte-identical.
+`src/components/Pricing/PricingPage.tsx:126`
 
-### Next
-Phase 3.14 — pricing / subscription / checkout cluster (`PricingPage`, `CheckoutPage`, `PaymentSuccess`, `PaymentCancel`, `PersistentSubscriptionModal`).
+```diff
+- <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-2xl`}>
++ <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-[var(--s4-radius-card)]`}>
+```
+
+This preserves directional behavior (header of a card that uses `rounded-[var(--s4-radius-card)]` on its parent at line 124 + `overflow-hidden`) — same pattern Phase 3.13 used for the ChatAssistant header.
+
+### Exemptions to preserve verbatim
+
+- `rounded-full` on icon halos (`PaymentSuccess` green check, `PaymentCancel` orange X, `CheckoutPage` red error halo, `PricingPage` theme-toggle button) — circular by design.
+- `rounded-md` on `PersistentSubscriptionModal:54` icon backdrop — explicit medium-radius affordance distinct from card-radius; out of forbidden-pattern set.
+- Semantic affordance colors: `bg-red-100`, `bg-blue-50`, `bg-orange-50`, `bg-green-100` and their dark-mode variants — state/intent colors, not brand-gradient candidates.
+- `text-white` on `bg-accent-gold` buttons — intentional contrast pairing.
+- Stripe/billing-period business logic, `useSubscription`/`useCredits` hooks, `verifySubscriptionCreditsAfterCheckout`, `SUBSCRIPTION_PROCESSING_PAYWALL_SESSION_KEY`, `ErrorLogger` calls — **not touched**.
+
+### Cross-file safety checks
+
+1. `useSubscription`, `useCredits`, `useFeatureAccess`, `useAuth` — read-only consumers; no signature change.
+2. `PersistentModalContext` exports `SUBSCRIPTION_PROCESSING_PAYWALL_SESSION_KEY` consumed by `PaymentSuccess` — not modified.
+3. Edge functions `create-checkout-session`, `stripe-webhook` — no client-side payload changes.
+4. Routes (`/pricing`, `/profile/subscription`, success/cancel return URLs) — unchanged.
+5. `SubscriptionGuard` and `SubscriptionRefreshListener` — share visual idiom with the cluster but are out of scope (separate phase / already aligned).
+6. i18n keys — none touched (these pages are English-only copy today; no locale drift).
+
+### Regression-guard extension
+
+Append the five files to `SWEPT_FILES` in `scripts/check-token-regressions.cjs` under a new `// Phase 3.14 (pricing / subscription / checkout cluster)` block, in declaration order matching the table above. Re-run `npm run check:tokens` — must report `✓ 21 swept file(s) clean.`
+
+### Audit gate (must all pass before marking 3.14 done)
+
+```text
+1. rg "rounded-(xl|2xl|lg|\[12px\])" <5 files>                       → 0
+2. rg "from-accent-gold to-accent-gold-soft" <5 files>               → 0
+3. rg "rounded-t-2xl|rounded-b-2xl|rounded-l-2xl|rounded-r-2xl" …    → 0
+4. rg "rounded-full" <5 files>                                       → 4 (icon halos + theme toggle)
+5. rg "rounded-md" <5 files>                                         → 1 (modal close affordance)
+6. npm run check:tokens                                              → 21 files clean
+7. git diff --stat                                                   → exactly 2 files changed
+                                                                       (PricingPage.tsx, check-token-regressions.cjs)
+```
+
+### Deliverables
+
+1. `src/components/Pricing/PricingPage.tsx` — single-line substitution at L126.
+2. `scripts/check-token-regressions.cjs` — append 5 files to `SWEPT_FILES`.
+3. `docs/SCHOLAR_V4_ISSUES.md` — append "Phase 3.14 — pricing / subscription / checkout cluster" section: file inventory, the lone substitution, exemption rationale (`rounded-full` halos, `rounded-md` modal affordance), audit gate results.
+4. `.lovable/plan.md` — Phase 3.14 RESULTS block (counts, audit gate, exemptions, next: Phase 3.15).
+
+### Why this is the right scope
+
+- Substituting only the one drifted class avoids gratuitous diffs; the rest of the cluster already conforms.
+- Adding the files to the allowlist now is the durable win: without it, any future contributor edit could silently re-introduce `rounded-xl`/gradient pairs and CI would not catch it.
+- Keeps the phase honest — 3.14 is documented as "sweep + guard" rather than overstating the substitution count.
+
+**Estimate:** ~3 min. **Next phase:** 3.15 (Library / Folders / ShareView cluster — to be scoped after 3.14 lands).
