@@ -1,164 +1,108 @@
+## Phase 0+1 verification
 
-# Scholar v4 — Full App Integration
+I traced every artifact created in Phase 0+1 against the rest of the codebase.
 
-Scholar v4 is a static design canvas: ~8,400 lines of inline-styled JSX with 6 color families × light/dark × ~70 fixed-1280×820 artboards, no real wiring. The good news: your `ThemeContext` already names the same 6 palettes (`navy-gold`, `oxblood-cream`, `forest-parchment`, `ink-blush`, `copper-charcoal`, `monochrome`) and writes `data-theme="…"` on `<html>`. So the integration is mostly: lift v4 tokens into CSS variables, rebuild the shell + every page as responsive Tailwind components wired to existing handlers, and stub anything that has no backend yet.
+### What I checked
+- `src/main.tsx` imports `./styles/scholarV4.css` (✓)
+- `src/App.tsx` imports `TodoToastListener` and mounts it inside `ToastProvider` at line 260 (✓)
+- `TodoToastListener.tsx` uses `useToast().info(message, duration)` — the real signature in `src/components/Toast/Toast.tsx` is `info: (message: string, duration?: number) => void` (✓ matches)
+- `todoToast.ts` is SSR-safe, no external deps, exports a clean `todo()` API + `TODO_TOAST_EVENT` (✓)
+- `ScholarV4Icons.tsx` is self-contained, only depends on `react` (✓)
+- `scholarV4.css` only aliases existing role tokens; no token name collisions with `index.css` or `designSystem.css` (`rg "--s4-"` only matches the new file) (✓)
+- `docs/SCHOLAR_V4_ISSUES.md` Phase 0 and Phase 1 marked done (✓)
 
-This is a large initiative. Trying to land it in one shot guarantees regressions. The plan below is **phased** — each phase ships a usable app and is independently reviewable.
+### Minor observations (non-blocking)
+- `S4Icons` and `todo()` are not consumed yet — expected, they're for Phase 2+.
+- The unrelated console errors visible right now (`fetchAchievements`, `updateColorTheme` failing) are pre-existing Supabase issues, not caused by Phase 0+1.
+- `scholarV4.css` declares `--s4-radius-card: 6px`, but Phase 1 chrome and existing Workshop use a literal `rounded-[6px]`. Phase 2 should migrate these to `rounded-[var(--s4-radius-card)]` via Tailwind arbitrary value so future tuning is one-file.
 
----
-
-## Scope summary
-
-- **6 themes × 2 modes** all selectable from Profile (already partly wired) — every component must read from CSS variables, not hardcoded colors.
-- **~50 pages** to rebuild visually to match v4 while preserving current business logic and Supabase wiring.
-- **Responsive** from ~360 px up; v4's fixed 1280-wide proportions become a design target, not a hard min-width.
-- **Stub policy**: any v4 control that doesn't map to existing functionality renders, but `onClick` fires a `toast("TODO: <feature> — not implemented yet")`. Every stub is logged in the issues report.
-- **Out of scope**: Supabase schema changes, edge-function changes, new features, new routes (only stubbing existing-but-missing UI).
-
----
-
-## Phase 0 — Foundation (no visual change yet)
-
-1. **Design tokens** → `src/styles/scholarV4.css`
-   - For each `data-theme="<family>"` (light) and `data-theme="<family>".dark` (dark), emit the 12 palette variables from v4's `T` object as CSS custom properties: `--s4-bg, --s4-panel, --s4-panel2, --s4-ink, --s4-body, --s4-muted, --s4-accent, --s4-accent-soft, --s4-rule, --s4-chip, --s4-sb, --s4-sb-ink, --s4-sb-muted, --s4-sb-active`.
-   - Add HSL equivalents so Tailwind utilities like `bg-[hsl(var(--s4-panel))]` work.
-2. **Tailwind config** → extend `colors` with `scholar.*` aliases pointing at the variables; extend `fontFamily` with `serif: ['Fraunces', …]` and ensure Inter is the sans default.
-3. **Fonts** → load Fraunces + Inter in `index.html` (preconnect to fonts.googleapis.com).
-4. **Icon set** → port v4's inline `Ic.*` SVGs to `src/components/Scholar/icons/` as small React components that accept `className`/`color`. We do **not** replace lucide-react globally; we use Scholar icons only inside the new shell and v4-rebuilt pages.
-5. **Smoke test**: load app on every theme/mode combo, verify no visual regression (variables exist but nothing consumes them yet).
-
-Deliverable: tokens live, app looks identical to today.
-
-## Phase 1 — App shell (visible change)
-
-Rebuild the chrome that wraps every authenticated route:
-
-- `Header4` → new `src/components/Layout/AppHeader.tsx` (logo monogram, tagline, credits chip, bell, avatar+plan). Wired to existing `useAuth`, `useCredits`, `NotificationCenter`.
-- `Side4` → new `src/components/Layout/AppSidebar.tsx` using shadcn `Sidebar` primitives, `collapsible="icon"`, themed sidebar background from `--s4-sb`. Items: Dashboard, My Library, Study Rooms, Academics, Examinations, EduPlay, History, Feedback. Active route via `NavLink`. Mobile: `offcanvas` via existing `SidebarTrigger`.
-- `Shell4` wrapper in `App.tsx` replacing the current dashboard layout container.
-- Mobile: header collapses logo+tagline → just logo+monogram; sidebar slides as a sheet under 1024 px.
-
-Deliverable: every existing page now sits inside the v4 shell. Page bodies still old; that's fine.
-
-## Phase 2 — Dashboard / Workshop (lead page, full fidelity)
-
-Rebuild `WorkshopPanel` and children to exact v4 spec (the one you wrote earlier — Workshop eyebrow, 32 px gap, 300 px right rail, 6 px card radius, 4 tabs File/Text/Scan/URL with 2 px bottom indicator, dropzone, dark feature card, recently-processed list with 12 px row padding).
-
-- Tabs: File (works), Text (works), Scan/OCR (works, gated by feature flag), **URL** (no backend → stub toast).
-- Right rail: Summary + Flashcards toggles already wired; the rotating tip from v4 → port verbatim.
-- Recently-processed → reuse existing `RecentlyProcessedList` but restyle.
-- Responsive: at <1024 px the right rail drops below the input card; at <640 px tabs become a horizontal scroller — never a horizontal page scroll.
-
-Deliverable: Dashboard matches v4 in all 12 theme×mode combos, fully functional on a 360 px phone and a 1920 px desktop.
-
-## Phase 3 — High-traffic pages
-
-In this order, each as one PR-sized change:
-
-1. **My Library** — restyle existing `LibraryPage`. All existing CRUD preserved.
-2. **History / The Ledger** — restyle `HistoryPage`.
-3. **Examinations hub** (Create / My Quizzes / Explore / History / Global / Preview) — restyle existing pages. *Active exam screens (MCQ / TF / Fill / Open) come in Phase 5.*
-4. **Academics** hub — restyle. **Tutor / Exam Schedule / SRS Review / Analytics** sub-pages are mostly stubs in v4 → ship the layouts, wire what exists (course list), toast-stub the rest.
-5. **EduPlay** hub + Brain Rush lobby/active/leaderboard/result/multiplayer — restyle existing Brain Rush + Multiplayer pages.
-6. **Study Rooms** + Create/Friends/Groups/Active — restyle existing Rooms pages, including the ZegoCloud video tile.
-7. **Profile** + Edit / Subscription / Billing / Username variants — restyle existing pages; the v4 "states" (canceled, failed, cooldown, empty billing) become real conditional renders driven by existing subscription state.
-8. **Feedback**, **Notifications**, **Goals**, **Achievements**, **Informational** — straight restyles.
-9. **Content viewers**: Read / Book Mode / Audio / Mind Map / Flashcard Study → restyle existing viewers.
-
-For each page: same routes, same data hooks, same handlers — only JSX + Tailwind classes change. Any control without a backing handler gets a `toast("TODO: <name>")`.
-
-## Phase 4 — Auth & out-of-shell pages
-
-`Auth`, `OnboardingLang`, `OnboardingTheme`, `Pricing`, `Checkout`, `PaymentSuccess`, `PaymentCancel`, `AccountSuspended`, `ShareView`, `NotFound`, `Tutorial`, `InsufficientCredits`, `LowCreditBanner`, `ChatAssistant`, `FloatingMiniPlayer` — these live outside the main shell. Restyle in place.
-
-## Phase 5 — Active exam runtime & modals
-
-The four active-exam screens (MCQ, TF, Fill, Open) and the result screen. These re-use `QuizTakingComponent` — the logic stays, the wrapper gets the v4 chrome (timer pill, question chip strip, exit-with-confirm modal).
-
-## Phase 6 — Cleanup & polish
-
-- Remove dead files: legacy `Card.tsx` paths that no one renders anymore, `designSystem.css` rules superseded by Scholar tokens.
-- Delete `design/` source artboards from the build (they're dev-only, but `src/pages/ScholarPreview.tsx` should point at v4 templates or be removed).
-- Final pass on dark-mode contrast (Oxblood and Ink palettes have low-contrast risk per v4 values; audit `--s4-muted` against `--s4-bg`).
+Phase 0+1 is clean. Proceeding to plan Phase 2.
 
 ---
 
-## Issues report — what's already known to be missing
+## Phase 2 — Dashboard / Workshop full rebuild
 
-You asked for "all issues — missing functions for buttons, etc." Based on a static read of v4 vs the current codebase, here's the up-front list. The full list grows during implementation; I'll keep `docs/SCHOLAR_V4_ISSUES.md` as a living checklist.
+### Goal
+Make the Workshop (Dashboard idle state) match Scholar v4 pixel-for-pixel **and** be the reference implementation that all later page rebuilds copy from. Every visual decision below is taken from the v4 artboard spec already in the design files; functionality stays on existing handlers, with the **URL** tab as the only new stub.
 
-### Missing or stubbed functionality (will toast "TODO")
+### Scope (in order)
 
-| v4 element | Page | Status |
-| --- | --- | --- |
-| **URL tab** in Workshop dropzone | Dashboard | No edge function to fetch+extract from a URL. Stub. |
-| **Scan / OCR** for handwritten | Dashboard | Edge fn `ocr-scan` exists for images — works for printed; handwriting quality is uncontrolled. |
-| **AI Tutor** chat surface | Academics · Tutor | No dedicated edge fn; could reuse `chat-assistant`. Stub initially. |
-| **Exam Schedule** with calendar | Academics · Exams | No `exam_schedule` table. Stub. |
-| **SRS Review** queue | Academics · SRS | `srsAlgorithm.ts` util exists; no `srs_cards` table. Stub queue UI. |
-| **Academics Analytics** charts | Academics · Analytics | Some studyTracking exists but no aggregation endpoint. Stub charts with mock until backend lands. |
-| **Find a Match** matchmaking | EduPlay · Find Match | No matchmaking edge fn; current multiplayer is invite-code only. Stub. |
-| **Group Chat** (room-wide text) | Rooms · Groups / GroupChat | No `room_messages` table. Stub. |
-| **Pomodoro notifications** | Notifications | `usePomodoroStore` exists locally; no push wiring. Stub the "enable push" CTA. |
-| **Achievements** badges | Achievements | No `achievements` table. Stub progress bars with static data. |
-| **Goals & Targets** weekly goals | Goals | No `user_goals` table. Stub with localStorage placeholder. |
-| **Billing History** entries | Profile · Billing | Exists via Stripe but the v4 "empty state", "failed", "canceled" variants need state-driven rendering — wire to existing subscription status. |
-| **Username cooldown** timer | Profile · Username | No `username_changed_at` timestamp on profiles. Stub timer. |
-| **ShareView** rich preview | /share/:id | Exists; v4 adds reactions/comments — stub. |
-| **Mind Map** export PNG | ContentView · MindMap | Library `html-to-image` not installed. Stub. |
-| **Floating MiniPlayer** dock controls | Audio Study | `useFloatingVideoStore` exists, drag-to-dock is new. Stub drag. |
+1. **Tokenize Workshop chrome**
+   - Replace literal `rounded-[6px]` / `rounded-[4px]` / inline `padding: '22px'` / `padding: '32px'` across `WorkshopPanel`, `InputForm`, `GenerationRail`, `RecentlyProcessedList` with `var(--s4-radius-card)`, `var(--s4-radius-btn)`, `var(--s4-card-pad)`, `var(--s4-card-pad-dark)`.
+   - This guarantees every other page rebuilt in Phase 3 inherits the same dial. No visual change today.
 
-### Likely visual regressions to watch
+2. **Workshop eyebrow + heading block** (currently missing)
+   - Above the two-column grid, add: gold eyebrow `WORKSHOP`, serif H1 `Begin a new passage.`, hairline rule. Lives in `WorkshopPanel.tsx`, not Dashboard.tsx, so it stays out of the busy/processing state.
 
-- v4 uses **Fraunces** (serif) for headings everywhere — currently project uses Inter throughout. Long Arabic strings in Fraunces fall back to system serif (Fraunces has no Arabic). Need a `font-family: Fraunces, 'IBM Plex Sans Arabic', …` stack.
-- v4 sidebar background is the brand-dark color (`--s4-sb`) regardless of light/dark mode. Current sidebar follows page background. Big visual change; intentional.
-- v4 dropzone is 220 px tall and the right rail is 300 px wide — at viewports under ~1080 px these don't fit side-by-side. Phase 2 stacks them.
-- Card radius drops from 12 px (current `rounded-xl`) to 6 px (v4). Will look "sharper / more editorial" — confirm this is desired across the app, not just Workshop.
-- Button radius drops from 12 px to 4 px. Same note.
+3. **InputForm tab strip → 4 tabs**
+   - Add `'url'` to the `inputMode` union and render a 4th tab `URL` (with `S4Icons.Globe`).
+   - `url` body: themed input + helper text + primary CTA `Import from URL →`. CTA calls `todo('URL import')` from `utils/todoToast`. No backend touched.
+   - Below `sm` breakpoint, the tab strip gains `overflow-x-auto` + `-mx-* px-*` bleed so it scrolls inside its card rather than pushing the page wide.
 
-### Risky migrations
+4. **Dropzone polish** (file + ocr)
+   - Lock dropzone height to v4's 220 px via `min-h-[220px]` and center contents with flex.
+   - Add the v4 micro-meta strip (`Average processing time`, `Last upload`, `Storage used`) only in file mode — these are already present but currently hardcoded; gate them behind a `dashboardMeta` prop (defaulting to `null`) so they hide cleanly when no real data is available, instead of lying with mock numbers. Logged as item #17 in `SCHOLAR_V4_ISSUES.md` to wire later.
 
-- `designSystem.css` defines `.btn-soft-primary`, `.card-subtle`, etc. with hardcoded hex. Many pages use these classes. Phase 6 maps them to v4 tokens; if a page is rebuilt in Phase 3 it can drop the class entirely.
-- `tailwind.config.js` likely has color tokens that conflict with the new `scholar.*` namespace — will audit on Phase 0.
-- The 6 theme palettes in `ThemeContext.tsx` currently emit **Tailwind class strings** (e.g. `bg-amber-100`) via `getThemeAccent()` etc. Anything calling these helpers keeps working but will look "off" until that page is rebuilt to consume CSS vars instead. Helpers stay for back-compat; new code uses vars.
+5. **GenerationRail v4 polish**
+   - Pure visual: 22 px → `var(--s4-card-pad-dark)`; row icons swapped to `S4Icons.Doc`, `S4Icons.Lib`, `S4Icons.Quiz`, `S4Icons.Bulb`; bottom CTA gets a `S4Icons.Arrow` instead of the literal `→`.
+   - Add the v4 rotating tip line below the CTA: small muted text that cycles through 3 tips on a 6 s interval (pure presentation, no persistence).
+   - The disabled Generate CTA stays disabled (current behavior). The Examination/Mind-map toggles already mark themselves as TODO in code — wire `todo()` toasts when the user flips them.
 
----
+6. **RecentlyProcessedList v4 polish**
+   - Row padding bumped from 12 px to v4's `py-3` (already correct).
+   - Replace the mock "Subject code" derivation with a single source-of-truth helper that returns `—` when no real subject exists, and add a comment pointing at `SCHOLAR_V4_ISSUES.md` so the next backend task knows where to plug in.
+   - Add the v4 5-column header row (`No.`, `Title`, `Subject`, `Output`, `When`) above the list, matching grid columns exactly.
+   - Empty-state copy unchanged; loading state gets a real 3-row skeleton instead of the plain "Loading…" text (uses existing `LoadingSkeleton`).
 
-## Technical details
+7. **Responsive contract**
+   - Wrapper grid in `WorkshopPanel`:
+     ```text
+     ≥1024 px: minmax(0, 1fr) 300px         (current)
+     <1024 px: stack — rail moves under input
+     <640 px:  tab strip horizontal-scrolls inside card
+     ```
+   - Implement via a single Tailwind class swap (`lg:grid-cols-[minmax(0,1fr)_300px] grid-cols-1`); drop the inline `style` block.
+   - Verified the current viewport (904 × 583) triggers the stacked layout — that's the intended responsive behavior, not a regression.
 
-**Files created**
-- `src/styles/scholarV4.css` — 6 families × 2 modes × ~14 vars.
-- `src/components/Scholar/icons/*.tsx` — ~30 icons from v4's `Ic` object.
-- `src/components/Layout/AppHeader.tsx`, `AppSidebar.tsx`, `AppShell.tsx`.
-- `src/components/Dashboard/v4/*.tsx` for the rebuilt Workshop pieces, then progressively under `Library/v4`, `Rooms/v4`, etc. (or in-place replacement once a page is fully ported).
-- `docs/SCHOLAR_V4_ISSUES.md` — running stub/issue ledger.
+8. **Stub registry**
+   - Add to `docs/SCHOLAR_V4_ISSUES.md`:
+     - #17 Workshop meta strip (real processing/storage numbers)
+     - #18 URL import handler
+     - #19 Examination/Mind-map output wiring from the rail
+     - #20 Subject code field on `user_history`
+
+### What I will NOT do in Phase 2
+- Touch any other page (Library, Quiz, Academics, etc.) — Phase 3.
+- Add new routes, new tables, new edge functions.
+- Replace `lucide-react` globally — Workshop migrates to `S4Icons`, other pages keep lucide until they're rebuilt.
+- Rebuild the busy/processing Dashboard state (modal/queue UI) — out of scope; only idle Workshop changes.
+
+### Technical details
 
 **Files modified**
-- `tailwind.config.js`, `index.html`, `src/App.tsx`, `src/contexts/ThemeContext.tsx` (adds CSS-var emission, keeps helper API).
+- `src/components/Dashboard/WorkshopPanel.tsx` — heading block, responsive grid, no inline styles.
+- `src/components/Dashboard/InputForm.tsx` — 4th URL tab, tab-strip overflow, dropzone min-height, meta strip gating, icon swaps where used inside the card.
+- `src/components/Dashboard/GenerationRail.tsx` — icons → S4Icons, tokens, rotating tip, TODO toasts on Examination/Mind-map.
+- `src/components/Dashboard/RecentlyProcessedList.tsx` — header row, skeleton loader, subject-code helper.
+- `src/styles/scholarV4.css` — add `--s4-card-pad`, `--s4-card-pad-dark` consumption helpers if missing (already declared).
+- `docs/SCHOLAR_V4_ISSUES.md` — add items #17–#20.
 
-**Files deleted (Phase 6 only, after all pages migrated)**
-- legacy palette code paths in `designSystem.css`, the old `Header.tsx`/`Sidebar.tsx` once replaced, and the dev-only `design/*` artboards from the build.
+**Files created**
+- `src/components/Dashboard/WorkshopHeader.tsx` — small, presentational; the eyebrow + H1 + hairline block. Kept separate so Phase 3 can reuse the pattern verbatim on every page.
 
-**Stub helper**
-```ts
-// src/utils/todoToast.ts
-import { toast } from "sonner";
-export const todo = (feature: string) =>
-  toast(`${feature} — not implemented yet`, { description: "Coming soon" });
-```
+**Cross-file safety checklist**
+- `ScholarCard` (used by `InputForm`) — current padding is `lg`; we keep that prop and let `ScholarCard` continue to own its radius. No change to `Scholar/` exports.
+- `useFeatureAccess`, `useSubscription`, `extractTextFromFile`, `medStudentClient` — untouched.
+- i18n keys — every new string (`workshop.eyebrow`, `workshop.title`, `workshop.url_tab`, `workshop.url_cta`, `workshop.url_helper`, `workshop.meta_*`, `workshop.tip_1..3`) added to all 4 locale files (`en`, `ar`, `fr`, `tr`). The `profile.loading` warning visible in console logs is a separate, pre-existing miss and will be fixed in Phase 3 when Profile is rebuilt — flagging it now so we don't repeat the mistake.
+- Theme tokens — `--s4-*` already alias the role tokens; no new CSS variables.
+- No `ThemeContext` changes; no Supabase calls added or moved.
 
-**Responsive contract**
-- Page-level horizontal scroll is a bug; flag any `min-w-[…px]` discovered.
-- Below 768 px: sidebar offcanvas, right rails stack under main column, tab strips become horizontal scroll inside their card.
-- Use a single content `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8` rhythm everywhere.
+**Best-practice notes**
+- All new tabs/buttons use real `<button type="button">` with `aria-controls`/`aria-selected` for the tab strip (current code is missing this); the URL stub uses `aria-disabled="false"` so screen readers don't lie.
+- The rotating tip uses `prefers-reduced-motion` to freeze on the first tip when the user has reduced motion enabled.
+- Every TODO toast goes through `todo()` — no inline `toast(...)` calls — so QA can grep one symbol.
 
----
+### Deliverable
+After Phase 2, the Dashboard idle state matches v4 in all 12 theme × mode combos, is fully responsive from 360 px up, and is the canonical reference for every page in Phase 3. Functionality identical to today except the new URL tab, which stubs cleanly.
 
-## Timeline & checkpoints
-
-- **Phase 0+1** (foundation + shell): biggest commit, visible everywhere. Show me before continuing.
-- **Phase 2** (Workshop only): second checkpoint — sign-off here locks the visual language.
-- **Phase 3** ships page-by-page; each page is its own commit so you can review and revert atomically.
-- After Phase 3 the issues doc is finalized and we tackle stubs in priority order you choose.
-
-Confirm the phasing (especially the Phase 0+1 checkpoint) and I'll start.
+Confirm and I'll start the build.
