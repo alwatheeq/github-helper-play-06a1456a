@@ -56,6 +56,11 @@ const SWEPT_FILES = [
   'src/components/Pricing/PaymentSuccess.tsx',
   'src/components/Pricing/PaymentCancel.tsx',
   'src/components/Subscription/PersistentSubscriptionModal.tsx',
+  // Phase 3.15 (library / content / history / share cluster)
+  'src/components/Dashboard/LibraryPage.tsx',
+  'src/components/Dashboard/ContentViewPage.tsx',
+  'src/components/Dashboard/HistoryPage.tsx',
+  'src/components/ShareView.tsx',
 ];
 
 const repoRoot = path.resolve(__dirname, '..');

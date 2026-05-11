@@ -158,3 +158,28 @@ Files swept (added to `SWEPT_FILES` allowlist in `scripts/check-token-regression
 - **Edge-function payloads** (`create-checkout-session`, `stripe-webhook`) and routes (`/pricing`, `/profile/subscription`, success/cancel return URLs) — unchanged.
 
 The cluster was largely pre-conformed in earlier passes; the durable win this phase is closing the regression-guard gap so any future contributor edit re-introducing `rounded-xl`/gradient pairs fails CI.
+
+## Phase 3.15 — library / content / history / share cluster
+
+Files added to `SWEPT_FILES` allowlist in `scripts/check-token-regressions.cjs`:
+
+| File | radius substitutions | gold-gradient flattens | exemptions |
+|---|---:|---:|---|
+| `src/components/Dashboard/LibraryPage.tsx` | 0 | 0 | 8× `rounded-full` (avatars, status pills, spinner ring, dot indicators) |
+| `src/components/Dashboard/ContentViewPage.tsx` | 0 | 0 | none |
+| `src/components/Dashboard/HistoryPage.tsx` | 0 | 0 | none |
+| `src/components/ShareView.tsx` | 0 | 0 | 2× `rounded-full` (spinner geometry, tag-chip pill) |
+
+**Audit gate**: `npm run check:tokens` → `✓ 25 swept file(s) clean.`
+
+### Findings
+All four files were already fully tokenized in earlier passes but were never on the regression-guard allowlist. Phase 3.15 is a **zero-substitution, guard-extension phase** — the durable win is enforcement, not churn.
+
+### Exemption rationale
+- `rounded-full` cases are circular-by-design (avatars, status badges, spinner rings, tag pills) — not card surfaces.
+- Semantic state colors (red/green/blue/orange tints) and `bg-accent-gold` / `bg-accent-gold-soft/30` chip tints preserved — affordance/intent, not brand-gradient candidates.
+- No `rounded-md` in this cluster.
+- Business logic (`useAuth`, `useSubscription`, `useNotifications`, Supabase reads on history/content/share-link tables, `generate-share-link` edge function, routes `/library` `/history` `/content/:id` `/share/:token`, `ErrorLogger` calls, i18n keys) — not touched.
+
+### Why "Folders" is not a separate file
+Folder management is composed inside `LibraryPage.tsx` — there is no standalone user-facing Folders component. Admin's `FoldersManagementPage.tsx` is part of a separate Admin cluster (to be addressed in a later phase).
