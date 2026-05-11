@@ -104,3 +104,20 @@ Plus a manual smoke pass: bell dropdown, Pomodoro start/pause/reset, low-credit 
 
 ### Estimated time
 ~10 min (scripted sweep + audit + smoke pass).
+---
+
+## Phase 3.8 — EXECUTED ✅
+
+Token sweep applied to 7 files. Audit gate all green:
+- 0 hits for `rounded-(xl|2xl|lg|[12px])`
+- 0 hits for `bg-gradient-to-r from-accent-gold to-accent-gold-soft`
+- 0 hits for `alert(` / `window.confirm(`
+- ar/en/fr/tr JSON valid
+
+v4 radius counts: NotificationCenter 3, PomodoroTimer 1, LowCreditBanner 1, LowCreditWarning 1, InsufficientCreditsModal 1, FloatingVideo/MiniPlayer 1, Admin/CreditManagementPage 3 = **11 substituted lines**.
+
+Note: pre-sweep estimate was 12; landed at 11 because one PomodoroTimer line carried two legacy radius classes that collapsed to one v4 class. Audit gate is the source of truth.
+
+Cross-file: `Header.tsx`, `Dashboard.tsx` lazy mounts, `App.tsx`, `usePomodoroStore`, `useFloatingVideoStore`, `useCreditStore`, `useNotifications`, `useCredits`, `CreditContext` — all byte-identical. No new imports.
+
+Ready for Phase 3.9 (Goals / Achievements).
