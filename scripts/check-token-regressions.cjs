@@ -31,6 +31,12 @@ const FORBIDDEN = [
     re: /\bfont-serif\b/g,
     hint: 'Use .s4-h1/.s4-h2/.s4-h3 helper classes (font-family is baked in).',
   },
+  {
+    id: 'tailwind-shadow',
+    // Raw Tailwind shadow utility classes — must use shadow-[var(--s4-shadow-*)] instead.
+    re: /(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g,
+    hint: 'Use shadow-[var(--s4-shadow-hairline|card|modal|floating)] instead.',
+  },
 ];
 
 // Files already swept. Append per phase — never remove.
