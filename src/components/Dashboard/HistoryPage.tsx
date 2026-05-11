@@ -8,7 +8,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
-import { ScholarCard, ScholarButton, PageHeader, ScholarSkeleton } from '../Scholar';
+import { ScholarCard, ScholarButton, ScholarBadge, PageHeader, ScholarSkeleton } from '../Scholar';
 
 interface HistoryEntry {
   id: string;
@@ -239,12 +239,10 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
                         )}
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
-                          {entry.original_file_name || t('common.unknown')}
+                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark inline-flex items-center gap-2 flex-wrap">
+                          <span>{entry.original_file_name || t('common.unknown')}</span>
                           {medical && (
-                            <span className="ml-2 px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 text-[10px] tracking-[1.5px] font-bold uppercase rounded-[var(--s4-radius-btn)] dark:bg-red-900/30 dark:text-red-200 dark:border-red-800">
-                              Medical
-                            </span>
+                            <ScholarBadge variant="danger">Medical</ScholarBadge>
                           )}
                         </h3>
                         <div className="flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark flex-wrap">
@@ -292,8 +290,8 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
 
                   {/* Stored until badge */}
                   <div className="mb-4">
-                    <div className="flex items-center space-x-2 text-sm text-orange-600 dark:text-orange-400">
-                      <Clock className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex items-center space-x-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                      <Clock className="h-4 w-4 flex-shrink-0 text-accent-gold" />
                       <span className="truncate">{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
                     </div>
                   </div>
