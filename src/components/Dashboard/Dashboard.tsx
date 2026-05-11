@@ -1539,7 +1539,7 @@ export const Dashboard: React.FC = () => {
                         <ScholarCard padding="md">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
-                              <div className="bg-accent-gold p-2 rounded-lg">
+                              <div className="bg-accent-gold p-2 rounded-[var(--s4-radius-card)]">
                                 <svg className="h-5 w-5 text-ink-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                                 </svg>
@@ -1557,7 +1557,7 @@ export const Dashboard: React.FC = () => {
                                 value={processingState.selectedLanguage}
                                 onChange={(e) => handleLanguageChange(e.target.value)}
                                 disabled={processingState.translating}
-                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                               >
                                 {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
                                   <option key={lang.code} value={lang.code}>
@@ -1604,7 +1604,7 @@ export const Dashboard: React.FC = () => {
                             <div className="relative">
                               <button
                                 onClick={() => setShowActionsMenu(!showActionsMenu)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-xl text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                               >
                                 <MoreVertical className="h-3.5 w-3.5" />
                                 <span>Actions</span>
@@ -1614,12 +1614,12 @@ export const Dashboard: React.FC = () => {
                               {showActionsMenu && (
                                 <>
                                   <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
-                                  <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-xl shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
+                                  <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
                                     <div className="p-1.5 space-y-0.5">
                                       {/* Copy All */}
                                       <button
                                         onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         {actionBarData.copiedIndex === -1 ? (
                                           <Check className="h-3.5 w-3.5 text-emerald-600" />
@@ -1632,7 +1632,7 @@ export const Dashboard: React.FC = () => {
                                       {/* Dual-mode */}
                                       <button
                                         onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         <FileSearch className="h-3.5 w-3.5 opacity-60" />
                                         <span>{t('summary.dual_mode')}</span>
@@ -1641,7 +1641,7 @@ export const Dashboard: React.FC = () => {
                                       <button
                                         type="button"
                                         onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         <Download className="h-3.5 w-3.5 opacity-60" />
                                         <span>{t('summary.export_txt')}</span>
@@ -1649,7 +1649,7 @@ export const Dashboard: React.FC = () => {
                                       <button
                                         type="button"
                                         onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         <Download className="h-3.5 w-3.5 opacity-60" />
                                         <span>{t('summary.export_pdf')}</span>
@@ -1662,7 +1662,7 @@ export const Dashboard: React.FC = () => {
                                       <button
                                         onClick={() => { actionBarData.onPublish(); setShowActionsMenu(false); }}
                                         disabled={actionBarData.publishing || actionBarData.published}
-                                        className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-lg transition-colors disabled:opacity-50 ${
+                                        className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-[var(--s4-radius-card)] transition-colors disabled:opacity-50 ${
                                           actionBarData.published
                                             ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'
                                             : processingState.medicalMode
@@ -1696,7 +1696,7 @@ export const Dashboard: React.FC = () => {
                                       {/* New Document */}
                                       <button
                                         onClick={() => { actionBarData.onNewDocument(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors"
+                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         <RefreshCw className="h-3.5 w-3.5 opacity-60" />
                                         <span>{t('summary.new_document')}</span>
@@ -1725,7 +1725,7 @@ export const Dashboard: React.FC = () => {
 
                     {processingState.stage === 'error' && (
                       <div className="text-center py-12">
-                        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
+                        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
                           <h3 className="text-lg font-semibold text-red-800 mb-2 dark:text-red-300">
                             {processingState.medicalMode ? '🏥 Medical Processing Error' : 'Processing Error'}
                           </h3>
@@ -1734,7 +1734,7 @@ export const Dashboard: React.FC = () => {
                           </p>
                           <button
                             onClick={resetProcessing}
-                            className={`px-4 py-2 text-white rounded-lg transition duration-150 ${
+                            className={`px-4 py-2 text-white rounded-[var(--s4-radius-card)] transition duration-150 ${
                               processingState.medicalMode
                                 ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
                                 : 'bg-red-600 hover:bg-red-700'

@@ -724,7 +724,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 onClick={() => setFlipped(!flipped)}
               >
                 {/* Front face */}
-                <div className={`absolute inset-0 w-full h-full backface-hidden rounded-2xl overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-2 ${
+                <div className={`absolute inset-0 w-full h-full backface-hidden rounded-[var(--s4-radius-card)] overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-2 ${
                   medicalMode ? 'border-red-100 dark:border-red-900' : 'border-blue-100 dark:border-blue-900/50'
                 }`}>
                   {/* Accent bar */}
@@ -754,7 +754,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                   </div>
                 </div>
                 {/* Back face */}
-                <div className={`absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-2 ${
+                <div className={`absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-[var(--s4-radius-card)] overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-2 ${
                   medicalMode ? 'border-emerald-100 dark:border-emerald-900' : 'border-emerald-100 dark:border-emerald-900/50'
                 }`}>
                   {/* Accent bar */}

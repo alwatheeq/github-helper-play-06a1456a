@@ -836,7 +836,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
         <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -854,7 +854,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => copyToClipboard(originalText, -2)}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-lg hover:opacity-60 transition duration-150`}
+                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
               >
                 {copiedIndex === -2 ? (
                   <Check className="h-4 w-4 text-green-600" />
@@ -876,7 +876,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         </div>
 
         <div className="p-6 max-h-96 overflow-y-auto">
-          <div className={`bg-subtle rounded-lg p-4`}>
+          <div className={`bg-subtle rounded-[var(--s4-radius-card)] p-4`}>
             {originalText && originalText.trim() ? (
               <div className={`text-secondary-ink dark:text-muted-ink-on-dark text-sm`}>
                 <HighlightLayer text={originalText} itemId={effectiveLibraryItemId} />
@@ -909,7 +909,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         />
       </div>
     ) : (
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border-divider dark:border-divider-on-dark`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border-divider dark:border-divider-on-dark`}>
       <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -981,7 +981,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             
             <button
               onClick={() => copyToClipboard(combinedSummary, -1)}
-              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-lg hover:opacity-60 transition duration-150`}
+              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
             >
               {copiedIndex === -1 ? (
                 <Check className="h-4 w-4 text-green-600" />
@@ -999,7 +999,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={() => setMindMapOpen(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-indigo-300 rounded-lg hover:bg-indigo-50 transition duration-150 dark:border-indigo-600 dark:hover:bg-indigo-900/40 dark:text-indigo-400"
+              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-indigo-300 rounded-[var(--s4-radius-card)] hover:bg-indigo-50 transition duration-150 dark:border-indigo-600 dark:hover:bg-indigo-900/40 dark:text-indigo-400"
             >
               <Brain className="h-4 w-4" />
               <span>{t('mind_map.title')}</span>
@@ -1018,7 +1018,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <button
                 type="button"
                 onClick={exportAsTxt}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-lg hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
               >
                 <Download className="h-4 w-4" />
                 <span>{t('summary.export_txt')}</span>
@@ -1026,7 +1026,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <button
                 type="button"
                 onClick={exportAsPdf}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-lg hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
               >
                 <Download className="h-4 w-4" />
                 <span>{t('summary.export_pdf')}</span>
@@ -1036,7 +1036,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                 <button
                   onClick={handleShowPublishModal}
                   disabled={publishing || published}
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-lg transition duration-150 ${
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-[var(--s4-radius-card)] transition duration-150 ${
                     published 
                       ? 'text-green-600 bg-green-50 border border-green-200'
                       : medicalMode
@@ -1075,7 +1075,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
       <div className={`p-6 max-h-96 overflow-y-auto text-secondary-ink dark:text-muted-ink-on-dark`}>
         {/* Medical Mode Enhanced Summary Display */}
         {medicalMode && (
-          <div className="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg dark:bg-red-900 dark:border-red-600">
+          <div className="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-[var(--s4-radius-card)] dark:bg-red-900 dark:border-red-600">
             <div className="flex items-center space-x-2 mb-2">
               <Activity className="h-4 w-4 text-red-600 dark:text-red-300" />
               <span className="font-medium text-red-900 dark:text-red-300">Clinical Summary</span>
@@ -1103,7 +1103,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     {/* Publish to Library Modal */}
     {showPublishModal && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className={`bg-card-light dark:bg-card-dark rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-2xl max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
 
           <div className={`px-5 pt-5 pb-4 border-b border-divider dark:border-divider-on-dark flex-shrink-0`}>
             <div className="flex items-start justify-between">
@@ -1145,14 +1145,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateFolderInput && (
-                <div className={`mb-2 p-2 rounded-xl border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-2 p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newFolderNameInput}
                       onChange={(e) => setNewFolderNameInput(e.target.value)}
                       placeholder={t('publish_modal.new_folder_name')}
-                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createFolderInPublishModal()}
                     />
                     <button
@@ -1175,7 +1175,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <select
                 value={selectedFolderId}
                 onChange={(e) => setSelectedFolderId(e.target.value)}
-                className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-xl focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               >
                 <option value="">{t('publish_modal.no_folder')}</option>
                 {folders.map(folder => (
@@ -1234,14 +1234,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateTag && (
-                <div className={`mb-3 p-2 rounded-xl border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-3 p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newTagName}
                       onChange={(e) => setNewTagName(e.target.value)}
                       placeholder="New private tag name"
-                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
                     <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors">
