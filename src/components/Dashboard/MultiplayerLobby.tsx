@@ -328,12 +328,12 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (error || !lobby) {
     return (
       <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800">
           {error || 'Lobby not found'}
         </div>
         <button
           onClick={onExit}
-          className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+          className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-[var(--s4-radius-card)] hover:bg-gray-700"
         >
           Go Back
         </button>
@@ -343,20 +343,20 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white`}>
+      <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
+        <div className={`bg-accent-gold p-6 text-white`}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-bold">{lobby.game_name}</h2>
             <button
               onClick={leaveLobby}
-              className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-2 hover:bg-white/20 rounded-[var(--s4-radius-card)] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-[var(--s4-radius-card)]">
               <span className="text-sm font-medium">Game Code:</span>
               <span className="text-xl font-bold tracking-wider">{lobby.game_code}</span>
               <button
@@ -367,7 +367,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
               </button>
             </div>
 
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-lg">
+            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-[var(--s4-radius-card)]">
               <Users className="w-5 h-5" />
               <span className="font-medium">
                 {lobby.current_players} / {lobby.max_players}
@@ -384,7 +384,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
           <div className="space-y-2 mb-6">
             {players.length === 0 && (
-              <div className="p-4 rounded-lg bg-yellow-50 border border-yellow-200 text-center">
+              <div className="p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center">
                 <p className="text-sm text-yellow-800">Loading players...</p>
               </div>
             )}
@@ -392,7 +392,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             {players.map((player) => (
               <div
                 key={player.id}
-                className="flex items-center justify-between p-4 rounded-lg border-2 bg-green-50 border-green-300"
+                className="flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-green-300"
               >
                 <div className="flex items-center gap-3">
                   {player.is_host && (
@@ -411,7 +411,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             ))}
 
             {lobby.current_players < lobby.max_players && (
-              <div className="p-4 rounded-lg border-2 border-dashed border-gray-300 text-center text-gray-500">
+              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-gray-300 text-center text-gray-500">
                 Waiting for more players...
               </div>
             )}
@@ -434,7 +434,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             {isHost && (
               <button
                 onClick={startGame}
-                className="flex-1 py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors bg-green-600 text-white hover:bg-green-700"
+                className="flex-1 py-3 rounded-[var(--s4-radius-card)] font-semibold flex items-center justify-center gap-2 transition-colors bg-green-600 text-white hover:bg-green-700"
               >
                 <Play className="w-5 h-5" />
                 Start Game
@@ -443,7 +443,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
             <button
               onClick={leaveLobby}
-              className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition-colors"
+              className="px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 font-semibold transition-colors"
             >
               Leave
             </button>

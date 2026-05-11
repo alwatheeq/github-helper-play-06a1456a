@@ -452,7 +452,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   if (loading || !currentQuestion) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center">
           <Loader2 className="h-16 w-16 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-4" />
           <p className="text-ink dark:text-ink-on-dark">Loading question...</p>
         </div>
@@ -484,19 +484,19 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
         {/* Main Question Area */}
         <div className="lg:col-span-3">
           {/* Header */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-4 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-4 mb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="bg-purple-100 dark:bg-purple-900 px-4 py-2 rounded-lg">
+                <div className="bg-purple-100 dark:bg-purple-900 px-4 py-2 rounded-[var(--s4-radius-card)]">
                   <span className="text-sm text-ink dark:text-ink-on-dark">Question</span>
                   <p className="text-lg font-bold text-purple-600 dark:text-purple-400">{questionProgress}</p>
                 </div>
-                <div className="bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-lg">
+                <div className="bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-[var(--s4-radius-card)]">
                   <span className="text-sm text-gray-600 dark:text-gray-400">Difficulty</span>
                   <p className="text-lg font-bold text-blue-600 dark:text-blue-400 capitalize">{currentQuestion.difficulty}</p>
                 </div>
               </div>
-              <div className={`flex items-center space-x-2 px-6 py-3 rounded-lg font-bold text-2xl ${
+              <div className={`flex items-center space-x-2 px-6 py-3 rounded-[var(--s4-radius-card)] font-bold text-2xl ${
                 timeLeft <= 5
                   ? 'bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400'
                   : timeLeft <= 10
@@ -510,7 +510,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           </div>
 
           {/* Question */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 mb-4">
             <div className={`flex items-start gap-2 mb-8`}>
               <h2 className="text-2xl md:text-3xl font-bold text-ink dark:text-ink-on-dark text-center flex-1">
                 {currentQuestion.question_text}
@@ -567,7 +567,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
             {/* Answer Feedback */}
             {answerFeedback && (
-              <div className={`mt-6 p-4 rounded-lg ${
+              <div className={`mt-6 p-4 rounded-[var(--s4-radius-card)] ${
                 answerFeedback === 'correct'
                   ? 'bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700'
                   : 'bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700'
@@ -601,10 +601,10 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
           {/* Host Controls */}
           {isHost && hasAnswered && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-4">
               <button
                 onClick={handleNextQuestion}
-                className="w-full px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition font-semibold"
+                className="w-full px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition font-semibold"
               >
                 {gameState.current_question_index + 1 >= gameState.total_questions ? 'Finish Game' : 'Next Question'}
               </button>
@@ -613,7 +613,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
           {/* Waiting for Host */}
           {!isHost && hasAnswered && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 text-center">
+            <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 text-center">
               <Loader2 className="h-8 w-8 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-2" />
               <p className="text-ink dark:text-ink-on-dark">Waiting for next question...</p>
             </div>
@@ -622,7 +622,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
         {/* Leaderboard Sidebar */}
         <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 sticky top-6">
+          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6 sticky top-6">
             <div className="flex items-center space-x-2 mb-4">
               <Trophy className="h-6 w-6 text-yellow-500" />
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Live Rankings</h3>
@@ -635,7 +635,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                 return (
                   <div
                     key={participant.id}
-                    className={`p-3 rounded-lg ${
+                    className={`p-3 rounded-[var(--s4-radius-card)] ${
                       myParticipant
                         ? 'bg-purple-100 dark:bg-purple-900 border-2 border-purple-500'
                         : 'bg-page-light dark:bg-page-dark'

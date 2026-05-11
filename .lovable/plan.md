@@ -1,99 +1,93 @@
-## Phase 3.2 — Verification
+## Phase 3.3 — Verification
 
-Audit gate (re-run on the 8 in-scope files):
+Re-run audit gate on the 6 in-scope files (`AcademicsPage`, `CourseAnalytics`, `CourseTutor`, `ExamScheduler`, `SRSReviewPanel`, `TopicsTagsModal`):
 
-- `rg "rounded-(xl|2xl|lg)" QuizPage|QuizTakingComponent|AIQuestionGenerator|ManualQuestionBuilder|GlobalExamDetailModal|LibraryPage|HistoryPage|InputForm` → **0 hits**
-- `rg "bg-gradient-to-r from-accent-gold|alert\(|window\.confirm\("` → **0 hits**
+- `rg "rounded-(xl|2xl|lg|\[12px\])"` → **0 hits**
+- `rg "bg-gradient-to-r from-accent-gold"` → **0 hits**
+- `rg "alert\(|window\.confirm\("` → **0 hits**
 - Locale JSON parse (en/ar/fr/tr) → **OK**
-- `Dashboard.tsx` lazy-load + prop signatures for `QuizPage` / `QuizTakingComponent` unchanged.
-- `useConfirm()` swap in `QuizTakingComponent` reuses the app-level provider — no new mounting.
+- `Dashboard.tsx` lazy-load of `AcademicsPage` (line 1487) intact, props unchanged.
+- All sub-component prop signatures, Supabase calls, hook usages identical to pre-sweep.
 
-Result: Phase 3.2 is clean. No linter, cross-file, or runtime regressions detected.
+Result: Phase 3.3 is clean. Conservative token sweep preserved layout exactly per user instruction; no linter, runtime, or cross-file regressions.
 
 ---
 
-## Phase 3.3 — Academics hub restyle
+## Phase 3.4 — EduPlay & Brain Rush / Multiplayer cluster
 
-Goal: token + primitive sweep across the Academics surface. **Layout, structure, columns, spacing rhythm, card grouping, and copy stay byte-identical.** This is a chrome migration — no JSX restructuring beyond swapping equivalent wrappers and replacing class strings.
+Goal: identical conservative token sweep on the gaming hub. **Layout, JSX structure, copy, gameplay logic, scoring, timers, realtime channels — all byte-identical.** Only class-string substitutions for legacy radius and the gold gradient.
 
-### Files in scope
+### Files in scope (9 files, ~4,543 lines)
 
-| File | Lines | Role |
-|------|-------|------|
-| `Academics/AcademicsPage.tsx` | 980 | Hub shell: courses list, topics, analytics, modals |
-| `Academics/CourseAnalytics.tsx` | 243 | Topic performance + course score cards |
-| `Academics/CourseTutor.tsx` | 129 | Per-course tutor entry card |
-| `Academics/ExamScheduler.tsx` | 277 | Exam date scheduling card + list |
-| `Academics/SRSReviewPanel.tsx` | 290 | Spaced-repetition review queue card |
-| `TopicsTagsModal.tsx` | 302 | Shared topics/tags management modal |
+| File | Lines | Hits | Role |
+|------|-------|------|------|
+| `EduPlayPage.tsx` | 1103 | 27 | Gaming hub: mode picker, library picker, recent games |
+| `BrainRushGamePlay.tsx` | 687 | 12 | Single-player Brain Rush runtime |
+| `BrainRushMultiplayerWrapper.tsx` | 74 | 0 | Mode router wrapper |
+| `BrainRushQuestionResults.tsx` | 279 | 11 | Per-question result card |
+| `BrainRushResults.tsx` | 375 | 17 | Final results screen |
+| `MultiplayerMenu.tsx` | 412 | 15 | Lobby entry / mode picker |
+| `MultiplayerLobby.tsx` | 455 | 12 | Room lobby |
+| `MultiplayerGamePlay.tsx` | 624 | 7 | Multiplayer runtime |
+| `MultiplayerResults.tsx` | 264 | 8 | Final scoreboard |
+| `GameJoinPage.tsx` | 270 | 13 | Public join-by-code page (route-level) |
 
-Touched indirectly (read-only verify, no edits unless a prop changes): `Dashboard.tsx` (line 1487 mount point), `useConfirm.tsx`, `Scholar/index.ts`.
+Touched indirectly (verify only): `Dashboard.tsx` line 1482 (`EduPlayPage` mount), `App.tsx` line 274 (`GameJoinPage` route), `useFloatingVideoStore`, `useMultiplayerSession` if present. **No prop / callback / store changes.**
 
 ### Deliverables
 
-1. **Token sweep** across all 6 files:
-   - `rounded-lg` / `rounded-xl` / `rounded-2xl` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]` for surfaces, `rounded-[var(--s4-radius-btn)]` for inputs/buttons, `rounded-[var(--s4-radius-chip)]` for pills.
-   - `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white` → `bg-accent-gold text-on-accent` (the 7 confirmed hits in CourseTutor L102, CourseAnalytics L155, ExamScheduler L151, SRSReviewPanel L173, TopicsTagsModal L81, AcademicsPage L843 + L959).
-   - Hard-coded status colors (`bg-blue-*`, `bg-red-*`, `bg-green-*`, `text-orange-*`) → `<ScholarBadge variant="info|danger|success|warn">` where they are status indicators; otherwise route through theme tokens.
+1. **Scripted token sweep** (same algorithm used for Academics):
+   - `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`
+   - `rounded-2xl` / `rounded-xl` / `rounded-lg` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]`
+   - No other class-string changes. No JSX restructuring. No primitive swaps.
 
-2. **Primitive swap (visual equivalents only — no layout change):**
-   - `AcademicsPage.tsx`: keep existing `<PageHeader>` (already in use, line 641). Convert remaining ad-hoc card containers to `<ScholarCard padding="lg">` keeping current width / column placement. Course rows → `<ScholarCard hover>` preserving the same flex layout. CTAs ("Create course", "Add topic", "Open", "Delete", "Cancel", "Save") → `<ScholarButton variant="primary|secondary|danger">`. Inputs (course name, course code, topic typeahead) → `<ScholarInput>`. Loading state → `<ScholarSkeleton>`. Empty state → existing copy wrapped in `<ScholarCard>`.
-   - `CourseAnalytics.tsx`: outer wrapper → `<ScholarCard padding="lg">`. Topic performance rows preserve their bar layout but bar fill uses `bg-accent-gold` + `MasteryBar` if column shape matches (verify before swap; if not 1:1, keep current bar markup).
-   - `CourseTutor.tsx`: card → `<ScholarCard padding="md">`. Icon bubble keeps its size, accent color via token. CTA → `<ScholarButton>`.
-   - `ExamScheduler.tsx`: scheduler card → `<ScholarCard padding="lg">`. Date input → `<ScholarInput type="date">`. Existing exam list rows preserved as-is, only chrome (border, radius) tokenized. Delete button → `<ScholarIconButton variant="danger">` with `useConfirm()` swap if an inline confirm exists.
-   - `SRSReviewPanel.tsx`: queue card → `<ScholarCard padding="lg">`. Difficulty buttons (Again / Hard / Good / Easy) keep order and grid, only colors recolored to token variants (no logic change). Empty state copy preserved.
-   - `TopicsTagsModal.tsx`: modal shell → `<ScholarCard variant="elevated" padding="lg">`. Tab pill (line 81 `activeTabBtn`) → `bg-accent-gold text-on-accent` token form. Add/Remove buttons → `<ScholarButton>` / `<ScholarIconButton>`. Confirmation flows → `useConfirm()`.
+2. **Inventory of remaining legacy color literals** (`bg-blue-*`, `bg-red-*`, `bg-green-*`, `bg-purple-*`, `bg-indigo-*`, `bg-pink-*`, `text-orange-*`) inside the 9 files. These typically live in:
+   - Brain Rush answer-feedback colors (correct = green, wrong = red) — **leave as-is**, they are semantic gameplay signals, not chrome. Recoloring would change the design.
+   - Multiplayer player-color avatars / leaderboard accents — **leave as-is**, data-driven user colors.
+   - Mode-card accent stripes on `EduPlayPage` and `MultiplayerMenu` — **leave as-is**, brand-distinct per game mode (per user instruction "do not change design").
+   - Document these in `docs/SCHOLAR_V4_ISSUES.md` under a new "data-driven color exemptions" section so they are not flagged in future audits.
 
-3. **i18n** — namespace `academics.*` already exists in en/ar/fr/tr (lines 1282, 1308 in en.json). Add only **missing** keys discovered during the sweep (eyebrow + empty states for each sub-card if not present). No renames; additive only. JSON-validate all four locales after edits.
+3. **Cross-file safety checks** (must hold true after edits):
+   - `Dashboard.tsx` import + mount of `EduPlayPage` (line 18, 1482) unchanged.
+   - `App.tsx` import + route mount of `GameJoinPage` (line 35, 274) unchanged.
+   - Realtime channels (`brain_rush_*`, `multiplayer_*` Supabase channels) untouched.
+   - `useFloatingVideoStore`, `useChatStore`, `useCreditStore` call sites identical.
+   - All `BrainRush*` callback prop signatures (`onAnswer`, `onComplete`, `onExit`) identical.
+   - `MultiplayerLobby` → `MultiplayerGamePlay` → `MultiplayerResults` state handoff byte-identical.
+   - No new imports beyond what each file already has.
 
-4. **`todo()` stubs** for any "Coming soon" placeholders found in the sweep — register entries in `docs/SCHOLAR_V4_ISSUES.md`.
-
-5. **Cross-file safety checks (must hold true after edits):**
-   - `Dashboard.tsx` import of `AcademicsPage` (lazy default) unchanged.
-   - `AcademicsPage` props from `Dashboard` (none — self-contained) unchanged.
-   - Sub-component prop signatures (`CourseAnalytics`, `CourseTutor`, `ExamScheduler`, `SRSReviewPanel`, `TopicsTagsModal`) unchanged.
-   - All Supabase calls (`courses`, `course_topics`, `topics`, `course_content_mappings`, `srs_reviews`, `course_exams`, `topic_performance`) byte-identical.
-   - `useConfirm()`, `useToast()`, `errorLogger`, `academicsAnalytics`, `academicsProfanity`, `academicsGenerationPreferences` — call sites unchanged.
-   - No new exports from `Scholar/index.ts` needed (all primitives already exported).
-   - No route or sidebar nav changes.
-
-6. **Audit gate at end of 3.3:**
-   - `rg "rounded-(xl|2xl|lg|\[12px\])" src/components/Dashboard/Academics src/components/Dashboard/TopicsTagsModal.tsx` → **0 hits**
-   - `rg "bg-gradient-to-r from-accent-gold" <same set>` → **0 hits**
-   - `rg "alert\(|window\.confirm\(|console\.(log|warn)" <same set>` (excluding `errorLogger`) → **0 hits**
-   - `rg "from-(blue|red|green|orange|purple|indigo|pink)-[0-9]" <same set>` → only inside data-driven status badges (flagged, not blocking)
-   - JSON validate en/ar/fr/tr → exit 0
-   - Manual smoke: open Academics tab, create course (existing topic + new topic), open `TopicsTagsModal`, open course detail showing analytics/tutor/exam/SRS panels — each renders without runtime error and matches the current layout exactly.
+4. **Audit gate at end of 3.4:**
+   - `rg "rounded-(xl|2xl|lg|\[12px\])" <9 files>` → **0 hits**
+   - `rg "bg-gradient-to-r from-accent-gold" <9 files>` → **0 hits**
+   - `rg "alert\(|window\.confirm\("` (excluding `errorLogger`) → **0 hits** (already 0)
+   - Locale JSON parse → exit 0
+   - Manual smoke (preview): open EduPlay tab, verify mode picker renders, open MultiplayerMenu, verify lobby renders, open Brain Rush solo runtime, verify question card and answer feedback intact.
 
 ### Out of scope (later phases)
 
-- Course generation / upload pipeline logic (Phase 5 owns runtime)
-- New analytics formulas, new SRS algorithm, exam reminders backend
-- Any `ChatAssistant`, pricing, onboarding, multiplayer, BookMode, FlashcardViewer, AudioStudy, EduPlay, BrainRush, Profile, Subscription, Pomodoro changes
-- Any layout/grid/column/spacing change — **explicitly forbidden by user request**
+- Brain Rush / Multiplayer runtime logic, scoring, matchmaking → owned by Phase 5.
+- Notifications / Pomodoro push wiring (issue #9) → Phase 3.5+.
+- "Find a Match" matchmaking stub (issue #7) → Phase 5.
+- Profile, Billing, Subscription, Feedback, Goals, Achievements, Informational, Content viewers, ShareView → later 3.x sub-phases.
+- Any layout / spacing / column / grid / copy change — **explicitly forbidden by user**.
 
 ### Best-practice notes
 
-- Reuse `Scholar/*` exclusively; no new ad-hoc components.
-- One commit per file group: (a) `AcademicsPage.tsx`, (b) the 4 sub-panels, (c) `TopicsTagsModal.tsx`, (d) audit pass + locales.
-- Every destructive confirm uses `useConfirm()`; every success message uses `useToast()`.
-- Verify each commit against the audit gate before moving on.
+- Single scripted commit (proven safe in 3.3): a Python regex pass identical to the 3.3 sweep, applied atomically across all 9 files.
+- Do not introduce `<ScholarCard>` / `<ScholarButton>` wrapper swaps in this sub-phase — even semantically equivalent swaps risk pixel-level layout drift on the dense gameplay cards. Token sweep only.
+- Audit gate must pass before marking phase complete.
+- Update `.lovable/plan.md` "Phase 3.4 — applied" section with hit counts per file.
 
 ### Timeline
 
-- `AcademicsPage.tsx` sweep: ~75 min (largest)
-- 4 sub-panels: ~45 min
-- `TopicsTagsModal.tsx`: ~20 min
-- Locales + audit gate: ~15 min
+- Scripted sweep: ~5 min
+- Audit gate + smoke check: ~10 min
+- Total: ~15 min
 
+Confirm and I'll run the sweep.
 ---
 
-## Phase 3.3 — applied
-
-Conservative token sweep (design preserved exactly per user instruction). Replaced across all 6 files:
-- `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold` (7 hits)
-- `rounded-{lg,xl,2xl,[12px]}` → `rounded-[var(--s4-radius-card)]` (45 hits across AcademicsPage 16, CourseAnalytics 4, CourseTutor 4, ExamScheduler 10, SRSReviewPanel 8, TopicsTagsModal 3)
-
-No JSX restructuring, no primitive swaps that would shift layout, no prop / Supabase / handler changes. Audit gate passed (0 hits for `rounded-(xl|2xl|lg|[12px])`, `bg-gradient-to-r from-accent-gold`, `alert(` / `window.confirm(`). All 4 locales validate.
-
-Phase 3.4+ will continue with EduPlay / BrainRush / Social etc. when requested.
+## Phase 3.4 — applied
+Token sweep across 9 gaming-hub files. Hits per file:
+EduPlayPage 30, BrainRushGamePlay 13, BrainRushMultiplayerWrapper 0, BrainRushQuestionResults 10, BrainRushResults 16, MultiplayerMenu 15, MultiplayerLobby 12, MultiplayerGamePlay 7, MultiplayerResults 5, GameJoinPage 14. Total 122 substitutions.
+Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. No JSX, prop, hook, or Supabase channel changes. Data-driven gameplay colors (correct/wrong feedback, player avatars, mode accents) intentionally preserved.

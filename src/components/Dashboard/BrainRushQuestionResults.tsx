@@ -118,7 +118,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center`}>
           <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
         </div>
@@ -129,7 +129,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       {/* Correct Answer Display */}
-      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg shadow-sm p-8 border-2 border-green-500 dark:border-green-600">
+      <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-[var(--s4-radius-card)] shadow-sm p-8 border-2 border-green-500 dark:border-green-600">
         <div className="flex items-center justify-center space-x-3 mb-4">
           <CheckCircle className="h-12 w-12 text-green-600 dark:text-green-400" />
           <h2 className={`text-3xl font-bold text-ink dark:text-ink-on-dark`}>Correct Answer</h2>
@@ -140,22 +140,22 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       </div>
 
       {/* Statistics */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
         <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Target className="h-6 w-6 text-blue-600" />
           <span>Question Statistics</span>
         </h3>
 
         <div className="grid grid-cols-3 gap-4 mb-4">
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 text-center">
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
             <p className="text-3xl font-bold text-green-600 dark:text-green-400">{correctCount}</p>
             <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Correct</p>
           </div>
-          <div className="bg-red-50 dark:bg-red-900/20 rounded-lg p-4 text-center">
+          <div className="bg-red-50 dark:bg-red-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
             <p className="text-3xl font-bold text-red-600 dark:text-red-400">{incorrectCount}</p>
             <p className="text-sm text-gray-600 dark:text-gray-400">Incorrect</p>
           </div>
-          <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4 text-center`}>
+          <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 text-center`}>
             <p className={`text-3xl font-bold text-secondary-ink dark:text-muted-ink-on-dark`}>{unansweredCount}</p>
             <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>No Answer</p>
           </div>
@@ -173,7 +173,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       </div>
 
       {/* Player Results */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
         <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
           <Trophy className="h-6 w-6 text-yellow-600" />
           <span>Player Results</span>
@@ -186,7 +186,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
             return (
               <div
                 key={result.id}
-                className={`p-4 rounded-lg border-2 transition ${
+                className={`p-4 rounded-[var(--s4-radius-card)] border-2 transition ${
                   isCurrentUser
                     ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 dark:border-blue-400'
                     : result.answer?.is_correct
@@ -254,11 +254,11 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       </div>
 
       {/* Next Question Button / Countdown */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-6">
         {isHost ? (
           <button
             onClick={onNextQuestion}
-            className={`w-full px-6 py-4 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md hover:opacity-90 transition font-semibold flex items-center justify-center space-x-2 text-lg`}
+            className={`w-full px-6 py-4 bg-accent-gold text-white rounded-md hover:opacity-90 transition font-semibold flex items-center justify-center space-x-2 text-lg`}
           >
             <span>Next Question</span>
             <ChevronRight className="h-6 w-6" />

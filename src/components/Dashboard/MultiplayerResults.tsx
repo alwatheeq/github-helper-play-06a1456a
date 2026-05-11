@@ -134,7 +134,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
         </div>
 
         {myResult && (
-          <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-divider dark:border-divider-on-dark p-8 mb-8">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8 mb-8">
             <h2 className="text-2xl font-bold mb-6 text-center">Your Performance</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {/* Stat tiles preserve game semantic colors */}
@@ -177,8 +177,8 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
           </div>
         )}
 
-        <div className="bg-card-light dark:bg-card-dark rounded-xl shadow-sm border border-divider dark:border-divider-on-dark overflow-hidden">
-          <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark overflow-hidden">
+          <div className="bg-accent-gold p-6 text-white">
             <h2 className="text-2xl font-bold flex items-center gap-2">
               <Trophy className="w-6 h-6" />
               Final Leaderboard
@@ -190,7 +190,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
               {results.map((result) => (
                 <div
                   key={result.user_id}
-                  className={`rounded-lg overflow-hidden transition-all ${
+                  className={`rounded-[var(--s4-radius-card)] overflow-hidden transition-all ${
                     result.user_id === user?.id
                       ? 'ring-2 ring-accent-gold shadow scale-[1.02]'
                       : 'shadow'
@@ -238,7 +238,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
         <div className="mt-8 flex justify-center gap-4">
           <button
             onClick={() => navigate('/dashboard/brain-rush')}
-            className="px-6 py-3 bg-accent-gold text-white rounded-lg hover:opacity-90 font-semibold flex items-center gap-2 transition-colors"
+            className="px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 font-semibold flex items-center gap-2 transition-colors"
           >
             <Home className="w-5 h-5" />
             Back to Brain Rush
