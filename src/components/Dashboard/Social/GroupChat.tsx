@@ -222,7 +222,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       <div className={`flex items-center gap-3 px-4 py-3 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
         <button
           onClick={onBack}
-          className={`p-1.5 rounded-lg transition-colors bg-accent-gold-soft/20`}
+          className={`p-1.5 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20`}
         >
           <ArrowLeft className={`w-5 h-5 text-ink dark:text-ink-on-dark`} />
         </button>
@@ -251,7 +251,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
               <button
                 onClick={loadOlderMessages}
                 disabled={loadingMore}
-                className={`w-full text-center text-xs py-2 rounded-lg transition-colors bg-accent-gold-soft/20 text-muted-ink dark:text-muted-ink-on-dark`}
+                className={`w-full text-center text-xs py-2 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20 text-muted-ink dark:text-muted-ink-on-dark`}
               >
                 {loadingMore ? (
                   <Loader2 className="w-3 h-3 animate-spin mx-auto" />
@@ -271,7 +271,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                     {/* Avatar */}
                     <div
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-white shrink-0 ${
-                        own ? "bg-accent-gold hover:bg-accent-gold-soft" : "bg-gradient-to-r from-accent-gold to-accent-gold-soft"
+                        own ? "bg-accent-gold hover:bg-accent-gold-soft" : "bg-accent-gold"
                       }`}
                     >
                       {senderInitial(msg)}
@@ -285,7 +285,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                         </div>
                       )}
                       <div
-                        className={`px-3 py-2 rounded-xl text-sm leading-relaxed ${
+                        className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-sm leading-relaxed ${
                           own
                             ? `bg-accent-gold hover:bg-accent-gold-soft text-white`
                             : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
@@ -319,12 +319,12 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
             placeholder={t('social.type_message')}
-            className={`flex-1 rounded-xl px-4 py-2.5 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
+            className={`flex-1 rounded-[var(--s4-radius-card)] px-4 py-2.5 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
           />
           <button
             onClick={handleSend}
             disabled={sending || !input.trim()}
-            className={`p-2.5 rounded-xl text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
+            className={`p-2.5 rounded-[var(--s4-radius-card)] text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
           >
             {sending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
