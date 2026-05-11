@@ -127,7 +127,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               onChange={(e) => setCurrentQuestion(e.target.value)}
               placeholder="Enter your question here..."
               rows={3}
-              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
             />
           </div>
 
@@ -151,7 +151,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       setCurrentOptions(newOptions);
                     }}
                     placeholder={`Enter option ${idx + 1}...`}
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   />
                   <button
                     type="button"
@@ -182,7 +182,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                   onClick={() => setDifficulty(level)}
                   className={`px-6 py-2 rounded-[var(--s4-radius-card)] font-medium transition ${
                     difficulty === level
-                      ? 'bg-purple-600 text-white'
+                      ? 'bg-accent-gold text-ink-on-dark'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                   }`}
                 >
@@ -208,7 +208,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               type="button"
               onClick={handleAddQuestion}
               disabled={!validateCurrentQuestion()}
-              className="flex-1 px-6 py-3 bg-purple-600 text-white rounded-[var(--s4-radius-card)] hover:bg-purple-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="flex-1 px-6 py-3 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
             >
               {editingIndex !== null ? <Edit2 className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
               <span>{editingIndex !== null ? 'Update Question' : 'Add Question'}</span>
@@ -307,7 +307,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               value={saveSetName}
               onChange={(e) => setSaveSetName(e.target.value)}
               placeholder="Enter a name for this question set..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 mb-4"
+              className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100 mb-4"
             />
             <div className="flex space-x-3">
               <button
@@ -318,7 +318,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               </button>
               <button
                 onClick={() => handleSaveAndFinish(true)}
-                className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-[var(--s4-radius-card)] hover:bg-purple-700 transition"
+                className="flex-1 px-4 py-2 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-90 transition"
               >
                 Save & Continue
               </button>
