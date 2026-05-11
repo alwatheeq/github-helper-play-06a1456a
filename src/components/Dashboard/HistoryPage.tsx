@@ -169,19 +169,19 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-ink dark:text-ink-on-dark mb-2">{t('history.generation_history')}</h2>
-        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
-          {t('history.history_desc')}
-        </p>
-      </div>
+      <PageHeader
+        eyebrow={t('history.eyebrow') || 'THE LEDGER'}
+        title={t('history.generation_history')}
+        descriptor={t('history.history_desc')}
+        className="mb-8"
+      />
 
       {/* Sorting Controls */}
       <ScholarCard variant="default" padding="md" className="mb-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-2 rounded-lg">
-              <History className="h-5 w-5 text-white" />
+            <div className="bg-chip dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark">
+              <History className="h-5 w-5 text-accent-gold" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('history.sort_options')}</h3>
