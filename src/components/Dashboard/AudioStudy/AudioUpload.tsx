@@ -23,10 +23,10 @@ export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, o
   const isDisabled = stage !== 'idle';
 
   return (
-    <div className={`p-4 rounded-lg border border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`}>
+    <div className={`p-4 rounded-[var(--s4-radius-card)] border border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <div className={`p-2 rounded-md bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
+          <div className={`p-2 rounded-md bg-accent-gold text-white`}>
             <Mic className="h-5 w-5" />
           </div>
           <div>
@@ -57,10 +57,10 @@ export const AudioUpload: React.FC<AudioUploadProps> = ({ stage, selectedFile, o
           type="button"
           disabled={isDisabled}
           onClick={() => inputRef.current?.click()}
-          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition duration-150 ${
+          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-150 ${
             isDisabled
               ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark border border border-divider dark:border-divider-on-dark`
-              : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90`
+              : `bg-accent-gold text-white hover:opacity-90`
           }`}
         >
           <Upload className="h-4 w-4" />

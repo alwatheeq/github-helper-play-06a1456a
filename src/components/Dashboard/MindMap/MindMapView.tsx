@@ -96,7 +96,7 @@ function CustomNode({ data }: NodeProps) {
     >
       <Handle type="target" position={Position.Top} className="!bg-indigo-400" />
       <div
-        className="rounded-lg border px-4 py-3 shadow-sm text-sm font-medium min-w-[140px] text-center transition-shadow hover:shadow-md"
+        className="rounded-[var(--s4-radius-card)] border px-4 py-3 shadow-sm text-sm font-medium min-w-[140px] text-center transition-shadow hover:shadow-md"
         style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
       >
         {data.label as string}
@@ -105,7 +105,7 @@ function CustomNode({ data }: NodeProps) {
 
       {showTooltip && (data.description as string) && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-lg border px-3 py-2 text-xs shadow-lg max-w-[220px] whitespace-pre-wrap"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-[var(--s4-radius-card)] border px-3 py-2 text-xs shadow-lg max-w-[220px] whitespace-pre-wrap"
           style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
         >
           {data.description as string}
@@ -178,7 +178,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
   if (!generated) {
     return (
       <div
-        className="rounded-lg border p-6 flex flex-col items-center gap-4"
+        className="rounded-[var(--s4-radius-card)] border p-6 flex flex-col items-center gap-4"
         style={{ background: CARD_BG, borderColor: MM_BORDER_FAINT }}
       >
         <div className="flex items-center gap-2 text-lg font-semibold">
@@ -193,7 +193,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
         <button
           onClick={generate}
           disabled={loading}
-          className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60 transition-colors"
+          className="inline-flex items-center gap-2 rounded-[var(--s4-radius-card)] bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-60 transition-colors"
         >
           {loading ? (
             <>
@@ -218,7 +218,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
 
   return (
     <div
-      className="rounded-lg border overflow-hidden"
+      className="rounded-[var(--s4-radius-card)] border overflow-hidden"
       style={{ borderColor: MM_BORDER_FAINT }}
     >
       <div

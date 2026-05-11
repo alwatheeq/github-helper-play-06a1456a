@@ -233,13 +233,13 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
     <div
       ref={widgetRef}
       style={widgetStyle}
-      className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.07)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)] border border-divider dark:border-divider-on-dark ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
+      className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_4px_16px_rgba(0,0,0,0.07)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)] border border-divider dark:border-divider-on-dark ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
       onMouseDown={handleMouseDown}
       onClick={freeFormMode ? handleBringToFront : undefined}
       data-widget={widget.id}
     >
       {/* Header */}
-      <div className={`flex items-center justify-between ${widget.isCollapsed ? 'px-3 py-2 min-w-0' : 'px-4 py-2.5'} border-b border-divider dark:border-divider-on-dark ${widget.isCollapsed ? 'rounded-xl border-0' : 'rounded-t-xl'}`}>
+      <div className={`flex items-center justify-between ${widget.isCollapsed ? 'px-3 py-2 min-w-0' : 'px-4 py-2.5'} border-b border-divider dark:border-divider-on-dark ${widget.isCollapsed ? 'rounded-[var(--s4-radius-card)] border-0' : 'rounded-t-[var(--s4-radius-card)]'}`}>
         <div className="flex items-center space-x-2 min-w-0 flex-1">
           <h3
             className={`font-medium uppercase tracking-widest opacity-50 ${widget.isCollapsed ? 'text-[10px] truncate' : 'text-[10px]'} text-ink dark:text-ink-on-dark`}

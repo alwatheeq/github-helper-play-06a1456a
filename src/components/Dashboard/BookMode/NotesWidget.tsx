@@ -411,7 +411,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
             setNoteContent('');
             setNoteType('page');
           }}
-          className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90 transition-opacity`}
+          className={`flex items-center space-x-2 px-3 py-1.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold text-white hover:opacity-90 transition-opacity`}
         >
           <Plus className="h-4 w-4" />
           <span>{t('notebook.add_note') || 'Add Note'}</span>
@@ -428,7 +428,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   onClick={() => setNoteType('page')}
                   className={`px-3 py-1 text-xs rounded ${
                     noteType === 'page'
-                      ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
+                      ? `bg-accent-gold text-white`
                       : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
                   }`}
                 >
@@ -438,7 +438,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   onClick={() => setNoteType('book')}
                   className={`px-3 py-1 text-xs rounded ${
                     noteType === 'book'
-                      ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
+                      ? `bg-accent-gold text-white`
                       : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
                   }`}
                 >
@@ -468,14 +468,14 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
               value={noteContent}
               onChange={(e) => setNoteContent(e.target.value)}
               placeholder={t('notebook.add_note') || 'Write your note...'}
-              className={`w-full px-3 py-2 border-divider dark:border-divider-on-dark rounded-lg bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark resize-none`}
+              className={`w-full px-3 py-2 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark resize-none`}
               rows={4}
             />
             <div className="flex space-x-2">
               <button
                 onClick={handleSaveNote}
                 disabled={!noteContent.trim()}
-                className={`flex-1 px-5 py-2.5 rounded-lg text-sm bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white hover:opacity-90 disabled:opacity-50 transition-opacity`}
+                className={`flex-1 px-5 py-2.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold text-white hover:opacity-90 disabled:opacity-50 transition-opacity`}
               >
                 {editingNoteId ? (t('notebook.edit_note') || 'Update') : (t('notebook.add_note') || 'Save')}
               </button>
@@ -485,7 +485,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                   setEditingNoteId(null);
                   setNoteContent('');
                 }}
-                className={`px-5 py-2.5 rounded-lg text-sm bg-accent-gold-soft/20 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark hover:opacity-60 transition-colors`}
+                className={`px-5 py-2.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold-soft/20 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-ink-on-dark hover:opacity-60 transition-colors`}
               >
                 {t('common.cancel') || 'Cancel'}
               </button>

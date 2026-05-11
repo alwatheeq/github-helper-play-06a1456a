@@ -84,3 +84,17 @@ Two parallel implementations of the same feature exist:
 - Split: `StudyGoalsPage.tsx` + `AchievementsPage.tsx`
 
 Pick one canonical implementation and delete the other during Phase 4.x consolidation. Do not merge or delete during token sweeps.
+
+## Phase 3.10 — Content Viewers Cluster (exemptions & follow-ups)
+
+**Files swept (12 edited):** FlashcardViewer, ShareView, BookModeViewer, NotesWidget, WidgetContainer, MindMapView, AudioUpload, TranscriptView, AudioSummaryGenerator, AudioTtsPlayer, ReadAloudButton, ContentViewPage. Substitutions: 60 (rounded-* → `var(--s4-radius-card)`) + gold gradients → `bg-accent-gold`.
+
+### Data-driven / structural exemptions (preserved byte-identical)
+- **FlashcardViewer flip-card faces** (lines 727, 757): `rounded-2xl` kept — flip animation backface depends on matched front/back radius.
+- **FlashcardViewer state gradients**: red/pink & blue/indigo (front by correctness), emerald/teal (success bar), red/pink-dark & purple/indigo-dark (quiz feedback) — encode answer state, not brand accent.
+- **MindMap indigo accents**: `bg-indigo-600/700`, indigo handles/borders — data-viz palette (continuation of earlier 3.x exemption).
+- **Dark floating popovers**: `HighlightMenu` (line 33) and `FreeFormToggle` tooltip (line 48) keep `bg-gray-900 … rounded-xl` — non-card chip surfaces. Defer to Phase 4.x popover-token pass.
+
+### Follow-ups (out of scope, flagged)
+- `NotesWidget.tsx:316` uses native `confirm()` for delete-note confirmation. Replace with `useConfirm()` modal in a dedicated UX-polish pass (consistent with prior `alert→toast` migration).
+- `src/components/Dashboard/ShareView.tsx` is a re-export of `src/components/ShareView.tsx` — consider consolidating in Phase 4.x.
