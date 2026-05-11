@@ -128,7 +128,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
         <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('course_analytics.loading') || 'Loading analytics…'}
         </div>
@@ -138,7 +138,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (!hasData) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6" dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6" dir={dir}>
         <div className="flex items-center gap-3">
           <BarChart3 className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
           <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
@@ -150,9 +150,9 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
   }
 
   return (
-    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6 space-y-6" dir={dir}>
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-6" dir={dir}>
       <div className="flex items-center gap-3">
-        <div className="p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white">
+        <div className="p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white">
           <BarChart3 className="h-5 w-5" />
         </div>
         <h3 className="font-semibold text-ink dark:text-ink-on-dark">

@@ -135,7 +135,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
   if (loading) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6`}>
+      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6`}>
         <div className={`animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
           {t('exam_scheduler.loading') || 'Loading exams…'}
         </div>
@@ -144,11 +144,11 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
   }
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6 space-y-5`} dir={dir}>
+    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-5`} dir={dir}>
       {/* Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
+          <div className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white`}>
             <CalendarDays className="h-5 w-5" />
           </div>
           <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
@@ -158,7 +158,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
         <button
           type="button"
           onClick={() => setShowForm((v) => !v)}
-          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm bg-accent-gold hover:bg-accent-gold-soft text-white`}
+          className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold hover:bg-accent-gold-soft text-white`}
         >
           <Plus className="h-4 w-4" />
           {t('exam_scheduler.add_exam') || 'Add Exam'}
@@ -167,25 +167,25 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Inline form */}
       {showForm && (
-        <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark space-y-3`}>
+        <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark space-y-3`}>
           <input
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             placeholder={t('exam_scheduler.name_placeholder') || 'Exam name'}
-            className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
+            className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
           />
           <input
             type="datetime-local"
             value={newDate}
             onChange={(e) => setNewDate(e.target.value)}
-            className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
+            className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm`}
           />
           <div className="flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className={`px-3 py-1.5 rounded-lg text-sm bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`}
+              className={`px-3 py-1.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`}
             >
               {t('common.cancel') || 'Cancel'}
             </button>
@@ -193,7 +193,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
               type="button"
               disabled={saving}
               onClick={handleAdd}
-              className={`px-4 py-1.5 rounded-lg text-sm bg-accent-gold hover:bg-accent-gold-soft text-white disabled:opacity-50`}
+              className={`px-4 py-1.5 rounded-[var(--s4-radius-card)] text-sm bg-accent-gold hover:bg-accent-gold-soft text-white disabled:opacity-50`}
             >
               {saving
                 ? (t('exam_scheduler.saving') || 'Saving…')
@@ -215,7 +215,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
             return (
               <div
                 key={exam.id}
-                className={`flex items-center justify-between gap-4 p-4 rounded-lg border border-divider dark:border-divider-on-dark ${
+                className={`flex items-center justify-between gap-4 p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark ${
                   countdown.isPast ? 'opacity-60' : ''
                 }`}
               >

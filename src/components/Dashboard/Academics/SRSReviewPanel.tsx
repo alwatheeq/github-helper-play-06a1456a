@@ -157,7 +157,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   if (loading) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6`}>
+      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6`}>
         <div className={`animate-pulse text-muted-ink dark:text-muted-ink-on-dark text-sm`}>
           {t('srs.loading') || 'Loading flashcards…'}
         </div>
@@ -167,10 +167,10 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   if (!reviewing) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6`} dir={dir}>
+      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6`} dir={dir}>
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}>
+            <div className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white`}>
               <Brain className="h-5 w-5" />
             </div>
             <div>
@@ -198,7 +198,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
                     setCurrentIndex(0);
                     setFlipped(false);
                   }}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent-gold hover:bg-accent-gold-soft text-white text-sm font-medium`}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold hover:bg-accent-gold-soft text-white text-sm font-medium`}
                 >
                   <ChevronRight className="h-4 w-4" />
                   {t('srs.review_now') || 'Review Now'}
@@ -214,7 +214,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
   const card = dueCards[currentIndex];
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6 space-y-6`} dir={dir}>
+    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-6`} dir={dir}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Brain className={`h-5 w-5 text-secondary-ink dark:text-muted-ink-on-dark`} />
@@ -238,7 +238,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
       <div className="perspective-1000">
         <div
           onClick={() => setFlipped((prev) => !prev)}
-          className={`relative cursor-pointer rounded-xl border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark min-h-[200px] flex items-center justify-center p-8 transition-transform duration-500`}
+          className={`relative cursor-pointer rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark min-h-[200px] flex items-center justify-center p-8 transition-transform duration-500`}
           style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
         >
           {/* Front */}
@@ -261,7 +261,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
           <button
             type="button"
             onClick={() => setFlipped(true)}
-            className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark text-sm`}
+            className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark text-sm`}
           >
             <RotateCcw className="h-4 w-4" />
             {t('srs.show_answer') || 'Show Answer'}
@@ -278,7 +278,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
               type="button"
               disabled={rating}
               onClick={() => handleRate(btn.key)}
-              className={`px-3 py-2 rounded-lg text-white text-sm font-medium ${btn.color} disabled:opacity-50`}
+              className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-white text-sm font-medium ${btn.color} disabled:opacity-50`}
             >
               {t(`srs.${btn.key}`) || btn.key}
             </button>
