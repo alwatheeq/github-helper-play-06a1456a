@@ -237,7 +237,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       <button
         type="button"
         onClick={() => setMindMapOpen(true)}
-        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white bg-accent-gold`}
+        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center shadow-[var(--s4-shadow-modal)] hover:shadow-[var(--s4-shadow-modal)] transition-shadow text-white bg-accent-gold`}
         title={t('mind_map.title') || 'Mind map'}
       >
         <Brain className="h-5 w-5" />
@@ -255,14 +255,14 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
           <button
             type="button"
             onClick={() => setAddWidgetMenuOpen(prev => !prev)}
-            className={`bg-accent-gold rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow text-white`}
+            className={`bg-accent-gold rounded-full w-10 h-10 flex items-center justify-center shadow-[var(--s4-shadow-modal)] hover:shadow-[var(--s4-shadow-modal)] transition-shadow text-white`}
             title={t('book_mode.add_widget') || 'Add Widget'}
           >
             <Plus className="h-5 w-5" />
           </button>
 
           {/* Widget type menu */}
-          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-xl border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
+          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
             <div className="p-1.5 space-y-0.5">
               {!widgets.some(w => w.type === 'book') && (
                 <button

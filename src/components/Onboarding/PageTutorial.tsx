@@ -70,7 +70,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
 
       {/* Tutorial Modal */}
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg max-w-2xl w-full overflow-hidden animate-scaleIn">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
         <div className="bg-accent-gold p-6 text-white relative">
           <button
@@ -126,7 +126,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {/* Next/Close Button */}
               <button
                 onClick={handleNext}
-                className="flex items-center space-x-2 px-6 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-80 transition-opacity font-semibold shadow-sm"
+                className="flex items-center space-x-2 px-6 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-80 transition-opacity font-semibold shadow-[var(--s4-shadow-hairline)]"
               >
                 <span>{isLastStep ? t('tutorial.close') : t('tutorial.next')}</span>
                 {!isLastStep && <ChevronRight className="h-4 w-4" />}

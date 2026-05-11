@@ -500,7 +500,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
 
   if (showAll) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)]`}>
         <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -561,7 +561,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
   }
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm dark:shadow-none`}>
+    <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] dark:shadow-none`}>
       <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -621,7 +621,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     onClick={() => handleStudyModeChange(mode)}
                     className={`p-1.5 rounded-full transition-colors ${
                       isActive
-                        ? `bg-card-light dark:bg-card-dark shadow-sm text-accent-gold`
+                        ? `bg-card-light dark:bg-card-dark shadow-[var(--s4-shadow-hairline)] text-accent-gold`
                         : `text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                     }`}
                     title={getStudyModeLabel(mode)}
@@ -639,7 +639,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <span>{t('flashcards.export')}</span>
               </button>
 
-              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-10`}>
+              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-10`}>
                 <div className="p-1">
                   <button
                     onClick={exportAsCSV}

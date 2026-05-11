@@ -30,7 +30,7 @@ export const InformationalPage: React.FC = React.memo(() => {
 
       <div className="space-y-8">
         {/* Overview Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Info className="h-6 w-6 text-white" />
@@ -64,7 +64,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* What&apos;s new */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-4">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <BarChart3 className="h-6 w-6 text-white" />
@@ -84,7 +84,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Getting Started Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[var(--s4-radius-card)] dark:from-green-600 dark:to-emerald-700">
               <Upload className="h-6 w-6 text-white" />
@@ -177,7 +177,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Understanding Results Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
@@ -275,7 +275,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Smart Features Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
@@ -319,7 +319,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Language & Translation Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Globe className="h-6 w-6 text-white" />
@@ -353,7 +353,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Managing Content Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[var(--s4-radius-card)] dark:from-orange-600 dark:to-red-700">
               <BookOpen className="h-6 w-6 text-white" />
@@ -448,7 +448,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Navigation & Account Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <User className="h-6 w-6 text-white" />
@@ -524,7 +524,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Tips & Best Practices */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-sm p-8 dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-hairline)] p-8 dark:shadow-none`}>
           <div className="flex items-center space-x-3 mb-6">
             <div className={`bg-accent-gold p-2 rounded-[var(--s4-radius-card)]`}>
               <Brain className="h-6 w-6 text-white" />
@@ -564,7 +564,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Support Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 border-2 border-divider dark:border-divider-on-dark dark:shadow-none`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 border-2 border-divider dark:border-divider-on-dark dark:shadow-none`}>
           <div className="text-center">
             <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4`}>{t('informational.need_help')}</h3>
             <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>

@@ -45,7 +45,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
 
   const timerCard = (
     <div
-      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-[var(--s4-radius-card)] shadow-lg border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
+      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-ink dark:text-ink-on-dark">
@@ -120,7 +120,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full shadow-lg border transition hover:scale-105 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark"
+              className="flex items-center gap-2 px-4 py-2 rounded-full shadow-[var(--s4-shadow-modal)] border transition hover:scale-105 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark"
             >
               <ModeIcon className="h-4 w-4" />
               <span className="font-mono text-sm font-semibold">{formatTime(timeRemaining)}</span>

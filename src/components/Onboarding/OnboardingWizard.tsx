@@ -203,7 +203,7 @@ export const OnboardingWizard: React.FC = () => {
                   onClick={() => handleThemeSelect(theme.id)}
                   className={`relative flex flex-col items-center gap-2 p-3 rounded-[var(--s4-radius-card)] border-2 transition-all ${
                     selectedTheme === theme.id
-                      ? 'border-accent-gold shadow-md'
+                      ? 'border-accent-gold shadow-[var(--s4-shadow-card)]'
                       : 'border-divider dark:border-divider-on-dark hover:border-accent-gold-soft'
                   }`}
                 >

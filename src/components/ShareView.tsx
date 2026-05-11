@@ -74,7 +74,7 @@ export const ShareView: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold mr-3"></div>
             <span className="text-secondary-ink dark:text-muted-ink-on-dark">{t('common.loading')}</span>
@@ -87,7 +87,7 @@ export const ShareView: React.FC = () => {
   if (error || !item) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('share.content_not_available')}</h3>
@@ -110,7 +110,7 @@ export const ShareView: React.FC = () => {
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark">
       {/* Header */}
-      <header className="bg-card-light dark:bg-card-dark shadow-sm border-b border-divider dark:border-divider-on-dark">
+      <header className="bg-card-light dark:bg-card-dark shadow-[var(--s4-shadow-hairline)] border-b border-divider dark:border-divider-on-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             {/* Left: Logo + Meshfahem */}
@@ -148,7 +148,7 @@ export const ShareView: React.FC = () => {
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-2">{item.title}</h2>

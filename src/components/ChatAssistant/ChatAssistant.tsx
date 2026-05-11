@@ -254,7 +254,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 bg-accent-gold text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center`}
+        className={`fixed bottom-6 right-6 z-50 bg-accent-gold text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-[var(--s4-shadow-hairline)] transition-colors duration-150  flex items-center justify-center`}
         aria-label={t('chat.open_assistant')}
       >
         <MessageCircle className="h-6 w-6" />
@@ -263,7 +263,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
       {/* Header */}
       <div className={`flex items-center justify-between p-6 bg-accent-gold text-white dark:text-gray-900 rounded-t-[var(--s4-radius-card)]`}>
         <div className="flex items-center space-x-2">

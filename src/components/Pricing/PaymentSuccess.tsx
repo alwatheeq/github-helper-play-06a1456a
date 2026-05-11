@@ -40,7 +40,7 @@ export const PaymentSuccess: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="max-w-2xl w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
+      <div className="max-w-2xl w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
         <div className="flex items-center justify-center mb-6">
           <div className="bg-green-100 dark:bg-green-900/30 p-6 rounded-full">
             <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />

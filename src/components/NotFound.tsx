@@ -7,7 +7,7 @@ export const NotFound: React.FC = () => {
 
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 max-w-md w-full text-center">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full text-center">
         <div className="flex items-center justify-center mb-6">
           <div className="bg-blue-100 dark:bg-blue-900/30 p-4 rounded-full">
             <FileQuestion className="h-16 w-16 text-blue-600 dark:text-blue-400" />

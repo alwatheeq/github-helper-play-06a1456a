@@ -133,7 +133,7 @@ export const GameJoinPage: React.FC = () => {
   if (loading) {
     return (
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center max-w-md w-full`}>
           <Loader2 className="h-16 w-16 text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
           <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Validating game code...</p>
         </div>
@@ -144,7 +144,7 @@ export const GameJoinPage: React.FC = () => {
   if (error && !gameInfo) {
     return (
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-12 text-center max-w-md w-full`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center max-w-md w-full`}>
           <AlertCircle className="h-16 w-16 text-red-600 dark:text-red-400 mx-auto mb-4" />
           <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-2`}>Unable to Join Game</h2>
           <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>{error}</p>
@@ -161,7 +161,7 @@ export const GameJoinPage: React.FC = () => {
 
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8 max-w-md w-full`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full`}>
         {/* Header */}
         <div className="text-center mb-8">
           <div className={`bg-accent-gold rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
@@ -230,7 +230,7 @@ export const GameJoinPage: React.FC = () => {
       {/* Auth Modal */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-lg p-8 max-w-md w-full">
+          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[var(--s4-shadow-modal)] p-8 max-w-md w-full">
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
             <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
               Choose how you'd like to join this game:

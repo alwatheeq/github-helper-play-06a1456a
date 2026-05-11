@@ -1087,7 +1087,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${libraryPickerOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {libraryPickerOpen && (
-                    <div className={`absolute left-0 right-0 top-full mt-1 z-50 rounded-[var(--s4-radius-card)] border shadow-lg overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+                    <div className={`absolute left-0 right-0 top-full mt-1 z-50 rounded-[var(--s4-radius-card)] border shadow-[var(--s4-shadow-modal)] overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
                       <div className={`p-2 border-b sticky top-0 z-10 border-divider dark:border-divider-on-dark`}>
                         <div className="flex items-center gap-2 px-2 py-1.5 rounded-[var(--s4-radius-card)] bg-black/5 dark:bg-white/5">
                           <Search className="h-4 w-4 shrink-0 opacity-60" />

@@ -62,7 +62,7 @@ export const PricingPage: React.FC = () => {
         {user && (
           <button
             onClick={() => navigate('/')}
-            className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-90 transition-opacity bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-[var(--s4-radius-card)] px-4 py-2 shadow-sm`}
+            className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-90 transition-opacity bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[var(--s4-shadow-hairline)]`}
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="font-medium">{t('pricing.back_to_dashboard')}</span>
@@ -71,7 +71,7 @@ export const PricingPage: React.FC = () => {
         <div className="flex-1" />
         <button
           onClick={() => navigate(user ? '/' : '/')}
-          className={`flex items-center justify-center bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-full w-10 h-10 shadow-sm hover:opacity-90 transition-opacity text-ink dark:text-ink-on-dark`}
+          className={`flex items-center justify-center bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-full w-10 h-10 shadow-[var(--s4-shadow-hairline)] hover:opacity-90 transition-opacity text-ink dark:text-ink-on-dark`}
           aria-label="Close"
         >
           <X className="h-5 w-5" />
@@ -121,7 +121,7 @@ export const PricingPage: React.FC = () => {
 
         {/* Standard plan card */}
         <div
-          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden mb-8`}
+          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] overflow-hidden mb-8`}
         >
           <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-[var(--s4-radius-card)]`}>
             <label htmlFor="billing-months" className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
@@ -169,7 +169,7 @@ export const PricingPage: React.FC = () => {
 
           {/* Extra Zegocloud hours */}
           <div
-            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
+            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-[var(--s4-shadow-hairline)]`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -213,7 +213,7 @@ export const PricingPage: React.FC = () => {
 
           {/* Extra AI Chat tokens */}
           <div
-            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
+            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-[var(--s4-shadow-hairline)]`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -261,7 +261,7 @@ export const PricingPage: React.FC = () => {
 
         {/* Summary + CTA */}
         <div
-          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-6 shadow-sm`}
+          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-6 shadow-[var(--s4-shadow-hairline)]`}
         >
             <div className="space-y-2 mb-6">
             <div className="flex justify-between text-sm">
