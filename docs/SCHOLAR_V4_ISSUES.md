@@ -221,3 +221,53 @@ Folder management is composed inside `LibraryPage.tsx` — there is no standalon
 **Regression guard:** 3 files appended to `SWEPT_FILES` under `// Phase 3.17` block. `npm run check:tokens` → ✓ 31 swept file(s) clean.
 
 **Audit gate:** legacy=0, directional=0, gold=0, rounded-full=3, rounded-md=0. Exactly 4 files changed.
+
+## Phase 3.18 — Auth + top-level error/empty states (DONE)
+
+**Files swept (5):**
+- `src/components/Auth/Auth.tsx` — 7 radius (L114, 116, 132, 142, 173, 188, 198: `rounded-lg` → `rounded-[var(--s4-radius-card)]`) + 2 gold-gradient removals (L104 logo badge, L198 submit button: `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`).
+- `src/components/AccountSuspended.tsx` — 5 radius (L76 `rounded-xl`, L91/107/126/137 `rounded-lg` → `rounded-[var(--s4-radius-card)]`).
+- `src/components/NotFound.tsx` — 3 radius (L10, 30, 38).
+- `src/components/ErrorBoundary.tsx` — 4 radius (L70, 86, 102, 110).
+- `src/components/EnvValidator.tsx` — 3 radius (L11, 26, 34).
+
+**Substitutions:** 22 plain radius, 2 gold-gradient removals → solid `bg-accent-gold` (canonical replacement from Phases 3.10–3.13). 0 directional.
+
+**Exemptions preserved:** 6× `rounded-full` (avatar/icon circles, loading spinner ring), 1× `rounded-md` (Auth.tsx L104 logo badge — chip sub-element, distinct from card radius).
+
+**Cross-file safety:** Auth state machine (Supabase `signInWithOAuth` / `signUp` / `signInWithPassword`, redirect URLs, retry flow, error/success messaging) untouched. ErrorBoundary lifecycle methods (`componentDidCatch`, `getDerivedStateFromError`, ErrorLogger integration) untouched. EnvValidator env-var detection logic (`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`) untouched. All semantic state palettes (red/green/blue/gray + dark variants) preserved verbatim. Focus-ring utilities preserved.
+
+**Regression guard:** 5 files appended under `// Phase 3.18 (auth + top-level fallbacks)`.
+
+**Audit gate:** `npm run check:tokens` → ✓ 39 swept file(s) clean (combined with 3.19).
+
+## Phase 3.19 — Primitives + i18n confirmation modal (DONE)
+
+**Files swept (3):**
+- `src/components/LanguageToggle.tsx` — 2 radius (L44 trigger button, L64 dropdown panel).
+- `src/components/Scholar/ScholarSkeleton.tsx` — 1 radius inside internal `roundedMap` (L16 value only; `lg` key + public prop API `rounded?: 'none'|'sm'|'md'|'lg'|'full'` preserved).
+- `src/contexts/I18nContext.tsx` — 3 radius on language-refresh modal (L151 dialog shell, L161 cancel button, L171 confirm button).
+
+**Substitutions:** 6 plain radius → `rounded-[var(--s4-radius-card)]`. 0 gold, 0 directional.
+
+**Exemptions preserved:** 1× `rounded-full` (ScholarSkeleton size variant).
+
+**Cross-file safety:** I18nContext provider value (`t()`, `language`, `setLanguage`, `showRefreshPrompt`, `dismissRefreshPrompt`, `useI18n` hook) untouched. ScholarSkeleton prop signature unchanged — callers (`ScholarPreview.tsx`, `HistoryPage.tsx`) use default `size=md` and remain unaffected. LanguageToggle public props unchanged. No Supabase, edge functions, locale keys, or business logic touched.
+
+**Regression guard:** 3 files appended under `// Phase 3.19 (language toggle / skeleton primitive / i18n modal)`.
+
+**Audit gate:** `npm run check:tokens` → ✓ 39 swept file(s) clean.
+
+## Phase 3.20 — CSS audit (DONE, verification-only)
+
+**Files audited (2):**
+- `src/index.css` — L358 `border-radius: 0.75rem; /* rounded-xl by default */` (global `button` selector), L365 `border-radius: 0.5rem; /* rounded-lg */` (global `input, textarea, select`).
+- `src/styles/designSystem.css` — L45 `.card-subtle`, L72 `.btn-soft-primary`, L98 `.btn-soft-secondary`.
+
+**Findings:** All 5 `rounded-(lg|xl)` matches are inline CSS comments (`/* rounded-xl */` annotations) inside CSS rule bodies that set `border-radius` in rem units. They document the Tailwind-utility equivalent of the rem value for designer/maintainer clarity. They are **not** utility classes and cannot leak into compiled output. No edits required.
+
+**Note (not blocking 3.20):** `index.css` lines 357–367 establish global element-default radii (`button`, `input`, `textarea`, `select`) using literal rem values rather than `var(--s4-radius-card)`. This is a pre-token-system fallback. Tokenising those defaults belongs to a future global-element pass, not the per-component sweep tracked by Phases 3.10–3.19.
+
+**Regression guard:** CSS files intentionally NOT added to `SWEPT_FILES` allowlist — the current regex would flag the comment lines and the guard is not comment-aware. Adding a comment-aware mode is deferred (low value vs. risk of silencing real future regressions).
+
+**Final state:** Non-Admin codebase fully tokenised for radius + gold gradients. Allowlist: 39 files. Admin cluster (17 files, 6 gold gradients) remains parked until those pages are designed.
