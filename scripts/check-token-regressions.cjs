@@ -65,6 +65,10 @@ const SWEPT_FILES = [
   'src/components/Dashboard/Dashboard.tsx',
   'src/components/Dashboard/SummaryDisplay.tsx',
   'src/components/Dashboard/FlashcardViewer.tsx',
+  // Phase 3.17 (book-mode toggle / highlight menu / tooltip overlays)
+  'src/components/Dashboard/BookMode/FreeFormToggle.tsx',
+  'src/components/Dashboard/Highlighting/HighlightMenu.tsx',
+  'src/components/Common/Tooltip.tsx',
 ];
 
 const repoRoot = path.resolve(__dirname, '..');
