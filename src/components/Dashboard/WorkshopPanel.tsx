@@ -2,7 +2,7 @@ import React from 'react';
 import { InputForm } from './InputForm';
 import { RecentlyProcessedList } from './RecentlyProcessedList';
 import { GenerationRail } from './GenerationRail';
-import { WorkshopHeader } from './WorkshopHeader';
+import { PageHeader } from '../Scholar';
 import { useI18n } from '../../contexts/I18nContext';
 import type { AcademicsGenerationPreferences } from '../../utils/academicsGenerationPreferences';
 
@@ -20,10 +20,9 @@ interface WorkshopPanelProps {
 
 /**
  * Scholar v4 Workshop — idle Dashboard state.
- * Layout:
  *   ≥1024 px: two-column grid, input card + 300 px dark feature rail
  *   <1024 px: single column, rail stacks under input card
- * The recently-processed list sits below, full-width.
+ * Header uses the shared Scholar PageHeader for cross-page consistency.
  */
 export const WorkshopPanel: React.FC<WorkshopPanelProps> = ({ onProcessInput, onOpenHistory }) => {
   const { t } = useI18n();
@@ -34,9 +33,10 @@ export const WorkshopPanel: React.FC<WorkshopPanelProps> = ({ onProcessInput, on
 
   return (
     <>
-      <WorkshopHeader
+      <PageHeader
         eyebrow={t('workshop.eyebrow')}
         title={t('workshop.title')}
+        className="mb-8"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
