@@ -414,7 +414,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
   const handleUrlSubmit = () => {
     // TODO #18 — URL import has no edge function yet. Stub via todo() toast.
-    todo(t('workshop.url_cta') || 'URL import');
+    todo(t('workshop.url_cta'));
   };
 
   return (
@@ -525,18 +525,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
 
-        {/* Meta row — file mode only. TODO #17: replace with live processing/storage stats.
-            Hidden by default until real data is wired so we don't ship mocked numbers. */}
-        {false && inputMode === 'file' && (
-          <>
-            <hr className="border-divider dark:border-divider-on-dark mt-4" />
-            <div className="flex flex-wrap gap-6 mt-3 text-[11px] font-light text-muted-ink dark:text-muted-ink-on-dark">
-              <span>Average processing time — —</span>
-              <span>Last upload — —</span>
-              <span>Storage used — —</span>
-            </div>
-          </>
-        )}
+        {/* Meta row removed — TODO #17 will re-introduce it once real processing/storage stats are wired. */}
 
         {/* OCR Scan Mode */}
         {inputMode === 'ocr' && (

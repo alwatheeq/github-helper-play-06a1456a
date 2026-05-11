@@ -8,7 +8,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
-import { ScholarCard, ScholarButton } from '../Scholar';
+import { ScholarCard, ScholarButton, PageHeader, ScholarSkeleton } from '../Scholar';
 
 interface HistoryEntry {
   id: string;
@@ -131,11 +131,14 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
   if (loading) {
     return (
       <div className="w-full">
+        <PageHeader
+          eyebrow={t('history.eyebrow') || 'THE LEDGER'}
+          title={t('history.generation_history')}
+          descriptor={t('history.history_desc')}
+          className="mb-8"
+        />
         <ScholarCard variant="default" padding="lg">
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-muted-ink dark:border-muted-ink-on-dark mr-3" />
-            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('history.loading_history')}</span>
-          </div>
+          <ScholarSkeleton count={4} height="1.25rem" />
         </ScholarCard>
       </div>
     );
@@ -166,19 +169,19 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-ink dark:text-ink-on-dark mb-2">{t('history.generation_history')}</h2>
-        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
-          {t('history.history_desc')}
-        </p>
-      </div>
+      <PageHeader
+        eyebrow={t('history.eyebrow') || 'THE LEDGER'}
+        title={t('history.generation_history')}
+        descriptor={t('history.history_desc')}
+        className="mb-8"
+      />
 
       {/* Sorting Controls */}
       <ScholarCard variant="default" padding="md" className="mb-6">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-2 rounded-lg">
-              <History className="h-5 w-5 text-white" />
+            <div className="bg-chip dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark">
+              <History className="h-5 w-5 text-accent-gold" />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('history.sort_options')}</h3>
@@ -194,7 +197,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
                 ErrorLogger.debug('Sort option changed', { component: 'HistoryPage', action: 'handleSortChange', newSortOption: e.target.value });
                 setSortOption(e.target.value);
               }}
-              className="px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+              className="px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
             >
               <option value="created_at_desc">{t('history.creation_newest')}</option>
               <option value="created_at_asc">{t('history.creation_oldest')}</option>
@@ -224,23 +227,23 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
                 <div className="p-6">
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
                     <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-lg ${
+                      <div className={`p-2 rounded-[var(--s4-radius-card)] border ${
                         medical
-                          ? 'bg-red-50 dark:bg-red-900/20'
-                          : 'bg-gradient-to-r from-accent-gold to-accent-gold-soft'
+                          ? 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
+                          : 'bg-chip dark:bg-card-dark border-divider dark:border-divider-on-dark'
                       }`}>
                         {medical ? (
                           <Stethoscope className="h-5 w-5 text-red-600 dark:text-red-300" />
                         ) : (
-                          <FileText className="h-5 w-5 text-white" />
+                          <FileText className="h-5 w-5 text-accent-gold" />
                         )}
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
                           {entry.original_file_name || t('common.unknown')}
                           {medical && (
-                            <span className="ml-2 px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full dark:bg-red-900 dark:text-red-300">
-                              🩺 Medical
+                            <span className="ml-2 px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 text-[10px] tracking-[1.5px] font-bold uppercase rounded-[var(--s4-radius-btn)] dark:bg-red-900/30 dark:text-red-200 dark:border-red-800">
+                              Medical
                             </span>
                           )}
                         </h3>
@@ -277,7 +280,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
                           {entry.topics.map((topic, index) => (
                             <span
                               key={index}
-                              className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full dark:bg-purple-900 dark:text-purple-300 whitespace-nowrap"
+                              className="px-2 py-0.5 bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark text-[10px] tracking-[1.5px] font-bold uppercase rounded-[var(--s4-radius-btn)] whitespace-nowrap"
                             >
                               {topic}
                             </span>
@@ -297,7 +300,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
 
                   <div className="mb-4">
                     <h4 className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('history.summary_preview')}</h4>
-                    <p className="text-secondary-ink dark:text-secondary-ink-on-dark bg-subtle dark:bg-subtle-on-dark rounded-lg p-3">
+                    <p className="text-secondary-ink dark:text-secondary-ink-on-dark bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-3">
                       {entry.summary_text.length > 150
                         ? entry.summary_text.substring(0, 150) + '...'
                         : entry.summary_text
