@@ -85,3 +85,9 @@ Touched indirectly (verify only): `Dashboard.tsx` line 1482 (`EduPlayPage` mount
 - Total: ~15 min
 
 Confirm and I'll run the sweep.
+---
+
+## Phase 3.4 — applied
+Token sweep across 9 gaming-hub files. Hits per file:
+EduPlayPage 30, BrainRushGamePlay 13, BrainRushMultiplayerWrapper 0, BrainRushQuestionResults 10, BrainRushResults 16, MultiplayerMenu 15, MultiplayerLobby 12, MultiplayerGamePlay 7, MultiplayerResults 5, GameJoinPage 14. Total 122 substitutions.
+Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. No JSX, prop, hook, or Supabase channel changes. Data-driven gameplay colors (correct/wrong feedback, player avatars, mode accents) intentionally preserved.
