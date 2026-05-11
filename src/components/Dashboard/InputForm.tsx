@@ -640,7 +640,36 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
 
-        {/* Settings Section */}
+        {/* URL Mode — stub. TODO #18: wire to a url→text edge function. */}
+        {inputMode === 'url' && (
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
+              {t('workshop.url_label')}
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="url"
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                placeholder="https://example.com/article"
+                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+              />
+              <button
+                type="button"
+                onClick={handleUrlSubmit}
+                disabled={previewMode || urlInput.trim().length === 0}
+                className="px-5 py-3 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-btn)] text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                {t('workshop.url_cta')} <span aria-hidden>→</span>
+              </button>
+            </div>
+            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark font-light">
+              {t('workshop.url_helper')}
+            </p>
+          </div>
+        )}
+
+
         <div className="mt-6 flex items-center justify-between">
           <button
             onClick={() => setShowSettings(!showSettings)}
