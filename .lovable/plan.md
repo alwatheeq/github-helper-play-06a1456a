@@ -94,3 +94,18 @@ Manual smoke is limited — pages are orphaned. Verify they at least compile by 
 
 ### Estimated time
 ~6 min (smaller cluster, single substitution pattern active, no smoke pass possible for orphans).
+---
+
+## Phase 3.9 — EXECUTED ✓
+
+**Files edited (3):** `GoalsAndAchievementsPage.tsx` (31), `StudyGoalsPage.tsx` (23), `AchievementsPage.tsx` (8). Total **62 substitutions** — exact match to pre-sweep estimate, no collapses.
+
+**Audit gate:**
+- 0 legacy radius hits, 0 gradient hits, 0 `alert`/`confirm` hits
+- v4 token counts: 31 / 23 / 8 (consistent with pre-sweep)
+- ar / en / fr / tr JSON parse OK
+- `fetchGoals` / `fetchAchievements` / `supabase.from` / `ErrorLogger.error` / `useAuth()` / `React.memo` call-sites — byte-identical
+
+**Follow-ups flagged in `docs/SCHOLAR_V4_ISSUES.md`:** orphan-page mount status, duplicate Goals/Achievements implementations. Both deferred to Phase 4.x.
+
+Next: Phase 3.10 — Feedback / Informational / Help cluster.
