@@ -409,7 +409,7 @@ export const CheckoutPage: React.FC = () => {
     const mode = getCheckoutMode();
     return (
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
-        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
+        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
               <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
@@ -425,7 +425,7 @@ export const CheckoutPage: React.FC = () => {
           </p>
 
           {error.includes('policy') && (
-            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 mb-6">
+            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
               <p className="text-sm text-blue-800 dark:text-blue-300 mb-2">
                 <strong>Database Permission Issue Detected</strong>
               </p>
@@ -436,7 +436,7 @@ export const CheckoutPage: React.FC = () => {
           )}
 
           {mode === 'stripe' && (
-            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4 mb-6">
+            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
               <p className="text-sm text-orange-800 dark:text-orange-300 mb-2">
                 <strong>Common causes:</strong>
               </p>
@@ -451,7 +451,7 @@ export const CheckoutPage: React.FC = () => {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
             >
               Back to Pricing
             </button>
@@ -461,14 +461,14 @@ export const CheckoutPage: React.FC = () => {
                 setRetryCount(prev => prev + 1);
                 initiateCheckout();
               }}
-              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
             >
               Try Again {retryCount > 0 && `(${retryCount})`}
             </button>
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200"
+              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
             >
               Return to Dashboard
             </button>
@@ -480,7 +480,7 @@ export const CheckoutPage: React.FC = () => {
 
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
-      <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
+      <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-sm p-8">
         <div className="flex items-center justify-center mb-6">
           <Loader2 className="h-12 w-12 text-blue-600 dark:text-blue-400 animate-spin" />
         </div>
@@ -495,7 +495,7 @@ export const CheckoutPage: React.FC = () => {
             : 'Redirecting to secure checkout...'}
         </p>
 
-        <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 mb-6">
+        <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
           <div className="flex justify-between items-center mb-2">
             <span className="text-secondary-ink dark:text-secondary-ink-on-dark">Plan:</span>
             <span className="font-semibold text-ink dark:text-ink-on-dark">{planDetails.name}</span>

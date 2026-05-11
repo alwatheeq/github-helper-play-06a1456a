@@ -136,7 +136,7 @@ export const SubscriptionManagementPage: React.FC = () => {
     return (
       <div className={shell}>
         <div className={inner}>
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark p-8`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark p-8`}>
             <div className="text-center">
               <div className={`bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center`}>
                 <Crown className={`h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark`} />
@@ -153,7 +153,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/pricing')}
-                className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white font-bold py-3 px-8 rounded-lg transition duration-200`}
+                className={`bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-8 rounded-[var(--s4-radius-card)] transition duration-200`}
               >
                 {t('subscription_management.view_plans')}
               </button>
@@ -212,7 +212,7 @@ export const SubscriptionManagementPage: React.FC = () => {
         <div className="p-6 space-y-6">
           {/* Trial Status */}
           {trialDaysRemaining !== null && trialDaysRemaining > 0 && (
-            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 flex items-start space-x-3">
+            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
               <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-blue-900 dark:text-blue-100">
@@ -230,7 +230,7 @@ export const SubscriptionManagementPage: React.FC = () => {
 
           {/* Payment Failed Warning */}
           {subscription.status === 'payment_failed' && (
-            <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-4 flex items-start space-x-3">
+            <div className="bg-red-50 dark:bg-red-900/30 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
               <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-red-900 dark:text-red-100">
@@ -248,7 +248,7 @@ export const SubscriptionManagementPage: React.FC = () => {
 
           {/* Canceled Subscription Notice */}
           {subscription.status === 'canceled' && (
-            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4 flex items-start space-x-3">
+            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
               <AlertCircle className="h-5 w-5 text-orange-600 dark:text-orange-400 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-orange-900 dark:text-orange-100">
@@ -266,7 +266,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           {/* Credits (tools / study room / AI) */}
           <>
               {/* Tools & Services */}
-              <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
+              <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-6`}>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
                     <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -288,14 +288,14 @@ export const SubscriptionManagementPage: React.FC = () => {
                   </p>
                   <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                     <div
-                      className={`h-3 rounded-full transition-colors duration-150 bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+                      className={`h-3 rounded-full transition-colors duration-150 bg-accent-gold`}
                       style={{ width: `${toolProgressPct}%` }}
                     />
                   </div>
                 </div>
               </div>
               {hasZego && (
-                <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
+                <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-6`}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -316,7 +316,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                     <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                       <div
-                        className={`h-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+                        className={`h-3 rounded-full bg-accent-gold`}
                         style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }}
                       />
                     </div>
@@ -324,7 +324,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 </div>
               )}
               {hasAiAddon && (
-                <div className={`bg-page-light dark:bg-page-dark rounded-lg p-6`}>
+                <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-6`}>
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-3">
                       <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -345,7 +345,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                     <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                       <div
-                        className={`h-3 rounded-full bg-gradient-to-r from-accent-gold to-accent-gold-soft`}
+                        className={`h-3 rounded-full bg-accent-gold`}
                         style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }}
                       />
                     </div>
@@ -355,7 +355,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             </>
 
           {subscription.billing_cycle_end && (
-            <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4 border-t border border-divider dark:border-divider-on-dark`}>
+            <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4 border-t border border-divider dark:border-divider-on-dark`}>
               <div className="flex items-center justify-between text-sm">
                 <span className={"text-secondary-ink dark:text-secondary-ink-on-dark"}>{t('subscription_management.billing_resets_in')}</span>
                 <span className={`font-semibold text-ink dark:text-ink-on-dark`}>
@@ -448,7 +448,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowCancelModal(true)}
-                className="w-full bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 font-semibold py-3 px-6 rounded-lg transition duration-200"
+                className="w-full bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
               >
                 {t('subscription_management.cancel_subscription')}
               </button>
@@ -458,7 +458,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/pricing')}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
               >
                 {t('subscription_management.reactivate')}
               </button>
@@ -467,7 +467,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/profile/billing')}
-              className={`w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200`}
+              className={`w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200`}
             >
               {t('subscription_management.view_billing_history')}
             </button>
@@ -478,13 +478,13 @@ export const SubscriptionManagementPage: React.FC = () => {
       {/* Cancel Modal */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-lg border border-divider dark:border-divider-on-dark max-w-md w-full p-6`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-lg border border-divider dark:border-divider-on-dark max-w-md w-full p-6`}>
             <div className="flex items-center justify-between mb-4">
               <h3 className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{t('subscription_management.cancel_modal_title')}</h3>
               <button
                 type="button"
                 onClick={() => setShowCancelModal(false)}
-                className={`p-2 bg-subtle dark:bg-subtle-on-dark hover:opacity-80 rounded-lg transition`}
+                className={`p-2 bg-subtle dark:bg-subtle-on-dark hover:opacity-80 rounded-[var(--s4-radius-card)] transition`}
               >
                 <X className={`h-5 w-5 text-secondary-ink dark:text-secondary-ink-on-dark`} />
               </button>
@@ -495,7 +495,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 {t('subscription_management.cancel_modal_body')}
               </p>
 
-              <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-4">
+              <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[var(--s4-radius-card)] p-4">
                 <p className="text-sm text-orange-800 dark:text-orange-300 font-semibold mb-2">
                   {t('subscription_management.cancel_what_happens')}
                 </p>
@@ -508,7 +508,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               </div>
 
               {cancelError && (
-                <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-3">
+                <div className="bg-red-50 dark:bg-red-900/30 rounded-[var(--s4-radius-card)] p-3">
                   <p className="text-sm text-red-700 dark:text-red-300">{cancelError}</p>
                 </div>
               )}
@@ -519,7 +519,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 type="button"
                 onClick={() => setShowCancelModal(false)}
                 disabled={canceling}
-                className={`flex-1 bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50`}
+                className={`flex-1 bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 disabled:opacity-50`}
               >
                 {t('subscription_management.keep_subscription')}
               </button>
@@ -527,7 +527,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 type="button"
                 onClick={handleCancelSubscription}
                 disabled={canceling}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 disabled:opacity-50 flex items-center justify-center"
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 disabled:opacity-50 flex items-center justify-center"
               >
                 {canceling ? (
                   <>

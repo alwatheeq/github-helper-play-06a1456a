@@ -41,10 +41,10 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
       <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
 
       <ScholarCard variant="elevated" padding="none" className="relative max-w-lg w-full overflow-hidden animate-scaleIn">
-        <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-6 text-white relative">
+        <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onDismiss}
-            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors duration-150 group"
+            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
             aria-label="Close"
           >
             <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />

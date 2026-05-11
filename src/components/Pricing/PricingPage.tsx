@@ -62,7 +62,7 @@ export const PricingPage: React.FC = () => {
         {user && (
           <button
             onClick={() => navigate('/')}
-            className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-90 transition-opacity bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-lg px-4 py-2 shadow-sm`}
+            className={`flex items-center space-x-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-90 transition-opacity bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-[var(--s4-radius-card)] px-4 py-2 shadow-sm`}
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="font-medium">{t('pricing.back_to_dashboard')}</span>
@@ -98,11 +98,11 @@ export const PricingPage: React.FC = () => {
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                   placeholder={t('pricing.promo_placeholder')}
-                  className={`flex-1 px-4 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className={`flex-1 px-4 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
                 <button
                   onClick={() => setShowPromoInput(false)}
-                  className={`px-4 py-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white font-medium`}
+                  className={`px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white font-medium`}
                 >
                   {t('pricing.apply')}
                 </button>
@@ -121,7 +121,7 @@ export const PricingPage: React.FC = () => {
 
         {/* Standard plan card */}
         <div
-          className={`rounded-2xl bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden mb-8`}
+          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden mb-8`}
         >
           <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-2xl`}>
             <label htmlFor="billing-months" className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
@@ -131,7 +131,7 @@ export const PricingPage: React.FC = () => {
               id="billing-months"
               value={billingMonths}
               onChange={(e) => setBillingMonths(normalizeStandardBillingMonths(parseInt(e.target.value, 10)))}
-              className={`w-full max-w-md mb-4 px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full max-w-md mb-4 px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             >
               <option value={1}>{t('pricing.billing_every_1')}</option>
               <option value={3}>{t('pricing.billing_every_3')}</option>
@@ -169,7 +169,7 @@ export const PricingPage: React.FC = () => {
 
           {/* Extra Zegocloud hours */}
           <div
-            className={`rounded-xl bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
+            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -184,7 +184,7 @@ export const PricingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setZegoHours((h) => Math.max(0, h - 1))}
-                  className={`rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
+                  className={`rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
                   disabled={zegoHours === 0}
                   aria-label="Decrease hours"
                 >
@@ -196,7 +196,7 @@ export const PricingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setZegoHours((h) => Math.min(MAX_ZEGO_HOURS, h + 1))}
-                  className={`rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
+                  className={`rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
                   disabled={zegoHours >= MAX_ZEGO_HOURS}
                   aria-label="Increase hours"
                 >
@@ -213,7 +213,7 @@ export const PricingPage: React.FC = () => {
 
           {/* Extra AI Chat tokens */}
           <div
-            className={`rounded-xl bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
+            className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-5 shadow-sm`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
@@ -231,7 +231,7 @@ export const PricingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setChatBlocks((b) => (b === MIN_AI_BLOCKS ? 0 : Math.max(MIN_AI_BLOCKS, b - 1)))}
-                  className={`rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
+                  className={`rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
                   disabled={chatBlocks === 0}
                   aria-label="Decrease token blocks"
                 >
@@ -243,7 +243,7 @@ export const PricingPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setChatBlocks((b) => (b === 0 ? MIN_AI_BLOCKS : Math.min(MAX_CHAT_BLOCKS, b + 1)))}
-                  className={`rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
+                  className={`rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark p-2 text-ink dark:text-ink-on-dark hover:opacity-80 transition-opacity disabled:opacity-50`}
                   disabled={chatBlocks >= MAX_CHAT_BLOCKS}
                   aria-label="Increase token blocks"
                 >
@@ -261,7 +261,7 @@ export const PricingPage: React.FC = () => {
 
         {/* Summary + CTA */}
         <div
-          className={`rounded-2xl bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-6 shadow-sm`}
+          className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border p-6 shadow-sm`}
         >
             <div className="space-y-2 mb-6">
             <div className="flex justify-between text-sm">
@@ -288,7 +288,7 @@ export const PricingPage: React.FC = () => {
           </div>
           <button
             onClick={handleSubscribe}
-            className={`w-full bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 text-white font-bold py-3 px-6 rounded-xl transition duration-200 flex items-center justify-center gap-2`}
+            className={`w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 flex items-center justify-center gap-2`}
           >
             <span>{isStripeEnabled() ? t('pricing.subscribe') : t('pricing.continue')}</span>
             <ArrowRight className="h-5 w-5" />

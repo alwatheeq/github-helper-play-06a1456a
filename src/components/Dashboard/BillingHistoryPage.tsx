@@ -365,7 +365,7 @@ export const BillingHistoryPage: React.FC = () => {
         </div>
       </div>
 
-      <div className={`mt-6 bg-subtle dark:bg-subtle-on-dark rounded-lg p-4 border-divider dark:border-divider-on-dark border`}>
+      <div className={`mt-6 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 border-divider dark:border-divider-on-dark border`}>
         <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
           <strong className="text-ink dark:text-ink-on-dark">Note:</strong> Receipts are generated on demand. Successful Stripe
           payments are recorded here for your account.
