@@ -108,3 +108,30 @@ Pick one canonical implementation and delete the other during Phase 4.x consolid
 - **InformationalPage non-gold semantic gradients** — line 89 (`from-green-500 to-emerald-600` Library section) and line 358 (`from-orange-500 to-red-600` Quiz/warning section). Encode section semantics, not brand accent — only radius substituted.
 - **`rounded-full` gold avatars** (OnboardingWizard:130, 186; LanguageChoicePage:46) — circular avatar geometry preserved; inner gold gradient flattened to `bg-accent-gold`.
 - **FeedbackPage primary affordances** — dashed dropzone (`border-2 border-dashed`) treatment preserved; `bg-blue-600` upload button color preserved (form primary affordance, not brand-gold candidate).
+
+## Phase 3.12 — Social cluster (exemptions & follow-ups)
+
+**Files swept (6 edited):** GroupsPanel, FriendsPanel, GroupChat, CommentSection, LikeButton, FavoriteButton. Substitutions: 44 (`rounded-*` → `var(--s4-radius-card)`) + 5 gold-gradient flattenings.
+
+### Data-driven / structural exemptions (preserved byte-identical)
+- **`rounded-full` gold avatars / pill buttons** — GroupsPanel:435, GroupChat:273, CommentSection:282, FriendsPanel "Add friend" button — circular geometry preserved; inner gold gradient flattened to `bg-accent-gold`.
+- **CommentSection primary affordance** — `bg-blue-600` post-comment button color preserved (form primary affordance convention from 3.11 FeedbackPage).
+- **FriendsPanel accept / decline icon tints** — `bg-green-500/10` and `bg-red-500/10` preserved as semantic affordances.
+- **`bg-white` QR code wrapper** (GroupsPanel) preserved — QR scanability requirement.
+
+## Token regression guard (Phase 3.12 deliverable)
+
+- `scripts/check-token-regressions.cjs` scans every file already migrated by Phases 3.10–3.13 and fails (`exit 1`) if a legacy `rounded-(xl|2xl|lg|[12px])` or `from-accent-gold to-accent-gold-soft` reappears.
+- Wired as `npm run check:tokens` and prepended to `quality` / `quality:quick`, so CI and local quality gates block regressions before lint / tsc / vitest / build.
+- The script's `SWEPT_FILES` allowlist is the source of truth — **every new phase MUST append its swept paths to that array** as the final step of its sweep.
+
+## Phase 3.13 — ChatAssistant cluster (exemptions & follow-ups)
+
+**Files swept (2 edited):** `ChatAssistant/ChatAssistant.tsx`, `ChatAssistant/GlobalChatAssistant.tsx`. Substitutions: 11 (`rounded-(t-)?lg` → `var(--s4-radius-card)`) + 8 gold-gradient flattenings.
+
+### Data-driven / structural exemptions (preserved byte-identical)
+- **FAB `rounded-full`** (both files) — circular floating-action geometry preserved; inner gold gradient flattened to `bg-accent-gold`.
+- **Header directional rounding** — `rounded-t-lg` → `rounded-t-[var(--s4-radius-card)]` (top-only rounding kept, value tokenized) to align with the panel's top edge.
+- **Resize-handle corner rounding** (`GlobalChatAssistant.tsx` lines 564–576) — `rounded-tl-lg` / `rounded-tr-lg` / `rounded-bl-lg` / `rounded-br-lg` preserved verbatim. These are 3px×3px drag affordances on the panel corners, not card surfaces; their radius hugs the parent panel and is a UX hit-area concern, not a brand token.
+- **`focus:ring-accent-gold`** and `bg-blue-500` hover tints on resize handles preserved — semantic affordance / focus-state colors.
+- **`ChatAssistant.css` / `GlobalChatAssistant.css`** out of scope: contain only `@keyframes shake`, `.drag-handle` cursors, and `.resize-handle` hover transitions — no radius or color tokens to migrate.
