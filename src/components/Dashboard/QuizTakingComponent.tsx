@@ -592,19 +592,22 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             <div className="flex space-x-2">
               <button
                 onClick={onExit}
-                className="px-6 py-2 border border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 rounded-[var(--s4-radius-card)] hover:bg-red-50 dark:hover:bg-red-900/20"
+              <ScholarButton
+                variant="danger"
+                onClick={() => setShowExitConfirm(true)}
               >
                 {t('quiz.exit_quiz')}
-              </button>
+              </ScholarButton>
 
               {currentQuestionIndex === questions.length - 1 ? (
-                <button
+                <ScholarButton
+                  variant="primary"
                   onClick={handleSubmit}
-                  className="px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-center space-x-2"
+                  icon={<Flag className="h-4 w-4" />}
+                  iconPosition="left"
                 >
-                  <Flag className="h-4 w-4" />
-                  <span>{t('quiz.submit')}</span>
-                </button>
+                  {t('quiz.submit')}
+                </ScholarButton>
               ) : (
                 <ScholarButton
                   onClick={handleNext}
