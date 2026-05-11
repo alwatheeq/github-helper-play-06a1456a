@@ -8,7 +8,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
-import { ScholarCard, ScholarButton } from '../Scholar';
+import { ScholarCard, ScholarButton, PageHeader, ScholarSkeleton } from '../Scholar';
 
 interface HistoryEntry {
   id: string;
@@ -131,11 +131,14 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
   if (loading) {
     return (
       <div className="w-full">
+        <PageHeader
+          eyebrow={t('history.eyebrow') || 'THE LEDGER'}
+          title={t('history.generation_history')}
+          descriptor={t('history.history_desc')}
+          className="mb-8"
+        />
         <ScholarCard variant="default" padding="lg">
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-muted-ink dark:border-muted-ink-on-dark mr-3" />
-            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('history.loading_history')}</span>
-          </div>
+          <ScholarSkeleton lines={4} />
         </ScholarCard>
       </div>
     );
