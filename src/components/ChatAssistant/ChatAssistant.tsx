@@ -254,7 +254,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center`}
+        className={`fixed bottom-6 right-6 z-50 bg-accent-gold text-white dark:text-gray-900 p-6 rounded-full shadow hover:shadow-sm transition-colors duration-150  flex items-center justify-center`}
         aria-label={t('chat.open_assistant')}
       >
         <MessageCircle className="h-6 w-6" />
@@ -263,9 +263,9 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-lg border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
       {/* Header */}
-      <div className={`flex items-center justify-between p-6 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-t-lg`}>
+      <div className={`flex items-center justify-between p-6 bg-accent-gold text-white dark:text-gray-900 rounded-t-[var(--s4-radius-card)]`}>
         <div className="flex items-center space-x-2">
           <MessageCircle className="h-5 w-5" />
           <span className="font-semibold">{t('chat.assistant_title')}</span>
@@ -304,7 +304,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(question)}
-                      className={`w-full text-left px-5 py-2.5 text-sm rounded-lg border border-divider dark:border-divider-on-dark bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
+                      className={`w-full text-left px-5 py-2.5 text-sm rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
                     >
                       {question}
                     </button>
@@ -319,9 +319,9 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-lg px-5 py-2.5 ${
+                      className={`max-w-[80%] rounded-[var(--s4-radius-card)] px-5 py-2.5 ${
                         message.role === 'user'
-                          ? `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900`
+                          ? `bg-accent-gold text-white dark:text-gray-900`
                           : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600'
                       }`}
                     >
@@ -331,7 +331,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg px-5 py-2.5 border border-gray-200 dark:border-gray-600">
+                    <div className="bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-gray-200 dark:border-gray-600">
                       <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
                     </div>
                   </div>
@@ -350,14 +350,14 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className="flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className="flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
+                className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white dark:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
                 aria-label={t('chat.send')}
               >
                 {loading ? (

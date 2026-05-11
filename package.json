@@ -8,8 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "quality": "npm run lint && npx tsc --noEmit && npx tsc --noEmit -p supabase/functions/tsconfig.json && npx vitest run && npm run build",
-    "quality:quick": "npm run lint && npx tsc --noEmit && npx tsc --noEmit -p supabase/functions/tsconfig.json && npx vitest run",
+    "quality": "npm run check:tokens && npm run lint && npx tsc --noEmit && npx tsc --noEmit -p supabase/functions/tsconfig.json && npx vitest run && npm run build",
+    "quality:quick": "npm run check:tokens && npm run lint && npx tsc --noEmit && npx tsc --noEmit -p supabase/functions/tsconfig.json && npx vitest run",
     "lint:supabase-functions": "eslint supabase/functions",
     "preview": "vite preview",
     "test": "vitest",
@@ -21,7 +21,8 @@
     "supabase:link": "supabase link --project-ref qynjzojmuarpcznepatt",
     "supabase:link-with-password": "node scripts/supabase-link-with-password.cjs",
     "supabase:db-push": "supabase db push --yes",
-    "supabase:db-push:interactive": "supabase db push"
+    "supabase:db-push:interactive": "supabase db push",
+    "check:tokens": "node scripts/check-token-regressions.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.54.0",
