@@ -101,7 +101,7 @@ export const Auth: React.FC = () => {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="flex justify-center items-center space-x-2 mb-4">
-            <div className="bg-gradient-to-r from-accent-gold to-accent-gold-soft p-3 rounded-md">
+            <div className="bg-accent-gold p-3 rounded-md">
               <FileText className="h-8 w-8 text-white" /> 
             </div>
             <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
@@ -111,9 +111,9 @@ export const Auth: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-card-light dark:bg-card-dark rounded-lg shadow-sm border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark p-8">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)]">
               <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
               {retryAttempts > 0 && retryAttempts < 3 && isSignUp && (
                 <button
@@ -129,7 +129,7 @@ export const Auth: React.FC = () => {
           )}
 
           {success && (
-            <div className="mb-4 p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <div className="mb-4 p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-[var(--s4-radius-card)]">
               <p className="text-green-700 dark:text-green-300 text-sm font-medium">{success}</p>
             </div>
           )}
@@ -139,7 +139,7 @@ export const Auth: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-lg text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50"
+              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -170,7 +170,7 @@ export const Auth: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
                 disabled={loading}
                 placeholder={t('auth.enter_email')}
               />
@@ -185,7 +185,7 @@ export const Auth: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-sm"
                 disabled={loading}
                 placeholder={t('auth.enter_password')}
               />
@@ -195,7 +195,7 @@ export const Auth: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-2.5 px-5 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-accent-gold to-accent-gold-soft hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 transition duration-150"
+                className="group relative w-full flex justify-center py-2.5 px-5 border border-transparent text-sm font-medium rounded-[var(--s4-radius-card)] text-white bg-accent-gold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 transition duration-150"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
