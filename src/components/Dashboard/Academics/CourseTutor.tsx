@@ -69,7 +69,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
         <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('ai_tutor.loading') || 'Loading tutor…'}
         </div>
@@ -79,7 +79,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
 
   if (!context) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg p-6" dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6" dir={dir}>
         <div className="flex items-center gap-3">
           <Bot className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
           <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
@@ -91,7 +91,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
   }
 
   return (
-    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-lg overflow-hidden" dir={dir}>
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] overflow-hidden" dir={dir}>
       {/* Collapsible header */}
       <button
         type="button"
@@ -99,7 +99,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName: 
         className="w-full flex items-center justify-between gap-3 p-5"
       >
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white">
+          <div className="p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white">
             <Bot className="h-5 w-5" />
           </div>
           <span className="font-semibold text-ink dark:text-ink-on-dark">

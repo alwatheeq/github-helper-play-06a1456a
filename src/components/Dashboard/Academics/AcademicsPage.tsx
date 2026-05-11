@@ -695,7 +695,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         </div>
       </EditorialCard>
 
-      <div className={`bg-card-light dark:bg-card-dark rounded-lg border-divider dark:border-divider-on-dark p-6`}>
+      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border-divider dark:border-divider-on-dark p-6`}>
         <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark`}>
           {t('academics.courses_section_title') || 'Your courses'}
         </h2>
@@ -707,7 +707,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-1 space-y-2">
             {courses.length === 0 ? (
-              <div className={`p-4 rounded-lg bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
+              <div className={`p-4 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 {t('academics.courses_empty_state') || 'No courses yet.'}
               </div>
             ) : (
@@ -716,7 +716,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   key={course.id}
                   type="button"
                   onClick={() => setSelectedCourseId(course.id)}
-                  className={`w-full text-left p-3 rounded-lg border border-divider dark:border-divider-on-dark ${
+                  className={`w-full text-left p-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark ${
                     selectedCourseId === course.id ? "bg-accent-gold-soft/20" : ''
                   }`}
                 >
@@ -731,7 +731,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
           </div>
 
           <div className="lg:col-span-2 space-y-4">
-            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
+            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
               <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
                 {selectedCourse?.course_name || t('academics.select_course')}
               </h3>
@@ -740,7 +740,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </p>
               {selectedCourse ? (
                 <details
-                  className={`group mt-3 rounded-lg border border-divider dark:border-divider-on-dark bg-accent-gold-soft/10 overflow-hidden`}
+                  className={`group mt-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-accent-gold-soft/10 overflow-hidden`}
                 >
                   <summary
                     className={`flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark`}
@@ -793,7 +793,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                       type="button"
                       onClick={() => void saveWorkingGenPrefs()}
                       disabled={savingGenPrefs || uploading || !canPersistGenerationPrefsToDb}
-                      className={`text-sm px-3 py-1.5 rounded-lg border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark`}
+                      className={`text-sm px-3 py-1.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark`}
                     >
                       {savingGenPrefs ? t('academics.saving_prefs') : t('academics.save_generation_prefs')}
                     </button>
@@ -837,10 +837,10 @@ export const AcademicsPage: React.FC = React.memo(() => {
                     type="button"
                     disabled={!selectedCourse || selectedFiles.length === 0 || uploading}
                     onClick={() => void handleGenerateContentForCourse()}
-                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${
+                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] ${
                       !selectedCourse || selectedFiles.length === 0 || uploading
                         ? `bg-accent-gold-soft/10 text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed`
-                        : `bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`
+                        : `bg-accent-gold text-white`
                     }`}
                   >
                     <Upload className="h-4 w-4" />
@@ -850,7 +850,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
+            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
               <div className="flex items-center gap-2 mb-3">
                 <BarChart3 className="h-4 w-4" />
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.analytics_heading')}</h4>
@@ -886,7 +886,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </>
             )}
 
-            <div className={`p-4 rounded-lg border border-divider dark:border-divider-on-dark`}>
+            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
               <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('academics.generated_content_heading')}</h4>
               <div className="space-y-2">
                 {courseItems.map((item) => (
@@ -910,25 +910,25 @@ export const AcademicsPage: React.FC = React.memo(() => {
 
       {showCreateCourse ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg border-divider dark:border-divider-on-dark w-full max-w-lg p-6`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border-divider dark:border-divider-on-dark w-full max-w-lg p-6`}>
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.create_course') || 'Create course'}</h3>
             <div className="space-y-3 mt-4">
               <input
                 value={newCourseName}
                 onChange={(e) => setNewCourseName(e.target.value)}
                 placeholder={t('academics.placeholder_course_name')}
-                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
               <input
                 value={newCourseCode}
                 onChange={(e) => setNewCourseCode(e.target.value)}
                 placeholder={t('academics.placeholder_course_code')}
-                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
               <select
                 value={selectedTopicId}
                 onChange={(e) => setSelectedTopicId(e.target.value)}
-                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               >
                 <option value="">{t('academics.select_existing_topic')}</option>
                 {topics.map((topic) => (
@@ -941,14 +941,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
                 placeholder={t('academics.placeholder_new_topic')}
-                className={`w-full px-3 py-2 rounded-lg border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
             </div>
             <div className="mt-5 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setShowCreateCourse(false)}
-                className={`px-4 py-2 rounded-lg bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark`}
+                className={`px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark`}
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -956,7 +956,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 type="button"
                 disabled={creatingCourse}
                 onClick={handleCreateCourse}
-                className={`px-4 py-2 rounded-lg bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
+                className={`px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white`}
               >
                 {creatingCourse ? t('academics.creating') : (t('common.save') || 'Save')}
               </button>
