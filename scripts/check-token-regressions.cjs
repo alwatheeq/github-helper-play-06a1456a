@@ -50,6 +50,12 @@ const SWEPT_FILES = [
   // Phase 3.13 (ChatAssistant cluster)
   'src/components/ChatAssistant/ChatAssistant.tsx',
   'src/components/ChatAssistant/GlobalChatAssistant.tsx',
+  // Phase 3.14 (pricing / subscription / checkout cluster)
+  'src/components/Pricing/PricingPage.tsx',
+  'src/components/Pricing/CheckoutPage.tsx',
+  'src/components/Pricing/PaymentSuccess.tsx',
+  'src/components/Pricing/PaymentCancel.tsx',
+  'src/components/Subscription/PersistentSubscriptionModal.tsx',
 ];
 
 const repoRoot = path.resolve(__dirname, '..');
