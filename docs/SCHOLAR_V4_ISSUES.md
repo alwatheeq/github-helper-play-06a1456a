@@ -31,6 +31,10 @@ or no existing handler gets a row here. As they are wired up, mark them
 | 14 | Share | Reactions / comments | 🟡 Stub | Share view exists; v4 adds social affordances. |
 | 15 | Content · Mind Map | "Export PNG" | 🟡 Stub | `html-to-image` not installed. |
 | 16 | Content · Audio | Floating mini-player drag-to-dock | 🟡 Stub | `useFloatingVideoStore` exists; drag is new. |
+| 17 | Dashboard | Workshop meta strip (avg processing time, last upload, storage used) | 🔴 Hidden | No backing data; hidden in code until real numbers wire up. |
+| 18 | Dashboard | URL import tab handler | 🟡 Stub | No edge function to fetch+extract URL text. Calls `todo()`. |
+| 19 | Dashboard · Rail | Examination & Mind-map outputs from GenerationRail | 🟡 Stub | Toggling either fires `todo()`; real wiring lives in InputForm CTAs. |
+| 20 | History | Subject code on `user_history` | 🟡 Stub | Derived from `topics[0]`; needs a real `subject_code` column. |
 
 ## Visual deltas to validate during each phase
 
@@ -47,7 +51,7 @@ or no existing handler gets a row here. As they are wired up, mark them
 
 - [x] Phase 0 — tokens, fonts, icons, helpers, this doc.
 - [x] Phase 1 — header/sidebar shell polish (existing chrome already 80% v4).
-- [ ] Phase 2 — Dashboard / Workshop full rebuild to v4.
+- [x] Phase 2 — Dashboard / Workshop full rebuild to v4.
 - [ ] Phase 3 — page-by-page restyle (Library, History, Quiz, Academics, EduPlay, Rooms, Profile, Feedback, Notifications, Goals, Achievements, Informational, Content viewers).
 - [ ] Phase 4 — Auth & out-of-shell pages.
 - [ ] Phase 5 — Active exam runtime & modals.
