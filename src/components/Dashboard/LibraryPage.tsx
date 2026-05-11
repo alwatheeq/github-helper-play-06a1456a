@@ -16,7 +16,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { PerformanceMonitor } from '../../utils/performanceMonitor';
 import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 import { useConfirm } from '../../hooks/useConfirm';
-import { PageHeader } from '../Scholar';
+import { PageHeader, ScholarButton } from '../Scholar';
 
 // GlobalExam interface removed - moved to QuizPage
 
@@ -704,12 +704,9 @@ export const LibraryPage: React.FC = React.memo(() => {
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
             <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>{error}</p>
-            <button
-              onClick={() => fetchLibraryData()}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 mx-auto"
-            >
-              <span>{t('common.try_again')}</span>
-            </button>
+            <ScholarButton variant="primary" onClick={() => fetchLibraryData()} className="mx-auto">
+              {t('common.try_again')}
+            </ScholarButton>
           </div>
         </div>
       </div>
@@ -935,13 +932,14 @@ export const LibraryPage: React.FC = React.memo(() => {
 
                   <div className="flex flex-wrap items-center gap-2 w-full justify-end">
                     {selectMultipleMode && selectedItems.size > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => setShowDeleteModal(true)}
-                        className="w-full sm:w-auto px-3 py-2 text-sm text-red-600 hover:text-red-800 border border-red-300 rounded-[var(--s4-radius-card)] hover:bg-red-50 transition duration-150 whitespace-nowrap dark:border-red-600 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-200"
-                      >
-                        {t('library.delete_button', { count: selectedItems.size })}
-                      </button>
+              <ScholarButton
+                variant="danger"
+                size="sm"
+                onClick={() => setShowDeleteModal(true)}
+                className="w-full sm:w-auto whitespace-nowrap"
+              >
+                {t('library.delete_button', { count: selectedItems.size })}
+              </ScholarButton>
                     )}
                   </div>
                 </div>
@@ -1229,18 +1227,12 @@ export const LibraryPage: React.FC = React.memo(() => {
             </div>
             
             <div className={`p-6 border-t border border-divider dark:border-divider-on-dark flex justify-end space-x-3`}>
-              <button
-                onClick={() => setShowDeleteModal(false)}
-                className={`px-4 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-subtle dark:bg-subtle-on-dark transition duration-150`}
-              >
+              <ScholarButton variant="secondary" onClick={() => setShowDeleteModal(false)}>
                 {t('common.cancel')}
-              </button>
-              <button
-                onClick={handleDeleteItems}
-                className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-[var(--s4-radius-card)] transition duration-150 dark:bg-red-700 dark:hover:bg-red-800"
-              >
+              </ScholarButton>
+              <ScholarButton variant="danger" onClick={handleDeleteItems}>
                 {t('library.delete_items_button')}
-              </button>
+              </ScholarButton>
             </div>
           </div>
         </div>
