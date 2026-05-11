@@ -1,7 +1,8 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan } from 'lucide-react';
+import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan, Globe } from 'lucide-react';
 import { ScholarCard } from '../Scholar';
+import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
 import { useSubscription } from '../../hooks/useSubscription';
@@ -44,7 +45,8 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
     includeFlashcards: DEFAULT_ACADEMICS_GENERATION_PREFERENCES.includeFlashcards,
     quizQuestionTypes: [...DEFAULT_ACADEMICS_GENERATION_PREFERENCES.quizQuestionTypes],
   }));
-  const [inputMode, setInputMode] = useState<'file' | 'text' | 'ocr'>('file');
+  const [inputMode, setInputMode] = useState<'file' | 'text' | 'ocr' | 'url'>('file');
+  const [urlInput, setUrlInput] = useState('');
   const ocrFileInputRef = useRef<HTMLInputElement>(null);
   const { t } = useI18n();
   const [textInput, setTextInput] = useState('');
@@ -396,19 +398,24 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
   // Tab button helper — hairline tab strip, active = gold underline
   const tabBtnCls = (active: boolean) =>
-    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ${
+    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 whitespace-nowrap ${
       active
         ? 'border-accent-gold text-ink dark:text-ink-on-dark'
         : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container — hairline dashed, 6px radius, transparent (the outer ScholarCard is the white surface)
+  // Dropzone container — hairline dashed, v4 radius token, 220px min-height (v4 spec)
   const dropzoneCls = (active: boolean) =>
-    `relative border border-dashed rounded-[6px] py-10 px-8 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[var(--s4-radius-card)] min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-150 ${
       active
         ? 'border-accent-gold bg-accent-gold/5'
         : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-accent-gold/60'
     }`;
+
+  const handleUrlSubmit = () => {
+    // TODO #18 — URL import has no edge function yet. Stub via todo() toast.
+    todo(t('workshop.url_cta') || 'URL import');
+  };
 
   return (
    <div className="w-full">
@@ -436,19 +443,51 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
         
-        {/* Tab Navigation — hairline strip */}
-        <div className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark">
-          <button onClick={() => setInputMode('file')} className={tabBtnCls(inputMode === 'file')}>
+        {/* Tab Navigation — hairline strip, horizontally scrollable on small viewports */}
+        <div
+          role="tablist"
+          aria-label="Input source"
+          className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
+        >
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'file'}
+            onClick={() => setInputMode('file')}
+            className={tabBtnCls(inputMode === 'file')}
+          >
             <File className="h-4 w-4" />
             <span>{t('dashboard.upload_file')}</span>
           </button>
-          <button onClick={() => setInputMode('text')} className={tabBtnCls(inputMode === 'text')}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'text'}
+            onClick={() => setInputMode('text')}
+            className={tabBtnCls(inputMode === 'text')}
+          >
             <Type className="h-4 w-4" />
             <span>{t('dashboard.paste_text')}</span>
           </button>
-          <button onClick={() => setInputMode('ocr')} className={tabBtnCls(inputMode === 'ocr')}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'ocr'}
+            onClick={() => setInputMode('ocr')}
+            className={tabBtnCls(inputMode === 'ocr')}
+          >
             <Scan className="h-4 w-4" />
             <span>{t('dashboard.ocr_scan')}</span>
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={inputMode === 'url'}
+            onClick={() => setInputMode('url')}
+            className={tabBtnCls(inputMode === 'url')}
+          >
+            <Globe className="h-4 w-4" />
+            <span>{t('workshop.url_tab')}</span>
           </button>
         </div>
 
@@ -486,15 +525,15 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
 
-        {/* Meta row — shown only in file mode, below the dashed box */}
-        {inputMode === 'file' && (
+        {/* Meta row — file mode only. TODO #17: replace with live processing/storage stats.
+            Hidden by default until real data is wired so we don't ship mocked numbers. */}
+        {false && inputMode === 'file' && (
           <>
             <hr className="border-divider dark:border-divider-on-dark mt-4" />
             <div className="flex flex-wrap gap-6 mt-3 text-[11px] font-light text-muted-ink dark:text-muted-ink-on-dark">
-              {/* TODO: connect — replace with live processing/storage stats */}
-              <span>Average processing time — 12s</span>
-              <span>Last upload — 2 hours ago</span>
-              <span>Storage used — 142 / 500 MB</span>
+              <span>Average processing time — —</span>
+              <span>Last upload — —</span>
+              <span>Storage used — —</span>
             </div>
           </>
         )}
@@ -601,7 +640,36 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
 
-        {/* Settings Section */}
+        {/* URL Mode — stub. TODO #18: wire to a url→text edge function. */}
+        {inputMode === 'url' && (
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
+              {t('workshop.url_label')}
+            </label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="url"
+                value={urlInput}
+                onChange={(e) => setUrlInput(e.target.value)}
+                placeholder="https://example.com/article"
+                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+              />
+              <button
+                type="button"
+                onClick={handleUrlSubmit}
+                disabled={previewMode || urlInput.trim().length === 0}
+                className="px-5 py-3 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-btn)] text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                {t('workshop.url_cta')} <span aria-hidden>→</span>
+              </button>
+            </div>
+            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark font-light">
+              {t('workshop.url_helper')}
+            </p>
+          </div>
+        )}
+
+
         <div className="mt-6 flex items-center justify-between">
           <button
             onClick={() => setShowSettings(!showSettings)}

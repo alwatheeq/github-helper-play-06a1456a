@@ -1,5 +1,7 @@
 import React from 'react';
-import { FileText, Layers, ClipboardList, Network } from 'lucide-react';
+import { FileText, Layers, ClipboardList, Network, ArrowRight } from 'lucide-react';
+import { todo } from '../../utils/todoToast';
+import { useI18n } from '../../contexts/I18nContext';
 
 interface ToggleProps {
   on: boolean;
@@ -64,8 +66,9 @@ interface GenerationRailProps {
 }
 
 /**
- * The single dark feature card on the Dashboard. 300px column, 22px padding.
- * Examination & Mind map are visual-only (TODO: connect).
+ * Dark feature card on the Dashboard right rail.
+ * 300px column, v4 dark-card padding token, v4 card-radius token.
+ * Examination & Mind map outputs are TODO (#19) — toggling them fires a stub toast.
  */
 export const GenerationRail: React.FC<GenerationRailProps> = ({
   includeSummary,
@@ -73,73 +76,113 @@ export const GenerationRail: React.FC<GenerationRailProps> = ({
   onToggleSummary,
   onToggleFlashcards,
 }) => {
-  // TODO: connect — Examination & Mind map outputs not implemented yet
+  const { t } = useI18n();
+
+  // TODO #19 — Examination & Mind-map outputs are not wired from this rail yet
   const [exam, setExam] = React.useState(false);
   const [mindMap, setMindMap] = React.useState(false);
 
-  // TODO: connect cost estimator
+  // Static cost estimate — TODO: wire to real estimator if/when implemented
   const cost = 8;
+
+  // Rotating tip: cycles every 6s; honors prefers-reduced-motion (freeze on first tip).
+  const tips = React.useMemo(
+    () => [
+      t('workshop.tip_1'),
+      t('workshop.tip_2'),
+      t('workshop.tip_3'),
+    ],
+    [t]
+  );
+  const [tipIdx, setTipIdx] = React.useState(0);
+  React.useEffect(() => {
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+    const id = window.setInterval(() => {
+      setTipIdx((i) => (i + 1) % tips.length);
+    }, 6000);
+    return () => window.clearInterval(id);
+  }, [tips.length]);
 
   return (
     <section
-      className="bg-card-dark text-ink-on-dark rounded-[6px]"
-      style={{ padding: '22px' }}
+      className="bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)]"
+      style={{ padding: 'var(--s4-card-pad-dark)' }}
     >
       <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold mb-1">
-        What to generate
+        {t('workshop.outputs_eyebrow')}
       </div>
       <h3 className="font-display text-[22px] font-semibold text-ink-on-dark mb-4 leading-tight">
-        Outputs.
+        {t('workshop.outputs_title')}
       </h3>
       <hr className="border-divider-on-dark mb-3" />
 
       <div>
         <Row
           icon={<FileText size={14} strokeWidth={1.5} />}
-          name="Summary"
-          description="Concise notes from the source"
+          name={t('dashboard.include_summary')}
+          description={t('workshop.row_summary_desc')}
           on={includeSummary}
           onToggle={(v) => onToggleSummary?.(v)}
         />
         <Row
           icon={<Layers size={14} strokeWidth={1.5} />}
-          name="Flashcards"
-          description="For spaced review"
+          name={t('dashboard.include_flashcards')}
+          description={t('workshop.row_flashcards_desc')}
           on={includeFlashcards}
           onToggle={(v) => onToggleFlashcards?.(v)}
         />
         <Row
           icon={<ClipboardList size={14} strokeWidth={1.5} />}
-          name="Examination"
-          description="Quiz from the content"
+          name={t('workshop.row_examination')}
+          description={t('workshop.row_examination_desc')}
           on={exam}
-          onToggle={setExam}
+          onToggle={(v) => {
+            setExam(v);
+            if (v) todo(t('workshop.row_examination'));
+          }}
         />
         <Row
           icon={<Network size={14} strokeWidth={1.5} />}
-          name="Mind map"
-          description="Visual outline"
+          name={t('workshop.row_mindmap')}
+          description={t('workshop.row_mindmap_desc')}
           on={mindMap}
-          onToggle={setMindMap}
+          onToggle={(v) => {
+            setMindMap(v);
+            if (v) todo(t('workshop.row_mindmap'));
+          }}
           isLast
         />
       </div>
 
       <div className="mt-4 flex items-center justify-between">
         <span className="text-[10px] uppercase tracking-[1.5px] text-muted-ink-on-dark">
-          Cost
+          {t('workshop.cost')}
         </span>
-        <span className="text-[13px] font-semibold text-accent-gold">{cost} credits</span>
+        <span className="text-[13px] font-semibold text-accent-gold">
+          {cost} {t('workshop.credits')}
+        </span>
       </div>
 
       <button
         type="button"
         disabled
-        title="Use the form on the left to generate"
-        className="mt-3 w-full bg-accent-gold text-card-dark text-[13px] font-bold rounded-[4px] py-3 disabled:opacity-90 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
+        title={t('workshop.generate_disabled_hint')}
+        className="mt-3 w-full bg-accent-gold text-card-dark text-[13px] font-bold rounded-[var(--s4-radius-btn)] py-3 disabled:opacity-90 disabled:cursor-not-allowed hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
       >
-        Generate <span aria-hidden>→</span>
+        <span>{t('workshop.generate_cta')}</span>
+        <ArrowRight size={14} strokeWidth={2} aria-hidden />
       </button>
+
+      <p
+        className="mt-3 text-[11px] font-light text-muted-ink-on-dark leading-snug min-h-[2.4em] transition-opacity duration-300"
+        aria-live="polite"
+      >
+        {tips[tipIdx]}
+      </p>
     </section>
   );
 };
