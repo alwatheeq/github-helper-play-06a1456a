@@ -123,7 +123,7 @@ export const PricingPage: React.FC = () => {
         <div
           className={`rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm overflow-hidden mb-8`}
         >
-          <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-2xl`}>
+          <div className={`p-6 bg-subtle dark:bg-subtle-on-dark rounded-t-[var(--s4-radius-card)]`}>
             <label htmlFor="billing-months" className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
               {t('pricing.billing_term_label')}
             </label>

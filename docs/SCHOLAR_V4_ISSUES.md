@@ -135,3 +135,26 @@ Pick one canonical implementation and delete the other during Phase 4.x consolid
 - **Resize-handle corner rounding** (`GlobalChatAssistant.tsx` lines 564–576) — `rounded-tl-lg` / `rounded-tr-lg` / `rounded-bl-lg` / `rounded-br-lg` preserved verbatim. These are 3px×3px drag affordances on the panel corners, not card surfaces; their radius hugs the parent panel and is a UX hit-area concern, not a brand token.
 - **`focus:ring-accent-gold`** and `bg-blue-500` hover tints on resize handles preserved — semantic affordance / focus-state colors.
 - **`ChatAssistant.css` / `GlobalChatAssistant.css`** out of scope: contain only `@keyframes shake`, `.drag-handle` cursors, and `.resize-handle` hover transitions — no radius or color tokens to migrate.
+
+## Phase 3.14 — pricing / subscription / checkout cluster
+
+Files swept (added to `SWEPT_FILES` allowlist in `scripts/check-token-regressions.cjs`):
+
+| File | radius substitutions | gold-gradient flattens | exemptions |
+|---|---:|---:|---|
+| `src/components/Pricing/PricingPage.tsx` | 1 (`rounded-t-2xl` → `rounded-t-[var(--s4-radius-card)]` @ L126) | 0 | 1× `rounded-full` (theme toggle) |
+| `src/components/Pricing/CheckoutPage.tsx` | 0 | 0 | 1× `rounded-full` (error icon halo) |
+| `src/components/Pricing/PaymentSuccess.tsx` | 0 | 0 | 1× `rounded-full` (success icon halo) |
+| `src/components/Pricing/PaymentCancel.tsx` | 0 | 0 | 1× `rounded-full` (cancel icon halo) |
+| `src/components/Subscription/PersistentSubscriptionModal.tsx` | 0 | 0 | 1× `rounded-md` (icon backdrop pill, distinct medium-radius affordance) |
+
+**Audit gate**: `npm run check:tokens` → `✓ 21 swept file(s) clean.`
+
+### Exemption rationale
+- **Icon halos `rounded-full`** — circular by design (status badges around `CheckCircle`, `XCircle`, error icon, theme toggle button); not card surfaces.
+- **`rounded-md` on `PersistentSubscriptionModal:54`** — explicit medium-radius affordance for the icon backdrop, intentionally distinct from card-radius; out of the forbidden-pattern set.
+- **Semantic state colors** (`bg-red-100`, `bg-blue-50`, `bg-orange-50`, `bg-green-100` + dark variants) preserved — affordance/intent colors, not brand-gradient candidates.
+- **Business logic** (`useSubscription`, `useCredits`, `verifySubscriptionCreditsAfterCheckout`, `SUBSCRIPTION_PROCESSING_PAYWALL_SESSION_KEY`, `ErrorLogger`) — not touched.
+- **Edge-function payloads** (`create-checkout-session`, `stripe-webhook`) and routes (`/pricing`, `/profile/subscription`, success/cancel return URLs) — unchanged.
+
+The cluster was largely pre-conformed in earlier passes; the durable win this phase is closing the regression-guard gap so any future contributor edit re-introducing `rounded-xl`/gradient pairs fails CI.
