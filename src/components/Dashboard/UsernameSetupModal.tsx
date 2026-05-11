@@ -209,7 +209,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
+            className="p-1.5 rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -218,7 +218,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
 
         <div className="p-5 space-y-4">
           {cooldownDays !== null ? (
-            <div className="p-4 rounded-lg bg-subtle text-center">
+            <div className="p-4 rounded-[var(--s4-radius-card)] bg-subtle text-center">
               <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 {t('social.username_cooldown').replace('{days}', String(cooldownDays))}
               </p>
@@ -236,7 +236,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
                   onChange={handleInputChange}
                   maxLength={20}
                   placeholder={t('social.username_placeholder')}
-                  className="w-full pl-8 pr-10 py-2.5 rounded-lg border border-divider dark:border-divider-on-dark bg-subtle text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-focus transition-colors"
+                  className="w-full pl-8 pr-10 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-focus transition-colors"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   {renderValidationIcon()}
