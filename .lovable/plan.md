@@ -98,3 +98,19 @@ Order: library-navigation surfaces first (LibraryPage → ContentViewPage → Hi
   Admin cluster (`src/components/Admin/**`) remains a separate, larger phase.
 
 **Estimate:** ~2 min (single file edit + 2 doc appends + guard run).
+---
+
+## Phase 3.15 — RESULTS
+
+**Substitutions applied**: 0 (cluster already conformed in earlier passes).
+
+**Regression guard extended**: 4 files appended to `SWEPT_FILES` under `// Phase 3.15 (library / content / history / share cluster)` block (LibraryPage, ContentViewPage, HistoryPage, ShareView).
+
+**Audit gate**:
+- `npm run check:tokens` → `✓ 25 swept file(s) clean.`
+- legacy radius / gold-gradient / directional legacy → 0 across all 4 files
+- `rounded-full` exemptions intact: 10 (8 LibraryPage + 2 ShareView)
+
+**Cross-file safety**: no hook signatures, contexts, Supabase queries, edge-function payloads (`generate-share-link`), routes, locale keys, or business logic modified. Exactly 1 source file changed (`scripts/check-token-regressions.cjs`) + 2 doc appends (this file, SCHOLAR_V4_ISSUES.md).
+
+**Next**: Phase 3.16 — core dashboard surfaces (Dashboard.tsx, SummaryDisplay.tsx, FlashcardViewer.tsx) which have active legacy hits requiring real substitutions.
