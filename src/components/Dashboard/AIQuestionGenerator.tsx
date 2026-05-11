@@ -183,7 +183,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
         <p className="text-gray-600 dark:text-gray-400">Let AI create questions about any topic</p>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm p-8">
         {!generating ? (
           <div className="space-y-6">
             {/* Topic Input */}
@@ -196,7 +196,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="e.g., Ancient Rome, Photosynthesis, World War II..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
               />
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Be specific for better questions
@@ -211,7 +211,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+                className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
               >
                 <option value="">Any Subject</option>
                 {subjects.map((s) => (
@@ -221,7 +221,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             </div>
 
             {/* Settings Display */}
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4">
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-[var(--s4-radius-card)] p-4">
               <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Generation Settings</h4>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
@@ -237,7 +237,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start space-x-3">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
                 <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-red-900 dark:text-red-200">Generation Failed</h4>
@@ -250,14 +250,14 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="flex space-x-4">
               <button
                 onClick={onCancel}
-                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
               >
                 Cancel
               </button>
               <button
                 onClick={handleGenerate}
                 disabled={!topic.trim() || topic.trim().length < 3}
-                className={`flex-1 px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+                className={`flex-1 px-6 py-3 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
               >
                 <Sparkles className="h-5 w-5" />
                 <span>Generate Questions</span>

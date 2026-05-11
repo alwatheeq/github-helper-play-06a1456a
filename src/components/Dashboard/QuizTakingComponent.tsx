@@ -384,26 +384,26 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="bg-green-50 dark:bg-green-900/30 rounded-lg p-4 text-center">
+              <div className="bg-green-50 dark:bg-green-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
                 <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-300 mx-auto mb-2" />
                 <p className="text-2xl font-bold text-green-600 dark:text-green-300">{results.correctCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.correct')}</p>
               </div>
 
-              <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-4 text-center">
+              <div className="bg-red-50 dark:bg-red-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
                 <XCircle className="h-8 w-8 text-red-600 dark:text-red-300 mx-auto mb-2" />
                 <p className="text-2xl font-bold text-red-600 dark:text-red-300">{results.incorrectCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.incorrect')}</p>
               </div>
 
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4 text-center">
+              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 text-center">
                 <AlertCircle className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-2" />
                 <p className="text-2xl font-bold text-secondary-ink dark:text-secondary-ink-on-dark">{results.unansweredCount}</p>
                 <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.unanswered')}</p>
               </div>
             </div>
 
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-lg p-4 mb-8">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 mb-8">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.time_taken')}:</span>
                 <span className="font-medium text-ink dark:text-ink-on-dark">
@@ -422,7 +422,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                 return (
                   <div
                     key={index}
-                    className={`border-2 rounded-lg p-4 ${
+                    className={`border-2 rounded-[var(--s4-radius-card)] p-4 ${
                       !wasAnswered
                         ? 'border-divider dark:border-divider-on-dark'
                         : isCorrect
@@ -500,7 +500,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               <select
                 value={currentLanguage}
                 onChange={(e) => handleLanguageSwitch(e.target.value)}
-                className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-lg text-sm focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-sm focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               >
                 {availableLanguages.map((lang) => (
                   <option key={lang} value={lang}>
@@ -549,7 +549,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                   value={answers[currentQuestionIndex] || ''}
                   onChange={(e) => handleAnswerSelect(e.target.value)}
                   rows={getQuestionKind(currentQuestion) === 'open_ended' ? 5 : 2}
-                  className="w-full px-4 py-3 rounded-lg border-2 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:border-accent-gold focus:ring-1 focus:ring-focus"
+                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border-2 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:border-accent-gold focus:ring-1 focus:ring-focus"
                   placeholder={t('quiz.type_your_answer')}
                 />
               </div>
@@ -561,7 +561,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                   tabIndex={0}
                   onClick={() => handleAnswerSelect(option)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAnswerSelect(option)}
-                  className={`w-full p-4 text-left rounded-lg border-2 transition-all cursor-pointer ${
+                  className={`w-full p-4 text-left rounded-[var(--s4-radius-card)] border-2 transition-all cursor-pointer ${
                     answers[currentQuestionIndex] === option
                       ? 'border-accent-gold bg-accent-gold-soft/20 dark:bg-accent-gold-soft/15'
                       : 'border-divider dark:border-divider-on-dark hover:border-accent-gold'
@@ -592,7 +592,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             <div className="flex space-x-2">
               <button
                 onClick={onExit}
-                className="px-6 py-2 border border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="px-6 py-2 border border-red-300 dark:border-red-600 text-red-600 dark:text-red-400 rounded-[var(--s4-radius-card)] hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 {t('quiz.exit_quiz')}
               </button>
@@ -600,7 +600,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               {currentQuestionIndex === questions.length - 1 ? (
                 <button
                   onClick={handleSubmit}
-                  className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center space-x-2"
+                  className="px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-center space-x-2"
                 >
                   <Flag className="h-4 w-4" />
                   <span>{t('quiz.submit')}</span>
@@ -626,7 +626,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               <button
                 key={index}
                 onClick={() => setCurrentQuestionIndex(index)}
-                className={`h-10 w-10 rounded-lg font-medium transition-all ${
+                className={`h-10 w-10 rounded-[var(--s4-radius-card)] font-medium transition-all ${
                   index === currentQuestionIndex
                     ? 'bg-accent-gold text-ink-on-dark'
                     : answers[index]
