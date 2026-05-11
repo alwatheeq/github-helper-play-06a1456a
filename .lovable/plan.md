@@ -92,3 +92,10 @@ Re-verify `Dashboard.tsx` byte-identical (no drift across phase transitions). Co
 - Total: ~13 min
 
 Confirm and I'll run the sweep.
+---
+
+## Phase 3.7 — applied
+Token sweep across 8 Billing/Subscription/Pricing files (~55 substitutions: BillingHistoryPage 1, SubscriptionManagementPage 21, PricingPage 13, CheckoutPage 8, PaymentSuccess 4, PaymentCancel 4, PersistentSubscriptionModal 2, SubscriptionGuard 2).
+Audit gate: 0 hits for rounded-(xl|2xl|lg|[12px]) and bg-gradient-to-r from-accent-gold. 0 alert/confirm. Locale JSON valid.
+Cross-file: App.tsx routes, Dashboard.tsx lazy mounts, useSubscription/useCreditStore/PersistentModalContext/SubscriptionUpsellGateContext call sites, create-checkout-session payload, postSubscribeCredits util — all byte-identical. No new imports.
+Data-driven exemptions preserved: plan-tier gradients, "most popular" highlight, invoice/subscription status pills, Stripe success/cancel icons.
