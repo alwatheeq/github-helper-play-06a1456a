@@ -222,7 +222,7 @@ export const FriendsPanel: React.FC = () => {
   };
 
   const Avatar: React.FC<{ name: string | null; size?: string }> = ({ name, size = 'h-10 w-10' }) => (
-    <div className={`${size} rounded-full bg-gradient-to-br from-accent-gold to-accent-gold-soft flex items-center justify-center text-white font-semibold text-sm shrink-0`}>
+    <div className={`${size} rounded-full bg-accent-gold flex items-center justify-center text-white font-semibold text-sm shrink-0`}>
       {(name || '?')[0].toUpperCase()}
     </div>
   );
