@@ -1,0 +1,68 @@
+/* ===========================================================================
+ * Scholar v4 — alias layer.
+ *
+ * The project already ships full role-based CSS variables in src/index.css
+ * keyed by [data-theme="<family>"] (light) and .dark[data-theme="<family>"]
+ * (dark) for all 6 palettes. To avoid duplicating that data — and to keep
+ * the v4 components in sync if those palettes are ever tuned — this file
+ * adds a thin --s4-* alias layer that maps Scholar v4's naming convention
+ * onto the existing variables.
+ *
+ * Scholar v4 components should use --s4-* exclusively. Older code keeps
+ * using --bg-page / --accent-gold / etc.; they resolve to the same values.
+ * ========================================================================= */
+
+:root {
+  /* surfaces */
+  --s4-bg:           var(--bg-page);
+  --s4-panel:        var(--bg-card-light);
+  --s4-panel2:       var(--bg-subtle);
+  --s4-chip:         var(--chip);
+
+  /* text */
+  --s4-ink:          var(--text-primary-dark);
+  --s4-body:         var(--text-secondary-dark);
+  --s4-muted:        var(--text-muted-dark);
+
+  /* accents */
+  --s4-accent:       var(--accent-gold);
+  --s4-accent-soft:  var(--accent-gold-soft);
+
+  /* lines */
+  --s4-rule:         var(--divider);
+
+  /* sidebar (always uses the brand-dark surface) */
+  --s4-sb:           var(--bg-sidebar);
+  --s4-sb-ink:       var(--text-primary-light);
+  --s4-sb-muted:     var(--text-muted-light);
+  --s4-sb-active:    var(--accent-gold);
+
+  /* tokenized radii / spacing per v4 spec */
+  --s4-radius-card:    6px;
+  --s4-radius-btn:     4px;
+  --s4-radius-chip:    999px;
+  --s4-rail-width:    300px;
+  --s4-shell-gap:      32px;
+  --s4-card-pad:       32px;
+  --s4-card-pad-dark:  22px;
+  --s4-tab-indicator:   2px;
+}
+
+/* Dark-mode variant inherits via the same alias chain because the
+ * underlying tokens already flip under .dark[data-theme="…"] selectors. */
+
+/* ---------------- Utility classes used by Scholar v4 components --------- */
+
+.s4-surface       { background: var(--s4-bg); color: var(--s4-body); }
+.s4-panel         { background: var(--s4-panel); color: var(--s4-body);
+                    border: 1px solid var(--s4-rule);
+                    border-radius: var(--s4-radius-card); }
+.s4-panel-dark    { background: var(--s4-sb); color: var(--s4-sb-ink);
+                    border-radius: var(--s4-radius-card); }
+.s4-eyebrow       { font-size: 10px; letter-spacing: 0.18em;
+                    text-transform: uppercase; font-weight: 700;
+                    color: var(--s4-accent); }
+.s4-h1            { font-family: 'Fraunces', Georgia, serif;
+                    font-size: 32px; line-height: 1.1; font-weight: 600;
+                    letter-spacing: -0.02em; color: var(--s4-ink); }
+.s4-hairline      { border-top: 1px solid var(--s4-rule); }
