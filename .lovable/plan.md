@@ -1,257 +1,170 @@
-## Phases 4.3 → 4.5 — Shadows, Colour, Component Shells
+## Phase 4.3 Verification — ✅ CLEAN
 
-Three sequential phases. Each ships with: prep commit (tokens/primitives) → mechanical sweep → regression-guard delta → verification gate → results appendix. Admin remains parked. Live audit re-check (2026-05-11) reconciles counts against the original audit numbers.
-
----
-
-## Phase 4.3 — Shadows (53 files, 132 hits)
-
-### Prep commit (`src/styles/scholarV4.css`)
-Add four shadow tokens under `:root` (dark-mode override via `.dark` block already present):
-
-```css
---s4-shadow-hairline: 0 0 0 1px hsl(var(--s4-rule));
---s4-shadow-card:     0 1px 2px rgb(0 0 0 / .04), 0 4px 12px rgb(0 0 0 / .04);
---s4-shadow-modal:    0 8px 32px rgb(0 0 0 / .12);
---s4-shadow-floating: 0 12px 40px rgb(0 0 0 / .16);
-```
-
-Dark-mode block multiplies alpha by ~2 (depth needs more contrast on dark surfaces). Reduced-motion / forced-colors unaffected.
-
-### Sweep mapping (locked)
-| Tailwind input | v4 output |
-|---|---|
-| `shadow-sm` | `shadow-[var(--s4-shadow-hairline)]` |
-| `shadow` / `shadow-md` | `shadow-[var(--s4-shadow-card)]` |
-| `shadow-lg` / `shadow-xl` | `shadow-[var(--s4-shadow-modal)]` |
-| `shadow-2xl` | `shadow-[var(--s4-shadow-floating)]` |
-| `hover:shadow-md` | `hover:shadow-[var(--s4-shadow-card)]` (variant preserved) |
-| `shadow-inner` | left untouched (not in v4 vocabulary; verify case-by-case, log deferrals) |
-
-### What we do NOT touch
-- `shadow-none` (semantic reset).
-- `shadow-inner` (no v4 mapping — deferred, logged).
-- Coloured shadows (`shadow-red-*`, `shadow-primary/30`, etc.) — those are decoration tokens, not surface elevation; preserved as-is.
-- Admin cluster (`src/components/Admin/**`) — parked.
-- Phase 4.1 primitives (`Scholar/CourseCard.tsx`, `Scholar/PageHeader.tsx`, `Scholar/ScholarBadge.tsx`) — token-defining surfaces.
-
-### Cross-file safety
-- **Modal/Toast/Popover z-stack**: `Modal.tsx`, `ConfirmationModal.tsx`, `PromptModal.tsx`, `Toast/Toast.tsx`, `Common/Tooltip.tsx` — sweep edits the shadow only; backdrop/overlay z-index untouched.
-- **`BookMode/BookModeViewer.tsx` + `Highlighting/HighlightLayer.tsx`**: floating widgets stack on top of content — verify the `--s4-shadow-floating` value still reads as "above modal" not "below."
-- **Phase 3 radius-swept files (~10)**: re-opened for shadow-only edits. Lines mutated are className strings; no JSX restructure.
-- **No state/handler/prop changes.** ClassName-only edits.
-
-### Regression rule
-```js
-{ id: 'tailwind-shadow',
-  re: /(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g,
-  hint: 'Use shadow-[var(--s4-shadow-*)]' }
-```
-Allowlist: append 53 files under `// Phase 4.3 (shadows)` block.
-
-### Verification gate
-```
-npm run check:tokens                      # 139 swept files clean (86 + 53)
-npx tsc -p tsconfig.app.json --noEmit     # 0 errors
-npx eslint <53 touched files>             # 0 errors
-bunx vitest run                           # 73/73
-```
-Visual smoke: `/dashboard` cards, `/pricing` plan cards, all modals (`PromptModal`, `ConfirmationModal`, `InsufficientCreditsModal`), `Toast` stack, `Tooltip`, `BookModeViewer`. Light + dark, navy-gold + oxblood-cream palettes.
+- `node scripts/check-token-regressions.cjs` → **133 swept files clean** (Phases 3.10–3.19 + 4.1 + 4.3, all 4 rules pass).
+- `rg -P "(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])" src/components src/pages` (non-Admin) → **0 hits**.
+- `var(--s4-shadow-*)` token references in `src/`: **125 usages**, all 4 tokens defined in both `:root` and `.dark` blocks of `src/styles/scholarV4.css`.
+- Single benign match remains in `src/index.css:507` — it's the `.hover\:shadow-lg:hover` *rule definition* (Tailwind-escaped global hover override), not a className consumer. Not a regression. Left untouched.
+- `tsc --noEmit` clean; `vitest` 73/73; `eslint` 0 errors. Phase 4.3 is closed.
 
 ---
 
-## Phase 4.4 — Colour (36 + ~30 files, ~784 hits — three internal commits)
+## Phase 4.4 — Colour sweep (plan)
 
-Largest phase. Three mechanical sweeps inside one verification gate.
+Live audit re-run (2026-05-11) reconciles the original 1,368 estimate to **978 hits across 82 files**:
 
-### Prep commit (`tailwind.config.ts` + verification)
-Audit-confirmed tokens already exist in `tailwind.config.ts` (`ink`, `ink-on-dark`, `secondary-ink`, `muted-ink`, `muted-ink-on-dark`, `card-light`, `card-dark`, `subtle`, `divider`, `divider-on-dark`, `page-dark`). Prep step:
-1. Verify each token resolves to an HSL semantic variable (no raw hex).
-2. Add any missing aliases discovered during dry-run grep (max 2–3 expected).
-3. Commit token verification — zero application-code edits in this commit.
+| Bucket | Hits |
+|---|---:|
+| `text-(gray\|slate)-N` (incl. `text-white` 218, `text-black` <1) | 478 + 218 |
+| `bg-(gray\|slate)-N` (incl. `bg-white` 122, `bg-black` 60 — of which 46 are `bg-black/N` overlays) | 255 + 122 + 60 |
+| `border-(gray)-N` + `border-white` 9 | 155 + 9 |
+| `ring`/`divide`/`placeholder` | 1 |
+
+**Top-pressure files:** `Dashboard/StudyGoalsPage.tsx` (43), `ProfilePage.tsx` (39), `GoalsAndAchievementsPage.tsx` (39), `QuizPage.tsx` (33), `EduPlayPage.tsx` (26), `ManualQuestionBuilder.tsx` (24), `MultiplayerMenu.tsx` (23), `InformationalPage.tsx` (23), `AIQuestionGenerator.tsx` (20), `Common/LoadingSkeleton.tsx` (16).
+
+---
+
+### Prep commit (`tailwind.config.js`)
+
+Tokens already wired: `ink`, `ink-on-dark`, `muted-ink`, `muted-ink-on-dark`, `divider`, `divider-on-dark`, `subtle`, `secondary-ink`, `card-light`, `card-dark`, `page`. Missing: nothing critical — `page-dark` is **not added**; instead the mapping uses bare `bg-page` (`--bg-page` already flips per `[data-theme]` × `.dark`, so no `dark:` variant needed).
+
+Prep step is **read-only verification** (zero application edits): grep every target token in `src/index.css`, confirm both light + dark variants resolve cleanly under all 6 palettes via `[data-theme]` cascade. If a regression-only token gap surfaces during dry-run, add it as a single follow-up commit before 4.4a starts.
+
+---
 
 ### Sweep mapping (locked — frozen during execution)
+
 ```
-text-gray-900|800        → text-ink              dark:text-ink-on-dark
-text-gray-700|600        → text-secondary-ink    dark:text-muted-ink-on-dark
-text-gray-500|400        → text-muted-ink        dark:text-muted-ink-on-dark
-text-gray-300            → text-muted-ink-on-dark
-bg-white                 → bg-card-light         dark:bg-card-dark
-bg-gray-50|100           → bg-subtle             dark:bg-card-dark
-bg-gray-800|900          → bg-card-dark
-border-gray-200|300      → border-divider        dark:border-divider-on-dark
-ring-gray-300            → ring-divider
-placeholder-gray-*       → placeholder:text-muted-ink
-divide-gray-*            → divide-divider
-text-black               → text-ink
-bg-black                 → bg-page-dark          (unless decorative — see below)
-text-white               → text-ink-on-dark      (unless on coloured surface — see below)
-slate|zinc|neutral|stone → mapped identically to gray-N of the same step
+text-gray-900|800     → text-ink              dark:text-ink-on-dark
+text-gray-700|600     → text-secondary-ink    dark:text-muted-ink-on-dark
+text-gray-500|400     → text-muted-ink        dark:text-muted-ink-on-dark
+text-gray-300|200|100 → text-muted-ink-on-dark   (these are inverted-surface
+                                                  consumers — pre-checked)
+bg-white              → bg-card-light         dark:bg-card-dark
+bg-gray-50|100|200    → bg-subtle             dark:bg-card-dark
+bg-gray-300|400       → bg-subtle             dark:bg-card-dark
+bg-gray-600|700|800|900 → bg-card-dark        (already dark — no `dark:` flip)
+border-gray-100|200|300 → border-divider      dark:border-divider-on-dark
+border-gray-600|700   → border-divider-on-dark
+ring-gray-500         → ring-divider
+slate-N|zinc-N|neutral-N|stone-N → mapped identically to gray-N of same step
+text-black            → text-ink
+text-white            → text-ink-on-dark      (context-dependent — see below)
+bg-black              → bg-page               (bare only; opacity overlays preserved)
+border-white          → border-card-light     (preserve when on coloured surface)
 ```
 
-### State-vs-decoration allowlist (preserved verbatim)
-- `red|green|yellow|blue|amber|orange|emerald|rose-(50…900)` — semantic state UI (error / success / warning / info / submit-confirm). Untouched.
-- `purple|indigo|pink|cyan|teal-N` — currently 0 hits in non-Admin tree (live re-check). Defensive: if any exist post-sweep, flagged for case-by-case review.
+**Why `text-gray-100/200/300` map to `text-ink-on-dark` rather than the regular `text-ink`:** in the current codebase these classes only appear on text that sits on the dark sidebar / coloured-surface ancestors (verified by spot-check of the top 5 files). Each consumer line is re-verified in 4.4a.
+
+---
 
 ### Context-dependent rules (`text-white` / `bg-black`)
-Per-line audit during 4.4a:
-- `text-white` on element whose ancestor sets `bg-accent-*`, `bg-red-*`, `bg-green-*`, `bg-primary`, `bg-gold` → **preserve** (foreground of coloured surface).
-- `text-white` on element with no coloured surface ancestor → **sweep** to `text-ink-on-dark`.
-- `bg-black` with `/N` opacity modifier (e.g. `bg-black/50` backdrops) → **preserve** (decorative overlay alpha).
-- Bare `bg-black` → **sweep** to `bg-page-dark`.
 
-Each context-dependent decision logged in a 4.4 audit appendix (file + line + rationale).
+Per-line audit during 4.4a/4.4b. Mechanical sweep is suspended for these two classes; instead a small Node helper enumerates each occurrence and classifies by nearest ancestor `bg-*` token in the same JSX subtree:
 
-### Three commit plan (inside one phase)
-1. **4.4a Text colours** — `text-(gray|slate|zinc|neutral|stone)-N` + conditional `text-white|black`. Estimated ~280 hits.
-2. **4.4b Backgrounds** — `bg-(gray|slate|zinc|neutral|stone)-N` + conditional `bg-white|black`. Estimated ~310 hits.
-3. **4.4c Borders + rings + dividers + placeholders.** Estimated ~190 hits.
+- `text-white` over `bg-accent-*` / `bg-red-*` / `bg-green-*` / `bg-primary` / `bg-gold` / any explicit coloured surface → **preserve**. (~140–160 estimated.)
+- `text-white` with no coloured-surface ancestor → **sweep to `text-ink-on-dark`**. (~55–70 estimated.)
+- `bg-black/N` (opacity-modified, ~46 hits) → **preserve** (modal backdrop / overlay alpha).
+- Bare `bg-black` (~14 hits) → **sweep to `bg-page`**.
+- `border-white` (9 hits) → manual review; default preserve.
 
-Each commit independently `tsc`-clean and `vitest`-green. Regression rule and allowlist applied **once** at phase end.
+Each context-dependent decision logged with file:line + ancestor surface in `docs/SCHOLAR_V4_ISSUES.md` Phase-4.4 appendix.
 
-### Frozen file list
-Generated live at sweep time via `rg -l` (~50 unique files across the three commits). Excluded:
-- `src/components/Admin/**` (parked).
-- `src/contexts/ThemeContext.tsx` — top hit file (~56). **Special handling**: it returns gradient strings used by other components. Verify each replacement is a `className`/`style` string mutation, not a logic change. `mem://style/theme-system` enforced.
-- Phase 4.1 primitives (3 files) — token-defining.
-- `src/index.css`, `src/styles/scholarV4.css` — source of truth, untouched.
+---
+
+### Three internal commits (one phase, one verification gate)
+
+1. **4.4a — Text colours.** All `text-(gray|slate|zinc|neutral|stone)-N` + classified `text-white|black`. Est. ~620 hits.
+2. **4.4b — Backgrounds.** All `bg-(gray|slate|zinc|neutral|stone)-N` + classified `bg-white|black`. Est. ~340 hits.
+3. **4.4c — Borders / rings / dividers / placeholders.** All remaining. Est. ~165 hits.
+
+Each commit is independently `tsc`-clean and `vitest`-green. Cadence: `bunx vitest run` after every 5 files swept. Regression rule + allowlist applied **once** at phase end.
+
+---
+
+### What we do NOT touch
+
+- **State / decoration colours** (`red|green|yellow|blue|amber|orange|emerald|rose-(50…900)`) — semantic UI, preserved verbatim.
+- **Coloured-surface foregrounds** (`text-white` on `bg-gold` etc.) — preserved.
+- **Opacity overlays** (`bg-black/N`, `bg-white/N`) — decorative, preserved.
+- **`src/components/Admin/**`** — parked.
+- **`src/contexts/ThemeContext.tsx`** — **specially handled** (see Cross-file safety). String-literal mutations only; `getThemeGradient` signature and return contract unchanged.
+- **Primitives** (`Scholar/CourseCard.tsx`, `Scholar/PageHeader.tsx`, `Scholar/ScholarBadge.tsx`, `Scholar/ScholarButton.tsx`, `Scholar/ScholarInput.tsx`, `Scholar/ScholarIconButton.tsx`, `Scholar/MasteryBar.tsx`, `Scholar/ScholarSkeleton.tsx`, `Scholar/ScholarAlert.tsx`, `Scholar/ScholarCard.tsx`) — token-defining surfaces.
+- **`src/index.css`, `src/styles/scholarV4.css`, `src/styles/designSystem.css`** — source of truth, untouched.
+
+---
 
 ### Cross-file safety
-- **`ThemeContext.tsx`**: `getThemeGradient` returns string literals. Sweep each string conservatively; run targeted ThemeContext tests after the commit. No new helper added; no signature changed.
-- **`Common/LoadingSkeleton.tsx`**: shimmer keyframe currently animates against `bg-gray-200`. After sweep to `bg-subtle`, re-check the gradient stop colour produces visible motion under both light and dark palettes. If not, add a dedicated `--s4-skeleton-shimmer` token in a follow-up patch (anticipated mitigation, not blocker).
-- **`Auth/Auth.tsx` confirmation modal blue**: classified as semantic submit-confirm UI → preserved as-is.
-- **Toast variants** (`success`/`error`/`warning`/`info`) — state colours preserved; only surface neutrals swept.
-- **`Sidebar.tsx`** — uses `--s4-sb-*` already in Phase 3; verify no residual `text-gray-*` overrides leak through.
-- **No `t()` / i18n** edits. **No prop / handler / hook** changes.
 
-### Regression rule
+- **`ThemeContext.tsx` (top hit count, ~56)** — `getThemeGradient` returns gradient string literals consumed across Admin + Dashboard (see `mem://style/theme-system`). Plan: sweep only `className` / `style` string fragments where the neutral is a foreground or surface token — leave `from-* via-* to-*` gradient stops untouched. Hand-audit every line. Run targeted ThemeContext consumers (`Dashboard.tsx`, Admin shells) post-commit; verify gradients still render in all 6 palettes × light/dark.
+- **`Common/LoadingSkeleton.tsx` (16 hits)** — shimmer keyframe currently animates against `bg-gray-200`. After sweep to `bg-subtle`, re-check the gradient stop produces visible motion in both light and dark. **Mitigation if invisible:** add `--s4-skeleton-shimmer` token in a single follow-up patch within 4.4b (anticipated, not blocker).
+- **`Auth/Auth.tsx` confirmation modal blue** — semantic submit-confirm UI → preserved verbatim.
+- **Toast variants** (`success`/`error`/`warning`/`info`) — state colours preserved; only surface neutrals swept.
+- **`Dashboard/Sidebar.tsx`** — already uses `--s4-sb-*` from Phase 3.16. Verify no residual `text-gray-*` leaks; sweep what's left to `text-ink-on-dark` (sidebar is dark-surface).
+- **`MindMap/MindMapView.tsx`, `BookMode/BookModeViewer.tsx`, `Highlighting/HighlightLayer.tsx`** — canvas / SVG rendering layers; ensure colour-string props passed to canvas (not className) aren't accidentally swept.
+- **No `t()` / i18n key** edits. **No prop / handler / hook / state / data-flow** changes — className/style-string mutations only.
+- **No `dark:` / `hover:` / `focus:` / `group-hover:` variants** on the swept token itself are touched; the *base* token migrates and the `dark:` variant is *added* (per mapping table). Pre-existing `dark:` variants are inspected for conflict before each line is rewritten — if a file already has `dark:bg-card-dark`, the sweep does not double it.
+- **Coloured shadows** introduced in 4.3 reference `--s4-shadow-*` only; no neutral-class shadows exist post-4.3.
+- **RTL** — Phase 4.1 typography cascade is the only path; 4.4 introduces no font-family or directional CSS.
+- **Reduced motion / forced colors** — `src/index.css` media-query blocks untouched.
+- **Memory respect** — `mem://constraints/supabase-preservation`, `mem://tech/typescript-config`, `mem://style/theme-system`, `mem://tech/supabase-sdk-compatibility`, `mem://tech/error-handling` observed.
+
+---
+
+### Regression rule (4.4)
+
 ```js
 { id: 'raw-neutral',
   re: /(?<![-\w])(?:text|bg|border|ring|divide|placeholder)-(?:gray|slate|zinc|neutral|stone)-\d+(?![-\w])/g,
-  hint: 'Use semantic ink/surface tokens' }
+  hint: 'Use semantic ink/surface tokens (ink, secondary-ink, muted-ink, card-light, card-dark, subtle, divider, page).' }
 ```
-Plus a second informational (non-blocking) rule that lists `text-white|bg-black` outside the preserved coloured-surface contexts — gated by per-file allowlist exceptions documented in `docs/SCHOLAR_V4_ISSUES.md`.
 
-### Verification gate
-```
-npm run check:tokens                      # 139 + 4.4 files clean
-npx tsc -p tsconfig.app.json --noEmit     # 0 errors
-npx eslint <swept files>                  # 0 errors
-bunx vitest run                           # 73/73
-```
-Visual smoke: every route surface (`/auth`, `/onboarding`, `/dashboard`, `/library`, `/pricing`, `/quiz`, `/profile`, `/share`, `/billing`, `/feedback`, `/edu-play`, `/academics`) × 2 palettes × {light, dark} = 48 smoke screenshots — focus on no white-on-white / black-on-black, state colours intact, gradients intact.
+A second informational (non-blocking) audit lists residual `text-white|bg-black` outside the allowlisted coloured-surface contexts — those exceptions land per-file in `docs/SCHOLAR_V4_ISSUES.md` rather than being mechanically banned (false-positives on coloured surfaces would block legitimate uses).
+
+Allowlist: append the ~80 swept files under `// Phase 4.4 (colour sweep)`; final count **~210 files**.
 
 ---
 
-## Phase 4.5 — Component shells (29 files, button-only)
+### Frozen file list
 
-### Prep commit (`Scholar/ScholarButton.tsx`)
-Audit-confirmed variant taxonomy is complete (`primary | secondary | ghost | outline | danger | link`). Prep step:
-1. **Verify `React.forwardRef`** on default export. If missing, add (ref is required for Tooltip + Radix Popover triggers).
-2. **Verify `...rest` spread** onto the underlying `<button>` element so consumers can pass `type`, `form`, `aria-*`, `data-*`, `disabled`, `onClick`, etc.
-3. Verify `disabled` prop disables both click handler and applies disabled visual variant.
-4. Single commit, no consumer changes.
-
-### Sweep target (locked)
-Bespoke `<button className="…px-…">` patterns across 29 files. Each call-site:
-
-```tsx
-// before
-<button className="px-4 py-2 rounded bg-blue-600 text-white …" onClick={…}>Save</button>
-
-// after — variant chosen per the taxonomy
-<ScholarButton variant="primary" onClick={…}>Save</ScholarButton>
-```
-
-Variant chosen per visual intent (submit/CTA → `primary`; cancel/dismiss → `secondary`; icon+text affordance → `ghost`; destructive → `danger`; inline text → `link`). Decision per call-site documented in the results appendix as a one-line table row.
-
-### What we do NOT touch
-- `<ScholarButton>` consumers (already migrated).
-- `<button>` inside Radix UI primitives (DropdownMenuTrigger, etc.) — Radix manages internal markup.
-- Icon-only buttons whose primitive is `Scholar/ScholarIconButton.tsx`.
-- `<form>` submit buttons whose `type="submit"` semantics are validated — preserved via `...rest`.
-- Admin cluster (parked).
-
-### Cross-file safety
-- **Form submit**: `Auth/Auth.tsx`, `Pricing/CheckoutPage.tsx`, `Dashboard/FeedbackPage.tsx`, `Dashboard/InputForm.tsx`, `Dashboard/ProfilePage.tsx` — `type="submit"` preserved through `...rest`; verified by submitting each form post-sweep.
-- **Tooltip/Popover wrapping**: any `<Tooltip><button>…</button></Tooltip>` → confirm `ScholarButton` forwards ref so Radix can position the popper. Prep commit guarantees this.
-- **Phase 3 radius-swept modals** (`PromptModal.tsx`, `ConfirmationModal.tsx`): preserve `disabled` state and the close-handler binding — re-test the X-close and Cancel paths.
-- **Aria-labels and i18n**: `{t('action.save')}` children stay as children of `<ScholarButton>` unchanged. No `t()` keys touched.
-- **Keyboard navigation**: ensure tab order unchanged — `ScholarButton` renders a single `<button>` (no fragment).
-- **Color exception**: state buttons that currently inline `bg-red-600` → migrate to `variant="danger"` (taxonomy-mapped, not preserved verbatim).
-
-### Regression guard (manual)
-No mechanical regex possible (`<button className="px-…">` is a legitimate pattern in primitives). At phase end:
-```bash
-rg '<button[^>]*className=[^>]*\bpx-' src/components src/pages | grep -v Admin | grep -v Scholar/
-# expected: 0 matches
-```
-Result captured in `docs/SCHOLAR_V4_ISSUES.md` appendix.
-
-### Verification gate
-```
-npm run check:tokens                      # all prior rules pass
-npx tsc -p tsconfig.app.json --noEmit     # 0 errors
-npx eslint <29 touched files>             # 0 errors
-bunx vitest run                           # 73/73 — run after every 5 swept files
-```
-Visual + interaction smoke:
-- Submit forms on `/auth`, `/checkout`, `/profile`, `/feedback`, `/inputs` — verify form posts.
-- Cancel + close buttons on all modals — verify closure.
-- Keyboard tab order across `/dashboard` toolbar.
-- RTL toggle on `/auth` form — verify button alignment.
+Generated live at sweep time via `rg -l` (current count: **82 files**). Exclusions enumerated above. Locked when 4.4a opens.
 
 ---
 
-## Aggregate execution order
+### Verification gate (blocking — phase end)
 
-1. **4.3 Shadows** — smallest in scope, builds shadow token grammar reused in 4.4 surfaces. ~3 days of mechanical edits + 1 verification cycle.
-2. **4.4 Colour** — bulk of the remaining v4 parity work; three internal commits, single verification gate at the end. ~5–6 days.
-3. **4.5 Component shells** — depends on 4.4 colour tokens (variant fills resolve to ink-on-accent etc.). Requires forwardRef prep. ~3 days.
+```
+node scripts/check-token-regressions.cjs   # ~210 swept files clean (all 5 rules)
+npx tsc -p tsconfig.app.json --noEmit      # 0 errors
+npx eslint <swept files>                   # 0 errors
+bunx vitest run                            # 73/73
+```
 
-After 4.5 ends, the remaining phases are 4.6 (icons), 4.7 (motion), 4.8 (dark-mode verification), 4.9 (page composition). Plan for those will be authored once 4.5 lands and live audit numbers re-confirm.
-
----
-
-## Cross-phase precautions (apply to all three)
-
-- **Admin parked** — `src/components/Admin/**` excluded from all sweeps, all regression allowlists, all verification gates.
-- **Primitives token-defining** — `Scholar/CourseCard.tsx`, `Scholar/PageHeader.tsx`, `Scholar/ScholarBadge.tsx`, `Scholar/ScholarButton.tsx`, `Scholar/ScholarInput.tsx`, `Scholar/ScholarIconButton.tsx`, `Scholar/MasteryBar.tsx`, `Scholar/ScholarSkeleton.tsx` — edited only in prep commits, never in mechanical sweeps.
-- **No i18n keys touched** — `t('…')` calls preserved character-for-character across all 3 phases.
-- **No prop / handler / hook / state logic changed** — className/style-string mutations only.
-- **No `dark:` / `hover:` / `focus:` variants on the swept token itself** — preserved verbatim; only the base token migrates.
-- **RTL safe** — Phase 4.1 helper cascade (`'Fraunces','Amiri',Georgia,…`) is the only typography path; 4.3/4.4/4.5 do not introduce new font-family declarations.
-- **Reduced motion / forced colors** — `src/index.css` blocks are untouched; new shadow/color tokens degrade gracefully under both media queries.
-- **Test cadence** — `bunx vitest run` after every 5 files in 4.4 and 4.5 (larger blast radius); after each phase in 4.3.
-- **Memory respect** — `mem://constraints/supabase-preservation`, `mem://tech/typescript-config`, `mem://style/theme-system`, `mem://tech/supabase-sdk-compatibility` all observed.
+**Visual smoke:** every route surface (`/auth`, `/onboarding`, `/dashboard`, `/library`, `/pricing`, `/quiz`, `/profile`, `/share`, `/billing`, `/feedback`, `/edu-play`, `/academics`) × 2 palettes (navy-gold, oxblood-cream) × {light, dark}. Focus: no white-on-white / black-on-black under any palette, state colours intact, gradients intact, LoadingSkeleton shimmer visible, modal backdrops still legible.
 
 ---
 
-## Deliverables per phase
+### Phase exit deliverables
 
-Each phase exits with:
-1. Mechanical sweep commits (1 for 4.3, 3 for 4.4, 1 for 4.5).
-2. Prep commit (CSS tokens for 4.3, token verification for 4.4, ScholarButton API confirm for 4.5).
-3. `scripts/check-token-regressions.cjs` — rule + allowlist append.
-4. `docs/SCHOLAR_V4_ISSUES.md` — results appendix (files touched, edit count, deferred-line log, cross-file safety statement, visual smoke summary).
-5. `.lovable/plan.md` — RESULTS block per phase.
+1. Three sweep commits (4.4a text, 4.4b bg, 4.4c borders) — className/style-string edits only.
+2. `tailwind.config.js` — token audit only (no additions expected).
+3. `scripts/check-token-regressions.cjs` — `raw-neutral` rule + ~80 files appended.
+4. `docs/SCHOLAR_V4_ISSUES.md` — Phase 4.4 results appendix: per-commit hit count, classified `text-white`/`bg-black` decisions table, deferred-line log, cross-file safety statement, visual smoke summary.
+5. `.lovable/plan.md` — Phase 4.4 RESULTS block.
 
-Estimated combined edits: ~1,000 className mutations across ~110 unique files (some files touched in multiple phases), + 1 CSS token file, + 1 ScholarButton verification, + 1 regression script update per phase.
-
-Awaiting approval to begin Phase 4.3.
+**Estimated:** ~1,125 className mutations across ~80 files + 1 script update + 2 docs. **No new tokens. No CSS file edits. No primitive edits.**
 
 ---
 
-## Phase 4.3 — RESULTS (2026-05-11)
+### Risk register
 
-**Status:** ✅ Complete.
+| Risk | Likelihood | Mitigation |
+|---|---|---|
+| `text-white` on coloured-surface miscalled by ancestor heuristic | Medium | Dry-run classifier dumps file:line + ancestor surface; manual review before 4.4a lands |
+| `ThemeContext.tsx` gradient-string fragment swept by accident | Medium | Excluded from mechanical sweep; hand-audit only |
+| LoadingSkeleton shimmer invisible after `bg-gray-200 → bg-subtle` | Medium | Visual check in 4.4b; fallback `--s4-skeleton-shimmer` token ready |
+| `text-gray-100/200/300` consumer is not actually on dark surface | Low | Per-line confirmation in 4.4a (heuristic-based dry-run) |
+| Existing `dark:` variant collides with newly-added `dark:` | Low | Pre-sweep grep per file rejects lines that already carry a `dark:` token on the same property |
+| `bg-black/N` overlay accidentally swept | Low | Regex requires no `/N` suffix; manual audit confirms |
+| Slate/zinc/neutral/stone mapped identically to gray but semantically different | Very low | Live audit confirms only `bg-slate-700|800` present (2 hits, dark-surface) |
 
-- Prep commit landed: 4 shadow tokens added to `src/styles/scholarV4.css` `:root`, dark-mode overrides under `.dark` (×2–×3 alpha). `--s4-shadow-hairline` references `var(--s4-rule)` directly (divider tokens are hex, not HSL triplets).
-- Mechanical sweep: **47 files / 134 className edits** across `src/components/**`. 0 deferrals — no `shadow-inner` or coloured-shadow hits in scope.
-- Reconciliation vs audit: audit projected 53 files / 132 hits; the 6 missing files (`Toast.tsx`, `Header.tsx`, `Dashboard.tsx`, `Scholar/ScholarAlert.tsx`, `Scholar/ScholarCard.tsx`, `InputForm.tsx`) all already used the legacy `--scholar-shadow-*` token chain — already token-driven, regression rule does not flag them.
-- Regression-guard delta: added `tailwind-shadow` rule (`/(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g`). Discovered one pre-existing residual in `src/contexts/I18nContext.tsx` (`shadow-xl`) from Phase 3.19 — fixed in-line. Allowlist now **133 files** (86 + 47).
-- Verification gate: `check:tokens` ✓ 133 clean, `tsc --noEmit` ✓ 0 errors, `vitest` ✓ 73/73.
-
-**Files changed:** `src/styles/scholarV4.css`, `scripts/check-token-regressions.cjs`, `src/contexts/I18nContext.tsx`, + 47 swept components.
-
-Awaiting approval to begin Phase 4.4 — Colour.
+Awaiting approval to begin Phase 4.4a (text colours).
