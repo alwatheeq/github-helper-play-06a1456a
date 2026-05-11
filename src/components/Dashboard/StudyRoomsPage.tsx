@@ -987,7 +987,7 @@ export const StudyRoomsPage: React.FC = () => {
       <div className="min-h-screen bg-gray-900 p-4">
         <div className="max-w-7xl mx-auto">
           {/* Minimal header with room info and leave button */}
-          <div className="mb-4 flex justify-between items-center bg-gray-800 rounded-lg p-4 shadow">
+          <div className="mb-4 flex justify-between items-center bg-gray-800 rounded-[var(--s4-radius-card)] p-4 shadow">
             <div className="flex items-center space-x-4">
               <div>
                 <h2 className="text-xl font-bold text-white">
@@ -1010,7 +1010,7 @@ export const StudyRoomsPage: React.FC = () => {
             </div>
             <button
               onClick={handleLeaveRoom}
-              className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center space-x-2"
+              className="px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors font-medium flex items-center space-x-2"
             >
               <X className="h-5 w-5" />
               <span>{t('study_rooms.leave_room') || 'Leave Room'}</span>
@@ -1018,7 +1018,7 @@ export const StudyRoomsPage: React.FC = () => {
           </div>
 
           {creditsExhaustedCountdown != null && creditsExhaustedCountdown > 0 && (
-            <div className="mb-4 rounded-lg bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
+            <div className="mb-4 rounded-[var(--s4-radius-card)] bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
               <Clock className="h-5 w-5 flex-shrink-0" />
               <span>{t('study_rooms.credits_exhausted_warning') || 'Study room credits exhausted. You will be removed in 30 seconds.'}</span>
               <span className="font-bold">{creditsExhaustedCountdown}s</span>
@@ -1088,7 +1088,7 @@ export const StudyRoomsPage: React.FC = () => {
         </div>
 
         {activeTab === 'create' && (
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg p-6`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-6`}>
             <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-6`}>{t('study_rooms.create_new')}</h2>
 
             <div className="space-y-5">
@@ -1102,7 +1102,7 @@ export const StudyRoomsPage: React.FC = () => {
                   onChange={(e) => setRoomName(e.target.value)}
                   placeholder={t('study_rooms.room_name_placeholder')}
                   maxLength={100}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
@@ -1116,7 +1116,7 @@ export const StudyRoomsPage: React.FC = () => {
                   placeholder={t('study_rooms.description_placeholder')}
                   maxLength={500}
                   rows={3}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
@@ -1132,7 +1132,7 @@ export const StudyRoomsPage: React.FC = () => {
                   onChange={(e) => setMaxParticipants(Number(e.target.value))}
                   className="w-full"
                 />
-                <div className={`text-center mt-2 px-4 py-2 border-divider dark:border-divider-on-dark rounded-lg bg-accent-gold-soft/10`}>
+                <div className={`text-center mt-2 px-4 py-2 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10`}>
                   <span className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{maxParticipants}</span>
                   <span className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark ml-2`}>{t('study_rooms.participants')}</span>
                 </div>
@@ -1141,7 +1141,7 @@ export const StudyRoomsPage: React.FC = () => {
               <button
                 onClick={handleCreateRoom}
                 disabled={creating || !roomName.trim()}
-                className={`w-full py-2.5 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-lg hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
+                className={`w-full py-2.5 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
               >
                 {creating ? (
                   <>
@@ -1162,14 +1162,14 @@ export const StudyRoomsPage: React.FC = () => {
         {(activeTab === 'browse' || activeTab === 'my-rooms') && (
           <div className="space-y-4">
             {activeTab === 'browse' && (
-              <div className={`relative bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-lg`}>
+              <div className={`relative bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-[var(--s4-radius-card)]`}>
                 <Search className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} aria-hidden />
                 <input
                   type="search"
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-lg bg-transparent text-ink dark:text-ink-on-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>
@@ -1177,12 +1177,12 @@ export const StudyRoomsPage: React.FC = () => {
             {loading ? (
               <LoadingSkeleton type="card" count={3} />
             ) : browseSearchNoMatches ? (
-              <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
                 <Search className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
                 <p className={`text-secondary-ink dark:text-muted-ink-on-dark`}>{t('study_rooms.browse_no_matches')}</p>
               </div>
             ) : displayRoomList.length === 0 ? (
-              <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
+              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
                 <Users className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
                 <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                   {activeTab === 'browse' ? t('study_rooms.no_active_rooms') : t('study_rooms.no_rooms_yet')}
@@ -1193,7 +1193,7 @@ export const StudyRoomsPage: React.FC = () => {
               </div>
             ) : (
               displayRoomList.map((room) => (
-                <div key={room.id} className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 hover:shadow transition-shadow`}>
+                <div key={room.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 hover:shadow transition-shadow`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
@@ -1221,7 +1221,7 @@ export const StudyRoomsPage: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={() => handleJoinRoom(room)}
-                        className={`px-4 py-2 bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white dark:text-gray-900 rounded-lg hover:opacity-90 flex items-center space-x-2`}
+                        className={`px-4 py-2 bg-accent-gold text-white dark:text-gray-900 rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
                       >
                         <UserPlus className="h-4 w-4" />
                         <span>{t('study_rooms.join')}</span>
@@ -1229,7 +1229,7 @@ export const StudyRoomsPage: React.FC = () => {
                       {activeTab === 'my-rooms' && room.creator_id === user?.id && (
                         <button
                           onClick={() => handleDeleteRoom(room.id)}
-                          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center space-x-2"
+                          className="px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 flex items-center space-x-2"
                           title={t('study_rooms.delete_room') || 'Delete Room'}
                         >
                           <Trash2 className="h-4 w-4" />
