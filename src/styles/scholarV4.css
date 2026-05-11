@@ -46,10 +46,22 @@
   --s4-card-pad:       32px;
   --s4-card-pad-dark:  22px;
   --s4-tab-indicator:   2px;
+
+  /* elevation tokens (Phase 4.3) — subtle hairline + ambient depth */
+  --s4-shadow-hairline: 0 0 0 1px hsl(var(--s4-rule));
+  --s4-shadow-card:     0 1px 2px rgb(0 0 0 / .04), 0 4px 12px rgb(0 0 0 / .04);
+  --s4-shadow-modal:    0 8px 32px rgb(0 0 0 / .12);
+  --s4-shadow-floating: 0 12px 40px rgb(0 0 0 / .16);
 }
 
 /* Dark-mode variant inherits via the same alias chain because the
- * underlying tokens already flip under .dark[data-theme="…"] selectors. */
+ * underlying tokens already flip under .dark[data-theme="…"] selectors.
+ * Shadows need stronger alpha on dark surfaces to read as elevation. */
+.dark {
+  --s4-shadow-card:     0 1px 2px rgb(0 0 0 / .12), 0 4px 12px rgb(0 0 0 / .18);
+  --s4-shadow-modal:    0 8px 32px rgb(0 0 0 / .36);
+  --s4-shadow-floating: 0 12px 40px rgb(0 0 0 / .48);
+}
 
 /* ---------------- Utility classes used by Scholar v4 components --------- */
 
