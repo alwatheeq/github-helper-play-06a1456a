@@ -148,7 +148,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       {children}
       {showRefreshPrompt && (
         <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 space-y-4">
+          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-xl max-w-md w-full p-6 space-y-4">
             <p className="text-gray-700 dark:text-gray-200">
               {t('language_refresh_prompt')}
             </p>
@@ -158,7 +158,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 onClick={() => {
                   dismissRefreshPrompt();
                 }}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition"
+                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-[var(--s4-radius-card)] transition"
               >
                 {t('language_refresh_ok')}
               </button>
@@ -168,7 +168,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                   dismissRefreshPrompt();
                   window.location.reload();
                 }}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                className="px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition"
               >
                 {t('language_refresh_now')}
               </button>
