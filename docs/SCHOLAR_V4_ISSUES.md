@@ -63,3 +63,24 @@ or no existing handler gets a row here. As they are wired up, mark them
 - Low-credit banner severity ramp (>30% neutral, 10–30% amber, <10% red) — retained
 - Mini-player drag-handle and close affordances — `rounded-full` retained
 - Admin credit-ops status badges (granted/revoked/expired) — retained
+
+## Phase 3.9 — Data-driven exemptions preserved
+- Achievement tier colors (bronze/silver/gold/platinum) — palette retained
+- Goal progress-bar severity ramp (red <33%, amber 33–66%, green ≥66%) — retained
+- Locked vs unlocked achievement opacity treatment — retained
+- Tier badges / streak / milestone counter rings — `rounded-full` retained
+
+## Phase 3.9 — Code-health follow-ups (not addressed in this phase)
+
+### Orphaned pages
+The following pages were token-swept for forward-compatibility but are **not currently mounted** anywhere in the app (no imports from `Dashboard.tsx`, `App.tsx`, `Sidebar.tsx`, or any other consumer). Wire-up is a layout/feature decision for Phase 4.x:
+- `src/components/Dashboard/GoalsAndAchievementsPage.tsx`
+- `src/components/Dashboard/StudyGoalsPage.tsx`
+- `src/components/Dashboard/AchievementsPage.tsx`
+
+### Duplicate implementations
+Two parallel implementations of the same feature exist:
+- Combined: `GoalsAndAchievementsPage.tsx`
+- Split: `StudyGoalsPage.tsx` + `AchievementsPage.tsx`
+
+Pick one canonical implementation and delete the other during Phase 4.x consolidation. Do not merge or delete during token sweeps.

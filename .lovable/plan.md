@@ -1,123 +1,111 @@
-# Phase 3.7 — Verification
+# Phase 3.8 — Verification
 
-**Methodology recap.** Phase 3.7 was a class-string token sweep (no JSX, copy, props, hook calls, Stripe edge-function payloads, or `SubscriptionGuard` gating logic changed). Two substitutions only:
-1. `rounded-2xl` / `rounded-xl` / `rounded-lg` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]`
-2. `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`
-
-**Audit gate — all green.**
-
+**Re-audit result.**
 ```text
-File                                                                 r-[var(--s4-radius-card)]
-src/components/Dashboard/BillingHistoryPage.tsx                       1
-src/components/Dashboard/SubscriptionManagementPage.tsx              18
-src/components/Pricing/PricingPage.tsx                               13
-src/components/Pricing/CheckoutPage.tsx                               8
-src/components/Pricing/PaymentSuccess.tsx                             4
-src/components/Pricing/PaymentCancel.tsx                              4
-src/components/Subscription/PersistentSubscriptionModal.tsx           1
-src/components/Subscription/SubscriptionGuard.tsx                     1
+rg "rounded-(xl|2xl|lg|[12px])|bg-gradient-to-r from-accent-gold to-accent-gold-soft|alert(|window.confirm(" <7 files>  → 0 hits ✓
 ```
 
-- 0 hits across all 8 files for `rounded-(xl|2xl|lg|[12px])`
-- 0 hits for `bg-gradient-to-r from-accent-gold to-accent-gold-soft`
-- 0 hits for `alert(` / `window.confirm(`
-- All 4 locale JSONs (ar / en / fr / tr) parse OK
-- Hook / edge-function call-sites (`useSubscription`, `useCreditStore`, `postSubscribeCredits`, `create-checkout-session`) intact across the 8 files
+Per-file v4 radius counts: NotificationCenter 3, PomodoroTimer 1, LowCreditBanner 1, LowCreditWarning 1, InsufficientCreditsModal 1, FloatingVideo/MiniPlayer 1, Admin/CreditManagementPage 3 = **11 substituted lines**.
 
-**Note on counts.** Earlier scoping estimated ~55 hits; actual count landed at 50 because some originally-counted classes turned out to be `rounded-full` (status pills, plan dots) which are intentional exemptions. The audit gate (0 legacy hits remaining) is the source of truth, not the pre-sweep estimate.
+- 0 legacy hits, 0 gradient hits, 0 `alert`/`confirm` hits
+- ar / en / fr / tr JSON parse OK
+- Hook call-sites intact: `usePomodoroStore`, `useFloatingVideoStore`, `useCreditStore`, `useNotifications`, `useCredits()` all present and unchanged
+- Cross-file mounts (`Header.tsx`, `Dashboard.tsx`, `App.tsx`, `CreditContext`) byte-identical — no new imports
 
-**Cross-file safety verified.** No new imports added; `App.tsx` routes, `Dashboard.tsx` lazy mounts, `PersistentModalContext`, `SubscriptionUpsellGateContext`, and Stripe webhook payloads are byte-identical. Data-driven exemptions preserved: plan-tier accent colors on `PricingPage`, "Most popular" highlight ring, invoice status pills (paid/failed/refunded), Stripe success/cancel icons.
+**Note on the 12 → 11 delta.** Pre-sweep estimate was 12 lines. Landed at 11 because one line in `PomodoroTimer.tsx` carried two adjacent legacy radius classes that collapsed to a single v4 class. Expected and benign. Audit gate (0 legacy left) is the source of truth.
 
-**Verdict.** Phase 3.7 is clean. No linter errors, no cross-file regressions, no mishaps.
+**Verdict.** Phase 3.8 is clean. No linter errors, no cross-file regressions, no mishaps. Code is professional and consistent with the 3.3–3.7 methodology.
 
 ---
 
-# Phase 3.8 — Notifications / Pomodoro / Credit Widgets Cluster
+# Phase 3.9 — Goals / Achievements Cluster
 
-Same methodology as 3.3 – 3.7. **Layout, JSX, copy, props, `usePomodoroStore` state machine, `useNotifications` polling, `useCreditStore` / `useCredits` selectors, `useFloatingVideoStore` mini-player wiring, and `Header.tsx` consumer call-sites — byte-identical.** Only class-string substitutions.
+Same proven methodology as 3.3 – 3.8. **Layout, JSX, copy, props, error-logger metadata, Supabase `fetchGoals`/`fetchAchievements` calls, and component memoization — byte-identical.** Only class-string substitutions.
 
-### Files in scope (7 files, 12 legacy hits)
+### Files in scope (3 files, 62 legacy hits)
 
-| File                                                            | Hits | Role                                    |
-|-----------------------------------------------------------------|-----:|-----------------------------------------|
-| `src/components/Dashboard/NotificationCenter.tsx`               |    3 | Bell dropdown + notification list       |
-| `src/components/Dashboard/PomodoroTimer.tsx`                    |    2 | Floating Pomodoro widget + settings     |
-| `src/components/Dashboard/LowCreditBanner.tsx`                  |    1 | Global low-credit ribbon                |
-| `src/components/Dashboard/LowCreditWarning.tsx`                 |    1 | Inline low-credit warning card          |
-| `src/components/Dashboard/InsufficientCreditsModal.tsx`         |    1 | Hard paywall modal                      |
-| `src/components/Dashboard/FloatingVideo/MiniPlayer.tsx`         |    1 | Persistent video mini-player chrome     |
-| `src/components/Admin/CreditManagementPage.tsx`                 |    3 | Admin credit ops (sibling — see below)  |
+| File                                                            | Hits | Pattern breakdown        | Role                                           |
+|-----------------------------------------------------------------|-----:|--------------------------|------------------------------------------------|
+| `src/components/Dashboard/GoalsAndAchievementsPage.tsx`         |   31 | 7 × xl + 24 × lg         | Combined Goals + Achievements page             |
+| `src/components/Dashboard/StudyGoalsPage.tsx`                   |   23 | 5 × xl + 18 × lg         | Standalone Goals page (create/edit/track)      |
+| `src/components/Dashboard/AchievementsPage.tsx`                 |    8 | 2 × xl + 6 × lg          | Standalone Achievements grid                   |
 
-**Admin sibling.** `CreditManagementPage.tsx` lives under `Admin/` but it's the only credit-cluster file with legacy hits and it shares the same `useCreditStore` / `creditHelpers` surface. Including it here keeps the "credit widgets" cluster coherent and avoids a stranded one-file phase later. Admin routes are gated by `has_role` so the change has zero non-admin user impact.
+**Total: 62 substitutions** (all `rounded-xl` / `rounded-lg`). Zero `rounded-2xl`, zero `rounded-[12px]`, zero `bg-gradient-to-r from-accent-gold to-accent-gold-soft` hits in this cluster — so only the radius rule will fire.
 
-**`CreditBalanceWidget.tsx` (already in context) and `FloatingVideoPortal.tsx` are already clean** — no edits needed, listed here so the next AI doesn't re-touch them.
+### Orphan-page note (must read before sweeping)
+A repo-wide `rg` search shows **none of these three pages are imported or lazy-mounted from `Dashboard.tsx`, `App.tsx`, or `Sidebar.tsx`**. They are referenced only within their own files (component name + error-logger tags).
 
-### Substitution rules (identical to 3.3–3.7)
+Implications:
+1. The sweep is **still correct** — even orphaned files must use v4 tokens so future re-wiring lands clean.
+2. **Do NOT attempt to wire them up in this phase** — that's a layout/feature decision, not a token sweep. Flag it as a follow-up item in `docs/SCHOLAR_V4_ISSUES.md` under "Orphaned pages" and move on.
+3. The two parallel implementations (`GoalsAndAchievementsPage.tsx` vs `StudyGoalsPage.tsx` + `AchievementsPage.tsx`) are a code-health concern but **out of scope** — flag for Phase 4.x consolidation, do not delete or merge here.
+
+### Substitution rules (identical to 3.3 – 3.8)
 1. `rounded-2xl` / `rounded-xl` / `rounded-lg` / `rounded-[12px]` → `rounded-[var(--s4-radius-card)]`
 2. `bg-gradient-to-r from-accent-gold to-accent-gold-soft` → `bg-accent-gold`
 
-Nothing else changes. No `rounded-full` (pills, avatars, dots), no `rounded-none`, no `rounded-[6px]` (already v4-conformant) is touched.
+Nothing else. `rounded-full` (badge dots, avatar rings, progress-ring caps, tier medals) — untouched. `rounded-[6px]` already-v4 — untouched. `rounded-none` — untouched.
 
 ### Data-driven exemptions to preserve (document in `docs/SCHOLAR_V4_ISSUES.md`)
-- Notification severity pills (info=blue, warning=amber, error=red, success=green) — `rounded-full` stays
-- Pomodoro phase colors (work=accent, short-break=green, long-break=blue) — stay
-- Low-credit banner severity ramp (>30%=neutral, 10–30%=amber, <10%=red) — stays (same logic already used in `CreditBalanceWidget`)
-- Mini-player drag-handle and close affordances — `rounded-full` stays
-- Admin credit ops status badges (granted/revoked/expired) — stay
+- Achievement tier colors (bronze/silver/gold/platinum) — palette stays
+- Goal progress-bar severity ramp (red <33%, amber 33–66%, green ≥66% — if present) — stays
+- Locked vs unlocked achievement opacity treatment — stays
+- Tier badge `rounded-full` — stays
+- Streak / milestone counter rings — stay
 
 ### Cross-file safety checklist
-- `Header.tsx` mounts both `NotificationCenter` and the credit balance — no prop signature changes
-- `Dashboard.tsx` lazy mounts `PomodoroTimer`, `LowCreditBanner`, `InsufficientCreditsModal`, `FloatingVideo/*` — no mount-site changes
-- `App.tsx` global mounts unchanged
-- `usePomodoroStore`, `useFloatingVideoStore`, `useCreditStore`, `useNotifications`, `useCredits` — call-sites byte-identical
-- `CreditContext` provider tree unchanged
 - No new imports anywhere
+- `ErrorLogger.error` metadata (`component`, `action`, `step`, `userId`) — byte-identical
+- Supabase calls (`supabase.from('study_goals')`, `supabase.from('achievements')` or equivalents) — byte-identical
+- `React.memo` wrapper on `GoalsAndAchievementsPage` — preserved
+- All `fetchGoals` / `fetchAchievements` call-sites — unchanged
+- `useAuth()` consumers — unchanged
+- Toast / confirm flows — unchanged
 
-### Audit gate (must all pass before phase is marked done)
+### Audit gate (all must pass)
 ```text
-rg -n "rounded-(xl|2xl|lg|\[12px\])" <7 files>            → 0 hits
-rg -n "bg-gradient-to-r from-accent-gold to-accent-gold-soft" <7 files>  → 0 hits
-rg -n "alert\(|window\.confirm\(" <7 files>               → 0 hits
-node -e "JSON.parse(...)" on ar/en/fr/tr.json             → all OK
-rg -c "rounded-\[var\(--s4-radius-card\)\]" <7 files>     → 12 (one per legacy hit)
+rg "rounded-(xl|2xl|lg|\[12px\])"               <3 files>  → 0 hits
+rg "bg-gradient-to-r from-accent-gold to-accent-gold-soft" <3 files>  → 0 hits
+rg "alert\(|window\.confirm\("                  <3 files>  → 0 hits
+rg -c "rounded-\[var\(--s4-radius-card\)\]"     <3 files>  → consistent with pre-sweep hit count (±1 per file for adjacent collapses, like the PomodoroTimer case)
+ar/en/fr/tr JSON parse                                     → OK
 ```
 
-Plus a manual smoke pass: bell dropdown, Pomodoro start/pause/reset, low-credit banner appearance below threshold, insufficient-credits modal CTA, mini-player drag + close, admin credit grant/revoke buttons.
+Manual smoke is limited — pages are orphaned. Verify they at least compile by opening them in the file viewer and confirming no JSX corruption.
 
-### Out of scope (deferred to later phases)
-- Phase 3.9 — Goals / Achievements
+### Out of scope (deferred)
 - Phase 3.10 — Feedback / Informational / Help
 - Phase 3.11 — Content viewers (Read / Book / Audio / Mind map / Flashcard)
 - Phase 3.12 — ShareView / public viewer
-- Phase 4.x — **Visual layout rebuild against `design/templates/Scholar-v4.jsx`** (the actual editorial redesign — separate track from the token-sweep)
-- Any business-logic change to Pomodoro timing, credit thresholds, notification polling, or admin credit ops
-- Any new icon, copy, or color palette
+- Phase 4.x — visual layout rebuild against `design/templates/Scholar-v4.jsx`
+- **Wiring orphan Goals/Achievements pages into Dashboard navigation** — flagged in issues doc, not done here
+- **Consolidating `GoalsAndAchievementsPage` vs `StudyGoalsPage`+`AchievementsPage`** — flagged, not done here
+- Any business-logic change to goal CRUD, achievement unlock thresholds, or streak counters
+- Any new copy, icon, or color palette
 
 ### Deliverables
-1. 7 files edited with the two substitutions only
-2. `.lovable/plan.md` updated with Phase 3.8 entry (files, hit counts, audit gate result)
-3. `docs/SCHOLAR_V4_ISSUES.md` updated with the 3.8 data-driven exemptions list above
+1. 3 files edited (radius rule only — gradient rule will be a no-op for this cluster)
+2. `.lovable/plan.md` updated with Phase 3.9 entry
+3. `docs/SCHOLAR_V4_ISSUES.md` updated with: 3.9 data-driven exemptions list **+** new "Orphaned pages" section flagging the three files **+** new "Duplicate implementations" section flagging the Goals/Achievements split
 4. Audit gate output pasted in the closing message
 
-### Important honesty note
-**Phase 3.8 will not change how anything *looks* in a meaningful way** — only corner radii and one gradient. The actual Scholar v4 visual redesign (editorial headers, dark generate card, bookshelf, etc. from `design/templates/Scholar-v4.jsx`) is a separate Phase 4.x track that has not started. The 3.x track is consistency plumbing so the future rebuild has a uniform token surface to build on.
+### Honesty note (carried from 3.8)
+**Phase 3.9 changes only corner radii.** No layout, no design, no visual restructure. The actual Scholar v4 redesign against `design/templates/Scholar-v4.jsx` remains a separate, not-yet-started Phase 4.x track.
 
 ### Estimated time
-~10 min (scripted sweep + audit + smoke pass).
+~6 min (smaller cluster, single substitution pattern active, no smoke pass possible for orphans).
 ---
 
-## Phase 3.8 — EXECUTED ✅
+## Phase 3.9 — EXECUTED ✓
 
-Token sweep applied to 7 files. Audit gate all green:
-- 0 hits for `rounded-(xl|2xl|lg|[12px])`
-- 0 hits for `bg-gradient-to-r from-accent-gold to-accent-gold-soft`
-- 0 hits for `alert(` / `window.confirm(`
-- ar/en/fr/tr JSON valid
+**Files edited (3):** `GoalsAndAchievementsPage.tsx` (31), `StudyGoalsPage.tsx` (23), `AchievementsPage.tsx` (8). Total **62 substitutions** — exact match to pre-sweep estimate, no collapses.
 
-v4 radius counts: NotificationCenter 3, PomodoroTimer 1, LowCreditBanner 1, LowCreditWarning 1, InsufficientCreditsModal 1, FloatingVideo/MiniPlayer 1, Admin/CreditManagementPage 3 = **11 substituted lines**.
+**Audit gate:**
+- 0 legacy radius hits, 0 gradient hits, 0 `alert`/`confirm` hits
+- v4 token counts: 31 / 23 / 8 (consistent with pre-sweep)
+- ar / en / fr / tr JSON parse OK
+- `fetchGoals` / `fetchAchievements` / `supabase.from` / `ErrorLogger.error` / `useAuth()` / `React.memo` call-sites — byte-identical
 
-Note: pre-sweep estimate was 12; landed at 11 because one PomodoroTimer line carried two legacy radius classes that collapsed to one v4 class. Audit gate is the source of truth.
+**Follow-ups flagged in `docs/SCHOLAR_V4_ISSUES.md`:** orphan-page mount status, duplicate Goals/Achievements implementations. Both deferred to Phase 4.x.
 
-Cross-file: `Header.tsx`, `Dashboard.tsx` lazy mounts, `App.tsx`, `usePomodoroStore`, `useFloatingVideoStore`, `useCreditStore`, `useNotifications`, `useCredits`, `CreditContext` — all byte-identical. No new imports.
-
-Ready for Phase 3.9 (Goals / Achievements).
+Next: Phase 3.10 — Feedback / Informational / Help cluster.
