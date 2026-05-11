@@ -689,7 +689,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (initialLoading) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
           <LoadingSkeleton type="page" count={5} />
         </div>
       </div>
@@ -699,14 +699,14 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (error) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-sm border border-divider dark:border-divider-on-dark`}>
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
             <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>{error}</p>
             <button
               onClick={() => fetchLibraryData()}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-150 mx-auto"
+              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 mx-auto"
             >
               <span>{t('common.try_again')}</span>
             </button>
@@ -721,7 +721,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     <div className="w-full">
       {/* Notification */}
       {notification.show && (
-        <div className={`mb-6 p-4 rounded-lg flex items-center space-x-3 ${
+        <div className={`mb-6 p-4 rounded-[var(--s4-radius-card)] flex items-center space-x-3 ${
           notification.type === 'success' 
             ? 'bg-green-50 border border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
             : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
@@ -801,7 +801,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-1 gap-6">
         {/* Main Content */}
         <div className="lg:col-span-1 ml-4 mr-4 lg:ml-6 lg:mr-6">
-          <div className={`rounded-lg shadow-sm border border-divider dark:border-divider-on-dark ${
+          <div className={`rounded-[var(--s4-radius-card)] shadow-sm border border-divider dark:border-divider-on-dark ${
             libraryViewMode === 'notebook' 
               ? `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none` 
               : `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none`
@@ -825,7 +825,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             }
                           }}
                           placeholder={t('library.search_library_placeholder')}
-                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                           autoFocus
                         />
                         {searchLoading && (
@@ -840,7 +840,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                           setSearchQuery('');
                           setIsSearchExpanded(false);
                         }}
-                        className={`shrink-0 p-2 rounded-lg border border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
+                        className={`shrink-0 p-2 rounded-[var(--s4-radius-card)] border border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
                         aria-label={t('library.search_close_aria')}
                       >
                         <X className={`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
@@ -854,7 +854,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                         <button
                           type="button"
                           onClick={() => setIsSearchExpanded(true)}
-                          className={`shrink-0 flex items-center justify-center p-2 rounded-lg border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
+                          className={`shrink-0 flex items-center justify-center p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
                           aria-label={t('library.search_library_placeholder')}
                         >
                           <Search className={`h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark`} />
@@ -864,7 +864,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <select
                         value={viewFilter}
                         onChange={(e) => setViewFilter(e.target.value as 'all' | 'mine' | 'community' | 'liked')}
-                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.view_filter_aria')}
                       >
                         <option value="all">{t('library.all_items')}</option>
@@ -873,7 +873,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                         <option value="liked">{t('library.view_liked')}</option>
                       </select>
                       <div
-                        className={`hidden md:flex flex-nowrap overflow-x-auto items-center gap-1 rounded-lg p-1 -mx-1 px-1 min-w-0 max-w-full bg-subtle dark:bg-subtle-on-dark border border border-divider dark:border-divider-on-dark`}
+                        className={`hidden md:flex flex-nowrap overflow-x-auto items-center gap-1 rounded-[var(--s4-radius-card)] p-1 -mx-1 px-1 min-w-0 max-w-full bg-subtle dark:bg-subtle-on-dark border border border-divider dark:border-divider-on-dark`}
                         role="group"
                         aria-label={t('library.view_filter_aria')}
                       >
@@ -907,7 +907,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
-                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.sort_by')}
                       >
                         <option value="created_at_desc">{t('library.sort_created_newest')}</option>
@@ -938,7 +938,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <button
                         type="button"
                         onClick={() => setShowDeleteModal(true)}
-                        className="w-full sm:w-auto px-3 py-2 text-sm text-red-600 hover:text-red-800 border border-red-300 rounded-lg hover:bg-red-50 transition duration-150 whitespace-nowrap dark:border-red-600 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-200"
+                        className="w-full sm:w-auto px-3 py-2 text-sm text-red-600 hover:text-red-800 border border-red-300 rounded-[var(--s4-radius-card)] hover:bg-red-50 transition duration-150 whitespace-nowrap dark:border-red-600 dark:hover:bg-red-900 dark:text-red-400 dark:hover:text-red-200"
                       >
                         {t('library.delete_button', { count: selectedItems.size })}
                       </button>
@@ -975,7 +975,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
                 {/* Multi-select header */}
                 {selectMultipleMode && (
-                  <div className={`flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark rounded-lg`}>
+                  <div className={`flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)]`}>
                     <span className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       {selectedItems.size > 0
                         ? t('library.items_selected', { count: selectedItems.size })
@@ -1170,7 +1170,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                           <div className="flex items-center space-x-2 ml-4">
                             <button
                               onClick={() => navigate(`/view/library/${item.id}`)}
-                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition duration-150 dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900"
+                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900"
                             >
                               <Eye className="h-4 w-4" />
                             </button>
@@ -1178,7 +1178,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.is_public && item.shareable_link ? (
                               <button
                                 onClick={() => handleUnshareItem(item.id)}
-                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-lg transition duration-150 dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900"
+                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900"
                                 title={t('library.unshare')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1186,7 +1186,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             ) : (
                               <button
                                 onClick={() => handleShareItem(item.id)}
-                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-lg transition duration-150 dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900"
+                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900"
                                 title={t('library.share')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1196,7 +1196,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.user_id === user?.id && (
                               <button
                                 onClick={() => handleDeleteItem(item.id)}
-                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition duration-150 dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900"
+                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </button>
@@ -1216,7 +1216,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Delete Items Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
             <div className={`p-6 border-b border border-divider dark:border-divider-on-dark`}>
               <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('library.delete_items_title')}</h3>
               <p className="text-sm text-red-600 mt-1 dark:text-red-400">{t('library.action_cannot_be_undone')}</p>
@@ -1231,13 +1231,13 @@ export const LibraryPage: React.FC = React.memo(() => {
             <div className={`p-6 border-t border border-divider dark:border-divider-on-dark flex justify-end space-x-3`}>
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className={`px-4 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 border border-divider dark:border-divider-on-dark rounded-lg bg-subtle dark:bg-subtle-on-dark transition duration-150`}
+                className={`px-4 py-2 text-sm text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-subtle dark:bg-subtle-on-dark transition duration-150`}
               >
                 {t('common.cancel')}
               </button>
               <button
                 onClick={handleDeleteItems}
-                className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-lg transition duration-150 dark:bg-red-700 dark:hover:bg-red-800"
+                className="px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-700 rounded-[var(--s4-radius-card)] transition duration-150 dark:bg-red-700 dark:hover:bg-red-800"
               >
                 {t('library.delete_items_button')}
               </button>
