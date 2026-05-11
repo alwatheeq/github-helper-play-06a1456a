@@ -98,3 +98,13 @@ Pick one canonical implementation and delete the other during Phase 4.x consolid
 ### Follow-ups (out of scope, flagged)
 - `NotesWidget.tsx:316` uses native `confirm()` for delete-note confirmation. Replace with `useConfirm()` modal in a dedicated UX-polish pass (consistent with prior `alert→toast` migration).
 - `src/components/Dashboard/ShareView.tsx` is a re-export of `src/components/ShareView.tsx` — consider consolidating in Phase 4.x.
+
+## Phase 3.11 — Informational / Feedback / Onboarding / Common modals (exemptions & follow-ups)
+
+**Files swept (8 edited):** InformationalPage, OnboardingWizard, FeedbackPage, PageTutorial, LanguageChoicePage, Common/Modal, Common/ConfirmationModal, Common/PromptModal. Substitutions: 69 (`rounded-*` → `var(--s4-radius-card)`) + 8 gold-gradient flattenings.
+
+### Data-driven / structural exemptions (preserved byte-identical)
+- **`Common/Tooltip.tsx:25`** — `bg-gray-900 … rounded-xl` global tooltip surface. Same dark-popover exemption rule as `HighlightMenu` / `FreeFormToggle` in 3.10. Defer to Phase 4.x popover-token pass.
+- **InformationalPage non-gold semantic gradients** — line 89 (`from-green-500 to-emerald-600` Library section) and line 358 (`from-orange-500 to-red-600` Quiz/warning section). Encode section semantics, not brand accent — only radius substituted.
+- **`rounded-full` gold avatars** (OnboardingWizard:130, 186; LanguageChoicePage:46) — circular avatar geometry preserved; inner gold gradient flattened to `bg-accent-gold`.
+- **FeedbackPage primary affordances** — dashed dropzone (`border-2 border-dashed`) treatment preserved; `bg-blue-600` upload button color preserved (form primary affordance, not brand-gold candidate).
