@@ -590,11 +590,9 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             </ScholarButton>
 
             <div className="flex space-x-2">
-              <button
-                onClick={onExit}
               <ScholarButton
                 variant="danger"
-                onClick={() => setShowExitConfirm(true)}
+                onClick={onExit}
               >
                 {t('quiz.exit_quiz')}
               </ScholarButton>
