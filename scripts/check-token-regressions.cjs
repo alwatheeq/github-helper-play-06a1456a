@@ -69,6 +69,16 @@ const SWEPT_FILES = [
   'src/components/Dashboard/BookMode/FreeFormToggle.tsx',
   'src/components/Dashboard/Highlighting/HighlightMenu.tsx',
   'src/components/Common/Tooltip.tsx',
+  // Phase 3.18 (auth + top-level fallbacks)
+  'src/components/Auth/Auth.tsx',
+  'src/components/AccountSuspended.tsx',
+  'src/components/NotFound.tsx',
+  'src/components/ErrorBoundary.tsx',
+  'src/components/EnvValidator.tsx',
+  // Phase 3.19 (language toggle / skeleton primitive / i18n modal)
+  'src/components/LanguageToggle.tsx',
+  'src/components/Scholar/ScholarSkeleton.tsx',
+  'src/contexts/I18nContext.tsx',
 ];
 
 const repoRoot = path.resolve(__dirname, '..');
