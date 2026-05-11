@@ -145,7 +145,7 @@ export const AchievementsPage: React.FC = () => {
   return (
     <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
       <div className="max-w-7xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-6 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-6 mb-6`}>
           <div className="flex items-center space-x-3 mb-6">
             <Award className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
             <div>
@@ -157,7 +157,7 @@ export const AchievementsPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={`bg-page-light dark:bg-page-dark rounded-lg p-4`}>
+            <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4`}>
               <div className="flex items-center justify-between">
                 <div>
                   <p className={`text-sm text-ink dark:text-ink-on-dark font-medium`}>{t('achievements.unlocked')}</p>
@@ -172,7 +172,7 @@ export const AchievementsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800 rounded-[var(--s4-radius-card)] p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-yellow-600 dark:text-yellow-300 font-medium">{t('achievements.total_xp')}</p>
@@ -187,7 +187,7 @@ export const AchievementsPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-lg p-4">
+            <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-[var(--s4-radius-card)] p-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-green-600 dark:text-green-300 font-medium">{t('achievements.completion')}</p>
@@ -204,13 +204,13 @@ export const AchievementsPage: React.FC = () => {
           </div>
         </div>
 
-        <div className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-4 mb-6`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-4 mb-6`}>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-5 py-2.5 rounded-lg font-medium transition-colors flex items-center space-x-2 ${
+                className={`px-5 py-2.5 rounded-[var(--s4-radius-card)] font-medium transition-colors flex items-center space-x-2 ${
                   selectedCategory === category.id
                     ? 'bg-blue-600 text-white'
                     : `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
@@ -231,7 +231,7 @@ export const AchievementsPage: React.FC = () => {
             return (
               <div
                 key={achievement.id}
-                className={`bg-card-light dark:bg-card-dark rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
+                className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
                   isUnlocked
                     ? 'border-2 border-yellow-400 dark:border-yellow-600'
                     : 'opacity-75 hover:opacity-100'
@@ -312,7 +312,7 @@ export const AchievementsPage: React.FC = () => {
         </div>
 
         {filteredAchievements.length === 0 && (
-          <div className={`bg-card-light dark:bg-card-dark rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
             <Award className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
             <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{t('achievements.no_achievements')}</p>
           </div>
