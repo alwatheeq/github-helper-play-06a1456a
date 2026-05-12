@@ -189,7 +189,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           <h2 className="s4-h2 mb-6">Create Multiplayer Game</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
               {error}
             </div>
           )}
@@ -286,7 +286,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           <h2 className="s4-h2 mb-6">Join Game</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
               {error}
             </div>
           )}
@@ -349,10 +349,10 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
       <div className="grid md:grid-cols-2 gap-6">
         <button
           onClick={() => setShowCreateForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
+          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-[background-color,border-color,color,opacity,transform,box-shadow]"
         >
           <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
+            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors dark:bg-blue-900/30">
               <Plus className="w-10 h-10 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Create Game</h3>
@@ -368,10 +368,10 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
         <button
           onClick={() => setShowJoinForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
+          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-[background-color,border-color,color,opacity,transform,box-shadow]"
         >
           <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors dark:bg-green-900/30">
               <Users className="w-10 h-10 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Join Game</h3>
@@ -386,7 +386,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         </button>
       </div>
 
-      <div className="mt-12 bg-blue-50 rounded-md p-6">
+      <div className="mt-12 bg-blue-50 rounded-md p-6 dark:bg-blue-950/40">
         <h3 className="font-semibold mb-3">How it works:</h3>
         <ol className="space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
           <li className="flex gap-2">

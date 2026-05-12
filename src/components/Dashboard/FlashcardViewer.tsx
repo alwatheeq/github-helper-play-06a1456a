@@ -527,7 +527,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             
             <button
               onClick={() => setShowAll(false)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition duration-150 dark:text-purple-400 dark:text-purple-200"
+              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition duration-[var(--s4-dur-fast)] dark:text-purple-400 dark:text-purple-200"
             >
               <EyeOff className="h-4 w-4" />
               <span>{t('flashcards.card_view')}</span>
@@ -639,7 +639,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <span>{t('flashcards.export')}</span>
               </button>
 
-              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-10`}>
+              <div className={`absolute right-0 mt-1 w-40 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-[var(--s4-dur-fast)] z-10`}>
                 <div className="p-1">
                   <button
                     onClick={exportAsCSV}
@@ -708,7 +708,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             
             <button
               onClick={() => setCurrentStudyMode('flip')}
-              className="px-6 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+              className="px-6 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)] dark:bg-blue-500 dark:hover:bg-blue-600"
             >
               {t('flashcards.return_flashcards')}
             </button>
@@ -718,7 +718,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             {/* Flip Mode */}
             {currentStudyMode === 'flip' && !studySessionComplete && (
               <div
-                className={`relative w-full h-72 cursor-pointer transition-transform duration-500 transform-style-preserve-3d ${
+                className={`relative w-full h-72 cursor-pointer transition-transform duration-[var(--s4-dur-slow)] transform-style-preserve-3d ${
                   flipped ? 'rotate-y-180' : ''
                 }`}
                 onClick={() => setFlipped(!flipped)}
@@ -787,25 +787,25 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
               <div className="mt-5 flex justify-center gap-2 flex-wrap">
                 <button
                   onClick={() => handleStudyResponse('hard')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors"
+                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
                 >
                   {medicalMode ? 'Need Review' : t('flashcards.hard')}
                 </button>
                 <button
                   onClick={() => handleStudyResponse('good')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30 transition-colors"
+                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30 transition-colors dark:bg-blue-950/40"
                 >
                   {medicalMode ? 'Understand' : t('flashcards.good')}
                 </button>
                 <button
                   onClick={() => handleStudyResponse('easy')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-200 text-emerald-600 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/30 transition-colors"
+                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-200 text-emerald-600 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/30 transition-colors dark:bg-emerald-950/40"
                 >
                   {medicalMode ? 'Know Well' : t('flashcards.easy')}
                 </button>
                 <button
                   onClick={() => handleStudyResponse('learned')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-purple-200 text-purple-600 hover:bg-purple-50 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-900/30 transition-colors"
+                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-purple-200 text-purple-600 hover:bg-purple-50 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-900/30 transition-colors dark:bg-purple-950/40"
                 >
                   {medicalMode ? 'Mastered' : t('flashcards.learned')}
                 </button>
@@ -841,7 +841,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkTypeAnswer}
                       disabled={!typedAnswer.trim()}
-                      className={`w-full py-3 px-4 text-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 ${
+                      className={`w-full py-3 px-4 text-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 disabled:opacity-50 disabled:cursor-not-allowed transition duration-[var(--s4-dur-fast)] ${
                         medicalMode
                           ? 'bg-red-600 hover:bg-red-700 focus-visible:ring-red-500 dark:bg-red-700 dark:hover:bg-red-800'
                           : 'bg-purple-600 hover:bg-purple-700 focus-visible:ring-focus dark:bg-purple-700 dark:hover:bg-purple-800'
@@ -877,7 +877,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)] dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -902,7 +902,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                         key={index}
                         onClick={() => setSelectedOption(option)}
                         disabled={showAnswer}
-                        className={`p-4 text-left border rounded-[var(--s4-radius-card)] transition duration-150 ${
+                        className={`p-4 text-left border rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
                           selectedOption === option
                             ? 'border-green-500 bg-green-50 text-green-800 dark:border-green-700 dark:bg-green-900 dark:text-green-300'
                             : `border-divider dark:border-divider-on-dark hover:opacity-60 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`
@@ -924,7 +924,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkMultipleChoice}
                       disabled={!selectedOption}
-                      className="w-full py-3 px-4 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-green-700 dark:hover:bg-green-800"
+                      className="w-full py-3 px-4 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-[var(--s4-dur-fast)] dark:bg-green-700 dark:hover:bg-green-800"
                     >
                       {t('flashcards.submit_answer')}
                     </button>
@@ -948,7 +948,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)] dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -985,7 +985,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <button
                       onClick={checkFillInBlanks}
                       disabled={!typedAnswer.trim()}
-                      className="w-full py-3 px-4 bg-orange-600 text-white rounded-[var(--s4-radius-card)] hover:bg-orange-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 dark:bg-orange-700 dark:hover:bg-orange-800"
+                      className="w-full py-3 px-4 bg-orange-600 text-white rounded-[var(--s4-radius-card)] hover:bg-orange-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50 disabled:cursor-not-allowed transition duration-[var(--s4-dur-fast)] dark:bg-orange-700 dark:hover:bg-orange-800"
                     >
                       {t('flashcards.check_answer')}
                     </button>
@@ -1009,7 +1009,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)] dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -1032,13 +1032,13 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     <div className="grid grid-cols-2 gap-4">
                       <button
                         onClick={() => checkTrueFalse(true)}
-                        className="py-4 px-6 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition duration-150 font-medium dark:bg-green-700 dark:hover:bg-green-800"
+                        className="py-4 px-6 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 transition duration-[var(--s4-dur-fast)] font-medium dark:bg-green-700 dark:hover:bg-green-800"
                       >
                         {t('flashcards.true')}
                       </button>
                       <button
                         onClick={() => checkTrueFalse(false)}
-                        className="py-4 px-6 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 transition duration-150 font-medium dark:bg-red-700 dark:hover:bg-red-800"
+                        className="py-4 px-6 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 transition duration-[var(--s4-dur-fast)] font-medium dark:bg-red-700 dark:hover:bg-red-800"
                       >
                         {t('flashcards.false')}
                       </button>
@@ -1063,7 +1063,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                       )}
                       <button
                         onClick={() => { nextCard(); setExplanation(''); }}
-                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150 dark:bg-blue-500 dark:hover:bg-blue-600"
+                        className="w-full py-3 px-4 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)] dark:bg-blue-500 dark:hover:bg-blue-600"
                       >
                         {t('flashcards.next_card')}
                       </button>
@@ -1079,7 +1079,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <button
                   onClick={prevCard}
                   disabled={flashcards.length <= 1}
-                  className={`flex items-center space-x-2 px-4 py-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150`}
+                  className={`flex items-center space-x-2 px-4 py-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition duration-[var(--s4-dur-fast)]`}
                 >
                   <ChevronLeft className="h-5 w-5" />
                   <span>{t('flashcards.previous')}</span>
@@ -1093,7 +1093,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                         setCurrentIndex(index);
                         resetCardState();
                       }}
-                      className={`w-2 h-2 rounded-full transition duration-150 ${ // Apply dark mode classes to pagination dots
+                      className={`w-2 h-2 rounded-full transition duration-[var(--s4-dur-fast)] ${ // Apply dark mode classes to pagination dots
                         index === currentIndex ? 'bg-accent-gold' : `text-muted-ink dark:text-muted-ink-on-dark hover:opacity-60`
                       }`}
                     />
@@ -1103,7 +1103,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 <button
                   onClick={nextCard}
                   disabled={flashcards.length <= 1}
-                  className={`flex items-center space-x-2 px-4 py-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150`}
+                  className={`flex items-center space-x-2 px-4 py-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed transition duration-[var(--s4-dur-fast)]`}
                 >
                   <span>{t('flashcards.next')}</span>
                   <ChevronRight className="h-5 w-5" />

@@ -145,7 +145,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
           
           <button
             onClick={onReset}
-            className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-150"
+            className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-[var(--s4-dur-fast)]"
             title={t('processing.cancel_processing')}
           >
             <X className="h-5 w-5" />
@@ -159,7 +159,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{progress}%</span>
             </div>
             <div className="w-full bg-subtle rounded-full h-4">
-              <div className={`h-4 rounded-full transition-all duration-150 ease-out ${
+              <div className={`h-4 rounded-full transition-all duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)] ${
                 medicalMode ? 'bg-red-600' : 'bg-accent-gold'
               }`}
                 style={{ width: `${progress}%` }}
@@ -172,7 +172,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               medicalMode ? 'text-red-500' : 'text-accent-gold'
             }`} />
             <div className="text-center max-w-2xl">
-              <p className="text-lg font-medium text-ink dark:text-ink-on-dark transition-opacity duration-500">
+              <p className="text-lg font-medium text-ink dark:text-ink-on-dark transition-opacity duration-[var(--s4-dur-slow)]">
                 {facts[currentFactIndex]}
               </p>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">

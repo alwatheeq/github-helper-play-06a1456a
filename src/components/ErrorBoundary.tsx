@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-4">
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-2xl w-full">
             <div className="flex items-center justify-center mb-6">
-              <div className="bg-orange-100 p-3 rounded-full">
+              <div className="bg-orange-100 p-3 rounded-full dark:bg-orange-900/30">
                 <AlertTriangle className="h-12 w-12 text-orange-600 dark:text-orange-400" />
               </div>
             </div>
@@ -99,7 +99,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center space-x-4">
               <button
                 onClick={this.handleReset}
-                className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)]"
               >
                 <RefreshCw className="h-5 w-5" />
                 <span>Try Again</span>
@@ -107,7 +107,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle transition duration-[var(--s4-dur-fast)]"
               >
                 <Home className="h-5 w-5" />
                 <span>Go Home</span>

@@ -109,7 +109,7 @@ export const OnboardingWizard: React.FC = () => {
         {[1, 2].map((s) => (
           <div
             key={s}
-            className={`h-2 rounded-full transition-all duration-300 ${
+            className={`h-2 rounded-full transition-all duration-[var(--s4-dur-base)] ${
               s === step
                 ? 'w-8 bg-accent-gold'
                 : s < step
@@ -201,7 +201,7 @@ export const OnboardingWizard: React.FC = () => {
                   key={theme.id}
                   type="button"
                   onClick={() => handleThemeSelect(theme.id)}
-                  className={`relative flex flex-col items-center gap-2 p-3 rounded-[var(--s4-radius-card)] border-2 transition-all ${
+                  className={`relative flex flex-col items-center gap-2 p-3 rounded-[var(--s4-radius-card)] border-2 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
                     selectedTheme === theme.id
                       ? 'border-accent-gold shadow-[var(--s4-shadow-card)]'
                       : 'border-divider dark:border-divider-on-dark hover:border-accent-gold-soft'

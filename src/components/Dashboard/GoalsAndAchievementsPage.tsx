@@ -411,7 +411,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-blue-400"></div>
           <p className={`mt-4 text-ink dark:text-ink-on-dark`}>{t('common.loading')}</p>
         </div>
       </div>
@@ -536,7 +536,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               )}
                               <button
                                 onClick={() => handleDeleteGoal(goal.id)}
-                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                                 title="Delete goal"
                               >
                                 <Trash2 className="h-5 w-5" />
@@ -553,7 +553,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                             </div>
                             <div className={`w-full bg-accent-gold-soft/20 rounded-full h-3`}>
                               <div
-                                className={`h-3 rounded-full transition-colors duration-150 ${
+                                className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                                   progress >= 100
                                     ? 'bg-green-600'
                                     : progress >= 75
@@ -601,7 +601,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                           </div>
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -708,7 +708,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 return (
                   <div
                     key={achievement.id}
-                    className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
+                    className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
                       isUnlocked
                         ? 'border-2 border-yellow-400 dark:border-yellow-600'
                         : 'opacity-75 hover:opacity-100'

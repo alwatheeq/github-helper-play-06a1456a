@@ -51,7 +51,7 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
               type="button"
               disabled={!hasText || isGenerating}
               onClick={onGenerateRequestedContent}
-              className={`inline-flex items-center px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-150 ${
+              className={`inline-flex items-center px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
                 !hasText || isGenerating
                   ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
                   : `bg-accent-gold text-white hover:opacity-90`

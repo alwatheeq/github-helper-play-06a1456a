@@ -215,7 +215,7 @@ export const TagsManagementPage: React.FC = React.memo(() => {
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -295,14 +295,14 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleStartEdit(tag)}
-                            className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-blue-400 dark:hover:bg-blue-900/30"
+                            className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-blue-400 dark:hover:bg-blue-900/30 dark:bg-blue-950/40"
                             title="Edit tag name"
                           >
                             <Edit2 className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteTag(tag.id, tag.name, tag.usage_count || 0)}
-                            className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-red-400 dark:hover:bg-red-900/30"
+                            className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-red-400 dark:hover:bg-red-900/30 dark:bg-red-950/40"
                             title="Delete tag"
                           >
                             <Trash2 className="h-4 w-4" />

@@ -153,7 +153,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/pricing')}
-                className={`bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-8 rounded-[var(--s4-radius-card)] transition duration-200`}
+                className={`bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-8 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]`}
               >
                 {t('subscription_management.view_plans')}
               </button>
@@ -276,8 +276,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
-                    <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                    <p className={`s4-h2 s4-numeric text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
+                    <p className={`s4-numeric text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       / {toolPlanCap.toLocaleString()} {t('subscription_management.credits_plan_cap_suffix')}
                     </p>
                   </div>
@@ -288,7 +288,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                   </p>
                   <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3`}>
                     <div
-                      className={`h-3 rounded-full transition-colors duration-150 bg-accent-gold`}
+                      className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] bg-accent-gold`}
                       style={{ width: `${toolProgressPct}%` }}
                     />
                   </div>
@@ -305,8 +305,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
-                      <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
+                      <p className={`s4-h2 s4-numeric text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
+                      <p className={`s4-numeric text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
                     </div>
                   </div>
                   <div className="space-y-2">
@@ -448,7 +448,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowCancelModal(true)}
-                className="w-full bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+                className="w-full bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 text-red-700 dark:text-red-300 font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
               >
                 {t('subscription_management.cancel_subscription')}
               </button>
@@ -458,7 +458,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/pricing')}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
               >
                 {t('subscription_management.reactivate')}
               </button>
@@ -467,7 +467,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             <button
               type="button"
               onClick={() => navigate('/profile/billing')}
-              className={`w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200`}
+              className={`w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]`}
             >
               {t('subscription_management.view_billing_history')}
             </button>
@@ -519,7 +519,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 type="button"
                 onClick={() => setShowCancelModal(false)}
                 disabled={canceling}
-                className={`flex-1 bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 disabled:opacity-50`}
+                className={`flex-1 bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-ink dark:text-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] disabled:opacity-50`}
               >
                 {t('subscription_management.keep_subscription')}
               </button>
@@ -527,7 +527,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 type="button"
                 onClick={handleCancelSubscription}
                 disabled={canceling}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 disabled:opacity-50 flex items-center justify-center"
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] disabled:opacity-50 flex items-center justify-center"
               >
                 {canceling ? (
                   <>

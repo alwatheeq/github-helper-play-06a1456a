@@ -74,7 +74,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
     return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
   });
 
-  const tileBase = `relative p-3 rounded-md border transition-colors duration-150 text-left text-sm`;
+  const tileBase = `relative p-3 rounded-md border transition-colors duration-[var(--s4-dur-fast)] text-left text-sm`;
   const tileSelected = `border-2 border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark shadow-[var(--s4-shadow-hairline)]`;
   const tileUnselected = `border border-divider dark:border-divider-on-dark hover:opacity-80`;
 
@@ -98,7 +98,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 rounded-[var(--s4-radius-card)] transition duration-150"
+              className="shrink-0 p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)]"
               aria-label={t(modalKey('close_dialog'))}
             >
               <X className="h-5 w-5" />
@@ -110,7 +110,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('topics')}
-              className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-[var(--s4-radius-card)] font-medium text-sm transition-colors duration-150 ${
+              className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-[var(--s4-radius-card)] font-medium text-sm transition-colors duration-[var(--s4-dur-fast)] ${
                 activeTab === 'topics' ? activeTabBtn : inactiveTabBtn
               }`}
             >
@@ -131,7 +131,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
             <button
               type="button"
               onClick={() => setActiveTab('tags')}
-              className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-[var(--s4-radius-card)] font-medium text-sm transition-colors duration-150 ${
+              className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-[var(--s4-radius-card)] font-medium text-sm transition-colors duration-[var(--s4-dur-fast)] ${
                 activeTab === 'tags' ? activeTabBtn : inactiveTabBtn
               }`}
             >

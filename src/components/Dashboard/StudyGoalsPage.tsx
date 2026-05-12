@@ -398,7 +398,7 @@ export const StudyGoalsPage: React.FC = () => {
                           )}
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -415,7 +415,7 @@ export const StudyGoalsPage: React.FC = () => {
                         </div>
                         <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
                           <div
-                            className={`h-3 rounded-full transition-colors duration-150 ${
+                            className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                               progress >= 100
                                 ? 'bg-green-600'
                                 : progress >= 75
@@ -463,7 +463,7 @@ export const StudyGoalsPage: React.FC = () => {
                       </div>
                       <button
                         onClick={() => handleDeleteGoal(goal.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                         title="Delete goal"
                       >
                         <Trash2 className="h-5 w-5" />

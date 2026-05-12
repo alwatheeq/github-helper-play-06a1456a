@@ -190,7 +190,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
               {results.map((result) => (
                 <div
                   key={result.user_id}
-                  className={`rounded-[var(--s4-radius-card)] overflow-hidden transition-all ${
+                  className={`rounded-[var(--s4-radius-card)] overflow-hidden transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
                     result.user_id === user?.id
                       ? 'ring-2 ring-accent-gold shadow scale-[1.02]'
                       : 'shadow'

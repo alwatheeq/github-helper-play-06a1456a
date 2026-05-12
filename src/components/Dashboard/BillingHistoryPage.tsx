@@ -346,7 +346,7 @@ export const BillingHistoryPage: React.FC = () => {
                       >
                         {downloadingReceipt === transaction.id ? (
                           <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 dark:border-blue-400"></div>
                             <span>Generating...</span>
                           </>
                         ) : (

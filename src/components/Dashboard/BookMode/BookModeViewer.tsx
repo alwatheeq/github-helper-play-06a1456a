@@ -244,7 +244,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       </button>
 
       <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-        <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+        <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
           <MindMapView text={summaryText} title={t('mind_map.title')} />
         </React.Suspense>
       </Modal>
@@ -262,7 +262,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
           </button>
 
           {/* Widget type menu */}
-          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
+          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-all duration-[var(--s4-dur-fast)] ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
             <div className="p-1.5 space-y-0.5">
               {!widgets.some(w => w.type === 'book') && (
                 <button

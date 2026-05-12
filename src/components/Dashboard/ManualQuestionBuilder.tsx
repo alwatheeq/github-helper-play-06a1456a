@@ -258,13 +258,13 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                   <div className="flex flex-col space-y-2 ml-4">
                     <button
                       onClick={() => handleEditQuestion(index)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded transition"
+                      className="p-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded transition dark:bg-blue-950/40"
                     >
                       <Edit2 className="h-4 w-4" />
                     </button>
                     <button
                       onClick={() => handleDeleteQuestion(index)}
-                      className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded transition"
+                      className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded transition dark:bg-red-950/40"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>

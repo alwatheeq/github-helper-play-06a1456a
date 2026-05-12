@@ -320,7 +320,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
@@ -328,7 +328,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (error || !lobby) {
     return (
       <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800 dark:text-red-200">
+        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800 dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
           {error || 'Lobby not found'}
         </div>
         <button
@@ -384,7 +384,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
           <div className="space-y-2 mb-6">
             {players.length === 0 && (
-              <div className="p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center">
+              <div className="p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center dark:bg-yellow-950/40 dark:border-yellow-800">
                 <p className="text-sm text-yellow-800 dark:text-yellow-200">Loading players...</p>
               </div>
             )}
@@ -392,7 +392,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             {players.map((player) => (
               <div
                 key={player.id}
-                className="flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-green-300"
+                className="flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-green-300 dark:bg-green-950/40 dark:border-green-700"
               >
                 <div className="flex items-center gap-3">
                   {player.is_host && (

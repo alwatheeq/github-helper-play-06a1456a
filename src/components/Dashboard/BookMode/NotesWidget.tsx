@@ -513,7 +513,7 @@ export const NotesWidget: React.FC<NotesWidgetProps> = ({
                 <div
                   key={note.id}
                   onClick={() => setExpandedNoteId(isExpanded ? null : note.id)}
-                  className={`p-2.5 bg-amber-50 dark:bg-amber-900/30 shadow-[0_2px_8px_rgba(0,0,0,0.12)] rounded-md border border-amber-200/80 dark:border-amber-700/50 transition-all cursor-pointer overflow-hidden ${
+                  className={`p-2.5 bg-amber-50 dark:bg-amber-900/30 shadow-[0_2px_8px_rgba(0,0,0,0.12)] rounded-md border border-amber-200/80 dark:border-amber-700/50 transition-[background-color,border-color,color,opacity,transform,box-shadow] cursor-pointer overflow-hidden ${
                     isExpanded
                       ? 'min-h-[80px] max-h-[104px] w-full max-w-[620px]'
                       : 'h-[48px] min-h-[44px] max-h-[52px] w-[320px] min-w-[280px] max-w-[360px]'

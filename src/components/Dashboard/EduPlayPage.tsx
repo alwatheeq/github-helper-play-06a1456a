@@ -592,7 +592,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <button
           onClick={() => setViewMode('game-selection')}
-          className={`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
+          className={`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
         >
           <div className="bg-white/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Target className="h-12 w-12 text-ink-on-dark" />
@@ -647,7 +647,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <button
             onClick={() => setViewMode('question-source')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
+            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
           >
             <Crown className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
             <h3 className="s4-h2 mb-2 text-ink-on-dark">Host a Game</h3>
@@ -656,7 +656,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
           <button
             onClick={() => setViewMode('join-game')}
-            className="bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform "
+            className="bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform "
           >
             <Users className="h-12 w-12 mx-auto mb-4" />
             <h3 className="s4-h2 mb-2">Join a Game</h3>
@@ -665,7 +665,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
           <button
             onClick={() => setViewMode('multiplayer-menu')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all transform `}
+            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
           >
             <Users className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
             <h3 className="s4-h2 mb-2 text-ink-on-dark">Multiplayer</h3>
@@ -720,7 +720,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('auto_generated');
             setViewMode('ai-generate');
           }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
+          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
         >
           <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Sparkles className="h-8 w-8 text-purple-600 dark:text-purple-400" />
@@ -734,7 +734,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             setQuestionSource('manual');
             setViewMode('manual-build');
           }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-all border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
+          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
         >
           <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
             <Edit className="h-8 w-8 text-blue-600 dark:text-blue-400" />

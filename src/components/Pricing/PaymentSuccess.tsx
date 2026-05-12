@@ -88,7 +88,7 @@ export const PaymentSuccess: React.FC = () => {
         <div className="space-y-3">
           <button
             onClick={() => navigate('/')}
-            className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-4 px-6 rounded-[var(--s4-radius-card)] transition duration-200 flex items-center justify-center space-x-2"
+            className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-4 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center space-x-2"
           >
             <Home className="h-5 w-5" />
             <span>Start Using the App</span>
@@ -97,7 +97,7 @@ export const PaymentSuccess: React.FC = () => {
 
           <button
             onClick={() => navigate('/profile/subscription')}
-            className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-80 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+            className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-80 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
           >
             View Subscription Details
           </button>

@@ -451,7 +451,7 @@ export const CheckoutPage: React.FC = () => {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
             >
               Back to Pricing
             </button>
@@ -461,14 +461,14 @@ export const CheckoutPage: React.FC = () => {
                 setRetryCount(prev => prev + 1);
                 initiateCheckout();
               }}
-              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
             >
               Try Again {retryCount > 0 && `(${retryCount})`}
             </button>
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200"
+              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
             >
               Return to Dashboard
             </button>

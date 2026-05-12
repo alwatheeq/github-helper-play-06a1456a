@@ -341,7 +341,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
                         className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 disabled:opacity-50"
                       >
                         {adjustingUserId === user.id ? (
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 dark:border-blue-400"></div>
                         ) : (
                           <Plus className="h-4 w-4" />
                         )}

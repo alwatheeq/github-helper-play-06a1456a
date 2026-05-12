@@ -10,7 +10,7 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center p-4">
         <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full">
           <div className="flex items-center justify-center mb-6">
-            <div className="bg-red-100 p-3 rounded-full">
+            <div className="bg-red-100 p-3 rounded-full dark:bg-red-900/30">
               <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
             </div>
           </div>
@@ -31,7 +31,7 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
             </ul>
           </div>
 
-          <div className="bg-blue-50 border border-blue-200 rounded-[var(--s4-radius-card)] p-4">
+          <div className="bg-blue-50 border border-blue-200 rounded-[var(--s4-radius-card)] p-4 dark:bg-blue-950/40 dark:border-blue-800">
             <h3 className="font-semibold text-blue-900 mb-2 dark:text-blue-200">To fix this:</h3>
             <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside dark:text-blue-200">
               <li>Create a .env file in the project root</li>

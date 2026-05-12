@@ -1141,7 +1141,7 @@ export const StudyRoomsPage: React.FC = () => {
               <button
                 onClick={handleCreateRoom}
                 disabled={creating || !roomName.trim()}
-                className={`w-full py-2.5 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
+                className={`w-full py-2.5 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
               >
                 {creating ? (
                   <>

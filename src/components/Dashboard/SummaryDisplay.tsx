@@ -854,7 +854,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => copyToClipboard(originalText, -2)}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
+                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-[var(--s4-dur-fast)]`}
               >
                 {copiedIndex === -2 ? (
                   <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -866,7 +866,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
               <button
                 onClick={() => setShowOriginalText(false)}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-150 dark:text-orange-400 dark:text-orange-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:text-orange-200"
               >
                 <X className="h-4 w-4" />
                 <span>{t('summary.back_to_summary')}</span>
@@ -981,7 +981,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             
             <button
               onClick={() => copyToClipboard(combinedSummary, -1)}
-              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
+              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-[var(--s4-dur-fast)]`}
             >
               {copiedIndex === -1 ? (
                 <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -999,7 +999,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={() => setMindMapOpen(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-indigo-300 rounded-[var(--s4-radius-card)] hover:bg-indigo-50 transition duration-150 dark:border-indigo-600 dark:hover:bg-indigo-900/40 dark:text-indigo-400"
+              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-indigo-300 rounded-[var(--s4-radius-card)] hover:bg-indigo-50 transition duration-[var(--s4-dur-fast)] dark:border-indigo-600 dark:hover:bg-indigo-900/40 dark:text-indigo-400 dark:bg-indigo-950/40"
             >
               <Brain className="h-4 w-4" />
               <span>{t('mind_map.title')}</span>
@@ -1007,7 +1007,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             
             <button
               onClick={() => setShowOriginalText(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-150 dark:text-orange-400 dark:hover:text-orange-200"
+              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200"
               title={!originalText || !originalText.trim() ? t('summary.no_original_text_available') : t('summary.view_original_text')}
             >
               <FileSearch className="h-4 w-4" />
@@ -1018,7 +1018,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <button
                 type="button"
                 onClick={exportAsTxt}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-[var(--s4-dur-fast)] dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200 dark:bg-purple-950/40"
               >
                 <Download className="h-4 w-4" />
                 <span>{t('summary.export_txt')}</span>
@@ -1026,7 +1026,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <button
                 type="button"
                 onClick={exportAsPdf}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-150 dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-[var(--s4-dur-fast)] dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200 dark:bg-purple-950/40"
               >
                 <Download className="h-4 w-4" />
                 <span>{t('summary.export_pdf')}</span>
@@ -1036,7 +1036,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                 <button
                   onClick={handleShowPublishModal}
                   disabled={publishing || published}
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-[var(--s4-radius-card)] transition duration-150 ${
+                  className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
                     published 
                       ? 'text-green-600 bg-green-50 border border-green-200'
                       : medicalMode
@@ -1063,7 +1063,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             {!isSharedView && !hideNewDocumentButton && (
               <button
                 onClick={onReset}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-ink dark:text-ink-on-dark hover:opacity-80 transition duration-150`}
+                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-ink dark:text-ink-on-dark hover:opacity-80 transition duration-[var(--s4-dur-fast)]`}
               >
                 <RefreshCw className="h-4 w-4" />
                 <span>{t('summary.new_document')}</span>
@@ -1095,7 +1095,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     )}
 
     <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
         <MindMapView text={combinedSummary} title={t('mind_map.title')} />
       </React.Suspense>
     </Modal>
@@ -1158,13 +1158,13 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                     <button
                       onClick={createFolderInPublishModal}
                       disabled={creatingFolder}
-                      className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacity-50 transition-colors dark:text-emerald-400"
+                      className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacity-50 transition-colors dark:text-emerald-400 dark:bg-emerald-950/40"
                     >
                       {creatingFolder ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                     </button>
                     <button
                       onClick={() => { setShowCreateFolderInput(false); setNewFolderNameInput(''); }}
-                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -1244,12 +1244,12 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
-                    <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors dark:text-emerald-400">
+                    <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors dark:text-emerald-400 dark:bg-emerald-950/40">
                       <Check className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => { setShowCreateTag(false); setNewTagName(''); }}
-                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors"
+                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>

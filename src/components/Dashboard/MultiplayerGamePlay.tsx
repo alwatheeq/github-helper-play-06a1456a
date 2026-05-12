@@ -479,7 +479,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4 dark:border-blue-400"></div>
           <p className="text-ink dark:text-ink-on-dark">Loading game...</p>
         </div>
       </div>
@@ -523,7 +523,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
               <div className="mb-6">
                 <div className="h-2 bg-accent-gold-soft/20 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-accent-gold transition-colors duration-150"
+                    className="h-full bg-accent-gold transition-colors duration-[var(--s4-dur-fast)]"
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>
@@ -588,7 +588,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                       player.user_id === user?.id
                         ? 'bg-blue-50 border-2 border-blue-300'
                         : 'bg-page-light dark:bg-page-dark'
-                    }`}
+                    } dark:border-blue-700`}
                   >
                     <div className="flex items-center gap-3">
                       <span className="font-bold text-lg text-ink dark:text-ink-on-dark">

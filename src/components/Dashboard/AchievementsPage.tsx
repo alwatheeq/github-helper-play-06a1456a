@@ -231,7 +231,7 @@ export const AchievementsPage: React.FC = () => {
             return (
               <div
                 key={achievement.id}
-                className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
+                className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
                   isUnlocked
                     ? 'border-2 border-yellow-400 dark:border-yellow-600'
                     : 'opacity-75 hover:opacity-100'

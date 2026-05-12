@@ -874,7 +874,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   courseId={selectedCourse.id}
                   itemIds={courseItems.map(ci => ci.item_id)}
                 />
-                <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+                <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
                   <CourseAnalytics courseId={selectedCourse.id} />
                 </React.Suspense>
                 <ExamScheduler courseId={selectedCourse.id} />

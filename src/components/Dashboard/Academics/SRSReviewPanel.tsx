@@ -238,7 +238,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
       <div className="perspective-1000">
         <div
           onClick={() => setFlipped((prev) => !prev)}
-          className={`relative cursor-pointer rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark min-h-[200px] flex items-center justify-center p-8 transition-transform duration-500`}
+          className={`relative cursor-pointer rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark min-h-[200px] flex items-center justify-center p-8 transition-transform duration-[var(--s4-dur-slow)]`}
           style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
         >
           {/* Front */}

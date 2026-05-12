@@ -88,7 +88,7 @@ export const LowCreditBanner: React.FC = () => {
   if (!config) return null;
 
   return (
-    <div className={`${config.bgColor} ${config.borderColor} border rounded-[var(--s4-radius-card)] p-4 mb-6 animate-in fade-in slide-in-from-top-2 duration-300`}>
+    <div className={`${config.bgColor} ${config.borderColor} border rounded-[var(--s4-radius-card)] p-4 mb-6 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-3 flex-1">
           <AlertTriangle className={`h-5 w-5 ${config.iconColor} flex-shrink-0 mt-0.5`} />

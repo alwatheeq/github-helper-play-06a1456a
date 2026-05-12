@@ -422,7 +422,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
               />
               <label
                 htmlFor="file-upload"
-                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 cursor-pointer transition duration-150"
+                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 cursor-pointer transition duration-[var(--s4-dur-fast)]"
               >
                 Browse Files
               </label>

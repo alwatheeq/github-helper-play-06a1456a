@@ -91,7 +91,7 @@ export const LoadingSkeleton: React.FC<LoadingSkeletonProps> = ({
 export const PageLoadingSkeleton: React.FC = () => (
   <div className="flex justify-center items-center py-12">
     <div className="space-y-4 text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-blue-400"></div>
       <p className="text-secondary-ink dark:text-muted-ink">Loading...</p>
     </div>
   </div>

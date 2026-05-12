@@ -398,7 +398,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
   // Tab button helper — hairline tab strip, active = gold underline
   const tabBtnCls = (active: boolean) =>
-    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 whitespace-nowrap ${
+    `flex items-center gap-2 px-1 pb-3 -mb-px border-b-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] whitespace-nowrap ${
       active
         ? 'border-accent-gold text-ink dark:text-ink-on-dark'
         : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
@@ -406,7 +406,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
   // Dropzone container — hairline dashed, v4 radius token, 220px min-height (v4 spec)
   const dropzoneCls = (active: boolean) =>
-    `relative border border-dashed rounded-[var(--s4-radius-card)] min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-150 ${
+    `relative border border-dashed rounded-[var(--s4-radius-card)] min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-[var(--s4-dur-fast)] ${
       active
         ? 'border-accent-gold bg-accent-gold/5'
         : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-accent-gold/60'
@@ -597,7 +597,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 textInput.length > 100000 ||
                 (medicalMode && medicalValidation && !medicalValidation.isValid)
               }
-              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
+              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-[var(--s4-dur-fast)] ${
                 medicalMode
                   ? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600'
                   : 'bg-accent-gold text-ink-on-dark hover:opacity-90'
@@ -660,7 +660,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         <div className="mt-6 flex items-center justify-between">
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-150"
+            className="flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-[var(--s4-dur-fast)]"
           >
             <Settings className="h-4 w-4" />
             <span>{t('dashboard.processing_settings')}</span>
@@ -810,12 +810,12 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 onChange={(e) => setMedicalMode(e.target.checked)}
                 className="sr-only"
               />
-              <div className={`w-12 h-6 rounded-full transition-colors duration-150 ${
+              <div className={`w-12 h-6 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                 medicalMode
                   ? 'bg-red-600'
                   : 'bg-divider dark:bg-divider-on-dark'
               }`}>
-                <div className={`w-5 h-5 bg-card-light rounded-full shadow-[var(--scholar-shadow-sm)] border border-divider transform transition duration-200 ${
+                <div className={`w-5 h-5 bg-card-light rounded-full shadow-[var(--scholar-shadow-sm)] border border-divider transform transition duration-[var(--s4-dur-base)] ${
                   medicalMode ? 'translate-x-6' : 'translate-x-0.5'
                 } mt-0.5`}></div>
               </div>

@@ -766,7 +766,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                 setLibraryViewMode('library');
                 localStorage.setItem('library_view_mode', 'library');
               }}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 ${
+              className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 ${
                 libraryViewMode === 'library'
                   ? 'bg-sidebar text-ink-on-dark'
                   : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -782,7 +782,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                 setLibraryViewMode('notebook');
                 localStorage.setItem('library_view_mode', 'notebook');
               }}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
+              className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
                 libraryViewMode === 'notebook'
                   ? 'bg-sidebar text-ink-on-dark'
                   : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -827,7 +827,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                         />
                         {searchLoading && (
                           <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
-                            <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full" />
+                            <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full dark:border-blue-400" />
                           </div>
                         )}
                       </div>
@@ -886,7 +886,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             key={value}
                             type="button"
                             onClick={() => setViewFilter(value)}
-                            className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors duration-150 ${
+                            className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] ${
                               viewFilter === value
                                 ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--s4-shadow-hairline)] border border border-divider dark:border-divider-on-dark`
                                 : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
@@ -917,7 +917,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <button
                         type="button"
                         onClick={() => setShowTopicsTagsModal(true)}
-                        className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-[var(--s4-radius-btn)] transition-colors duration-150 whitespace-nowrap w-full sm:w-auto shrink-0 bg-accent-gold text-ink-on-dark hover:opacity-90"
+                        className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-[var(--s4-radius-btn)] transition-colors duration-[var(--s4-dur-fast)] whitespace-nowrap w-full sm:w-auto shrink-0 bg-accent-gold text-ink-on-dark hover:opacity-90"
                       >
                         <Filter className="h-4 w-4 shrink-0" aria-hidden />
                         <span>{t('library.topics_tags_heading')}</span>
@@ -1027,7 +1027,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               </div>
 
               {libraryItems.length === 0 ? (
-                <div className="text-center py-12">
+                <div className="text-center py-16 min-h-[40vh] flex flex-col items-center justify-center">
                   {libraryViewMode === 'notebook' ? (
                     <>
                       <FileText className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
@@ -1057,7 +1057,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               ) : (
                 <div className="space-y-4">
                   {libraryItems.map((item) => (
-                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-all duration-150 dark:shadow-[var(--s4-shadow-hairline)] dark:hover:shadow bg-card-light dark:bg-card-dark`}>
+                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-fast)] dark:shadow-[var(--s4-shadow-hairline)] dark:hover:shadow bg-card-light dark:bg-card-dark`}>
                       <div className="flex items-start justify-between">
                         <div className="flex items-start space-x-3 flex-1">
                           {selectMultipleMode && (
@@ -1168,7 +1168,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                           <div className="flex items-center space-x-2 ml-4">
                             <button
                               onClick={() => navigate(`/view/library/${item.id}`)}
-                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900"
+                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900 dark:bg-blue-950/40"
                             >
                               <Eye className="h-4 w-4" />
                             </button>
@@ -1176,7 +1176,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.is_public && item.shareable_link ? (
                               <button
                                 onClick={() => handleUnshareItem(item.id)}
-                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900"
+                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900 dark:bg-orange-950/40"
                                 title={t('library.unshare')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1184,7 +1184,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             ) : (
                               <button
                                 onClick={() => handleShareItem(item.id)}
-                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900"
+                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900 dark:bg-green-950/40"
                                 title={t('library.share')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1194,7 +1194,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.user_id === user?.id && (
                               <button
                                 onClick={() => handleDeleteItem(item.id)}
-                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-150 dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900"
+                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900 dark:bg-red-950/40"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </button>

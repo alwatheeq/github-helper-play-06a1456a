@@ -90,7 +90,7 @@ export const Auth: React.FC = () => {
         type="button"
         tabIndex={-1}
         onClick={handleHiddenAdminTap}
-        className="fixed bottom-3 left-4 z-10 text-xs text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-colors duration-150 select-none"
+        className="fixed bottom-3 left-4 z-10 text-xs text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-colors duration-[var(--s4-dur-fast)] select-none"
         title="Admin Portal"
       >
         Admin
@@ -139,7 +139,7 @@ export const Auth: React.FC = () => {
               type="button"
               onClick={handleGoogleSignIn}
               disabled={loading}
-              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-[var(--s4-shadow-hairline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50"
+              className="w-full flex items-center justify-center space-x-3 px-6 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-accent-gold-soft/10 shadow-[var(--s4-shadow-hairline)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-[var(--s4-dur-fast)] disabled:opacity-50"
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -170,7 +170,7 @@ export const Auth: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-[var(--s4-dur-fast)] disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
                 disabled={loading}
                 placeholder={t('auth.enter_email')}
               />
@@ -185,7 +185,7 @@ export const Auth: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-150 disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
+                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-divider dark:border-divider-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition duration-[var(--s4-dur-fast)] disabled:opacity-50 shadow-[var(--s4-shadow-hairline)]"
                 disabled={loading}
                 placeholder={t('auth.enter_password')}
               />
@@ -195,7 +195,7 @@ export const Auth: React.FC = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full flex justify-center py-2.5 px-5 border border-transparent text-sm font-medium rounded-[var(--s4-radius-card)] text-white bg-accent-gold hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 transition duration-150"
+                className="group relative w-full flex justify-center py-2.5 px-5 border border-transparent text-sm font-medium rounded-[var(--s4-radius-card)] text-white bg-accent-gold hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 transition duration-[var(--s4-dur-fast)]"
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
@@ -214,7 +214,7 @@ export const Auth: React.FC = () => {
                   setError(null);
                   setSuccess(null);
                 }}
-                className="text-accent-gold hover:opacity-80 text-sm font-medium transition duration-150 disabled:opacity-50"
+                className="text-accent-gold hover:opacity-80 text-sm font-medium transition duration-[var(--s4-dur-fast)] disabled:opacity-50"
               >
                 {isSignUp ? t('auth.have_account') : t('auth.need_account')}
               </button>

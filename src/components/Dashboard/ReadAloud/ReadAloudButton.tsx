@@ -48,7 +48,7 @@ export const ReadAloudButton: React.FC<ReadAloudButtonProps> = ({
       aria-label={label}
       title={label}
       onClick={handleClick}
-      className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-sm transition-opacity duration-150 ${
+      className={`inline-flex items-center justify-center rounded-md px-2 py-1 text-sm transition-opacity duration-[var(--s4-dur-fast)] ${
         canRead
           ? `bg-accent-gold text-white hover:opacity-90`
           : `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`

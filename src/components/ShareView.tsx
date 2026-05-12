@@ -96,7 +96,7 @@ export const ShareView: React.FC = () => {
             </p>
             <a
               href="/"
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition duration-150"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition duration-[var(--s4-dur-fast)]"
             >
               <ExternalLink className="h-4 w-4" />
               <span>{t('share.visit_meshfahem')}</span>
@@ -135,7 +135,7 @@ export const ShareView: React.FC = () => {
             <div className="flex-shrink-0">
               <a
                 href="/"
-                className="flex items-center space-x-2 px-4 py-2 text-accent-gold hover:opacity-80 border border-accent-gold/40 rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition duration-150 text-sm"
+                className="flex items-center space-x-2 px-4 py-2 text-accent-gold hover:opacity-80 border border-accent-gold/40 rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition duration-[var(--s4-dur-fast)] text-sm"
               >
                 <ExternalLink className="h-4 w-4" />
                 <span>{t('share.get_meshfahem')}</span>

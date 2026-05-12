@@ -45,7 +45,7 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
       </button>
 
       {/* Tooltip */}
-      <div className="absolute right-0 top-full mt-2 w-56 bg-card-dark text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 shadow-[var(--s4-shadow-modal)] pointer-events-none">
+      <div className="absolute right-0 top-full mt-2 w-56 bg-card-dark text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-[var(--s4-dur-fast)] z-50 shadow-[var(--s4-shadow-modal)] pointer-events-none">
         <p className="font-semibold mb-1 flex items-center gap-1.5">
           <Move className="h-3 w-3" />
           <span>{t('free_form.available') || 'Free-Form Mode'}</span>

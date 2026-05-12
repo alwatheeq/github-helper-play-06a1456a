@@ -493,7 +493,7 @@ const GlobalChatAssistantContent: React.FC = () => {
             });
           }
         }}
-        className={`fixed z-50 bg-accent-gold text-white p-4 rounded-full shadow hover:shadow-[var(--s4-shadow-hairline)] transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`fixed z-50 bg-accent-gold text-white p-4 rounded-full shadow hover:shadow-[var(--s4-shadow-hairline)] transition-colors duration-[var(--s4-dur-fast)]  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -509,7 +509,7 @@ const GlobalChatAssistantContent: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
+      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-[var(--s4-dur-fast)] ${isDragging ? 'cursor-move' : ''}`}
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

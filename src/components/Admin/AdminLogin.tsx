@@ -239,7 +239,7 @@ export const AdminLogin: React.FC = () => {
           </p>
 
           {error && (
-            <div className="mb-8 p-6 bg-red-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/30 border border-red-800 rounded-lg flex items-start space-x-3">
+            <div className="mb-8 p-6 bg-red-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/30 border border-red-800 rounded-lg flex items-start space-x-3 dark:border-red-300">
               <AlertCircle className="h-5 w-5 text-red-400 mt-0.5 flex-shrink-0" />
               <div className="flex-1">
                 <p className="text-sm text-red-200 mb-2">{error}</p>
