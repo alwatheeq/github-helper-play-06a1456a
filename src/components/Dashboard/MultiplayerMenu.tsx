@@ -189,7 +189,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           <h2 className="s4-h2 mb-6">Create Multiplayer Game</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200">
               {error}
             </div>
           )}
@@ -204,7 +204,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 value={gameName}
                 onChange={(e) => setGameName(e.target.value)}
                 placeholder="Enter game name"
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -216,7 +216,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={maxPlayers}
                   onChange={(e) => setMaxPlayers(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
                 >
                   {[2, 3, 4, 5, 6, 8, 10].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -231,7 +231,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={questionCount}
                   onChange={(e) => setQuestionCount(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
                 >
                   {[5, 10, 15, 20, 25].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -247,7 +247,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               <select
                 value={timePerQuestion}
                 onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               >
                 {[15, 20, 30, 45, 60].map(num => (
                   <option key={num} value={num}>{num}s</option>
@@ -286,7 +286,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           <h2 className="s4-h2 mb-6">Join Game</h2>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm dark:text-red-200">
               {error}
             </div>
           )}
@@ -302,7 +302,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                 placeholder="Enter 6-digit code"
                 maxLength={6}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -353,13 +353,13 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         >
           <div className="flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
-              <Plus className="w-10 h-10 text-blue-600" />
+              <Plus className="w-10 h-10 text-blue-600 dark:text-blue-400" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Create Game</h3>
             <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               Host a new game and invite friends to join
             </p>
-            <div className="flex items-center text-blue-600 font-medium">
+            <div className="flex items-center text-blue-600 font-medium dark:text-blue-400">
               Get Started
               <ArrowRight className="w-4 h-4 ml-2 group- transition-transform" />
             </div>
@@ -372,13 +372,13 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         >
           <div className="flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
-              <Users className="w-10 h-10 text-green-600" />
+              <Users className="w-10 h-10 text-green-600 dark:text-green-400" />
             </div>
             <h3 className="s4-h3 text-[20px] mb-2">Join Game</h3>
             <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               Enter a game code to join an existing game
             </p>
-            <div className="flex items-center text-green-600 font-medium">
+            <div className="flex items-center text-green-600 font-medium dark:text-green-400">
               Join Now
               <ArrowRight className="w-4 h-4 ml-2 group- transition-transform" />
             </div>
@@ -390,19 +390,19 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         <h3 className="font-semibold mb-3">How it works:</h3>
         <ol className="space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
           <li className="flex gap-2">
-            <span className="font-bold text-blue-600">1.</span>
+            <span className="font-bold text-blue-600 dark:text-blue-400">1.</span>
             <span>Create a game or join using a code shared by a friend</span>
           </li>
           <li className="flex gap-2">
-            <span className="font-bold text-blue-600">2.</span>
+            <span className="font-bold text-blue-600 dark:text-blue-400">2.</span>
             <span>Wait for players to join (everyone is automatically ready!)</span>
           </li>
           <li className="flex gap-2">
-            <span className="font-bold text-blue-600">3.</span>
+            <span className="font-bold text-blue-600 dark:text-blue-400">3.</span>
             <span>Answer questions as fast and accurately as possible</span>
           </li>
           <li className="flex gap-2">
-            <span className="font-bold text-blue-600">4.</span>
+            <span className="font-bold text-blue-600 dark:text-blue-400">4.</span>
             <span>See who comes out on top in the final leaderboard!</span>
           </li>
         </ol>

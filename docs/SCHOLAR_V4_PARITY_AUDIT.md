@@ -337,3 +337,77 @@ Each phase exit appends to `docs/SCHOLAR_V4_ISSUES.md`:
 - [x] No source files modified.
 
 **Awaiting approval to begin Phase 4.1 — Typography.**
+
+---
+
+## Phase 4.5 — Component shells (shipped)
+
+- `src/components/Scholar/ScholarButton.tsx` converted from `React.FC` to `React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ScholarButtonProps>`. Fixes silent ref-drop in Radix `asChild` and Tooltip trigger paths. No public API change; all 81 external consumers compile clean (`tsc --noEmit`).
+- `displayName = 'ScholarButton'` set for clean React DevTools output.
+- `FlashcardViewer` audit: the "Flip card" target is a clickable surface (`<div onClick>`), not a `<button>`. No bespoke button to migrate; plan item closed.
+
+## Phase 4.6 — Iconography (shipped, revised approach)
+
+The originally-planned mass JSX rewrite (~523 sites across 95 files) was rejected as too high-risk for pure visual normalization. Applied a CSS-level normalization instead:
+
+```css
+svg.lucide                            { stroke-width: 1.6; }
+svg.lucide[width="10"|"12"|"14"|"16"] { stroke-width: 1.7; }
+```
+
+Lucide-react attaches `class="lucide lucide-{name}"` to every emitted `<svg>` and reflects the `size` prop into the SVG `width`/`height` attributes, so this single CSS rule normalizes every existing icon to the v4 stroke spec without touching a single call site.
+
+Per-icon intentional overrides remain available via:
+- The new `<ScholarIcon icon={Foo} strokeWidth={2}>` primitive (preferred for new code), or
+- An inline `style={{ strokeWidth: 2 }}` (wins over the class rule).
+
+The `ScholarIcon` wrapper is exported from `@/components/Scholar` and forwards refs.
+
+## Phase 4.7 — Motion + focus-visible (shipped)
+
+**Tokens added** to `src/styles/scholarV4.css`: `--s4-ease`, `--s4-ease-out`, `--s4-dur-fast/base/slow`. A `prefers-reduced-motion: reduce` block collapses durations to `0.001ms` and forces `animation-iteration-count: 1` — preserves `animationend` listeners while honoring user a11y preference.
+
+**Sweep** (`scripts/phase-4-7-motion-sweep.cjs`) — 241 replacements across 43 files:
+- `focus:ring-*` → `focus-visible:ring-*`
+- `focus:ring-offset-*` → `focus-visible:ring-offset-*`
+- Collision guard skips lines that already carry the `focus-visible:` form.
+- Manual sweeps applied to `index.css` (`.focus-ring` utility) and `ThemeContext.getThemeFocusRing` (runtime template string).
+
+`transition-all`/`duration-N`/`ease-*` rewrites were intentionally deferred — the sweep first logs `transition-all` neighbours of `filter:`/`backdrop-`/`grid-template` for manual review (currently 0 matches), so a future commit can finish the conversion safely.
+
+## Phase 4.8 — Dark-mode parity (shipped, conservative pass)
+
+**Audit** — `scripts/phase-4-8-dark-audit.cjs`: scanned 98 files outside Admin, found 399 state-color orphan occurrences across 70 files (where a `text|bg|border-{state-color}-N` token has no `dark:` sibling on the same className).
+
+**Conservative auto-fix** — `scripts/phase-4-8-dark-fix.cjs`: applied dark siblings only to the unambiguous subset (`text-{state}-{600|700|800|900}` — dark inks that almost always need a lighter dark-mode form). Mapping: 600→400, 700→300, 800→200, 900→200.
+- 18 files touched, 55 dark siblings added.
+- `bg-*` and `border-*` orphans deferred — colored surfaces are highly contextual and require visual review per element.
+
+**Full orphan list** for follow-up review: `docs/audit/4.8-dark-orphans.txt`.
+
+## Phase 4.9 — Page composition (audit + deferred fixes)
+
+This phase is intentionally narrative/design-judgment work — it should not be batch-automated. Audit complete:
+
+| Page | Status |
+|---|---|
+| Auth | ✅ Already on v4 spec (`max-w-md`, vertically centred). |
+| Dashboard home | Pending visual diff vs `design/Scholar v4.html`. Right-rail width and section gaps already use `--s4-rail-width` / `--s4-shell-gap` tokens. |
+| LibraryPage | Pending visual diff for grid gutter and empty-state centring. |
+| Pricing | Pending mobile CTA-stack review. |
+| Subscription / Management | Pending billing-table line-height + `s4-numeric` audit. |
+| Onboarding wizard | Pending step-indicator spacing review. |
+
+Deferring the 5 remaining pages to a focused follow-up commit per page (with before/after screenshots) preserves the "no design-eye → no rewrite" rule. All token primitives needed for those pages are already in place (Phases 4.1–4.7), so the follow-up work is layout-only with zero further token risk.
+
+---
+
+## Phase 4 close-out — gate snapshot
+
+| Gate | Result |
+|---|---|
+| `tsc --noEmit` | ✅ clean |
+| `vitest run` | ✅ 73/73 |
+| `npm run check:tokens` | ✅ 133 swept files clean |
+| Raw-neutral occurrences outside Admin | 0 |
+| `focus:ring` outside Admin | 0 (2 dynamic-template/legacy sites migrated) |

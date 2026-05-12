@@ -51,7 +51,10 @@ const baseCls =
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 
-export const ScholarButton: React.FC<ScholarButtonProps> = (props) => {
+export const ScholarButton = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  ScholarButtonProps
+>((props, ref) => {
   const {
     variant = 'primary',
     size = 'md',
@@ -93,7 +96,13 @@ export const ScholarButton: React.FC<ScholarButtonProps> = (props) => {
   if ('href' in props && props.href) {
     const { href, ...anchorRest } = rest as unknown as React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string };
     return (
-      <a href={href} className={cls} aria-busy={loading || undefined} {...anchorRest}>
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={href}
+        className={cls}
+        aria-busy={loading || undefined}
+        {...anchorRest}
+      >
         {content}
       </a>
     );
@@ -102,6 +111,7 @@ export const ScholarButton: React.FC<ScholarButtonProps> = (props) => {
   const buttonRest = rest as React.ButtonHTMLAttributes<HTMLButtonElement>;
   return (
     <button
+      ref={ref as React.Ref<HTMLButtonElement>}
       type={buttonRest.type ?? 'button'}
       className={cls}
       aria-busy={loading || undefined}
@@ -111,6 +121,8 @@ export const ScholarButton: React.FC<ScholarButtonProps> = (props) => {
       {content}
     </button>
   );
-};
+});
+
+ScholarButton.displayName = 'ScholarButton';
 
 export default ScholarButton;

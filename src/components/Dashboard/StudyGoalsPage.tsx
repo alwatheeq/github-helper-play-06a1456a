@@ -398,7 +398,7 @@ export const StudyGoalsPage: React.FC = () => {
                           )}
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -463,7 +463,7 @@ export const StudyGoalsPage: React.FC = () => {
                       </div>
                       <button
                         onClick={() => handleDeleteGoal(goal.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                         title="Delete goal"
                       >
                         <Trash2 className="h-5 w-5" />
@@ -514,7 +514,7 @@ export const StudyGoalsPage: React.FC = () => {
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -534,7 +534,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder="e.g., Study 30 minutes daily"
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -548,7 +548,7 @@ export const StudyGoalsPage: React.FC = () => {
                   placeholder="Describe your goal..."
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -562,7 +562,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   Set the target number to achieve your goal
@@ -578,7 +578,7 @@ export const StudyGoalsPage: React.FC = () => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 

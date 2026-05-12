@@ -265,7 +265,7 @@ export const AdminLogin: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white placeholder-gray-400 transition"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white placeholder-gray-400 transition"
                   placeholder="admin@example.com"
                 />
               </div>
@@ -283,7 +283,7 @@ export const AdminLogin: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white placeholder-gray-400 transition"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white placeholder-gray-400 transition"
                   placeholder="Enter your password"
                 />
               </div>
@@ -292,7 +292,7 @@ export const AdminLogin: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition shadow`}
+              className={`w-full bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white py-3 px-6 rounded-lg font-semibold hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition shadow`}
             >
               {loading ? 'Signing in...' : 'Sign In to Admin Panel'}
             </button>

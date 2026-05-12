@@ -822,7 +822,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             }
                           }}
                           placeholder={t('library.search_library_placeholder')}
-                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                           autoFocus
                         />
                         {searchLoading && (
@@ -861,7 +861,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <select
                         value={viewFilter}
                         onChange={(e) => setViewFilter(e.target.value as 'all' | 'mine' | 'community' | 'liked')}
-                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.view_filter_aria')}
                       >
                         <option value="all">{t('library.all_items')}</option>
@@ -904,7 +904,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       <select
                         value={sortOption}
                         onChange={(e) => setSortOption(e.target.value)}
-                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                         aria-label={t('library.sort_by')}
                       >
                         <option value="created_at_desc">{t('library.sort_created_newest')}</option>
@@ -1065,7 +1065,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                               type="checkbox"
                               checked={selectedItems.has(item.id)}
                               onChange={() => handleSelectItem(item.id)}
-                              className={`mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border border-divider dark:border-divider-on-dark rounded`}
+                              className={`mt-1 h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border border-divider dark:border-divider-on-dark rounded dark:text-blue-400`}
                             />
                           )}
 

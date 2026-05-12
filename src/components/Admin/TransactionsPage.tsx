@@ -245,7 +245,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
               placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
@@ -254,7 +254,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="succeeded">Succeeded</option>
@@ -270,7 +270,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>

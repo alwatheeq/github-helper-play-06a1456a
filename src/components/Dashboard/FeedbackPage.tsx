@@ -371,7 +371,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                   ? 'Tell us about your experience, report bugs, or share what you think...'
                   : 'Share your ideas for new features or improvements...'
               }
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               rows={8}
               maxLength={2000}
               disabled={isSubmitting}

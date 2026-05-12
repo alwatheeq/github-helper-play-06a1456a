@@ -1504,7 +1504,7 @@ export const Dashboard: React.FC = () => {
                   eyebrow={
                     <span className="inline-flex items-center gap-1.5">
                       The Workshop
-                      <span aria-hidden="true" className="text-[12px] leading-none text-red-600">🚩</span>
+                      <span aria-hidden="true" className="text-[12px] leading-none text-red-600 dark:text-red-400">🚩</span>
                       <svg aria-hidden="true" width="10" height="12" viewBox="0 0 10 12" fill="none" stroke="#8b5cf6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 11V1" /><path d="M2 1.5h6l-1.5 2L8 5.5H2" fill="#8b5cf6" /></svg>
                     </span>
                   }
@@ -1557,7 +1557,7 @@ export const Dashboard: React.FC = () => {
                                 value={processingState.selectedLanguage}
                                 onChange={(e) => handleLanguageChange(e.target.value)}
                                 disabled={processingState.translating}
-                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                               >
                                 {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
                                   <option key={lang.code} value={lang.code}>
@@ -1622,7 +1622,7 @@ export const Dashboard: React.FC = () => {
                                         className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
                                       >
                                         {actionBarData.copiedIndex === -1 ? (
-                                          <Check className="h-3.5 w-3.5 text-emerald-600" />
+                                          <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
                                         ) : (
                                           <Copy className="h-3.5 w-3.5 opacity-60" />
                                         )}

@@ -573,7 +573,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 value={textInput}
                 onChange={(e) => setTextInput(e.target.value)}
                 placeholder={t('dashboard.paste_placeholder')}
-                className="w-full h-64 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full h-64 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
             </div>
             
@@ -597,7 +597,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 textInput.length > 100000 ||
                 (medicalMode && medicalValidation && !medicalValidation.isValid)
               }
-              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
+              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
                 medicalMode
                   ? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600'
                   : 'bg-accent-gold text-ink-on-dark hover:opacity-90'
@@ -639,7 +639,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 placeholder="https://example.com/article"
-                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <button
                 type="button"
@@ -680,7 +680,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 <select
                   value={flashcardCount}
                   onChange={(e) => setFlashcardCount(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                  className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                 >
                   <option value={10}>10 {t('dashboard.cards')}</option>
                   <option value={20}>20 {t('dashboard.cards')}</option>
@@ -698,7 +698,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                       type="radio"
                       checked={!fromSummary}
                       onChange={() => setFromSummary(false)}
-                      className="h-4 w-4 text-accent-gold focus:ring-focus border-divider dark:border-divider-on-dark"
+                      className="h-4 w-4 text-accent-gold focus-visible:ring-focus border-divider dark:border-divider-on-dark"
                     />
                     <span className="ml-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.full_content')}</span>
                   </label>
@@ -708,7 +708,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                       checked={fromSummary}
                       onChange={() => generationPrefs.includeSummary && setFromSummary(true)}
                       disabled={!generationPrefs.includeSummary}
-                      className="h-4 w-4 text-accent-gold focus:ring-focus border-divider dark:border-divider-on-dark"
+                      className="h-4 w-4 text-accent-gold focus-visible:ring-focus border-divider dark:border-divider-on-dark"
                     />
                     <span className="ml-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('dashboard.summary')}</span>
                   </label>
@@ -728,7 +728,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                   onChange={(e) =>
                     setGenerationPrefs((p) => ({ ...p, includeSummary: e.target.checked }))
                   }
-                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
+                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus-visible:ring-focus"
                 />
                 {t('dashboard.include_summary')}
               </label>
@@ -739,7 +739,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                   onChange={(e) =>
                     setGenerationPrefs((p) => ({ ...p, includeFlashcards: e.target.checked }))
                   }
-                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
+                  className="h-4 w-4 rounded border-divider dark:border-divider-on-dark text-accent-gold focus-visible:ring-focus"
                 />
                 {t('dashboard.include_flashcards')}
               </label>
@@ -752,7 +752,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                       type="checkbox"
                       checked={generationPrefs.quizQuestionTypes.includes(qt)}
                       onChange={() => toggleDashboardQuizType(qt)}
-                      className="h-3.5 w-3.5 rounded border-divider dark:border-divider-on-dark text-accent-gold focus:ring-focus"
+                      className="h-3.5 w-3.5 rounded border-divider dark:border-divider-on-dark text-accent-gold focus-visible:ring-focus"
                     />
                     {t(`dashboard.quiz_type_${qt}`)}
                   </label>

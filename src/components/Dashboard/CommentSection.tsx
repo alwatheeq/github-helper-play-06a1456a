@@ -305,7 +305,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                     maxLength={2000}
-                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={3}
                   />
                   <div className="flex items-center space-x-2">
@@ -383,7 +383,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder="Write a reply..."
                     maxLength={2000}
-                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={2}
                   />
                   <div className="flex items-center space-x-2">
@@ -445,7 +445,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
-          className="px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+          className="px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
         >
           <option value="newest">Newest First</option>
           <option value="oldest">Oldest First</option>
@@ -458,7 +458,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Write a comment..."
           maxLength={2000}
-          className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+          className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
           rows={3}
         />
         <div className="flex items-center justify-between mt-2">

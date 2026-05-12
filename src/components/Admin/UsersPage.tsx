@@ -650,7 +650,7 @@ export const UsersPage: React.FC = React.memo(() => {
               placeholder="Search users by email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
         </div>
@@ -677,7 +677,7 @@ export const UsersPage: React.FC = React.memo(() => {
                         className="p-1"
                       >
                         {selectedItems.size === filteredUsers.length ? (
-                          <CheckSquare className="h-5 w-5 text-blue-600" />
+                          <CheckSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         ) : (
                           <Square className="h-5 w-5 text-gray-400" />
                         )}
@@ -725,7 +725,7 @@ export const UsersPage: React.FC = React.memo(() => {
                           className="p-1"
                         >
                           {selectedItems.has(user.id) ? (
-                            <CheckSquare className="h-5 w-5 text-blue-600" />
+                            <CheckSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                           ) : (
                             <Square className="h-5 w-5 text-gray-400" />
                           )}
@@ -1127,7 +1127,7 @@ export const UsersPage: React.FC = React.memo(() => {
                             toast.error('Failed to remove tag');
                           }
                         }}
-                        className="hover:text-red-600"
+                        className="hover:text-red-600 dark:text-red-400"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -1214,7 +1214,7 @@ export const UsersPage: React.FC = React.memo(() => {
                                 toast.error('Failed to delete note');
                               }
                             }}
-                            className="ml-2 text-red-600 hover:text-red-800"
+                            className="ml-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:text-red-200"
                           >
                             <X className="h-4 w-4" />
                           </button>

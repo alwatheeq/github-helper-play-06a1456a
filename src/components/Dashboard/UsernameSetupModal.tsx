@@ -236,7 +236,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
                   onChange={handleInputChange}
                   maxLength={20}
                   placeholder={t('social.username_placeholder')}
-                  className="w-full pl-8 pr-10 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-focus transition-colors"
+                  className="w-full pl-8 pr-10 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                   {renderValidationIcon()}

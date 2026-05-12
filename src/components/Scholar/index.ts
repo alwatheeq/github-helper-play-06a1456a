@@ -44,3 +44,4 @@ export { NumberedList } from './NumberedList';
 export type { NumberedListItem } from './NumberedList';
 export { KeyValueRow } from './KeyValueRow';
 export { FeatureDarkCard } from './FeatureDarkCard';
+export { ScholarIcon } from './ScholarIcon';

@@ -261,7 +261,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by admin or description..."
-                className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
               />
             </div>
           </div>
@@ -273,7 +273,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
             <select
               value={filterActionType}
               onChange={(e) => setFilterActionType(e.target.value)}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="">All Actions</option>
               <option value="CREATE">Create</option>
@@ -293,7 +293,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
             <select
               value={filterTable}
               onChange={(e) => setFilterTable(e.target.value)}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="">All Tables</option>
               {uniqueTables.map(table => (
@@ -314,7 +314,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
                   setDateRange(value);
                 }
               }}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             >
               <option value="today">Today</option>
               <option value="7days">Last 7 Days</option>

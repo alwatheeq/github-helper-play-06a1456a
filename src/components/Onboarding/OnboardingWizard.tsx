@@ -172,7 +172,7 @@ export const OnboardingWizard: React.FC = () => {
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-gold"
             >
               {t('onboarding.next')}
               <ChevronRight className="h-4 w-4" />
@@ -238,7 +238,7 @@ export const OnboardingWizard: React.FC = () => {
                 type="button"
                 onClick={handleComplete}
                 disabled={completing}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-gold"
               >
                 {completing ? (
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />

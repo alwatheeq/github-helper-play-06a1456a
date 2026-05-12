@@ -231,7 +231,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
               placeholder="Search feedback..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
@@ -240,7 +240,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>
@@ -254,7 +254,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
             >
               <option value="all">All Types</option>
               <option value="feedback">Feedback</option>
@@ -414,7 +414,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                   <select
                     value={selectedFeedback.status}
                     onChange={(e) => updateFeedbackStatus(selectedFeedback.id, e.target.value as 'pending' | 'reviewed' | 'resolved')}
-                    className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-lg text-sm focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                    className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-lg text-sm focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
                   >
                     <option value="pending">Pending</option>
                     <option value="reviewed">Reviewed</option>

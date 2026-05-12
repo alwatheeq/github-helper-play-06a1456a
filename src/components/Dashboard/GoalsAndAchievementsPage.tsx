@@ -536,7 +536,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               )}
                               <button
                                 onClick={() => handleDeleteGoal(goal.id)}
-                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                                 title="Delete goal"
                               >
                                 <Trash2 className="h-5 w-5" />
@@ -601,7 +601,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                           </div>
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />
@@ -819,7 +819,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -839,7 +839,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder={t('goals.goal_title_placeholder')}
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -853,7 +853,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   placeholder={t('goals.description_placeholder')}
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -867,7 +867,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   {t('goals.target_value_help')}
@@ -883,7 +883,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-divider rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-green-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                 />
               </div>
 

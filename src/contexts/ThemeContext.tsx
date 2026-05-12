@@ -446,7 +446,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const getThemeText = (): string => activeUI.textPrimary;
   const getThemeFocusRing = (): string => {
     const focusColor = isDark ? activeUI.accentHover : activeUI.accent;
-    return `focus:ring-${focusColor}`;
+    return `focus-visible:ring-${focusColor}`;
   };
   const getThemeTextPrimary = (): string => activeUI.textPrimary;
   const getThemeTextSecondary = (): string => activeUI.textSecondary;

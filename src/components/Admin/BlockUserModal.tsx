@@ -166,7 +166,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                       setBlockType(e.target.value as 'permanent' | 'temporary');
                       setExpirationDate('');
                     }}
-                    className="w-4 h-4 text-red-600 focus:ring-red-500"
+                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
                   <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Permanent</span>
                 </label>
@@ -177,7 +177,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     value="temporary"
                     checked={blockType === 'temporary'}
                     onChange={(e) => setBlockType(e.target.value as 'permanent' | 'temporary')}
-                    className="w-4 h-4 text-red-600 focus:ring-red-500"
+                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
                   <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Temporary</span>
                 </label>
@@ -197,7 +197,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                 onChange={(e) => setExpirationDate(e.target.value)}
                 min={minDate}
                 required={blockType === 'temporary'}
-                className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
               />
             </div>
           )}
@@ -213,7 +213,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
               placeholder={isCurrentlyBlocked ? 'Reason for unblocking...' : 'Reason for blocking...'}
               required={!isCurrentlyBlocked}
               rows={4}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
 
