@@ -4,7 +4,7 @@ import { handleCorsPreflight } from '../_shared/cors.ts';
 import { jsonResponse, errorResponse } from '../_shared/response.ts';
 import { validateMethod } from '../_shared/validation.ts';
 
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
 const MAX_TOKENS = 4096;
 
 async function callClaude(
@@ -13,9 +13,9 @@ async function callClaude(
   model: string,
   maxTokens: number
 ) {
-  const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
+  const apiKey = Deno.env.get('GEMINI_API_KEY');
   if (!apiKey) {
-    return { error: 'Missing ANTHROPIC_API_KEY environment variable' };
+    return { error: 'Missing GEMINI_API_KEY environment variable' };
   }
 
   const safeMaxTokens = Math.min(maxTokens, MAX_TOKENS);
@@ -23,47 +23,49 @@ async function callClaude(
     console.warn(`⚠️ Token limit capped from ${maxTokens} to ${safeMaxTokens}`);
   }
 
+  const geminiModel = typeof model === 'string' && model ? model : DEFAULT_MODEL;
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 50000);
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: safeMaxTokens,
-        system: systemPrompt,
-        // Claude requires alternating user/assistant roles; filter out any system entries
-        messages: messages.filter(m => m.role === 'user' || m.role === 'assistant'),
-      }),
-      signal: controller.signal,
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent`,
+      {
+        method: 'POST',
+        headers: {
+          'x-goog-api-key': apiKey,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: messages
+            .filter(m => m.role === 'user' || m.role === 'assistant')
+            .map(m => ({
+              role: m.role === 'assistant' ? 'model' : 'user',
+              parts: [{ text: m.content }],
+            })),
+          generationConfig: { maxOutputTokens: safeMaxTokens },
+        }),
+        signal: controller.signal,
+      }
+    );
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
-      return { error: `Anthropic API error ${response.status}: ${errorText}` };
+      return { error: `Gemini API error ${response.status}: ${errorText}` };
     }
 
     const data = await response.json();
 
-    if (!data?.content || !Array.isArray(data.content) || data.content.length === 0) {
-      return { error: 'Anthropic API returned invalid response structure' };
-    }
-
-    const output = data.content[0]?.text || '';
+    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     if (!output || output.trim().length === 0) {
-      return { error: 'Anthropic API returned empty response' };
+      return { error: 'Gemini API returned empty response' };
     }
 
-    const inputTokens = data?.usage?.input_tokens || 0;
-    const outputTokens = data?.usage?.output_tokens || 0;
+    const inputTokens = data?.usageMetadata?.promptTokenCount || 0;
+    const outputTokens = data?.usageMetadata?.candidatesTokenCount || 0;
     const totalTokens = inputTokens + outputTokens;
 
     return { output, tokens: { input: inputTokens, output: outputTokens, total: totalTokens } };
@@ -147,16 +149,16 @@ Deno.serve(async (req) => {
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
-    const anthropicKey = Deno.env.get('ANTHROPIC_API_KEY');
+    const geminiKey = Deno.env.get('GEMINI_API_KEY');
 
     if (!supabaseUrl || !supabaseKey) {
       console.error('[chat-assistant] Missing Supabase credentials');
       return errorResponse('Server configuration error: Missing Supabase credentials', 500);
     }
 
-    if (!anthropicKey) {
-      console.error('[chat-assistant] Missing Anthropic API key');
-      return errorResponse('Server configuration error: Missing Anthropic API key', 500);
+    if (!geminiKey) {
+      console.error('[chat-assistant] Missing Gemini API key');
+      return errorResponse('Server configuration error: Missing Gemini API key', 500);
     }
 
     const { createClient } = await import('jsr:@supabase/supabase-js@2');

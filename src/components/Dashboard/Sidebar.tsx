@@ -82,10 +82,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const navigationItems = [
     { id: 'main' as const, label: t('sidebar.dashboard'), icon: Home, description: t('sidebar.dashboard_desc'), disabled: false },
     { id: 'library' as const, label: t('sidebar.my_library'), icon: BookOpen, description: t('sidebar.library_desc'), disabled: false },
-    { id: 'quiz' as const, label: t('sidebar.quiz'), icon: FileQuestion, description: t('sidebar.quiz_desc'), disabled: false },
-    { id: 'eduplay' as const, label: t('sidebar.eduplay'), icon: Gamepad2, description: t('sidebar.eduplay_desc'), disabled: false },
     { id: 'study-rooms' as const, label: t('sidebar.study_rooms'), icon: Users, description: t('sidebar.study_rooms_desc'), disabled: false },
     { id: 'academics' as const, label: t('sidebar.academics'), icon: Target, description: t('sidebar.academics_desc'), disabled: false },
+    { id: 'quiz' as const, label: t('sidebar.quiz'), icon: FileQuestion, description: t('sidebar.quiz_desc'), disabled: false },
+    { id: 'eduplay' as const, label: t('sidebar.eduplay'), icon: Gamepad2, description: t('sidebar.eduplay_desc'), disabled: false },
     { id: 'history' as const, label: t('sidebar.history'), icon: History, description: t('sidebar.history_desc'), disabled: false },
     { id: 'informational' as const, label: t('sidebar.informational'), icon: Info, description: t('sidebar.info_desc'), disabled: false },
     { id: 'feedback' as const, label: t('sidebar.feedback'), icon: MessageSquare, description: t('sidebar.feedback_desc'), disabled: false },

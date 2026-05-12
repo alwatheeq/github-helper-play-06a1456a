@@ -5,9 +5,9 @@ import type { SupabaseClient } from 'npm:@supabase/supabase-js@2.54.0';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
 const MAX_TOKENS_HARD_LIMIT = 4096;
-const ANTHROPIC_TIMEOUT_MS = 45000;
+const GEMINI_TIMEOUT_MS = 45000;
 const MAX_RETRIES = 3;
 
 /** Aligns with app `CONFIG.CHARS_PER_CHUNK` — max cleaned chars sent to the model per summary request. */
@@ -171,102 +171,94 @@ async function hashContent(text: string, action: string, language: string): Prom
   return Array.from(new Uint8Array(buffer)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-// ─── Anthropic client ─────────────────────────────────────────────────────────
+// ─── Gemini client ────────────────────────────────────────────────────────────
 
-interface AnthropicSuccess {
+interface GeminiSuccess {
   output: string;
   tokens: { input: number; output: number; total: number };
 }
 
-interface AnthropicError {
+interface GeminiError {
   error: string;
-  /** When set (4xx from Anthropic), handlers may return this HTTP status instead of 500. */
+  /** When set (4xx from Gemini), handlers may return this HTTP status instead of 500. */
   statusCode?: number;
 }
 
-type AnthropicResult = AnthropicSuccess | AnthropicError;
+type GeminiResult = GeminiSuccess | GeminiError;
 
-function getAnthropicApiKey(usageChannel: string | undefined): string | null {
-  const primary = Deno.env.get('ANTHROPIC_API_KEY')?.trim();
-  if (usageChannel === 'academics') {
-    const dedicated = Deno.env.get('ANTHROPIC_API_KEY_ACADEMICS')?.trim();
-    return dedicated || primary || null;
-  }
-  return primary || null;
-}
-
-function anthropicErrorHttpStatus(result: AnthropicResult): number {
+function geminiErrorHttpStatus(result: GeminiResult): number {
   if (!('error' in result)) return 500;
   const sc = result.statusCode;
   if (typeof sc === 'number' && sc >= 400 && sc < 500) return sc;
   return 500;
 }
 
-async function callAnthropic(
+async function callGemini(
   prompt: string,
   model: string,
   maxTokens: number,
-  usageChannel?: string
-): Promise<AnthropicResult> {
-  const apiKey = getAnthropicApiKey(usageChannel);
-  if (!apiKey) return { error: 'Missing ANTHROPIC_API_KEY environment variable' };
+  _usageChannel?: string
+): Promise<GeminiResult> {
+  const apiKey = Deno.env.get('GEMINI_API_KEY')?.trim();
+  if (!apiKey) return { error: 'Missing GEMINI_API_KEY environment variable' };
 
   const safeMaxTokens = Math.min(maxTokens, MAX_TOKENS_HARD_LIMIT);
 
   for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), ANTHROPIC_TIMEOUT_MS);
+    const timeoutId = setTimeout(() => controller.abort(), GEMINI_TIMEOUT_MS);
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          model,
-          max_tokens: safeMaxTokens,
-          messages: [{ role: 'user', content: [{ type: 'text', text: prompt }] }],
-        }),
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: 'POST',
+          headers: {
+            'x-goog-api-key': apiKey,
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [{ role: 'user', parts: [{ text: prompt }] }],
+            generationConfig: { maxOutputTokens: safeMaxTokens },
+          }),
+          signal: controller.signal,
+        }
+      );
 
       clearTimeout(timeoutId);
 
-      if (response.status === 529 || response.status >= 500) {
+      if (response.status >= 500) {
         const waitMs = 1000 * Math.pow(2, attempt);
-        console.warn(`Anthropic ${response.status} on attempt ${attempt + 1}, retrying in ${waitMs}ms`);
+        console.warn(`Gemini ${response.status} on attempt ${attempt + 1}, retrying in ${waitMs}ms`);
         if (attempt < MAX_RETRIES - 1) {
           await new Promise((r) => setTimeout(r, waitMs));
           continue;
         }
         const errorText = await response.text();
-        return { error: `Anthropic API error ${response.status} after ${MAX_RETRIES} attempts: ${errorText}` };
+        return { error: `Gemini API error ${response.status} after ${MAX_RETRIES} attempts: ${errorText}` };
       }
 
       if (!response.ok) {
         const errorText = await response.text();
         if (response.status >= 400 && response.status < 500) {
           return {
-            error: `Anthropic API error ${response.status}: ${errorText}`,
+            error: `Gemini API error ${response.status}: ${errorText}`,
             statusCode: response.status,
           };
         }
-        return { error: `Anthropic API error ${response.status}: ${errorText}` };
+        return { error: `Gemini API error ${response.status}: ${errorText}` };
       }
 
       const data = await response.json();
-      const output = data?.content?.[0]?.text || '';
-      const inputTokens = data?.usage?.input_tokens || 0;
-      const outputTokens = data?.usage?.output_tokens || 0;
+      const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const inputTokens = data?.usageMetadata?.promptTokenCount || 0;
+      const outputTokens = data?.usageMetadata?.candidatesTokenCount || 0;
 
       return { output, tokens: { input: inputTokens, output: outputTokens, total: inputTokens + outputTokens } };
     } catch (err: unknown) {
       clearTimeout(timeoutId);
       const msg = err instanceof Error ? err.message : String(err);
-      if (err instanceof Error && err.name === 'AbortError') return { error: 'Request timeout — Anthropic API took too long to respond' };
+      if (err instanceof Error && err.name === 'AbortError') return { error: 'Request timeout — Gemini API took too long to respond' };
       if (attempt < MAX_RETRIES - 1) {
         const waitMs = 1000 * Math.pow(2, attempt);
         console.warn(`Request error on attempt ${attempt + 1}, retrying in ${waitMs}ms: ${msg}`);
@@ -470,9 +462,9 @@ ${textForModel}
 
 Start immediately with "- ".`;
 
-  const result = await callAnthropic(prompt, model, maxTokens, usageChannel);
+  const result = await callGemini(prompt, model, maxTokens, usageChannel);
 
-  if ('error' in result) return jsonResponse({ error: result.error }, anthropicErrorHttpStatus(result));
+  if ('error' in result) return jsonResponse({ error: result.error }, geminiErrorHttpStatus(result));
 
   let summaryText = result.output.trim();
 
@@ -558,9 +550,9 @@ ${sourceText}
 
 Flashcards:`;
 
-  const result = await callAnthropic(prompt, model, 1500, usageChannel);
+  const result = await callGemini(prompt, model, 1500, usageChannel);
 
-  if ('error' in result) return jsonResponse({ error: result.error }, anthropicErrorHttpStatus(result));
+  if ('error' in result) return jsonResponse({ error: result.error }, geminiErrorHttpStatus(result));
 
   // Strict single-line Q/A parser — no stray-line accumulation
   const cards: { front: string; back: string }[] = [];
@@ -649,9 +641,9 @@ ${cleanedText}
 
 Topics:`;
 
-  const result = await callAnthropic(prompt, model, 300, usageChannel);
+  const result = await callGemini(prompt, model, 300, usageChannel);
 
-  if ('error' in result) return jsonResponse({ error: result.error }, anthropicErrorHttpStatus(result));
+  if ('error' in result) return jsonResponse({ error: result.error }, geminiErrorHttpStatus(result));
 
   const topics: string[] = result.output
     .split('\n')
@@ -680,7 +672,7 @@ type SummaryFlashcardsRequestBody = {
   totalChunks?: number;
   summaryText?: string;
   targetLanguage?: string;
-  /** When `academics`, uses `ANTHROPIC_API_KEY_ACADEMICS` if set, else primary key. */
+  /** Accepted for backwards-compat but no longer affects key selection. */
   usageChannel?: string;
 };
 

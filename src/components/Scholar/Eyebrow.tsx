@@ -18,7 +18,7 @@ export const Eyebrow: React.FC<EyebrowProps> = ({
   const Tag = as as keyof JSX.IntrinsicElements;
   const cls = [
     'inline-block',
-    'text-[11px] font-semibold tracking-[0.14em] uppercase',
+    'text-[10px] font-bold tracking-[0.25em] uppercase',
     'text-accent-gold',
     className,
   ].join(' ');

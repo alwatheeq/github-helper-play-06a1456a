@@ -7,6 +7,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
+import { PageHeader } from '../Scholar';
 
 interface UploadedFile {
   file: File;
@@ -334,18 +335,13 @@ export const FeedbackPage: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
-      <div className="max-w-7xl mx-auto">
-
-        {/* ── v4 Header ─────────────────────────────────────────────── */}
-        <div className="flex justify-between items-end mb-0">
-          <div>
-            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">Correspondence</div>
-            <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark mt-1.5 mb-1 tracking-[-0.8px]">A letter to the editors.</h1>
-            <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Tell us what worked, what broke, or what could be lovelier.</p>
-          </div>
-        </div>
-        <div className="h-px bg-ink dark:bg-ink-on-dark mt-3.5 mb-5 opacity-80" />
+    <div className="w-full">
+        <PageHeader
+          eyebrow="Correspondence"
+          title="A letter to the editors"
+          descriptor="Tell us what worked, what broke, or what could be lovelier."
+          className="mb-5"
+        />
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-7">
@@ -564,7 +560,6 @@ export const FeedbackPage: React.FC = React.memo(() => {
             </div>
           </div>
         </div>
-      </div>
 
       {/* Feedback Tutorial */}
       {tutorialConfig && (

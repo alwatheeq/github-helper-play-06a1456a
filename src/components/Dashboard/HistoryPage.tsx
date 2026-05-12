@@ -8,7 +8,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
-import { ScholarCard, ScholarButton, ScholarBadge, PageHeader, ScholarSkeleton } from '../Scholar';
+import { ScholarCard, ScholarButton, PageHeader, ScholarSkeleton } from '../Scholar';
 
 interface HistoryEntry {
   id: string;
@@ -167,25 +167,14 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
     );
   }
 
-  // Roman numeral helper (up to 20 items covers typical history pages)
-  const toRoman = (n: number): string => {
-    const vals = [10, 9, 5, 4, 1];
-    const syms = ['x', 'ix', 'v', 'iv', 'i'];
-    let result = '';
-    for (let i = 0; i < vals.length; i++) {
-      while (n >= vals[i]) { result += syms[i]; n -= vals[i]; }
-    }
-    return result;
-  };
-
   return (
     <div className="w-full overflow-hidden">
       {/* Scholar v4 PageHeader */}
       <PageHeader
-        eyebrow={t('history.eyebrow') || 'THE LEDGER'}
-        title={t('history.generation_history')}
-        descriptor={t('history.history_desc')}
-        className="mb-8"
+        eyebrow={t('history.eyebrow') || 'The Ledger'}
+        title={t('history.generation_history') || 'History'}
+        descriptor={t('history.history_desc') || 'everything you have done, in order.'}
+        className="mb-5"
         actions={
           <div className="flex items-center gap-3">
             <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark sr-only">{t('history.sort_by')}</label>
@@ -206,6 +195,33 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
         }
       />
 
+      {/* v4 Stats strip — dark ink bar, 4 items */}
+      {historyEntries.length > 0 && (() => {
+        const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        const itemsThisWeek = historyEntries.filter(e => new Date(e.created_at).getTime() >= oneWeekAgo).length;
+        const totalCards = historyEntries.reduce((sum, e) => sum + (e.flashcards_json?.length || 0), 0);
+        const uniqueTopics = new Set(historyEntries.flatMap(e => e.topics || [])).size;
+        const stats = [
+          { label: 'items this week', value: String(itemsThisWeek) },
+          { label: 'total items', value: String(historyEntries.length) },
+          { label: 'total cards', value: String(totalCards) },
+          { label: 'topics covered', value: String(uniqueTopics) },
+        ];
+        return (
+          <div className="flex bg-sidebar mb-5">
+            {stats.map(({ label, value }, i) => (
+              <div
+                key={label}
+                className={`flex-1 py-3.5 px-5 text-center ${i < stats.length - 1 ? 'border-r border-card-light/10' : ''}`}
+              >
+                <div className="font-display text-[24px] font-bold text-card-light leading-none">{value}</div>
+                <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1.5">{label}</div>
+              </div>
+            ))}
+          </div>
+        );
+      })()}
+
       {historyEntries.length === 0 ? (
         <div className="text-center py-20 flex flex-col items-center justify-center">
           <History className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
@@ -216,76 +232,66 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
         </div>
       ) : (
         /* Scholar v4 Hist4: table-like list with roman numerals, hairline rows, row hover */
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] overflow-hidden">
+        <div className="border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark overflow-hidden">
           {historyEntries.map((entry, index) => {
             const medical = isMedicalEntry(entry);
+            const accentColor = medical ? '#9C2B2B' : '#5B7A3A';
+            const typeLabel = medical ? 'MEDICAL' : 'LIBRARY';
             return (
               <div
                 key={entry.id}
-                className={`group flex items-start gap-5 px-6 py-4 hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors duration-[var(--s4-dur-fast)] ${
+                className={`group flex items-start gap-3.5 py-3.5 pl-0 pr-5 hover:bg-subtle/60 dark:hover:bg-subtle-on-dark/20 transition-colors duration-[var(--s4-dur-fast)] ${
                   index < historyEntries.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
                 }`}
               >
-                {/* Roman numeral column */}
-                <div className="flex-shrink-0 w-8 pt-0.5">
-                  <span className="font-display text-sm text-accent-gold font-semibold select-none">
-                    {toRoman(index + 1)}.
-                  </span>
-                </div>
+                {/* Left accent bar */}
+                <div className="self-stretch w-[3px] flex-shrink-0 rounded-sm min-h-[44px]" style={{ background: accentColor }} />
 
                 {/* Main content */}
                 <div className="flex-1 min-w-0">
-                  {/* Filename + medical badge */}
-                  <div className="flex items-start gap-2 mb-1.5 flex-wrap">
-                    <span className="text-sm font-semibold text-ink dark:text-ink-on-dark leading-snug">
-                      {entry.original_file_name || t('common.unknown')}
+                  {/* Type badge + time */}
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span
+                      className="text-[9px] font-bold tracking-[1.2px] px-2 py-0.5 border"
+                      style={{ color: accentColor, borderColor: `${accentColor}44` }}
+                    >
+                      {typeLabel}
                     </span>
-                    {medical && (
-                      <ScholarBadge variant="danger">Medical</ScholarBadge>
+                    <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+                      {formatDate(entry.created_at)}
+                    </span>
+                  </div>
+
+                  {/* Filename */}
+                  <div className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-0.5">
+                    {entry.original_file_name || t('common.unknown')}
+                  </div>
+
+                  {/* Meta: cards + topics */}
+                  <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">
+                    {entry.flashcards_json.length > 0 && (
+                      <span>{entry.flashcards_json.length} cards generated</span>
+                    )}
+                    {entry.topics?.length ? (
+                      <span> · {entry.topics.slice(0, 2).join(', ')}</span>
+                    ) : null}
+                    {entry.expires_at && (
+                      <span className="flex items-center gap-1 mt-0.5">
+                        <Clock className="h-3 w-3 flex-shrink-0 text-accent-gold" />
+                        {t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}
+                      </span>
                     )}
                   </div>
-
-                  {/* Output type + topic chips */}
-                  <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
-                    {/* Input type chip */}
-                    <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap">
-                      {entry.original_input_type === 'file' ? t('history.file_upload') : t('history.text_input')}
-                    </span>
-                    {/* Cards count chip */}
-                    <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap">
-                      {entry.flashcards_json.length} {entry.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
-                    </span>
-                    {/* Topic chips */}
-                    {entry.topics?.slice(0, 3).map((topic, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap"
-                      >
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Expiry */}
-                  <div className="flex items-center gap-1 text-xs text-muted-ink dark:text-muted-ink-on-dark">
-                    <Clock className="h-3 w-3 flex-shrink-0 text-accent-gold" />
-                    <span>{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
-                  </div>
                 </div>
 
-                {/* Relative date + Open button */}
-                <div className="flex-shrink-0 flex flex-col items-end gap-2 pt-0.5">
-                  <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap">
-                    {formatDate(entry.created_at)}
-                  </span>
-                  <ScholarButton
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
-                  >
-                    {t('history.view_content')}
-                  </ScholarButton>
-                </div>
+                {/* View button */}
+                <button
+                  type="button"
+                  onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
+                  className="flex-shrink-0 px-3 py-1 border border-divider dark:border-divider-on-dark bg-transparent text-[11px] text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] mt-0.5"
+                >
+                  View
+                </button>
               </div>
             );
           })}

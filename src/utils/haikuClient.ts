@@ -133,7 +133,7 @@ class HaikuClient {
     ErrorLogger.debug('Using regular summary generation', { component: 'haikuClient', action: 'generateSummary', medicalMode: false });
     const { summary, tokens } = await this.callFunction('generate-summary-and-flashcards', {
       action: 'summary',
-      model: CONFIG.ANTHROPIC_MODEL,
+      model: CONFIG.GEMINI_MODEL,
       text,
       chunkIndex,
       totalChunks,
@@ -164,7 +164,7 @@ class HaikuClient {
 
     const { flashcards, tokens } = await this.callFunction('generate-summary-and-flashcards', {
       action: 'flashcards',
-      model: CONFIG.ANTHROPIC_MODEL,
+      model: CONFIG.GEMINI_MODEL,
       text,
       count,
       mode,

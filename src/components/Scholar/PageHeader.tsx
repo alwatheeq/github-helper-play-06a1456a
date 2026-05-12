@@ -41,11 +41,11 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
               <Eyebrow>{eyebrow}</Eyebrow>
             </div>
           ) : null}
-          <h1 className="font-display text-3xl sm:text-4xl leading-tight text-ink dark:text-ink-on-dark">
+          <h1 className="font-display text-[30px] sm:text-[38px] font-semibold leading-tight tracking-tight text-ink dark:text-ink-on-dark">
             {titleNode}
           </h1>
           {descriptor ? (
-            <p className="mt-2 text-sm sm:text-base text-secondary-ink dark:text-muted-ink-on-dark max-w-2xl">
+            <p className="mt-1 font-display text-[13px] text-muted-ink dark:text-muted-ink-on-dark max-w-2xl">
               {descriptor}
             </p>
           ) : null}
@@ -55,7 +55,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         ) : null}
       </div>
       {!hideRule ? (
-        <hr className="hairline border-divider dark:border-divider-on-dark mt-6" />
+        <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-4" />
       ) : null}
     </header>
   );

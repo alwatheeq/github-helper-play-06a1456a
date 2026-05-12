@@ -2,10 +2,10 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.39.3';
 
 const MODEL_TOKEN_LIMITS: { [key: string]: number } = {
-  'claude-haiku-4-5-20251001': 4096,
+  'gemini-2.5-flash-lite': 8192,
 };
 
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
 const QUESTIONS_PER_CHUNK = 3; // ✅ as requested
 const MAX_CHUNK_RETRIES = 3;
 
@@ -260,44 +260,47 @@ RESPOND WITH PURE JSON ONLY - NO MARKDOWN, NO EXPLANATIONS.
 Begin with [ and end with ]`;
 }
 
-// --- Claude call with timeout + usage extraction ---
-async function callClaude(prompt: string, claudeApiKey: string, maxTokens: number, temperature: number): Promise<{ text: string; tokens: TokenUsage }> {
+// --- Gemini call with timeout + usage extraction ---
+async function callClaude(prompt: string, geminiApiKey: string, maxTokens: number, temperature: number): Promise<{ text: string; tokens: TokenUsage }> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 45000);
 
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': claudeApiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: DEFAULT_MODEL,
-        max_tokens: Math.min(maxTokens, MODEL_TOKEN_LIMITS[DEFAULT_MODEL] || 4096),
-        temperature,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-      signal: controller.signal
-    });
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODEL}:generateContent`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': geminiApiKey,
+        },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: {
+            maxOutputTokens: Math.min(maxTokens, MODEL_TOKEN_LIMITS[DEFAULT_MODEL] || 8192),
+            temperature,
+          },
+        }),
+        signal: controller.signal,
+      }
+    );
 
     clearTimeout(timeoutId);
 
     if (!resp.ok) {
       const errorText = await resp.text();
-      throw new Error(`Claude API error: ${resp.status} - ${errorText}`);
+      throw new Error(`Gemini API error: ${resp.status} - ${errorText}`);
     }
 
     const data = await resp.json();
-    const responseText = (data?.content?.[0]?.text || '').trim();
-    const inputTokens = data?.usage?.input_tokens || 0;
-    const outputTokens = data?.usage?.output_tokens || 0;
+    const responseText = (data?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+    const inputTokens = data?.usageMetadata?.promptTokenCount || 0;
+    const outputTokens = data?.usageMetadata?.candidatesTokenCount || 0;
 
     return { text: responseText, tokens: { input: inputTokens, output: outputTokens, total: inputTokens + outputTokens } };
   } catch (e: unknown) {
     clearTimeout(timeoutId);
-    if (e instanceof Error && e.name === 'AbortError') throw new Error('Claude request timed out');
+    if (e instanceof Error && e.name === 'AbortError') throw new Error('Gemini request timed out');
     throw e;
   }
 }
@@ -488,8 +491,8 @@ Deno.serve(async (req: Request) => {
     if (questionCount < 5 || questionCount > 50) throw new Error('Question count must be between 5 and 50');
 
     console.log('🔑 Step 4: API key validation');
-    const claudeApiKey = Deno.env.get('ANTHROPIC_API_KEY');
-    if (!claudeApiKey) throw new Error('ANTHROPIC_API_KEY is not configured');
+    const claudeApiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!claudeApiKey) throw new Error('GEMINI_API_KEY is not configured');
 
     console.log('🤖 Step 5: Generate questions');
     const { questions, tokensUsedTotal } = await generateQuestionsInChunks(

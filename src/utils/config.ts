@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   // AI Model Configuration
-  ANTHROPIC_MODEL: 'claude-haiku-4-5-20251001',
+  GEMINI_MODEL: 'gemini-2.5-flash-lite',
   
   // Processing Limits
   MAX_SLIDES_PER_UPLOAD: 400,

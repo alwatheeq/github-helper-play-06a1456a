@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Users, X, Copy, Check, Clock, UserPlus, Trash2, Search } from 'lucide-react';
+import { Users, X, Copy, Check, Clock, Trash2, Search } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 const ZegoVideoRoom = React.lazy(() => import('./ZegoVideoRoom').then(m => ({ default: m.ZegoVideoRoom })));
@@ -975,13 +975,6 @@ export const StudyRoomsPage: React.FC = () => {
     return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   };
 
-  const formatExpiry = (dateString: string) => {
-    const now = new Date();
-    const expiry = new Date(dateString);
-    const hoursLeft = Math.floor((expiry.getTime() - now.getTime()) / (1000 * 60 * 60));
-    return `${hoursLeft}h left`;
-  };
-
   if (selectedRoom) {
     return (
       <div className="min-h-screen bg-card-dark p-4">
@@ -1074,26 +1067,24 @@ export const StudyRoomsPage: React.FC = () => {
   const activeStudyRoomsTabId = activeTab;
 
   return (
-    <div className="min-h-screen bg-page p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="w-full">
         <PageHeader
-          eyebrow={t('study_rooms.eyebrow') || 'Collaboration'}
+          eyebrow={t('study_rooms.eyebrow') || 'MeshFahem · Live'}
           title={t('study_rooms.title')}
-          descriptor={t('study_rooms.page_description') || 'Collaborate with others in real-time'}
-          className="mb-6"
-          hideRule
+          descriptor={t('study_rooms.page_description') || 'Collaborate live with peers. Join a session or start your own.'}
+          className="mb-5"
           actions={
-            <ScholarButton
-              variant="primary"
-              size="md"
+            <button
+              type="button"
               onClick={() => setActiveTab('create')}
+              className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-sidebar text-card-light font-display text-[13px] font-semibold cursor-pointer border-none"
             >
-              {t('study_rooms.create_room') || 'Create Room'}
-            </ScholarButton>
+              + {t('study_rooms.create_room') || 'Create Room'}
+            </button>
           }
         />
 
-        <div className="mb-6">
+        <div className="mb-4">
           <SectionTabs
             tabs={studyRoomsTabs}
             activeId={activeStudyRoomsTabId}
@@ -1211,14 +1202,14 @@ export const StudyRoomsPage: React.FC = () => {
           <div className="space-y-5">
             {/* Search bar — v4 panel style */}
             {activeTab === 'browse' && (
-              <div className="flex items-center gap-3 px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)]">
+              <div className="flex items-center gap-[10px] px-[14px] py-[9px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-[22px]">
                 <Search className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" aria-hidden />
                 <input
                   type="search"
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className="flex-1 bg-transparent text-[13px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+                  className="flex-1 bg-transparent text-[13px] text-muted-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>
@@ -1226,12 +1217,15 @@ export const StudyRoomsPage: React.FC = () => {
 
             {/* Section heading row */}
             {!loading && displayRoomList.length > 0 && (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-[10px] mb-3">
                 <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">
                   {activeTab === 'browse' ? 'Live Now' : t('study_rooms.my_rooms')}
                 </span>
-                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {displayRoomList.length}</span>
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {displayRoomList.length} rooms</span>
                 <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+                <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">
+                  {activeTab === 'browse' ? 'most active' : 'recent'}
+                </span>
               </div>
             )}
 
@@ -1254,31 +1248,30 @@ export const StudyRoomsPage: React.FC = () => {
               </div>
             ) : (
               /* 3-col card grid matching Rooms4 layout */
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[14px]">
                 {displayRoomList.map((room) => {
                   const isFull = (room.participant_count || 0) >= room.max_participants;
+                  const n = room.participant_count || 0;
+                  const avatarLetters = Array.from({ length: Math.min(n, 4) }, (_, i) => String.fromCharCode(65 + (i % 26)));
+                  const avatarPalette = ['var(--color-accent-gold)','var(--color-secondary-ink)','var(--color-sidebar)','var(--color-muted-ink)'];
                   return (
-                    <div key={room.id} className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)] hover:shadow-md transition-shadow">
-                      {/* Card header strip */}
-                      <div className="bg-card-dark px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)]">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-accent-gold" />
-                          <span className="text-[9px] tracking-[0.15em] uppercase font-bold text-accent-gold">Live</span>
+                    <div key={room.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col">
+                      {/* Card header — dark ink strip */}
+                      <div className="bg-sidebar px-[14px] py-[11px] flex justify-between items-center">
+                        <div className="text-[9.5px] tracking-[1.5px] uppercase font-bold text-accent-gold">
+                          {room.room_code}
                         </div>
-                        {isFull ? (
-                          <span className="text-[9px] tracking-[0.15em] uppercase font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded-full">Full</span>
-                        ) : (
-                          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
-                            <Clock className="h-3 w-3" /> {formatExpiry(room.expires_at)}
-                          </span>
-                        )}
+                        <div className="inline-flex items-center gap-[5px] px-[9px] py-[3px] bg-accent-gold text-[9px] tracking-[1.5px] uppercase font-bold text-ink">
+                          <div className="w-1 h-1 rounded-full bg-ink flex-shrink-0" />
+                          Live
+                        </div>
                       </div>
 
                       {/* Card body */}
-                      <div className="px-4 py-4 flex-1 flex flex-col gap-3">
+                      <div className="px-[16px] py-[14px] flex-1 flex flex-col gap-[9px]">
                         <div>
-                          <h3 className="font-display text-[17px] font-semibold text-ink dark:text-ink-on-dark leading-snug">
-                            {room.room_name}
+                          <h3 className="font-display text-[17px] font-semibold text-ink dark:text-ink-on-dark leading-tight mb-[3px]">
+                            {room.room_name}.
                           </h3>
                         </div>
                         {room.room_description && (
@@ -1286,19 +1279,33 @@ export const StudyRoomsPage: React.FC = () => {
                             {room.room_description}
                           </p>
                         )}
-                        <div className="flex gap-1.5 flex-wrap">
-                          <span className="text-[9px] tracking-[0.12em] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark px-2 py-0.5 rounded">
-                            {room.room_code}
+                        <div className="flex gap-[5px] flex-wrap">
+                          <span className="text-[9px] tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark font-bold px-[7px] py-[2px] border border-divider dark:border-divider-on-dark uppercase">
+                            Video
+                          </span>
+                          <span className="text-[9px] tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark font-bold px-[7px] py-[2px] border border-divider dark:border-divider-on-dark uppercase">
+                            Chat
                           </span>
                         </div>
                       </div>
 
                       {/* Card footer */}
-                      <div className="px-4 py-3 border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
-                        <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
-                          <Users className="h-3.5 w-3.5" />
-                          {room.participant_count || 0} / {room.max_participants}
-                        </span>
+                      <div className="px-[16px] py-[10px] border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {/* Avatar stack */}
+                          <div className="flex">
+                            {avatarLetters.map((letter, i) => (
+                              <div
+                                key={i}
+                                className="w-[22px] h-[22px] rounded-full grid place-items-center text-[9.5px] font-bold text-card-light border-2 border-card-light dark:border-card-dark flex-shrink-0"
+                                style={{ background: avatarPalette[i % avatarPalette.length], marginLeft: i ? '-7px' : '0' }}
+                              >
+                                {letter}
+                              </div>
+                            ))}
+                          </div>
+                          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{n} / {room.max_participants}</span>
+                        </div>
                         <div className="flex items-center gap-2">
                           {activeTab === 'my-rooms' && room.creator_id === user?.id && (
                             <button
@@ -1312,10 +1319,9 @@ export const StudyRoomsPage: React.FC = () => {
                           <button
                             onClick={() => handleJoinRoom(room)}
                             disabled={isFull}
-                            className="px-4 py-1.5 bg-accent-gold text-white dark:text-ink text-[12px] font-semibold rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center gap-1.5"
+                            className="px-[14px] py-[6px] bg-accent-gold text-ink font-display text-[12px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-opacity"
                           >
-                            <UserPlus className="h-3.5 w-3.5" />
-                            {t('study_rooms.join')}
+                            {isFull ? 'Full' : 'Join Now'}
                           </button>
                         </div>
                       </div>
@@ -1339,7 +1345,6 @@ export const StudyRoomsPage: React.FC = () => {
             onBack={() => setActiveTab('groups')}
           />
         )}
-      </div>
 
       <UsernameSetupModal
         isOpen={showUsernameModal}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Upload, BookOpen, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
+import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
 import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -915,52 +915,39 @@ export const QuizPage: React.FC = React.memo(() => {
           <PageHeader
             eyebrow={t('quiz.eyebrow') || 'Examinations'}
             title={t('quiz.page_title') || t('quiz.quizzes_and_exams') || 'Quizzes & Exams'}
-            descriptor={t('quiz.descriptor') || undefined}
+            descriptor={t('quiz.descriptor') || 'Compose a new quiz, sit a global exam, or revisit your previous attempts.'}
+            className="mb-5"
             actions={
               <div
                 role="tablist"
                 aria-label={t('quiz.view_mode') || 'View mode'}
-                className="inline-flex border border-divider dark:border-divider-on-dark overflow-hidden"
+                className="flex gap-6 items-baseline pb-1 border-b border-divider dark:border-divider-on-dark"
               >
-                <button
-                  role="tab"
-                  aria-selected={quizViewMode === 'quizzes'}
-                  onClick={() => {
-                    setQuizViewMode('quizzes');
-                    if (activeTab === 'exams') {
-                      setActiveTab('quizzes');
-                    }
-                  }}
-                  className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 ${
-                    quizViewMode === 'quizzes'
-                      ? 'bg-ink text-ink-on-dark'
-                      : 'bg-transparent text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle'
-                  }`}
-                >
-                  <FileQuestion className="h-4 w-4" />
-                  {t('quiz.my_quizzes') || 'My Quizzes'}
-                </button>
-                <button
-                  role="tab"
-                  aria-selected={quizViewMode === 'exams'}
-                  onClick={() => {
-                    setQuizViewMode('exams');
-                    if (activeTab === 'quizzes') {
-                      setActiveTab('explore');
-                    }
-                  }}
-                  className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
-                    quizViewMode === 'exams'
-                      ? 'bg-ink text-ink-on-dark'
-                      : 'bg-transparent text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle'
-                  }`}
-                >
-                  <Globe className="h-4 w-4" />
-                  {t('quiz.global_exams') || 'Global Exams'}
-                </button>
+                {([['quizzes', t('quiz.my_quizzes') || 'My Quizzes'], ['exams', t('quiz.global_exams') || 'Global Exams']] as const).map(([k, l]) => {
+                  const on = quizViewMode === k;
+                  return (
+                    <button
+                      key={k}
+                      role="tab"
+                      aria-selected={on}
+                      onClick={() => {
+                        setQuizViewMode(k);
+                        if (k === 'exams' && activeTab === 'quizzes') setActiveTab('explore');
+                        if (k === 'quizzes' && activeTab === 'exams') setActiveTab('quizzes');
+                      }}
+                      className={`bg-transparent border-none pb-[6px] cursor-pointer font-display text-[14px] font-medium transition-colors ${
+                        on
+                          ? 'text-ink dark:text-ink-on-dark font-semibold border-b-2 border-accent-gold'
+                          : 'text-muted-ink dark:text-muted-ink-on-dark border-b-2 border-transparent'
+                      }`}
+                      style={{ marginBottom: '-1px' }}
+                    >
+                      {l}
+                    </button>
+                  );
+                })}
               </div>
             }
-            hideRule
           />
 
           <SectionTabs
@@ -997,7 +984,7 @@ export const QuizPage: React.FC = React.memo(() => {
 
         {/* ── Create Tab ── */}
         {activeTab === 'create' && (
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-6 rounded-[var(--s4-radius-card)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
             {quizViewMode === 'exams' ? (
               <div className="text-center py-16">
                 <Globe className="h-10 w-10 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-5" />
@@ -1015,59 +1002,49 @@ export const QuizPage: React.FC = React.memo(() => {
                 </button>
               </div>
             ) : (
-              <>
+              <div className="grid gap-[22px]" style={{ gridTemplateColumns: '1.4fr 1fr' }}>
+              {/* Left: form */}
+              <div>
                 {/* Eyebrow label */}
-                <p className="text-[10px] tracking-[2px] uppercase font-bold text-accent-gold mb-1">
-                  {t('quiz.create_new') || 'New Examination'}
+                <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-[5px]">
+                  {t('quiz.create_new') || 'Subject of examination'}
                 </p>
+                {/* Title underline input */}
+                <div className="pb-2 border-b border-ink dark:border-ink-on-dark mb-4">
+                  <input
+                    type="text"
+                    value={quizTitle}
+                    onChange={(e) => setQuizTitle(e.target.value)}
+                    placeholder={t('quiz.quiz_title_placeholder') || 'An examination on…'}
+                    maxLength={200}
+                    className="w-full bg-transparent font-display text-[21px] text-muted-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+                  />
+                </div>
 
-                <div className="space-y-5">
-                  {/* Quiz Title */}
-                  <div>
-                    <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-1.5 uppercase tracking-wider">
-                      {t('quiz.quiz_title')}
-                    </label>
-                    <input
-                      type="text"
-                      value={quizTitle}
-                      onChange={(e) => setQuizTitle(e.target.value)}
-                      placeholder={t('quiz.quiz_title_placeholder')}
-                      maxLength={200}
-                      className="w-full px-3 py-2 input-clean text-sm"
-                    />
-                  </div>
-
-                  {/* Content Source */}
-                  <div>
-                    <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
-                      {t('quiz.content_source')}
-                    </label>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedSource('library')}
-                        className={`p-3 border transition-colors text-sm ${
-                          selectedSource === 'library'
-                            ? 'border-ink bg-ink text-ink-on-dark'
-                            : 'border-divider dark:border-divider-on-dark bg-bg-subtle dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:border-ink/50'
-                        }`}
-                      >
-                        <BookOpen className="h-4 w-4 mx-auto mb-1.5" />
-                        <span className="font-semibold text-xs block">{t('quiz.from_library')}</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedSource('upload')}
-                        className={`p-3 border transition-colors text-sm ${
-                          selectedSource === 'upload'
-                            ? 'border-ink bg-ink text-ink-on-dark'
-                            : 'border-divider dark:border-divider-on-dark bg-bg-subtle dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:border-ink/50'
-                        }`}
-                      >
-                        <Upload className="h-4 w-4 mx-auto mb-1.5" />
-                        <span className="font-semibold text-xs block">{t('quiz.upload_file')}</span>
-                      </button>
-                    </div>
+                <div className="space-y-[14px]">
+                  {/* Content Source — 2-col selector matching Quiz4 design */}
+                  <div className="grid grid-cols-2 gap-2">
+                    {([
+                      { k: 'library' as const, l: t('quiz.from_library') || 'From Library', sub: `${libraryItems.length} volumes` },
+                      { k: 'upload'  as const, l: t('quiz.upload_file')   || 'Submit anew',  sub: 'upload a file' },
+                    ]).map(s => {
+                      const on = selectedSource === s.k;
+                      return (
+                        <button
+                          key={s.k}
+                          type="button"
+                          onClick={() => setSelectedSource(s.k)}
+                          className={`py-[16px] px-[14px] text-center cursor-pointer transition-colors ${
+                            on
+                              ? 'border-2 border-accent-gold bg-accent-gold-soft'
+                              : 'border border-divider dark:border-divider-on-dark bg-transparent'
+                          }`}
+                        >
+                          <div className={`font-display text-[15px] font-semibold ${on ? 'text-accent-gold' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>{s.l}</div>
+                          <div className={`font-display text-[11px] mt-[3px] ${on ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{s.sub}</div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   {/* Library Item or Upload File — searchable picker */}
@@ -1174,86 +1151,110 @@ export const QuizPage: React.FC = React.memo(() => {
                     </div>
                   )}
 
-                  {/* Quiz Settings Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
-                        {t('quiz.question_count')}
-                      </label>
-                      <div className="flex items-stretch border border-divider dark:border-divider-on-dark">
-                        <button
-                          type="button"
-                          onClick={() => setQuestionCount(c => Math.max(5, c - 5))}
-                          className="w-9 h-9 flex items-center justify-center bg-transparent text-muted-ink text-lg hover:bg-subtle transition-colors"
-                        >−</button>
-                        <div className="flex-1 h-9 flex items-center justify-center border-x border-divider dark:border-divider-on-dark font-display font-semibold text-ink dark:text-ink-on-dark text-sm">
-                          {questionCount}
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setQuestionCount(c => Math.min(50, c + 5))}
-                          className="w-9 h-9 flex items-center justify-center bg-transparent text-muted-ink text-lg hover:bg-subtle transition-colors"
-                        >+</button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
-                        {t('quiz.difficulty_level')}
-                      </label>
-                      <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden">
-                        {(['easy', 'medium', 'hard'] as const).map((d, j) => (
-                          <button
-                            key={d}
-                            type="button"
-                            onClick={() => setDifficulty(d)}
-                            className={`flex-1 py-2 text-xs font-semibold transition-colors ${
-                              j < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''
-                            } ${difficulty === d ? 'bg-ink text-ink-on-dark' : 'bg-transparent text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-subtle'}`}
-                          >
-                            {t(`quiz.difficulty_${d}`)}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
-                        {t('quiz.quiz_language')}
-                      </label>
-                      <select
-                        value={targetLanguage}
-                        onChange={(e) => setTargetLanguage(e.target.value)}
-                        className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
-                      >
-                        <option value="en">{t('quiz.language_en')}</option>
-                        <option value="ar">{t('quiz.language_ar')}</option>
-                        <option value="fr">{t('quiz.language_fr')}</option>
-                        <option value="tr">{t('quiz.language_tr')}</option>
-                      </select>
+                  {/* Row: Question count */}
+                  <div className="flex justify-between items-center">
+                    <span className="font-display text-[12px] text-secondary-ink dark:text-muted-ink-on-dark">{t('quiz.question_count') || 'Number of questions'}</span>
+                    <div className="flex items-stretch">
+                      <button type="button" onClick={() => setQuestionCount(c => Math.max(5, c - 5))} className="w-7 h-7 bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink text-lg grid place-items-center cursor-pointer">−</button>
+                      <div className="w-11 h-7 border-y border-divider dark:border-divider-on-dark flex items-center justify-center font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">{questionCount}</div>
+                      <button type="button" onClick={() => setQuestionCount(c => Math.min(50, c + 5))} className="w-7 h-7 bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink text-lg grid place-items-center cursor-pointer">+</button>
                     </div>
                   </div>
 
-                  {/* Generate Button */}
+                  {/* Row: Difficulty */}
+                  <div className="flex justify-between items-center">
+                    <span className="font-display text-[12px] text-secondary-ink dark:text-muted-ink-on-dark">{t('quiz.difficulty_level') || 'Difficulty'}</span>
+                    <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden">
+                      {(['easy', 'medium', 'hard'] as const).map((d, j) => (
+                        <button
+                          key={d}
+                          type="button"
+                          onClick={() => setDifficulty(d)}
+                          className={`px-4 py-[7px] font-display text-[12px] font-semibold cursor-pointer border-none transition-colors ${
+                            j < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''
+                          } ${difficulty === d ? 'bg-sidebar text-card-light' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'}`}
+                        >
+                          {t(`quiz.difficulty_${d}`)}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Row: Language */}
+                  <div className="flex justify-between items-center">
+                    <span className="font-display text-[12px] text-secondary-ink dark:text-muted-ink-on-dark">{t('quiz.quiz_language') || 'Language'}</span>
+                    <select
+                      value={targetLanguage}
+                      onChange={(e) => setTargetLanguage(e.target.value)}
+                      className="min-w-[170px] px-3 py-[7px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark font-display text-[13px] font-semibold cursor-pointer"
+                    >
+                      <option value="en">{t('quiz.language_en')}</option>
+                      <option value="ar">{t('quiz.language_ar')}</option>
+                      <option value="fr">{t('quiz.language_fr')}</option>
+                      <option value="tr">{t('quiz.language_tr')}</option>
+                    </select>
+                  </div>
+
+                  {/* Generate CTA */}
                   <button
                     onClick={handleGenerateQuiz}
                     disabled={generating || !quizTitle.trim()}
-                    className="w-full py-3 bg-ink text-ink-on-dark font-semibold text-sm hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full py-[11px] bg-sidebar text-card-light font-display text-[13px] font-medium text-center border-none cursor-pointer hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
                   >
-                    {generating ? (
-                      <>
-                        <div className="animate-spin h-4 w-4 border-2 border-ink-on-dark border-t-transparent rounded-full"></div>
-                        <span>{t('quiz.generating')}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Plus className="h-4 w-4" />
-                        <span>{t('quiz.generate')} →</span>
-                      </>
-                    )}
+                    {generating ? t('quiz.generating') : `${t('quiz.generate') || 'Compose the examination'} →`}
                   </button>
                 </div>
-              </>
+              </div>
+
+              {/* Right: dark stats panel */}
+              <div>
+                <div className="bg-sidebar p-[22px] mb-4">
+                  <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold">Highest mark</div>
+                  <div className="font-display leading-none mt-2" style={{ fontSize: 58, fontWeight: 600, color: 'var(--color-card-light, #f8f4ec)' }}>
+                    {quizHistory.length > 0
+                      ? `${Math.max(...quizHistory.map(h => Math.round(h.score_percentage)))}`
+                      : '—'}
+                    <span className="text-[22px] text-accent-gold">%</span>
+                  </div>
+                  {quizHistory.length > 0 && (() => {
+                    const best = quizHistory.reduce((b, h) => h.score_percentage > b.score_percentage ? h : b, quizHistory[0]);
+                    return <div className="font-display text-[12px] text-accent-gold mt-1.5">{best.quiz_title?.slice(0, 32) || '—'}</div>;
+                  })()}
+                  <div className="h-px bg-accent-gold opacity-20 mt-3.5" />
+                  <div className="flex justify-between mt-2.5">
+                    {[
+                      [String(quizHistory.length), 'sittings'],
+                      [quizHistory.length > 0 ? `${Math.round(quizHistory.reduce((s,h) => s + h.score_percentage, 0) / quizHistory.length)}%` : '—', 'average'],
+                    ].map(([v, l]) => (
+                      <div key={l} className="text-center">
+                        <div className="font-display text-[18px] font-bold text-card-light">{v}</div>
+                        <div className="text-[9px] tracking-[1.5px] uppercase text-accent-gold mt-0.5">{l}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {quizHistory.length > 0 && (
+                  <>
+                    <div className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2.5">Recent sittings</div>
+                    {quizHistory.slice(0, 3).map((r, i) => (
+                      <div key={r.id} className={`flex items-start gap-[10px] py-[11px] ${i < Math.min(2, quizHistory.length - 1) ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
+                        <span className="font-display text-[12px] text-accent-gold w-6 pt-[1px] flex-shrink-0">{['i.','ii.','iii.'][i]}</span>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-snug truncate">{r.quiz_title}</div>
+                          <div className="font-display text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
+                            {new Date(r.created_at).toLocaleDateString()}
+                          </div>
+                        </div>
+                        <span className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark flex-shrink-0">
+                          {Math.round(r.score_percentage)}<span className="text-[10px] text-accent-gold">%</span>
+                        </span>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
+              </div>
             )}
           </div>
         )}

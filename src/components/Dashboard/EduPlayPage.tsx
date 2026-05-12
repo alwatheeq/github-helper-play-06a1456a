@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Gamepad2, Play, Users, Clock, Trophy, Copy, Check, LogOut, Crown, Target, Sparkles, Edit } from 'lucide-react';
+import { Gamepad2, Play, Users, Copy, Check, LogOut, Crown, Target, Sparkles, Edit } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -19,6 +19,7 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
+import { PageHeader } from '../Scholar';
 
 interface GameSession {
   id: string;
@@ -582,101 +583,151 @@ export const EduPlayPage: React.FC = React.memo(() => {
     }
   };
 
-  const renderMenu = () => (
-    <div className="w-full">
-      {/* Page Header — Scholar v4 style */}
-      <div className="mb-2">
-        <div className="text-[10px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">The Games Room</div>
-        <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark tracking-tight leading-none mb-1">Play &amp; Learn.</h1>
-        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">choose your game — every session sharpens your edge.</p>
-      </div>
-      <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-3 mb-5" />
+  const renderMenu = () => {
+    const games = [
+      {
+        k: 'rush', live: true,
+        sub: 'Multiplayer · Real-time',
+        title: 'Brain Rush.',
+        desc: 'Head-to-head quiz duels against classmates. First to 7 correct wins. Host a room, join a friend\'s game, or enter a ranked online match.',
+        cta: 'Enter the arena →',
+        onClick: () => setViewMode('game-selection'),
+      },
+      { k: 'flash', live: false, sub: 'Solo · Flashcards',      title: 'Flash Sprint.',    desc: 'Race through a deck against the clock. Every correct answer extends your time.' },
+      { k: 'daily', live: false, sub: 'Community · Shared set', title: 'Daily Challenge.', desc: 'One curated question set per day, shared across the whole community.' },
+      { k: 'tourn', live: false, sub: 'Competitive · Bracket',  title: 'Tournament.',      desc: 'Bracket-style competitions across a full course. Win rounds to advance.' },
+    ];
+    const recentSessions = [
+      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–4',  pts: '+350', date: 'Today' },
+      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–5',  pts: '+350', date: 'Today' },
+      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Lost 4–7', pts: '+80',  date: 'Yesterday' },
+      { mode: 'Brain Rush', detail: 'Ranked Online', result: 'Won 7–3',  pts: '+420', date: 'Monday' },
+    ];
+    const leaderboard = [
+      { rank: 1, init: 'Y', name: 'Yusuf B.',  pts: 2840, you: false },
+      { rank: 2, init: 'J', name: 'You',        pts: 2610, you: true  },
+      { rank: 3, init: 'L', name: 'Layla A.',   pts: 2480, you: false },
+      { rank: 4, init: 'K', name: 'Karim H.',   pts: 1920, you: false },
+      { rank: 5, init: 'R', name: 'Reem S.',    pts: 1750, you: false },
+    ];
 
-      {/* Top row: BrainRush hero + two action cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
-        {/* BrainRush featured hero card (dark bg-sidebar) */}
-        <div className="lg:col-span-2 bg-sidebar p-6 flex flex-col shadow-[var(--s4-shadow-hairline)]">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold uppercase mb-2">Multiplayer · Real-time</div>
-              <h2 className="font-display text-[32px] font-semibold text-ink-on-dark tracking-tight leading-none mb-3">Brain Rush.</h2>
-              <p className="text-[13px] text-muted-ink-on-dark leading-relaxed max-w-sm">
-                Head-to-head quiz duels against classmates. Host a room, join a friend's game, or enter a ranked online match.
-              </p>
+    return (
+      <div className="w-full">
+        <PageHeader
+          eyebrow="The Games Room"
+          title="Play & Learn"
+          descriptor="choose your game — every session sharpens your edge."
+          className="mb-5"
+        />
+
+        {/* Main 2-col layout: games left, right rail */}
+        <div className="grid gap-[22px]" style={{ gridTemplateColumns: '1fr 300px' }}>
+          {/* Left: game cards 2×2 */}
+          <div>
+            <div className="grid grid-cols-2 gap-[14px] mb-[22px]">
+              {games.map((g) => (
+                <div
+                  key={g.k}
+                  className={`p-[22px_22px_20px] flex flex-col ${g.live ? 'bg-sidebar' : 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark'}`}
+                >
+                  <div className="flex justify-between items-start mb-[10px]">
+                    <div>
+                      <div className={`text-[9px] tracking-[1.5px] uppercase font-bold mb-[5px] ${g.live ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.sub}</div>
+                      <div className={`font-display text-[18px] font-semibold tracking-tight ${g.live ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>{g.title}</div>
+                    </div>
+                    {g.live
+                      ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-sidebar font-bold uppercase rounded-full flex-shrink-0">Live</div>
+                      : <div className="text-[9px] tracking-[1.5px] px-2 py-[3px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase flex-shrink-0">Soon</div>
+                    }
+                  </div>
+                  <div className={`text-[12px] leading-relaxed flex-1 mb-4 ${g.live ? 'text-card-light/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.desc}</div>
+                  {g.live && g.onClick
+                    ? <button onClick={g.onClick} className="py-2 bg-accent-gold text-sidebar font-display text-[12.5px] font-bold text-center cursor-pointer border-none hover:opacity-90 transition">
+                        {g.cta}
+                      </button>
+                    : <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark italic">Coming soon.</div>
+                  }
+                </div>
+              ))}
             </div>
-            <span className="flex items-center gap-1.5 text-[9px] tracking-[1.5px] font-bold uppercase bg-accent-gold text-sidebar px-2.5 py-1 rounded-full flex-shrink-0 ml-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-sidebar animate-pulse" />
-              Live
-            </span>
+
+            {/* Recent Sessions table */}
+            <div>
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-[10px]">Recent Sessions</div>
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+                <div className="grid py-[6px] px-[16px] border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 80px 70px 70px' }}>
+                  {['Game · Details', 'Result', 'Pts', 'Date'].map(h => (
+                    <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
+                  ))}
+                </div>
+                {recentSessions.map((r, i) => (
+                  <div
+                    key={i}
+                    className={`grid py-[10px] px-[16px] items-center ${i < recentSessions.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
+                    style={{ gridTemplateColumns: '1fr 80px 70px 70px' }}
+                  >
+                    <div>
+                      <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark">{r.mode}</div>
+                      <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[1px]">{r.detail}</div>
+                    </div>
+                    <div className={`text-[12px] font-${r.result.startsWith('Won') ? 'semibold' : 'normal'} ${r.result.startsWith('Won') ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{r.result}</div>
+                    <div className="font-display text-[13px] font-semibold text-accent-gold">{r.pts}</div>
+                    <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{r.date}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="mt-auto pt-4">
-            <button
-              onClick={() => setViewMode('game-selection')}
-              className="inline-block bg-accent-gold text-sidebar text-[12.5px] font-bold px-5 py-2.5 hover:opacity-90 transition"
-            >
-              Enter the arena →
-            </button>
+
+          {/* Right rail */}
+          <div className="flex flex-col gap-[14px]">
+            {/* Your Record — dark panel */}
+            <div className="bg-sidebar p-[20px_18px]">
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-card-light/40 mb-3">Your Record</div>
+              <div className="flex items-baseline gap-[6px] mb-1">
+                <span className="font-display text-[36px] font-bold text-card-light">7</span>
+                <span className="text-[14px] text-accent-gold font-semibold">W</span>
+                <span className="font-display text-[22px] font-light text-card-light/20 mx-1">—</span>
+                <span className="font-display text-[36px] font-bold text-card-light/50">3</span>
+                <span className="text-[14px] text-card-light/40 font-semibold">L</span>
+              </div>
+              <div className="text-[11px] text-card-light/50 mb-3.5">this week · Brain Rush</div>
+              <div className="h-px bg-card-light/10 mb-3.5" />
+              <div className="grid grid-cols-2 gap-[10px]">
+                {[['70%','win rate'],['2,610','total pts'],['10','games'],['8.2s','avg time']].map(([v,l]) => (
+                  <div key={l}>
+                    <div className="font-display text-[16px] font-semibold text-card-light">{v}</div>
+                    <div className="text-[9px] tracking-[1px] uppercase text-card-light/40 mt-0.5">{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Leaderboard */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[16px]">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Leaderboard · This Week</div>
+              {leaderboard.map((p, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center gap-[9px] py-[7px] px-[6px] ${i < leaderboard.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''} ${p.you ? 'bg-accent-gold-soft' : ''}`}
+                >
+                  <span className={`font-display text-[12px] w-[13px] flex-shrink-0 ${p.rank === 1 ? 'text-accent-gold font-bold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.rank}</span>
+                  <div
+                    className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-sidebar flex-shrink-0"
+                    style={{ background: p.you ? 'var(--color-accent-gold)' : 'var(--color-sidebar)' }}
+                  >
+                    {p.init}
+                  </div>
+                  <span className={`flex-1 text-[12px] ${p.you ? 'font-bold text-ink dark:text-ink-on-dark' : 'font-medium text-secondary-ink dark:text-muted-ink-on-dark'}`}>{p.name}</span>
+                  <span className={`font-display text-[12px] flex-shrink-0 ${p.you ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.pts.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-
-        {/* Action cards stacked in right column */}
-        <div className="flex flex-col gap-3">
-          {/* Host a Session — dark card */}
-          <button
-            onClick={() => setViewMode('question-source')}
-            className="flex-1 bg-card-dark p-5 text-left shadow-[var(--s4-shadow-hairline)] hover:opacity-90 transition"
-          >
-            <Crown className="h-5 w-5 text-accent-gold mb-3" />
-            <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Host a Session.</div>
-            <div className="text-[11px] text-muted-ink-on-dark leading-relaxed">Create your own Brain Rush game and share a code with your class.</div>
-            <div className="mt-3 text-[11px] font-bold text-accent-gold">Host →</div>
-          </button>
-          {/* Join a Game — light card */}
-          <button
-            onClick={() => setViewMode('join-game')}
-            className="flex-1 bg-card-light dark:bg-card-light p-5 text-left border border-divider shadow-[var(--s4-shadow-hairline)] hover:opacity-90 transition"
-          >
-            <Users className="h-5 w-5 text-ink mb-3" />
-            <div className="font-display text-[15px] font-semibold text-ink mb-1">Join a Game.</div>
-            <div className="text-[11px] text-muted-ink leading-relaxed">Enter a room code from your classmate to join their session.</div>
-            <div className="mt-3 text-[11px] font-bold text-ink">Join →</div>
-          </button>
-        </div>
       </div>
-
-      {/* Stats strip — 3 horizontal stat tiles */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
-        {[
-          { label: 'Games Played', value: '10' },
-          { label: 'Win Rate', value: '70%' },
-          { label: 'Best Streak', value: '7W' },
-        ].map(({ label, value }) => (
-          <div key={label} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)] text-center">
-            <div className="font-display text-[26px] font-semibold text-ink dark:text-ink-on-dark leading-none">{value}</div>
-            <div className="text-[9px] tracking-[1.2px] uppercase text-muted-ink dark:text-muted-ink-on-dark mt-2">{label}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Coming soon games */}
-      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">More Games Coming Soon</div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {[
-          { icon: Trophy, label: 'Flash Sprint.', sub: 'Solo · Flashcards' },
-          { icon: Clock, label: 'Daily Challenge.', sub: 'Community · Shared set' },
-        ].map(({ icon: Icon, label, sub }) => (
-          <div key={label} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 opacity-50 flex items-center gap-4 shadow-[var(--s4-shadow-hairline)]">
-            <Icon className="h-7 w-7 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
-            <div>
-              <div className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">{label}</div>
-              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{sub}</div>
-            </div>
-            <div className="ml-auto text-[9px] tracking-[1.5px] font-bold text-muted-ink dark:text-muted-ink-on-dark uppercase border border-divider dark:border-divider-on-dark px-2 py-0.5">Soon</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderGameSelection = () => (
     <div className="w-full max-w-4xl mx-auto">
@@ -1140,7 +1191,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="w-full min-h-0 p-4 sm:p-6">
+    <div className="w-full">
       {viewMode === 'menu' && renderMenu()}
       {viewMode === 'game-selection' && renderGameSelection()}
       {viewMode === 'question-source' && renderQuestionSource()}

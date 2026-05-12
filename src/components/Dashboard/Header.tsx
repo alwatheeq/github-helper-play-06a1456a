@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FileText, User, LogOut, Sun, Moon, HandCoins, Shield } from 'lucide-react';
+import { User, LogOut, Sun, Moon, HandCoins, Shield } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { useCredits } from '../../contexts/CreditContext';
@@ -110,8 +110,10 @@ export const Header: React.FC = () => {
         <div className="flex items-center h-16 rtl:flex-row-reverse">
           {/* Logo + App name */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse flex-shrink-0">
-            <div className="bg-chip p-2 rounded-md border border-divider dark:border-divider-on-dark">
-              <FileText className="h-6 w-6 text-accent-gold" />
+            <div className="h-9 w-9 rounded-full bg-sidebar flex items-center justify-center flex-shrink-0">
+              <span className="font-display text-base font-bold text-accent-gold leading-none select-none">
+                {t('app_name')[0]}
+              </span>
             </div>
             <h1 className="font-display text-xl text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
           </div>

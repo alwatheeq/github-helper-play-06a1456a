@@ -637,14 +637,13 @@ export const AcademicsPage: React.FC = React.memo(() => {
     <>
       <div className="space-y-6">
       <PageHeader
-        eyebrow={t('academics.eyebrow') || 'Studies'}
+        eyebrow={t('academics.eyebrow') || `Spring '26 · ${courses.length} enrolled`}
         title={t('academics.tab_title') || 'Academics'}
         descriptor={
           t('academics.tab_desc') ||
-          'Create courses, turn uploaded content into study tools, and track progress by topic.'
+          'Courses, uploads, and topic-level progress.'
         }
-        hideRule
-        className="mb-0"
+        className="mb-5"
         actions={
           <button
             type="button"
@@ -652,10 +651,10 @@ export const AcademicsPage: React.FC = React.memo(() => {
               migrationErrorToastShownRef.current = false;
               setShowCreateCourse(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-card-dark text-ink-on-dark border border-divider hover:opacity-90 transition-opacity text-sm font-medium"
+            className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-accent-gold text-ink font-display text-[13px] font-semibold border-none cursor-pointer"
           >
             <Plus className="h-4 w-4" aria-hidden />
-            <span>{t('academics.create_course') || 'Create course'}</span>
+            {t('academics.create_course') || 'Enrol a Course'}
           </button>
         }
       />
@@ -679,44 +678,66 @@ export const AcademicsPage: React.FC = React.memo(() => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {courses.map((course) => {
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {courses.map((course, idx) => {
                 const isSelected = selectedCourseId === course.id;
+                const accentColors = ['var(--color-ink,#1a1a1a)', 'var(--color-accent-gold,#B8893A)', 'var(--color-secondary-ink,#4a5568)', 'var(--color-muted-ink,#9ca3af)'];
+                const accentColor = accentColors[idx % accentColors.length];
                 return (
-                  <button
+                  <div
                     key={course.id}
-                    type="button"
-                    onClick={() => setSelectedCourseId(course.id)}
-                    className={`text-left bg-card-dark rounded-[var(--s4-radius-card)] border p-5 flex flex-col gap-3 transition-shadow hover:shadow-[var(--s4-shadow-card)] ${
-                      isSelected ? 'border-accent-gold' : 'border-divider'
+                    className={`bg-subtle dark:bg-card-dark border flex flex-col gap-[10px] p-4 transition-colors cursor-pointer ${
+                      isSelected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark'
                     }`}
+                    style={{ borderTop: `3px solid ${accentColor}` }}
+                    onClick={() => setSelectedCourseId(course.id)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && setSelectedCourseId(course.id)}
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-display text-lg font-semibold text-ink-on-dark leading-tight truncate">
+                    {/* Header row: code/prof + grade */}
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] tracking-[1.5px] uppercase font-bold mb-1" style={{ color: accentColor }}>
+                          {course.course_code || t('academics.topic_label')}
+                          {course.academics_topics?.name ? ` · ${course.academics_topics.name}` : ''}
+                        </div>
+                        <div className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-tight">
                           {course.course_name}
-                        </p>
-                        <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-chip text-muted-ink-on-dark text-xs font-medium">
-                          {course.course_code
-                            ? `${course.course_code} · ${course.academics_topics?.name || ''}`
-                            : (course.academics_topics?.name || t('academics.topic_label'))}
-                        </span>
+                        </div>
                       </div>
-                      {isSelected && (
-                        <span className="shrink-0 w-2 h-2 rounded-full bg-accent-gold mt-1" />
-                      )}
+                      <div className="text-right flex-shrink-0">
+                        <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark">Score</div>
+                        <div className="font-display text-[19px] font-semibold leading-none mt-0.5" style={{ color: accentColor }}>
+                          {isSelected ? `${courseScore}%` : '—'}
+                        </div>
+                      </div>
                     </div>
-                    {/* Progress bar — accent-gold fill */}
-                    <div className="w-full h-1.5 rounded-full bg-bg-subtle overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-accent-gold transition-all"
-                        style={{ width: `${Math.min(100, courseScore)}%` }}
-                      />
+                    {/* Hairline */}
+                    <div className="h-px bg-divider dark:bg-divider-on-dark" />
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {[
+                        { v: isSelected ? `${courseScore}%` : '—', l: 'avg score' },
+                        { v: '—', l: 'studied' },
+                        { v: '—', l: 'topics' },
+                        { v: '—', l: 'cards due' },
+                      ].map(({ v, l }) => (
+                        <div key={l}>
+                          <div className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">{v}</div>
+                          <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{l}</div>
+                        </div>
+                      ))}
                     </div>
-                    <p className="text-xs text-muted-ink-on-dark">
-                      {t('academics.course_score') || 'Score'} {courseScore}%
-                    </p>
-                  </button>
+                    {/* Open button */}
+                    <button
+                      type="button"
+                      onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
+                      className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
+                    >
+                      Open →
+                    </button>
+                  </div>
                 );
               })}
             </div>
@@ -733,15 +754,15 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className="bg-card-dark border border-divider rounded-[var(--s4-radius-card)] p-4 text-left hover:border-accent-gold transition-colors"
+                className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 text-left hover:border-accent-gold transition-colors"
               >
-                <span className="font-medium text-sm text-ink-on-dark">{label}</span>
+                <span className="font-display font-medium text-[13px] text-ink dark:text-ink-on-dark">{label}</span>
               </button>
             ))}
           </div>
 
           {/* Week streak strip */}
-          <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-4">
+          <div className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
             <p className="text-xs font-semibold text-muted-ink-on-dark uppercase tracking-widest mb-3">
               {t('academics.week_streak') || 'This week'}
             </p>

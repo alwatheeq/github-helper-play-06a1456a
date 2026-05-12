@@ -2,7 +2,7 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.39.3';
 import type { SupabaseClient } from 'npm:@supabase/supabase-js@2.39.3';
 
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
 const QUESTIONS_PER_CHUNK = 3;
 const MAX_CHUNK_RETRIES = 3;
 
@@ -464,20 +464,20 @@ Example format: ["Topic 1: summary...", "Topic 2: summary...", ...]
 
 No markdown, no code blocks, just the JSON array.`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': claudeApiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: DEFAULT_MODEL,
-      max_tokens: 2000,
-      temperature: 0.3,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODEL}:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': claudeApiKey,
+      },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 2000, temperature: 0.3 },
+      }),
+    }
+  );
 
   if (!response.ok) {
     console.warn('Topic segment extraction failed, falling back to text slicing');
@@ -485,7 +485,7 @@ No markdown, no code blocks, just the JSON array.`;
   }
 
   const data = await response.json();
-  const raw = (data?.content?.[0]?.text || '').trim();
+  const raw = (data?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
 
   try {
     const parsed = tryParseJSON(raw);
@@ -634,30 +634,30 @@ async function generateChunk(
   const langMultiplier = languageMultipliers[targetLanguage] || 1.0;
   const calculatedMaxTokens = Math.min(Math.ceil(questionsInChunk * 250 * langMultiplier), 4096);
 
-  const claudeResponse = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': claudeApiKey,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: DEFAULT_MODEL,
-      max_tokens: calculatedMaxTokens,
-      temperature: 0.7, // Slightly higher temperature encourages more varied output
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
+  const geminiResponse = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODEL}:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': claudeApiKey,
+      },
+      body: JSON.stringify({
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: calculatedMaxTokens, temperature: 0.7 },
+      }),
+    }
+  );
 
-  if (!claudeResponse.ok) {
-    const errorText = await claudeResponse.text();
-    throw new Error(`Claude API error: ${claudeResponse.status} - ${errorText}`);
+  if (!geminiResponse.ok) {
+    const errorText = await geminiResponse.text();
+    throw new Error(`Gemini API error: ${geminiResponse.status} - ${errorText}`);
   }
 
-  const claudeData = await claudeResponse.json();
-  const responseText = (claudeData?.content?.[0]?.text || '').trim();
-  const inputTokens = claudeData?.usage?.input_tokens || 0;
-  const outputTokens = claudeData?.usage?.output_tokens || 0;
+  const geminiData = await geminiResponse.json();
+  const responseText = (geminiData?.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+  const inputTokens = geminiData?.usageMetadata?.promptTokenCount || 0;
+  const outputTokens = geminiData?.usageMetadata?.candidatesTokenCount || 0;
   const tokens = { input: inputTokens, output: outputTokens, total: inputTokens + outputTokens };
 
   const rawQuestions = tryParseJSON(responseText);
@@ -841,8 +841,8 @@ Deno.serve(async (req: Request) => {
     if (!text || text.length < 300) throw new Error('Text content must be at least 300 characters');
     if (questionCount < 5 || questionCount > 50) throw new Error('Question count must be between 5 and 50');
 
-    const claudeApiKey = Deno.env.get('ANTHROPIC_API_KEY');
-    if (!claudeApiKey) throw new Error('ANTHROPIC_API_KEY is not configured');
+    const claudeApiKey = Deno.env.get('GEMINI_API_KEY');
+    if (!claudeApiKey) throw new Error('GEMINI_API_KEY is not configured');
 
     if (!isAdmin) {
       const languageMultipliers: Record<string, number> = { en: 1.0, ar: 2.0, fr: 1.5, tr: 1.5 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { MoreVertical, Copy, Check, FileSearch, Download, BookOpen, GraduationCap, RefreshCw, ArrowLeft, PanelLeft } from 'lucide-react';
+import { MoreVertical, Copy, Check, FileSearch, Download, BookOpen, RefreshCw, ArrowLeft, PanelLeft } from 'lucide-react';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { ProcessingStatus } from './ProcessingStatus';
@@ -29,11 +29,9 @@ import type { FeatureType } from '../../contexts/PersistentModalContext';
 import { useSubscriptionUpsellGate } from '../../contexts/SubscriptionUpsellGateContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useSubscription } from '../../hooks/useSubscription';
-import { ScholarCard } from '../Scholar';
 import { GlobalChatAssistant } from '../ChatAssistant/GlobalChatAssistant';
 import { PageTutorial } from '../Onboarding/PageTutorial';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
-import { FreeFormToggle } from './BookMode/FreeFormToggle';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
 import { extractTextFromFile, extractTextFromImage } from '../../utils/fileProcessor';
@@ -1533,180 +1531,121 @@ export const Dashboard: React.FC = () => {
                     )}
 
                     {processingState.stage === 'completed' && (
-                      <div className="space-y-8">
-                        {/* Language Selector */}
-                        <ScholarCard padding="md">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-3">
-                              <div className="bg-accent-gold p-2 rounded-[var(--s4-radius-card)]">
-                                <svg className="h-5 w-5 text-ink-on-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                                </svg>
-                              </div>
-                              <div>
-                                <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">Content Language</h3>
-                                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                                  {processingState.translating ? 'Translating content...' : 'Choose a language for your summary and flashcards'}
-                                </p>
-                              </div>
-                            </div>
+                      <div className="space-y-3">
+                        {/* Dash4Result action bar */}
+                        <div className="flex items-center gap-1 pb-2.5 border-b border-divider dark:border-divider-on-dark flex-wrap">
+                          {/* Back to History */}
+                          {loadedHistoryEntry && (
+                            <button
+                              onClick={handleBackToHistory}
+                              className="inline-flex items-center gap-1.5 px-[11px] py-1 border border-divider dark:border-divider-on-dark text-[11px] text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+                            >
+                              <ArrowLeft className="h-3 w-3" />
+                              {t('history.back_to_history') || 'Back to History'}
+                            </button>
+                          )}
+                          {loadedHistoryEntry && <div className="w-px h-3.5 bg-divider dark:bg-divider-on-dark mx-1" />}
 
-                            <div className="flex items-center space-x-4">
-                              <select
-                                value={processingState.selectedLanguage}
-                                onChange={(e) => handleLanguageChange(e.target.value)}
-                                disabled={processingState.translating}
-                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
-                              >
-                                {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
-                                  <option key={lang.code} value={lang.code}>
-                                    {lang.flag} {lang.name}
-                                  </option>
-                                ))}
-                              </select>
-
-                              {processingState.translating && (
-                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-accent-gold"></div>
-                              )}
-                            </div>
-                          </div>
-                        </ScholarCard>
-
-                        {/* Action Bar - positioned below Content Language card */}
-                        {actionBarData && (
-                          <div className="flex items-center justify-between flex-wrap gap-2">
-                            {/* Back to History - when viewing from history */}
-                            {loadedHistoryEntry && (
+                          {actionBarData && (
+                            <>
                               <button
-                                onClick={handleBackToHistory}
-                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors bg-card-light dark:bg-card-dark"
+                                onClick={actionBarData.onCopyAll}
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
                               >
-                                <ArrowLeft className="h-3.5 w-3.5" />
-                                <span>{t('history.back_to_history') || 'Back to History'}</span>
+                                {actionBarData.copiedIndex === -1 ? <Check className="h-3 w-3 text-accent-gold" /> : <Copy className="h-3 w-3 opacity-60" />}
+                                {t('summary.copy_all')}
                               </button>
+                              <button
+                                onClick={actionBarData.onDualMode}
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                              >
+                                <FileSearch className="h-3 w-3 opacity-60" />{t('summary.dual_mode')}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={actionBarData.onExportTxt}
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                              >
+                                <Download className="h-3 w-3 opacity-60" />{t('summary.export_txt')}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={actionBarData.onExportPdf}
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                              >
+                                <Download className="h-3 w-3 opacity-60" />{t('summary.export_pdf')}
+                              </button>
+                            </>
+                          )}
+
+                          <div className="flex-1" />
+
+                          {/* Language selector — inline, minimal */}
+                          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark cursor-pointer">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-gold flex-shrink-0"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+                            <select
+                              value={processingState.selectedLanguage}
+                              onChange={(e) => handleLanguageChange(e.target.value)}
+                              disabled={processingState.translating}
+                              className="text-[11px] text-secondary-ink dark:text-muted-ink-on-dark bg-transparent border-none outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed pr-1"
+                            >
+                              {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
+                                <option key={lang.code} value={lang.code}>{lang.flag} {lang.name}</option>
+                              ))}
+                            </select>
+                            {processingState.translating && (
+                              <div className="animate-spin h-3 w-3 border-2 border-accent-gold border-t-transparent rounded-full" />
                             )}
-                            {/* Free-Form Mode Toggle - hidden until optimized */}
-                            {(() => {
-                              const showFreeFormToggle = false;
-                              return showFreeFormToggle && (
-                                <div className="flex items-center">
-                                  <FreeFormToggle
-                                    enabled={actionBarData.freeFormMode}
-                                    onToggle={actionBarData.onFreeFormToggle}
-                                    compact={false}
-                                  />
-                                </div>
-                              );
-                            })()}
-
-                            {/* Actions Menu Button */}
-                            <div className="relative">
-                              <button
-                                onClick={() => setShowActionsMenu(!showActionsMenu)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-                              >
-                                <MoreVertical className="h-3.5 w-3.5" />
-                                <span>Actions</span>
-                              </button>
-
-                              {/* Actions Dropdown Menu */}
-                              {showActionsMenu && (
-                                <>
-                                  <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
-                                  <div className="absolute right-0 mt-1.5 w-56 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
-                                    <div className="p-1.5 space-y-0.5">
-                                      {/* Copy All */}
-                                      <button
-                                        onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
-                                      >
-                                        {actionBarData.copiedIndex === -1 ? (
-                                          <Check className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                                        ) : (
-                                          <Copy className="h-3.5 w-3.5 opacity-60" />
-                                        )}
-                                        <span>{t('summary.copy_all')}</span>
-                                      </button>
-
-                                      {/* Dual-mode */}
-                                      <button
-                                        onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
-                                      >
-                                        <FileSearch className="h-3.5 w-3.5 opacity-60" />
-                                        <span>{t('summary.dual_mode')}</span>
-                                      </button>
-
-                                      <button
-                                        type="button"
-                                        onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
-                                      >
-                                        <Download className="h-3.5 w-3.5 opacity-60" />
-                                        <span>{t('summary.export_txt')}</span>
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
-                                      >
-                                        <Download className="h-3.5 w-3.5 opacity-60" />
-                                        <span>{t('summary.export_pdf')}</span>
-                                      </button>
-
-                                      {/* Divider before primary action */}
-                                      <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
-
-                                      {/* Publish to Library — highlighted */}
-                                      <button
-                                        onClick={() => { actionBarData.onPublish(); setShowActionsMenu(false); }}
-                                        disabled={actionBarData.publishing || actionBarData.published}
-                                        className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm rounded-[var(--s4-radius-card)] transition-colors disabled:opacity-50 ${
-                                          actionBarData.published
-                                            ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-900/20 dark:text-emerald-400'
-                                            : processingState.medicalMode
-                                              ? 'text-red-700 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30'
-                                              : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:hover:bg-emerald-900/30'
-                                        }`}
-                                      >
-                                        {actionBarData.publishing ? (
-                                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                                        ) : actionBarData.published ? (
-                                          <Check className="h-3.5 w-3.5" />
-                                        ) : processingState.medicalMode ? (
-                                          <GraduationCap className="h-3.5 w-3.5" />
-                                        ) : (
-                                          <BookOpen className="h-3.5 w-3.5" />
-                                        )}
-                                        <span>
-                                          {actionBarData.published
-                                            ? t('summary.published')
-                                            : actionBarData.publishing
-                                              ? t('summary.publishing')
-                                              : processingState.medicalMode
-                                                ? 'Save to Medical Library'
-                                                : t('summary.publish_library')}
-                                        </span>
-                                      </button>
-
-                                      {/* Divider before destructive */}
-                                      <div className="my-1 border-t border-divider dark:border-divider-on-dark" />
-
-                                      {/* New Document */}
-                                      <button
-                                        onClick={() => { actionBarData.onNewDocument(); setShowActionsMenu(false); }}
-                                        className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-muted-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5 rounded-[var(--s4-radius-card)] transition-colors"
-                                      >
-                                        <RefreshCw className="h-3.5 w-3.5 opacity-60" />
-                                        <span>{t('summary.new_document')}</span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </>
-                              )}
-                            </div>
                           </div>
-                        )}
+
+                          {actionBarData && (
+                            <>
+                              <button
+                                onClick={actionBarData.onPublish}
+                                disabled={actionBarData.publishing || actionBarData.published}
+                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-ink dark:bg-card-dark border-none text-[11.5px] font-semibold text-card-light dark:text-ink-on-dark cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-[var(--s4-dur-fast)]"
+                              >
+                                {actionBarData.publishing ? <RefreshCw className="h-3 w-3 animate-spin" /> : actionBarData.published ? <Check className="h-3 w-3" /> : <BookOpen className="h-3 w-3" />}
+                                {actionBarData.published ? t('summary.published') : actionBarData.publishing ? t('summary.publishing') : t('summary.publish_library')}
+                              </button>
+                              <button
+                                onClick={actionBarData.onNewDocument}
+                                className="inline-flex items-center gap-1.5 px-[11px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)] ml-1"
+                              >
+                                <RefreshCw className="h-3 w-3 opacity-60" />{t('summary.new_document')}
+                              </button>
+                              <div className="relative ml-0.5">
+                                <button
+                                  onClick={() => setShowActionsMenu(!showActionsMenu)}
+                                  className="inline-flex items-center gap-1 px-[10px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+                                >
+                                  <MoreVertical className="h-3.5 w-3.5" /> Actions
+                                </button>
+                                {showActionsMenu && (
+                                  <>
+                                    <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
+                                    <div className="absolute right-0 mt-1 w-52 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
+                                      <div className="p-1.5 space-y-0.5">
+                                        <button onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors">
+                                          <Copy className="h-3.5 w-3.5 opacity-60" />{t('summary.copy_all')}
+                                        </button>
+                                        <button onClick={() => { actionBarData.onDualMode(); setShowActionsMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors">
+                                          <FileSearch className="h-3.5 w-3.5 opacity-60" />{t('summary.dual_mode')}
+                                        </button>
+                                        <button type="button" onClick={() => { actionBarData.onExportTxt(); setShowActionsMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors">
+                                          <Download className="h-3.5 w-3.5 opacity-60" />{t('summary.export_txt')}
+                                        </button>
+                                        <button type="button" onClick={() => { actionBarData.onExportPdf(); setShowActionsMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors">
+                                          <Download className="h-3.5 w-3.5 opacity-60" />{t('summary.export_pdf')}
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                            </>
+                          )}
+                        </div>
 
                         <SummaryDisplay
                           summaryChunks={processingState.summaryChunks}

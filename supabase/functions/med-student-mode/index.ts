@@ -10,7 +10,7 @@ const corsHeaders = {
 };
 
 // Security: server-side model/limits only (ignore client-provided model/maxTokens)
-const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
+const DEFAULT_MODEL = 'gemini-2.5-flash-lite';
 const MAX_MODEL_TOKENS = 4096;
 
 // Action-specific caps (prevents abuse + stabilizes output)
@@ -378,12 +378,12 @@ function parseMedicalTopics(aiOutput: string): string[] {
   return validTopics.slice(0, 8);
 }
 
-// Enhanced Anthropic API call with timeout + enforced model + enforced maxTokens
+// Gemini API call with timeout + enforced model + enforced maxTokens
 async function callAnthropicForMedicalContent(prompt: string, maxTokens: number) {
-  const apiKey = Deno.env.get('ANTHROPIC_API_KEY');
+  const apiKey = Deno.env.get('GEMINI_API_KEY');
   if (!apiKey) {
-    console.error('ANTHROPIC_API_KEY environment variable is not set.');
-    return { error: 'Missing ANTHROPIC_API_KEY environment variable' };
+    console.error('GEMINI_API_KEY environment variable is not set.');
+    return { error: 'Missing GEMINI_API_KEY environment variable' };
   }
 
   const safeMaxTokens = Math.min(Math.max(200, maxTokens), MAX_MODEL_TOKENS);
@@ -392,31 +392,28 @@ async function callAnthropicForMedicalContent(prompt: string, maxTokens: number)
   const timeoutId: ReturnType<typeof setTimeout> | undefined = setTimeout(() => controller.abort(), 45000);
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: DEFAULT_MODEL,
-        max_tokens: safeMaxTokens,
-        messages: [{
-          role: 'user',
-          content: [{ type: 'text', text: prompt }]
-        }]
-      }),
-      signal: controller.signal
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${DEFAULT_MODEL}:generateContent`,
+      {
+        method: 'POST',
+        headers: {
+          'x-goog-api-key': apiKey,
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: prompt }] }],
+          generationConfig: { maxOutputTokens: safeMaxTokens },
+        }),
+        signal: controller.signal,
+      }
+    );
 
     clearTimeout(timeoutId);
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`Anthropic API error ${response.status}: ${errorText}`);
-      
-      // Provide medical-specific error context
+      console.error(`Gemini API error ${response.status}: ${errorText}`);
+
       if (response.status === 400) {
         return { error: 'Invalid request to AI service - medical content may be too complex' };
       } else if (response.status === 429) {
@@ -424,16 +421,16 @@ async function callAnthropicForMedicalContent(prompt: string, maxTokens: number)
       } else if (response.status === 500) {
         return { error: 'AI service experiencing issues - please retry your medical content' };
       }
-      
-      return { 
-        error: `Medical AI processing failed (${response.status}): ${errorText}` 
+
+      return {
+        error: `Medical AI processing failed (${response.status}): ${errorText}`,
       };
     }
 
     const data = await response.json();
-    const output = data?.content?.[0]?.text || '';
-    const inputTokens = data?.usage?.input_tokens || 0;
-    const outputTokens = data?.usage?.output_tokens || 0;
+    const output = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const inputTokens = data?.usageMetadata?.promptTokenCount || 0;
+    const outputTokens = data?.usageMetadata?.candidatesTokenCount || 0;
     const totalTokens = inputTokens + outputTokens;
 
     if (!output.trim()) {
@@ -447,7 +444,7 @@ async function callAnthropicForMedicalContent(prompt: string, maxTokens: number)
       return { error: 'Medical AI request timed out - please try again' };
     }
     const msg = error instanceof Error ? error.message : String(error);
-    console.error(`Request to Anthropic API failed: ${msg}`);
+    console.error(`Gemini API request failed: ${msg}`);
     return { error: `Medical AI request failed: ${msg}` };
   }
 }
