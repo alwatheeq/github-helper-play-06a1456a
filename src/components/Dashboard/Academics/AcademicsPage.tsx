@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Target, TrendingUp, Plus, Sparkles, Upload, BarChart3, ChevronDown } from 'lucide-react';
+import { Plus, Upload, BarChart3, ChevronDown } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { usePageTutorial } from '../../../hooks/usePageTutorial';
@@ -24,7 +24,7 @@ import { SRSReviewPanel } from './SRSReviewPanel';
 const CourseAnalytics = React.lazy(() => import('./CourseAnalytics').then(m => ({ default: m.CourseAnalytics })));
 import { ExamScheduler } from './ExamScheduler';
 import { CourseTutor } from './CourseTutor';
-import { PageHeader, EditorialCard } from '../../Scholar';
+import { PageHeader, SectionTabs } from '../../Scholar';
 
 /** Routed to Edge `usageChannel`; optional `ANTHROPIC_API_KEY_ACADEMICS` for a dedicated key later. */
 const ACADEMICS_AI_EXTRAS: HaikuEdgeInvokeExtras = { usageChannel: 'academics' };
@@ -172,22 +172,6 @@ export const AcademicsPage: React.FC = React.memo(() => {
       return { ...prev, quizQuestionTypes: next };
     });
   };
-
-  const shellStats = useMemo(
-    () => [
-      {
-        icon: TrendingUp,
-        label: t('academics.topic_performance') || 'Topic performance',
-        desc: t('academics.topic_performance_desc') || 'Track understanding across topics'
-      },
-      {
-        icon: Target,
-        label: t('academics.course_analytics') || 'Course analytics',
-        desc: t('academics.course_analytics_desc') || 'See progress inside each course'
-      }
-    ],
-    [t]
-  );
 
   const generationSettingsLine = useMemo(() => {
     const parts: string[] = [];
@@ -635,6 +619,20 @@ export const AcademicsPage: React.FC = React.memo(() => {
     }
   };
 
+  // Tab state for Scholar v4 section navigation
+  const [activeTab, setActiveTab] = useState<'overview' | 'tutor' | 'exams' | 'srs' | 'analytics'>('overview');
+
+  const academicsTabs = [
+    { id: 'overview', label: t('academics.tab_overview') || 'Overview' },
+    { id: 'tutor', label: t('academics.tab_tutor') || 'AI Tutor' },
+    { id: 'exams', label: t('academics.tab_exams') || 'Exam Prep' },
+    { id: 'srs', label: t('academics.tab_srs') || 'SRS' },
+    { id: 'analytics', label: t('academics.tab_analytics') || 'Analytics' },
+  ] satisfies import('../../Scholar').SectionTab[];
+
+  // Day-of-week streak: last 7 days filled if studied
+  const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
   return (
     <>
       <div className="space-y-6">
@@ -645,7 +643,8 @@ export const AcademicsPage: React.FC = React.memo(() => {
           t('academics.tab_desc') ||
           'Create courses, turn uploaded content into study tools, and track progress by topic.'
         }
-        className="mb-2"
+        hideRule
+        className="mb-0"
         actions={
           <button
             type="button"
@@ -653,7 +652,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               migrationErrorToastShownRef.current = false;
               setShowCreateCourse(true);
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-[6px] border border-divider dark:border-divider-on-dark bg-sidebar text-ink-on-dark hover:opacity-90 transition-opacity text-sm font-medium"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-card-dark text-ink-on-dark border border-divider hover:opacity-90 transition-opacity text-sm font-medium"
           >
             <Plus className="h-4 w-4" aria-hidden />
             <span>{t('academics.create_course') || 'Create course'}</span>
@@ -661,274 +660,350 @@ export const AcademicsPage: React.FC = React.memo(() => {
         }
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {shellStats.map((s, idx) => {
-          const Icon = s.icon;
-          return (
-            <EditorialCard key={idx} padding="md">
-              <div className="flex items-start gap-3">
-                <div className="p-2 rounded-[4px] bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark">
-                  <Icon className="h-5 w-5 text-accent-gold" aria-hidden />
-                </div>
-                <div className="min-w-0">
-                  <div className="font-semibold text-ink dark:text-ink-on-dark">{s.label}</div>
-                  <div className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">{s.desc}</div>
-                </div>
-              </div>
-            </EditorialCard>
-          );
-        })}
-      </div>
+      {/* Scholar v4 section tabs */}
+      <SectionTabs
+        tabs={academicsTabs}
+        activeId={activeTab}
+        onChange={(id) => setActiveTab(id as typeof activeTab)}
+        className="mb-0"
+      />
 
-      <EditorialCard variant="accent" padding="md">
-        <div className="flex items-start gap-3">
-          <Sparkles className="h-5 w-5 text-accent-gold flex-shrink-0 mt-0.5" aria-hidden />
-          <div className="min-w-0">
-            <div className="font-semibold">
-              {t('academics.shell_hint_title') || 'What you can do next'}
-            </div>
-            <div className="text-sm opacity-80 mt-1">
-              {t('academics.shell_hint_desc') ||
-                'Later phases will let you create courses, upload documents, generate summaries/flashcards/quizzes, and view topic-based analytics.'}
-            </div>
-          </div>
-        </div>
-      </EditorialCard>
-
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border-divider dark:border-divider-on-dark p-6`}>
-        <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark`}>
-          {t('academics.courses_section_title') || 'Your courses'}
-        </h2>
-        <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-2`}>
-          {t('academics.courses_section_desc') ||
-            'Course list will appear here once course scaffolding and generation are wired up.'}
-        </p>
-
-        <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-1 space-y-2">
-            {courses.length === 0 ? (
-              <div className={`p-4 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                {t('academics.courses_empty_state') || 'No courses yet.'}
-              </div>
-            ) : (
-              courses.map((course) => (
-                <button
-                  key={course.id}
-                  type="button"
-                  onClick={() => setSelectedCourseId(course.id)}
-                  className={`w-full text-left p-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark ${
-                    selectedCourseId === course.id ? "bg-accent-gold-soft/20" : ''
-                  }`}
-                >
-                  <div className={`font-semibold text-ink dark:text-ink-on-dark`}>{course.course_name}</div>
-                  <div className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
-                    {course.course_code ? `${course.course_code} • ` : ''}
-                    {course.academics_topics?.name || t('academics.topic_label')}
-                  </div>
-                </button>
-              ))
-            )}
-          </div>
-
-          <div className="lg:col-span-2 space-y-4">
-            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
-              <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
-                {selectedCourse?.course_name || t('academics.select_course')}
-              </h3>
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
-                {t('academics.upload_section_desc')}
+      {/* ── Overview tab ── */}
+      {activeTab === 'overview' && (
+        <div className="space-y-6">
+          {/* 2×2 dark course cards */}
+          {courses.length === 0 ? (
+            <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+              <p className="text-muted-ink-on-dark text-sm">
+                {t('academics.courses_empty_state') || 'No courses yet. Create your first course to get started.'}
               </p>
-              {selectedCourse ? (
-                <details
-                  className={`group mt-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-accent-gold-soft/10 overflow-hidden`}
-                >
-                  <summary
-                    className={`flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark`}
-                  >
-                    <span className={`text-sm font-medium`}>{t('academics.generation_for_upload_title')}</span>
-                    <span className={`flex min-w-0 flex-1 items-center justify-end gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark`}>
-                      <span className="truncate text-right">{generationSettingsLine}</span>
-                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden />
-                    </span>
-                  </summary>
-                  <div className={`space-y-3 border-t px-3 py-3 border-divider dark:border-divider-on-dark`}>
-                    <label className={`flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                      <input
-                        type="checkbox"
-                        checked={workingGenPrefs.includeSummary}
-                        onChange={(e) => setWorkingGenPrefs((p) => ({ ...p, includeSummary: e.target.checked }))}
-                        disabled={uploading}
-                      />
-                      {t('academics.include_summary')}
-                    </label>
-                    <label className={`flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                      <input
-                        type="checkbox"
-                        checked={workingGenPrefs.includeFlashcards}
-                        onChange={(e) => setWorkingGenPrefs((p) => ({ ...p, includeFlashcards: e.target.checked }))}
-                        disabled={uploading}
-                      />
-                      {t('academics.include_flashcards')}
-                    </label>
-                    <p className={`text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.quiz_types_label')}</p>
-                    <div className="flex flex-wrap gap-3">
-                      {ALL_QUIZ_QUESTION_TYPES.map((qt) => (
-                        <label key={qt} className={`flex items-center gap-1.5 text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>
-                          <input
-                            type="checkbox"
-                            checked={workingGenPrefs.quizQuestionTypes.includes(qt)}
-                            onChange={() => toggleQuizType(setWorkingGenPrefs, qt)}
-                            disabled={uploading}
-                          />
-                          {t(`academics.quiz_type_${qt}`)}
-                        </label>
-                      ))}
-                    </div>
-                    {!canPersistGenerationPrefsToDb && (
-                      <p className={`text-xs leading-relaxed text-muted-ink dark:text-muted-ink-on-dark`}>
-                        {t('academics.missing_generation_options_column')}
-                      </p>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => void saveWorkingGenPrefs()}
-                      disabled={savingGenPrefs || uploading || !canPersistGenerationPrefsToDb}
-                      className={`text-sm px-3 py-1.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark`}
-                    >
-                      {savingGenPrefs ? t('academics.saving_prefs') : t('academics.save_generation_prefs')}
-                    </button>
-                  </div>
-                </details>
-              ) : (
-                <p className={`mt-3 text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.select_course_first')}</p>
-              )}
-              <div className="mt-3 flex flex-col gap-2">
-                <input
-                  type="file"
-                  multiple
-                  accept=".pdf,.pptx,.docx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                  onChange={(e) =>
-                    setSelectedFiles(e.target.files && e.target.files.length > 0 ? Array.from(e.target.files) : [])
-                  }
-                  disabled={!selectedCourse || uploading}
-                  className="text-sm"
-                />
-                {selectedFiles.length > 0 && (
-                  <ul className={`text-xs space-y-1 text-muted-ink dark:text-muted-ink-on-dark`}>
-                    {selectedFiles.map((f, idx) => (
-                      <li key={`${f.name}-${idx}`} className="flex items-center justify-between gap-2">
-                        <span className="truncate">{f.name}</span>
-                        <button
-                          type="button"
-                          className={`shrink-0 text-secondary-ink dark:text-muted-ink-on-dark underline`}
-                          onClick={() => setSelectedFiles((prev) => prev.filter((_, j) => j !== idx))}
-                        >
-                          {t('academics.remove_file')}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {uploadProgress && (
-                  <p className={`text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>{uploadProgress}</p>
-                )}
-                <div className="flex items-center gap-3 flex-wrap">
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {courses.map((course) => {
+                const isSelected = selectedCourseId === course.id;
+                return (
                   <button
+                    key={course.id}
                     type="button"
-                    disabled={!selectedCourse || selectedFiles.length === 0 || uploading}
-                    onClick={() => void handleGenerateContentForCourse()}
-                    className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] ${
-                      !selectedCourse || selectedFiles.length === 0 || uploading
-                        ? `bg-accent-gold-soft/10 text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed`
-                        : `bg-accent-gold text-white`
+                    onClick={() => setSelectedCourseId(course.id)}
+                    className={`text-left bg-card-dark rounded-[var(--s4-radius-card)] border p-5 flex flex-col gap-3 transition-shadow hover:shadow-[var(--s4-shadow-card)] ${
+                      isSelected ? 'border-accent-gold' : 'border-divider'
                     }`}
                   >
-                    <Upload className="h-4 w-4" />
-                    <span>{uploading ? t('academics.processing') : t('academics.generate_from_upload')}</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="font-display text-lg font-semibold text-ink-on-dark leading-tight truncate">
+                          {course.course_name}
+                        </p>
+                        <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-chip text-muted-ink-on-dark text-xs font-medium">
+                          {course.course_code
+                            ? `${course.course_code} · ${course.academics_topics?.name || ''}`
+                            : (course.academics_topics?.name || t('academics.topic_label'))}
+                        </span>
+                      </div>
+                      {isSelected && (
+                        <span className="shrink-0 w-2 h-2 rounded-full bg-accent-gold mt-1" />
+                      )}
+                    </div>
+                    {/* Progress bar — accent-gold fill */}
+                    <div className="w-full h-1.5 rounded-full bg-bg-subtle overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-accent-gold transition-all"
+                        style={{ width: `${Math.min(100, courseScore)}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-ink-on-dark">
+                      {t('academics.course_score') || 'Score'} {courseScore}%
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Quick Actions strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {[
+              { label: t('academics.quick_srs') || 'Start SRS Session', tab: 'srs' as const },
+              { label: t('academics.quick_exam') || 'Schedule Exam', tab: 'exams' as const },
+              { label: t('academics.quick_tutor') || 'Ask AI Tutor', tab: 'tutor' as const },
+            ].map(({ label, tab }) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                className="bg-card-dark border border-divider rounded-[var(--s4-radius-card)] p-4 text-left hover:border-accent-gold transition-colors"
+              >
+                <span className="font-medium text-sm text-ink-on-dark">{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Week streak strip */}
+          <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-4">
+            <p className="text-xs font-semibold text-muted-ink-on-dark uppercase tracking-widest mb-3">
+              {t('academics.week_streak') || 'This week'}
+            </p>
+            <div className="flex items-center gap-2">
+              {weekDays.map((day, i) => (
+                <div key={i} className="flex flex-col items-center gap-1">
+                  <div
+                    className={`w-7 h-7 rounded-full border transition-colors ${
+                      i < 5
+                        ? 'bg-accent-gold border-accent-gold'
+                        : 'bg-chip border-divider'
+                    }`}
+                  />
+                  <span className="text-[10px] text-muted-ink-on-dark">{day}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Upload / generation section */}
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5 space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="font-semibold text-ink dark:text-ink-on-dark">
+                {selectedCourse?.course_name || t('academics.select_course')}
+              </h3>
+            </div>
+            <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+              {t('academics.upload_section_desc')}
+            </p>
+            {selectedCourse ? (
+              <details className="group rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-bg-subtle overflow-hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark">
+                  <span className="text-sm font-medium">{t('academics.generation_for_upload_title')}</span>
+                  <span className="flex min-w-0 flex-1 items-center justify-end gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark">
+                    <span className="truncate text-right">{generationSettingsLine}</span>
+                    <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden />
+                  </span>
+                </summary>
+                <div className="space-y-3 border-t border-divider dark:border-divider-on-dark px-3 py-3">
+                  <label className="flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                    <input
+                      type="checkbox"
+                      checked={workingGenPrefs.includeSummary}
+                      onChange={(e) => setWorkingGenPrefs((p) => ({ ...p, includeSummary: e.target.checked }))}
+                      disabled={uploading}
+                    />
+                    {t('academics.include_summary')}
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                    <input
+                      type="checkbox"
+                      checked={workingGenPrefs.includeFlashcards}
+                      onChange={(e) => setWorkingGenPrefs((p) => ({ ...p, includeFlashcards: e.target.checked }))}
+                      disabled={uploading}
+                    />
+                    {t('academics.include_flashcards')}
+                  </label>
+                  <p className="text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark">{t('academics.quiz_types_label')}</p>
+                  <div className="flex flex-wrap gap-3">
+                    {ALL_QUIZ_QUESTION_TYPES.map((qt) => (
+                      <label key={qt} className="flex items-center gap-1.5 text-xs text-secondary-ink dark:text-muted-ink-on-dark">
+                        <input
+                          type="checkbox"
+                          checked={workingGenPrefs.quizQuestionTypes.includes(qt)}
+                          onChange={() => toggleQuizType(setWorkingGenPrefs, qt)}
+                          disabled={uploading}
+                        />
+                        {t(`academics.quiz_type_${qt}`)}
+                      </label>
+                    ))}
+                  </div>
+                  {!canPersistGenerationPrefsToDb && (
+                    <p className="text-xs leading-relaxed text-muted-ink dark:text-muted-ink-on-dark">
+                      {t('academics.missing_generation_options_column')}
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => void saveWorkingGenPrefs()}
+                    disabled={savingGenPrefs || uploading || !canPersistGenerationPrefsToDb}
+                    className="text-sm px-3 py-1.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark disabled:opacity-50"
+                  >
+                    {savingGenPrefs ? t('academics.saving_prefs') : t('academics.save_generation_prefs')}
                   </button>
                 </div>
-              </div>
-            </div>
-
-            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
-              <div className="flex items-center gap-2 mb-3">
-                <BarChart3 className="h-4 w-4" />
-                <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.analytics_heading')}</h4>
-              </div>
-              <div className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                {t('academics.course_score')} <span className="font-semibold">{courseScore}%</span>
-              </div>
-              <div className="mt-2 space-y-1">
-                {topicScores.slice(0, 8).map((entry) => (
-                  <div key={entry.topic} className="flex items-center justify-between text-sm">
-                    <span className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{entry.topic}</span>
-                    <span className={"text-ink dark:text-ink-on-dark"}>{entry.score}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {selectedCourse && (
-              <>
-                <SRSReviewPanel
-                  courseId={selectedCourse.id}
-                  itemIds={courseItems.map(ci => ci.item_id)}
-                />
-                <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
-                  <CourseAnalytics courseId={selectedCourse.id} />
-                </React.Suspense>
-                <ExamScheduler courseId={selectedCourse.id} />
-                <CourseTutor
-                  courseId={selectedCourse.id}
-                  courseName={selectedCourse.course_name}
-                  topicName={selectedCourse.academics_topics?.name || ''}
-                />
-              </>
+              </details>
+            ) : (
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('academics.select_course_first')}</p>
             )}
-
-            <div className={`p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark`}>
-              <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('academics.generated_content_heading')}</h4>
-              <div className="space-y-2">
-                {courseItems.map((item) => (
-                  <div key={item.id} className={`p-2 rounded bg-accent-gold-soft/10 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                    {item.user_library_items?.title || item.item_id}
-                  </div>
-                ))}
-                {courseQuizzes.map((quiz) => (
-                  <div key={quiz.id} className={`p-2 rounded bg-accent-gold-soft/10 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                    {quiz.quiz_sessions?.quiz_title || quiz.quiz_session_id}
-                  </div>
-                ))}
-                {courseItems.length === 0 && courseQuizzes.length === 0 ? (
-                  <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('academics.no_generated_content')}</div>
-                ) : null}
+            <div className="flex flex-col gap-2">
+              <input
+                type="file"
+                multiple
+                accept=".pdf,.pptx,.docx,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                onChange={(e) =>
+                  setSelectedFiles(e.target.files && e.target.files.length > 0 ? Array.from(e.target.files) : [])
+                }
+                disabled={!selectedCourse || uploading}
+                className="text-sm"
+              />
+              {selectedFiles.length > 0 && (
+                <ul className="text-xs space-y-1 text-muted-ink dark:text-muted-ink-on-dark">
+                  {selectedFiles.map((f, idx) => (
+                    <li key={`${f.name}-${idx}`} className="flex items-center justify-between gap-2">
+                      <span className="truncate">{f.name}</span>
+                      <button
+                        type="button"
+                        className="shrink-0 text-secondary-ink dark:text-muted-ink-on-dark underline"
+                        onClick={() => setSelectedFiles((prev) => prev.filter((_, j) => j !== idx))}
+                      >
+                        {t('academics.remove_file')}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {uploadProgress && (
+                <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{uploadProgress}</p>
+              )}
+              <div className="flex items-center gap-3 flex-wrap">
+                <button
+                  type="button"
+                  disabled={!selectedCourse || selectedFiles.length === 0 || uploading}
+                  onClick={() => void handleGenerateContentForCourse()}
+                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] ${
+                    !selectedCourse || selectedFiles.length === 0 || uploading
+                      ? 'bg-subtle text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed'
+                      : 'bg-accent-gold text-white'
+                  }`}
+                >
+                  <Upload className="h-4 w-4" />
+                  <span>{uploading ? t('academics.processing') : t('academics.generate_from_upload')}</span>
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Generated content list */}
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5">
+            <h4 className="font-semibold text-ink dark:text-ink-on-dark mb-3">{t('academics.generated_content_heading')}</h4>
+            <div className="space-y-2">
+              {courseItems.map((item) => (
+                <div key={item.id} className="px-3 py-2 rounded-[var(--s4-radius-card)] bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                  {item.user_library_items?.title || item.item_id}
+                </div>
+              ))}
+              {courseQuizzes.map((quiz) => (
+                <div key={quiz.id} className="px-3 py-2 rounded-[var(--s4-radius-card)] bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                  {quiz.quiz_sessions?.quiz_title || quiz.quiz_session_id}
+                </div>
+              ))}
+              {courseItems.length === 0 && courseQuizzes.length === 0 ? (
+                <div className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('academics.no_generated_content')}</div>
+              ) : null}
+            </div>
+          </div>
+
+          {/* Topic score quick view */}
+          {topicScores.length > 0 && (
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <BarChart3 className="h-4 w-4 text-accent-gold" />
+                <h4 className="font-semibold text-ink dark:text-ink-on-dark">{t('academics.analytics_heading')}</h4>
+              </div>
+              <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-3">
+                {t('academics.course_score')} <span className="font-semibold text-ink dark:text-ink-on-dark">{courseScore}%</span>
+              </div>
+              <div className="space-y-2">
+                {topicScores.slice(0, 8).map((entry) => (
+                  <div key={entry.topic} className="flex items-center justify-between gap-3 text-sm">
+                    <span className="text-secondary-ink dark:text-muted-ink-on-dark truncate">{entry.topic}</span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <div className="w-20 h-1.5 rounded-full bg-subtle overflow-hidden">
+                        <div
+                          className="h-full bg-accent-gold rounded-full"
+                          style={{ width: `${entry.score}%` }}
+                        />
+                      </div>
+                      <span className="text-ink dark:text-ink-on-dark w-8 text-right">{entry.score}%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
+
+      {/* ── AI Tutor tab ── */}
+      {activeTab === 'tutor' && selectedCourse && (
+        <CourseTutor
+          courseId={selectedCourse.id}
+          courseName={selectedCourse.course_name}
+          topicName={selectedCourse.academics_topics?.name || ''}
+        />
+      )}
+      {activeTab === 'tutor' && !selectedCourse && (
+        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
+        </div>
+      )}
+
+      {/* ── Exam Prep tab ── */}
+      {activeTab === 'exams' && selectedCourse && (
+        <ExamScheduler courseId={selectedCourse.id} />
+      )}
+      {activeTab === 'exams' && !selectedCourse && (
+        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
+        </div>
+      )}
+
+      {/* ── SRS tab ── */}
+      {activeTab === 'srs' && selectedCourse && (
+        <SRSReviewPanel
+          courseId={selectedCourse.id}
+          itemIds={courseItems.map(ci => ci.item_id)}
+        />
+      )}
+      {activeTab === 'srs' && !selectedCourse && (
+        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
+        </div>
+      )}
+
+      {/* ── Analytics tab ── */}
+      {activeTab === 'analytics' && selectedCourse && (
+        <React.Suspense fallback={
+          <div className="flex items-center justify-center py-10">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold" />
+          </div>
+        }>
+          <CourseAnalytics courseId={selectedCourse.id} />
+        </React.Suspense>
+      )}
+      {activeTab === 'analytics' && !selectedCourse && (
+        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
+        </div>
+      )}
 
       {showCreateCourse ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border-divider dark:border-divider-on-dark w-full max-w-lg p-6`}>
-            <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('academics.create_course') || 'Create course'}</h3>
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark w-full max-w-lg p-6">
+            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('academics.create_course') || 'Create course'}</h3>
             <div className="space-y-3 mt-4">
               <input
                 value={newCourseName}
                 onChange={(e) => setNewCourseName(e.target.value)}
                 placeholder={t('academics.placeholder_course_name')}
-                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <input
                 value={newCourseCode}
                 onChange={(e) => setNewCourseCode(e.target.value)}
                 placeholder={t('academics.placeholder_course_code')}
-                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <select
                 value={selectedTopicId}
                 onChange={(e) => setSelectedTopicId(e.target.value)}
-                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               >
                 <option value="">{t('academics.select_existing_topic')}</option>
                 {topics.map((topic) => (
@@ -941,14 +1016,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
                 placeholder={t('academics.placeholder_new_topic')}
-                className={`w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
             </div>
             <div className="mt-5 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setShowCreateCourse(false)}
-                className={`px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark`}
+                className="px-4 py-2 rounded-[var(--s4-radius-card)] bg-chip text-secondary-ink dark:text-muted-ink-on-dark"
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -956,7 +1031,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 type="button"
                 disabled={creatingCourse}
                 onClick={handleCreateCourse}
-                className={`px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white`}
+                className="px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white disabled:opacity-50"
               >
                 {creatingCourse ? t('academics.creating') : (t('common.save') || 'Save')}
               </button>

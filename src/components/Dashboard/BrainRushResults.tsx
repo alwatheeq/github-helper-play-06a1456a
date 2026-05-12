@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Trophy, Medal, Target, Clock, CheckCircle, TrendingUp, Home } from 'lucide-react';
+import { Home } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -104,9 +104,9 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center`}>
-          <div className="animate-spin h-12 w-12 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4 dark:border-purple-400"></div>
-          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center shadow-[var(--s4-shadow-hairline)]">
+          <div className="w-10 h-10 border-2 border-accent-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Loading results...</p>
         </div>
       </div>
     );
@@ -114,260 +114,190 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
 
   const winner = participantStats[0];
   const myStats = participantStats.find(s => s.participant.user_id === user?.id);
+  const myRank = myStats ? participantStats.findIndex(s => s.participant.user_id === user?.id) + 1 : null;
 
   return (
-    <div className="max-w-7xl mx-auto">
-      {/* Confetti Effect */}
+    <div className="w-full max-w-7xl mx-auto">
+      {/* Confetti Effect — subtle */}
       {showConfetti && (
         <div className="fixed inset-0 pointer-events-none z-50">
-          <div className="absolute inset-0 animate-pulse">
-            {[...Array(50)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-3 h-3 rounded-full animate-ping"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  backgroundColor: ['#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#3B82F6'][i % 5],
-                  animationDelay: `${Math.random() * 2}s`,
-                  animationDuration: `${2 + Math.random() * 3}s`
-                }}
-              />
+          {[...Array(30)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 rounded-full animate-ping"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 60}%`,
+                backgroundColor: ['#e2c06a', '#f0f0e8', '#5dd4a4', '#e07a9a'][i % 4],
+                animationDelay: `${Math.random() * 2}s`,
+                animationDuration: `${2 + Math.random() * 2}s`,
+                opacity: 0.6,
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Header row — Scholar v4 style */}
+      <div className="flex items-end justify-between mb-4">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">Brain Rush · {gameSession.game_title}</div>
+          <h1 className="font-display text-[30px] font-semibold text-ink dark:text-ink-on-dark tracking-tight">Final Results</h1>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={onReturnHome}
+            className="flex items-center gap-2 px-3 py-2 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11.5px] hover:opacity-70 transition"
+          >
+            <Home className="h-4 w-4" />
+            Back to Games
+          </button>
+          <button
+            onClick={onReturnHome}
+            className="px-4 py-2 bg-sidebar text-ink-on-dark text-[11.5px] font-semibold hover:opacity-90 transition"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
+
+      {/* Dark banner — your result */}
+      {myStats && myRank && (
+        <div className="bg-sidebar px-7 py-6 mb-4 flex items-center shadow-[var(--s4-shadow-hairline)]">
+          <div className="pr-7 border-r border-white/10 flex-shrink-0">
+            <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Your Rank</div>
+            <div className="font-display text-[56px] font-semibold text-ink-on-dark leading-none tracking-tight">
+              #{myRank}<span className="text-[20px] text-accent-gold ml-2">of {participantStats.length}</span>
+            </div>
+            <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold mt-2 uppercase">
+              {myRank === 1 ? '— Winner!' : myRank <= 3 ? '— Top 3 finish' : '— Strong effort'}
+            </div>
+          </div>
+          <div className="flex-1 flex justify-evenly pl-7">
+            {[
+              [myStats.participant.score.toLocaleString(), 'Score'],
+              [`${myStats.correctAnswers} / ${myStats.totalAnswers}`, 'Correct'],
+              [`${myStats.accuracy.toFixed(0)}%`, 'Accuracy'],
+            ].map(([v, l], i) => (
+              <div key={l} className="text-center">
+                <div className="font-display text-[30px] font-semibold text-ink-on-dark leading-none">{v}</div>
+                <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-2">{l}</div>
+              </div>
+            ))}
+            <div className="text-center border-l border-white/10 pl-7">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Avg Time</div>
+              <div className="font-display text-[24px] font-semibold text-ink-on-dark leading-none">
+                {myStats.avgTimeSeconds.toFixed(1)}<span className="text-[13px] text-muted-ink-on-dark">s</span>
+              </div>
+              <div className="text-[10px] text-muted-ink-on-dark mt-1">per question</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 2-col: top finishers left, full standings right */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Left: top 3 + game summary */}
+        <div className="flex flex-col gap-0">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Top Finishers</div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+            {participantStats.slice(0, 3).map((stats, i) => {
+              const isMe = stats.participant.user_id === user?.id;
+              return (
+                <div
+                  key={stats.participant.id}
+                  className={`flex items-center gap-4 px-5 py-4 border-b border-divider dark:border-divider-on-dark last:border-0 ${i === 0 ? 'bg-chip dark:bg-chip' : ''}`}
+                  style={{ borderLeft: i === 0 ? '3px solid var(--color-accent-gold)' : '3px solid transparent' }}
+                >
+                  <div className={`font-display text-[22px] font-bold w-7 flex-shrink-0 ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 1}</div>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                    {stats.participant.display_name[0].toUpperCase()}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[12.5px] font-bold text-ink dark:text-ink-on-dark truncate">
+                      {stats.participant.display_name}
+                      {isMe && <span className="text-[9px] tracking-wider text-accent-gold ml-2">YOU</span>}
+                    </div>
+                    <div className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.correctAnswers}/{stats.totalAnswers} correct · {stats.accuracy.toFixed(0)}%</div>
+                  </div>
+                  <div className={`font-display text-[16px] font-bold ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {stats.participant.score.toLocaleString()}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Game summary */}
+          <div className="mt-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-5 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Summary</div>
+            {[
+              ['Questions', String(gameSession.total_questions)],
+              ['Players', String(participantStats.length)],
+              ['Difficulty', gameSession.difficulty_level],
+              ['Winner', winner?.participant.display_name || '—'],
+            ].map(([k, v]) => (
+              <div key={k} className="flex justify-between py-2 border-b border-divider dark:border-divider-on-dark last:border-0">
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{k}</span>
+                <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark capitalize">{v}</span>
+              </div>
             ))}
           </div>
         </div>
-      )}
 
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className={`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
-          <Trophy className="h-16 w-16 text-ink-on-dark" />
-        </div>
-        <h1 className={`s4-h1 text-[36px] md:text-5xl text-ink dark:text-ink-on-dark mb-2`}>
-          Game Complete!
-        </h1>
-        <p className={`text-xl text-secondary-ink dark:text-muted-ink-on-dark`}>{gameSession.game_title}</p>
-      </div>
-
-      {/* Winner Podium */}
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-6">
-        <div className="flex items-end justify-center space-x-4 mb-8">
-          {/* 2nd Place */}
-          {participantStats[1] && (
-            <div className="text-center pb-8">
-              <div className="bg-gradient-to-br from-gray-300 to-gray-400 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-3 shadow">
-                <span className={`s4-h1 text-ink dark:text-ink-on-dark`}>2</span>
-              </div>
-              <div className={`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-4 min-w-[140px]`}>
-                <p className={`font-bold text-ink dark:text-ink-on-dark truncate`}>
-                  {participantStats[1].participant.display_name}
-                </p>
-                <p className={`s4-h2 text-secondary-ink dark:text-muted-ink-on-dark`}>
-                  {participantStats[1].participant.score.toLocaleString()}
-                </p>
-                <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>points</p>
-              </div>
+        {/* Right: full standings table */}
+        <div className="md:col-span-2">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Final Standings · All {participantStats.length} Players</div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+            <div className="grid grid-cols-[36px_1fr_60px_52px_52px_80px] px-4 py-2 border-b border-divider dark:border-divider-on-dark">
+              {['#', 'Player', 'Correct', 'Acc', 'Avg', 'Score'].map(h => (
+                <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
+              ))}
             </div>
-          )}
-
-          {/* 1st Place */}
-          {winner && (
-            <div className="text-center">
-              <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-2 animate-bounce" />
-              <div className="bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full w-28 h-28 flex items-center justify-center mx-auto mb-3 shadow-[var(--s4-shadow-modal)]">
-                <span className="s4-h1 text-[40px] text-yellow-900 dark:text-yellow-200">1</span>
-              </div>
-              <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900 dark:to-yellow-800 rounded-[var(--s4-radius-card)] p-4 min-w-[160px]">
-                <p className={`font-bold text-lg text-ink dark:text-ink-on-dark truncate`}>
-                  {winner.participant.display_name}
-                </p>
-                <p className="s4-h1 text-yellow-700 dark:text-yellow-300">
-                  {winner.participant.score.toLocaleString()}
-                </p>
-                <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>points</p>
-              </div>
-            </div>
-          )}
-
-          {/* 3rd Place */}
-          {participantStats[2] && (
-            <div className="text-center pb-16">
-              <div className="bg-gradient-to-br from-orange-400 to-orange-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 shadow">
-                <span className="s4-h2 text-orange-900 dark:text-orange-200">3</span>
-              </div>
-              <div className="bg-orange-100 dark:bg-orange-900 rounded-[var(--s4-radius-card)] p-4 min-w-[120px]">
-                <p className={`font-bold text-ink dark:text-ink-on-dark truncate text-sm`}>
-                  {participantStats[2].participant.display_name}
-                </p>
-                <p className="s4-h3 text-[20px] text-orange-700 dark:text-orange-300">
-                  {participantStats[2].participant.score.toLocaleString()}
-                </p>
-                <p className="text-xs text-muted-ink dark:text-muted-ink">points</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Winner Message */}
-        <div className="text-center">
-          <p className={`s4-h2 text-transparent bg-clip-text bg-accent-gold`}>
-            {winner.participant.user_id === user?.id ? 'Congratulations! You Won!' : `${winner.participant.display_name} Wins!`}
-          </p>
-        </div>
-      </div>
-
-      {/* Full Leaderboard */}
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-6">
-        <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-6 flex items-center space-x-2`}>
-          <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-          <span>Final Standings</span>
-        </h2>
-
-        <div className="space-y-3">
-          {participantStats.map((stats, index) => {
-            const isCurrentUser = stats.participant.user_id === user?.id;
-
-            return (
-              <div
-                key={stats.participant.id}
-                className={`p-4 rounded-[var(--s4-radius-card)] border-2 transition ${
-                  isCurrentUser
-                    ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-500 dark:border-purple-400'
-                    : `bg-accent-gold-soft/10 border-transparent`
-                }`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center space-x-4">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
-                      index === 0
-                        ? 'bg-yellow-400 text-yellow-900'
-                        : index === 1
-                        ? `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
-                        : index === 2
-                        ? 'bg-orange-400 text-orange-900'
-                        : `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`
-                    }`}>
-                      {index + 1}
+            {participantStats.map((stats, i) => {
+              const isMe = stats.participant.user_id === user?.id;
+              return (
+                <div
+                  key={stats.participant.id}
+                  className={`grid grid-cols-[36px_1fr_60px_52px_52px_80px] px-4 py-3 border-b border-divider dark:border-divider-on-dark last:border-0 items-center ${isMe ? 'bg-chip dark:bg-chip' : ''}`}
+                  style={{ borderLeft: isMe ? '3px solid var(--color-accent-gold)' : '3px solid transparent' }}
+                >
+                  <span className={`font-display text-[14px] font-bold ${i < 3 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 1}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                      {stats.participant.display_name[0].toUpperCase()}
                     </div>
-                    <div>
-                      <p className={`font-bold text-ink dark:text-ink-on-dark`}>
-                        {stats.participant.display_name}
-                        {isCurrentUser && <span className="text-purple-600 dark:text-purple-400 ml-2">(You)</span>}
-                      </p>
-                      <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                        <span className="flex items-center space-x-1">
-                          <CheckCircle className="h-4 w-4" />
-                          <span>{stats.correctAnswers}/{stats.totalAnswers} correct</span>
-                        </span>
-                        <span className="flex items-center space-x-1">
-                          <Target className="h-4 w-4" />
-                          <span>{stats.accuracy.toFixed(0)}% accuracy</span>
-                        </span>
-                        <span className="flex items-center space-x-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{stats.avgTimeSeconds.toFixed(1)}s avg</span>
-                        </span>
-                      </div>
-                    </div>
+                    <span className={`text-[12px] truncate ${isMe ? 'font-bold text-ink dark:text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
+                      {stats.participant.display_name}
+                    </span>
                   </div>
-                  <div className="text-right">
-                    <p className={`s4-h1 text-ink dark:text-ink-on-dark`}>
-                      {stats.participant.score.toLocaleString()}
-                    </p>
-                    <p className="text-sm text-secondary-ink dark:text-muted-ink">points</p>
-                  </div>
+                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.correctAnswers}/{stats.totalAnswers}</span>
+                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.accuracy.toFixed(0)}%</span>
+                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.avgTimeSeconds.toFixed(1)}s</span>
+                  <span className={`font-display text-[16px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {stats.participant.score.toLocaleString()}
+                  </span>
                 </div>
-
-                {/* Score Breakdown */}
-                <div className={`pt-3 border-t border-divider dark:border-divider-on-dark`}>
-                  <div className="grid grid-cols-3 gap-4 text-center text-sm">
-                    <div>
-                      <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Correct</p>
-                      <p className="font-bold text-green-600 dark:text-green-400">{stats.correctAnswers}</p>
-                    </div>
-                    <div>
-                      <p className="text-secondary-ink dark:text-muted-ink">Incorrect</p>
-                      <p className="font-bold text-red-600 dark:text-red-400">{stats.totalAnswers - stats.correctAnswers}</p>
-                    </div>
-                    <div>
-                      <p className="text-secondary-ink dark:text-muted-ink">Accuracy</p>
-                      <p className="font-bold text-blue-600 dark:text-blue-400">{stats.accuracy.toFixed(0)}%</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Game Summary */}
-      <div className={`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-6 mb-6`}>
-        <h3 className={`font-bold text-ink dark:text-ink-on-dark mb-4`}>Game Summary</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Total Questions</p>
-            <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{gameSession.total_questions}</p>
-          </div>
-          <div className="text-center">
-            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Players</p>
-            <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{participantStats.length}</p>
-          </div>
-          <div className="text-center">
-            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Difficulty</p>
-            <p className={`s4-h2 text-ink dark:text-ink-on-dark capitalize`}>{gameSession.difficulty_level}</p>
-          </div>
-          <div className="text-center">
-            <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>Top Score</p>
-            <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{winner?.participant.score.toLocaleString()}</p>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Your Performance (if you played) */}
-      {myStats && (
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
-          <h3 className={`font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
-            <Medal className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-            <span>Your Performance</span>
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Rank</p>
-              <p className="s4-h1 text-purple-600 dark:text-purple-400">
-                #{participantStats.findIndex(s => s.participant.user_id === user?.id) + 1}
-              </p>
-            </div>
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Score</p>
-              <p className="s4-h1 text-blue-600 dark:text-blue-400">
-                {myStats.participant.score.toLocaleString()}
-              </p>
-            </div>
-            <div className="bg-green-50 dark:bg-green-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Accuracy</p>
-              <p className="s4-h1 text-green-600 dark:text-green-400">
-                {myStats.accuracy.toFixed(0)}%
-              </p>
-            </div>
-            <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-[var(--s4-radius-card)] p-4 text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-1">Avg Time</p>
-              <p className="s4-h1 text-yellow-600 dark:text-yellow-400">
-                {myStats.avgTimeSeconds.toFixed(1)}s
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Actions */}
-      <div className="flex justify-center">
+      {/* CTAs */}
+      <div className="flex justify-center gap-3 mt-6">
         <button
           onClick={onReturnHome}
-          className={`px-8 py-4 bg-accent-gold text-white rounded-md hover:opacity-90 transition font-semibold flex items-center space-x-2 shadow`}
+          className="flex items-center gap-2 px-6 py-3 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] hover:opacity-70 transition"
         >
-          <Home className="h-5 w-5" />
-          <span>Return to Games</span>
+          <Home className="h-4 w-4" />
+          Back to Lobby
+        </button>
+        <button
+          onClick={onReturnHome}
+          className="px-6 py-3 bg-sidebar text-ink-on-dark font-display text-[14px] font-bold hover:opacity-90 transition"
+        >
+          Play Again
         </button>
       </div>
     </div>

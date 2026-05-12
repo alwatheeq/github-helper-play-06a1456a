@@ -274,174 +274,140 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
   };
 
   return (
-    <div dir={dir} className="space-y-6">
-      {/* Create group */}
-      <div className={`rounded-[var(--s4-radius-card)] p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
-          <Plus className="w-4 h-4" />
-          {t('social.create_group')}
-        </h3>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={newGroupName}
-            onChange={(e) => setNewGroupName(e.target.value)}
-            placeholder={t('social.group_name')}
-            maxLength={100}
-            className={`flex-1 rounded-[var(--s4-radius-card)] px-3 py-2 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
-            onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
-          />
-          <button
-            onClick={handleCreate}
-            disabled={creating || !newGroupName.trim()}
-            className={`px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
-          >
-            {creating ? '...' : t('social.create_group')}
-          </button>
-        </div>
-      </div>
+    <div dir={dir} className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-6">
 
-      {/* Join group */}
-      <div className={`rounded-[var(--s4-radius-card)] p-4 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
-          <Hash className="w-4 h-4" />
-          {t('social.join_group')}
-        </h3>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={joinCode}
-            onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
-            placeholder={t('social.group_code')}
-            maxLength={6}
-            className={`flex-1 rounded-[var(--s4-radius-card)] px-3 py-2 text-sm border outline-none font-mono tracking-widest uppercase transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
-            onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
-          />
-          <button
-            onClick={handleJoin}
-            disabled={joining || joinCode.trim().length !== 6}
-            className={`px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
-          >
-            {joining ? '...' : t('social.join_group')}
-          </button>
-        </div>
-      </div>
-
-      {/* My groups */}
+      {/* LEFT — My groups + Discover */}
       <div>
-        <h3 className={`text-sm font-semibold mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark`}>
-          <Users className="w-4 h-4" />
-          {t('social.my_groups')}
-        </h3>
+        {/* My Groups section heading */}
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">{t('social.my_groups')}</span>
+          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {groups.filter(g => true).length}</span>
+          <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+        </div>
 
         {loading ? (
-          <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center py-8`}>...</div>
+          <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center py-8">...</div>
         ) : groups.length === 0 ? (
-          <div className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center py-8`}>
+          <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center py-8">
             {t('social.no_groups')}
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             {groups.map((group) => (
               <div
                 key={group.id}
-                className={`rounded-[var(--s4-radius-card)] border overflow-hidden transition-[background-color,border-color,color,opacity,transform,box-shadow] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
+                className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)]"
               >
-                {/* Group header */}
+                {/* Group card header */}
+                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)] ${group.my_role === 'admin' ? 'bg-ink dark:bg-ink' : 'bg-subtle dark:bg-card-dark'}`}>
+                  <div className="flex items-center gap-2">
+                    {/* Mini avatar stack */}
+                    <div className="flex">
+                      {(members[group.id] || []).slice(0, 4).map((m, idx) => (
+                        <div
+                          key={m.id}
+                          className="w-5 h-5 rounded-full bg-accent-gold border-2 border-card-dark flex items-center justify-center text-[8px] font-bold text-white"
+                          style={{ marginLeft: idx > 0 ? -6 : 0 }}
+                        >
+                          {(m.username || m.display_name || '?')[0].toUpperCase()}
+                        </div>
+                      ))}
+                    </div>
+                    {group.member_count > 4 && (
+                      <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">+{group.member_count - 4}</span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-[9px] tracking-[0.15em] uppercase font-bold ${group.my_role === 'admin' ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                      {group.my_role === 'admin' ? t('social.admin') : t('social.member')}
+                    </span>
+                    {group.my_role === 'admin' && <Crown className="w-3 h-3 text-accent-gold" />}
+                  </div>
+                </div>
+
+                {/* Card body */}
                 <button
                   onClick={() => toggleExpand(group.id)}
-                  className={`w-full p-4 text-left transition-colors hover:opacity-80`}
+                  className="px-4 py-4 flex-1 text-left"
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                      <div className={`font-semibold text-sm truncate text-ink dark:text-ink-on-dark`}>
-                        {group.name}
-                      </div>
-                      <div className={`text-xs mt-1 flex items-center gap-3 text-muted-ink dark:text-muted-ink-on-dark`}>
-                        <span className="flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {group.member_count}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          {group.my_role === 'admin' ? (
-                            <Crown className="w-3 h-3" />
-                          ) : null}
-                          {group.my_role === 'admin' ? t('social.admin') : t('social.member')}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpenGroupChat(group.id, group.name);
-                        }}
-                        className={`p-2 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20`}
-                        title={t('social.open_chat')}
-                      >
-                        <MessageSquare className={`w-4 h-4 text-ink dark:text-ink-on-dark`} />
-                      </button>
-                    </div>
-                  </div>
+                  <p className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-1">
+                    {group.name}
+                  </p>
+                  <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                    <Users className="w-3 h-3" /> {group.member_count} {t('social.members')}
+                  </p>
                 </button>
+
+                {/* Card footer */}
+                <div className="px-4 py-3 border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                    <span className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">{t('social.member')}</span>
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenGroupChat(group.id, group.name);
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 transition-opacity"
+                    title={t('social.open_chat')}
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    {t('social.open_chat')}
+                  </button>
+                </div>
 
                 {/* Expanded content */}
                 {expandedGroupId === group.id && (
-                  <div className={`border-t px-4 pb-4 pt-3 space-y-4 border-divider dark:border-divider-on-dark`}>
+                  <div className="border-t border-divider dark:border-divider-on-dark px-4 pb-4 pt-3 space-y-4">
                     {/* Group code + QR */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between">
                       <div>
-                        <div className={`text-xs mb-1 text-muted-ink dark:text-muted-ink-on-dark`}>
-                          {t('social.group_code')}
-                        </div>
+                        <p className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mb-1">{t('social.group_code')}</p>
                         <div className="flex items-center gap-2">
-                          <span className={`font-mono text-lg font-bold tracking-widest text-ink dark:text-ink-on-dark`}>
+                          <span className="font-mono text-[18px] font-bold tracking-widest text-ink dark:text-ink-on-dark">
                             {group.group_code}
                           </span>
                           <button
                             onClick={() => copyCode(group.group_code)}
-                            className={`p-1.5 rounded-md transition-colors bg-accent-gold-soft/20`}
+                            className="p-1.5 rounded-md bg-subtle dark:bg-card-dark transition-colors"
                             title={t('social.copy_code')}
                           >
                             {copiedCode === group.group_code ? (
                               <Check className="w-3.5 h-3.5 text-green-500" />
                             ) : (
-                              <Copy className={`w-3.5 h-3.5 text-muted-ink dark:text-muted-ink-on-dark`} />
+                              <Copy className="w-3.5 h-3.5 text-muted-ink dark:text-muted-ink-on-dark" />
                             )}
                           </button>
                         </div>
                       </div>
                       <div className="bg-card-light dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)]">
-                        <QRCodeSVG value={group.group_code} size={64} />
+                        <QRCodeSVG value={group.group_code} size={56} />
                       </div>
                     </div>
 
                     {/* Members list */}
                     <div>
-                      <div className={`text-xs font-medium mb-2 text-ink dark:text-ink-on-dark`}>
+                      <p className="text-[10px] font-semibold text-ink dark:text-ink-on-dark mb-2">
                         {t('social.members')} ({group.member_count})
-                      </div>
+                      </p>
                       {loadingMembers === group.id ? (
-                        <div className={`text-xs py-2 text-muted-ink dark:text-muted-ink-on-dark`}>...</div>
+                        <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark py-2">...</p>
                       ) : (
                         <div className="space-y-1.5">
                           {(members[group.id] || []).map((m) => (
                             <div
                               key={m.id}
-                              className={`flex items-center justify-between py-1.5 px-2 rounded-[var(--s4-radius-card)] text-xs bg-accent-gold-soft/20`}
+                              className="flex items-center justify-between py-1.5 px-2.5 rounded-[var(--s4-radius-card)] text-[11px] bg-subtle dark:bg-card-dark"
                             >
                               <div className="flex items-center gap-2 min-w-0">
-                                <div
-                                  className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0 bg-accent-gold`}
-                                >
+                                <div className="w-6 h-6 rounded-full bg-accent-gold flex items-center justify-center text-[10px] font-bold text-white shrink-0">
                                   {(m.username || m.display_name || '?')[0].toUpperCase()}
                                 </div>
-                                <span className={`truncate text-ink dark:text-ink-on-dark`}>
+                                <span className="truncate text-ink dark:text-ink-on-dark">
                                   {m.username || m.display_name || m.user_id.slice(0, 8)}
                                 </span>
-                                {m.role === 'admin' && (
-                                  <Crown className="w-3 h-3 text-amber-500 shrink-0" />
-                                )}
+                                {m.role === 'admin' && <Crown className="w-3 h-3 text-amber-500 shrink-0" />}
                               </div>
                               {group.my_role === 'admin' && m.role !== 'admin' && (
                                 <button
@@ -458,11 +424,11 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                       )}
                     </div>
 
-                    {/* Admin actions */}
+                    {/* Admin delete */}
                     {group.my_role === 'admin' && (
                       <button
                         onClick={() => handleDeleteGroup(group.id)}
-                        className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-500 transition-colors mt-2"
+                        className="flex items-center gap-1.5 text-[11px] text-red-400 hover:text-red-500 transition-colors"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                         {t('social.delete_group')}
@@ -474,6 +440,62 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             ))}
           </div>
         )}
+      </div>
+
+      {/* RIGHT rail */}
+      <div className="flex flex-col gap-4">
+
+        {/* Create Group CTA — dark card like v4 */}
+        <div className="bg-ink dark:bg-card-dark rounded-[var(--s4-radius-card)] p-5 shadow-[var(--s4-shadow-hairline)]">
+          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-2">
+            {t('social.create_group')}
+          </p>
+          <p className="font-display text-[15px] text-ink-on-dark dark:text-ink-on-dark leading-snug mb-4">
+            Gather your study circle — invite peers by course or name.
+          </p>
+          <input
+            type="text"
+            value={newGroupName}
+            onChange={(e) => setNewGroupName(e.target.value)}
+            placeholder={t('social.group_name')}
+            maxLength={100}
+            className="w-full px-3 py-2 mb-3 border border-white/20 bg-white/10 text-[12px] text-white placeholder:text-white/40 rounded-[var(--s4-radius-card)] focus:outline-none"
+            onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+          />
+          <button
+            onClick={handleCreate}
+            disabled={creating || !newGroupName.trim()}
+            className="w-full py-2.5 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 transition-opacity disabled:opacity-40"
+          >
+            {creating ? '...' : `${t('social.create_group')} →`}
+          </button>
+        </div>
+
+        {/* Join Group */}
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
+          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3 flex items-center gap-2">
+            <Hash className="w-3 h-3" />
+            {t('social.join_group')}
+          </p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={joinCode}
+              onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
+              placeholder={t('social.group_code')}
+              maxLength={6}
+              className="flex-1 px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] font-mono tracking-widest uppercase text-ink dark:text-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none"
+              onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
+            />
+            <button
+              onClick={handleJoin}
+              disabled={joining || joinCode.trim().length !== 6}
+              className="px-3 py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-40 transition-opacity"
+            >
+              {joining ? '...' : t('social.join_group')}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

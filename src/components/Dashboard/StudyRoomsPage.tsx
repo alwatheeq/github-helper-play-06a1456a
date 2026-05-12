@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Users, Plus, X, Copy, Check, Clock, UserPlus, Trash2, Search, Heart, UsersRound } from 'lucide-react';
+import { Users, Plus, X, Copy, Check, Clock, UserPlus, Trash2, Search } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 const ZegoVideoRoom = React.lazy(() => import('./ZegoVideoRoom').then(m => ({ default: m.ZegoVideoRoom })));
@@ -17,7 +17,7 @@ import { useFloatingVideoStore } from '../../stores/useFloatingVideoStore';
 import { FriendsPanel } from './Social/FriendsPanel';
 import { GroupsPanel } from './Social/GroupsPanel';
 import { GroupChat } from './Social/GroupChat';
-import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
+import { PageHeader, ScholarButton, RoomCard, SectionTabs, type SectionTab } from '../Scholar';
 
 interface StudyRoom {
   id: string;
@@ -986,33 +986,38 @@ export const StudyRoomsPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-card-dark p-4">
         <div className="max-w-7xl mx-auto">
-          {/* Minimal header with room info and leave button */}
-          <div className="mb-4 flex justify-between items-center bg-card-dark rounded-[var(--s4-radius-card)] p-4 shadow">
-            <div className="flex items-center space-x-4">
+          {/* Active room header — Scholar v4 dark bar style */}
+          <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border border-white/10 rounded-[var(--s4-radius-card)] px-5 py-3">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-accent-gold inline-block" />
+                <span className="text-[10px] tracking-[0.15em] uppercase font-bold text-accent-gold">Live</span>
+              </div>
+              <div className="w-px h-4 bg-white/10" />
               <div>
-                <h2 className="text-xl font-bold text-ink-on-dark">
+                <h2 className="font-display text-sm font-semibold text-white leading-none">
                   {selectedRoom.room_name}
                 </h2>
-                <div className="flex items-center space-x-3 mt-1 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                  <span className="flex items-center">
-                    <Users className="h-4 w-4 mr-1" />
+                <div className="flex items-center gap-3 mt-1 text-xs text-white/50">
+                  <span className="flex items-center gap-1">
+                    <Users className="h-3 w-3" />
                     {participants.length}/{selectedRoom.max_participants}
                   </span>
                   <button
                     onClick={() => copyRoomCode(selectedRoom.room_code)}
-                    className="flex items-center space-x-1 hover:text-secondary-ink dark:text-muted-ink-on-dark dark:hover:text-muted-ink-on-dark transition-colors"
+                    className="flex items-center gap-1 hover:text-white/80 transition-colors font-mono"
                   >
-                    {copiedCode ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                    <span className="font-mono">{selectedRoom.room_code}</span>
+                    {copiedCode ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                    {selectedRoom.room_code}
                   </button>
                 </div>
               </div>
             </div>
             <button
               onClick={handleLeaveRoom}
-              className="px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors font-medium flex items-center space-x-2"
+              className="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors font-semibold text-sm flex items-center gap-2"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
               <span>{t('study_rooms.leave_room') || 'Leave Room'}</span>
             </button>
           </div>
@@ -1026,7 +1031,7 @@ export const StudyRoomsPage: React.FC = () => {
           )}
 
           {/* Full-screen ZegoCloud video interface */}
-          <div className="bg-page rounded-md overflow-hidden shadow-[var(--s4-shadow-modal)]" style={{ height: 'calc(100vh - 140px)' }}>
+          <div className="bg-[#111] rounded-md overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
             <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" /></div>}>
               <ZegoVideoRoom
                 roomId={selectedRoom.room_code}
@@ -1052,23 +1057,24 @@ export const StudyRoomsPage: React.FC = () => {
     { id: 'browse', label: t('study_rooms.browse') },
     { id: 'my-rooms', label: t('study_rooms.my_rooms'), count: myRooms.length },
     { id: 'create', label: t('study_rooms.create') },
-    { id: 'friends', label: (<><Heart className="h-3.5 w-3.5 inline me-1.5" aria-hidden />{t('social.tab_friends')}</>) },
-    { id: 'groups', label: (<><UsersRound className="h-3.5 w-3.5 inline me-1.5" aria-hidden />{t('social.tab_groups')}</>) },
+    { id: 'friends', label: t('social.tab_friends') },
+    { id: 'groups', label: t('social.tab_groups') },
+    { id: 'group-chat', label: 'Group Chat' },
   ];
 
   const handleStudyRoomsTabChange = (id: string) => {
     if (id === 'friends' || id === 'groups') {
-      handleSocialTabClick(id);
+      handleSocialTabClick(id as 'friends' | 'groups');
     } else {
       setActiveTab(id as typeof activeTab);
     }
   };
 
-  // For tab-active styling, treat 'group-chat' as 'groups'.
-  const activeStudyRoomsTabId = activeTab === 'group-chat' ? 'groups' : activeTab;
+  // For tab-active styling, treat 'group-chat' as 'group-chat' directly.
+  const activeStudyRoomsTabId = activeTab;
 
   return (
-    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
+    <div className="min-h-screen bg-page p-6">
       <div className="max-w-6xl mx-auto">
         <PageHeader
           eyebrow={t('study_rooms.eyebrow') || 'Collaboration'}
@@ -1076,6 +1082,15 @@ export const StudyRoomsPage: React.FC = () => {
           descriptor={t('study_rooms.page_description') || 'Collaborate with others in real-time'}
           className="mb-6"
           hideRule
+          actions={
+            <ScholarButton
+              variant="primary"
+              size="md"
+              onClick={() => setActiveTab('create')}
+            >
+              {t('study_rooms.create_room') || 'Create Room'}
+            </ScholarButton>
+          }
         />
 
         <div className="mb-6">
@@ -1088,26 +1103,32 @@ export const StudyRoomsPage: React.FC = () => {
         </div>
 
         {activeTab === 'create' && (
-          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-6`}>
-            <h2 className={`text-xl font-semibold text-ink dark:text-ink-on-dark mb-6`}>{t('study_rooms.create_new')}</h2>
+          <div className="bg-card-dark rounded-[var(--s4-radius-card)] p-7 shadow-[var(--s4-shadow-hairline)]">
+            <p className="text-[9px] tracking-[0.25em] uppercase text-accent-gold font-bold mb-6">
+              {t('study_rooms.create_new') || 'New Room'}
+            </p>
 
-            <div className="space-y-5">
+            <div className="space-y-6">
+              {/* Room name — large underline input matching v4 */}
               <div>
-                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
+                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
                   {t('study_rooms.room_name')}
                 </label>
-                <input
-                  type="text"
-                  value={roomName}
-                  onChange={(e) => setRoomName(e.target.value)}
-                  placeholder={t('study_rooms.room_name_placeholder')}
-                  maxLength={100}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-                />
+                <div className="border-b border-ink dark:border-ink-on-dark pb-2">
+                  <input
+                    type="text"
+                    value={roomName}
+                    onChange={(e) => setRoomName(e.target.value)}
+                    placeholder={t('study_rooms.room_name_placeholder')}
+                    maxLength={100}
+                    className="w-full bg-transparent text-ink dark:text-ink-on-dark text-xl font-display placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+                  />
+                </div>
               </div>
 
+              {/* Description */}
               <div>
-                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
+                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
                   {t('study_rooms.description')}
                 </label>
                 <textarea
@@ -1116,130 +1137,192 @@ export const StudyRoomsPage: React.FC = () => {
                   placeholder={t('study_rooms.description_placeholder')}
                   maxLength={500}
                   rows={3}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/40 resize-none"
                 />
               </div>
 
+              {/* Max participants — grid of select with chip display */}
               <div>
-                <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
+                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-3">
                   {t('study_rooms.max_participants')}
                 </label>
-                <input
-                  type="range"
-                  min="2"
-                  max="20"
-                  value={maxParticipants}
-                  onChange={(e) => setMaxParticipants(Number(e.target.value))}
-                  className="w-full"
-                />
-                <div className={`text-center mt-2 px-4 py-2 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-accent-gold-soft/10`}>
-                  <span className={`text-xl font-bold text-ink dark:text-ink-on-dark`}>{maxParticipants}</span>
-                  <span className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark ml-2`}>{t('study_rooms.participants')}</span>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-center justify-between px-3 py-2 bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)]">
+                    <span className="text-[13px] text-ink dark:text-ink-on-dark">{maxParticipants} {t('study_rooms.participants')}</span>
+                    <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">▾</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2"
+                    max="20"
+                    value={maxParticipants}
+                    onChange={(e) => setMaxParticipants(Number(e.target.value))}
+                    className="accent-accent-gold self-center"
+                  />
                 </div>
               </div>
 
-              <button
-                onClick={handleCreateRoom}
-                disabled={creating || !roomName.trim()}
-                className={`w-full py-2.5 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 border-divider dark:border-divider-on-dark`}
-              >
-                {creating ? (
-                  <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                    <span>{t('study_rooms.creating')}</span>
-                  </>
-                ) : (
-                  <>
-                    <Plus className="h-5 w-5" />
-                    <span>{t('study_rooms.create_room')}</span>
-                  </>
-                )}
-              </button>
+              {/* Privacy toggle chips */}
+              <div>
+                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-3">
+                  Privacy
+                </label>
+                <div className="flex gap-2">
+                  {(['Private with link', 'Public'] as const).map((label, i) => (
+                    <div
+                      key={label}
+                      className={`px-4 py-2 text-[12px] cursor-pointer border rounded-[var(--s4-radius-card)] transition-colors ${
+                        i === 0
+                          ? 'border-accent-gold/60 bg-accent-gold/10 text-accent-gold font-semibold'
+                          : 'border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark'
+                      }`}
+                    >
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex justify-end gap-3 pt-2">
+                <ScholarButton
+                  variant="secondary"
+                  size="md"
+                  onClick={() => setActiveTab('browse')}
+                >
+                  {t('study_rooms.cancel') || 'Cancel'}
+                </ScholarButton>
+                <ScholarButton
+                  variant="primary"
+                  size="md"
+                  loading={creating}
+                  loadingText={t('study_rooms.creating') || 'Creating…'}
+                  onClick={handleCreateRoom}
+                  disabled={creating || !roomName.trim()}
+                >
+                  {t('study_rooms.create_room') || 'Create Room'} →
+                </ScholarButton>
+              </div>
             </div>
           </div>
         )}
 
         {(activeTab === 'browse' || activeTab === 'my-rooms') && (
-          <div className="space-y-4">
+          <div className="space-y-5">
+            {/* Search bar — v4 panel style */}
             {activeTab === 'browse' && (
-              <div className={`relative bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border rounded-[var(--s4-radius-card)]`}>
-                <Search className={`absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} aria-hidden />
+              <div className="flex items-center gap-3 px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)]">
+                <Search className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" aria-hidden />
                 <input
                   type="search"
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40`}
+                  className="flex-1 bg-transparent text-[13px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>
             )}
+
+            {/* Section heading row */}
+            {!loading && displayRoomList.length > 0 && (
+              <div className="flex items-center gap-3">
+                <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">
+                  {activeTab === 'browse' ? 'Live Now' : t('study_rooms.my_rooms')}
+                </span>
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {displayRoomList.length}</span>
+                <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+              </div>
+            )}
+
             {loading ? (
               <LoadingSkeleton type="card" count={3} />
             ) : browseSearchNoMatches ? (
-              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
-                <Search className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                <p className={`text-secondary-ink dark:text-muted-ink-on-dark`}>{t('study_rooms.browse_no_matches')}</p>
+              <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-12 text-center">
+                <Search className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
+                <p className="text-secondary-ink dark:text-muted-ink-on-dark text-sm">{t('study_rooms.browse_no_matches')}</p>
               </div>
             ) : displayRoomList.length === 0 ? (
-              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
-                <Users className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
+              <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-12 text-center">
+                <Users className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
+                <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                   {activeTab === 'browse' ? t('study_rooms.no_active_rooms') : t('study_rooms.no_rooms_yet')}
                 </p>
-                <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                   {activeTab === 'browse' ? t('study_rooms.create_to_start') : t('study_rooms.create_first_room')}
                 </p>
               </div>
             ) : (
-              displayRoomList.map((room) => (
-                <div key={room.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 hover:shadow transition-shadow`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
-                        {room.room_name}
-                      </h3>
-                      {room.room_description && (
-                        <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-3`}>
-                          {room.room_description}
-                        </p>
-                      )}
-                      <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
-                        <span className="flex items-center">
-                          <Users className="h-4 w-4 mr-1" />
-                          {room.participant_count || 0}/{room.max_participants}
+              /* 3-col card grid matching Rooms4 layout */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {displayRoomList.map((room) => {
+                  const isFull = (room.participant_count || 0) >= room.max_participants;
+                  return (
+                    <div key={room.id} className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)] hover:shadow-md transition-shadow">
+                      {/* Card header strip */}
+                      <div className="bg-card-dark px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)]">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full bg-accent-gold" />
+                          <span className="text-[9px] tracking-[0.15em] uppercase font-bold text-accent-gold">Live</span>
+                        </div>
+                        {isFull ? (
+                          <span className="text-[9px] tracking-[0.15em] uppercase font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded-full">Full</span>
+                        ) : (
+                          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                            <Clock className="h-3 w-3" /> {formatExpiry(room.expires_at)}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Card body */}
+                      <div className="px-4 py-4 flex-1 flex flex-col gap-3">
+                        <div>
+                          <h3 className="font-display text-[17px] font-semibold text-ink dark:text-ink-on-dark leading-snug">
+                            {room.room_name}
+                          </h3>
+                        </div>
+                        {room.room_description && (
+                          <p className="text-[12.5px] text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed line-clamp-2">
+                            {room.room_description}
+                          </p>
+                        )}
+                        <div className="flex gap-1.5 flex-wrap">
+                          <span className="text-[9px] tracking-[0.12em] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark px-2 py-0.5 rounded">
+                            {room.room_code}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Card footer */}
+                      <div className="px-4 py-3 border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
+                        <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                          <Users className="h-3.5 w-3.5" />
+                          {room.participant_count || 0} / {room.max_participants}
                         </span>
-                        <span className="flex items-center">
-                          <Clock className="h-4 w-4 mr-1" />
-                          {formatExpiry(room.expires_at)}
-                        </span>
-                        <span className={`font-mono text-xs bg-accent-gold-soft/20 px-2 py-1 rounded`}>
-                          {room.room_code}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          {activeTab === 'my-rooms' && room.creator_id === user?.id && (
+                            <button
+                              onClick={() => handleDeleteRoom(room.id)}
+                              className="p-1.5 text-red-400 hover:text-red-500 transition-colors"
+                              title={t('study_rooms.delete_room') || 'Delete Room'}
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleJoinRoom(room)}
+                            disabled={isFull}
+                            className="px-4 py-1.5 bg-accent-gold text-white dark:text-ink text-[12px] font-semibold rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center gap-1.5"
+                          >
+                            <UserPlus className="h-3.5 w-3.5" />
+                            {t('study_rooms.join')}
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => handleJoinRoom(room)}
-                        className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
-                      >
-                        <UserPlus className="h-4 w-4" />
-                        <span>{t('study_rooms.join')}</span>
-                      </button>
-                      {activeTab === 'my-rooms' && room.creator_id === user?.id && (
-                        <button
-                          onClick={() => handleDeleteRoom(room.id)}
-                          className="px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 flex items-center space-x-2"
-                          title={t('study_rooms.delete_room') || 'Delete Room'}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          <span>{t('study_rooms.delete') || 'Delete'}</span>
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))
+                  );
+                })}
+              </div>
             )}
           </div>
         )}

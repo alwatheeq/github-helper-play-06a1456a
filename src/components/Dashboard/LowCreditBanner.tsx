@@ -1,7 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useCredits } from '../../contexts/CreditContext';
 import { ErrorLogger } from '../../utils/errorLogger';
+
+const AlertIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+    <line x1="12" y1="9" x2="12" y2="13"/>
+    <line x1="12" y1="17" x2="12.01" y2="17"/>
+  </svg>
+);
+
+interface BannerConfig {
+  wrapperClass: string;
+  iconClass: string;
+  textClass: string;
+  badgeClass: string;
+  btnClass: string;
+  title: string;
+  message: string;
+}
 
 export const LowCreditBanner: React.FC = () => {
   const { balance } = useCredits();
@@ -47,67 +65,86 @@ export const LowCreditBanner: React.FC = () => {
     return null;
   }
 
-  const getWarningConfig = () => {
-    const { credits_remaining, cycle_end } = balance;
-    const cycleEndDate = cycle_end ? new Date(cycle_end).toLocaleDateString() : 'unknown date';
+  const { credits_remaining, cycle_end } = balance;
+  const cycleEndDate = cycle_end ? new Date(cycle_end).toLocaleDateString() : 'unknown date';
 
+  const getConfig = (): BannerConfig | null => {
     switch (warningLevel) {
       case 250:
         return {
-          bgColor: 'bg-red-50 dark:bg-red-900/20',
-          borderColor: 'border-red-200 dark:border-red-800',
-          textColor: 'text-red-800 dark:text-red-200',
-          iconColor: 'text-red-600 dark:text-red-400',
-          title: 'CRITICAL: Very Low Credits',
-          message: `You have only ${credits_remaining.toLocaleString()} credits remaining. You may not be able to complete large requests. Credits will refresh on ${cycleEndDate}.`
+          wrapperClass: 'bg-red-50 dark:bg-red-900/20 border-l-4 border-l-red-600 border border-red-200 dark:border-red-800/60',
+          iconClass: 'text-red-600 dark:text-red-400',
+          textClass: 'text-red-800 dark:text-red-200',
+          badgeClass: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700',
+          btnClass: 'bg-red-600 hover:bg-red-700 text-white shadow-[0_2px_8px_rgba(220,38,38,0.35)]',
+          title: 'Credits Critically Low',
+          message: `You have only ${credits_remaining.toLocaleString()} credits left. Upgrade now to avoid interruptions. Credits refresh on ${cycleEndDate}.`,
         };
       case 500:
         return {
-          bgColor: 'bg-orange-50 dark:bg-orange-900/20',
-          borderColor: 'border-orange-200 dark:border-orange-800',
-          textColor: 'text-orange-800 dark:text-orange-200',
-          iconColor: 'text-orange-600 dark:text-orange-400',
-          title: 'Low Credits Warning',
-          message: `You have ${credits_remaining.toLocaleString()} credits remaining. Consider managing your usage carefully. Credits will refresh on ${cycleEndDate}.`
+          wrapperClass: 'bg-amber-50 dark:bg-amber-900/20 border-l-4 border-l-amber-500 border border-amber-200 dark:border-amber-800/60',
+          iconClass: 'text-amber-600 dark:text-amber-400',
+          textClass: 'text-amber-900 dark:text-amber-200',
+          badgeClass: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700',
+          btnClass: 'bg-amber-600 hover:bg-amber-700 text-white shadow-[0_2px_8px_rgba(217,119,6,0.35)]',
+          title: 'Running Low on Credits',
+          message: `You have ${credits_remaining.toLocaleString()} credits remaining. Consider topping up soon to keep your momentum going. Refreshes on ${cycleEndDate}.`,
         };
       case 1000:
         return {
-          bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
-          borderColor: 'border-yellow-200 dark:border-yellow-800',
-          textColor: 'text-yellow-800 dark:text-yellow-200',
-          iconColor: 'text-yellow-600 dark:text-yellow-400',
-          title: 'Credits Running Low',
-          message: `You have ${credits_remaining.toLocaleString()} credits remaining out of ${balance.credits_total.toLocaleString()}. Credits will refresh on ${cycleEndDate}.`
+          wrapperClass: 'bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-l-yellow-500 border border-yellow-200 dark:border-yellow-800/60',
+          iconClass: 'text-yellow-600 dark:text-yellow-400',
+          textClass: 'text-yellow-900 dark:text-yellow-200',
+          badgeClass: 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700',
+          btnClass: 'bg-yellow-600 hover:bg-yellow-700 text-white shadow-[0_2px_8px_rgba(202,138,4,0.35)]',
+          title: 'Credit Balance Notice',
+          message: `Your credit balance is at ${credits_remaining.toLocaleString()}. You're doing great — just a heads up to plan ahead. Refreshes on ${cycleEndDate}.`,
         };
       default:
         return null;
     }
   };
 
-  const config = getWarningConfig();
+  const config = getConfig();
   if (!config) return null;
 
   return (
-    <div className={`${config.bgColor} ${config.borderColor} border rounded-[var(--s4-radius-card)] p-4 mb-6 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
-      <div className="flex items-start justify-between">
-        <div className="flex items-start space-x-3 flex-1">
-          <AlertTriangle className={`h-5 w-5 ${config.iconColor} flex-shrink-0 mt-0.5`} />
-          <div className="flex-1">
-            <h3 className={`font-semibold ${config.textColor} mb-1`}>
-              {config.title}
-            </h3>
-            <p className={`text-sm ${config.textColor}`}>
-              {config.message}
-            </p>
-          </div>
+    <div className={`${config.wrapperClass} rounded-[var(--s4-radius-card)] p-3.5 mb-5 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
+      <div className="flex items-start gap-3.5">
+        {/* Alert icon */}
+        <div className={`flex-shrink-0 mt-0.5 ${config.iconClass}`}>
+          <AlertIcon />
         </div>
-        <button
-          onClick={() => setShowBanner(false)}
-          className={`${config.textColor} hover:opacity-70 transition-opacity flex-shrink-0 ml-2`}
-          aria-label="Dismiss warning"
-        >
-          <X className="h-5 w-5" />
-        </button>
+
+        {/* Text content */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
+            <span className={`text-sm font-bold ${config.textClass}`}>{config.title}</span>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${config.badgeClass}`}>
+              {credits_remaining.toLocaleString()} credits
+            </span>
+          </div>
+          <p className={`text-xs leading-relaxed ${config.textClass} opacity-85`}>
+            {config.message}
+          </p>
+        </div>
+
+        {/* Actions */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <a
+            href="/pricing"
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-[var(--s4-radius-card)] whitespace-nowrap transition-opacity shadow-sm ${config.btnClass}`}
+          >
+            Top Up
+          </a>
+          <button
+            onClick={() => setShowBanner(false)}
+            className={`w-7 h-7 flex items-center justify-center rounded-[var(--s4-radius-card)] border ${config.badgeClass} hover:opacity-70 transition-opacity`}
+            aria-label="Dismiss warning"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
       </div>
     </div>
   );

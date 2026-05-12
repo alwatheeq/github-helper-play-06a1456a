@@ -81,10 +81,13 @@ export const PricingPage: React.FC = () => {
       <div className="max-w-2xl mx-auto mt-20">
         {/* Hero */}
         <div className="text-center mb-10">
-          <h1 className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-3`}>
-            {t('pricing.standard_title')}
+          <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-accent-gold mb-3">
+            Pricing
+          </p>
+          <h1 className="font-display s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-3" style={{ letterSpacing: '-0.02em' }}>
+            Choose your plan
           </h1>
-          <p className={`text-lg text-secondary-ink dark:text-secondary-ink-on-dark`}>
+          <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
             {t('pricing.standard_description')}
             {!isStripeEnabled() && (
               <span className="block mt-1 text-base"> {t('pricing.no_payment_required')}</span>
@@ -288,7 +291,7 @@ export const PricingPage: React.FC = () => {
           </div>
           <button
             onClick={handleSubscribe}
-            className={`w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center gap-2`}
+            className="w-full bg-ink dark:bg-ink-on-dark text-ink-on-dark dark:text-ink font-bold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center gap-2 hover:opacity-85"
           >
             <span>{isStripeEnabled() ? t('pricing.subscribe') : t('pricing.continue')}</span>
             <ArrowRight className="h-5 w-5" />

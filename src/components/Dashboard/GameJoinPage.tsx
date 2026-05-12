@@ -132,10 +132,10 @@ export const GameJoinPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center max-w-md w-full`}>
-          <Loader2 className="h-16 w-16 text-blue-600 dark:text-blue-400 animate-spin mx-auto mb-4" />
-          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Validating game code...</p>
+      <div className="min-h-screen bg-page flex items-center justify-center p-4">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+          <Loader2 className="h-12 w-12 text-accent-gold animate-spin mx-auto mb-4" />
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Validating game code...</p>
         </div>
       </div>
     );
@@ -143,14 +143,14 @@ export const GameJoinPage: React.FC = () => {
 
   if (error && !gameInfo) {
     return (
-      <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center max-w-md w-full`}>
-          <AlertCircle className="h-16 w-16 text-red-600 dark:text-red-400 mx-auto mb-4" />
-          <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-2`}>Unable to Join Game</h2>
-          <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>{error}</p>
+      <div className="min-h-screen bg-page flex items-center justify-center p-4">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+          <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-3">Unable to Join Game</h2>
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-6">{error}</p>
           <button
             onClick={() => navigate('/dashboard?view=eduplay')}
-            className="px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition"
+            className="px-6 py-3 bg-accent-gold text-sidebar text-[13px] font-bold hover:opacity-90 transition"
           >
             Go to EduPlay
           </button>
@@ -160,106 +160,132 @@ export const GameJoinPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4`}>
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full`}>
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className={`bg-accent-gold rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
-            <Gamepad2 className="h-12 w-12 text-ink-on-dark" />
-          </div>
-          <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Join Game</h2>
-          {gameInfo && (
-            <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>{gameInfo.game_title}</p>
-          )}
-        </div>
+    <div className="min-h-screen bg-page flex items-center justify-center p-4">
+      {/* Scholar v4 Play4Join layout: centered card */}
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4">
 
-        {/* Join Form */}
-        <div className="space-y-6">
-          <div>
-            <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
-              Game Code
-            </label>
-            <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-[var(--s4-radius-card)]">
-              <span className="s4-h1 text-blue-600 dark:text-blue-400 tracking-wider">
-                {gameCode?.toUpperCase()}
-              </span>
+        {/* Main join card */}
+        <div className="md:col-span-2">
+          {/* Dark banner header */}
+          <div className="bg-sidebar px-7 py-5 mb-0 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+            <div>
+              <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">The Games Room · Brain Rush</div>
+              <div className="font-display text-[24px] font-semibold text-ink-on-dark">Join a Game.</div>
             </div>
+            <button
+              onClick={() => navigate('/dashboard?view=eduplay')}
+              className="text-[11px] font-bold text-sidebar bg-accent-gold px-3 py-1.5 hover:opacity-90 transition"
+            >← Back</button>
           </div>
 
-          <div>
-            <label className={`block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
-              Your Display Name
-            </label>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-0 px-7 py-6 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Enter Room Code</div>
+
+            {/* Game code display — large monospace */}
+            <div className="border-2 border-accent-gold bg-chip dark:bg-card-dark px-6 py-4 text-center mb-2">
+              <div className="font-display text-[30px] font-bold text-ink dark:text-ink-on-dark tracking-[8px]">
+                {gameCode?.toUpperCase()}
+              </div>
+            </div>
+            {gameInfo && (
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6 text-center">{gameInfo.game_title}</div>
+            )}
+
+            {/* Display name */}
+            <div className="text-[10px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2">Your Display Name</div>
             <input
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your name"
               maxLength={50}
-              className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className="w-full border border-divider dark:border-divider-on-dark px-4 py-3 text-[13px] bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold mb-1"
             />
-          </div>
+            <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">This is how you'll appear to others in the game.</div>
 
-          {error && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
-              <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
-            </div>
-          )}
-
-          <button
-            onClick={handleJoinGame}
-            disabled={joining || !displayName.trim()}
-            className={`w-full px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
-          >
-            {joining ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                <span>Joining...</span>
-              </>
-            ) : (
-              <>
-                <Users className="h-5 w-5" />
-                <span>Join Game</span>
-              </>
+            {error && (
+              <div className="border border-red-500/40 bg-red-500/10 px-4 py-3 flex items-start gap-3 mb-4">
+                <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+                <p className="text-[12px] text-red-600 dark:text-red-400">{error}</p>
+              </div>
             )}
-          </button>
+
+            <button
+              onClick={handleJoinGame}
+              disabled={joining || !displayName.trim()}
+              className="w-full py-3 bg-accent-gold text-sidebar font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            >
+              {joining ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Joining...
+                </>
+              ) : (
+                'Join Game →'
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Right rail */}
+        <div className="flex flex-col gap-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How to Join</div>
+            {[
+              'Get the room code from your host or teacher',
+              'Enter the code and press Join',
+              'Wait in the lobby until the host starts',
+              'Answer as fast as you can — speed counts!',
+            ].map((tip, i) => (
+              <div key={i} className="flex gap-3 mb-3">
+                <div className="w-5 h-5 rounded-full bg-subtle dark:bg-chip flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
+                </div>
+                <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">{tip}</span>
+              </div>
+            ))}
+          </div>
+          <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
+            <Gamepad2 className="h-7 w-7 text-accent-gold mb-3" />
+            <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Brain Rush.</div>
+            <div className="text-[11px] text-muted-ink-on-dark">Real-time quiz duels against your classmates. First to answer correctly earns the most points.</div>
+          </div>
         </div>
       </div>
 
       {/* Auth Modal */}
       {showAuthModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-modal)] p-8 max-w-md w-full">
-            <h3 className={`s4-h2 text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
-            <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+            <h3 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-2">Join the Game</h3>
+            <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-6">
               Choose how you'd like to join this game:
             </p>
 
             <div className="space-y-3">
               <button
                 onClick={handleSignIn}
-                className="w-full px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition font-medium"
+                className="w-full py-3 bg-accent-gold text-sidebar text-[13px] font-bold hover:opacity-90 transition"
               >
                 Sign In to Your Account
               </button>
 
               <button
                 onClick={handleSignUp}
-                className="w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transition font-medium"
+                className="w-full py-3 bg-sidebar text-ink-on-dark text-[13px] font-bold hover:opacity-90 transition"
               >
                 Create New Account
               </button>
 
               <button
                 onClick={handleContinueAsGuest}
-                className={`w-full px-6 py-3 border-2 border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition font-medium`}
+                className="w-full py-3 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[13px] hover:opacity-70 transition"
               >
                 Continue as Guest
               </button>
             </div>
 
-            <p className={`mt-4 text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>
+            <p className="mt-4 text-[11px] text-muted-ink dark:text-muted-ink-on-dark text-center">
               Guest users won't have their progress saved
             </p>
           </div>

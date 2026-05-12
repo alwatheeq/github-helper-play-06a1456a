@@ -584,115 +584,162 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
   const renderMenu = () => (
     <div className="w-full">
-      <div className="mb-12 text-center">
-        <Gamepad2 className={`h-20 w-20 text-ink dark:text-ink-on-dark mx-auto mb-4`} />
-        <h2 className={`s4-h1 text-[40px] text-ink dark:text-ink-on-dark mb-4`}>EduPlay</h2>
+      {/* Page Header — Scholar v4 style */}
+      <div className="mb-2">
+        <div className="text-[10px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">The Games Room</div>
+        <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark tracking-tight leading-none mb-1">Play &amp; Learn.</h1>
+        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">choose your game — every session sharpens your edge.</p>
+      </div>
+      <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-3 mb-5" />
+
+      {/* Top row: BrainRush hero + two action cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5">
+        {/* BrainRush featured hero card (dark bg-sidebar) */}
+        <div className="lg:col-span-2 bg-sidebar p-6 flex flex-col shadow-[var(--s4-shadow-hairline)]">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold uppercase mb-2">Multiplayer · Real-time</div>
+              <h2 className="font-display text-[32px] font-semibold text-ink-on-dark tracking-tight leading-none mb-3">Brain Rush.</h2>
+              <p className="text-[13px] text-muted-ink-on-dark leading-relaxed max-w-sm">
+                Head-to-head quiz duels against classmates. Host a room, join a friend's game, or enter a ranked online match.
+              </p>
+            </div>
+            <span className="flex items-center gap-1.5 text-[9px] tracking-[1.5px] font-bold uppercase bg-accent-gold text-sidebar px-2.5 py-1 rounded-full flex-shrink-0 ml-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-sidebar animate-pulse" />
+              Live
+            </span>
+          </div>
+          <div className="mt-auto pt-4">
+            <button
+              onClick={() => setViewMode('game-selection')}
+              className="inline-block bg-accent-gold text-sidebar text-[12.5px] font-bold px-5 py-2.5 hover:opacity-90 transition"
+            >
+              Enter the arena →
+            </button>
+          </div>
+        </div>
+
+        {/* Action cards stacked in right column */}
+        <div className="flex flex-col gap-3">
+          {/* Host a Session — dark card */}
+          <button
+            onClick={() => setViewMode('question-source')}
+            className="flex-1 bg-card-dark p-5 text-left shadow-[var(--s4-shadow-hairline)] hover:opacity-90 transition"
+          >
+            <Crown className="h-5 w-5 text-accent-gold mb-3" />
+            <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Host a Session.</div>
+            <div className="text-[11px] text-muted-ink-on-dark leading-relaxed">Create your own Brain Rush game and share a code with your class.</div>
+            <div className="mt-3 text-[11px] font-bold text-accent-gold">Host →</div>
+          </button>
+          {/* Join a Game — light card */}
+          <button
+            onClick={() => setViewMode('join-game')}
+            className="flex-1 bg-card-light dark:bg-card-light p-5 text-left border border-divider shadow-[var(--s4-shadow-hairline)] hover:opacity-90 transition"
+          >
+            <Users className="h-5 w-5 text-ink mb-3" />
+            <div className="font-display text-[15px] font-semibold text-ink mb-1">Join a Game.</div>
+            <div className="text-[11px] text-muted-ink leading-relaxed">Enter a room code from your classmate to join their session.</div>
+            <div className="mt-3 text-[11px] font-bold text-ink">Join →</div>
+          </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <button
-          onClick={() => setViewMode('game-selection')}
-          className={`group bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
-        >
-          <div className="bg-white/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-            <Target className="h-12 w-12 text-ink-on-dark" />
+      {/* Stats strip — 3 horizontal stat tiles */}
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        {[
+          { label: 'Games Played', value: '10' },
+          { label: 'Win Rate', value: '70%' },
+          { label: 'Best Streak', value: '7W' },
+        ].map(({ label, value }) => (
+          <div key={label} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)] text-center">
+            <div className="font-display text-[26px] font-semibold text-ink dark:text-ink-on-dark leading-none">{value}</div>
+            <div className="text-[9px] tracking-[1.2px] uppercase text-muted-ink dark:text-muted-ink-on-dark mt-2">{label}</div>
           </div>
-          <h3 className="s4-h2 mb-2 text-ink-on-dark">Brain Rush</h3>
-          <p className="text-ink-on-dark/90">Fast-paced 4-choice quiz battles</p>
-          <div className="mt-4 text-sm text-ink-on-dark/80">Compete in real-time!</div>
-        </button>
+        ))}
+      </div>
 
-        <div className={`bg-accent-gold-soft/20 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60`}>
-          <div className={`bg-accent-gold-soft/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4`}>
-            <Trophy className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark`} />
+      {/* Coming soon games */}
+      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">More Games Coming Soon</div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {[
+          { icon: Trophy, label: 'Flash Sprint.', sub: 'Solo · Flashcards' },
+          { icon: Clock, label: 'Daily Challenge.', sub: 'Community · Shared set' },
+        ].map(({ icon: Icon, label, sub }) => (
+          <div key={label} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 opacity-50 flex items-center gap-4 shadow-[var(--s4-shadow-hairline)]">
+            <Icon className="h-7 w-7 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
+            <div>
+              <div className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">{label}</div>
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{sub}</div>
+            </div>
+            <div className="ml-auto text-[9px] tracking-[1.5px] font-bold text-muted-ink dark:text-muted-ink-on-dark uppercase border border-divider dark:border-divider-on-dark px-2 py-0.5">Soon</div>
           </div>
-          <h3 className={`s4-h3 text-[20px] mb-2 text-secondary-ink dark:text-muted-ink-on-dark`}>Coming Soon</h3>
-          <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>More exciting games on the way!</p>
-        </div>
-
-        <div className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
-          <div className="bg-subtle dark:bg-card-dark rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-            <Clock className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark" />
-          </div>
-          <h3 className="s4-h3 text-[20px] mb-2 text-secondary-ink dark:text-muted-ink">Coming Soon</h3>
-          <p className="text-sm text-muted-ink dark:text-muted-ink text-center">More exciting games on the way!</p>
-        </div>
+        ))}
       </div>
     </div>
   );
 
   const renderGameSelection = () => (
     <div className="w-full max-w-4xl mx-auto">
-      <button
-        onClick={() => setViewMode('menu')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
-      >
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        <span>Back to Games</span>
-      </button>
-
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-8`}>
-        <div className="text-center mb-8">
-          <div className={`bg-accent-gold rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-4`}>
-            <Target className="h-16 w-16 text-ink-on-dark" />
-          </div>
-          <h2 className={`s4-h1 text-[36px] text-ink dark:text-ink-on-dark mb-2`}>Brain Rush</h2>
-          <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
-            Fast-paced multiplayer quiz game with 4-choice questions
-          </p>
+      {/* Header banner — dark bg-sidebar */}
+      <div className="bg-sidebar p-5 mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">The Games Room · Brain Rush</div>
+          <div className="font-display text-[26px] font-semibold text-ink-on-dark tracking-tight">Brain Rush.</div>
+          <div className="text-[12px] text-muted-ink-on-dark mt-1">Real-time quiz duels · First to answer wins · +350 pts per win</div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <button
-            onClick={() => setViewMode('question-source')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
-          >
-            <Crown className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
-            <h3 className="s4-h2 mb-2 text-ink-on-dark">Host a Game</h3>
-            <p className="text-ink-on-dark/90">Create your own Brain Rush game</p>
-          </button>
-
-          <button
-            onClick={() => setViewMode('join-game')}
-            className="bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform "
-          >
-            <Users className="h-12 w-12 mx-auto mb-4" />
-            <h3 className="s4-h2 mb-2">Join a Game</h3>
-            <p className="text-green-100">Enter a code to join a game</p>
-          </button>
-
-          <button
-            onClick={() => setViewMode('multiplayer-menu')}
-            className={`bg-accent-gold hover:opacity-90 text-white rounded-[var(--s4-radius-card)] p-8 shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] transform `}
-          >
-            <Users className="h-12 w-12 mx-auto mb-4 text-ink-on-dark" />
-            <h3 className="s4-h2 mb-2 text-ink-on-dark">Multiplayer</h3>
-            <p className="text-ink-on-dark/90">Real-time competitive mode</p>
-          </button>
-        </div>
+        <button
+          onClick={() => setViewMode('menu')}
+          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-2 hover:opacity-90 transition"
+        >← Back</button>
       </div>
 
-      <div className={`bg-accent-gold-soft/20 rounded-md p-6`}>
-        <h4 className={`font-bold text-ink dark:text-ink-on-dark mb-3 flex items-center space-x-2`}>
-          <Trophy className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-          <span>How to Play</span>
-        </h4>
-        <ul className={`space-y-2 text-secondary-ink dark:text-muted-ink-on-dark`}>
-          <li className="flex items-start space-x-2">
-            <span className="text-purple-600 dark:text-purple-400 font-bold">1.</span>
-            <span>Answer 4-choice questions as fast as you can</span>
-          </li>
-          <li className="flex items-start space-x-2">
-            <span className="text-purple-600 dark:text-purple-400 font-bold">2.</span>
-            <span>Earn more points for correct answers and faster times</span>
-          </li>
-          <li className="flex items-start space-x-2">
-            <span className="text-purple-600 dark:text-purple-400 font-bold">3.</span>
-            <span>Compete with friends to reach the top of the leaderboard</span>
-          </li>
-        </ul>
+      {/* Lobby options — 3-col grid */}
+      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How do you want to play?</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
+        {[
+          { icon: Crown, label: 'Host a Game.', sub: 'Create a private room and share a code with your classmate.', cta: 'Host →', primary: true, action: () => setViewMode('question-source') },
+          { icon: Users, label: 'Join a Game.', sub: 'Enter a room code from your classmate to join their session.', cta: 'Join →', primary: false, action: () => setViewMode('join-game') },
+          { icon: Target, label: 'Play Online.', sub: 'Enter the ranked queue and get matched against players live.', cta: 'Find match →', primary: false, action: () => setViewMode('multiplayer-menu') },
+        ].map(({ icon: Icon, label, sub, cta, primary, action }) => (
+          <div
+            key={label}
+            className={`p-5 flex flex-col shadow-[var(--s4-shadow-hairline)] ${
+              primary ? 'bg-sidebar' : 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark'
+            }`}
+          >
+            <Icon className={`h-5 w-5 mb-3 ${primary ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} />
+            <div className={`font-display text-[15px] font-semibold mb-2 ${primary ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{label}</div>
+            <div className={`text-[11.5px] leading-relaxed flex-1 mb-4 ${primary ? 'text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{sub}</div>
+            <button
+              onClick={action}
+              className={`text-center text-[12px] font-bold py-2 transition ${
+                primary
+                  ? 'bg-accent-gold text-sidebar hover:opacity-90'
+                  : 'border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark hover:opacity-70'
+              }`}
+            >{cta}</button>
+          </div>
+        ))}
+      </div>
+
+      {/* How it works */}
+      <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
+        <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3 opacity-60">How it works</div>
+        <div className="space-y-3">
+          {[
+            'AI generates questions based on your topic',
+            'Share the room code with your class',
+            'Players join from any device',
+            'Most correct answers across all rounds wins',
+          ].map((tip, i) => (
+            <div key={i} className="flex gap-3 items-start">
+              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
+              </div>
+              <span className="text-[11.5px] text-muted-ink-on-dark leading-relaxed">{tip}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -814,56 +861,76 @@ export const EduPlayPage: React.FC = React.memo(() => {
   );
 
   const renderJoinGame = () => (
-    <div className="max-w-md mx-auto">
-      <button
-        onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
-      >
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        <span>Back</span>
-      </button>
+    <div className="w-full max-w-4xl mx-auto">
+      {/* Header banner */}
+      <div className="bg-sidebar p-5 mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">The Games Room · Brain Rush</div>
+          <div className="font-display text-[24px] font-semibold text-ink-on-dark">Join a Game.</div>
+        </div>
+        <button
+          onClick={() => setViewMode('game-selection')}
+          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-2 hover:opacity-90 transition"
+        >← Back</button>
+      </div>
 
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
-        <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-6 text-center">Join Game</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Main join card */}
+        <div className="md:col-span-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-7 shadow-[var(--s4-shadow-hairline)]">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-5">Enter Room Code</div>
 
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-              Game Code
-            </label>
+          {/* Code input — large monospace */}
+          <div className="mb-2">
             <input
               type="text"
               value={joinCode}
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-              placeholder="Enter 6-digit code"
-              maxLength={6}
-              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
+              placeholder="XXXXXXXX"
+              maxLength={8}
+              className="w-full border-2 border-accent-gold bg-bg-chip dark:bg-card-dark px-5 py-4 font-display text-[30px] font-bold text-ink dark:text-ink-on-dark tracking-[8px] text-center focus:outline-none"
             />
           </div>
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">Ask your host or teacher for the 8-character room code.</div>
 
-          <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-              Your Name
-            </label>
-            <input
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Enter your display name"
-              maxLength={50}
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-            />
-          </div>
+          {/* Display name */}
+          <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark font-bold tracking-[1px] uppercase mb-2">Your Display Name</div>
+          <input
+            type="text"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            placeholder="Your name in the game"
+            maxLength={50}
+            className="w-full border border-divider dark:border-divider-on-dark px-4 py-3 text-[13px] bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold mb-2"
+          />
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">This is how you'll appear to others in the game.</div>
 
           <button
             onClick={handleJoinGame}
             disabled={!joinCode.trim() || !displayName.trim()}
-            className="w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-accent-gold text-sidebar text-[14px] font-bold font-display hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Join Game
+            Join Game →
           </button>
+        </div>
+
+        {/* Right rail — how to join */}
+        <div className="flex flex-col gap-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How to Join</div>
+            {[
+              'Get the room code from your host or teacher',
+              'Enter the code above and press Join',
+              'Wait in the lobby until the host starts',
+              'Answer as fast as you can — speed counts!',
+            ].map((tip, i) => (
+              <div key={i} className="flex gap-3 mb-3">
+                <div className="w-5 h-5 rounded-full bg-subtle dark:bg-chip flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
+                </div>
+                <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">{tip}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -873,123 +940,136 @@ export const EduPlayPage: React.FC = React.memo(() => {
     const joinUrl = currentGame ? getGameJoinUrl(currentGame.game_code) : '';
 
     return (
-      <div className="max-w-5xl mx-auto">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
-          <div className="text-center mb-8">
-            <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">
-              {currentGame?.game_title}
-            </h2>
-            <p className="text-secondary-ink dark:text-muted-ink mb-6">
-              {currentGame?.total_questions} questions • {currentGame?.question_timer_seconds}s per question
-            </p>
-
-            {/* Game Code and QR Code Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              {/* Game Code */}
-              <div className={`bg-accent-gold-soft/20 rounded-md p-6 border-2 border-divider dark:border-divider-on-dark opacity-50`}>
-                <div className="flex items-center justify-center space-x-2 mb-3">
-                  <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink">Game Code</span>
-                </div>
-                <div className="flex items-center justify-center space-x-3 mb-3">
-                  <span className="s4-h1 text-[40px] text-blue-600 dark:text-blue-400 tracking-wider">
-                    {currentGame?.game_code}
-                  </span>
-                </div>
-                <button
-                  onClick={copyGameCode}
-                  className="w-full px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition flex items-center justify-center space-x-2"
-                >
-                  {copiedCode ? (
-                    <>
-                      <Check className="h-5 w-5" />
-                      <span>Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-5 w-5" />
-                      <span>Copy Code</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* QR Code */}
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-md p-6 border-2 border-green-300 dark:border-green-700">
-                <div className="flex items-center justify-center space-x-2 mb-3">
-                  <QrCode className="h-5 w-5 text-green-600 dark:text-green-400" />
-                  <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink">Scan to Join</span>
-                </div>
-                <div className="flex justify-center">
-                  <div className="bg-card-light dark:bg-card-dark p-4 rounded-[var(--s4-radius-card)] inline-block">
-                    <QRCodeSVG
-                      value={joinUrl}
-                      size={160}
-                      level="H"
-                      includeMargin={true}
-                    />
-                  </div>
-                </div>
+      <div className="w-full max-w-5xl mx-auto">
+        {/* Banner — dark, room open header */}
+        <div className="bg-sidebar p-5 mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+          <div>
+            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Brain Rush · Waiting Room</div>
+            <div className="flex items-center gap-4">
+              <div className="font-display text-[22px] font-semibold text-ink-on-dark">Room Open.</div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-accent-gold" />
+                <span className="text-[12px] text-muted-ink-on-dark">{participants.length} player{participants.length !== 1 ? 's' : ''} joined</span>
               </div>
             </div>
+            <div className="text-[12px] text-muted-ink-on-dark mt-1">{currentGame?.game_title}</div>
           </div>
-
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark flex items-center space-x-2">
-              <Users className="h-5 w-5" />
-              <span>Players ({participants.length})</span>
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {participants.map((participant, index) => (
-              <div
-                key={participant.id}
-                className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded-[var(--s4-radius-card)] p-4 flex items-center space-x-3"
-              >
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
-                  {index + 1}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-ink dark:text-muted-ink-on-dark truncate">
-                    {participant.display_name}
-                    {participant.is_host && <Crown className="h-4 w-4 inline ml-1 text-yellow-500" />}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {participants.length === 0 && (
-            <div className="text-center py-12 text-muted-ink dark:text-muted-ink">
-              <Users className="h-16 w-16 mx-auto mb-4 opacity-50" />
-              <p>Waiting for players to join...</p>
-            </div>
-          )}
-        </div>
-
-        <div className="flex space-x-3">
-          <button
-            onClick={handleLeaveGame}
-            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:text-muted-ink-on-dark dark:hover:bg-card-dark flex items-center justify-center space-x-2`}
-          >
-            <LogOut className="h-5 w-5" />
-            <span>Leave Game</span>
-          </button>
           {isHost && (
             <button
               onClick={handleStartGame}
               disabled={participants.length < 1 || startingGame}
-              className="flex-1 px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="font-display text-[13px] font-bold text-sidebar bg-accent-gold px-5 py-3 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Play className="h-5 w-5" />
-              <span>{startingGame ? 'Starting...' : 'Start Game'}</span>
+              {startingGame ? 'Starting...' : 'Start Game →'}
             </button>
           )}
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {/* Left: QR + code + room settings */}
+          <div>
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Share with your class</div>
+
+            {/* QR Code */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3 mb-3 shadow-[var(--s4-shadow-hairline)]">
+              <div className="flex justify-center">
+                <div className="bg-white p-2 inline-block">
+                  <QRCodeSVG value={joinUrl} size={168} level="H" includeMargin={false} />
+                </div>
+              </div>
+            </div>
+
+            {/* Room code */}
+            <div className="bg-sidebar p-4 text-center mb-3 shadow-[var(--s4-shadow-hairline)]">
+              <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Room Code</div>
+              <div className="font-display text-[28px] font-bold text-ink-on-dark tracking-[6px] leading-none mb-1">
+                {currentGame?.game_code}
+              </div>
+              <div className="text-[10px] text-muted-ink-on-dark mb-3">Share this code with your class</div>
+              <button
+                onClick={copyGameCode}
+                className="flex items-center justify-center gap-2 w-full py-2 border border-muted-ink-on-dark/30 text-ink-on-dark text-[11px] hover:bg-white/10 transition"
+              >
+                {copiedCode ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                {copiedCode ? 'Copied!' : 'Copy Code'}
+              </button>
+            </div>
+
+            {/* Room settings */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)]">
+              <div className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Room Settings</div>
+              {[
+                ['Questions', String(currentGame?.total_questions || '—')],
+                ['Time / Q', `${currentGame?.question_timer_seconds || 30}s`],
+                ['Difficulty', currentGame?.difficulty_level || 'Medium'],
+              ].map(([k, v]) => (
+                <div key={k} className="flex justify-between py-1.5 border-b border-divider dark:border-divider-on-dark last:border-0">
+                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{k}</span>
+                  <span className="text-[11px] text-ink dark:text-ink-on-dark font-semibold">{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: player grid (2-col-span) */}
+          <div className="md:col-span-2">
+            <div className="flex justify-between items-center mb-3">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Players in Room</div>
+              <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">{participants.length} joined</div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {participants.map((participant) => (
+                <div
+                  key={participant.id}
+                  className={`flex items-center gap-2 p-3 border shadow-[var(--s4-shadow-hairline)] ${
+                    participant.is_host
+                      ? 'bg-sidebar border-accent-gold/40'
+                      : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'
+                  }`}
+                >
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
+                    participant.is_host ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'
+                  }`}>
+                    {participant.display_name[0].toUpperCase()}
+                  </div>
+                  <div className="min-w-0">
+                    <div className={`text-[11px] font-semibold truncate ${participant.is_host ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
+                      {participant.display_name}
+                    </div>
+                    {participant.is_host && (
+                      <div className="text-[9px] text-accent-gold font-bold uppercase tracking-wider">Host</div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {participants.length === 0 && (
+                <div className="col-span-full text-center py-10 text-muted-ink dark:text-muted-ink-on-dark">
+                  <Users className="h-10 w-10 mx-auto mb-3 opacity-40" />
+                  <p className="text-[12px]">Waiting for players to join...</p>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-5 flex gap-3">
+              <button
+                onClick={handleLeaveGame}
+                className="px-5 py-2.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11.5px] hover:opacity-70 transition flex items-center gap-2"
+              >
+                <LogOut className="h-4 w-4" />
+                Leave Game
+              </button>
+              {!isHost && (
+                <div className="flex items-center gap-2 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+                  <Gamepad2 className="h-4 w-4 opacity-60" />
+                  Waiting for host to start...
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
   };
 
   const renderGameActive = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Zap, Trophy } from 'lucide-react';
+import { Clock, Zap } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../Toast/Toast';
@@ -479,8 +479,8 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4 dark:border-blue-400"></div>
-          <p className="text-ink dark:text-ink-on-dark">Loading game...</p>
+          <div className="w-10 h-10 border-2 border-accent-gold border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Loading game...</p>
         </div>
       </div>
     );
@@ -490,7 +490,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <p className="text-ink dark:text-ink-on-dark">No questions available</p>
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">No questions available</p>
         </div>
       </div>
     );
@@ -498,125 +498,106 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
 
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const timerPct = Math.round((timeLeft / timePerQuestion) * 100);
+  const answeredCount = playerScores.filter(p => p.score > 0 || p.correct > 0).length;
 
   return (
-    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-              <span className={`text-2xl font-bold ${timeLeft <= 5 ? 'text-red-600 animate-pulse' : 'text-ink dark:text-ink-on-dark'}`}>
-                {timeLeft}s
-              </span>
-            </div>
-
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow">
-              <span className="text-sm text-ink dark:text-ink-on-dark">Question {currentQuestionIndex + 1} / {questions.length}</span>
-            </div>
+    <div className="w-full max-w-5xl mx-auto">
+      {/* Label + timer pill row */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">
+          Brain Rush Multiplayer · Question {currentQuestionIndex + 1} of {questions.length}
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} / {playerScores.length} answered</span>
+          {/* Timer pill */}
+          <div className="flex items-center gap-2 bg-chip dark:bg-chip border border-accent-gold px-3 py-1.5 rounded-full">
+            <Clock className="w-3.5 h-3.5 text-accent-gold" />
+            <span className={`font-display text-[20px] font-bold leading-none ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-accent-gold'}`}>{timeLeft}</span>
+            <span className="text-[10px] text-accent-gold opacity-70 font-semibold">s</span>
           </div>
         </div>
+      </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8">
-              <div className="mb-6">
-                <div className="h-2 bg-accent-gold-soft/20 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-accent-gold transition-colors duration-[var(--s4-dur-fast)]"
-                    style={{ width: `${progress}%` }}
-                  ></div>
+      {/* Progress bar — accent-gold fill */}
+      <div className="h-px bg-divider dark:bg-divider-on-dark mb-2" />
+      <div className="h-[3px] bg-divider dark:bg-divider-on-dark mb-4">
+        <div className="h-full bg-accent-gold transition-all duration-1000" style={{ width: `${timerPct}%` }} />
+      </div>
+
+      {/* Question card — bordered top with accent */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-6 py-5 mb-3 shadow-[var(--s4-shadow-hairline)]">
+        <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Question</div>
+        <p className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark leading-snug m-0">
+          {currentQuestion.question}
+        </p>
+      </div>
+
+      {/* Options — full-width vertical list */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-3 shadow-[var(--s4-shadow-hairline)]">
+        {currentQuestion.options.map((option, i) => {
+          const isSelected = selectedAnswer === option;
+          const isCorrect = option === currentQuestion.correct_answer;
+          const showResult = hasAnswered;
+          const letters = ['A', 'B', 'C', 'D'];
+
+          let borderLeft = '3px solid transparent';
+          let bg = 'transparent';
+          if (showResult && isCorrect) { borderLeft = '3px solid #4caf50'; bg = 'rgba(76,175,80,0.08)'; }
+          else if (showResult && isSelected && !isCorrect) { borderLeft = '3px solid #d9534f'; bg = 'rgba(217,83,79,0.08)'; }
+          else if (isSelected) { borderLeft = '3px solid var(--color-accent-gold)'; bg = 'rgba(226,192,106,0.07)'; }
+
+          return (
+            <button
+              key={i}
+              onClick={() => !hasAnswered && submitAnswer(option)}
+              disabled={hasAnswered}
+              style={{ borderLeft, background: bg }}
+              className={`w-full flex items-center gap-4 px-6 py-4 border-b border-divider dark:border-divider-on-dark last:border-0 text-left transition-colors ${!hasAnswered ? 'cursor-pointer hover:bg-chip/30' : 'cursor-not-allowed'}`}
+            >
+              <span className={`font-display text-[17px] font-bold flex-shrink-0 w-6 ${isSelected || (showResult && isCorrect) ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                {letters[i]}
+              </span>
+              <span className={`text-[14px] leading-snug flex-1 ${isSelected ? 'text-ink dark:text-ink-on-dark font-semibold' : 'text-ink dark:text-ink-on-dark'}`}>{option}</span>
+              {showResult && isCorrect && (
+                <div className="ml-auto w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </div>
+              )}
+              {showResult && isSelected && !isCorrect && (
+                <Zap className="w-4 h-4 text-red-400 flex-shrink-0 ml-auto" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Players answered status panel */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+        <div className="px-4 py-2 border-b border-divider dark:border-divider-on-dark flex items-center gap-3">
+          <span className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Players</span>
+          <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} answered · {playerScores.length - answeredCount} waiting</span>
+        </div>
+        <div className="p-4 flex flex-wrap gap-2">
+          {playerScores.map((player, i) => {
+            const answered = player.correct > 0 || (hasAnswered && player.user_id === user?.id);
+            const isMe = player.user_id === user?.id;
+            return (
+              <div
+                key={player.user_id}
+                className={`flex items-center gap-2 px-3 py-1.5 border ${answered ? 'bg-chip dark:bg-chip border-accent-gold/20' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark opacity-60'}`}
+              >
+                {answered ? (
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-gold"><polyline points="20 6 9 17 4 12"/></svg>
+                ) : (
+                  <div className="w-2 h-2 rounded-full border border-muted-ink dark:border-muted-ink-on-dark" />
+                )}
+                <span className={`text-[11.5px] ${answered ? 'text-ink dark:text-ink-on-dark font-medium' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                  {player.display_name}{isMe ? ' (You)' : ''}
+                </span>
               </div>
-
-              <h2 className="s4-h2 mb-8 text-ink dark:text-ink-on-dark">
-                {currentQuestion.question}
-              </h2>
-
-              <div className="space-y-3">
-                {currentQuestion.options.map((option, index) => {
-                  const isSelected = selectedAnswer === option;
-                  const isCorrect = option === currentQuestion.correct_answer;
-                  const showResult = hasAnswered;
-
-                  let buttonClass = 'w-full p-4 rounded-[var(--s4-radius-card)] border-2 text-left font-medium transition-all ';
-
-                  if (showResult) {
-                    if (isCorrect) {
-                      buttonClass += 'bg-green-100 border-green-500 text-green-800';
-                    } else if (isSelected && !isCorrect) {
-                      buttonClass += 'bg-red-100 border-red-500 text-red-800';
-                    } else {
-                      buttonClass += 'bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark';
-                    }
-                  } else {
-                    buttonClass += 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-blue-500 hover:bg-blue-50 cursor-pointer';
-                  }
-
-                  return (
-                    <button
-                      key={index}
-                      onClick={() => submitAnswer(option)}
-                      disabled={hasAnswered}
-                      className={buttonClass}
-                    >
-                      <div className="flex items-center justify-between">
-                        <span>{option}</span>
-                        {showResult && isCorrect && (
-                          <Zap className="w-5 h-5 text-green-600 dark:text-green-400" />
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-1">
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 sticky top-6">
-              <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-yellow-500" />
-                Live Leaderboard
-              </h3>
-
-              <div className="space-y-2">
-                {playerScores.map((player, index) => (
-                  <div
-                    key={player.user_id}
-                    className={`p-3 rounded-[var(--s4-radius-card)] flex items-center justify-between ${
-                      player.user_id === user?.id
-                        ? 'bg-blue-50 border-2 border-blue-300'
-                        : 'bg-page-light dark:bg-page-dark'
-                    } dark:border-blue-700`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-bold text-lg text-ink dark:text-ink-on-dark">
-                        #{index + 1}
-                      </span>
-                      <div>
-                        <div className="font-semibold">
-                          {player.display_name}
-                          {player.user_id === user?.id && (
-                            <span className="text-xs text-blue-600 ml-1 dark:text-blue-400">(You)</span>
-                          )}
-                        </div>
-                        <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
-                          {player.correct} correct
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-bold text-lg text-blue-600 dark:text-blue-400">
-                        {player.score}
-                      </div>
-                      <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">pts</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -836,53 +836,43 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)]`}>
-        <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className={`bg-subtle p-2 rounded-md border-divider dark:border-divider-on-dark`}>
-                <FileSearch className="h-5 w-5 text-ink-on-dark" />
-              </div>
-              <div>
-                <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('summary.original_text')}</h3>
-                <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-                  {t('summary.full_extracted')}
-                </p>
-              </div>
+      <div className="bg-card-light rounded-[var(--s4-radius-card)] border border-divider shadow-[var(--s4-shadow-card)]">
+        {/* Header — Scholar v4 action bar style with border-l accent */}
+        <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="bg-accent-gold-soft p-2 border border-divider">
+              <FileSearch className="h-4 w-4 text-accent-gold" />
             </div>
-
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => copyToClipboard(originalText, -2)}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-[var(--s4-dur-fast)]`}
-              >
-                {copiedIndex === -2 ? (
-                  <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
-                ) : (
-                  <Copy className="h-4 w-4" />
-                )}
-                <span>{t('summary.copy_text')}</span>
-              </button>
-
-              <button
-                onClick={() => setShowOriginalText(false)}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:text-orange-200"
-              >
-                <X className="h-4 w-4" />
-                <span>{t('summary.back_to_summary')}</span>
-              </button>
+            <div>
+              <h3 className="font-display text-[15px] font-semibold text-ink leading-tight">{t('summary.original_text')}</h3>
+              <p className="text-[11px] text-muted-ink mt-0.5">{t('summary.full_extracted')}</p>
             </div>
           </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => copyToClipboard(originalText, -2)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+            >
+              {copiedIndex === -2 ? <Check className="h-3.5 w-3.5 text-green-600" /> : <Copy className="h-3.5 w-3.5" />}
+              <span>{t('summary.copy_text')}</span>
+            </button>
+            <button
+              onClick={() => setShowOriginalText(false)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-muted-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+            >
+              <X className="h-3.5 w-3.5" />
+              <span>{t('summary.back_to_summary')}</span>
+            </button>
+          </div>
         </div>
-
         <div className="p-6 max-h-96 overflow-y-auto">
-          <div className={`bg-subtle rounded-[var(--s4-radius-card)] p-4`}>
+          <div className="bg-subtle p-4">
             {originalText && originalText.trim() ? (
-              <div className={`text-secondary-ink dark:text-muted-ink-on-dark text-sm`}>
+              <div className="text-secondary-ink text-sm leading-relaxed">
                 <HighlightLayer text={originalText} itemId={effectiveLibraryItemId} />
               </div>
             ) : (
-              <p className={`text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed whitespace-pre-wrap text-sm`}>
+              <p className="text-muted-ink leading-relaxed whitespace-pre-wrap text-sm">
                 {t('summary.no_original_text')}
               </p>
             )}
@@ -909,86 +899,55 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         />
       </div>
     ) : (
-      <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border-divider dark:border-divider-on-dark`}>
-      <div className={`p-6 border-b border-divider dark:border-divider-on-dark`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-md border ${
-              medicalMode
-                ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-                : `bg-subtle border-divider dark:border-divider-on-dark`
-            }`}>
+      /* Scholar v4 Dash4Result style — clean card with editorial left-border accent on header */
+      <div className="bg-card-light border border-divider shadow-[var(--s4-shadow-card)]">
+        {/* Header row: title left, action buttons right */}
+        <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 mb-0.5">
               {medicalMode ? (
-                <Stethoscope className="h-5 w-5 text-red-700 dark:text-red-400" />
+                <Stethoscope className="h-4 w-4 text-red-600 flex-shrink-0" />
               ) : (
-                <FileText className={`h-5 w-5 text-ink dark:text-ink-on-dark`} />
+                <FileText className="h-4 w-4 text-accent-gold flex-shrink-0" />
               )}
+              <h2 className="font-display text-[18px] font-semibold text-ink leading-tight tracking-tight">
+                {medicalMode ? 'Clinical Summary' : t('summary.document_summary')}
+              </h2>
             </div>
-            <div> {/* Apply dark mode classes to summary header text */}
-              <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>
-                {medicalMode ? '🏥 Medical Content Summary' : t('summary.document_summary')}
-              </h3>
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-                {medicalMode ? (
-                  <>
-                    {summaryChunks.length} clinical section{summaryChunks.length === 1 ? '' : 's'} processed
-                    {medicalScore && (
-                      <span className="ml-2">• Medical Score: {medicalScore}/100</span>
-                    )}
-                  </>
-                ) : (
-                  `${summaryChunks.length} ${summaryChunks.length === 1 ? t('summary.sections_processed') : t('summary.sections_processed_plural')}`
-                )}
-              </p>
-              
-              {/* Topics Display */}
-              {topics.length > 0 && (
-                <div className="flex items-center space-x-2 mt-2">
-                  <span className={`text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark`}>
-                    {medicalMode ? '🩺 Medical Specialties:' : t('summary.topics')}
+            <p className="text-[11px] text-muted-ink mt-0.5">
+              {medicalMode ? (
+                <>
+                  {summaryChunks.length} clinical section{summaryChunks.length === 1 ? '' : 's'} processed
+                  {medicalScore && <span className="ml-1.5">· Medical Score: {medicalScore}/100</span>}
+                </>
+              ) : (
+                `${summaryChunks.length} ${summaryChunks.length === 1 ? t('summary.sections_processed') : t('summary.sections_processed_plural')}`
+              )}
+            </p>
+
+            {/* Topics — minimal chip row */}
+            {topics.length > 0 && (
+              <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                {topics.map((topic, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-0.5 text-[10px] font-medium bg-chip border border-divider text-secondary-ink"
+                  >
+                    {topic}
                   </span>
-                  <div className="flex flex-wrap gap-1">
-                    {topics.map((topic, index) => (
-                      <span
-                        key={index}
-                        className={`px-2 py-1 text-xs rounded-full ${
-                          medicalMode
-                            ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                            : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                        }`}
-                      >
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center space-x-2">
-            {/* Free-Form Mode Toggle - hidden until optimized */}
-            {(() => {
-              const showFreeFormToggle = false;
-              return showFreeFormToggle && !isSharedView && (
-                <FreeFormToggle
-                  enabled={freeFormMode}
-                  onToggle={handleFreeFormToggle}
-                  compact={false}
-                />
-              );
-            })()}
-            
+          {/* Action row — top-right (Dash4Result spec) */}
+          <div className="flex items-center gap-1.5 flex-shrink-0 flex-wrap justify-end">
             <button
               onClick={() => copyToClipboard(combinedSummary, -1)}
-              className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-[var(--s4-dur-fast)]`}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
             >
-              {copiedIndex === -1 ? (
-                <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
-              ) : (
-                <Copy className="h-4 w-4" />
-              )}
-              <span>{t('summary.copy_all')}</span>
+              {copiedIndex === -1 ? <Check className="h-3.5 w-3.5 text-accent-gold" /> : <Copy className="h-3.5 w-3.5" />}
+              {t('summary.copy_all')}
             </button>
 
             <ReadAloudButton
@@ -999,98 +958,94 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={() => setMindMapOpen(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-indigo-300 rounded-[var(--s4-radius-card)] hover:bg-indigo-50 transition duration-[var(--s4-dur-fast)] dark:border-indigo-600 dark:hover:bg-indigo-900/40 dark:text-indigo-400 dark:bg-indigo-950/40"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
             >
-              <Brain className="h-4 w-4" />
-              <span>{t('mind_map.title')}</span>
+              <Brain className="h-3.5 w-3.5" />
+              {t('mind_map.title')}
             </button>
-            
+
             <button
               onClick={() => setShowOriginalText(true)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200"
-              title={!originalText || !originalText.trim() ? t('summary.no_original_text_available') : t('summary.view_original_text')}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              title={!originalText?.trim() ? t('summary.no_original_text_available') : t('summary.view_original_text')}
             >
-              <FileSearch className="h-4 w-4" />
-              <span>{t('summary.dual_mode')}</span>
+              <FileSearch className="h-3.5 w-3.5" />
+              {t('summary.dual_mode')}
             </button>
-            
-            <div className="flex items-center flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={exportAsTxt}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-[var(--s4-dur-fast)] dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200 dark:bg-purple-950/40"
-              >
-                <Download className="h-4 w-4" />
-                <span>{t('summary.export_txt')}</span>
-              </button>
-              <button
-                type="button"
-                onClick={exportAsPdf}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-purple-300 rounded-[var(--s4-radius-card)] hover:bg-purple-50 transition duration-[var(--s4-dur-fast)] dark:border-purple-600 dark:hover:bg-purple-900 dark:text-purple-400 dark:hover:text-purple-200 dark:bg-purple-950/40"
-              >
-                <Download className="h-4 w-4" />
-                <span>{t('summary.export_pdf')}</span>
-              </button>
 
-              {!isSharedView && (
-                <button
-                  onClick={handleShowPublishModal}
-                  disabled={publishing || published}
-                  className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
-                    published 
-                      ? 'text-green-600 bg-green-50 border border-green-200'
-                      : medicalMode
-                        ? 'text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 dark:bg-red-500 dark:hover:bg-red-600'
-                        : `bg-accent-gold text-white hover:opacity-90 disabled:opacity-50`
-                  }`}
-                >
-                  {publishing ? (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  ) : published ? (
-                    <Check className="h-4 w-4" />
-                  ) : medicalMode ? (
-                    <GraduationCap className="h-4 w-4" />
-                  ) : (
-                    <BookOpen className="h-4 w-4" />
-                  )}
-                  <span>
-                    {published ? t('summary.published') : publishing ? t('summary.publishing') : medicalMode ? '📚 Save to Medical Library' : t('summary.publish_library')}
-                  </span>
-                </button>
-              )}
-            </div>
-            
+            <button
+              type="button"
+              onClick={exportAsTxt}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+            >
+              <Download className="h-3.5 w-3.5" />
+              {t('summary.export_txt')}
+            </button>
+
+            <button
+              type="button"
+              onClick={exportAsPdf}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+            >
+              <Download className="h-3.5 w-3.5" />
+              {t('summary.export_pdf')}
+            </button>
+
+            {!isSharedView && (
+              <button
+                onClick={handleShowPublishModal}
+                disabled={publishing || published}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-60 ${
+                  published
+                    ? 'bg-subtle border border-divider text-accent-gold'
+                    : medicalMode
+                      ? 'bg-red-600 text-white hover:bg-red-700 border border-red-600'
+                      : 'bg-ink text-ink-on-dark border border-ink hover:opacity-90'
+                }`}
+              >
+                {publishing ? (
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                ) : published ? (
+                  <Check className="h-3.5 w-3.5" />
+                ) : medicalMode ? (
+                  <GraduationCap className="h-3.5 w-3.5" />
+                ) : (
+                  <BookOpen className="h-3.5 w-3.5" />
+                )}
+                {published ? t('summary.published') : publishing ? t('summary.publishing') : medicalMode ? 'Save to Medical Library' : t('summary.publish_library')}
+              </button>
+            )}
+
             {!isSharedView && !hideNewDocumentButton && (
               <button
                 onClick={onReset}
-                className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-ink dark:text-ink-on-dark hover:opacity-80 transition duration-[var(--s4-dur-fast)]`}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
               >
-                <RefreshCw className="h-4 w-4" />
-                <span>{t('summary.new_document')}</span>
+                <RefreshCw className="h-3.5 w-3.5" />
+                {t('summary.new_document')}
               </button>
             )}
           </div>
         </div>
-      </div> {/* Apply dark mode classes to summary content */}
-      <div className={`p-6 max-h-96 overflow-y-auto text-secondary-ink dark:text-muted-ink-on-dark`}>
-        {/* Medical Mode Enhanced Summary Display */}
-        {medicalMode && (
-          <div className="mb-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-[var(--s4-radius-card)] dark:bg-red-900 dark:border-red-600">
-            <div className="flex items-center space-x-2 mb-2">
-              <Activity className="h-4 w-4 text-red-600 dark:text-red-300" />
-              <span className="font-medium text-red-900 dark:text-red-300">Clinical Summary</span>
+
+        {/* Summary prose body */}
+        <div className="p-6 max-h-96 overflow-y-auto">
+          {/* Medical mode clinical banner */}
+          {medicalMode && (
+            <div className="mb-4 p-3 bg-red-50 border-l-[3px] border-red-500">
+              <div className="flex items-center gap-2 mb-1">
+                <Activity className="h-3.5 w-3.5 text-red-600 flex-shrink-0" />
+                <span className="text-[11px] font-bold uppercase tracking-[1.5px] text-red-700">Clinical Summary</span>
+              </div>
+              <p className="text-[12px] text-red-800 leading-relaxed">
+                Optimised for medical education — pathophysiology, clinical correlations, and board exam high-yield content.
+              </p>
             </div>
-            <p className="text-sm text-red-800 dark:text-red-200">
-              This summary has been optimized for medical education with emphasis on pathophysiology, 
-              clinical correlations, and board exam high-yield information.
-            </p>
+          )}
+          <div className="text-[13px] text-secondary-ink leading-[1.82]">
+            <HighlightLayer text={combinedSummary} itemId={effectiveLibraryItemId} />
           </div>
-        )}
-        <div className="leading-relaxed text-sm">
-          <HighlightLayer text={combinedSummary} itemId={effectiveLibraryItemId} />
         </div>
-      </div>
-      
       </div>
     )}
 

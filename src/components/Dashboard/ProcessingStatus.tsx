@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Loader2, Brain, Zap, X, Stethoscope, Heart, Activity, Scan } from 'lucide-react';
+import { Loader2, Brain, Zap, Stethoscope, Heart, Activity, Scan } from 'lucide-react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { ScholarCard } from '../Scholar';
 
 interface ProcessingStatusProps {
   stage: 'uploading' | 'processing';
@@ -56,135 +55,167 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
 }) => {
   const { t } = useI18n();
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
-  
+
   // Select facts based on medical mode
   const facts = medicalMode ? medicalFacts : generalFacts;
-  
+
   // Rotate facts every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFactIndex((prevIndex) => (prevIndex + 1) % facts.length);
     }, 4000); // 4 seconds
-    
+
     return () => clearInterval(interval);
   }, [facts.length]);
-  
+
+  const modeLabel = medicalMode
+    ? mode === 'fast' ? 'Fast Medical Processing' : 'Comprehensive Medical Analysis'
+    : mode === 'fast' ? t('processing.fast_processing') : t('processing.staged_processing');
+
+  const modeDesc = medicalMode
+    ? mode === 'fast'
+      ? 'Rapid medical content analysis for board exam preparation'
+      : 'In-depth clinical analysis with pathophysiology and differential diagnosis focus'
+    : mode === 'fast' ? t('processing.fast_desc') : t('processing.staged_desc');
+
   return (
     <div className="max-w-4xl mx-auto">
-      <ScholarCard padding="lg">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-3">
-            <div className={`p-3 rounded-full border ${
-              medicalMode 
-                ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
-                : 'bg-subtle border-divider dark:border-divider-on-dark'
-            }`}>
-              {mode === 'fast' ? (
-                medicalMode ? <Activity className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Zap className="h-6 w-6 text-accent-gold" />
-              ) : (
-                medicalMode ? <Stethoscope className="h-6 w-6 text-red-700 dark:text-red-400" /> : <Brain className="h-6 w-6 text-accent-gold" />
-              )}
+      {/* Page eyebrow + title — no card border, full-width centred layout (Dash4Proc) */}
+      <div className="mb-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-accent-gold">
+              The Workshop · Processing
             </div>
-            <div>
-              <h3 className="text-xl font-semibold text-ink dark:text-ink-on-dark">
-                {medicalMode ? (
-                  mode === 'fast' 
-                    ? '🏥 Fast Medical Processing'
-                    : '🩺 Comprehensive Medical Analysis'
-                ) : (
-                  mode === 'fast' ? t('processing.fast_processing') : t('processing.staged_processing')
-                )}
-              </h3>
-              <p className="text-secondary-ink dark:text-muted-ink-on-dark">
-                {medicalMode ? (
-                  mode === 'fast' 
-                    ? 'Rapid medical content analysis for board exam preparation'
-                    : 'In-depth clinical analysis with pathophysiology and differential diagnosis focus'
-                ) : (
-                  mode === 'fast' ? t('processing.fast_desc') : t('processing.staged_desc')
-                )}
-              </p>
-              {/* OCR Indicator */}
-              {extractionMethod === 'OCR' && (
-                <div className="flex items-center space-x-2 mt-2">
-                  <div className="flex items-center space-x-1">
-                    <Scan className="h-4 w-4 text-accent-gold" />
-                    <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
-                      Using OCR to extract text from image
+            <h1 className="font-display text-[34px] font-semibold text-ink mt-1.5 mb-1 tracking-tight leading-tight">
+              Composing your materials.
+            </h1>
+            <p className="text-[13px] text-muted-ink italic">{modeDesc}</p>
+          </div>
+          {/* Mode badge */}
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold tracking-[1.2px] uppercase border ${
+            medicalMode
+              ? 'bg-red-50 border-red-300 text-red-700'
+              : 'bg-accent-gold-soft border-accent-gold text-accent-gold'
+          }`}>
+            {mode === 'fast'
+              ? <Zap className="h-2.5 w-2.5" />
+              : medicalMode ? <Stethoscope className="h-2.5 w-2.5" /> : <Brain className="h-2.5 w-2.5" />
+            }
+            {modeLabel}
+          </div>
+        </div>
+        <div className="h-px bg-ink/80 mt-3.5 mb-4" />
+      </div>
+
+      {/* Progress bar — full-width, accent-gold fill */}
+      <div className="mb-6">
+        <div className="flex items-baseline justify-between mb-2">
+          <span className="text-[12.5px] text-secondary-ink">{message}</span>
+          <span className="font-display text-[12px] font-bold text-accent-gold tracking-[0.5px]">{progress}%</span>
+        </div>
+        <div className="w-full bg-subtle h-[5px]">
+          <div
+            className={`h-full transition-all duration-[var(--s4-dur-base)] ease-[var(--s4-ease)] rounded-full ${
+              medicalMode ? 'bg-red-600' : 'bg-accent-gold'
+            }`}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Two-column layout (Dash4Proc) */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-[22px]">
+
+        {/* Left — composing panel with editorial left-border accent */}
+        <div className="bg-subtle border border-divider border-l-[3px] border-l-accent-gold">
+          <div className="px-5 py-3.5 border-b border-divider flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`w-[38px] h-[38px] border border-divider flex items-center justify-center flex-shrink-0 ${
+                medicalMode ? 'bg-red-50' : 'bg-accent-gold-soft'
+              }`}>
+                {mode === 'fast'
+                  ? medicalMode ? <Activity className="h-5 w-5 text-red-600" /> : <Zap className="h-5 w-5 text-accent-gold" />
+                  : medicalMode ? <Stethoscope className="h-5 w-5 text-red-600" /> : <Brain className="h-5 w-5 text-accent-gold" />
+                }
+              </div>
+              <div>
+                <div className="font-display text-[15px] font-semibold text-ink leading-tight">{modeLabel}</div>
+                <div className="text-[11px] text-muted-ink mt-0.5">
+                  AI extraction · est. 40 seconds remaining
+                  {/* OCR Indicator */}
+                  {extractionMethod === 'OCR' && (
+                    <span className="ml-2 inline-flex items-center gap-1">
+                      <Scan className="h-3 w-3 text-accent-gold" />
+                      OCR
+                      {confidence !== undefined && (
+                        <span className="ml-1 text-accent-gold font-medium">
+                          {Math.round(confidence * 100)}%
+                        </span>
+                      )}
                     </span>
-                  </div>
-                  {confidence !== undefined && (
-                    <div className="px-2 py-1 rounded-full text-xs font-medium bg-accent-gold/15 text-ink dark:text-ink-on-dark">
-                      Confidence: {Math.round(confidence * 100)}%
-                    </div>
+                  )}
+                  {/* Medical Score */}
+                  {medicalMode && medicalScore && (
+                    <span className="ml-2 inline-flex items-center gap-1">
+                      <Heart className="h-3 w-3 text-red-500" />
+                      <span className="text-red-700">{medicalScore}/100</span>
+                    </span>
                   )}
                 </div>
-              )}
-              {/* Medical Score Display */}
-              {medicalMode && medicalScore && (
-                <div className="flex items-center space-x-2 mt-2">
-                  <div className="flex items-center space-x-1">
-                    <Heart className="h-4 w-4 text-red-500" />
-                    <span className="text-sm font-medium text-red-700 dark:text-red-300">
-                      Medical Content Score: {medicalScore}/100
-                    </span>
-                  </div>
-                  <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    medicalScore >= 80 
-                      ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                      : medicalScore >= 65
-                      ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-                      : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                  }`}>
-                    {medicalScore >= 80 ? 'Excellent' : medicalScore >= 65 ? 'Good' : 'Fair'}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <button
-            onClick={onReset}
-            className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition duration-[var(--s4-dur-fast)]"
-            title={t('processing.cancel_processing')}
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="space-y-6">
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">{message}</span>
-              <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{progress}%</span>
-            </div>
-            <div className="w-full bg-subtle rounded-full h-4">
-              <div className={`h-4 rounded-full transition-all duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)] ${
-                medicalMode ? 'bg-red-600' : 'bg-accent-gold'
-              }`}
-                style={{ width: `${progress}%` }}
-              ></div>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-center space-x-3 py-8">
-            <Loader2 className={`h-8 w-8 animate-spin ${
-              medicalMode ? 'text-red-500' : 'text-accent-gold'
-            }`} />
-            <div className="text-center max-w-2xl">
-              <p className="text-lg font-medium text-ink dark:text-ink-on-dark transition-opacity duration-[var(--s4-dur-slow)]">
-                {facts[currentFactIndex]}
+          {/* Pull-quote area — rotating fact as an editorial quote */}
+          <div className="px-8 py-10 flex items-start gap-[18px]">
+            <div className="flex-shrink-0 opacity-55 mt-1">
+              <Loader2 className={`h-6 w-6 animate-spin ${medicalMode ? 'text-red-500' : 'text-accent-gold'}`} />
+            </div>
+            <div>
+              <p className="font-display text-[16px] text-ink leading-[1.72] transition-opacity duration-[var(--s4-dur-base)]">
+                "{facts[currentFactIndex]}"
               </p>
-              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
-                {medicalMode 
-                  ? 'Analyzing clinical content with medical education focus'
-                  : t('processing.processing_desc')
-                }
-              </p>
+              <div className="font-display text-[10.5px] text-accent-gold mt-3 tracking-[0.3px]">— Study science</div>
+              <div className="text-[11.5px] text-muted-ink mt-3.5">Processing your content in the background.</div>
             </div>
           </div>
         </div>
-      </ScholarCard>
+
+        {/* Right — dark editorial panel */}
+        <div className="bg-card-dark flex flex-col px-[26px] py-6">
+          <div className="text-[9px] font-bold tracking-[2.5px] uppercase text-accent-gold mb-4">While you wait</div>
+          <p className="font-display text-[15px] text-ink-on-dark leading-[1.72] flex-1">
+            "Reading in short bursts with intentional pauses activates your brain's consolidation process — what you're doing right now."
+          </p>
+          <div className="font-display text-[10.5px] text-accent-gold mt-3 mb-5">— On spaced learning</div>
+          <div className="h-px bg-ink-on-dark/10 mb-4" />
+          <div className="text-[9px] font-bold tracking-[2px] uppercase text-ink-on-dark/30 mb-3">This session</div>
+          {[
+            ['Source', progress < 30 ? 'Extracting…' : 'Extracted'],
+            ['Output', 'Summary + Flashcards'],
+            ['Mode', modeLabel],
+          ].map(([k, v], i) => (
+            <div
+              key={i}
+              className={`flex justify-between items-baseline py-1.5 ${i < 2 ? 'border-b border-ink-on-dark/5' : ''}`}
+            >
+              <span className="text-[11.5px] text-ink-on-dark/35">{k}</span>
+              <span className="font-display text-[11.5px] font-semibold text-ink-on-dark">{v}</span>
+            </div>
+          ))}
+          <div className="mt-5 flex justify-end">
+            <button
+              onClick={onReset}
+              className="text-[12px] text-muted-ink-on-dark hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] border border-ink-on-dark/15 px-4 py-1.5 hover:border-ink-on-dark/30"
+              title={t('processing.cancel_processing')}
+            >
+              Cancel processing
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 };

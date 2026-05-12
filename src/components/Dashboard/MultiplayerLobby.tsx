@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Users, Copy, Check, Play, Crown, Clock, X } from 'lucide-react';
+import { Copy, Check, Play, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../Toast/Toast';
@@ -320,7 +320,10 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="text-center">
+          <div className="w-10 h-10 border-2 border-accent-gold border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">Loading lobby...</p>
+        </div>
       </div>
     );
   }
@@ -328,12 +331,12 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (error || !lobby) {
     return (
       <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800 dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
+        <div className="border border-red-500/30 bg-red-500/10 p-5 text-red-600 dark:text-red-400 text-[13px]">
           {error || 'Lobby not found'}
         </div>
         <button
           onClick={onExit}
-          className="mt-4 px-4 py-2 bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-card-dark"
+          className="mt-4 px-4 py-2.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] hover:opacity-70 transition"
         >
           Go Back
         </button>
@@ -341,112 +344,143 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
     );
   }
 
+  const readyCount = players.filter(p => p.is_ready !== false).length;
+
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow overflow-hidden">
-        <div className={`bg-accent-gold p-6 text-white`}>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="s4-h2">{lobby.game_name}</h2>
-            <button
-              onClick={leaveLobby}
-              className="p-2 hover:bg-white/20 rounded-[var(--s4-radius-card)] transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-[var(--s4-radius-card)]">
-              <span className="text-sm font-medium">Game Code:</span>
-              <span className="s4-h3 text-[20px] tracking-wider">{lobby.game_code}</span>
-              <button
-                onClick={copyGameCode}
-                className="ml-2 p-1 hover:bg-white/20 rounded transition-colors"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
-
-            <div className="flex items-center gap-2 bg-white/20 px-4 py-2 rounded-[var(--s4-radius-card)]">
-              <Users className="w-5 h-5" />
-              <span className="font-medium">
-                {lobby.current_players} / {lobby.max_players}
-              </span>
-            </div>
-          </div>
+    <div className="w-full max-w-5xl mx-auto">
+      {/* Header — Scholar v4 style */}
+      <div className="flex items-end justify-between mb-4">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">EduPlay · Multiplayer</div>
+          <h1 className="font-display text-[28px] font-semibold text-ink dark:text-ink-on-dark tracking-tight">{lobby.game_name}</h1>
         </div>
+        <div className="flex gap-2">
+          <button
+            onClick={leaveLobby}
+            className="flex items-center gap-2 px-3 py-2 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11.5px] hover:opacity-70 transition"
+          >
+            <X className="w-4 h-4" />
+            Leave
+          </button>
+          <button
+            onClick={copyGameCode}
+            className="flex items-center gap-2 px-3 py-2 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11.5px] hover:opacity-70 transition"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            Copy Code
+          </button>
+        </div>
+      </div>
 
-        <div className="p-6">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            Players ({players.length})
-          </h3>
+      {/* Dark room-code banner */}
+      <div className="bg-sidebar px-7 py-5 mb-5 flex items-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="pr-7 border-r border-white/10 flex-shrink-0">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Room Code</div>
+          <div className="font-display text-[32px] font-black text-ink-on-dark tracking-[4px] leading-none font-mono">{lobby.game_code}</div>
+          <div className="text-[10px] text-muted-ink-on-dark mt-1">Share with participants</div>
+        </div>
+        <div className="flex-1 flex justify-evenly pl-7">
+          {[
+            [`${lobby.current_players} / ${lobby.max_players}`, 'Players'],
+            [`${readyCount} / ${players.length}`, 'Ready'],
+            [String(lobby.game_config?.questionCount || 10), 'Questions'],
+            [`${lobby.game_config?.timePerQuestion || 30}s`, 'Per Question'],
+          ].map(([v, l], i) => (
+            <div key={l} className="text-center">
+              <div className={`font-display text-[26px] font-semibold leading-none ${i < 2 ? 'text-accent-gold' : 'text-ink-on-dark'}`}>{v}</div>
+              <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-1">{l}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          <div className="space-y-2 mb-6">
+      {/* 2-col layout: player table + host controls */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Players table — 2 cols wide */}
+        <div className="md:col-span-2">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Players in Lobby</div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+            <div className="grid grid-cols-[28px_1fr_80px_64px] px-4 py-2 border-b border-divider dark:border-divider-on-dark">
+              {['', 'Player', 'Status', 'Role'].map(h => (
+                <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
+              ))}
+            </div>
+
             {players.length === 0 && (
-              <div className="p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center dark:bg-yellow-950/40 dark:border-yellow-800">
-                <p className="text-sm text-yellow-800 dark:text-yellow-200">Loading players...</p>
-              </div>
+              <div className="px-4 py-6 text-center text-[12px] text-muted-ink dark:text-muted-ink-on-dark italic">Loading players...</div>
             )}
 
-            {players.map((player) => (
+            {players.map((player, i) => (
               <div
                 key={player.id}
-                className="flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-green-300 dark:bg-green-950/40 dark:border-green-700"
+                className={`grid grid-cols-[28px_1fr_80px_64px] px-4 py-3 items-center border-b border-divider dark:border-divider-on-dark last:border-0`}
               >
-                <div className="flex items-center gap-3">
-                  {player.is_host && (
-                    <Crown className="w-5 h-5 text-yellow-500" />
-                  )}
-                  <span className="font-medium">{player.display_name}</span>
-                  {player.user_id === user?.id && (
-                    <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">(You)</span>
-                  )}
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-bold ${player.is_host ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                  {player.display_name[0].toUpperCase()}
                 </div>
-
+                <span className={`text-[12px] ${player.is_host ? 'font-semibold text-ink dark:text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
+                  {player.display_name}
+                  {player.user_id === user?.id && <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark ml-2">(You)</span>}
+                </span>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-green-600 dark:text-green-400">Ready</span>
+                  <div className="w-2 h-2 rounded-full bg-green-500" />
+                  <span className="text-[11px] text-ink dark:text-ink-on-dark">Ready</span>
                 </div>
+                <span className={`text-[11px] ${player.is_host ? 'text-accent-gold font-semibold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                  {player.is_host ? 'Host' : '—'}
+                </span>
               </div>
             ))}
 
-            {lobby.current_players < lobby.max_players && (
-              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-divider dark:border-divider-on-dark text-center text-muted-ink dark:text-muted-ink-on-dark">
-                Waiting for more players...
+            {/* Empty slots */}
+            {Array.from({ length: Math.max(0, 2 - players.length) }).map((_, i) => (
+              <div key={`empty-${i}`} className="grid grid-cols-[28px_1fr_80px_64px] px-4 py-3 items-center border-b border-divider dark:border-divider-on-dark last:border-0 opacity-40">
+                <div className="w-6 h-6 rounded-full bg-divider dark:bg-divider-on-dark" />
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark italic">Waiting for player…</span>
+                <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">—</span>
+                <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">—</span>
               </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Host controls + game settings */}
+        <div className="flex flex-col gap-3">
+          <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Host Controls</div>
+            {isHost ? (
+              <>
+                <button
+                  onClick={startGame}
+                  className="w-full py-3 bg-accent-gold text-sidebar font-display text-[13px] font-bold flex items-center justify-center gap-2 mb-2 hover:opacity-90 transition"
+                >
+                  <Play className="w-4 h-4" />
+                  Start Game
+                </button>
+                <button
+                  onClick={leaveLobby}
+                  className="w-full py-2.5 border border-white/20 text-muted-ink-on-dark text-[11px] hover:bg-white/10 transition"
+                >
+                  Cancel Game
+                </button>
+              </>
+            ) : (
+              <div className="text-[12px] text-muted-ink-on-dark text-center py-3">Waiting for host to start...</div>
             )}
           </div>
 
-          <div className="border-t pt-6">
-            <h4 className="font-semibold mb-3">Game Settings</h4>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-muted-ink dark:text-muted-ink-on-dark" />
-                <span>Time per question: {lobby.game_config.timePerQuestion || 30}s</span>
+          <div className="bg-card-light dark:bg-card-dark border border-t-2 border-accent-gold border-b-divider border-l-divider border-r-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
+            <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Settings</div>
+            {[
+              ['Questions', String(lobby.game_config?.questionCount || 10)],
+              ['Time / Q', `${lobby.game_config?.timePerQuestion || 30}s`],
+              ['Max Players', String(lobby.max_players)],
+            ].map(([k, v]) => (
+              <div key={k} className="flex justify-between py-2 border-b border-divider dark:border-divider-on-dark last:border-0">
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{k}</span>
+                <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark">{v}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span>Questions: {lobby.game_config.questionCount || 10}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3 mt-6">
-            {isHost && (
-              <button
-                onClick={startGame}
-                className="flex-1 py-3 rounded-[var(--s4-radius-card)] font-semibold flex items-center justify-center gap-2 transition-colors bg-green-600 text-white hover:bg-green-700"
-              >
-                <Play className="w-5 h-5" />
-                Start Game
-              </button>
-            )}
-
-            <button
-              onClick={leaveLobby}
-              className="px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 font-semibold transition-colors"
-            >
-              Leave
-            </button>
+            ))}
           </div>
         </div>
       </div>

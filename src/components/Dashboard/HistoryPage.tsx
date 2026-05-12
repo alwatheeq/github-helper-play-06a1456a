@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { History, FileText, Calendar, AlertCircle, RefreshCw, Tag, Clock, Stethoscope } from 'lucide-react';
+import { History, AlertCircle, RefreshCw, Clock, Stethoscope } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
@@ -167,37 +167,35 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
     );
   }
 
+  // Roman numeral helper (up to 20 items covers typical history pages)
+  const toRoman = (n: number): string => {
+    const vals = [10, 9, 5, 4, 1];
+    const syms = ['x', 'ix', 'v', 'iv', 'i'];
+    let result = '';
+    for (let i = 0; i < vals.length; i++) {
+      while (n >= vals[i]) { result += syms[i]; n -= vals[i]; }
+    }
+    return result;
+  };
+
   return (
     <div className="w-full overflow-hidden">
+      {/* Scholar v4 PageHeader */}
       <PageHeader
         eyebrow={t('history.eyebrow') || 'THE LEDGER'}
         title={t('history.generation_history')}
         descriptor={t('history.history_desc')}
         className="mb-8"
-      />
-
-      {/* Sorting Controls */}
-      <ScholarCard variant="default" padding="md" className="mb-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center space-x-3">
-            <div className="bg-chip dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark">
-              <History className="h-5 w-5 text-accent-gold" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('history.sort_options')}</h3>
-              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('history.sort_desc')}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">{t('history.sort_by')}</label>
+        actions={
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark sr-only">{t('history.sort_by')}</label>
             <select
               value={sortOption}
               onChange={(e) => {
                 ErrorLogger.debug('Sort option changed', { component: 'HistoryPage', action: 'handleSortChange', newSortOption: e.target.value });
                 setSortOption(e.target.value);
               }}
-              className="px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
             >
               <option value="created_at_desc">{t('history.creation_newest')}</option>
               <option value="created_at_asc">{t('history.creation_oldest')}</option>
@@ -205,108 +203,90 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
               <option value="filename_desc">{t('history.filename_za')}</option>
             </select>
           </div>
-        </div>
-      </ScholarCard>
+        }
+      />
 
       {historyEntries.length === 0 ? (
-        <ScholarCard variant="default" padding="lg">
-          <div className="text-center py-12">
-            <History className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('history.no_history')}</h3>
-            <p className="text-secondary-ink dark:text-secondary-ink-on-dark">
-              {t('history.process_first')}
-            </p>
-          </div>
-        </ScholarCard>
+        <div className="text-center py-20 flex flex-col items-center justify-center">
+          <History className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+          <h3 className="font-display text-xl text-ink dark:text-ink-on-dark mb-2">{t('history.no_history')}</h3>
+          <p className="text-secondary-ink dark:text-secondary-ink-on-dark max-w-sm">
+            {t('history.process_first')}
+          </p>
+        </div>
       ) : (
-        <div className="space-y-4">
-          {historyEntries.map((entry) => {
+        /* Scholar v4 Hist4: table-like list with roman numerals, hairline rows, row hover */
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] overflow-hidden">
+          {historyEntries.map((entry, index) => {
             const medical = isMedicalEntry(entry);
             return (
-              <ScholarCard key={entry.id} variant="default" padding="none" hover className="overflow-hidden">
-                <div className="p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
-                    <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-[var(--s4-radius-card)] border ${
-                        medical
-                          ? 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800'
-                          : 'bg-chip dark:bg-card-dark border-divider dark:border-divider-on-dark'
-                      }`}>
-                        {medical ? (
-                          <Stethoscope className="h-5 w-5 text-red-600 dark:text-red-300" />
-                        ) : (
-                          <FileText className="h-5 w-5 text-accent-gold" />
-                        )}
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark inline-flex items-center gap-2 flex-wrap">
-                          <span>{entry.original_file_name || t('common.unknown')}</span>
-                          {medical && (
-                            <ScholarBadge variant="danger">Medical</ScholarBadge>
-                          )}
-                        </h3>
-                        <div className="flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark flex-wrap">
-                          <div className="flex items-center">
-                            <Calendar className="h-4 w-4 mr-1" />
-                            {formatDate(entry.created_at)}
-                          </div>
-                          <span className="capitalize">
-                            {entry.original_input_type === 'file' ? t('history.file_upload') : t('history.text_input')}
-                          </span>
-                          <span>
-                            {entry.flashcards_json.length} {entry.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+              <div
+                key={entry.id}
+                className={`group flex items-start gap-5 px-6 py-4 hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors duration-[var(--s4-dur-fast)] ${
+                  index < historyEntries.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
+                }`}
+              >
+                {/* Roman numeral column */}
+                <div className="flex-shrink-0 w-8 pt-0.5">
+                  <span className="font-display text-sm text-accent-gold font-semibold select-none">
+                    {toRoman(index + 1)}.
+                  </span>
+                </div>
 
-                    <ScholarButton
-                      variant="primary"
-                      size="sm"
-                      onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
-                    >
-                      {t('history.view_content')}
-                    </ScholarButton>
+                {/* Main content */}
+                <div className="flex-1 min-w-0">
+                  {/* Filename + medical badge */}
+                  <div className="flex items-start gap-2 mb-1.5 flex-wrap">
+                    <span className="text-sm font-semibold text-ink dark:text-ink-on-dark leading-snug">
+                      {entry.original_file_name || t('common.unknown')}
+                    </span>
+                    {medical && (
+                      <ScholarBadge variant="danger">Medical</ScholarBadge>
+                    )}
                   </div>
 
-                  {/* Topics display */}
-                  {entry.topics && entry.topics.length > 0 && (
-                    <div className="mb-4">
-                      <div className="flex items-start space-x-2">
-                        <Tag className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 mt-1" />
-                        <div className="flex flex-wrap gap-2 min-w-0">
-                          {entry.topics.map((topic, index) => (
-                            <span
-                              key={index}
-                              className="px-2 py-0.5 bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark text-[10px] tracking-[1.5px] font-bold uppercase rounded-[var(--s4-radius-btn)] whitespace-nowrap"
-                            >
-                              {topic}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Stored until badge */}
-                  <div className="mb-4">
-                    <div className="flex items-center space-x-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
-                      <Clock className="h-4 w-4 flex-shrink-0 text-accent-gold" />
-                      <span className="truncate">{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
-                    </div>
+                  {/* Output type + topic chips */}
+                  <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+                    {/* Input type chip */}
+                    <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap">
+                      {entry.original_input_type === 'file' ? t('history.file_upload') : t('history.text_input')}
+                    </span>
+                    {/* Cards count chip */}
+                    <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap">
+                      {entry.flashcards_json.length} {entry.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
+                    </span>
+                    {/* Topic chips */}
+                    {entry.topics?.slice(0, 3).map((topic, i) => (
+                      <span
+                        key={i}
+                        className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap"
+                      >
+                        {topic}
+                      </span>
+                    ))}
                   </div>
 
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('history.summary_preview')}</h4>
-                    <p className="text-secondary-ink dark:text-secondary-ink-on-dark bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-3">
-                      {entry.summary_text.length > 150
-                        ? entry.summary_text.substring(0, 150) + '...'
-                        : entry.summary_text
-                      }
-                    </p>
+                  {/* Expiry */}
+                  <div className="flex items-center gap-1 text-xs text-muted-ink dark:text-muted-ink-on-dark">
+                    <Clock className="h-3 w-3 flex-shrink-0 text-accent-gold" />
+                    <span>{t('history.expires_on', { date: formatStoredUntil(entry.expires_at) })}</span>
                   </div>
                 </div>
-              </ScholarCard>
+
+                {/* Relative date + Open button */}
+                <div className="flex-shrink-0 flex flex-col items-end gap-2 pt-0.5">
+                  <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap">
+                    {formatDate(entry.created_at)}
+                  </span>
+                  <ScholarButton
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => onViewHistoryEntry ? onViewHistoryEntry(entry) : navigate(`/view/history/${entry.id}`)}
+                  >
+                    {t('history.view_content')}
+                  </ScholarButton>
+                </div>
+              </div>
             );
           })}
         </div>

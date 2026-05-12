@@ -33,290 +33,203 @@ export const AchievementsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      fetchData();
-    }
+    if (user) { fetchData(); }
   }, [user]);
 
   const fetchData = async () => {
     if (!user) return;
-
     try {
       setLoading(true);
-
       const [achievementsRes, userAchievementsRes] = await Promise.all([
-        supabase
-          .from('achievements_definitions')
-          .select('*')
-          .eq('is_active', true)
-          .order('sort_order', { ascending: true }),
-        supabase
-          .from('user_achievements')
-          .select('achievement_id, earned_at, progress_value')
-          .eq('user_id', user.id)
+        supabase.from('achievements_definitions').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
+        supabase.from('user_achievements').select('achievement_id, earned_at, progress_value').eq('user_id', user.id)
       ]);
-
-      if (!achievementsRes.error && achievementsRes.data) {
-        setAllAchievements(achievementsRes.data);
-      }
-
-      if (!userAchievementsRes.error && userAchievementsRes.data) {
-        setUserAchievements(userAchievementsRes.data);
-      }
+      if (!achievementsRes.error && achievementsRes.data) { setAllAchievements(achievementsRes.data); }
+      if (!userAchievementsRes.error && userAchievementsRes.data) { setUserAchievements(userAchievementsRes.data); }
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, { component: 'AchievementsPage', action: 'fetchAchievements', userId: user?.id });
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
-  const isAchievementUnlocked = (achievementId: string) => {
-    return userAchievements.some(ua => ua.achievement_id === achievementId);
-  };
-
-  const getEarnedDate = (achievementId: string) => {
-    const achievement = userAchievements.find(ua => ua.achievement_id === achievementId);
-    return achievement?.earned_at;
-  };
+  const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
+  const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
 
   const getBadgeColor = (tier: string) => {
-    const colors = {
-      bronze: 'from-amber-600 to-amber-800',
-      silver: 'from-gray-400 to-gray-600',
-      gold: 'from-yellow-400 to-yellow-600',
-      platinum: 'from-cyan-400 to-cyan-600',
-      diamond: 'from-purple-400 to-purple-600'
-    };
-    return colors[tier as keyof typeof colors] || 'from-gray-400 to-gray-600';
+    const colors: Record<string, string> = { bronze: 'from-amber-600 to-amber-800', silver: 'from-gray-400 to-gray-600', gold: 'from-yellow-400 to-yellow-600', platinum: 'from-cyan-400 to-cyan-600', diamond: 'from-purple-400 to-purple-600' };
+    return colors[tier] || 'from-gray-400 to-gray-600';
   };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'study':
-        return <BookOpen className="h-5 w-5" />;
-      case 'social':
-        return <Users className="h-5 w-5" />;
-      case 'achievement':
-        return <TrendingUp className="h-5 w-5" />;
-      case 'special':
-        return <Star className="h-5 w-5" />;
-      default:
-        return <Award className="h-5 w-5" />;
+      case 'study': return <BookOpen className="h-5 w-5" />;
+      case 'social': return <Users className="h-5 w-5" />;
+      case 'achievement': return <TrendingUp className="h-5 w-5" />;
+      case 'special': return <Star className="h-5 w-5" />;
+      default: return <Award className="h-5 w-5" />;
     }
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    });
+    return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  const filteredAchievements = selectedCategory === 'all'
-    ? allAchievements
-    : allAchievements.filter(a => a.category === selectedCategory);
-
+  const filteredAchievements = selectedCategory === 'all' ? allAchievements : allAchievements.filter(a => a.category === selectedCategory);
   const earnedCount = allAchievements.filter(a => isAchievementUnlocked(a.id)).length;
-  const totalXPEarned = allAchievements
-    .filter(a => isAchievementUnlocked(a.id))
-    .reduce((sum, a) => sum + a.xp_reward, 0);
+  const totalXPEarned = allAchievements.filter(a => isAchievementUnlocked(a.id)).reduce((sum, a) => sum + a.xp_reward, 0);
 
   const categories = [
-    { id: 'all', label: t('achievements.all'), icon: <Award className="h-4 w-4" /> },
-    { id: 'study', label: t('achievements.category_study'), icon: <BookOpen className="h-4 w-4" /> },
-    { id: 'social', label: t('achievements.category_social'), icon: <Users className="h-4 w-4" /> },
-    { id: 'achievement', label: t('achievements.category_achievement'), icon: <TrendingUp className="h-4 w-4" /> },
-    { id: 'special', label: t('achievements.category_special'), icon: <Star className="h-4 w-4" /> }
+    { id: 'all', label: t('achievements.all') },
+    { id: 'study', label: t('achievements.category_study') },
+    { id: 'social', label: t('achievements.category_social') },
+    { id: 'achievement', label: t('achievements.category_achievement') },
+    { id: 'special', label: t('achievements.category_special') }
   ];
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-page-light dark:bg-page-dark">
         <div className="text-center">
-          <div className={`animate-spin rounded-full h-12 w-12 border-b-2 text-muted-ink dark:text-muted-ink-on-dark mx-auto`}></div>
-          <p className={`mt-4 text-secondary-ink dark:text-muted-ink-on-dark`}>{t('achievements.loading')}</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto"></div>
+          <p className="mt-4 text-secondary-ink dark:text-muted-ink-on-dark">{t('achievements.loading')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`min-h-screen bg-page-light dark:bg-page-dark p-6`}>
+    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
       <div className="max-w-7xl mx-auto">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-6 mb-6`}>
-          <div className="flex items-center space-x-3 mb-6">
-            <Award className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
-            <div>
-              <h1 className={`s4-h1 text-ink dark:text-ink-on-dark`}>{t('achievements.title')}</h1>
-              <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-1`}>
-                {t('achievements.subtitle')}
-              </p>
-            </div>
+
+        {/* ── v4 Header ─────────────────────────────────────────────── */}
+        <div className="flex justify-between items-end mb-0">
+          <div>
+            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">Achievements</div>
+            <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark mt-1.5 mb-1 tracking-[-0.8px]">{t('achievements.title') || 'Your Badges.'}</h1>
+            <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">{earnedCount} earned · {allAchievements.length - earnedCount} locked</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={`bg-page-light dark:bg-page-dark rounded-[var(--s4-radius-card)] p-4`}>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className={`text-sm text-ink dark:text-ink-on-dark font-medium`}>{t('achievements.unlocked')}</p>
-                  <p className={`s4-h1 text-ink dark:text-ink-on-dark mt-1`}>
-                    {earnedCount}
-                  </p>
-                  <p className={`text-xs text-ink dark:text-ink-on-dark mt-1`}>
-                    {t('achievements.of')} {allAchievements.length}
-                  </p>
-                </div>
-                <Award className="h-12 w-12 text-blue-600 dark:text-blue-300 opacity-50" />
-              </div>
+          <div className="text-right">
+            <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-1">Scholar — Level 4</div>
+            <div className="w-[200px] h-[5px] bg-card-dark dark:bg-subtle-on-dark rounded-full mb-1.5">
+              <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
             </div>
-
-            <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900 dark:to-yellow-800 rounded-[var(--s4-radius-card)] p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-yellow-600 dark:text-yellow-300 font-medium">{t('achievements.total_xp')}</p>
-                  <p className="s4-h1 text-yellow-700 dark:text-yellow-200 mt-1">
-                    {totalXPEarned}
-                  </p>
-                  <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
-                    {t('achievements.from_achievements')}
-                  </p>
-                </div>
-                <Zap className="h-12 w-12 text-yellow-600 dark:text-yellow-300 opacity-50" />
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 rounded-[var(--s4-radius-card)] p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-green-600 dark:text-green-300 font-medium">{t('achievements.completion')}</p>
-                  <p className="s4-h1 text-green-700 dark:text-green-200 mt-1">
-                    {Math.round((earnedCount / allAchievements.length) * 100)}%
-                  </p>
-                  <p className="text-xs text-green-600 dark:text-green-400 mt-1">
-                    {t('achievements.progress')}
-                  </p>
-                </div>
-                <TrendingUp className="h-12 w-12 text-green-600 dark:text-green-300 opacity-50" />
-              </div>
-            </div>
+            <div className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{totalXPEarned} XP · 680 to Level 5</div>
           </div>
         </div>
+        <div className="h-px bg-ink dark:bg-ink-on-dark mt-3.5 mb-5 opacity-80" />
 
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-4 mb-6`}>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-5 py-2.5 rounded-[var(--s4-radius-card)] font-medium transition-colors flex items-center space-x-2 ${
-                  selectedCategory === category.id
-                    ? 'bg-blue-600 text-white'
-                    : `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`
-                }`}
-              >
-                {category.icon}
-                <span>{category.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-6">
+          <div>
+            {/* Category filter tabs */}
+            <div className="flex gap-0 mb-4 border-b border-divider dark:border-divider-on-dark">
+              {categories.map(c => {
+                const on = selectedCategory === c.id;
+                return (
+                  <button key={c.id} onClick={() => setSelectedCategory(c.id)} className="bg-transparent border-none px-3.5 py-1.5 pb-2 cursor-pointer text-xs font-medium capitalize transition-colors" style={{ color: on ? 'var(--color-text-ink)' : 'var(--color-text-muted-ink)', borderBottom: on ? '2px solid var(--color-accent-gold)' : '2px solid transparent', marginBottom: -1 }}>
+                    {c.label}
+                  </button>
+                );
+              })}
+            </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredAchievements.map((achievement) => {
-            const isUnlocked = isAchievementUnlocked(achievement.id);
-            const earnedDate = getEarnedDate(achievement.id);
-
-            return (
-              <div
-                key={achievement.id}
-                className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow p-6 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
-                  isUnlocked
-                    ? 'border-2 border-yellow-400 dark:border-yellow-600'
-                    : 'opacity-75 hover:opacity-100'
-                }`}
-              >
-                <div className="flex items-start justify-between mb-4">
+            {/* Badge grid — 4 cols */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
+              {filteredAchievements.map((achievement) => {
+                const isUnlocked = isAchievementUnlocked(achievement.id);
+                const earnedDate = getEarnedDate(achievement.id);
+                return (
                   <div
-                    className={`p-3 rounded-md ${
-                      isUnlocked
-                        ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}`
-                        : "bg-accent-gold-soft/20"
-                    }`}
+                    key={achievement.id}
+                    className={`border border-divider dark:border-divider-on-dark px-3 py-3.5 text-center transition-opacity ${isUnlocked ? 'bg-card-dark dark:bg-subtle' : 'bg-card-light dark:bg-card-dark opacity-45'}`}
                   >
-                    {isUnlocked ? (
-                      <Award className="h-8 w-8 text-ink-on-dark" />
+                    <div className={`p-2 rounded mx-auto w-10 h-10 flex items-center justify-center mb-2 ${isUnlocked ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}` : 'bg-subtle dark:bg-card-dark'}`}>
+                      {isUnlocked ? (
+                        <Award className="h-6 w-6 text-ink-on-dark" />
+                      ) : (
+                        <Lock className="h-6 w-6 text-muted-ink dark:text-muted-ink-on-dark" />
+                      )}
+                    </div>
+
+                    <div className="font-display text-[11px] font-semibold text-ink dark:text-ink-on-dark mb-1 leading-snug">{achievement.title}</div>
+                    <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark leading-snug mb-1.5">{achievement.description}</div>
+
+                    <div className={`text-[8px] tracking-wide font-bold px-1.5 py-0.5 mb-1.5 inline-block ${
+                      achievement.badge_tier === 'bronze' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300'
+                      : achievement.badge_tier === 'gold' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
+                      : achievement.badge_tier === 'platinum' ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300'
+                      : achievement.badge_tier === 'diamond' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
+                      : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
+                    }`}>{achievement.badge_tier.toUpperCase()}</div>
+
+                    <div className="flex items-center justify-center gap-0.5 text-[9px] text-muted-ink dark:text-muted-ink-on-dark mb-1">
+                      <Zap className="h-2.5 w-2.5" />
+                      {achievement.xp_reward} XP
+                    </div>
+
+                    {isUnlocked && earnedDate ? (
+                      <div className="text-[9px] text-accent-gold font-semibold">Earned {formatDate(earnedDate)}</div>
                     ) : (
-                      <Lock className={`h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark`} />
+                      <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark italic">{t('achievements.locked')}</div>
                     )}
                   </div>
-                  <div className="flex flex-col items-end">
-                    <span
-                      className={`text-xs px-2 py-1 rounded-full font-medium ${
-                        achievement.badge_tier === 'bronze'
-                          ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300'
-                          : achievement.badge_tier === 'silver'
-                          ? `bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark`
-                          : achievement.badge_tier === 'gold'
-                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
-                          : achievement.badge_tier === 'platinum'
-                          ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-300'
-                          : 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300'
-                      }`}
-                    >
-                      {achievement.badge_tier.toUpperCase()}
-                    </span>
-                    <span className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1 flex items-center`}>
-                      <Zap className="h-3 w-3 mr-1" />
-                      {achievement.xp_reward} XP
-                    </span>
-                  </div>
-                </div>
+                );
+              })}
+            </div>
 
-                <h3 className={`text-lg font-bold mb-2 ${
-                  isUnlocked
-                    ? "text-ink dark:text-ink-on-dark"
-                    : "text-secondary-ink dark:text-muted-ink-on-dark"
-                }`}>
-                  {achievement.title}
-                </h3>
-
-                <p className={`text-sm mb-3 ${
-                  isUnlocked
-                    ? "text-secondary-ink dark:text-muted-ink-on-dark"
-                    : "text-muted-ink dark:text-muted-ink-on-dark"
-                }`}>
-                  {achievement.description}
-                </p>
-
-                <div className={`flex items-center justify-between pt-3 border-t border-divider dark:border-divider-on-dark`}>
-                  <div className={`flex items-center space-x-2 text-xs text-muted-ink dark:text-muted-ink-on-dark`}>
-                    {getCategoryIcon(achievement.category)}
-                    <span className="capitalize">{achievement.category}</span>
-                  </div>
-                  {isUnlocked && earnedDate && (
-                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">
-                      {formatDate(earnedDate)}
-                    </span>
-                  )}
-                  {!isUnlocked && (
-                    <span className={`text-xs text-muted-ink dark:text-muted-ink-on-dark font-medium`}>
-                      {t('achievements.locked')}
-                    </span>
-                  )}
-                </div>
+            {filteredAchievements.length === 0 && (
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center mt-4">
+                <Award className="h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+                <p className="text-secondary-ink dark:text-muted-ink-on-dark">{t('achievements.no_achievements')}</p>
               </div>
-            );
-          })}
-        </div>
-
-        {filteredAchievements.length === 0 && (
-          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow p-12 text-center`}>
-            <Award className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-            <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>{t('achievements.no_achievements')}</p>
+            )}
           </div>
-        )}
+
+          {/* Right rail */}
+          <div className="flex flex-col gap-4">
+            {/* XP total dark tile */}
+            <div className="bg-ink dark:bg-card-dark px-[18px] py-5 text-center">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
+              <div className="font-display text-[46px] font-bold text-card-light dark:text-ink leading-none">{totalXPEarned}</div>
+              <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>
+              <div className="h-[3px] bg-white/10 dark:bg-white/5 rounded-full mt-3 mb-1">
+                <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
+              </div>
+              <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">68% to Level 5</div>
+            </div>
+
+            {/* By category breakdown */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-4">
+              <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-2.5">By Category</div>
+              {categories.filter(c => c.id !== 'all').map(c => {
+                const total = allAchievements.filter(b => b.category === c.id).length;
+                const got = allAchievements.filter(b => b.category === c.id && isAchievementUnlocked(b.id)).length;
+                return (
+                  <div key={c.id} className="flex justify-between py-1.5">
+                    <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark capitalize">{c.label}</span>
+                    <span className="font-display text-[12px] font-semibold text-ink dark:text-ink-on-dark">{got}/{total}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Overall summary */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-4">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2.5">Overall Progress</div>
+              <div className="flex justify-between py-1.5">
+                <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{t('achievements.unlocked')}</span>
+                <span className="font-display text-[12px] font-semibold text-ink dark:text-ink-on-dark">{earnedCount} / {allAchievements.length}</span>
+              </div>
+              <div className="flex justify-between py-1.5">
+                <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{t('achievements.completion')}</span>
+                <span className="font-display text-[12px] font-semibold text-ink dark:text-ink-on-dark">{allAchievements.length > 0 ? Math.round((earnedCount / allAchievements.length) * 100) : 0}%</span>
+              </div>
+              <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full mt-2">
+                <div className="h-full bg-accent-gold rounded-full" style={{ width: `${allAchievements.length > 0 ? Math.round((earnedCount / allAchievements.length) * 100) : 0}%` }} />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, CheckCircle, XCircle, ArrowRight, ArrowLeft, Flag, AlertCircle } from 'lucide-react';
+import { CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useI18n } from '../../contexts/I18nContext';
@@ -7,8 +7,6 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { ReadAloudButton } from './ReadAloud/ReadAloudButton';
-import { ScholarCard } from '../Scholar/ScholarCard';
-import { ScholarButton } from '../Scholar/ScholarButton';
 
 type QuestionKind = 'multiple_choice' | 'true_false' | 'fill_in_blank' | 'open_ended';
 
@@ -47,7 +45,7 @@ function normalizeAnswerStatic(answer: string): string {
     .trim()
     .replace(/\s+/g, ' ')
     .replace(/[.,!?;:'"()-]/g, '')
-    .replace(/\u00A0/g, ' ')
+    .replace(/ /g, ' ')
     .trim();
 }
 
@@ -254,7 +252,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
       .trim()
       .replace(/\s+/g, ' ')
       .replace(/[.,!?;:'"()-]/g, '')
-      .replace(/\u00A0/g, ' ')
+      .replace(/ /g, ' ')
       .trim();
   };
 
@@ -334,13 +332,6 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getScoreColor = (percentage: number) => {
-    if (percentage >= 90) return 'text-green-600 dark:text-green-400';
-    if (percentage >= 70) return 'text-accent-gold';
-    if (percentage >= 50) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
-  };
-
   const handleLanguageSwitch = async (newLanguage: string) => {
     if (newLanguage === currentLanguage) return;
 
@@ -357,105 +348,137 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
     }
   };
 
+  const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-page dark:bg-page-dark">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto"></div>
-          <p className="mt-4 text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.loading')}</p>
+          <div className="animate-spin h-10 w-10 border-2 border-ink dark:border-ink-on-dark border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.loading')}</p>
         </div>
       </div>
     );
   }
 
+  /* ── Result screen ── */
   if (isSubmitted && results) {
+    const passed = results.scorePercentage >= 60;
+    const total = questions.length;
+
     return (
-      <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
-        <div className="max-w-4xl mx-auto">
-          <ScholarCard variant="elevated" padding="lg">
-            <div className="text-center mb-8">
-              <div className={`text-6xl font-bold mb-4 ${getScoreColor(results.scorePercentage)}`}>
-                {Math.round(results.scorePercentage)}%
-              </div>
-              <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-2">
-                {t('quiz.complete')}
-              </h2>
-              <p className="text-secondary-ink dark:text-secondary-ink-on-dark">{quizTitle}</p>
+      <div className="min-h-screen bg-page dark:bg-page-dark p-6">
+        <div className="max-w-4xl mx-auto space-y-5">
+
+          {/* Header + action row */}
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-[10px] tracking-[2.5px] uppercase font-bold text-accent-gold">
+                {t('quiz.complete') || 'The Examination · Complete'}
+              </p>
+              <h1 className="font-display text-3xl font-semibold text-ink dark:text-ink-on-dark mt-1 tracking-tight">
+                {quizTitle}
+              </h1>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={onComplete}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-divider dark:border-divider-on-dark text-xs text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
+              >
+                ← {t('quiz.back_to_quizzes')}
+              </button>
+            </div>
+          </div>
+
+          {/* Score banner — dark ink */}
+          <div className="bg-ink flex items-center gap-0 px-8 py-6">
+            {/* Score */}
+            <div className="pr-8 border-r border-white/10 flex-shrink-0">
+              <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Final score</p>
+              <p className="font-display text-6xl font-semibold text-ink-on-dark leading-none tracking-tight">
+                {Math.round(results.scorePercentage)}
+                <span className="text-2xl text-accent-gold">%</span>
+              </p>
+              <p className="text-[10px] text-accent-gold mt-2">
+                — {passed ? 'Pass' : 'Below passing mark'}
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="bg-green-50 dark:bg-green-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
-                <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-300 mx-auto mb-2" />
-                <p className="s4-h2 text-green-600 dark:text-green-300">{results.correctCount}</p>
-                <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.correct')}</p>
-              </div>
+            {/* Stats */}
+            <div className="flex-1 flex justify-evenly pl-8">
+              {[
+                { value: results.correctCount,   label: 'Correct',    icon: <CheckCircle className="h-3 w-3" /> },
+                { value: results.incorrectCount, label: 'Incorrect',  icon: <XCircle className="h-3 w-3" /> },
+                { value: results.unansweredCount,label: 'Skipped',    icon: <AlertCircle className="h-3 w-3" /> },
+              ].map(({ value, label, icon }) => (
+                <div key={label} className="text-center">
+                  <div className="flex justify-center mb-1.5 text-accent-gold">{icon}</div>
+                  <p className="font-display text-3xl font-semibold text-ink-on-dark leading-none">{value}</p>
+                  <p className="text-[9px] tracking-widest text-white/50 uppercase mt-1.5">{label}</p>
+                </div>
+              ))}
 
-              <div className="bg-red-50 dark:bg-red-900/30 rounded-[var(--s4-radius-card)] p-4 text-center">
-                <XCircle className="h-8 w-8 text-red-600 dark:text-red-300 mx-auto mb-2" />
-                <p className="s4-h2 text-red-600 dark:text-red-300">{results.incorrectCount}</p>
-                <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.incorrect')}</p>
-              </div>
-
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 text-center">
-                <AlertCircle className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-2" />
-                <p className="s4-h2 text-secondary-ink dark:text-secondary-ink-on-dark">{results.unansweredCount}</p>
-                <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.unanswered')}</p>
-              </div>
-            </div>
-
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 mb-8">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('quiz.time_taken')}:</span>
-                <span className="font-medium text-ink dark:text-ink-on-dark">
+              {/* Time */}
+              <div className="text-center border-l border-white/10 pl-7">
+                <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Time taken</p>
+                <p className="font-display text-2xl font-semibold text-ink-on-dark leading-none">
                   {formatTime(results.timeTaken)}
-                </span>
+                </p>
+                <p className="text-[10px] text-white/40 mt-1.5">
+                  {Math.round(results.timeTaken / questions.length)}s / q avg
+                </p>
               </div>
             </div>
+          </div>
 
-            <div className="space-y-4 mb-8">
-              <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('quiz.review_answers')}</h3>
+          {/* Answer review */}
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold shadow-[var(--s4-shadow-hairline)]">
+            <div className="px-5 py-2.5 border-b border-divider dark:border-divider-on-dark">
+              <p className="text-[9px] tracking-[2.2px] uppercase font-bold text-ink dark:text-ink-on-dark opacity-50">
+                Answer review
+              </p>
+            </div>
+            <div className="divide-y divide-divider dark:divide-divider-on-dark">
               {questions.map((question, index) => {
                 const userAnswer = answers[index];
                 const isCorrect = userAnswer ? isUserAnswerCorrect(question, userAnswer) : false;
                 const wasAnswered = !!userAnswer;
 
                 return (
-                  <div
-                    key={index}
-                    className={`border-2 rounded-[var(--s4-radius-card)] p-4 ${
-                      !wasAnswered
-                        ? 'border-divider dark:border-divider-on-dark'
-                        : isCorrect
-                        ? 'border-green-500 dark:border-green-600 bg-green-50 dark:bg-green-900/20'
-                        : 'border-red-500 dark:border-red-600 bg-red-50 dark:bg-red-900/20'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <p className="font-medium text-ink dark:text-ink-on-dark">
-                        {index + 1}. {question.question}
-                      </p>
-                      {wasAnswered && (
-                        isCorrect ? (
-                          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 ml-2" />
-                        ) : (
-                          <XCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 ml-2" />
-                        )
-                      )}
+                  <div key={index} className="flex gap-3 p-5">
+                    {/* Status icon */}
+                    <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center mt-0.5 ${
+                      !wasAnswered ? 'bg-subtle dark:bg-subtle-on-dark' :
+                      isCorrect ? 'bg-accent-gold/15' : 'bg-ink/10 dark:bg-white/10'
+                    }`}>
+                      {wasAnswered && isCorrect && <CheckCircle className="h-3 w-3 text-accent-gold" />}
+                      {wasAnswered && !isCorrect && <XCircle className="h-3 w-3 text-ink dark:text-ink-on-dark" />}
+                      {!wasAnswered && <span className="text-[10px] text-muted-ink">—</span>}
                     </div>
 
-                    <div className="space-y-1 text-sm">
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <p className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark leading-snug mb-2">
+                        {index + 1}. {question.question}
+                      </p>
+
                       {userAnswer && (
-                        <p className={`${isCorrect ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'}`}>
-                          {t('quiz.your_answer')}: {userAnswer}
+                        <p className={`text-xs mb-1.5 ${isCorrect ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                          <span className="text-[9px] tracking-widest uppercase font-bold text-muted-ink mr-1.5">Yours:</span>
+                          {userAnswer}
                         </p>
+                      )}
+                      {!wasAnswered && (
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1.5">Not answered</p>
                       )}
                       {!isCorrect && (
-                        <p className="text-green-700 dark:text-green-300">
-                          {t('quiz.correct_answer')}: {question.correct_answer}
-                        </p>
+                        <div className="text-xs px-2.5 py-2 bg-accent-gold/10 border-l-2 border-accent-gold mb-1.5">
+                          <span className="text-[9px] tracking-widest uppercase font-bold text-accent-gold mr-1.5">Correct:</span>
+                          <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{question.correct_answer}</span>
+                        </div>
                       )}
                       {question.explanation && (
-                        <p className="text-secondary-ink dark:text-secondary-ink-on-dark mt-2 italic">
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark italic leading-relaxed">
                           {question.explanation}
                         </p>
                       )}
@@ -464,184 +487,324 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                 );
               })}
             </div>
+          </div>
 
-            <div className="flex space-x-4">
-              <ScholarButton
-                onClick={onComplete}
-                variant="primary"
-                size="lg"
-                fullWidth
-              >
-                {t('quiz.back_to_quizzes')}
-              </ScholarButton>
-            </div>
-          </ScholarCard>
+          {/* Bottom CTA */}
+          <button
+            onClick={onComplete}
+            className="w-full py-3 bg-ink text-ink-on-dark font-semibold text-sm hover:opacity-80 transition-opacity"
+          >
+            ← {t('quiz.back_to_quizzes')}
+          </button>
         </div>
       </div>
     );
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  const kind = currentQuestion ? getQuestionKind(currentQuestion) : 'multiple_choice';
   const answeredCount = Object.keys(answers).length;
+  const progressPct = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
-      <div className="max-w-4xl mx-auto">
-        <ScholarCard className="mb-4" padding="md">
+    <div className="min-h-screen bg-page dark:bg-page-dark flex flex-col">
+      {/* ── Compact header ── */}
+      <div className="border-b border-divider dark:border-divider-on-dark px-6 py-3 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] tracking-[2.5px] uppercase font-bold text-accent-gold leading-none mb-0.5">
+            {t('quiz.in_progress') || 'The Examination · In Progress'}
+          </p>
+          <h1 className="font-display font-semibold text-lg text-ink dark:text-ink-on-dark leading-tight tracking-tight">
+            {quizTitle}
+          </h1>
+        </div>
+        <div className="flex items-center gap-3">
+          {availableLanguages.length > 1 && (
+            <select
+              value={currentLanguage}
+              onChange={(e) => handleLanguageSwitch(e.target.value)}
+              className="px-2.5 py-1.5 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-xs text-ink dark:text-ink-on-dark outline-none"
+            >
+              {availableLanguages.map((lang) => (
+                <option key={lang} value={lang}>{t(`quiz.language_${lang}`)}</option>
+              ))}
+            </select>
+          )}
+        </div>
+      </div>
+
+      {/* Progress strip */}
+      <div className="px-6 py-2 flex items-center gap-3 border-b border-divider dark:border-divider-on-dark">
+        <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 tabular-nums">
+          Q {currentQuestionIndex + 1} / {questions.length}
+        </span>
+        <div className="flex-1 h-[3px] bg-subtle dark:bg-subtle-on-dark">
+          <div className="h-full bg-accent-gold transition-all" style={{ width: `${progressPct}%` }} />
+        </div>
+        <span className="text-[11px] font-bold text-accent-gold flex-shrink-0 tabular-nums">
+          {answeredCount} answered
+        </span>
+      </div>
+
+      {/* ── Main 2-col layout ── */}
+      <div className="flex flex-1 min-h-0">
+
+        {/* LEFT — question zone */}
+        <div className="flex-1 flex flex-col border-r border-divider dark:border-divider-on-dark p-6 md:p-8 overflow-y-auto">
+
+          {/* Question type label + read aloud */}
           <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">{quizTitle}</h2>
-              <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
-                {t('quiz.question_progress', { current: currentQuestionIndex + 1, total: questions.length })}
-              </p>
+            <span className="text-[9px] tracking-[2.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark">
+              {kind === 'multiple_choice' ? 'Multiple choice' :
+               kind === 'true_false' ? 'True / False' :
+               kind === 'fill_in_blank' ? 'Fill in the blank' : 'Open ended'}
+            </span>
+            <ReadAloudButton text={currentQuestion?.question || ''} />
+          </div>
+
+          {/* Question watermark number */}
+          <div className="relative flex-1">
+            <div
+              className="absolute -top-2 -left-1 font-display font-bold text-ink dark:text-ink-on-dark opacity-[0.03] leading-none select-none pointer-events-none"
+              style={{ fontSize: '7rem' }}
+            >
+              {String(currentQuestionIndex + 1).padStart(2, '0')}
             </div>
-            {availableLanguages.length > 1 && (
-              <select
-                value={currentLanguage}
-                onChange={(e) => handleLanguageSwitch(e.target.value)}
-                className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-sm focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
-              >
-                {availableLanguages.map((lang) => (
-                  <option key={lang} value={lang}>
-                    {t(`quiz.language_${lang}`)}
-                  </option>
-                ))}
-              </select>
-            )}
-            {timeRemaining !== null && (
-              <div className={`flex items-center space-x-2 ${timeRemaining < 60 ? 'text-red-600 dark:text-red-400' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
-                <Clock className="h-5 w-5" />
-                <span className="text-lg font-bold">{formatTime(timeRemaining)}</span>
+
+            {/* Question text */}
+            <p className="relative font-display font-semibold text-xl md:text-2xl text-ink dark:text-ink-on-dark leading-relaxed mb-7">
+              {currentQuestion?.question}
+            </p>
+
+            {/* ── MCQ options ── */}
+            {kind === 'multiple_choice' && (
+              <div className="flex flex-col gap-2">
+                {currentQuestion.options.map((option, i) => {
+                  const selected = answers[currentQuestionIndex] === option;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => handleAnswerSelect(option)}
+                      className={`flex items-stretch text-left border transition-colors w-full overflow-hidden ${
+                        selected
+                          ? 'border-accent-gold bg-accent-gold/10 dark:bg-accent-gold/15'
+                          : 'border-divider dark:border-divider-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
+                      }`}
+                    >
+                      {/* Letter badge */}
+                      <div className={`w-11 flex-shrink-0 flex items-center justify-center border-r text-xs font-bold ${
+                        selected
+                          ? 'border-accent-gold bg-accent-gold/20 text-accent-gold'
+                          : 'border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
+                      }`}>
+                        {OPTION_LETTERS[i] || String(i + 1)}
+                      </div>
+                      <div className="flex flex-1 items-center justify-between px-4 py-3">
+                        <span className={`text-sm leading-snug ${selected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
+                          {option}
+                        </span>
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <ReadAloudButton text={option} className="ml-2 flex-shrink-0" />
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             )}
-          </div>
 
-          <div className="w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mb-4">
-            <div
-              className="bg-accent-gold h-2 rounded-full transition-colors duration-[var(--s4-dur-fast)]"
-              style={{ width: `${progress}%` }}
-            ></div>
-          </div>
+            {/* ── True / False ── */}
+            {kind === 'true_false' && (
+              <div className="grid grid-cols-2 gap-3">
+                {currentQuestion.options.slice(0, 2).map((option, i) => {
+                  const selected = answers[currentQuestionIndex] === option;
+                  const icon = i === 0 ? '✓' : '✗';
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => handleAnswerSelect(option)}
+                      className={`h-32 flex flex-col items-center justify-center gap-3 border transition-colors ${
+                        selected
+                          ? 'bg-ink border-ink text-ink-on-dark'
+                          : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
+                      }`}
+                    >
+                      <span className={`text-xl ${selected ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{icon}</span>
+                      <span className={`font-display text-2xl font-semibold tracking-tight ${selected ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
+                        {option}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
-          <div className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
-            {t('quiz.answered')}: {answeredCount} / {questions.length}
-          </div>
-        </ScholarCard>
-
-        <ScholarCard padding="lg">
-          <div className="flex items-start gap-2 mb-6">
-            <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark flex-1">
-              {currentQuestion.question}
-            </h3>
-            <ReadAloudButton text={currentQuestion.question} />
-          </div>
-
-          <div className="space-y-3 mb-8">
-            {getQuestionKind(currentQuestion) === 'open_ended' || getQuestionKind(currentQuestion) === 'fill_in_blank' ? (
+            {/* ── Fill in blank ── */}
+            {kind === 'fill_in_blank' && (
               <div>
-                <label className="block text-sm font-medium mb-2 text-secondary-ink dark:text-secondary-ink-on-dark">
-                  {getQuestionKind(currentQuestion) === 'fill_in_blank'
-                    ? t('quiz.your_answer_fill_blank')
-                    : t('quiz.your_answer_open')}
-                </label>
+                <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-3">Your answer</p>
+                <div className="border-b-2 border-ink dark:border-ink-on-dark pb-2 mb-2">
+                  <input
+                    type="text"
+                    value={answers[currentQuestionIndex] || ''}
+                    onChange={(e) => handleAnswerSelect(e.target.value)}
+                    placeholder="Type your answer…"
+                    className="w-full bg-transparent font-display text-lg text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark outline-none"
+                  />
+                </div>
+                <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+                  Exact or partial match accepted
+                </p>
+              </div>
+            )}
+
+            {/* ── Open ended ── */}
+            {kind === 'open_ended' && (
+              <div>
+                <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-3">Your response</p>
                 <textarea
                   value={answers[currentQuestionIndex] || ''}
                   onChange={(e) => handleAnswerSelect(e.target.value)}
-                  rows={getQuestionKind(currentQuestion) === 'open_ended' ? 5 : 2}
-                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border-2 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:border-accent-gold focus-visible:ring-1 focus-visible:ring-focus"
+                  rows={6}
                   placeholder={t('quiz.type_your_answer')}
+                  className="w-full px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold text-sm text-ink dark:text-ink-on-dark leading-relaxed outline-none focus:border-l-accent-gold resize-none"
                 />
-              </div>
-            ) : (
-              currentQuestion.options.map((option, index) => (
-                <div
-                  key={index}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => handleAnswerSelect(option)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleAnswerSelect(option)}
-                  className={`w-full p-4 text-left rounded-[var(--s4-radius-card)] border-2 transition-all cursor-pointer ${
-                    answers[currentQuestionIndex] === option
-                      ? 'border-accent-gold bg-accent-gold-soft/20 dark:bg-accent-gold-soft/15'
-                      : 'border-divider dark:border-divider-on-dark hover:border-accent-gold'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-ink dark:text-ink-on-dark flex-1">{option}</span>
-                    <span onClick={(e) => e.stopPropagation()}>
-                      <ReadAloudButton text={option} className="ml-2 flex-shrink-0" />
-                    </span>
-                  </div>
+                <div className="flex justify-between mt-2">
+                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+                    {(answers[currentQuestionIndex] || '').split(/\s+/).filter(Boolean).length} words
+                  </span>
+                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">Keyword matching</span>
                 </div>
-              ))
+              </div>
             )}
           </div>
 
-          <div className="flex items-center justify-between">
-            <ScholarButton
+          {/* ── Navigation ── */}
+          <div className="flex items-center justify-between pt-5 border-t border-divider dark:border-divider-on-dark mt-6">
+            <button
               onClick={handlePrevious}
               disabled={currentQuestionIndex === 0}
-              variant="secondary"
-              icon={<ArrowLeft className="h-4 w-4" />}
-              iconPosition="left"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-divider dark:border-divider-on-dark text-xs text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {t('quiz.previous')}
-            </ScholarButton>
+              ← {t('quiz.previous')}
+            </button>
 
-            <div className="flex space-x-2">
-              <ScholarButton
-                variant="danger"
+            <div className="flex items-center gap-2">
+              <button
                 onClick={onExit}
+                className="px-4 py-2 border border-divider dark:border-divider-on-dark text-xs text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
               >
                 {t('quiz.exit_quiz')}
-              </ScholarButton>
+              </button>
 
               {currentQuestionIndex === questions.length - 1 ? (
-                <ScholarButton
-                  variant="primary"
+                <button
                   onClick={handleSubmit}
-                  icon={<Flag className="h-4 w-4" />}
-                  iconPosition="left"
+                  className="px-5 py-2 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
                 >
-                  {t('quiz.submit')}
-                </ScholarButton>
+                  {t('quiz.submit')} →
+                </button>
               ) : (
-                <ScholarButton
+                <button
                   onClick={handleNext}
-                  variant="primary"
-                  icon={<ArrowRight className="h-4 w-4" />}
-                  iconPosition="right"
+                  className="px-5 py-2 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
                 >
-                  {t('quiz.next')}
-                </ScholarButton>
+                  {t('quiz.next')} →
+                </button>
               )}
             </div>
           </div>
-        </ScholarCard>
+        </div>
 
-        <ScholarCard className="mt-4" padding="sm">
-          <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark mb-2 px-1">{t('quiz.question_progress_label')}</p>
-          <div className="flex flex-wrap gap-2 px-1 pb-1">
-            {questions.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentQuestionIndex(index)}
-                className={`h-10 w-10 rounded-[var(--s4-radius-card)] font-medium transition-all ${
-                  index === currentQuestionIndex
-                    ? 'bg-accent-gold text-ink-on-dark'
-                    : answers[index]
-                    ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300'
-                    : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark'
-                }`}
-              >
-                {index + 1}
-              </button>
-            ))}
+        {/* RIGHT — dark sidebar: timer + question map */}
+        <div className="hidden md:flex flex-col bg-ink w-64 xl:w-72 flex-shrink-0">
+
+          {/* Timer */}
+          <div className="px-6 pt-6 pb-5 border-b border-white/10">
+            <p className="text-[9px] tracking-[2.5px] uppercase font-bold text-accent-gold mb-3">
+              {timeRemaining !== null ? 'Time remaining' : 'Elapsed'}
+            </p>
+            {timeRemaining !== null ? (
+              <>
+                <p className={`font-display text-5xl font-semibold leading-none tracking-tighter ${timeRemaining < 60 ? 'text-red-400' : 'text-ink-on-dark'}`}>
+                  {formatTime(timeRemaining)}
+                </p>
+                <p className="text-[10px] text-accent-gold mt-2 tracking-wide">— minutes · seconds</p>
+              </>
+            ) : (
+              <p className="font-display text-5xl font-semibold text-ink-on-dark leading-none tracking-tighter">
+                —:——
+              </p>
+            )}
+            <div className="flex gap-5 mt-4">
+              {[
+                [answeredCount.toString(), 'done'],
+                [(questions.length - answeredCount).toString(), 'left'],
+              ].map(([v, l]) => (
+                <div key={l}>
+                  <p className="font-display text-2xl font-semibold text-ink-on-dark leading-none">{v}</p>
+                  <p className="text-[9px] tracking-[1.5px] uppercase text-accent-gold mt-1">{l}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </ScholarCard>
+
+          {/* Question map */}
+          <div className="px-6 py-5 flex-1">
+            <p className="text-[9px] tracking-[2px] uppercase font-bold text-white/30 mb-3">Question map</p>
+            <div className="flex flex-wrap gap-1.5">
+              {questions.map((_, idx) => {
+                const isCurrent = idx === currentQuestionIndex;
+                const hasAnswer = !!answers[idx];
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentQuestionIndex(idx)}
+                    className={`w-7 h-7 flex items-center justify-center text-[10px] font-semibold transition-colors ${
+                      isCurrent
+                        ? 'bg-accent-gold text-ink'
+                        : hasAnswer
+                        ? 'bg-white/15 text-white/60'
+                        : 'bg-transparent text-white/25 border border-white/12'
+                    }`}
+                  >
+                    {idx + 1}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Exit */}
+          <div className="px-6 pb-6">
+            <button
+              onClick={onExit}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-white/15 text-[11px] text-white/40 hover:text-white/60 hover:border-white/25 transition-colors"
+            >
+              Exit quiz
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile question dots (small screens) */}
+      <div className="md:hidden flex flex-wrap gap-1.5 px-4 py-3 border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+        {questions.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentQuestionIndex(idx)}
+            className={`w-8 h-8 text-xs font-medium transition-colors ${
+              idx === currentQuestionIndex
+                ? 'bg-accent-gold text-ink'
+                : answers[idx]
+                ? 'bg-subtle dark:bg-subtle-on-dark text-accent-gold'
+                : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
+            }`}
+          >
+            {idx + 1}
+          </button>
+        ))}
       </div>
     </div>
   );
 };
-

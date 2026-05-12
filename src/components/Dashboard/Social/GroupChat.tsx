@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowLeft, Send, Loader2 } from 'lucide-react';
+import { ArrowLeft, Send, Loader2, Paperclip, Smile } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
@@ -217,32 +217,45 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
   const isOwn = (msg: ChatMessage) => msg.sender_id === user?.id;
 
   return (
-    <div dir={dir} className="flex flex-col h-full">
-      {/* Header */}
-      <div className={`flex items-center gap-3 px-4 py-3 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
+    <div dir={dir} className="flex flex-col" style={{ height: 'calc(100vh - 220px)', minHeight: 480 }}>
+
+      {/* Header — Scholar v4 GroupChat4 style */}
+      <div className="flex items-center gap-3 px-4 py-0 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]" style={{ height: 58 }}>
         <button
           onClick={onBack}
-          className={`p-1.5 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20`}
+          className="p-1.5 rounded-[var(--s4-radius-card)] bg-subtle dark:bg-card-dark hover:opacity-80 transition-opacity"
         >
-          <ArrowLeft className={`w-5 h-5 text-ink dark:text-ink-on-dark`} />
+          <ArrowLeft className="w-5 h-5 text-ink dark:text-ink-on-dark" />
         </button>
-        <h2 className={`font-semibold text-sm truncate text-ink dark:text-ink-on-dark`}>
-          {groupName}
-        </h2>
+        {/* Group avatar */}
+        <div className="relative flex-shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-gold to-accent-gold/60 flex items-center justify-center text-[15px] font-bold text-white shadow-md">
+            {groupName[0]?.toUpperCase()}
+          </div>
+          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-card-light dark:border-card-dark" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h2 className="text-[14px] font-bold text-ink dark:text-ink-on-dark truncate leading-tight">{groupName}</h2>
+          <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">Group chat</p>
+        </div>
       </div>
 
       {/* Messages area */}
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto px-4 py-3 space-y-3"
+        className="flex-1 overflow-y-auto px-4 py-4 bg-page dark:bg-page flex flex-col gap-1"
+        style={{
+          backgroundImage: 'radial-gradient(var(--color-border-divider, #e5e7eb) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
       >
         {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <Loader2 className={`w-6 h-6 animate-spin text-muted-ink dark:text-muted-ink-on-dark`} />
+          <div className="flex items-center justify-center py-16 flex-1">
+            <Loader2 className="w-6 h-6 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
           </div>
         ) : messages.length === 0 ? (
-          <div className={`text-sm text-center py-16 text-muted-ink dark:text-muted-ink-on-dark`}>
+          <div className="text-[13px] text-center py-16 flex-1 text-muted-ink dark:text-muted-ink-on-dark">
             {t('social.no_messages')}
           </div>
         ) : (
@@ -251,56 +264,76 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
               <button
                 onClick={loadOlderMessages}
                 disabled={loadingMore}
-                className={`w-full text-center text-xs py-2 rounded-[var(--s4-radius-card)] transition-colors bg-accent-gold-soft/20 text-muted-ink dark:text-muted-ink-on-dark`}
+                className="self-center px-4 py-1.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-full text-[11px] text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity mb-2"
               >
-                {loadingMore ? (
-                  <Loader2 className="w-3 h-3 animate-spin mx-auto" />
-                ) : (
-                  t('social.load_more')
-                )}
+                {loadingMore ? <Loader2 className="w-3 h-3 animate-spin mx-auto" /> : t('social.load_more')}
               </button>
             )}
-            {messages.map((msg) => {
+
+            {/* Date chip */}
+            <div className="flex justify-center mb-4">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-full px-4 py-1 text-[9px] font-bold text-muted-ink dark:text-muted-ink-on-dark tracking-widest uppercase">
+                Today
+              </div>
+            </div>
+
+            {messages.map((msg, i) => {
               const own = isOwn(msg);
+              const prevMsg = i > 0 ? messages[i - 1] : null;
+              const nextMsg = i < messages.length - 1 ? messages[i + 1] : null;
+              const isFirst = !prevMsg || prevMsg.sender_id !== msg.sender_id;
+              const isLast = !nextMsg || nextMsg.sender_id !== msg.sender_id;
+
+              // Bubble border radii — grouped style from GroupChat4
+              const rOther = `${isFirst ? 4 : 4}px 18px ${isLast ? 18 : 6}px ${isFirst ? 18 : 4}px`;
+              const rOwn = `18px ${isFirst ? 4 : 4}px ${isFirst ? 6 : 18}px 18px`;
+
               return (
                 <div
                   key={msg.id}
-                  className={`flex ${own ? 'justify-end' : 'justify-start'}`}
+                  className={`flex ${own ? 'flex-row-reverse' : 'flex-row'} items-end gap-2.5`}
+                  style={{ marginBottom: isLast ? 14 : 3 }}
                 >
-                  <div className={`flex gap-2 max-w-[80%] ${own ? 'flex-row-reverse' : 'flex-row'}`}>
-                    {/* Avatar */}
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-bold text-ink-on-dark shrink-0 ${
-                        own ? "bg-accent-gold hover:bg-accent-gold-soft" : "bg-accent-gold"
-                      }`}
-                    >
-                      {senderInitial(msg)}
-                    </div>
+                  {/* Avatar column — 34px fixed width for alignment */}
+                  <div className="w-8 flex-shrink-0" style={{ paddingBottom: isFirst ? 0 : 0 }}>
+                    {!own && isFirst && (
+                      <div className="w-8 h-8 rounded-xl bg-accent-gold flex items-center justify-center text-[11px] font-bold text-white shadow-md flex-shrink-0">
+                        {senderInitial(msg)}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Message column */}
+                  <div className={`max-w-[66%] flex flex-col ${own ? 'items-end' : 'items-start'}`}>
+                    {/* Name + time — only on first bubble of a group */}
+                    {!own && isFirst && (
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-[11px] font-bold text-accent-gold">{senderLabel(msg)}</span>
+                        <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{relativeTime(msg.created_at)}</span>
+                      </div>
+                    )}
 
                     {/* Bubble */}
-                    <div>
-                      {!own && (
-                        <div className={`text-[10px] mb-0.5 px-1 text-muted-ink dark:text-muted-ink-on-dark`}>
-                          {senderLabel(msg)}
-                        </div>
-                      )}
-                      <div
-                        className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-sm leading-relaxed ${
-                          own
-                            ? `bg-accent-gold hover:bg-accent-gold-soft text-white`
-                            : `bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark`
-                        }`}
-                      >
-                        {msg.content}
-                      </div>
-                      <div
-                        className={`text-[10px] mt-0.5 px-1 text-muted-ink dark:text-muted-ink-on-dark ${
-                          own ? 'text-end' : 'text-start'
-                        }`}
-                      >
-                        {relativeTime(msg.created_at)}
-                      </div>
+                    <div
+                      className={`px-3.5 py-2.5 text-[13px] leading-relaxed break-words ${
+                        own
+                          ? 'bg-accent-gold/15 text-ink dark:text-ink-on-dark'
+                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-sm'
+                      }`}
+                      style={{
+                        borderRadius: own ? rOwn : rOther,
+                        boxShadow: own ? undefined : '0 1px 5px rgba(0,0,0,0.08)',
+                      }}
+                    >
+                      {msg.content}
                     </div>
+
+                    {/* Time — own messages only, last in group */}
+                    {own && isLast && (
+                      <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark mt-1">
+                        {relativeTime(msg.created_at)}
+                      </span>
+                    )}
                   </div>
                 </div>
               );
@@ -310,29 +343,38 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
         )}
       </div>
 
-      {/* Input bar */}
-      <div className={`shrink-0 border-t px-4 py-3 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
-        <div className="flex items-center gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
-            placeholder={t('social.type_message')}
-            className={`flex-1 rounded-[var(--s4-radius-card)] px-4 py-2.5 text-sm border outline-none transition-colors bg-accent-gold-soft/20 border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark`}
-          />
-          <button
-            onClick={handleSend}
-            disabled={sending || !input.trim()}
-            className={`p-2.5 rounded-[var(--s4-radius-card)] text-white transition-opacity disabled:opacity-40 bg-accent-gold hover:bg-accent-gold-soft`}
-          >
-            {sending ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Send className="w-4 h-4" />
-            )}
-          </button>
-        </div>
+      {/* Input bar — Scholar v4 GroupChat4 style */}
+      <div className="shrink-0 border-t border-divider dark:border-divider-on-dark px-4 py-2.5 bg-card-light dark:bg-card-dark flex items-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        {/* Attachment icon */}
+        <button className="w-8 h-8 rounded-lg bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+          <Paperclip className="w-3.5 h-3.5" />
+        </button>
+        {/* Emoji icon */}
+        <button className="w-8 h-8 rounded-lg bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+          <Smile className="w-3.5 h-3.5" />
+        </button>
+        {/* Text input — pill shape */}
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
+          placeholder={t('social.type_message')}
+          className="flex-1 rounded-full px-5 py-2.5 text-[13px] border-[1.5px] border-divider dark:border-divider-on-dark bg-page dark:bg-page text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+        />
+        {/* Send button */}
+        <button
+          onClick={handleSend}
+          disabled={sending || !input.trim()}
+          className="w-9 h-9 rounded-xl bg-accent-gold flex items-center justify-center flex-shrink-0 hover:opacity-90 disabled:opacity-40 transition-opacity shadow-md"
+          style={{ boxShadow: 'var(--color-accent-gold, #c9a227) 0 3px 12px 0' }}
+        >
+          {sending ? (
+            <Loader2 className="w-4 h-4 animate-spin text-white" />
+          ) : (
+            <Send className="w-3.5 h-3.5 text-white" />
+          )}
+        </button>
       </div>
     </div>
   );

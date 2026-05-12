@@ -222,157 +222,176 @@ export const FriendsPanel: React.FC = () => {
   };
 
   const Avatar: React.FC<{ name: string | null; size?: string }> = ({ name, size = 'h-10 w-10' }) => (
-    <div className={`${size} rounded-full bg-accent-gold flex items-center justify-center text-white font-semibold text-sm shrink-0`}>
+    <div className={`${size} rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-sm shrink-0`}>
       {(name || '?')[0].toUpperCase()}
     </div>
   );
 
   return (
-    <div className="space-y-6" dir={dir}>
-      {/* Search */}
-      <div className="p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
+    <div dir={dir} className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6">
+
+      {/* LEFT — search + friend list */}
+      <div>
+        {/* Search bar */}
+        <div className="flex items-center gap-3 px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] mb-6">
+          <Search className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
           <input
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder={t('social.search_friends')}
-            className="w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 transition-colors"
+            className="flex-1 bg-transparent text-[13px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
           />
-          {isSearching && (
-            <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-blue-400" />
-          )}
+          {isSearching && <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />}
         </div>
 
-        {searchResults.length > 0 && (
-          <div className="mt-3 space-y-2">
-            {searchResults.map((profile) => (
-              <div
-                key={profile.id}
-                className="flex items-center justify-between p-3 rounded-[var(--s4-radius-card)] bg-page-light dark:bg-page-dark"
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <Avatar name={profile.display_name} />
-                  <div className="min-w-0">
-                    <p className="font-medium truncate text-ink dark:text-ink-on-dark">
-                      {profile.display_name || profile.username}
-                    </p>
-                    {profile.username && (
-                      <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
-                    )}
-                  </div>
-                </div>
-                <button
-                  onClick={() => sendFriendRequest(profile.id)}
-                  disabled={sendingRequest === profile.id}
-                  className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--s4-radius-card)] text-sm font-medium text-white bg-accent-gold hover:opacity-90 transition-opacity disabled:opacity-50"
-                >
-                  {sendingRequest === profile.id ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <UserPlus className="h-4 w-4" />
-                  )}
-                  {t('social.add_friend')}
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {searchQuery.trim().length >= 2 && !isSearching && searchResults.length === 0 && (
-          <p className="text-sm text-center mt-3 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_results')}</p>
-        )}
-      </div>
-
-      {/* Pending Incoming Requests */}
-      {pendingIncoming.length > 0 && (
-        <div className="p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
-          <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 text-ink dark:text-ink-on-dark">
-            {t('social.pending_requests')}
-          </h3>
-          <div className="space-y-2">
-            {pendingIncoming.map((req) => {
-              const profile = req.requester;
-              return (
-                <div
-                  key={req.id}
-                  className="flex items-center justify-between p-3 rounded-[var(--s4-radius-card)] bg-page-light dark:bg-page-dark"
-                >
-                  <div className="flex items-center gap-3 min-w-0">
+        {/* Search results */}
+        {(searchResults.length > 0 || (searchQuery.trim().length >= 2 && !isSearching)) && (
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">Results</span>
+              <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+            </div>
+            {searchResults.length > 0 ? (
+              <div className="space-y-0 divide-y divide-divider dark:divide-divider-on-dark">
+                {searchResults.map((profile) => (
+                  <div key={profile.id} className="flex items-center gap-4 py-3">
                     <Avatar name={profile.display_name} />
-                    <div className="min-w-0">
-                      <p className="font-medium truncate text-ink dark:text-ink-on-dark">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
                         {profile.display_name || profile.username}
                       </p>
                       {profile.username && (
-                        <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
+                        <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
                       )}
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
                     <button
-                      onClick={() => handleRequest(req.id, 'accepted')}
-                      disabled={processingRequest === req.id}
-                      className="p-2 rounded-[var(--s4-radius-card)] bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-colors"
-                      aria-label={t('social.accept')}
+                      onClick={() => sendFriendRequest(profile.id)}
+                      disabled={sendingRequest === profile.id}
+                      className="shrink-0 flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-bold text-ink-on-dark dark:text-ink bg-accent-gold hover:opacity-90 transition-opacity disabled:opacity-50 rounded-[var(--s4-radius-card)]"
                     >
-                      {processingRequest === req.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Check className="h-4 w-4" />
-                      )}
-                    </button>
-                    <button
-                      onClick={() => handleRequest(req.id, 'rejected')}
-                      disabled={processingRequest === req.id}
-                      className="p-2 rounded-[var(--s4-radius-card)] bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors"
-                      aria-label={t('social.reject')}
-                    >
-                      <X className="h-4 w-4" />
+                      {sendingRequest === profile.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UserPlus className="h-3.5 w-3.5" />}
+                      {t('social.add_friend')}
                     </button>
                   </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            ) : (
+              <p className="text-[12px] text-center py-4 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_results')}</p>
+            )}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Friends List */}
-      <div className="p-4 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
-        <h3 className="text-sm font-semibold uppercase tracking-wide mb-3 flex items-center gap-2 text-ink dark:text-ink-on-dark">
-          <Users className="h-4 w-4" />
-          {t('social.friends_list')}
-        </h3>
+        {/* Active friends section */}
+        <div className="flex items-center gap-3 mb-3">
+          <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">{t('social.friends_list')}</span>
+          {!loadingFriends && <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {friends.length}</span>}
+          <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+        </div>
 
         {loadingFriends ? (
           <div className="flex justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
+            <Loader2 className="h-5 w-5 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
           </div>
         ) : friends.length === 0 ? (
-          <p className="text-sm text-center py-6 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_friends')}</p>
+          <p className="text-[12px] text-center py-8 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_friends')}</p>
         ) : (
-          <div className="space-y-2">
+          <div className="divide-y divide-divider dark:divide-divider-on-dark">
             {friends.map((row) => {
               const profile = getFriendProfile(row);
               return (
-                <div
-                  key={row.id}
-                  className="flex items-center gap-3 p-3 rounded-[var(--s4-radius-card)] bg-page-light dark:bg-page-dark"
-                >
-                  <Avatar name={profile.display_name} />
-                  <div className="min-w-0">
-                    <p className="font-medium truncate text-ink dark:text-ink-on-dark">
+                <div key={row.id} className="flex items-center gap-4 py-3.5">
+                  {/* Avatar with online dot */}
+                  <div className="relative flex-shrink-0">
+                    <div className="h-10 w-10 rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-[15px]">
+                      {(profile.display_name || profile.username || '?')[0].toUpperCase()}
+                    </div>
+                    {/* green online indicator */}
+                    <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-page dark:border-page" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
                       {profile.display_name || profile.username}
                     </p>
                     {profile.username && (
-                      <p className="text-sm truncate text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
+                      <p className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
                     )}
                   </div>
                 </div>
               );
             })}
+          </div>
+        )}
+      </div>
+
+      {/* RIGHT rail */}
+      <div className="flex flex-col gap-4">
+
+        {/* Add a Friend card */}
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
+          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3">
+            {t('social.add_friend')}
+          </p>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder={t('social.search_friends')}
+            className="w-full px-3 py-2 mb-3 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none"
+          />
+          <button className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 transition-opacity">
+            {t('social.add_friend')}
+          </button>
+        </div>
+
+        {/* Pending Requests */}
+        {pendingIncoming.length > 0 && (
+          <div className="bg-ink dark:bg-card-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
+            <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3">
+              {t('social.pending_requests')} · {pendingIncoming.length}
+            </p>
+            <div className="space-y-3">
+              {pendingIncoming.map((req) => {
+                const profile = req.requester;
+                return (
+                  <div key={req.id}>
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-accent-gold flex items-center justify-center text-[12px] font-bold text-ink-on-dark flex-shrink-0">
+                        {(profile.display_name || profile.username || '?')[0].toUpperCase()}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[12.5px] font-semibold text-ink-on-dark dark:text-ink-on-dark truncate">
+                          {profile.display_name || profile.username}
+                        </p>
+                        {profile.username && (
+                          <p className="text-[10px] text-muted-ink-on-dark">@{profile.username}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleRequest(req.id, 'accepted')}
+                        disabled={processingRequest === req.id}
+                        className="flex-1 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-1"
+                        aria-label={t('social.accept')}
+                      >
+                        {processingRequest === req.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
+                        {t('social.accept')}
+                      </button>
+                      <button
+                        onClick={() => handleRequest(req.id, 'rejected')}
+                        disabled={processingRequest === req.id}
+                        className="flex-1 py-1.5 border border-white/20 text-white/60 text-[11px] rounded-[var(--s4-radius-card)] hover:bg-white/10 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+                        aria-label={t('social.reject')}
+                      >
+                        <X className="h-3.5 w-3.5" />
+                        {t('social.reject')}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

@@ -21,9 +21,15 @@ export const InformationalPage: React.FC = React.memo(() => {
   
   return (
     <div className="max-w-6xl mx-auto">
+      {/* Page header — S4 Eyebrow + font-display heading */}
       <div className="mb-8">
-        <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>{t('informational.how_to_use')}</h2>
-        <p className={`text-lg text-secondary-ink dark:text-muted-ink-on-dark`}>
+        <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-accent-gold mb-1.5">
+          About MeshFahem
+        </p>
+        <h2 className="font-display s4-h1 text-ink dark:text-ink-on-dark mb-2" style={{ letterSpacing: '-0.02em' }}>
+          {t('informational.how_to_use')}
+        </h2>
+        <p className="text-lg text-secondary-ink dark:text-muted-ink-on-dark">
           {t('informational.complete_guide')}
         </p>
       </div>

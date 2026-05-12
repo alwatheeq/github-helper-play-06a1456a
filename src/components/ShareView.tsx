@@ -108,79 +108,89 @@ export const ShareView: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-page-light dark:bg-page-dark">
-      {/* Header */}
-      <header className="bg-card-light dark:bg-card-dark shadow-[var(--s4-shadow-hairline)] border-b border-divider dark:border-divider-on-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            {/* Left: Logo + Meshfahem */}
-            <div className="flex items-center space-x-3 flex-shrink-0">
-              <div className="bg-accent-gold p-2 rounded-[var(--s4-radius-card)]">
-                <FileText className="h-6 w-6 text-ink-on-dark" />
-              </div>
-              <div>
-                <h1 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
-                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('share.shared_content')}</p>
-              </div>
-            </div>
-
-            {/* Middle: Tagline */}
-            <div className="flex-1 flex justify-center px-2 sm:px-4 min-w-0">
-              <p className="text-xs sm:text-sm text-secondary-ink dark:text-muted-ink-on-dark italic text-center whitespace-nowrap truncate">
-                this is just beginning, there is better to come
-              </p>
-            </div>
-
-            {/* Right: Get Meshfahem button */}
-            <div className="flex-shrink-0">
-              <a
-                href="/"
-                className="flex items-center space-x-2 px-4 py-2 text-accent-gold hover:opacity-80 border border-accent-gold/40 rounded-[var(--s4-radius-card)] hover:bg-accent-gold-soft/10 transition duration-[var(--s4-dur-fast)] text-sm"
-              >
-                <ExternalLink className="h-4 w-4" />
-                <span>{t('share.get_meshfahem')}</span>
-              </a>
-            </div>
+    <div className="min-h-screen bg-page-light dark:bg-page-dark flex flex-col">
+      {/* Branded dark header */}
+      <header className="bg-sidebar dark:bg-sidebar h-[52px] flex items-center px-5 gap-3.5 flex-shrink-0 border-b border-divider/20">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <div className="w-[26px] h-[26px] bg-accent-gold rounded-[6px] flex items-center justify-center flex-shrink-0">
+            <FileText className="h-3.5 w-3.5 text-white" />
           </div>
+          <span className="text-sm font-semibold text-ink-on-dark">{t('app_name')}</span>
         </div>
+
+        <div className="w-px h-[18px] bg-white/15 flex-shrink-0" />
+
+        {/* Document title */}
+        <span className="text-sm font-medium text-ink-on-dark/80 truncate flex-1">
+          {item.title}
+        </span>
+
+        {/* Shared badge */}
+        <span className="text-[11px] font-medium text-ink-on-dark/60 whitespace-nowrap flex-shrink-0">
+          {t('share.shared_content')}
+        </span>
+
+        {/* CTA */}
+        <a
+          href="/"
+          className="flex items-center gap-1.5 px-3 py-1.5 border border-accent-gold/50 rounded-[var(--s4-radius-card)] text-xs font-medium text-accent-gold hover:bg-accent-gold/10 transition duration-[var(--s4-dur-fast)] flex-shrink-0"
+        >
+          <ExternalLink className="h-3.5 w-3.5" />
+          <span>{t('share.get_meshfahem')}</span>
+        </a>
       </header>
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        {/* Title card */}
         <div className="mb-8">
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="s4-h2 text-ink dark:text-ink-on-dark mb-2">{item.title}</h2>
-                <div className="flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                  <span>{t('common.created', { date: formatDate(item.created_at) })}</span>
-                  <span>•</span>
-                  <span>{item.flashcards_json.length} {item.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}</span>
-                </div>
-                
-                {/* Topics */}
-                {item.topics && item.topics.length > 0 && (
-                  <div className="flex items-center space-x-2 mt-3">
-                    <span className="text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark">{t('common.topics')}:</span>
-                    <div className="flex flex-wrap gap-2">
-                      {item.topics.map((topic, index) => (
-                        <span
-                          key={index}
-                          className="px-2 py-1 bg-accent-gold-soft/30 text-accent-gold text-xs rounded-full"
-                        >
-                          {topic}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+            <h2 className="font-display text-2xl font-bold text-ink dark:text-ink-on-dark mb-2" style={{ letterSpacing: '-0.01em' }}>
+              {item.title}
+            </h2>
+            <div className="flex items-center flex-wrap gap-3 text-sm text-muted-ink dark:text-muted-ink-on-dark">
+              <span>{t('common.created', { date: formatDate(item.created_at) })}</span>
+              <span>·</span>
+              {/* Flashcard count badge */}
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-accent-gold-soft/20 text-accent-gold text-xs font-semibold rounded-full">
+                {item.flashcards_json.length} {item.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
+              </span>
+            </div>
+
+            {/* Topics */}
+            {item.topics && item.topics.length > 0 && (
+              <div className="flex items-center gap-2 mt-3 flex-wrap">
+                <span className="text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark">{t('common.topics')}:</span>
+                {item.topics.map((topic, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-0.5 bg-accent-gold-soft/30 text-accent-gold text-xs rounded-full"
+                  >
+                    {topic}
+                  </span>
+                ))}
               </div>
+            )}
+
+            {/* Create your own CTA */}
+            <div className="mt-5 pt-5 border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
+              <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                Study smarter with AI-powered summaries and flashcards.
+              </p>
+              <a
+                href="/"
+                className="flex items-center gap-2 px-4 py-2 bg-ink dark:bg-ink text-ink-on-dark text-sm font-bold rounded-[var(--s4-radius-card)] hover:opacity-85 transition-opacity whitespace-nowrap"
+              >
+                Create your own
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
             </div>
           </div>
         </div>
 
         <div className="space-y-8">
-          <SummaryDisplay 
+          <SummaryDisplay
             summaryChunks={[item.summary_text]}
             flashcards={item.flashcards_json}
             originalText={item.original_text_content || ''}
@@ -190,7 +200,7 @@ export const ShareView: React.FC = () => {
             isSharedView={true}
             highlightLibraryItemId={item.id}
           />
-          
+
           {item.flashcards_json.length > 0 && (
             <FlashcardViewer
               flashcards={item.flashcards_json}
@@ -204,15 +214,13 @@ export const ShareView: React.FC = () => {
       {/* Footer */}
       <footer className="bg-card-light dark:bg-card-dark border-t border-divider dark:border-divider-on-dark mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-2 text-muted-ink dark:text-muted-ink-on-dark">
-              <div className="bg-accent-gold p-1 rounded">
-                <FileText className="h-4 w-4 text-ink-on-dark" />
-              </div>
-              <span className="text-sm">
-                {t('share.powered_by')} <strong>{t('app_name')}</strong> - {t('share.ai_powered_learning')}
-              </span>
+          <div className="flex items-center justify-center gap-2 text-muted-ink dark:text-muted-ink-on-dark">
+            <div className="bg-accent-gold p-1 rounded">
+              <FileText className="h-4 w-4 text-white" />
             </div>
+            <span className="text-sm">
+              {t('share.powered_by')} <strong>{t('app_name')}</strong> — {t('share.ai_powered_learning')}
+            </span>
           </div>
         </div>
       </footer>

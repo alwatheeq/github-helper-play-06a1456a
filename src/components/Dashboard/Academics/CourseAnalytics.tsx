@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BarChart3, Clock, Layers } from 'lucide-react';
+import { BarChart3, Clock, Layers, BookOpen, Target } from 'lucide-react';
 import {
   LineChart,
   Line,
@@ -12,6 +12,7 @@ import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
+import { MasteryBar } from '../../Scholar';
 
 interface QuizScorePoint {
   label: string;
@@ -149,23 +150,56 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
     );
   }
 
+  const avgScore = quizScores.length > 0
+    ? Math.round(quizScores.reduce((s, q) => s + q.score, 0) / quizScores.length)
+    : 0;
+
   return (
-    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-6" dir={dir}>
-      <div className="flex items-center gap-3">
-        <div className="p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white">
-          <BarChart3 className="h-5 w-5" />
-        </div>
-        <h3 className="font-semibold text-ink dark:text-ink-on-dark">
-          {t('course_analytics.title') || 'Course Analytics'}
-        </h3>
+    /* Aca4Analytics layout: stats row → chart area → subject bars */
+    <div className="space-y-5" dir={dir}>
+      {/* Stats row — 4 tiles */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[
+          {
+            icon: BookOpen,
+            value: quizScores.length,
+            label: t('course_analytics.quizzes_taken') || 'Quizzes taken',
+          },
+          {
+            icon: Target,
+            value: `${avgScore}%`,
+            label: t('course_analytics.avg_score') || 'Avg score',
+          },
+          {
+            icon: Layers,
+            value: `${masteryPct}%`,
+            label: t('course_analytics.mastery') || 'Mastery',
+          },
+          {
+            icon: Clock,
+            value: studyHours > 0 ? `${studyHours}h ${studyMins}m` : `${studyMins}m`,
+            label: t('course_analytics.study_time') || 'Study time',
+          },
+        ].map(({ icon: Icon, value, label }) => (
+          <div
+            key={label}
+            className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <Icon className="h-4 w-4 text-accent-gold" />
+              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{label}</p>
+            </div>
+            <p className="font-display text-2xl font-bold text-ink dark:text-ink-on-dark">{value}</p>
+          </div>
+        ))}
       </div>
 
       {/* Quiz scores chart */}
       {quizScores.length > 0 && (
-        <div>
-          <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-3">
-            {t('course_analytics.quiz_scores') || 'Quiz Scores'}
-          </h4>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5">
+          <p className="text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-widest mb-4">
+            {t('course_analytics.quiz_scores') || 'Quiz Scores Over Time'}
+          </p>
           <div className="w-full h-48">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={quizScores} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -183,9 +217,10 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
                 />
                 <Tooltip
                   contentStyle={{
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     fontSize: '12px',
                     border: '1px solid var(--divider)',
+                    background: 'var(--bg-card)',
                   }}
                 />
                 <Line
@@ -193,7 +228,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
                   dataKey="score"
                   stroke={accentStroke}
                   strokeWidth={2}
-                  dot={{ r: 4 }}
+                  dot={{ r: 4, fill: 'var(--accent-gold)' }}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
@@ -202,41 +237,21 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
         </div>
       )}
 
-      {/* Mastery progress bar */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
+      {/* Flashcard mastery — horizontal bar */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5 space-y-3">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Layers className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
-            <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
+            <Layers className="h-4 w-4 text-accent-gold" />
+            <p className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
               {t('course_analytics.flashcard_mastery') || 'Flashcard Mastery'}
-            </h4>
+            </p>
           </div>
-          <span className="text-sm font-semibold text-ink dark:text-ink-on-dark">{masteryPct}%</span>
+          <span className="text-sm font-bold text-ink dark:text-ink-on-dark">{masteryPct}%</span>
         </div>
-        <div className="w-full h-3 rounded-full bg-accent-gold-soft/20 overflow-hidden">
-          <div
-            className="h-full rounded-full bg-accent-gold transition-all duration-[var(--s4-dur-slow)]"
-            style={{ width: `${masteryPct}%` }}
-          />
-        </div>
-        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
+        <MasteryBar topic="" percent={masteryPct} />
+        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
           {t('course_analytics.mastery_desc') || 'Cards with interval > 21 days'}
         </p>
-      </div>
-
-      {/* Study time */}
-      <div className="flex items-center gap-3">
-        <Clock className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
-        <div>
-          <h4 className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
-            {t('course_analytics.study_time') || 'Study Time'}
-          </h4>
-          <span className="text-lg font-semibold text-ink dark:text-ink-on-dark">
-            {studyHours > 0
-              ? `${studyHours}h ${studyMins}m`
-              : `${studyMins}m`}
-          </span>
-        </div>
       </div>
     </div>
   );

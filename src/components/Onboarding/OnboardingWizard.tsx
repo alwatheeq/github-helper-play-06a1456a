@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Globe, Palette, Check, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Check, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useUserPreferences } from '../../contexts/UserPreferencesContext';
@@ -16,7 +16,7 @@ const LANGUAGES = [
 interface ThemeOption {
   id: ColorTheme;
   name: string;
-  swatch: string;
+  stripes: string[];
   desc: string;
 }
 
@@ -24,37 +24,37 @@ const THEME_OPTIONS: ThemeOption[] = [
   {
     id: 'navy-gold',
     name: 'Navy & Gold',
-    swatch: 'linear-gradient(135deg, #f5f5f4, #b45309)',
+    stripes: ['#0E1F3A', '#B8893A', '#FAF7EE', '#FFFFFF'],
     desc: 'Classic & scholarly',
   },
   {
     id: 'oxblood-cream',
     name: 'Oxblood & Cream',
-    swatch: 'linear-gradient(135deg, #fafaf9, #991b1b)',
+    stripes: ['#3E1414', '#9C2B2B', '#F6EFE5', '#FFFFFF'],
     desc: 'Warm & literary',
   },
   {
     id: 'forest-parchment',
     name: 'Forest & Parchment',
-    swatch: 'linear-gradient(135deg, #ecfdf5, #065f46)',
+    stripes: ['#1A2E1F', '#5B7A3A', '#A8C880', '#F1EEDE'],
     desc: 'Calm & studious',
   },
   {
     id: 'ink-blush',
     name: 'Ink & Blush',
-    swatch: 'linear-gradient(135deg, #fff1f2, #be123c)',
+    stripes: ['#1B1B1F', '#C5708A', '#F4DDE3', '#F7F2EC'],
     desc: 'Soft & considered',
   },
   {
     id: 'copper-charcoal',
     name: 'Copper & Charcoal',
-    swatch: 'linear-gradient(135deg, #fff7ed, #c2410c)',
+    stripes: ['#3A2A1E', '#B8723A', '#F0DCC0', '#F4EFE5'],
     desc: 'Earthy & refined',
   },
   {
     id: 'monochrome',
     name: 'Monochrome',
-    swatch: 'linear-gradient(135deg, #9ca3af, #1f2937)',
+    stripes: ['#111827', '#374151', '#9CA3AF', '#FAFAFA'],
     desc: 'Quiet & clinical',
   },
 ];
@@ -101,155 +101,140 @@ export const OnboardingWizard: React.FC = () => {
     .replace('{total}', '2');
 
   return (
-    <div
-      className="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-card-light dark:bg-card-dark"
-    >
-      {/* Progress indicator */}
-      <div className="w-full max-w-md mb-8 flex items-center justify-center gap-2">
-        {[1, 2].map((s) => (
-          <div
-            key={s}
-            className={`h-2 rounded-full transition-all duration-[var(--s4-dur-base)] ${
-              s === step
-                ? 'w-8 bg-accent-gold'
-                : s < step
-                  ? 'w-8 bg-accent-gold-soft'
-                  : 'w-4 bg-divider dark:bg-divider-on-dark'
-            }`}
-          />
-        ))}
-        <span className="ml-2 text-xs text-secondary-ink dark:text-muted-ink-on-dark">{stepLabel}</span>
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-page-light dark:bg-page-dark">
+
+      {/* ── Step indicator ──────────────────────────────────────────── */}
+      <div className="flex items-center justify-center gap-2 mb-8">
+        <div className={`h-[6px] rounded-full transition-all ${step >= 1 ? 'w-8 bg-accent-gold' : 'w-8 bg-divider dark:bg-divider-on-dark'}`} />
+        <div className={`h-[6px] rounded-full transition-all ${step >= 2 ? 'w-8 bg-accent-gold' : 'w-4 bg-divider dark:bg-divider-on-dark'}`} />
+        <span className="ml-1 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{stepLabel}</span>
       </div>
 
-      <div className="w-full max-w-md">
-        {step === 1 ? (
-          /* ── STEP 1: Language ────────────────────────────────────────── */
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <div className="flex justify-center">
-                <div className="p-3 rounded-full bg-accent-gold">
-                  <Globe className="h-10 w-10 text-ink-on-dark" />
-                </div>
-              </div>
-              <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
-                {t('onboarding.step_language')}
-              </h1>
-              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                {t('onboarding.step_language_sub')}
-              </p>
+      {step === 1 ? (
+        /* ── STEP 1: Language ───────────────────────────────────────── */
+        <div className="w-[440px] max-w-full">
+          {/* Icon + heading */}
+          <div className="text-center mb-7">
+            <div className="w-14 h-14 rounded-full bg-accent-gold flex items-center justify-center mx-auto mb-4">
+              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
             </div>
+            <div className="font-display text-[26px] font-bold text-ink dark:text-ink-on-dark mb-1.5">{t('onboarding.step_language')}</div>
+            <div className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">{t('onboarding.step_language_sub')}</div>
+          </div>
 
-            <div
-              className="rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark overflow-hidden divide-y divide-divider dark:divide-divider-on-dark"
-            >
-              {LANGUAGES.map((lang) => (
+          {/* Language list */}
+          <div className="border border-divider dark:border-divider-on-dark rounded-[10px] overflow-hidden mb-5">
+            {LANGUAGES.map((lang, i) => {
+              const selected = selectedLang === lang.code;
+              return (
                 <button
                   key={lang.code}
                   type="button"
                   onClick={() => handleLangSelect(lang.code)}
-                  className={`w-full flex items-center justify-between px-4 py-3 text-left transition-colors ${
-                    selectedLang === lang.code
-                      ? 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
-                      : 'hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark'
-                  }`}
+                  className={`w-full flex items-center justify-between px-4 py-3.5 text-left transition-colors ${
+                    i < LANGUAGES.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
+                  } ${selected ? 'bg-accent-gold/[0.12] dark:bg-accent-gold/10' : 'bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xl leading-none" aria-hidden>
-                      {lang.flag}
-                    </span>
-                    <span className="font-semibold text-xs bg-accent-gold-soft/30 px-2 py-1 rounded">
-                      {lang.initials}
-                    </span>
-                    <span className="text-sm font-medium">{lang.name}</span>
+                    <span className="text-xl leading-none" aria-hidden>{lang.flag}</span>
+                    <span className="text-[10px] font-bold bg-accent-gold/[0.18] text-accent-gold px-1.5 py-0.5 rounded">{lang.initials}</span>
+                    <span className={`text-[14px] ${selected ? 'font-semibold text-ink dark:text-ink-on-dark' : 'font-normal text-secondary-ink dark:text-muted-ink-on-dark'}`}>{lang.name}</span>
                   </div>
-                  {selectedLang === lang.code && (
-                    <Check className="h-5 w-5 text-accent-gold shrink-0" />
+                  {selected && (
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-gold)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
                   )}
                 </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setStep(2)}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-gold"
-            >
-              {t('onboarding.next')}
-              <ChevronRight className="h-4 w-4" />
-            </button>
+              );
+            })}
           </div>
-        ) : (
-          /* ── STEP 2: Color Theme ─────────────────────────────────────── */
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <div className="flex justify-center">
-                <div className="p-3 rounded-full bg-accent-gold">
-                  <Palette className="h-10 w-10 text-ink-on-dark" />
-                </div>
-              </div>
-              <h1 className="s4-h2 text-ink dark:text-ink-on-dark">
-                {t('onboarding.step_theme')}
-              </h1>
-              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                {t('onboarding.step_theme_sub')}
-              </p>
-            </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              {THEME_OPTIONS.map((theme) => (
+          {/* Next button */}
+          <button
+            type="button"
+            onClick={() => setStep(2)}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-[8px] bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition"
+          >
+            {t('onboarding.next')}
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        </div>
+      ) : (
+        /* ── STEP 2: Color Theme ──────────────────────────────────────── */
+        <div className="w-[520px] max-w-full">
+          {/* Icon + heading */}
+          <div className="text-center mb-6">
+            <div className="w-14 h-14 rounded-full bg-accent-gold flex items-center justify-center mx-auto mb-3.5">
+              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/>
+                <circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+              </svg>
+            </div>
+            <div className="font-display text-[26px] font-bold text-ink dark:text-ink-on-dark mb-1.5">{t('onboarding.step_theme')}</div>
+            <div className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">{t('onboarding.step_theme_sub')}</div>
+          </div>
+
+          {/* Theme grid */}
+          <div className="grid grid-cols-2 gap-2.5 mb-5">
+            {THEME_OPTIONS.map((theme) => {
+              const selected = selectedTheme === theme.id;
+              return (
                 <button
                   key={theme.id}
                   type="button"
                   onClick={() => handleThemeSelect(theme.id)}
-                  className={`relative flex flex-col items-center gap-2 p-3 rounded-[var(--s4-radius-card)] border-2 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
-                    selectedTheme === theme.id
-                      ? 'border-accent-gold shadow-[var(--s4-shadow-card)]'
-                      : 'border-divider dark:border-divider-on-dark hover:border-accent-gold-soft'
+                  className={`relative text-left border-2 rounded-[14px] px-3.5 pt-3.5 pb-3 bg-card-light dark:bg-card-dark transition-colors ${
+                    selected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark hover:border-accent-gold/40'
                   }`}
                 >
-                  {/* Color swatch */}
-                  <div
-                    className="w-full h-10 rounded-md"
-                    style={{ background: theme.swatch }}
-                  />
-                  <span className="text-xs font-semibold text-ink dark:text-ink-on-dark">
-                    {theme.name}
-                  </span>
-                  <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{theme.desc}</span>
-                  {selectedTheme === theme.id && (
-                    <div className="absolute top-2 right-2 bg-accent-gold rounded-full p-0.5">
-                      <Check className="h-3 w-3 text-ink-on-dark" />
+                  {/* Multi-stripe swatch */}
+                  <div className="flex rounded-[8px] overflow-hidden h-8 mb-2.5">
+                    {theme.stripes.map((color, j) => (
+                      <div key={j} className="flex-1" style={{ background: color }} />
+                    ))}
+                  </div>
+                  <div className="text-[12px] font-bold text-ink dark:text-ink-on-dark mb-0.5">{theme.name}</div>
+                  <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{theme.desc}</div>
+                  {selected && (
+                    <div className="absolute top-2 right-2 w-[18px] h-[18px] rounded-full bg-accent-gold flex items-center justify-center">
+                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
                     </div>
                   )}
                 </button>
-              ))}
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={() => setStep(1)}
-                className="flex items-center justify-center gap-1 px-4 py-3 rounded-[var(--s4-radius-card)] text-sm font-medium border border-divider dark:border-divider-on-dark bg-transparent hover:bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark transition"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                {t('onboarding.back')}
-              </button>
-              <button
-                type="button"
-                onClick={handleComplete}
-                disabled={completing}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-[var(--s4-radius-card)] text-sm font-semibold text-white bg-accent-gold hover:opacity-90 transition disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-gold"
-              >
-                {completing ? (
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                ) : (
-                  t('onboarding.get_started')
-                )}
-              </button>
-            </div>
+              );
+            })}
           </div>
-        )}
-      </div>
+
+          {/* Back + Get Started */}
+          <div className="flex gap-2.5">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="flex items-center gap-1.5 px-4 py-2.5 border border-divider dark:border-divider-on-dark rounded-[8px] text-[13px] text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark hover:opacity-75 transition"
+            >
+              <ChevronLeft className="h-3.5 w-3.5" />
+              {t('onboarding.back')}
+            </button>
+            <button
+              type="button"
+              onClick={handleComplete}
+              disabled={completing}
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition disabled:opacity-50"
+            >
+              {completing ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />
+              ) : (
+                `${t('onboarding.get_started')} →`
+              )}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

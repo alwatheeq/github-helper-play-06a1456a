@@ -521,14 +521,19 @@ const GlobalChatAssistantContent: React.FC = () => {
     >
       {/* Header with drag handle */}
       <div className={`flex items-center justify-between p-4 bg-accent-gold text-white rounded-t-[var(--s4-radius-card)] chat-header cursor-move`}>
-        <div className="flex items-center space-x-2 flex-1">
-          <div className="drag-handle cursor-move">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          <div className="drag-handle cursor-move flex-shrink-0">
             <GripVertical className="h-4 w-4 opacity-70" />
           </div>
-          <Sparkles className="h-5 w-5" />
-          <span className="font-semibold">{t('chat.assistant_title')}</span>
+          <div className="w-8 h-8 flex-shrink-0 rounded-[var(--s4-radius-card)] bg-white/20 flex items-center justify-center">
+            <Sparkles className="h-4 w-4" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-white leading-none">{t('chat.assistant_title')}</p>
+            <p className="text-[10px] text-white/75 leading-none mt-0.5">Powered by Claude · Always learning</p>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => {
               setIsMinimized(true);
@@ -538,23 +543,33 @@ const GlobalChatAssistantContent: React.FC = () => {
                 userId: user?.id
               });
             }}
-            className="hover:bg-white/20 p-1 rounded transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
             aria-label={t('chat.minimize')}
           >
-            <Minimize2 className="h-4 w-4" />
+            <Minimize2 className="h-3.5 w-3.5" />
           </button>
           <button
             onClick={() => {
               setIsOpen(false);
               setIsMinimized(false);
             }}
-            className="hover:bg-white/20 p-1 rounded transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
             aria-label={t('chat.close')}
           >
-            <X className="h-4 w-4" />
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>
+
+      {/* Context strip — "Studying: [doc name]" */}
+      {chatContext.summaryText && (
+        <div className="px-4 py-2 bg-accent-gold-soft/20 dark:bg-accent-gold-soft/10 border-b border-divider dark:border-divider-on-dark flex items-center gap-2">
+          <Sparkles className="h-3 w-3 text-accent-gold flex-shrink-0" />
+          <p className="text-[10px] font-semibold text-accent-gold truncate">
+            Studying: {chatContext.contextId ? 'Current document' : 'General session'}
+          </p>
+        </div>
+      )}
 
       {/* Resize handles - only show when not minimized (minimized shows circular button) */}
       {/* Note: At this point, we know isOpen && !isMinimized due to early return above */}

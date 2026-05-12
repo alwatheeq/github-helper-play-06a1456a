@@ -32,6 +32,17 @@ interface WorkshopV4Props {
   onOpenHistory?: () => void;
 }
 
+/** Stepper button for the question count control in the dark "What to Generate" panel. */
+const StepBtn: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({ onClick, children }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className="w-7 h-7 bg-transparent border border-accent-gold/35 text-accent-gold text-lg font-light cursor-pointer grid place-items-center leading-none hover:border-accent-gold/60 transition-colors duration-[var(--s4-dur-fast)]"
+  >
+    {children}
+  </button>
+);
+
 interface HistoryRow {
   id: string;
   original_file_name: string | null;
@@ -127,6 +138,9 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
   const [includeFlashcards, setIncludeFlashcards] = useState(true);
   const [includeExam, setIncludeExam] = useState(false);
   const [includeMindMap, setIncludeMindMap] = useState(false);
+
+  // Question count stepper — examination count, visual-only (Dash4 spec).
+  const [qCount, setQCount] = useState(10);
 
   // Recent rows (5 latest).
   const [rows, setRows] = useState<HistoryRow[] | null>(null);
@@ -284,7 +298,26 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
             />
           </div>
 
-          <div className="pt-3.5 border-t border-accent-gold/25 mt-0.5">
+          {/* Question count stepper — Dash4 spec */}
+          <div className="flex items-center justify-between py-2.5 border-t border-accent-gold/20 mt-0.5">
+            <div>
+              <div className="text-[10px] font-bold tracking-[1.5px] uppercase text-accent-gold">
+                {t('workshop.questions_label') || 'Questions'}
+              </div>
+              <div className="font-display text-[10.5px] text-ink-on-dark/45 mt-0.5">
+                {t('workshop.per_examination') || 'per examination'}
+              </div>
+            </div>
+            <div className="flex items-stretch">
+              <StepBtn onClick={() => setQCount((c) => Math.max(5, c - 5))}>−</StepBtn>
+              <div className="w-[38px] h-7 border-t border-b border-accent-gold/35 grid place-items-center font-display text-[14px] text-ink-on-dark tabular-nums">
+                {qCount}
+              </div>
+              <StepBtn onClick={() => setQCount((c) => Math.min(50, c + 5))}>+</StepBtn>
+            </div>
+          </div>
+
+          <div className="pt-3.5 border-t border-accent-gold/25">
             <div className="text-[11px] text-accent-gold mb-2.5 tabular-nums">
               8 {t('workshop.credits')}
             </div>
@@ -292,7 +325,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
               type="button"
               disabled
               title={t('workshop.generate_disabled_hint')}
-              className="w-full bg-accent-gold text-card-dark text-[13px] font-semibold rounded-[var(--s4-radius-btn)] py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)]"
+              className="w-full bg-accent-gold text-card-dark text-[13px] font-semibold py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)]"
             >
               <span>{t('workshop.generate_cta')}</span>
               <ArrowRight size={14} strokeWidth={2} aria-hidden />
@@ -300,13 +333,13 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
           </div>
         </section>
 
-        {/* Tip card — light, separate from dark panel (matches v4) */}
-        <section className="bg-card-light border border-divider rounded-[var(--s4-radius-card)] px-[18px] py-4 min-h-[76px]">
+        {/* Tip card — light panel, font-display italic rotating tip (Dash4 spec) */}
+        <section className="bg-card-light border border-divider px-[18px] py-4 min-h-[76px]">
           <div className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink mb-2 tabular-nums">
             {String(tipIdx + 1).padStart(2, '0')} / {String(tips.length).padStart(2, '0')}
           </div>
           <p
-            className="text-[13px] text-ink leading-[1.6] transition-[opacity] duration-[var(--s4-dur-base)] ease-[var(--s4-ease)]"
+            className="font-display text-[13px] text-ink leading-[1.6] italic transition-[opacity] duration-[var(--s4-dur-base)] ease-[var(--s4-ease)]"
             aria-live="polite"
           >
             {tips[tipIdx]}

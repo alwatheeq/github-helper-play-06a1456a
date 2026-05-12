@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Trophy, Users, CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { BrainRushQuestionResults } from './BrainRushQuestionResults';
@@ -452,9 +452,9 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   if (loading || !currentQuestion) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center">
-          <Loader2 className="h-16 w-16 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-4" />
-          <p className="text-ink dark:text-ink-on-dark">Loading question...</p>
+        <div className="bg-card-dark p-12 text-center shadow-[var(--s4-shadow-hairline)]">
+          <Loader2 className="h-12 w-12 text-accent-gold animate-spin mx-auto mb-4" />
+          <p className="text-ink-on-dark text-[13px]">Loading question...</p>
         </div>
       </div>
     );
@@ -462,6 +462,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
   const sortedParticipants = [...participants].sort((a, b) => b.score - a.score);
   const questionProgress = `${gameState.current_question_index + 1} / ${gameState.total_questions}`;
+  const timerPct = Math.round((timeLeft / currentQuestion.time_limit_seconds) * 100);
 
   // Show question results after timer expires or all players have answered
   if (showQuestionResults && currentQuestion) {
@@ -478,210 +479,209 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
     );
   }
 
+  // Colour palette for 4 answer cards (blue / orange / green / red)
+  const cardColors = [
+    { bg: '#1e3a5f', border: '#2d5a8e', label: '#7ab3e0' },
+    { bg: '#5c2d0a', border: '#8a4412', label: '#f0a05a' },
+    { bg: '#0d3d2e', border: '#1a6449', label: '#5dd4a4' },
+    { bg: '#4a1020', border: '#7a1a35', label: '#e07a9a' },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main Question Area */}
-        <div className="lg:col-span-3">
-          {/* Header */}
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-4 mb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="bg-purple-100 dark:bg-purple-900 px-4 py-2 rounded-[var(--s4-radius-card)]">
-                  <span className="text-sm text-ink dark:text-ink-on-dark">Question</span>
-                  <p className="text-lg font-bold text-purple-600 dark:text-purple-400">{questionProgress}</p>
-                </div>
-                <div className="bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-[var(--s4-radius-card)]">
-                  <span className="text-sm text-secondary-ink dark:text-muted-ink">Difficulty</span>
-                  <p className="text-lg font-bold text-blue-600 dark:text-blue-400 capitalize">{currentQuestion.difficulty}</p>
-                </div>
-              </div>
-              <div className={`flex items-center space-x-2 px-6 py-3 rounded-[var(--s4-radius-card)] font-bold text-2xl ${
-                timeLeft <= 5
-                  ? 'bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400'
-                  : timeLeft <= 10
-                  ? 'bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-400'
-                  : 'bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400'
-              }`}>
-                <Clock className="h-6 w-6" />
-                <span>{timeLeft}s</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Question */}
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-4">
-            <div className={`flex items-start gap-2 mb-8`}>
-              <h2 className="s4-h2 md:text-3xl text-ink dark:text-ink-on-dark text-center flex-1">
-                {currentQuestion.question_text}
-              </h2>
-              <ReadAloudButton text={currentQuestion.question_text} />
-            </div>
-
-            {/* Answer Options */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {currentQuestion.options.map((option, index) => {
-                const isSelected = selectedAnswer === option;
-                const isCorrect = option === currentQuestion.correct_answer;
-                const showCorrectAnswer = hasAnswered;
-
-                let optionClass = 'bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:border-purple-400 dark:hover:border-purple-500';
-
-                if (showCorrectAnswer && isCorrect) {
-                  optionClass = 'bg-green-100 dark:bg-green-900 border-2 border-green-500 dark:border-green-400';
-                } else if (showCorrectAnswer && isSelected && !isCorrect) {
-                  optionClass = 'bg-red-100 dark:bg-red-900 border-2 border-red-500 dark:border-red-400';
-                } else if (isSelected) {
-                  optionClass = 'bg-purple-100 dark:bg-purple-900 border-2 border-purple-500 dark:border-purple-400';
-                }
-
-                return (
-                  <div
-                    key={index}
-                    role="button"
-                    tabIndex={hasAnswered ? -1 : 0}
-                    onClick={() => !hasAnswered && handleAnswerSelect(option)}
-                    onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
-                    className={`${optionClass} rounded-md p-6 text-left transition-[background-color,border-color,color,opacity,transform,box-shadow] relative ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-lg font-medium text-ink dark:text-ink-on-dark flex-1">
-                        {option}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        {showCorrectAnswer && isCorrect && (
-                          <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
-                        )}
-                        {showCorrectAnswer && isSelected && !isCorrect && (
-                          <XCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
-                        )}
-                        <span onClick={(e) => e.stopPropagation()}>
-                          <ReadAloudButton text={option} />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Answer Feedback */}
-            {answerFeedback && (
-              <div className={`mt-6 p-4 rounded-[var(--s4-radius-card)] ${
-                answerFeedback === 'correct'
-                  ? 'bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700'
-                  : 'bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700'
-              }`}>
-                <div className="flex items-center space-x-3">
-                  {answerFeedback === 'correct' ? (
-                    <>
-                      <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
-                      <div>
-                        <p className="font-bold text-green-900 dark:text-green-100">Correct!</p>
-                        <p className="text-sm text-green-700 dark:text-green-300">
-                          +{1000 + Math.floor((timeLeft / currentQuestion.time_limit_seconds) * 500)} points
-                        </p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <XCircle className="h-6 w-6 text-red-600 dark:text-red-400" />
-                      <div>
-                        <p className="font-bold text-red-900 dark:text-red-100">Incorrect</p>
-                        <p className="text-sm text-red-700 dark:text-red-300">
-                          The correct answer was: {currentQuestion.correct_answer}
-                        </p>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Host Controls */}
-          {isHost && hasAnswered && (
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-4">
-              <button
-                onClick={handleNextQuestion}
-                className="w-full px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition font-semibold"
-              >
-                {gameState.current_question_index + 1 >= gameState.total_questions ? 'Finish Game' : 'Next Question'}
-              </button>
-            </div>
-          )}
-
-          {/* Waiting for Host */}
-          {!isHost && hasAnswered && (
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 text-center">
-              <Loader2 className="h-8 w-8 text-purple-600 dark:text-purple-400 animate-spin mx-auto mb-2" />
-              <p className="text-ink dark:text-ink-on-dark">Waiting for next question...</p>
-            </div>
-          )}
+    <div className="w-full max-w-7xl mx-auto">
+      {/* Top bar: question label + leave */}
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <div className="text-[10px] tracking-[2.5px] text-accent-gold font-bold uppercase">Brain Rush · Question {questionProgress}</div>
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{gameSession.game_title} · {participants.length} players</div>
         </div>
+        <button className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark px-3 py-1.5 hover:opacity-70 transition">
+          Leave Game
+        </button>
+      </div>
 
-        {/* Leaderboard Sidebar */}
-        <div className="lg:col-span-1">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 sticky top-6">
-            <div className="flex items-center space-x-2 mb-4">
-              <Trophy className="h-6 w-6 text-yellow-500" />
-              <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">Live Rankings</h3>
-            </div>
-
-            <div className="space-y-2">
-              {sortedParticipants.map((participant, index) => {
-                const myParticipant = user && participant.user_id === user.id;
-
-                return (
-                  <div
-                    key={participant.id}
-                    className={`p-3 rounded-[var(--s4-radius-card)] ${
-                      myParticipant
-                        ? 'bg-purple-100 dark:bg-purple-900 border-2 border-purple-500'
-                        : 'bg-page-light dark:bg-page-dark'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                          index === 0
-                            ? 'bg-yellow-400 text-yellow-900'
-                            : index === 1
-                            ? 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
-                            : index === 2
-                            ? 'bg-orange-400 text-orange-900'
-                            : 'bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark'
-                        }`}>
-                          {index + 1}
-                        </div>
-                        <div>
-                          <p className="font-medium text-ink dark:text-ink-on-dark text-sm">
-                            {participant.display_name}
-                            {myParticipant && <span className="text-purple-600 dark:text-purple-400"> (You)</span>}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="font-bold text-ink dark:text-ink-on-dark">
-                        {participant.score.toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-4 pt-4 border-t border-divider dark:border-divider-on-dark">
-              <div className="flex items-center justify-between text-sm text-ink dark:text-ink-on-dark">
-                <div className="flex items-center space-x-1">
-                  <Users className="h-4 w-4" />
-                  <span>{participants.length} Players</span>
-                </div>
-                <span>{questionProgress}</span>
+      {/* Live player strip */}
+      <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
+        {sortedParticipants.slice(0, 6).map((p, i) => {
+          const isMe = user && p.user_id === user.id;
+          return (
+            <div
+              key={p.id}
+              className={`flex items-center gap-2 px-3 py-2 flex-shrink-0 border ${
+                isMe
+                  ? 'bg-sidebar border-accent-gold'
+                  : i === 0
+                  ? 'bg-chip dark:bg-chip border-divider dark:border-divider-on-dark'
+                  : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'
+              }`}
+            >
+              <span className={`text-[9px] font-bold ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>#{i + 1}</span>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                {p.display_name[0].toUpperCase()}
               </div>
+              <span className={`text-[11px] font-semibold ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
+              <span className={`text-[13px] font-bold font-display ml-1 ${i === 0 || isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score.toLocaleString()}</span>
             </div>
+          );
+        })}
+        {sortedParticipants.length > 6 && (
+          <div className="flex items-center px-3 py-2 bg-chip dark:bg-chip border border-divider dark:border-divider-on-dark text-[10px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0">
+            +{sortedParticipants.length - 6} more
           </div>
+        )}
+      </div>
+
+      {/* Timer bar — full-width accent-gold fill */}
+      <div className="mb-4">
+        <div className="h-1 bg-divider dark:bg-divider-on-dark">
+          <div
+            className="h-full bg-accent-gold transition-all duration-1000"
+            style={{ width: `${timerPct}%` }}
+          />
+        </div>
+        <div className="flex justify-between mt-1.5">
+          <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">time remaining</span>
+          <span className={`font-display text-[13px] font-semibold ${timeLeft <= 5 ? 'text-red-500' : 'text-ink dark:text-ink-on-dark'}`}>{timeLeft}s</span>
         </div>
       </div>
+
+      {/* Question — centered, font-display, borderLeft accent */}
+      <div className="border-l-[3px] border-accent-gold pl-5 mb-5">
+        <div className="flex items-start gap-3">
+          <h2 className="font-display text-[20px] font-semibold text-ink dark:text-ink-on-dark leading-snug flex-1">
+            {currentQuestion.question_text}
+          </h2>
+          <ReadAloudButton text={currentQuestion.question_text} />
+        </div>
+      </div>
+
+      {/* Answer cards — 2x2 grid with distinct colours */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+        {currentQuestion.options.map((option, index) => {
+          const isSelected = selectedAnswer === option;
+          const isCorrect = option === currentQuestion.correct_answer;
+          const showResult = hasAnswered;
+          const colors = cardColors[index];
+
+          let bgColor = colors.bg;
+          let borderColor = colors.border;
+          if (showResult && isCorrect) { bgColor = '#1a4d2e'; borderColor = '#4caf50'; }
+          else if (showResult && isSelected && !isCorrect) { bgColor = '#4a1212'; borderColor = '#d9534f'; }
+          else if (isSelected) { borderColor = '#e2c06a'; }
+
+          return (
+            <div
+              key={index}
+              role="button"
+              tabIndex={hasAnswered ? -1 : 0}
+              onClick={() => !hasAnswered && handleAnswerSelect(option)}
+              onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
+              style={{ backgroundColor: bgColor, borderColor }}
+              className={`flex gap-4 items-start p-5 border-2 rounded-[var(--s4-radius-card)] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
+            >
+              <span style={{ color: colors.label }} className="text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5">
+                {['A','B','C','D'][index]}
+              </span>
+              <span className="text-[13.5px] text-white leading-snug font-medium flex-1">{option}</span>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {showResult && isCorrect && <CheckCircle className="h-5 w-5 text-green-400" />}
+                {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-red-400" />}
+                <span onClick={(e) => e.stopPropagation()}>
+                  <ReadAloudButton text={option} />
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Answer feedback banner */}
+      {answerFeedback && (
+        <div className={`p-4 mb-4 flex items-center gap-3 ${answerFeedback === 'correct' ? 'bg-green-900/40 border border-green-600' : 'bg-red-900/40 border border-red-600'}`}>
+          {answerFeedback === 'correct' ? (
+            <>
+              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-green-300 text-[13px]">Correct!</p>
+                <p className="text-[11px] text-green-400">+{1000 + Math.floor((timeLeft / currentQuestion.time_limit_seconds) * 500)} points</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+              <div>
+                <p className="font-bold text-red-300 text-[13px]">Incorrect</p>
+                <p className="text-[11px] text-red-400">Correct answer: {currentQuestion.correct_answer}</p>
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Game info strip */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-3 flex gap-6 mb-4 shadow-[var(--s4-shadow-hairline)]">
+        {[['Game', gameSession.game_title], ['Format', 'Most correct answers wins'], ['Points', '+1000 correct · time bonus']].map(([k, v]) => (
+          <div key={k} className="flex gap-2 items-baseline">
+            <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark font-bold tracking-wider uppercase">{k}</span>
+            <span className="text-[11px] text-ink dark:text-ink-on-dark font-medium">{v}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Live leaderboard — compact 3-col grid */}
+      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Live Standings · {participants.length} Players</div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+        {/* Rank 1 spans full row */}
+        {sortedParticipants.slice(0, 1).map(p => {
+          const isMe = user && p.user_id === user.id;
+          return (
+            <div key={p.id} className={`sm:col-span-3 flex items-center gap-3 px-4 py-3 border-2 border-accent-gold ${isMe ? 'bg-sidebar' : 'bg-chip dark:bg-chip'}`}>
+              <span className="font-display text-[22px] font-bold text-accent-gold w-7">1</span>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                {p.display_name[0].toUpperCase()}
+              </div>
+              <div className="flex-1">
+                <div className={`text-[13px] font-bold ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</div>
+                <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">Leading the room</div>
+              </div>
+              <span className="font-display text-[24px] font-bold text-accent-gold">{p.score.toLocaleString()}</span>
+            </div>
+          );
+        })}
+        {sortedParticipants.slice(1).map((p, i) => {
+          const isMe = user && p.user_id === user.id;
+          return (
+            <div key={p.id} className={`flex items-center gap-2 px-3 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
+              <span className="font-display text-[14px] font-bold text-muted-ink dark:text-muted-ink-on-dark w-5">{i + 2}</span>
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                {p.display_name[0].toUpperCase()}
+              </div>
+              <span className={`text-[11px] flex-1 truncate ${isMe ? 'text-ink-on-dark font-bold' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
+              <span className={`font-display text-[13px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score.toLocaleString()}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Host Controls */}
+      {isHost && hasAnswered && (
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)]">
+          <button
+            onClick={handleNextQuestion}
+            className="w-full py-3 bg-sidebar text-ink-on-dark text-[14px] font-bold font-display hover:opacity-90 transition"
+          >
+            {gameState.current_question_index + 1 >= gameState.total_questions ? 'Finish Game →' : 'Next Question →'}
+          </button>
+        </div>
+      )}
+
+      {/* Waiting for Host */}
+      {!isHost && hasAnswered && (
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 text-center shadow-[var(--s4-shadow-hairline)]">
+          <Loader2 className="h-7 w-7 text-accent-gold animate-spin mx-auto mb-2" />
+          <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">Waiting for next question...</p>
+        </div>
+      )}
     </div>
   );
 };

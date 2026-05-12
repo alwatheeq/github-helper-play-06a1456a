@@ -417,15 +417,15 @@ export const QuizPage: React.FC = React.memo(() => {
           const incomplete = allAttempts.filter((attempt: GlobalExamAttempt) => {
             const exam = attempt.global_exams;
             if (!exam || exam.total_questions === 0) return false;
-            
+
             const unansweredRatio = attempt.unanswered_count / exam.total_questions;
-            
+
             // Check time ratio only if time limit is valid (> 0)
             let timeRatio = 0;
             if (exam.time_limit_minutes > 0) {
               timeRatio = attempt.time_taken_seconds / (exam.time_limit_minutes * 60);
             }
-            
+
             // Consider incomplete if:
             // 1. More than 50% unanswered, OR
             // 2. Less than 10% of time limit used (likely abandoned) - only if time limit exists
@@ -770,18 +770,18 @@ export const QuizPage: React.FC = React.memo(() => {
         }
       }
     } catch (error) {
-      const errorMessage = handleApiError(error, { 
-        component: 'QuizPage', 
+      const errorMessage = handleApiError(error, {
+        component: 'QuizPage',
         action: 'handleGenerateQuiz',
         metadata: { questionCount, difficulty, selectedSource }
       });
-      
-      ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), { 
-        component: 'QuizPage', 
+
+      ErrorLogger.error(error instanceof Error ? error : new Error(String(error)), {
+        component: 'QuizPage',
         action: 'handleGenerateQuiz',
         metadata: { questionCount, difficulty, selectedSource }
       });
-      
+
       showErrorToast(errorMessage);
     } finally {
       clearTimeout(timeoutId);
@@ -885,13 +885,16 @@ export const QuizPage: React.FC = React.memo(() => {
     return `${mins}m ${secs}s`;
   };
 
-  const getDifficultyColor = (level: string) => {
-    const colors = {
-      easy: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
-      medium: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
-      hard: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
+  const getDifficultyBadgeClass = (level: string) => {
+    const map: Record<string, string> = {
+      easy: 'bg-chip text-muted-ink dark:text-muted-ink-on-dark',
+      beginner: 'bg-chip text-muted-ink dark:text-muted-ink-on-dark',
+      medium: 'bg-chip text-secondary-ink dark:text-secondary-ink-on-dark',
+      intermediate: 'bg-chip text-secondary-ink dark:text-secondary-ink-on-dark',
+      hard: 'bg-ink text-ink-on-dark',
+      advanced: 'bg-ink text-ink-on-dark',
     };
-    return colors[level as keyof typeof colors] || colors.medium;
+    return map[level] ?? map.medium;
   };
 
   if (activeQuizId) {
@@ -917,7 +920,7 @@ export const QuizPage: React.FC = React.memo(() => {
               <div
                 role="tablist"
                 aria-label={t('quiz.view_mode') || 'View mode'}
-                className="inline-flex border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
+                className="inline-flex border border-divider dark:border-divider-on-dark overflow-hidden"
               >
                 <button
                   role="tab"
@@ -930,8 +933,8 @@ export const QuizPage: React.FC = React.memo(() => {
                   }}
                   className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 ${
                     quizViewMode === 'quizzes'
-                      ? 'bg-ink text-ink-on-dark dark:bg-card-light dark:text-ink'
-                      : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                      ? 'bg-ink text-ink-on-dark'
+                      : 'bg-transparent text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle'
                   }`}
                 >
                   <FileQuestion className="h-4 w-4" />
@@ -948,8 +951,8 @@ export const QuizPage: React.FC = React.memo(() => {
                   }}
                   className={`px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
                     quizViewMode === 'exams'
-                      ? 'bg-ink text-ink-on-dark dark:bg-card-light dark:text-ink'
-                      : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                      ? 'bg-ink text-ink-on-dark'
+                      : 'bg-transparent text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle'
                   }`}
                 >
                   <Globe className="h-4 w-4" />
@@ -992,389 +995,405 @@ export const QuizPage: React.FC = React.memo(() => {
           />
         </div>
 
+        {/* ── Create Tab ── */}
         {activeTab === 'create' && (
-          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-6 rounded-[var(--s4-radius-card)]">
             {quizViewMode === 'exams' ? (
-              <div className="text-center py-12">
-                <Globe className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>
+              <div className="text-center py-16">
+                <Globe className="h-10 w-10 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-5" />
+                <p className="font-display text-xl font-semibold text-ink dark:text-ink-on-dark mb-2">
                   {t('quiz.exams_cannot_be_created') || 'Global exams cannot be created'}
-                </h2>
-                <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>
-                  {t('quiz.exams_cannot_be_created_message') || "Global exams cannot be created. Switch to 'My Quizzes' mode to create custom quizzes."}
+                </p>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-6">
+                  {t('quiz.exams_cannot_be_created_message') || "Switch to My Quizzes mode to compose a custom examination."}
                 </p>
                 <button
                   onClick={() => setQuizViewMode('quizzes')}
-                  className={`px-6 py-3 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-[background-color,border-color,color,opacity,transform,box-shadow] font-medium`}
+                  className="px-6 py-2.5 bg-ink text-ink-on-dark text-sm font-semibold hover:opacity-80 transition-opacity"
                 >
                   {t('quiz.switch_to_quizzes') || 'Switch to My Quizzes'}
                 </button>
               </div>
             ) : (
               <>
-                <h2 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-5`}>{t('quiz.create_new')}</h2>
+                {/* Eyebrow label */}
+                <p className="text-[10px] tracking-[2px] uppercase font-bold text-accent-gold mb-1">
+                  {t('quiz.create_new') || 'New Examination'}
+                </p>
 
-            <div className="space-y-4">
-              {/* Quiz Title */}
-              <div>
-                <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                  {t('quiz.quiz_title')}
-                </label>
-                <input
-                  type="text"
-                  value={quizTitle}
-                  onChange={(e) => setQuizTitle(e.target.value)}
-                  placeholder={t('quiz.quiz_title_placeholder')}
-                  maxLength={200}
-                  className="w-full px-3 py-2 input-clean text-sm"
-                />
-              </div>
+                <div className="space-y-5">
+                  {/* Quiz Title */}
+                  <div>
+                    <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-1.5 uppercase tracking-wider">
+                      {t('quiz.quiz_title')}
+                    </label>
+                    <input
+                      type="text"
+                      value={quizTitle}
+                      onChange={(e) => setQuizTitle(e.target.value)}
+                      placeholder={t('quiz.quiz_title_placeholder')}
+                      maxLength={200}
+                      className="w-full px-3 py-2 input-clean text-sm"
+                    />
+                  </div>
 
-              {/* Content Source */}
-              <div>
-                <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                  {t('quiz.content_source')}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSource('library')}
-                    className={`p-2.5 border rounded-md transition-colors text-sm text-ink dark:text-ink-on-dark ${
-                      selectedSource === 'library'
-                        ? `border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark`
-                        : `border border-divider dark:border-divider-on-dark hover:opacity-60 bg-transparent`
-                    }`}
-                  >
-                    <BookOpen className={`h-4 w-4 mx-auto mb-1 text-ink dark:text-ink-on-dark`} />
-                    <span className={`font-medium text-ink dark:text-ink-on-dark`}>{t('quiz.from_library')}</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedSource('upload')}
-                    className={`p-2.5 border rounded-md transition-colors text-sm text-ink dark:text-ink-on-dark ${
-                      selectedSource === 'upload'
-                        ? `border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark`
-                        : `border border-divider dark:border-divider-on-dark hover:opacity-60 bg-transparent`
-                    }`}
-                  >
-                    <Upload className={`h-4 w-4 mx-auto mb-1 text-ink dark:text-ink-on-dark`} />
-                    <span className={`font-medium text-ink dark:text-ink-on-dark`}>{t('quiz.upload_file')}</span>
-                  </button>
-                </div>
-              </div>
+                  {/* Content Source */}
+                  <div>
+                    <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
+                      {t('quiz.content_source')}
+                    </label>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSource('library')}
+                        className={`p-3 border transition-colors text-sm ${
+                          selectedSource === 'library'
+                            ? 'border-ink bg-ink text-ink-on-dark'
+                            : 'border-divider dark:border-divider-on-dark bg-bg-subtle dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:border-ink/50'
+                        }`}
+                      >
+                        <BookOpen className="h-4 w-4 mx-auto mb-1.5" />
+                        <span className="font-semibold text-xs block">{t('quiz.from_library')}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedSource('upload')}
+                        className={`p-3 border transition-colors text-sm ${
+                          selectedSource === 'upload'
+                            ? 'border-ink bg-ink text-ink-on-dark'
+                            : 'border-divider dark:border-divider-on-dark bg-bg-subtle dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:border-ink/50'
+                        }`}
+                      >
+                        <Upload className="h-4 w-4 mx-auto mb-1.5" />
+                        <span className="font-semibold text-xs block">{t('quiz.upload_file')}</span>
+                      </button>
+                    </div>
+                  </div>
 
-              {/* Library Item or Upload File — searchable picker */}
-              {selectedSource === 'library' && (
-                <div ref={libraryPickerRef} className="relative">
-                  <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                    {t('quiz.select_item')}
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => !libraryItemsLoading && setLibraryPickerOpen((o) => !o)}
-                    disabled={libraryItemsLoading}
-                    className={`w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-[var(--s4-radius-card)] border text-left transition-all min-h-[42px] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-opacity-80 disabled:opacity-60 disabled:cursor-not-allowed`}
-                  >
-                    <span className={`truncate text-sm ${selectedLibraryItem ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
-                      {libraryItemsLoading
-                        ? t('quiz.loading_library')
-                        : selectedLibraryItem
-                          ? (libraryItems.find((i) => i.id === selectedLibraryItem)?.title ?? selectedLibraryItem)
-                          : libraryItems.length === 0
-                            ? t('quiz.no_library_items_yet')
-                            : t('quiz.choose_item')}
-                    </span>
-                    <ChevronDown className={`h-4 w-4 shrink-0 transition-transform ${libraryPickerOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  {libraryPickerOpen && (
-                    <div className={`absolute left-0 right-0 top-full mt-1 z-50 rounded-[var(--s4-radius-card)] border shadow-[var(--s4-shadow-modal)] overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}>
-                      <div className={`p-2 border-b sticky top-0 z-10 border-divider dark:border-divider-on-dark`}>
-                        <div className="flex items-center gap-2 px-2 py-1.5 rounded-[var(--s4-radius-card)] bg-black/5 dark:bg-white/5">
-                          <Search className="h-4 w-4 shrink-0 opacity-60" />
-                          <input
-                            type="text"
-                            value={librarySearchQuery}
-                            onChange={(e) => setLibrarySearchQuery(e.target.value)}
-                            placeholder={t('quiz.search_library_placeholder')}
-                            className="flex-1 bg-transparent text-sm outline-none min-w-0"
-                          />
-                        </div>
-                      </div>
-                      <div className="max-h-56 overflow-y-auto p-1">
-                        {libraryItemsLoading ? (
-                          <div className={`py-4 text-center text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('quiz.loading_library')}</div>
-                        ) : (() => {
-                          const q = librarySearchQuery.trim().toLowerCase();
-                          const filtered = q
-                            ? libraryItems.filter(
-                                (i) =>
-                                  i.title.toLowerCase().includes(q) ||
-                                  (i.summary_text && i.summary_text.toLowerCase().includes(q))
-                              )
-                            : libraryItems;
-                          if (filtered.length === 0) {
-                            return (
-                              <div className={`py-4 text-center text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                                {libraryItems.length === 0 ? t('quiz.no_library_items_yet') : t('quiz.no_matches')}
-                              </div>
-                            );
-                          }
-                          return (
-                            <ul className="space-y-0.5">
-                              {filtered.map((item) => (
-                                <li key={item.id}>
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedLibraryItem(item.id);
-                                      setLibraryPickerOpen(false);
-                                      setLibrarySearchQuery('');
-                                    }}
-                                    className={`w-full text-left px-3 py-2.5 rounded-[var(--s4-radius-card)] text-sm transition-colors flex items-center gap-2 ${item.id === selectedLibraryItem ? 'bg-primary/15 text-primary' : `text-ink dark:text-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`}`}
-                                  >
-                                    {item.id === selectedLibraryItem && <Check className="h-4 w-4 shrink-0" />}
-                                    <span className="flex-1 min-w-0">
-                                      <span className="font-medium block truncate">{item.title}</span>
-                                      {item.summary_text && (
-                                        <span className={`text-xs block truncate mt-0.5 text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                                          {item.summary_text.slice(0, 80)}{item.summary_text.length > 80 ? '…' : ''}
+                  {/* Library Item or Upload File — searchable picker */}
+                  {selectedSource === 'library' && (
+                    <div ref={libraryPickerRef} className="relative">
+                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-1.5 uppercase tracking-wider">
+                        {t('quiz.select_item')}
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => !libraryItemsLoading && setLibraryPickerOpen((o) => !o)}
+                        disabled={libraryItemsLoading}
+                        className="w-full flex items-center justify-between gap-2 px-3 py-2.5 border text-left transition-all min-h-[42px] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-ink/40 disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        <span className={`truncate text-sm ${selectedLibraryItem ? 'text-ink dark:text-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                          {libraryItemsLoading
+                            ? t('quiz.loading_library')
+                            : selectedLibraryItem
+                              ? (libraryItems.find((i) => i.id === selectedLibraryItem)?.title ?? selectedLibraryItem)
+                              : libraryItems.length === 0
+                                ? t('quiz.no_library_items_yet')
+                                : t('quiz.choose_item')}
+                        </span>
+                        <ChevronDown className={`h-4 w-4 shrink-0 transition-transform text-muted-ink ${libraryPickerOpen ? 'rotate-180' : ''}`} />
+                      </button>
+                      {libraryPickerOpen && (
+                        <div className="absolute left-0 right-0 top-full mt-1 z-50 border shadow-[var(--s4-shadow-hairline)] overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark">
+                          <div className="p-2 border-b sticky top-0 z-10 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+                            <div className="flex items-center gap-2 px-2 py-1.5 bg-subtle dark:bg-subtle-on-dark">
+                              <Search className="h-4 w-4 shrink-0 text-muted-ink" />
+                              <input
+                                type="text"
+                                value={librarySearchQuery}
+                                onChange={(e) => setLibrarySearchQuery(e.target.value)}
+                                placeholder={t('quiz.search_library_placeholder')}
+                                className="flex-1 bg-transparent text-sm outline-none min-w-0 text-ink dark:text-ink-on-dark"
+                              />
+                            </div>
+                          </div>
+                          <div className="max-h-56 overflow-y-auto p-1">
+                            {libraryItemsLoading ? (
+                              <div className="py-4 text-center text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.loading_library')}</div>
+                            ) : (() => {
+                              const q = librarySearchQuery.trim().toLowerCase();
+                              const filtered = q
+                                ? libraryItems.filter(
+                                    (i) =>
+                                      i.title.toLowerCase().includes(q) ||
+                                      (i.summary_text && i.summary_text.toLowerCase().includes(q))
+                                  )
+                                : libraryItems;
+                              if (filtered.length === 0) {
+                                return (
+                                  <div className="py-4 text-center text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                                    {libraryItems.length === 0 ? t('quiz.no_library_items_yet') : t('quiz.no_matches')}
+                                  </div>
+                                );
+                              }
+                              return (
+                                <ul className="space-y-0.5">
+                                  {filtered.map((item) => (
+                                    <li key={item.id}>
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setSelectedLibraryItem(item.id);
+                                          setLibraryPickerOpen(false);
+                                          setLibrarySearchQuery('');
+                                        }}
+                                        className={`w-full text-left px-3 py-2.5 text-sm transition-colors flex items-center gap-2 ${item.id === selectedLibraryItem ? 'bg-accent-gold/15 text-accent-gold' : 'text-ink dark:text-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'}`}
+                                      >
+                                        {item.id === selectedLibraryItem && <Check className="h-4 w-4 shrink-0 text-accent-gold" />}
+                                        <span className="flex-1 min-w-0">
+                                          <span className="font-medium block truncate">{item.title}</span>
+                                          {item.summary_text && (
+                                            <span className="text-xs block truncate mt-0.5 text-muted-ink dark:text-muted-ink-on-dark">
+                                              {item.summary_text.slice(0, 80)}{item.summary_text.length > 80 ? '…' : ''}
+                                            </span>
+                                          )}
                                         </span>
-                                      )}
-                                    </span>
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          );
-                        })()}
-                      </div>
+                                      </button>
+                                    </li>
+                                  ))}
+                                </ul>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
-                </div>
-              )}
 
-              {selectedSource === 'upload' && (
-                <div>
-                  <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                    {t('quiz.upload_document_label')}
-                  </label>
-                  <input
-                    type="file"
-                    accept=".pdf,.docx,.pptx"
-                    onChange={(e) => setUploadedFile(e.target.files?.[0] || null)}
-                    className="w-full px-3 py-2 input-clean text-sm"
-                  />
-                </div>
-              )}
+                  {selectedSource === 'upload' && (
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-1.5 uppercase tracking-wider">
+                        {t('quiz.upload_document_label')}
+                      </label>
+                      <input
+                        type="file"
+                        accept=".pdf,.docx,.pptx"
+                        onChange={(e) => setUploadedFile(e.target.files?.[0] || null)}
+                        className="w-full px-3 py-2 input-clean text-sm"
+                      />
+                    </div>
+                  )}
 
-              {/* Quiz Settings Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div>
-                  <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                    {t('quiz.question_count')}
-                  </label>
-                  <input
-                    type="range"
-                    min="5"
-                    max="50"
-                    step="5"
-                    value={questionCount}
-                    onChange={(e) => setQuestionCount(Number(e.target.value))}
-                    className="w-full"
-                  />
-                  <div className="text-center mt-1.5">
-                    <span className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{questionCount}</span>
-                    <span className={`text-xs text-secondary-ink dark:text-secondary-ink-on-dark ml-1.5`}>{t('quiz.questions')}</span>
+                  {/* Quiz Settings Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
+                        {t('quiz.question_count')}
+                      </label>
+                      <div className="flex items-stretch border border-divider dark:border-divider-on-dark">
+                        <button
+                          type="button"
+                          onClick={() => setQuestionCount(c => Math.max(5, c - 5))}
+                          className="w-9 h-9 flex items-center justify-center bg-transparent text-muted-ink text-lg hover:bg-subtle transition-colors"
+                        >−</button>
+                        <div className="flex-1 h-9 flex items-center justify-center border-x border-divider dark:border-divider-on-dark font-display font-semibold text-ink dark:text-ink-on-dark text-sm">
+                          {questionCount}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setQuestionCount(c => Math.min(50, c + 5))}
+                          className="w-9 h-9 flex items-center justify-center bg-transparent text-muted-ink text-lg hover:bg-subtle transition-colors"
+                        >+</button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
+                        {t('quiz.difficulty_level')}
+                      </label>
+                      <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden">
+                        {(['easy', 'medium', 'hard'] as const).map((d, j) => (
+                          <button
+                            key={d}
+                            type="button"
+                            onClick={() => setDifficulty(d)}
+                            className={`flex-1 py-2 text-xs font-semibold transition-colors ${
+                              j < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''
+                            } ${difficulty === d ? 'bg-ink text-ink-on-dark' : 'bg-transparent text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-subtle'}`}
+                          >
+                            {t(`quiz.difficulty_${d}`)}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark mb-2 uppercase tracking-wider">
+                        {t('quiz.quiz_language')}
+                      </label>
+                      <select
+                        value={targetLanguage}
+                        onChange={(e) => setTargetLanguage(e.target.value)}
+                        className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
+                      >
+                        <option value="en">{t('quiz.language_en')}</option>
+                        <option value="ar">{t('quiz.language_ar')}</option>
+                        <option value="fr">{t('quiz.language_fr')}</option>
+                        <option value="tr">{t('quiz.language_tr')}</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                    {t('quiz.difficulty_level')}
-                  </label>
-                  <select
-                    value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value as 'easy' | 'medium' | 'hard')}
-                    className="w-full px-3 py-2 input-clean text-sm"
+                  {/* Generate Button */}
+                  <button
+                    onClick={handleGenerateQuiz}
+                    disabled={generating || !quizTitle.trim()}
+                    className="w-full py-3 bg-ink text-ink-on-dark font-semibold text-sm hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <option value="easy">{t('quiz.difficulty_easy')}</option>
-                    <option value="medium">{t('quiz.difficulty_medium')}</option>
-                    <option value="hard">{t('quiz.difficulty_hard')}</option>
-                  </select>
+                    {generating ? (
+                      <>
+                        <div className="animate-spin h-4 w-4 border-2 border-ink-on-dark border-t-transparent rounded-full"></div>
+                        <span>{t('quiz.generating')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="h-4 w-4" />
+                        <span>{t('quiz.generate')} →</span>
+                      </>
+                    )}
+                  </button>
                 </div>
-
-                <div>
-                  <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-1.5`}>
-                    {t('quiz.quiz_language')}
-                  </label>
-                  <select
-                    value={targetLanguage}
-                    onChange={(e) => setTargetLanguage(e.target.value)}
-                    className="w-full px-3 py-2 input-clean text-sm"
-                  >
-                    <option value="en">{t('quiz.language_en')}</option>
-                    <option value="ar">{t('quiz.language_ar')}</option>
-                    <option value="fr">{t('quiz.language_fr')}</option>
-                    <option value="tr">{t('quiz.language_tr')}</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Generate Button */}
-              <button
-                onClick={handleGenerateQuiz}
-                disabled={generating || !quizTitle.trim()}
-                className={`w-full py-2 bg-accent-gold text-white rounded-md hover:opacity-90 transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 text-sm`}
-              >
-                {generating ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>{t('quiz.generating')}</span>
-                  </>
-                ) : (
-                  <>
-                    <Plus className="h-4 w-4" />
-                    <span>{t('quiz.generate')}</span>
-                  </>
-                )}
-              </button>
-            </div>
               </>
             )}
           </div>
         )}
 
+        {/* ── My Quizzes / My Exams Tab ── */}
         {activeTab === 'quizzes' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {quizViewMode === 'quizzes' ? (
-              /* My Quizzes View */
+              /* My Quizzes — 2-col card grid */
               <>
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : quizSessions.length === 0 ? (
-                  <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
-                    <FileQuestion className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                    <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>{t('quiz.no_quizzes')}</p>
-                    <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('quiz.create_first')}</p>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <FileQuestion className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">{t('quiz.no_quizzes')}</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.create_first')}</p>
                   </div>
                 ) : (
-                  quizSessions.map((quiz) => (
-                    <div key={quiz.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {quizSessions.map((quiz) => (
+                      <div
+                        key={quiz.id}
+                        className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold shadow-[var(--s4-shadow-hairline)] p-4 flex gap-4"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-1">
+                            {new Date(quiz.created_at).toLocaleDateString()}
+                          </p>
+                          <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark leading-snug mb-2.5">
                             {quiz.quiz_title}
                           </h3>
-                          <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                            <span className="flex items-center">
-                              <FileQuestion className="h-4 w-4 mr-1" />
-                              {quiz.question_count} {t('quiz.questions')}
+                          <div className="flex flex-wrap gap-1.5">
+                            <span className={`text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(quiz.difficulty_level)}`}>
+                              {quiz.difficulty_level}
                             </span>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(quiz.difficulty_level)}`}>
-                              {quiz.difficulty_level.toUpperCase()}
+                            <span className="text-[9px] font-bold tracking-wide px-2 py-0.5 bg-chip text-muted-ink dark:text-muted-ink-on-dark">
+                              {quiz.question_count} q.
                             </span>
-                            <span>{new Date(quiz.created_at).toLocaleDateString()}</span>
+                            {quiz.time_limit_minutes && (
+                              <span className="text-[9px] font-bold tracking-wide px-2 py-0.5 bg-chip text-muted-ink dark:text-muted-ink-on-dark">
+                                {quiz.time_limit_minutes}m
+                              </span>
+                            )}
                           </div>
                         </div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex-shrink-0 flex flex-col items-end justify-between gap-2">
                           <button
                             onClick={() => handleStartQuiz(quiz.id)}
-                            className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
+                            className="flex items-center gap-1.5 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
                           >
-                            <Play className="h-4 w-4" />
-                            <span>{t('quiz.start')}</span>
+                            <Play className="h-3 w-3" />
+                            {t('quiz.start')}
                           </button>
                           <button
                             onClick={() => handleDeleteQuiz(quiz.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900 dark:text-red-400 dark:bg-red-950/40"
+                            className="p-1.5 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark dark:hover:text-ink-on-dark transition-colors"
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    ))}
+                  </div>
                 )}
               </>
             ) : (
-              /* My Exams View - Incomplete Exams */
+              /* My Exams — Incomplete Exams */
               <>
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : incompleteExams.length === 0 ? (
-                  <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
-                    <Clock className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                    <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>{t('quiz.no_incomplete_exams') || 'No incomplete exams'}</p>
-                    <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('quiz.start_exam_to_continue') || 'Start an exam to continue it later'}</p>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <Clock className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">
+                      {t('quiz.no_incomplete_exams') || 'No incomplete exams'}
+                    </p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                      {t('quiz.start_exam_to_continue') || 'Start an exam to continue it later'}
+                    </p>
                   </div>
                 ) : (
-                  incompleteExams
-                    .filter((attempt) => attempt.global_exams !== null)
-                    .map((attempt) => {
-                      const exam = attempt.global_exams!;
-                      const progress = Math.max(0, Math.min(100, ((exam.total_questions - attempt.unanswered_count) / exam.total_questions) * 100));
-                      return (
-                      <div key={attempt.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
-                              {exam.exam_name}
-                            </h3>
-                            <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark mb-3`}>
-                              <span className="flex items-center">
-                                <FileQuestion className="h-4 w-4 mr-1" />
-                                {exam.total_questions - attempt.unanswered_count} / {exam.total_questions} {t('quiz.questions')}
-                              </span>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                exam.difficulty_level === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-                                exam.difficulty_level === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
-                                'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                              }`}>
-                                {exam.difficulty_level}
-                              </span>
-                              <span>{new Date(attempt.started_at).toLocaleDateString()}</span>
+                  <div className="space-y-3">
+                    {incompleteExams
+                      .filter((attempt) => attempt.global_exams !== null)
+                      .map((attempt) => {
+                        const exam = attempt.global_exams!;
+                        const progress = Math.max(0, Math.min(100, ((exam.total_questions - attempt.unanswered_count) / exam.total_questions) * 100));
+                        return (
+                          <div key={attempt.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-5">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1.5">
+                                  {exam.exam_name}
+                                </h3>
+                                <div className="flex items-center gap-3 text-xs text-muted-ink dark:text-muted-ink-on-dark mb-3">
+                                  <span>{exam.total_questions - attempt.unanswered_count} / {exam.total_questions} q.</span>
+                                  <span className={`px-1.5 py-0.5 font-bold ${getDifficultyBadgeClass(exam.difficulty_level)}`}>
+                                    {exam.difficulty_level}
+                                  </span>
+                                  <span>{new Date(attempt.started_at).toLocaleDateString()}</span>
+                                </div>
+                                <div className="w-full bg-subtle dark:bg-subtle-on-dark h-[3px] mb-1.5">
+                                  <div className="h-[3px] bg-accent-gold" style={{ width: `${progress}%` }} />
+                                </div>
+                                <p className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{Math.round(progress)}% {t('quiz.completed') || 'completed'}</p>
+                              </div>
+                              <button
+                                onClick={() => setSelectedExam(exam)}
+                                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
+                              >
+                                <Play className="h-3 w-3" />
+                                {t('quiz.continue_exam') || 'Continue'}
+                              </button>
                             </div>
-                            <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mb-2`}>
-                              <div 
-                                className={`h-2 rounded-full bg-accent-gold`}
-                                style={{ width: `${progress}%` }}
-                              ></div>
-                            </div>
-                            <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark`}>{Math.round(progress)}% {t('quiz.completed') || 'completed'}</p>
                           </div>
-                          <div className="flex items-center space-x-2">
-                            <button
-                              onClick={() => setSelectedExam(exam)}
-                              className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 flex items-center space-x-2`}
-                            >
-                              <Play className="h-4 w-4" />
-                              <span>{t('quiz.continue_exam') || 'Continue Exam'}</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
+                        );
+                      })}
+                  </div>
                 )}
               </>
             )}
           </div>
         )}
 
+        {/* ── Explore Tab ── */}
         {activeTab === 'explore' && (
           <>
             {quizViewMode === 'exams' ? (
-              /* Global Exams View - Explore */
+              /* Global Exams — Explore */
               <div className="space-y-4">
-                {/* Filters */}
-                <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6`}>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-1">
-                      <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>Country/Region</label>
+                {/* Filter bar */}
+                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2">Country / Region</p>
                       <select
                         value={examCountry}
                         onChange={(e) => setExamCountry(e.target.value)}
-                        className={`w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
                       >
                         <option value="all">All Countries</option>
                         <option value="USA">USA</option>
@@ -1387,12 +1406,12 @@ export const QuizPage: React.FC = React.memo(() => {
                         <option value="Saudi Arabia">Saudi Arabia</option>
                       </select>
                     </div>
-                    <div className="flex-1">
-                      <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>Exam Type</label>
+                    <div>
+                      <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2">Exam Type</p>
                       <select
                         value={examType}
                         onChange={(e) => setExamType(e.target.value)}
-                        className={`w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                        className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
                       >
                         <option value="all">All Types</option>
                         <option value="standardized">Standardized Tests</option>
@@ -1401,83 +1420,66 @@ export const QuizPage: React.FC = React.memo(() => {
                         <option value="certification">Professional Certification</option>
                       </select>
                     </div>
-                    <div className="flex-1">
-                      <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>Search</label>
-                      <div className="relative">
+                    <div>
+                      <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2">Search</p>
+                      <div className="flex items-center gap-2 px-3 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+                        <Search className="h-4 w-4 text-muted-ink flex-shrink-0" />
                         <input
                           type="text"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search exams..."
-                          className="w-full px-4 py-2 pr-10 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                          placeholder="Search exams…"
+                          className="flex-1 bg-transparent text-sm outline-none text-ink dark:text-ink-on-dark placeholder:text-muted-ink"
                         />
                         {loading && (
-                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                            <div className={`animate-spin h-4 w-4 border-2 text-muted-ink dark:text-muted-ink-on-dark border-t-transparent rounded-full`}></div>
-                          </div>
+                          <div className="animate-spin h-4 w-4 border-2 border-muted-ink border-t-transparent rounded-full flex-shrink-0" />
                         )}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Exams Grid */}
+                {/* Exam cards grid */}
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : globalExams.length === 0 ? (
-                  <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center`}>
-                    <Globe className={`h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                    <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>No exams found</h3>
-                    <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>Try adjusting your filters</p>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <Globe className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">No exams found</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Try adjusting your filters</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {globalExams.map((exam) => (
-                      <div key={exam.id} className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 cursor-pointer`}>
-                        <div className="flex items-start justify-between mb-4">
-                          <div>
-                            <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-1`}>{exam.exam_name}</h3>
-                            <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{exam.exam_code}</p>
-                          </div>
-                          <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            exam.difficulty_level === 'beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' :
-                            exam.difficulty_level === 'intermediate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300' :
-                            'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                          }`}>
-                            {exam.difficulty_level}
-                          </span>
+                      <div
+                        key={exam.id}
+                        className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4 flex flex-col gap-2 relative"
+                      >
+                        {/* Level badge */}
+                        <span className={`absolute top-3 right-3 text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(exam.difficulty_level)}`}>
+                          {exam.difficulty_level}
+                        </span>
+                        <div className="pr-20">
+                          <p className="text-[10px] font-bold tracking-widest text-accent-gold mb-0.5">{exam.exam_code}</p>
+                          <h3 className="font-display font-semibold text-base text-ink dark:text-ink-on-dark leading-snug">{exam.exam_name}</h3>
                         </div>
-
-                        <p className={`text-secondary-ink dark:text-secondary-ink-on-dark text-sm mb-4 line-clamp-2`}>{exam.description}</p>
-
-                        <div className="space-y-2 mb-4">
-                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
-                            <Globe className="h-4 w-4 mr-2" />
-                            <span>{exam.country}</span>
-                            {exam.region && <span className="ml-2">• {exam.region}</span>}
-                          </div>
-                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
-                            <FileQuestion className="h-4 w-4 mr-2" />
-                            <span>{exam.total_questions} questions</span>
-                          </div>
-                          <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
-                            <Clock className="h-4 w-4 mr-2" />
-                            <span>{exam.time_limit_minutes} minutes</span>
-                          </div>
-                          {exam.subject && (
-                            <div className="flex items-center text-sm text-secondary-ink dark:text-muted-ink">
-                              <BookOpen className="h-4 w-4 mr-2" />
-                              <span>{exam.subject}</span>
-                            </div>
-                          )}
+                        <p className="text-xs text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed line-clamp-2">
+                          {exam.description}
+                        </p>
+                        <div className="h-px bg-divider dark:bg-divider-on-dark mt-1" />
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
+                            <span className="font-semibold text-secondary-ink dark:text-secondary-ink-on-dark">{exam.country}</span>
+                            {exam.region && <span className="italic"> · {exam.region}</span>}
+                          </p>
+                          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{exam.total_questions} q.</p>
                         </div>
-
                         <button
                           onClick={() => setSelectedExam(exam)}
-                          className={`w-full px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all flex items-center justify-center space-x-2`}
+                          className="w-full mt-1 py-2 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity flex items-center justify-center gap-1.5"
                         >
-                          <Play className="h-4 w-4" />
-                          <span>Start Practice</span>
+                          <Play className="h-3 w-3" />
+                          Preview
                         </button>
                       </div>
                     ))}
@@ -1485,298 +1487,314 @@ export const QuizPage: React.FC = React.memo(() => {
                 )}
               </div>
             ) : (
-              /* Quizzes View - Explore */
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Sidebar with Folders */}
-            <div className="lg:col-span-1">
-              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
-                    <Folder className="h-5 w-5" />
-                    <span>Folders</span>
-                  </h3>
-                  <button
-                    onClick={() => setShowCreateFolder(true)}
-                    className="p-1 text-ink hover:opacity-80 dark:text-ink-on-dark"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </button>
-                </div>
-
-                {showCreateFolder && (
-                  <div className="mb-4 p-3 bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] space-y-2">
-                    <input
-                      type="text"
-                      value={newFolderName}
-                      onChange={(e) => setNewFolderName(e.target.value)}
-                      placeholder="Folder name"
-                      className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-focus focus-visible:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
-                    />
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="color"
-                        value={newFolderColor}
-                        onChange={(e) => setNewFolderColor(e.target.value)}
-                        className="h-8 w-12 rounded cursor-pointer"
-                      />
+              /* Quizzes — Explore (Folders) */
+              <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+                {/* Sidebar */}
+                <div className="lg:col-span-1">
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xs font-bold tracking-widest uppercase text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-2">
+                        <Folder className="h-4 w-4" />
+                        Folders
+                      </h3>
                       <button
-                        onClick={handleCreateFolder}
-                        className={`flex-1 px-3 py-1 bg-accent-gold text-white dark:text-ink text-sm rounded-[var(--s4-radius-card)] hover:opacity-90 transition`}
+                        onClick={() => setShowCreateFolder(true)}
+                        className="p-1 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark dark:hover:text-ink-on-dark transition-colors"
                       >
-                        Create
-                      </button>
-                      <button
-                        onClick={() => setShowCreateFolder(false)}
-                        className="px-3 py-1 bg-subtle text-secondary-ink text-sm rounded-[var(--s4-radius-card)] hover:bg-subtle transition dark:bg-card-dark dark:text-muted-ink-on-dark"
-                      >
-                        Cancel
+                        <Plus className="h-4 w-4" />
                       </button>
                     </div>
-                  </div>
-                )}
 
-                <div className="space-y-2">
-                  <button
-                    onClick={() => setSelectedFolder('all')}
-                    className={`w-full text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
-                      selectedFolder === 'all'
-                        ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                        : 'text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
-                    }`}
-                  >
-                    All Quizzes
-                  </button>
-                  <button
-                    onClick={() => setSelectedFolder('uncategorized')}
-                    className={`w-full text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
-                      selectedFolder === 'uncategorized'
-                        ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                        : 'text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
-                    }`}
-                  >
-                    Uncategorized
-                  </button>
-
-                  {quizFolders.map((folder) => (
-                    <div key={folder.id} className="group flex items-center">
-                      <button
-                        onClick={() => setSelectedFolder(folder.id)}
-                        className={`flex-1 text-left px-3 py-2 rounded-[var(--s4-radius-card)] transition ${
-                          selectedFolder === folder.id
-                            ? 'bg-subtle text-ink dark:bg-subtle-on-dark dark:text-ink-on-dark'
-                            : 'text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
-                        }`}
-                      >
-                        <div className="flex items-center space-x-2">
-                          <div
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: folder.color }}
+                    {showCreateFolder && (
+                      <div className="mb-4 p-3 bg-subtle dark:bg-subtle-on-dark space-y-2">
+                        <input
+                          type="text"
+                          value={newFolderName}
+                          onChange={(e) => setNewFolderName(e.target.value)}
+                          placeholder="Folder name"
+                          className="w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark outline-none focus:border-ink/50"
+                        />
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="color"
+                            value={newFolderColor}
+                            onChange={(e) => setNewFolderColor(e.target.value)}
+                            className="h-8 w-12 cursor-pointer"
                           />
-                          <span>{folder.name}</span>
+                          <button
+                            onClick={handleCreateFolder}
+                            className="flex-1 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
+                          >
+                            Create
+                          </button>
+                          <button
+                            onClick={() => setShowCreateFolder(false)}
+                            className="px-3 py-1.5 bg-subtle dark:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark text-xs hover:opacity-80 transition-opacity"
+                          >
+                            Cancel
+                          </button>
                         </div>
-                      </button>
-                      <button
-                        onClick={() => handleDeleteFolder(folder.id)}
-                        className="opacity-0 group-hover:opacity-100 p-1 text-red-600 hover:text-red-800 transition dark:text-red-400 dark:hover:text-red-200"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+                      </div>
+                    )}
 
-            {/* Main Content - Quizzes */}
-            <div className="lg:col-span-3">
-              <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6`}>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">
-                    {selectedFolder === 'all' ? 'All Quizzes' :
-                     selectedFolder === 'uncategorized' ? 'Uncategorized Quizzes' :
-                     quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
-                  </h3>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search quizzes..."
-                      className={`pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-focus focus-visible:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
-                    />
+                    <div className="space-y-0.5">
+                      {[
+                        { id: 'all', name: 'All Quizzes' },
+                        { id: 'uncategorized', name: 'Uncategorized' },
+                      ].map((f) => (
+                        <button
+                          key={f.id}
+                          onClick={() => setSelectedFolder(f.id)}
+                          className={`w-full text-left px-3 py-2 text-sm transition-colors ${
+                            selectedFolder === f.id
+                              ? 'bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark font-medium'
+                              : 'text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
+                          }`}
+                        >
+                          {f.name}
+                        </button>
+                      ))}
+                      {quizFolders.map((folder) => (
+                        <div key={folder.id} className="group flex items-center">
+                          <button
+                            onClick={() => setSelectedFolder(folder.id)}
+                            className={`flex-1 text-left px-3 py-2 text-sm transition-colors flex items-center gap-2 ${
+                              selectedFolder === folder.id
+                                ? 'bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark font-medium'
+                                : 'text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
+                            }`}
+                          >
+                            <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: folder.color }} />
+                            <span>{folder.name}</span>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteFolder(folder.id)}
+                            className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark transition-all"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  {quizSessions
-                    .filter(quiz => {
+                {/* Quiz list */}
+                <div className="lg:col-span-3">
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-5">
+                    <div className="flex items-center justify-between mb-5">
+                      <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark">
+                        {selectedFolder === 'all' ? 'All Quizzes' :
+                         selectedFolder === 'uncategorized' ? 'Uncategorized Quizzes' :
+                         quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
+                      </h3>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-ink" />
+                        <input
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Search quizzes…"
+                          className="pl-9 pr-4 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm outline-none focus:border-ink/50"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      {quizSessions
+                        .filter(quiz => {
+                          if (selectedFolder === 'all') return true;
+                          if (selectedFolder === 'uncategorized') return !quiz.folder_id;
+                          return quiz.folder_id === selectedFolder;
+                        })
+                        .filter(quiz => quiz.quiz_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+                        .map((quiz) => (
+                          <div key={quiz.id} className="border border-divider dark:border-divider-on-dark p-4 flex items-center justify-between gap-4">
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-medium text-sm text-ink dark:text-ink-on-dark truncate mb-1">{quiz.quiz_title}</h4>
+                              <div className="flex items-center gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark">
+                                <span>{quiz.question_count} questions</span>
+                                <span className={`px-1.5 py-0.5 font-bold ${getDifficultyBadgeClass(quiz.difficulty_level)}`}>
+                                  {quiz.difficulty_level}
+                                </span>
+                                {quiz.time_limit_minutes && (
+                                  <span className="flex items-center gap-1">
+                                    <Clock className="h-3 w-3" />
+                                    {quiz.time_limit_minutes}m
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 flex-shrink-0">
+                              <select
+                                onChange={(e) => handleMoveQuizToFolder(quiz.id, e.target.value || null)}
+                                value={quiz.folder_id || ''}
+                                className="px-2 py-1.5 text-xs border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark outline-none"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <option value="">Move to…</option>
+                                <option value="">Uncategorized</option>
+                                {quizFolders.map(folder => (
+                                  <option key={folder.id} value={folder.id}>{folder.name}</option>
+                                ))}
+                              </select>
+                              <button
+                                onClick={() => handleStartQuiz(quiz.id)}
+                                className="flex items-center gap-1.5 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
+                              >
+                                <Play className="h-3 w-3" />
+                                Start
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+
+                    {quizSessions.filter(quiz => {
                       if (selectedFolder === 'all') return true;
                       if (selectedFolder === 'uncategorized') return !quiz.folder_id;
                       return quiz.folder_id === selectedFolder;
-                    })
-                    .filter(quiz => quiz.quiz_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
-                    .map((quiz) => (
-                      <div key={quiz.id} className={`border border-divider dark:border-divider-on-dark opacity-60 dark:opacity-40 rounded-[var(--s4-radius-card)] p-4`}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{quiz.quiz_title}</h4>
-                            <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                              <span>{quiz.question_count} questions</span>
-                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(quiz.difficulty_level)}`}>
-                                {quiz.difficulty_level}
-                              </span>
-                              {quiz.time_limit_minutes && (
-                                <span className="flex items-center">
-                                  <Clock className="h-4 w-4 mr-1" />
-                                  {quiz.time_limit_minutes}m
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <select
-                              onChange={(e) => handleMoveQuizToFolder(quiz.id, e.target.value || null)}
-                              value={quiz.folder_id || ''}
-                              className={`px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-focus focus-visible:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <option value="">Move to...</option>
-                              <option value="">Uncategorized</option>
-                              {quizFolders.map(folder => (
-                                <option key={folder.id} value={folder.id}>{folder.name}</option>
-                              ))}
-                            </select>
-                            <button
-                              onClick={() => handleStartQuiz(quiz.id)}
-                              className={`px-4 py-2 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition flex items-center space-x-2`}
-                            >
-                              <Play className="h-4 w-4" />
-                              <span>Start</span>
-                            </button>
-                          </div>
-                        </div>
+                    }).length === 0 && (
+                      <div className="text-center py-12">
+                        <Folder className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-3" />
+                        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">No quizzes in this folder</p>
                       </div>
-                    ))}
-                </div>
-
-                {quizSessions.filter(quiz => {
-                  if (selectedFolder === 'all') return true;
-                  if (selectedFolder === 'uncategorized') return !quiz.folder_id;
-                  return quiz.folder_id === selectedFolder;
-                }).length === 0 && (
-                  <div className="text-center py-12">
-                    <Folder className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
-                    <p className="text-secondary-ink dark:text-muted-ink">No quizzes in this folder</p>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-          </div>
             )}
           </>
         )}
 
+        {/* ── History Tab ── */}
         {activeTab === 'history' && (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {quizViewMode === 'exams' ? (
-              /* Exam History View */
+              /* Exam History */
               <>
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : examAttempts.length === 0 ? (
-                  <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center">
-                    <Trophy className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
-                    <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('quiz.no_exam_attempts') || 'No exam attempts yet'}</p>
-                    <p className="text-sm text-muted-ink dark:text-muted-ink">{t('quiz.complete_exam_first') || 'Complete an exam to see your history'}</p>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <Trophy className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">
+                      {t('quiz.no_exam_attempts') || 'No exam attempts yet'}
+                    </p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                      {t('quiz.complete_exam_first') || 'Complete an exam to see your history'}
+                    </p>
                   </div>
                 ) : (
-                  examAttempts
-                    .filter((attempt) => attempt.global_exams !== null)
-                    .map((attempt) => {
-                      const exam = attempt.global_exams!;
-                      return (
-                      <div key={attempt.id} className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">
-                              {exam.exam_name}
-                            </h3>
-                            <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                              <span className="flex items-center">
-                                <Trophy className="h-4 w-4 mr-1" />
-                                {attempt.score_percentage.toFixed(1)}% {t('quiz.exam_score') || 'Score'}
-                              </span>
-                              <span className="text-green-600 dark:text-green-400">
-                                {attempt.correct_count} {t('quiz.exam_correct') || 'Correct'}
-                              </span>
-                              <span className="text-red-600 dark:text-red-400">
-                                {attempt.incorrect_count} {t('quiz.exam_incorrect') || 'Incorrect'}
-                              </span>
-                              {attempt.unanswered_count > 0 && (
-                                <span className="text-secondary-ink dark:text-muted-ink">
-                                  {attempt.unanswered_count} {t('quiz.exam_unanswered') || 'Unanswered'}
-                                </span>
-                              )}
-                              <span className="flex items-center">
-                                <Clock className="h-4 w-4 mr-1" />
-                                {formatTime(attempt.time_taken_seconds)}
-                              </span>
-                              <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+                    {examAttempts
+                      .filter((attempt) => attempt.global_exams !== null)
+                      .map((attempt, i, arr) => {
+                        const exam = attempt.global_exams!;
+                        const score = attempt.score_percentage;
+                        const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
+                        const strokeColor = score >= 90 ? 'border-l-accent-gold' : score >= 80 ? 'border-l-secondary-ink' : 'border-l-muted-ink';
+                        return (
+                          <div
+                            key={attempt.id}
+                            className={`flex items-start gap-4 p-5 ${i < arr.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
+                          >
+                            {/* Score column */}
+                            <div className={`flex-shrink-0 border-l-[3px] pl-3 min-w-[52px] ${strokeColor}`}>
+                              <p className={`font-display text-2xl font-bold leading-none ${scoreColor}`}>{score.toFixed(0)}</p>
+                              <p className={`text-[9px] tracking-wide ${scoreColor} opacity-70`}>%</p>
+                            </div>
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1">{exam.exam_name}</h3>
+                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-ink dark:text-muted-ink-on-dark mb-2">
+                                <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
+                                <span>·</span>
+                                <span>{exam.total_questions} q.</span>
+                                <span>·</span>
+                                <span>{formatTime(attempt.time_taken_seconds)}</span>
+                                <span className="px-1.5 py-0.5 font-bold bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark">Global</span>
+                              </div>
+                              {/* Answer bar */}
+                              <div className="flex h-[3px] gap-px mb-1.5">
+                                <div className="bg-accent-gold opacity-75" style={{ width: `${(attempt.correct_count / exam.total_questions) * 100}%` }} />
+                                <div className="bg-muted-ink opacity-40" style={{ width: `${(attempt.incorrect_count / exam.total_questions) * 100}%` }} />
+                                {attempt.unanswered_count > 0 && (
+                                  <div className="bg-divider" style={{ width: `${(attempt.unanswered_count / exam.total_questions) * 100}%` }} />
+                                )}
+                              </div>
+                              <div className="flex gap-3 text-[10px]">
+                                <span className="text-accent-gold">{attempt.correct_count} correct</span>
+                                <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.incorrect_count} wrong</span>
+                                {attempt.unanswered_count > 0 && (
+                                  <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.unanswered_count} skipped</span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                          <div className="s4-h1 text-ink dark:text-ink-on-dark">
-                            {attempt.score_percentage.toFixed(0)}%
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
+                        );
+                      })}
+                  </div>
                 )}
               </>
             ) : (
-              /* Quiz History View */
+              /* Quiz History */
               <>
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : quizHistory.length === 0 ? (
-                  <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center">
-                    <Trophy className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
-                    <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('quiz.no_attempts')}</p>
-                    <p className="text-sm text-muted-ink dark:text-muted-ink">{t('quiz.complete_first')}</p>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <Trophy className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">{t('quiz.no_attempts')}</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.complete_first')}</p>
                   </div>
                 ) : (
-                  quizHistory.map((attempt) => (
-                    <div key={attempt.id} className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">
-                            {attempt.quiz_sessions.quiz_title}
-                          </h3>
-                          <div className={`flex items-center space-x-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                            <span className="flex items-center">
-                              <Trophy className="h-4 w-4 mr-1" />
-                              {attempt.score_percentage.toFixed(1)}% {t('quiz.score')}
-                            </span>
-                            <span className="text-green-600 dark:text-green-400">
-                              {attempt.correct_count} {t('quiz.correct')}
-                            </span>
-                            <span className="text-red-600 dark:text-red-400">
-                              {attempt.incorrect_count} {t('quiz.incorrect')}
-                            </span>
-                            <span className="flex items-center">
-                              <Clock className="h-4 w-4 mr-1" />
-                              {formatTime(attempt.time_taken_seconds)}
-                            </span>
-                            <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+                    {quizHistory.map((attempt, i, arr) => {
+                      const score = attempt.score_percentage;
+                      const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
+                      const strokeColor = score >= 90 ? 'border-l-accent-gold' : score >= 80 ? 'border-l-secondary-ink' : 'border-l-muted-ink';
+                      return (
+                        <div
+                          key={attempt.id}
+                          className={`flex items-start gap-4 p-5 ${i < arr.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
+                        >
+                          {/* Score column */}
+                          <div className={`flex-shrink-0 border-l-[3px] pl-3 min-w-[52px] ${strokeColor}`}>
+                            <p className={`font-display text-2xl font-bold leading-none ${scoreColor}`}>{score.toFixed(0)}</p>
+                            <p className={`text-[9px] tracking-wide ${scoreColor} opacity-70`}>%</p>
+                          </div>
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1">
+                              {attempt.quiz_sessions.quiz_title}
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-ink dark:text-muted-ink-on-dark mb-2">
+                              <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
+                              <span>·</span>
+                              <span>{formatTime(attempt.time_taken_seconds)}</span>
+                              <span className="px-1.5 py-0.5 font-bold bg-chip text-secondary-ink dark:text-secondary-ink-on-dark">My Quiz</span>
+                            </div>
+                            {/* Answer bar */}
+                            <div className="flex h-[3px] gap-px mb-1.5">
+                              <div className="bg-accent-gold opacity-75" style={{ width: `${(attempt.correct_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
+                              <div className="bg-muted-ink opacity-40" style={{ width: `${(attempt.incorrect_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
+                              {attempt.unanswered_count > 0 && (
+                                <div className="bg-divider" style={{ width: `${(attempt.unanswered_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
+                              )}
+                            </div>
+                            <div className="flex gap-3 text-[10px]">
+                              <span className="text-accent-gold">{attempt.correct_count} correct</span>
+                              <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.incorrect_count} wrong</span>
+                              {attempt.unanswered_count > 0 && (
+                                <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.unanswered_count} skipped</span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                        <div className="s4-h1 text-ink dark:text-ink-on-dark">
-                          {attempt.score_percentage.toFixed(0)}%
-                        </div>
-                      </div>
-                    </div>
-                  ))
+                      );
+                    })}
+                  </div>
                 )}
               </>
             )}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CheckCircle, ArrowRight, Home } from 'lucide-react';
+import { Home, ArrowRight } from 'lucide-react';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useAuth } from '../../hooks/useAuth';
 import { useCredits } from '../../contexts/CreditContext';
@@ -38,82 +38,110 @@ export const PaymentSuccess: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- one-shot after checkout
   }, [user?.id]);
 
+  const whatNext = [
+    { label: 'Generate summaries & flashcards from any document', bg: '#dcfce7', col: '#16a34a' },
+    { label: 'Save your work to library for future reference',       bg: '#dbeafe', col: '#2563eb' },
+    { label: 'Join study rooms and collaborate with peers',          bg: '#fce7f3', col: '#db2777' },
+    { label: 'Track your progress and earn achievements',            bg: '#fef3c7', col: '#d97706' },
+  ];
+
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="max-w-2xl w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
-        <div className="flex items-center justify-center mb-6">
-          <div className="bg-green-100 dark:bg-green-900/30 p-6 rounded-full">
-            <CheckCircle className="h-16 w-16 text-green-600 dark:text-green-400" />
+      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-divider dark:border-divider-on-dark overflow-hidden">
+
+        {/* Dark top band */}
+        <div className="bg-ink dark:bg-ink px-10 pt-8 pb-12 relative text-center overflow-hidden">
+          {/* Decorative dots */}
+          {[
+            { l: 32,  t: 18, s: 7, o: 0.35 },
+            { l: 460, t: 12, s: 5, o: 0.25 },
+            { l: 80,  t: 52, s: 4, o: 0.20 },
+            { l: 400, t: 48, s: 6, o: 0.30 },
+            { l: 220, t: 8,  s: 3, o: 0.15 },
+          ].map((d, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-accent-gold"
+              style={{ left: d.l, top: d.t, width: d.s, height: d.s, opacity: d.o }}
+            />
+          ))}
+          <h1 className="font-display text-[30px] font-bold text-ink-on-dark relative" style={{ letterSpacing: '-0.02em' }}>
+            Welcome Aboard!
+          </h1>
+          <p className="text-sm text-ink-on-dark/60 mt-1.5 relative">
+            Your subscription is now active
+          </p>
+        </div>
+
+        {/* Floating green checkmark badge */}
+        <div className="flex justify-center -mt-7">
+          <div className="w-14 h-14 rounded-full bg-green-600 border-[3px] border-card-light dark:border-card-dark flex items-center justify-center shadow-[0_4px_16px_rgba(22,163,74,0.3)]">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
           </div>
         </div>
 
-        <h1 className="s4-h1 text-ink dark:text-ink-on-dark text-center mb-4">
-          Welcome Aboard!
-        </h1>
+        {/* Content */}
+        <div className="px-9 pb-8 pt-5">
+          <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark text-center leading-relaxed mb-6">
+            You now have full access to all premium features. Start exploring what MeshFahem has to offer.
+          </p>
 
-        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark text-center mb-8">
-          Your subscription has been activated successfully. You now have full access to all premium features!
-        </p>
+          {/* What's next */}
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5 mb-6">
+            <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-4">
+              What's Next?
+            </p>
+            <div className="space-y-2.5">
+              {whatNext.map(({ label, bg, col }, i) => (
+                <div key={i} className="flex items-center gap-2.5">
+                  <div
+                    className="w-[22px] h-[22px] rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ background: bg }}
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={col} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                  </div>
+                  <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark leading-snug">
+                    {label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-6 mb-8">
-          <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-4">What's Next?</h2>
-          <ul className="space-y-3">
-            <li className="flex items-start space-x-3">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark">
-                Generate unlimited summaries, flashcards, and quizzes
-              </span>
-            </li>
-            <li className="flex items-start space-x-3">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark">
-                Save your work to your library for future reference
-              </span>
-            </li>
-            <li className="flex items-start space-x-3">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark">
-                Join study rooms and collaborate with others
-              </span>
-            </li>
-            <li className="flex items-start space-x-3">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-              <span className="text-secondary-ink dark:text-secondary-ink-on-dark">
-                Track your progress and earn achievements
-              </span>
-            </li>
-          </ul>
-        </div>
+          {/* Buttons */}
+          <div className="space-y-2.5">
+            <button
+              onClick={() => navigate('/')}
+              className="w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3.5 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center gap-2"
+            >
+              <Home className="h-5 w-5" />
+              <span>Start Using the App</span>
+              <ArrowRight className="h-5 w-5" />
+            </button>
 
-        <div className="space-y-3">
-          <button
-            onClick={() => navigate('/')}
-            className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-4 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center space-x-2"
-          >
-            <Home className="h-5 w-5" />
-            <span>Start Using the App</span>
-            <ArrowRight className="h-5 w-5" />
-          </button>
+            <button
+              onClick={() => navigate('/profile/subscription')}
+              className="w-full border border-divider dark:border-divider-on-dark hover:opacity-70 text-secondary-ink dark:text-muted-ink-on-dark font-medium py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
+            >
+              View Subscription Details
+            </button>
+          </div>
 
-          <button
-            onClick={() => navigate('/profile/subscription')}
-            className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-80 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
-          >
-            View Subscription Details
-          </button>
-        </div>
-
-        {sessionId && (
-          <div className="mt-6 pt-6 border-t border-divider dark:border-divider-on-dark">
-            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark text-center">
+          {sessionId && (
+            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark text-center mt-5">
               Session ID: {sessionId}
             </p>
-          </div>
-        )}
+          )}
 
-        <div className="mt-6">
-          <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark text-center">
-            Need help? Contact us at <a href="mailto:support@example.com" className="text-accent-gold hover:underline">support@example.com</a>
+          <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark text-center mt-4">
+            Need help?{' '}
+            <a href="mailto:support@meshfahem.com" className="text-accent-gold hover:underline">
+              support@meshfahem.com
+            </a>
           </p>
         </div>
       </div>

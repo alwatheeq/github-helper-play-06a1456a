@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Lightbulb, Upload, X, Video, Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { PageHeader, SectionTabs, EditorialCard, type SectionTab } from '../Scholar';
+import { MessageSquare, Lightbulb, Upload, X, Video, Send, CheckCircle, AlertCircle, Flag } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
@@ -16,12 +15,14 @@ interface UploadedFile {
   type: 'image' | 'video';
 }
 
+type FeedbackTab = 'note' | 'suggestion' | 'complaint';
+
 export const FeedbackPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const { t } = useI18n();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('feedback');
-  const [activeTab, setActiveTab] = useState<'feedback' | 'suggestion'>('feedback');
+  const [activeTab, setActiveTab] = useState<FeedbackTab>('note');
   const [feedbackText, setFeedbackText] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -34,6 +35,22 @@ export const FeedbackPage: React.FC = React.memo(() => {
   const maxVideoSize = 50 * 1024 * 1024;
   const acceptedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
   const acceptedVideoTypes = ['video/mp4', 'video/mov', 'video/webm'];
+
+  const categories: { k: FeedbackTab; l: string; desc: string; Icon: React.FC<{ className?: string }> }[] = [
+    { k: 'note',       l: 'A Note',       desc: 'A thought, observation, or anything on your mind.',        Icon: ({ className }) => <MessageSquare className={className} /> },
+    { k: 'suggestion', l: 'A Suggestion', desc: 'Something you wish existed, or how to make it better.',    Icon: ({ className }) => <Lightbulb className={className} /> },
+    { k: 'complaint',  l: 'A Complaint',  desc: 'Something broke or frustrated you — we want to know.',     Icon: ({ className }) => <Flag className={className} /> },
+  ];
+
+  const shipped = [
+    { v: 'v2.4.1', n: 'Improved Arabic OCR accuracy',     date: 'May 3'  },
+    { v: 'v2.4.0', n: 'Faster flashcard generation',      date: 'Apr 28' },
+    { v: 'v2.3.7', n: 'Study Rooms — live collaboration', date: 'Apr 21' },
+    { v: 'v2.3.5', n: 'Tags and topic filters in Library', date: 'Apr 12' },
+    { v: 'v2.3.2', n: 'Dark mode for all six themes',     date: 'Apr 4'  },
+  ];
+
+  const activeCategory = categories.find(c => c.k === activeTab)!;
 
   // Show tutorial on first visit
   useEffect(() => {
@@ -139,14 +156,14 @@ export const FeedbackPage: React.FC = React.memo(() => {
           });
 
         if (error) {
-          const message = handleSupabaseError(error, { 
-            component: 'FeedbackPage', 
+          const message = handleSupabaseError(error, {
+            component: 'FeedbackPage',
             action: 'uploadFilesToStorage',
             fileName: fileData.file.name,
             filePath: fileName
           });
-          ErrorLogger.error(error, { 
-            component: 'FeedbackPage', 
+          ErrorLogger.error(error, {
+            component: 'FeedbackPage',
             action: 'uploadFilesToStorage',
             fileName: fileData.file.name,
             filePath: fileName,
@@ -157,8 +174,8 @@ export const FeedbackPage: React.FC = React.memo(() => {
 
         if (!data) {
           const errorMsg = `Upload succeeded but no data returned for ${fileData.file.name}`;
-          ErrorLogger.error(new Error(errorMsg), { 
-            component: 'FeedbackPage', 
+          ErrorLogger.error(new Error(errorMsg), {
+            component: 'FeedbackPage',
             action: 'uploadFilesToStorage',
             fileName: fileData.file.name
           });
@@ -171,13 +188,13 @@ export const FeedbackPage: React.FC = React.memo(() => {
 
         uploadedUrls.push(urlData.publicUrl);
       } catch (err) {
-        const message = handleApiError(err, { 
-          component: 'FeedbackPage', 
+        const message = handleApiError(err, {
+          component: 'FeedbackPage',
           action: 'uploadFilesToStorage',
           fileName: fileData.file.name
         });
-        ErrorLogger.error(err, { 
-          component: 'FeedbackPage', 
+        ErrorLogger.error(err, {
+          component: 'FeedbackPage',
           action: 'uploadFilesToStorage',
           fileName: fileData.file.name
         });
@@ -217,8 +234,8 @@ export const FeedbackPage: React.FC = React.memo(() => {
         try {
           mediaUrls = await uploadFilesToStorage();
         } catch (uploadError) {
-          const message = handleApiError(uploadError, { 
-            component: 'FeedbackPage', 
+          const message = handleApiError(uploadError, {
+            component: 'FeedbackPage',
             action: 'handleSubmit',
             step: 'fileUpload'
           });
@@ -239,13 +256,13 @@ export const FeedbackPage: React.FC = React.memo(() => {
         });
 
       if (dbError) {
-        const message = handleSupabaseError(dbError, { 
-          component: 'FeedbackPage', 
+        const message = handleSupabaseError(dbError, {
+          component: 'FeedbackPage',
           action: 'handleSubmit',
           step: 'databaseInsert'
         });
-        ErrorLogger.error(dbError, { 
-          component: 'FeedbackPage', 
+        ErrorLogger.error(dbError, {
+          component: 'FeedbackPage',
           action: 'handleSubmit',
           step: 'databaseInsert',
           userId: user.id
@@ -273,8 +290,8 @@ export const FeedbackPage: React.FC = React.memo(() => {
 
         if (!response.ok) {
           const errorText = await response.text();
-          ErrorLogger.error(new Error(`Email notification failed: ${response.status}`), { 
-            component: 'FeedbackPage', 
+          ErrorLogger.error(new Error(`Email notification failed: ${response.status}`), {
+            component: 'FeedbackPage',
             action: 'handleSubmit',
             step: 'emailNotification',
             status: response.status,
@@ -283,8 +300,8 @@ export const FeedbackPage: React.FC = React.memo(() => {
           // Non-blocking: feedback was saved, just email failed
         }
       } catch (emailError) {
-        ErrorLogger.error(emailError, { 
-          component: 'FeedbackPage', 
+        ErrorLogger.error(emailError, {
+          component: 'FeedbackPage',
           action: 'handleSubmit',
           step: 'emailNotification'
         });
@@ -302,12 +319,12 @@ export const FeedbackPage: React.FC = React.memo(() => {
       }, 5000);
 
     } catch (error) {
-      const message = handleApiError(error, { 
-        component: 'FeedbackPage', 
+      const message = handleApiError(error, {
+        component: 'FeedbackPage',
         action: 'handleSubmit'
       });
-      ErrorLogger.error(error, { 
-        component: 'FeedbackPage', 
+      ErrorLogger.error(error, {
+        component: 'FeedbackPage',
         action: 'handleSubmit',
         userId: user.id
       });
@@ -319,211 +336,237 @@ export const FeedbackPage: React.FC = React.memo(() => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
-      <PageHeader
-        eyebrow={t('feedback.eyebrow') || 'From the editors'}
-        title={t('feedback.title') || 'Feedback & suggestions'}
-        descriptor={t('feedback.descriptor') || 'Help us improve by sharing your thoughts and ideas.'}
-        className="mb-6"
-        hideRule
-      />
+    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
+      <div className="max-w-7xl mx-auto">
 
-      <EditorialCard padding="none" className="overflow-hidden">
-        <div className="px-6 pt-4">
-          <SectionTabs
-            ariaLabel={t('feedback.sections') || 'Feedback sections'}
-            activeId={activeTab}
-            onChange={(id) => setActiveTab(id as 'feedback' | 'suggestion')}
-            tabs={[
-              {
-                id: 'feedback',
-                label: (
-                  <span className="inline-flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    {t('feedback.tab_feedback') || 'Feedback'}
-                  </span>
-                ),
-              },
-              {
-                id: 'suggestion',
-                label: (
-                  <span className="inline-flex items-center gap-2">
-                    <Lightbulb className="h-4 w-4" />
-                    {t('feedback.tab_suggestion') || 'Suggestion'}
-                  </span>
-                ),
-              },
-            ] as SectionTab[]}
-          />
-        </div>
-
-        <form onSubmit={handleSubmit} className="p-8 space-y-6">
+        {/* ── v4 Header ─────────────────────────────────────────────── */}
+        <div className="flex justify-between items-end mb-0">
           <div>
-            <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
-              {activeTab === 'feedback' ? 'Your Feedback' : 'Your Suggestion'}
-              <span className="text-red-500 ml-1">*</span>
-            </label>
-            <textarea
-              value={feedbackText}
-              onChange={(e) => setFeedbackText(e.target.value)}
-              placeholder={
-                activeTab === 'feedback'
-                  ? 'Tell us about your experience, report bugs, or share what you think...'
-                  : 'Share your ideas for new features or improvements...'
-              }
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-              rows={8}
-              maxLength={2000}
-              disabled={isSubmitting}
-            />
-            <div className="flex justify-between mt-2">
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-                {activeTab === 'feedback' ? 'Describe any issues or feedback' : 'Describe your suggestion in detail'}
-              </p>
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-                {feedbackText.length}/2000
-              </p>
-            </div>
+            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">Correspondence</div>
+            <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark mt-1.5 mb-1 tracking-[-0.8px]">A letter to the editors.</h1>
+            <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Tell us what worked, what broke, or what could be lovelier.</p>
           </div>
+        </div>
+        <div className="h-px bg-ink dark:bg-ink-on-dark mt-3.5 mb-5 opacity-80" />
 
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-7">
+
+          {/* ── LEFT — form ──────────────────────────────────────────── */}
           <div>
-            <label className={`block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
-              Attach Images or Videos (Optional)
-            </label>
+            {/* Category selector — 3 editorial cards */}
+            <div className="grid grid-cols-3 gap-2.5 mb-5">
+              {categories.map(({ k, l, desc, Icon }) => {
+                const on = activeTab === k;
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    onClick={() => setActiveTab(k)}
+                    className={`relative text-left px-4 pt-4 pb-3.5 border transition-colors ${
+                      on
+                        ? 'bg-ink dark:bg-card-dark border-ink dark:border-divider-on-dark'
+                        : 'bg-subtle dark:bg-subtle-on-dark border-divider dark:border-divider-on-dark hover:opacity-80'
+                    }`}
+                  >
+                    {on && <div className="absolute top-0 left-0 right-0 h-[2px] bg-accent-gold" />}
+                    <div className={`mb-2.5 ${on ? 'opacity-100' : 'opacity-60'}`}>
+                      <Icon className={`h-5 w-5 ${on ? 'text-accent-gold' : 'text-ink dark:text-ink-on-dark'}`} />
+                    </div>
+                    <div className={`font-display text-[13.5px] font-semibold mb-1.5 ${on ? 'text-card-light dark:text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{l}</div>
+                    <div className={`text-[10.5px] leading-snug ${on ? 'text-card-light/70 dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{desc}</div>
+                  </button>
+                );
+              })}
+            </div>
 
+            {/* Letter panel */}
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark px-6 py-5">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">To the editors of Scholar</div>
+              <div className="font-display text-[14px] text-muted-ink dark:text-muted-ink-on-dark mb-3.5">Dear Scholar,</div>
+
+              <textarea
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                placeholder={activeCategory.desc.charAt(0).toUpperCase() + activeCategory.desc.slice(1) + '…'}
+                className="w-full bg-transparent border-none resize-none outline-none text-[13px] text-ink dark:text-ink-on-dark placeholder-muted-ink dark:placeholder-muted-ink-on-dark leading-relaxed min-h-[160px] pb-3.5 border-b border-divider dark:border-divider-on-dark"
+                rows={8}
+                maxLength={2000}
+                disabled={isSubmitting}
+              />
+
+              <div className="flex justify-between items-end mt-3.5">
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{feedbackText.length} / 2000 characters</span>
+                <div className="text-right">
+                  <div className="font-display text-[12px] text-muted-ink dark:text-muted-ink-on-dark">Yours sincerely,</div>
+                  <div className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark mt-0.5">— {user?.name || user?.email?.split('@')[0] || 'A user'}</div>
+                </div>
+              </div>
+
+              {/* Attach + actions */}
+              <div className="mt-4 pt-3.5 border-t border-divider dark:border-divider-on-dark flex justify-between items-center">
+                <label htmlFor="file-upload-feedback" className="font-display text-[12px] text-accent-gold underline cursor-pointer hover:opacity-75 transition">
+                  + attach a file or screenshot
+                </label>
+                <input
+                  type="file"
+                  id="file-upload-feedback"
+                  multiple
+                  accept={[...acceptedImageTypes, ...acceptedVideoTypes].join(',')}
+                  onChange={(e) => handleFileSelect(e.target.files)}
+                  className="hidden"
+                  disabled={isSubmitting}
+                />
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => { setFeedbackText(''); setUploadedFiles([]); setSubmitStatus('idle'); setErrorMessage(''); }}
+                    className="px-4 py-2 bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark font-display text-[13px] font-semibold hover:opacity-75 transition"
+                    disabled={isSubmitting}
+                  >
+                    Discard
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting || !feedbackText.trim()}
+                    className="px-5 py-2 bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark border-none font-display text-[13px] font-semibold disabled:opacity-40 hover:opacity-80 transition flex items-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-current" />
+                        Sending…
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-3.5 w-3.5" />
+                        Send the letter
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* File drag-drop zone */}
+            {uploadedFiles.length > 0 || isDragging ? (
+              <div
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`mt-3 border border-dashed border-divider dark:border-divider-on-dark p-4 transition-colors ${isDragging ? 'bg-accent-gold-soft' : 'bg-subtle dark:bg-subtle-on-dark'}`}
+              >
+                {uploadedFiles.length > 0 && (
+                  <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+                    {uploadedFiles.map((fileData, index) => (
+                      <div key={index} className="relative group">
+                        <div className="aspect-square overflow-hidden bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+                          {fileData.type === 'image' ? (
+                            <img src={fileData.preview} alt={`Upload ${index + 1}`} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <Video className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark" />
+                            </div>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => removeFile(index)}
+                          className="absolute top-1 right-1 p-0.5 bg-red-500 text-white opacity-0 group-hover:opacity-100 transition"
+                          disabled={isSubmitting}
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                        <p className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1 truncate">{fileData.file.name}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : null}
+
+            {/* Drop zone hint */}
+            {!isDragging && (
+              <div
+                onDragOver={handleDragOver}
+                className="hidden"
+              />
+            )}
+
+            {/* Hidden drag-drop overlay */}
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`border-2 border-dashed rounded-[var(--s4-radius-card)] p-8 text-center transition-colors ${
-                isDragging
-                  ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900'
-                  : `border border-divider dark:border-divider-on-dark hover:opacity-60`
-              }`}
+              className={`mt-3 border-2 border-dashed transition-colors ${isDragging ? 'block border-accent-gold bg-accent-gold-soft p-4 text-center text-[13px] text-accent-gold' : 'hidden'}`}
             >
-              <Upload className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-              <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
-                Drag and drop files here, or click to browse
-              </p>
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-                Images (JPG, PNG, GIF, WebP) up to 5MB • Videos (MP4, MOV, WebM) up to 50MB
-              </p>
-              <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1`}>
-                Maximum {maxFiles} files
-              </p>
-              <input
-                type="file"
-                multiple
-                accept={[...acceptedImageTypes, ...acceptedVideoTypes].join(',')}
-                onChange={(e) => handleFileSelect(e.target.files)}
-                className="hidden"
-                id="file-upload"
-                disabled={isSubmitting}
-              />
-              <label
-                htmlFor="file-upload"
-                className="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 cursor-pointer transition duration-[var(--s4-dur-fast)]"
-              >
-                Browse Files
-              </label>
+              Drop files here
             </div>
 
-            {uploadedFiles.length > 0 && (
-              <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
-                {uploadedFiles.map((fileData, index) => (
-                  <div key={index} className="relative group">
-                    <div className={`aspect-square rounded-[var(--s4-radius-card)] overflow-hidden bg-subtle dark:bg-subtle-on-dark`}>
-                      {fileData.type === 'image' ? (
-                        <img
-                          src={fileData.preview}
-                          alt={`Upload ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Video className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark`} />
-                        </div>
-                      )}
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeFile(index)}
-                      className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition opacity-0 group-hover:opacity-100"
-                      disabled={isSubmitting}
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                    <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1 truncate`}>
-                      {fileData.file.name}
-                    </p>
-                  </div>
-                ))}
+            {/* Status messages */}
+            {errorMessage && (
+              <div className="mt-3 flex items-center gap-2 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+                <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0" />
+                <p className="text-[12px] text-red-700 dark:text-red-300">{errorMessage}</p>
+              </div>
+            )}
+
+            {submitStatus === 'success' && (
+              <div className="mt-3 flex items-center gap-2 p-3.5 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 flex-shrink-0" />
+                <p className="text-[12px] text-green-700 dark:text-green-300">
+                  Thank you! Your {activeTab} has been submitted successfully.
+                </p>
               </div>
             )}
           </div>
 
-          {errorMessage && (
-            <div className="flex items-center space-x-2 p-4 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] dark:bg-red-900 dark:border-red-700">
-              <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-300" />
-              <p className="text-red-700 text-sm dark:text-red-300">{errorMessage}</p>
+          {/* ── RIGHT rail ──────────────────────────────────────────────── */}
+          <div className="flex flex-col gap-0">
+            {/* From the editors — dark ink tile */}
+            <div className="bg-ink dark:bg-card-dark px-6 py-5 mb-5">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">From the editors</div>
+              <div className="font-display text-[16px] text-card-light dark:text-ink-on-dark leading-relaxed">
+                "This is just the beginning — there is better still to come."
+              </div>
+              <div className="font-display text-[11px] text-accent-gold mt-3">— the Scholar team</div>
             </div>
-          )}
 
-          {submitStatus === 'success' && (
-            <div className="flex items-center space-x-2 p-4 bg-green-50 border border-green-200 rounded-[var(--s4-radius-card)] dark:bg-green-900 dark:border-green-700">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-300" />
-              <p className="text-green-700 text-sm dark:text-green-300">
-                Thank you! Your {activeTab} has been submitted successfully.
-              </p>
+            {/* Recently Shipped */}
+            <div className="mb-5">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase whitespace-nowrap">Recently Shipped</div>
+                <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+              </div>
+              {shipped.map((r, i) => (
+                <div key={i} className={`flex items-baseline gap-3 py-2.5 ${i < shipped.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
+                  <span className="font-display text-[11px] text-accent-gold font-bold min-w-[46px]">{r.v}</span>
+                  <span className="text-[12.5px] text-ink dark:text-ink-on-dark leading-snug flex-1">{r.n}</span>
+                  <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0">{r.date}</span>
+                </div>
+              ))}
             </div>
-          )}
 
-          <div className="flex items-center justify-between pt-4 border-t border-divider dark:border-divider-on-dark">
-            <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
-              <span className="text-red-500">*</span> {t('feedback.required_field') || 'Required field'}
-            </p>
-            <button
-              type="submit"
-              disabled={isSubmitting || !feedbackText.trim()}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] text-sm font-medium transition-colors bg-ink text-ink-on-dark hover:bg-ink/90 dark:bg-card-light dark:text-ink dark:hover:bg-card-light/90 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
-                  <span>{t('feedback.submitting') || 'Submitting...'}</span>
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4" />
-                  <span>{activeTab === 'feedback'
-                    ? (t('feedback.submit_feedback') || 'Submit feedback')
-                    : (t('feedback.submit_suggestion') || 'Submit suggestion')}</span>
-                </>
-              )}
-            </button>
+            {/* Other ways to reach us */}
+            <div className="pt-3.5 border-t border-divider dark:border-divider-on-dark">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase whitespace-nowrap">Other Ways to Reach Us</div>
+                <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+              </div>
+              {[
+                ['Support',   'support@scholar.app'],
+                ['Community', 'Discord · @scholar'],
+                ['Response',  'Within 36 hours'],
+              ].map(([k, v], i) => (
+                <div key={i} className="flex justify-between items-baseline mb-2.5">
+                  <span className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">{k}</span>
+                  <span className="font-display text-[12px] text-ink dark:text-ink-on-dark">{v}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </form>
-      </EditorialCard>
-
-      <EditorialCard variant="accent" className="mt-6">
-        <h3 className="font-display text-xl mb-3">
-          {t('feedback.next_title') || 'What happens next.'}
-        </h3>
-        <ul className="space-y-2 text-sm">
-          <li className="flex items-start gap-2">
-            <span className="text-accent-gold">—</span>
-            <span>{t('feedback.next_item_1') || `Your ${activeTab} will be reviewed by our team`}</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-accent-gold">—</span>
-            <span>{t('feedback.next_item_2') || 'We appreciate all feedback and suggestions to improve the app'}</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="text-accent-gold">—</span>
-            <span>{t('feedback.next_item_3') || 'You may receive a follow-up if we need additional information'}</span>
-          </li>
-        </ul>
-      </EditorialCard>
+        </div>
+      </div>
 
       {/* Feedback Tutorial */}
       {tutorialConfig && (

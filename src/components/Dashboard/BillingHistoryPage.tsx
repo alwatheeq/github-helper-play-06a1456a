@@ -8,7 +8,6 @@ import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { PageHeader, EditorialCard } from '../Scholar';
 import { useI18n } from '../../contexts/I18nContext';
 
 interface Transaction {
@@ -78,47 +77,24 @@ export const BillingHistoryPage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'succeeded':
-        return <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />;
+        return <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />;
       case 'failed':
-        return <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />;
+        return <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />;
       case 'pending':
-        return <Clock className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />;
+        return <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />;
       default:
-        return <Clock className="h-5 w-5 text-secondary-ink dark:text-muted-ink" />;
+        return <Clock className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />;
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { bg: string; text: string; label: string }> = {
-      succeeded: {
-        bg: 'bg-green-100 dark:bg-green-900/30',
-        text: 'text-green-800 dark:text-green-300',
-        label: 'Succeeded'
-      },
-      failed: {
-        bg: 'bg-red-100 dark:bg-red-900/30',
-        text: 'text-red-800 dark:text-red-300',
-        label: 'Failed'
-      },
-      pending: {
-        bg: 'bg-yellow-100 dark:bg-yellow-900/30',
-        text: 'text-yellow-800 dark:text-yellow-300',
-        label: 'Pending'
-      },
-      refunded: {
-        bg: 'bg-subtle dark:bg-subtle-on-dark',
-        text: 'text-secondary-ink dark:text-secondary-ink-on-dark',
-        label: 'Refunded'
-      }
+  const getStatusLabel = (status: string): { label: string; className: string } => {
+    const map: Record<string, { label: string; className: string }> = {
+      succeeded: { label: 'Succeeded', className: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' },
+      failed: { label: 'Failed', className: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' },
+      pending: { label: 'Pending', className: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' },
+      refunded: { label: 'Refunded', className: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark' },
     };
-
-    const config = statusConfig[status] || statusConfig.pending;
-
-    return (
-      <span className={`${config.bg} ${config.text} px-3 py-1 rounded-full text-sm font-semibold`}>
-        {config.label}
-      </span>
-    );
+    return map[status] || map.pending;
   };
 
   const downloadReceipt = async (transaction: Transaction) => {
@@ -214,163 +190,134 @@ export const BillingHistoryPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-        <div className="flex items-center justify-center min-h-[40vh]">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-sky-400" />
-            <p className={`mt-4 text-secondary-ink dark:text-secondary-ink-on-dark`}>Loading billing history...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (transactions.length === 0) {
-    return (
-      <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-        <div className="max-w-4xl mx-auto space-y-6">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition`}
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>{t('common.go_back') || 'Go back'}</span>
-          </button>
-          <PageHeader
-            eyebrow={t('billing.eyebrow')}
-            title={t('billing.title')}
-            descriptor={t('billing.descriptor')}
-          />
-          <EditorialCard padding="lg">
-            <div className="text-center py-8">
-              <div className="bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <Receipt className="h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark" />
-              </div>
-              <h2 className="font-display text-2xl text-ink dark:text-ink-on-dark mb-3">
-                {t('billing.empty_title')}
-              </h2>
-              <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark max-w-md mx-auto">
-                {t('billing.empty_desc')}
-              </p>
-            </div>
-          </EditorialCard>
+      <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto" />
+          <p className="mt-4 text-muted-ink dark:text-muted-ink-on-dark">Loading billing history…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={`w-full min-h-0 bg-page-light dark:bg-page-dark p-6`}>
-      <div className="max-w-6xl mx-auto space-y-6">
-      <button
-        type="button"
-        onClick={() => navigate(-1)}
-        className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition`}
-      >
-        <ArrowLeft className="h-5 w-5" />
-        <span>{t('common.go_back') || 'Go back'}</span>
-      </button>
-      <PageHeader
-        eyebrow={t('billing.eyebrow')}
-        title={t('billing.title')}
-        descriptor={t('billing.descriptor')}
-      />
+    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
+      <div className="max-w-5xl mx-auto">
 
-      <div
-        className={`bg-card-light dark:bg-card-dark rounded-[6px] border border-divider dark:border-divider-on-dark overflow-hidden`}
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-subtle dark:bg-subtle-on-dark">
-              <tr>
-                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
-                  Date
-                </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
-                  Description
-                </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
-                  Amount
-                </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
-                  Status
-                </th>
-                <th className={`px-6 py-4 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider`}>
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className={`divide-y border-divider dark:border-divider-on-dark`}>
-              {transactions.map((transaction) => (
-                <tr key={transaction.id} className="hover:opacity-90 transition-opacity">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">
-                      <Calendar className={`h-4 w-4 text-secondary-ink dark:text-secondary-ink-on-dark`} />
-                      <span className={`text-sm text-ink dark:text-ink-on-dark`}>
-                        {new Date(transaction.created_at).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div>
-                      <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
-                        {transaction.transaction_type === 'subscription_payment'
-                          ? 'Subscription Payment'
-                          : transaction.transaction_type === 'trial_conversion'
-                          ? 'Trial Conversion'
-                          : 'Payment'}
-                      </p>
-                      <p className={`text-xs text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                        {transaction.payment_method === 'card' ? 'Credit Card' : transaction.payment_method}
-                      </p>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`text-sm font-semibold text-ink dark:text-ink-on-dark`}>
-                      {formatCurrency(transaction.amount, transaction.currency.toUpperCase())}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">
-                      {getStatusIcon(transaction.status)}
-                      {getStatusBadge(transaction.status)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {transaction.status === 'succeeded' && (
-                      <button
-                        onClick={() => downloadReceipt(transaction)}
-                        disabled={downloadingReceipt === transaction.id}
-                        className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm disabled:opacity-50"
-                      >
-                        {downloadingReceipt === transaction.id ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 dark:border-blue-400"></div>
-                            <span>Generating...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Download className="h-4 w-4" />
-                            <span>Download Receipt</span>
-                          </>
-                        )}
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {/* Back link */}
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-75 transition mb-5"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="text-[12px]">Back to Subscription</span>
+        </button>
+
+        {/* ── v4 dark ink header ─────────────────────────────────────── */}
+        <div className="bg-ink dark:bg-card-dark px-7 py-5 mb-6">
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">Account</div>
+          <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
         </div>
-      </div>
 
-      <div className={`mt-6 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4 border-divider dark:border-divider-on-dark border`}>
-        <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
-          <strong className="text-ink dark:text-ink-on-dark">Note:</strong> Receipts are generated on demand. Successful Stripe
-          payments are recorded here for your account.
-        </p>
-      </div>
+        {transactions.length === 0 ? (
+          /* ── Empty state ─────────────────────────────────────────────── */
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col items-center justify-center py-16 text-center">
+            <div className="w-14 h-14 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-full flex items-center justify-center mb-5">
+              <Receipt className="h-6 w-6 text-muted-ink dark:text-muted-ink-on-dark" />
+            </div>
+            <div className="font-display text-[20px] font-semibold text-ink dark:text-ink-on-dark mb-2">No billing history</div>
+            <div className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed max-w-[340px]">
+              Your transactions will appear here once you've made a payment. Free plan users don't have billing history.
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* ── Transaction table ─────────────────────────────────────── */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden mb-4">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark">
+                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Date</th>
+                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Description</th>
+                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Amount</th>
+                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Status</th>
+                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Receipt</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-divider dark:divide-divider-on-dark">
+                    {transactions.map((transaction) => {
+                      const { label, className } = getStatusLabel(transaction.status);
+                      return (
+                        <tr key={transaction.id} className="hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="h-3.5 w-3.5 text-muted-ink dark:text-muted-ink-on-dark" />
+                              <span className="text-[12px] text-ink dark:text-ink-on-dark">
+                                {new Date(transaction.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4">
+                            <div className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-tight">
+                              {transaction.transaction_type === 'subscription_payment'
+                                ? 'Subscription Payment'
+                                : transaction.transaction_type === 'trial_conversion'
+                                ? 'Trial Conversion'
+                                : 'Payment'}
+                            </div>
+                            <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
+                              {transaction.payment_method === 'card' ? 'Credit Card' : transaction.payment_method}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <span className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">
+                              {formatCurrency(transaction.amount, transaction.currency.toUpperCase())}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              {getStatusIcon(transaction.status)}
+                              <span className={`text-[9px] tracking-wide font-bold px-2 py-0.5 ${className}`}>{label.toUpperCase()}</span>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            {transaction.status === 'succeeded' && (
+                              <button
+                                onClick={() => downloadReceipt(transaction)}
+                                disabled={downloadingReceipt === transaction.id}
+                                className="flex items-center gap-1.5 text-[11px] font-semibold text-accent-gold hover:opacity-75 transition disabled:opacity-40"
+                              >
+                                {downloadingReceipt === transaction.id ? (
+                                  <>
+                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-accent-gold" />
+                                    <span>Generating…</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Download className="h-3.5 w-3.5" />
+                                    <span>Download</span>
+                                  </>
+                                )}
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Note */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-3">
+              <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">
+                <span className="font-semibold text-ink dark:text-ink-on-dark">Note:</span> Receipts are generated on demand. Successful Stripe payments are recorded here for your account.
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

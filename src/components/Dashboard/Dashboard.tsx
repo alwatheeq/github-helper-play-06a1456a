@@ -19,6 +19,7 @@ const QuizPage = lazy(() => import('./QuizPage').then(m => ({ default: m.QuizPag
 const EduPlayPage = lazy(() => import('./EduPlayPage').then(m => ({ default: m.EduPlayPage })));
 const StudyRoomsPage = lazy(() => import('./StudyRoomsPage').then(m => ({ default: m.StudyRoomsPage })));
 const AcademicsPage = lazy(() => import('./Academics/AcademicsPage').then(m => ({ default: m.AcademicsPage })));
+const NotificationsPage = lazy(() => import('./NotificationsPage').then(m => ({ default: m.NotificationsPage })));
 import { InsufficientCreditsModal } from './InsufficientCreditsModal';
 import { PersistentSubscriptionModal } from '../Subscription/PersistentSubscriptionModal';
 import {
@@ -84,7 +85,8 @@ type DashboardSidebarView =
   | 'quiz'
   | 'eduplay'
   | 'academics'
-  | 'study-rooms';
+  | 'study-rooms'
+  | 'notifications';
 
 function mapDashboardViewToSoftUpsellFeature(view: DashboardSidebarView): FeatureType | null {
   switch (view) {
@@ -152,7 +154,7 @@ export const Dashboard: React.FC = () => {
     }
   }, [location.state, location.pathname, user, navigate]);
 
-  const [currentView, setCurrentView] = useState<'main' | 'history' | 'library' | 'informational' | 'feedback' | 'profile' | 'quiz' | 'eduplay' | 'academics' | 'study-rooms'>('main');
+  const [currentView, setCurrentView] = useState<'main' | 'history' | 'library' | 'informational' | 'feedback' | 'profile' | 'quiz' | 'eduplay' | 'academics' | 'study-rooms' | 'notifications'>('main');
 
   useEffect(() => {
     const onFocusStudyRooms = () => setCurrentView('study-rooms');
@@ -1497,6 +1499,10 @@ export const Dashboard: React.FC = () => {
 
             {currentView === 'profile' && (
               <ProfilePage key="profile" />
+            )}
+
+            {currentView === 'notifications' && (
+              <NotificationsPage key="notifications" />
             )}
 
             {currentView === 'main' && (

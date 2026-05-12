@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Brain, RotateCcw, ChevronRight } from 'lucide-react';
+import { Brain, ChevronRight } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
-import { Badge } from '../../Common/Badge';
 import { calculateSRS, type SRSRating, type SRSState } from '../../../utils/srsAlgorithm';
 
 interface Flashcard {
@@ -148,17 +147,21 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
     }
   };
 
-  const ratingButtons: { key: SRSRating; color: string }[] = [
-    { key: 'again', color: 'bg-red-500 hover:bg-red-600' },
-    { key: 'hard', color: 'bg-orange-500 hover:bg-orange-600' },
-    { key: 'good', color: 'bg-emerald-500 hover:bg-emerald-600' },
-    { key: 'easy', color: 'bg-blue-500 hover:bg-blue-600' },
+  const ratingButtons: { key: SRSRating; color: string; label: string; sub: string }[] = [
+    { key: 'again', color: 'bg-red-500 hover:bg-red-600', label: t('srs.again') || 'Again', sub: t('srs.again_sub') || 'Forgot completely' },
+    { key: 'hard', color: 'bg-orange-500 hover:bg-orange-600', label: t('srs.hard') || 'Hard', sub: t('srs.hard_sub') || 'Recalled with effort' },
+    { key: 'good', color: 'bg-emerald-500 hover:bg-emerald-600', label: t('srs.good') || 'Good', sub: t('srs.good_sub') || 'Recalled correctly' },
+    { key: 'easy', color: 'bg-blue-500 hover:bg-blue-600', label: t('srs.easy') || 'Easy', sub: t('srs.easy_sub') || 'Recalled instantly' },
   ];
+
+  const progressPct = dueCards.length > 0
+    ? Math.round((currentIndex / dueCards.length) * 100)
+    : 0;
 
   if (loading) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6`}>
-        <div className={`animate-pulse text-muted-ink dark:text-muted-ink-on-dark text-sm`}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
+        <div className="animate-pulse text-muted-ink dark:text-muted-ink-on-dark text-sm">
           {t('srs.loading') || 'Loading flashcards…'}
         </div>
       </div>
@@ -167,17 +170,17 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   if (!reviewing) {
     return (
-      <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6`} dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6" dir={dir}>
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white`}>
+            <div className="p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white">
               <Brain className="h-5 w-5" />
             </div>
             <div>
-              <h3 className={`font-semibold text-ink dark:text-ink-on-dark`}>
+              <h3 className="font-semibold text-ink dark:text-ink-on-dark">
                 {t('srs.title') || 'Spaced Repetition'}
               </h3>
-              <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                 {dueCards.length > 0
                   ? t('srs.cards_due', { count: dueCards.length }) || `${dueCards.length} cards due`
                   : t('srs.no_cards_due') || 'No cards due for review'}
@@ -185,27 +188,20 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            {dueCards.length > 0 && (
-              <>
-                <Badge variant="warning" size="sm">
-                  {dueCards.length}
-                </Badge>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setReviewing(true);
-                    setCurrentIndex(0);
-                    setFlipped(false);
-                  }}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold hover:bg-accent-gold-soft text-white text-sm font-medium`}
-                >
-                  <ChevronRight className="h-4 w-4" />
-                  {t('srs.review_now') || 'Review Now'}
-                </button>
-              </>
-            )}
-          </div>
+          {dueCards.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setReviewing(true);
+                setCurrentIndex(0);
+                setFlipped(false);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white text-sm font-medium hover:opacity-90"
+            >
+              <ChevronRight className="h-4 w-4" />
+              {t('srs.review_now') || 'Review Now'}
+            </button>
+          )}
         </div>
       </div>
     );
@@ -214,76 +210,102 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
   const card = dueCards[currentIndex];
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-6`} dir={dir}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Brain className={`h-5 w-5 text-secondary-ink dark:text-muted-ink-on-dark`} />
-          <span className={`text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark`}>
-            {currentIndex + 1} / {dueCards.length}
-          </span>
+    /* Aca4SRS: large centered flip card */
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 space-y-5" dir={dir}>
+      {/* Progress row */}
+      <div className="flex items-center gap-4">
+        <div className="flex-1 h-2 rounded-full bg-chip dark:bg-bg-chip overflow-hidden">
+          <div
+            className="h-full rounded-full bg-accent-gold transition-all duration-300"
+            style={{ width: `${progressPct}%` }}
+          />
         </div>
+        <span className="text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap">
+          {currentIndex + 1} / {dueCards.length}
+        </span>
         <button
           type="button"
-          onClick={() => {
-            setReviewing(false);
-            setFlipped(false);
-          }}
-          className={`text-sm text-muted-ink dark:text-muted-ink-on-dark hover:underline`}
+          onClick={() => { setReviewing(false); setFlipped(false); }}
+          className="text-xs text-muted-ink dark:text-muted-ink-on-dark hover:underline"
         >
-          {t('srs.exit_review') || 'Exit'}
+          {t('srs.exit_review') || 'Exit Review'}
         </button>
       </div>
 
-      {/* Flip card */}
-      <div className="perspective-1000">
-        <div
-          onClick={() => setFlipped((prev) => !prev)}
-          className={`relative cursor-pointer rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark min-h-[200px] flex items-center justify-center p-8 transition-transform duration-[var(--s4-dur-slow)]`}
-          style={{ transformStyle: 'preserve-3d', transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
-        >
-          {/* Front */}
-          <div
-            className="absolute inset-0 flex items-center justify-center p-8 backface-hidden"
-            style={{ backfaceVisibility: 'hidden' }}
-          >
-            <p className={`text-lg text-center text-ink dark:text-ink-on-dark`}>{card.front}</p>
+      {/* Large flip card — min-h-64 per Aca4SRS */}
+      <div
+        className="relative cursor-pointer rounded-[var(--s4-radius-card)] border-2 overflow-hidden"
+        style={{ minHeight: '16rem', borderColor: 'var(--accent-gold)' }}
+        onClick={() => setFlipped((p) => !p)}
+      >
+        {/* Front face */}
+        <div className={`transition-opacity duration-300 ${flipped ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          <div className="bg-accent-gold/10 px-6 py-5 border-b border-divider dark:border-divider-on-dark">
+            <p className="text-xs font-bold text-accent-gold uppercase tracking-widest mb-3">
+              {t('srs.question_label') || 'Question'}
+            </p>
+            <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark leading-snug">
+              {card.front}
+            </p>
           </div>
-          {/* Back */}
-          <div
-            className="absolute inset-0 flex items-center justify-center p-8 backface-hidden"
-            style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
-          >
-            <p className={`text-lg text-center text-ink dark:text-ink-on-dark`}>{card.back}</p>
+          <div className="px-6 py-4 flex items-center justify-center">
+            <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+              {t('srs.tap_to_reveal') || 'Tap to reveal answer'}
+            </p>
           </div>
         </div>
 
-        {!flipped && (
-          <button
-            type="button"
-            onClick={() => setFlipped(true)}
-            className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold-soft/20 text-secondary-ink dark:text-muted-ink-on-dark text-sm`}
-          >
-            <RotateCcw className="h-4 w-4" />
-            {t('srs.show_answer') || 'Show Answer'}
-          </button>
-        )}
+        {/* Back face */}
+        <div className={`absolute inset-0 transition-opacity duration-300 ${flipped ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+          <div className="bg-accent-gold/10 px-6 py-5 border-b border-divider dark:border-divider-on-dark">
+            <p className="text-xs font-bold text-accent-gold uppercase tracking-widest mb-3">
+              {t('srs.question_label') || 'Question'}
+            </p>
+            <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark leading-snug">
+              {card.front}
+            </p>
+          </div>
+          <div className="px-6 py-5 bg-card-light dark:bg-card-dark">
+            <p className="text-xs font-bold text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-widest mb-3">
+              {t('srs.answer_label') || 'Answer'}
+            </p>
+            <p className="text-base text-ink dark:text-ink-on-dark leading-relaxed">
+              {card.back}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Rating buttons */}
-      {flipped && (
-        <div className="grid grid-cols-4 gap-2">
-          {ratingButtons.map((btn) => (
-            <button
-              key={btn.key}
-              type="button"
-              disabled={rating}
-              onClick={() => handleRate(btn.key)}
-              className={`px-3 py-2 rounded-[var(--s4-radius-card)] text-ink-on-dark text-sm font-medium ${btn.color} disabled:opacity-50`}
-            >
-              {t(`srs.${btn.key}`) || btn.key}
-            </button>
-          ))}
+      {/* Rating buttons — shown only when flipped */}
+      {flipped ? (
+        <div>
+          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-3">
+            {t('srs.rate_prompt') || 'How well did you know this?'}
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {ratingButtons.map((btn) => (
+              <button
+                key={btn.key}
+                type="button"
+                disabled={rating}
+                onClick={() => handleRate(btn.key)}
+                className={`py-3 px-2 rounded-[var(--s4-radius-card)] text-white text-center ${btn.color} disabled:opacity-50 transition-opacity`}
+              >
+                <p className="text-sm font-bold">{btn.label}</p>
+                <p className="text-[10px] opacity-85 mt-0.5">{btn.sub}</p>
+              </button>
+            ))}
+          </div>
         </div>
+      ) : (
+        /* Tap-to-reveal button shortcut */
+        <button
+          type="button"
+          onClick={() => setFlipped(true)}
+          className="w-full py-2.5 rounded-[var(--s4-radius-card)] border border-accent-gold/40 text-sm text-accent-gold font-medium hover:bg-accent-gold/10 transition-colors"
+        >
+          {t('srs.show_answer') || 'Show Answer'}
+        </button>
       )}
     </div>
   );

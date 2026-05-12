@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
-import { BookOpen, Search, Eye, Share2, Trash2, Users, CheckCircle2, AlertCircle, X, Tag, FileText, Calendar, Stethoscope, Filter, Globe, User, Heart, ScanLine } from 'lucide-react';
+import { BookOpen, Search, Eye, Share2, Trash2, CheckCircle2, AlertCircle, X, Tag, FileText, Stethoscope, Filter } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
@@ -91,7 +91,6 @@ export const LibraryPage: React.FC = React.memo(() => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState<string>('created_at_desc');
   const [viewFilter, setViewFilter] = useState<'all' | 'mine' | 'community' | 'liked'>(() => {
@@ -719,7 +718,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Notification */}
       {notification.show && (
         <div className={`mb-6 p-4 rounded-[var(--s4-radius-card)] flex items-center space-x-3 ${
-          notification.type === 'success' 
+          notification.type === 'success'
             ? 'bg-green-50 border border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
             : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
         }`}>
@@ -732,7 +731,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           <button
             onClick={() => setNotification(prev => ({ ...prev, show: false }))}
             className={`${
-              notification.type === 'success' 
+              notification.type === 'success'
                 ? 'text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-200'
                 : 'text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200'
             }`}
@@ -742,6 +741,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         </div>
       )}
 
+      {/* Scholar v4 PageHeader */}
       <PageHeader
         eyebrow={libraryViewMode === 'notebook'
           ? (t('notebook.eyebrow') || 'Personal')
@@ -754,461 +754,365 @@ export const LibraryPage: React.FC = React.memo(() => {
           : t('library.my_library_desc')}
         className="mb-8"
         actions={
-          <div
-            role="tablist"
-            aria-label={t('library.view_mode') || 'View mode'}
-            className="inline-flex items-center border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
-          >
-            <button
-              role="tab"
-              aria-selected={libraryViewMode === 'library'}
-              onClick={() => {
-                setLibraryViewMode('library');
-                localStorage.setItem('library_view_mode', 'library');
-              }}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 ${
-                libraryViewMode === 'library'
-                  ? 'bg-sidebar text-ink-on-dark'
-                  : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
-              }`}
+          <div className="flex items-center gap-3">
+            {/* Search input right-aligned in header */}
+            <div className="relative">
+              <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-muted-ink dark:text-muted-ink-on-dark" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t('library.search_library_placeholder')}
+                className="pl-9 pr-4 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark w-48 sm:w-64 transition-[width] duration-[var(--s4-dur-fast)]"
+              />
+              {searchLoading && (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                  <div className="animate-spin h-3.5 w-3.5 border-2 border-accent-gold border-t-transparent rounded-full" />
+                </div>
+              )}
+            </div>
+            {/* Library / Notebook mode toggle */}
+            <div
+              role="tablist"
+              aria-label={t('library.view_mode') || 'View mode'}
+              className="inline-flex items-center border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
             >
-              <BookOpen className="h-4 w-4" aria-hidden />
-              {t('library.my_library_title') || 'My Library'}
-            </button>
-            <button
-              role="tab"
-              aria-selected={libraryViewMode === 'notebook'}
-              onClick={() => {
-                setLibraryViewMode('notebook');
-                localStorage.setItem('library_view_mode', 'notebook');
-              }}
-              className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
-                libraryViewMode === 'notebook'
-                  ? 'bg-sidebar text-ink-on-dark'
-                  : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
-              }`}
-            >
-              <FileText className="h-4 w-4" aria-hidden />
-              {t('notebook.title') || 'Notebook'}
-            </button>
+              <button
+                role="tab"
+                aria-selected={libraryViewMode === 'library'}
+                onClick={() => {
+                  setLibraryViewMode('library');
+                  localStorage.setItem('library_view_mode', 'library');
+                }}
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 ${
+                  libraryViewMode === 'library'
+                    ? 'bg-sidebar text-ink-on-dark'
+                    : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                }`}
+              >
+                <BookOpen className="h-4 w-4" aria-hidden />
+                {t('library.my_library_title') || 'My Library'}
+              </button>
+              <button
+                role="tab"
+                aria-selected={libraryViewMode === 'notebook'}
+                onClick={() => {
+                  setLibraryViewMode('notebook');
+                  localStorage.setItem('library_view_mode', 'notebook');
+                }}
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
+                  libraryViewMode === 'notebook'
+                    ? 'bg-sidebar text-ink-on-dark'
+                    : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
+                }`}
+              >
+                <FileText className="h-4 w-4" aria-hidden />
+                {t('notebook.title') || 'Notebook'}
+              </button>
+            </div>
           </div>
         }
       />
 
-      <div className="grid grid-cols-1 gap-6">
-        {/* Main Content */}
-        <div className="lg:col-span-1 ml-4 mr-4 lg:ml-6 lg:mr-6">
-          <div className={`rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark ${
-            libraryViewMode === 'notebook' 
-              ? `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none` 
-              : `bg-card-light dark:bg-card-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-none`
-          }`}>
-            {/* Controls Header */}
-            <div className={`p-5 border-b border border-divider dark:border-divider-on-dark`}>
-              <div className="flex flex-col space-y-3">
-                <div className="flex flex-col gap-3 w-full min-w-0">
-                  {/* Expanded search: full-width row so it does not collide with filters */}
-                  {isSearchExpanded && (
-                    <div className="flex items-center gap-2 w-full min-w-0">
-                      <div className="relative flex-1 min-w-0">
-                        <Search className={`h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-muted-ink dark:text-muted-ink-on-dark`} />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          onBlur={() => {
-                            if (!searchQuery) {
-                              setIsSearchExpanded(false);
-                            }
-                          }}
-                          placeholder={t('library.search_library_placeholder')}
-                          className={`w-full pl-10 pr-10 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-                          autoFocus
-                        />
-                        {searchLoading && (
-                          <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
-                            <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full dark:border-blue-400" />
-                          </div>
-                        )}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSearchQuery('');
-                          setIsSearchExpanded(false);
-                        }}
-                        className={`shrink-0 p-2 rounded-[var(--s4-radius-card)] border border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
-                        aria-label={t('library.search_close_aria')}
-                      >
-                        <X className={`h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark`} />
-                      </button>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col lg:flex-row lg:items-stretch gap-3 w-full min-w-0">
-                    <div className="flex flex-col sm:flex-row sm:items-stretch gap-3 flex-1 min-w-0">
-                      {!isSearchExpanded && (
-                        <button
-                          type="button"
-                          onClick={() => setIsSearchExpanded(true)}
-                          className={`shrink-0 flex items-center justify-center p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-colors`}
-                          aria-label={t('library.search_library_placeholder')}
-                        >
-                          <Search className={`h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark`} />
-                        </button>
-                      )}
-
-                      <select
-                        value={viewFilter}
-                        onChange={(e) => setViewFilter(e.target.value as 'all' | 'mine' | 'community' | 'liked')}
-                        className={`md:hidden w-full min-w-0 px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-                        aria-label={t('library.view_filter_aria')}
-                      >
-                        <option value="all">{t('library.all_items')}</option>
-                        <option value="mine">{t('library.view_mine')}</option>
-                        <option value="community">{t('library.view_community')}</option>
-                        <option value="liked">{t('library.view_liked')}</option>
-                      </select>
-                      <div
-                        className={`hidden md:flex flex-nowrap overflow-x-auto items-center gap-1 rounded-[var(--s4-radius-card)] p-1 -mx-1 px-1 min-w-0 max-w-full bg-subtle dark:bg-subtle-on-dark border border border-divider dark:border-divider-on-dark`}
-                        role="group"
-                        aria-label={t('library.view_filter_aria')}
-                      >
-                        {(
-                          [
-                            { value: 'all' as const, icon: Globe, label: t('library.all_items') },
-                            { value: 'mine' as const, icon: User, label: t('library.view_mine') },
-                            { value: 'community' as const, icon: Users, label: t('library.view_community') },
-                            { value: 'liked' as const, icon: Heart, label: t('library.view_liked') },
-                          ] as const
-                        ).map(({ value, icon: Icon, label }) => (
-                          <button
-                            key={value}
-                            type="button"
-                            onClick={() => setViewFilter(value)}
-                            className={`shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] ${
-                              viewFilter === value
-                                ? `bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-[var(--s4-shadow-hairline)] border border border-divider dark:border-divider-on-dark`
-                                : `text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`
-                            }`}
-                          >
-                            <Icon className="h-4 w-4 shrink-0" aria-hidden />
-                            <span className="sm:inline">{label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Sort + Topics on one row from sm+; stacks on very small screens */}
-                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 w-full lg:w-auto lg:shrink-0 lg:min-w-0">
-                      <select
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)}
-                        className={`w-full sm:min-w-[12rem] sm:max-w-[min(100%,20rem)] px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
-                        aria-label={t('library.sort_by')}
-                      >
-                        <option value="created_at_desc">{t('library.sort_created_newest')}</option>
-                        <option value="created_at_asc">{t('library.sort_created_oldest')}</option>
-                        <option value="last_viewed_desc">{t('library.sort_last_viewed')}</option>
-                        <option value="title_asc">{t('library.sort_title_az')}</option>
-                        <option value="title_desc">{t('library.sort_title_za')}</option>
-                        <option value="like_count_desc">{t('library.sort_most_liked')}</option>
-                      </select>
-                      <button
-                        type="button"
-                        onClick={() => setShowTopicsTagsModal(true)}
-                        className="flex items-center justify-center sm:justify-start space-x-2 px-3 py-2 text-sm rounded-[var(--s4-radius-btn)] transition-colors duration-[var(--s4-dur-fast)] whitespace-nowrap w-full sm:w-auto shrink-0 bg-accent-gold text-ink-on-dark hover:opacity-90"
-                      >
-                        <Filter className="h-4 w-4 shrink-0" aria-hidden />
-                        <span>{t('library.topics_tags_heading')}</span>
-                        {(selectedTags.length > 0 || selectedTopics.length > 0) && (
-                          <span className="px-2 py-0.5 rounded-[var(--s4-radius-btn)] text-xs font-semibold bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark">
-                            {selectedTags.length + selectedTopics.length}
-                          </span>
-                        )}
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-2 w-full justify-end">
-                    {selectMultipleMode && selectedItems.size > 0 && (
-              <ScholarButton
-                variant="danger"
-                size="sm"
-                onClick={() => setShowDeleteModal(true)}
-                className="w-full sm:w-auto whitespace-nowrap"
+      {/* Scholar v4: SectionTabs (All | Mine | Community | Liked) */}
+      <div className="mb-6">
+        <div className="flex items-end justify-between gap-4 flex-wrap border-b border-divider dark:border-divider-on-dark pb-0">
+          <div className="flex items-end gap-6">
+            {(
+              [
+                { value: 'all' as const, label: t('library.all_items') || 'All' },
+                { value: 'mine' as const, label: t('library.view_mine') || 'Mine' },
+                { value: 'community' as const, label: t('library.view_community') || 'Community' },
+                { value: 'liked' as const, label: t('library.view_liked') || 'Liked' },
+              ] as const
+            ).map(({ value, label }) => (
+              <button
+                key={value}
+                type="button"
+                role="tab"
+                aria-selected={viewFilter === value}
+                onClick={() => setViewFilter(value)}
+                className={[
+                  'relative pb-3 pt-1 text-sm font-medium whitespace-nowrap transition-colors',
+                  viewFilter === value
+                    ? 'text-ink dark:text-ink-on-dark'
+                    : 'text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark',
+                ].join(' ')}
               >
-                {t('library.delete_button', { count: selectedItems.size })}
-              </ScholarButton>
-                    )}
-                  </div>
-                </div>
-
-                {/* Active Filters */}
-                {getActiveFiltersCount() > 0 && (
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className={`text-sm text-muted-ink dark:text-muted-ink-on-dark`}>{t('library.active_filters')}:</span>
-                    {searchQuery && (
-                      <span className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
-                        Search: {searchQuery}
-                      </span>
-                    )}
-                    {selectedTags.map(tagId => {
-                      const tag = tags.find(t => t.id === tagId);
-                      return tag ? (
-                        <span key={tagId} className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
-                          <Tag className="h-3 w-3 inline mr-1" />
-                          {tag.name}
-                        </span>
-                      ) : null;
-                    })}
-                    {selectedTopics.map(topic => (
-                      <span key={topic} className={`px-2 py-1 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`}>
-                        <BookOpen className="h-3 w-3 inline mr-1" />
-                        {topic}
-                      </span>
-                    ))}
-                  </div>
+                {label}
+                {viewFilter === value && (
+                  <span className="absolute inset-x-0 -bottom-px h-0.5 bg-accent-gold" />
                 )}
+              </button>
+            ))}
+          </div>
 
-                {/* Multi-select header */}
-                {selectMultipleMode && (
-                  <div className={`flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)]`}>
-                    <span className={`text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                      {selectedItems.size > 0
-                        ? t('library.items_selected', { count: selectedItems.size })
-                        : t('library.select_multiple')
-                      }
-                    </span>
-                    <div className="flex items-center gap-3">
-                      {selectedItems.size > 0 && (
-                        <button
-                          onClick={() => setSelectedItems(new Set())}
-                          className="text-sm text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-200"
-                        >
-                          {t('library.clear_selection')}
-                        </button>
-                      )}
-                      <button
-                        onClick={handleSelectAll}
-                        className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200"
-                      >
-                        {selectedItems.size === libraryItems.length ? t('library.deselect_all') : t('library.select_all')}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Section Title & Content */}
-            <div className="p-5">
-              <div className="flex items-center justify-between mb-5">
-                <div>
-                  <h3 className={`text-xl font-bold ${
-                    libraryViewMode === 'notebook'
-                      ? `text-ink dark:text-ink-on-dark`
-                      : `text-ink dark:text-ink-on-dark`
-                  }`}>
-                    {libraryViewMode === 'notebook'
-                      ? (t('notebook.items_with_notes') || 'My Notes')
-                      : t('library.all_items')}
-                  </h3>
-                  <p className={`text-sm mt-1 opacity-70 ${
-                    libraryViewMode === 'notebook'
-                      ? `text-ink dark:text-ink-on-dark`
-                      : `text-ink dark:text-ink-on-dark`
-                  }`}>
-                    {libraryViewMode === 'notebook'
-                      ? (t('notebook.items_with_notes_count', { count: libraryItems.length }) || `${libraryItems.length} ${libraryItems.length === 1 ? 'item' : 'items'} with notes`)
-                      : t('library.items_total', { count: libraryItems.length })}
-                  </p>
-                </div>
-              </div>
-
-              {libraryItems.length === 0 ? (
-                <div className="text-center py-16 min-h-[40vh] flex flex-col items-center justify-center">
-                  {libraryViewMode === 'notebook' ? (
-                    <>
-                      <FileText className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
-                        {t('notebook.no_items_with_notes') || 'No Notes Yet'}
-                      </h3>
-                      <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
-                        {t('notebook.add_notes_to_items') || 'Start adding notes to your library items. They will appear here for easy access.'}
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <BookOpen className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
-                      <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>
-                        {searchQuery || selectedTags.length > 0 
-                          ? t('library.no_items_match_search') 
-                          : t('library.no_library_items_yet')}
-                      </h3>
-                      <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
-                        {searchQuery || selectedTags.length > 0 
-                          ? t('library.adjust_search_filter') 
-                          : t('library.process_to_build_library')}
-                      </p>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {libraryItems.map((item) => (
-                    <div key={item.id} className={`border border-divider dark:border-divider-on-dark rounded-md p-4 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.1),0_1px_3px_0_rgba(0,0,0,0.08)] transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-fast)] dark:shadow-[var(--s4-shadow-hairline)] dark:hover:shadow bg-card-light dark:bg-card-dark`}>
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-start space-x-3 flex-1">
-                          {selectMultipleMode && (
-                            <input
-                              type="checkbox"
-                              checked={selectedItems.has(item.id)}
-                              onChange={() => handleSelectItem(item.id)}
-                              className={`mt-1 h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border border-divider dark:border-divider-on-dark rounded dark:text-blue-400`}
-                            />
-                          )}
-
-                          <div className={`bg-subtle dark:bg-subtle-on-dark p-2 rounded-md flex-shrink-0 border border-divider dark:border-divider-on-dark`}>
-                            {/\.(jpg|jpeg|png|webp|gif|bmp|tiff?)$/i.test(item.original_file_name ?? '') || item.topics?.includes('ocr')
-                              ? <ScanLine className={`h-4 w-4 text-ink dark:text-ink-on-dark`} />
-                              : <BookOpen className={`h-4 w-4 text-ink dark:text-ink-on-dark`} />
-                            }
-                          </div>
-
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-1">
-                              <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{item.title}</h4>
-                              {item.hasNotes && item.notesCount && item.notesCount > 0 && (
-                                <span className={`px-2 py-0.5 text-xs rounded-full flex items-center space-x-1 bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`} title={t('notebook.notes_count', { count: item.notesCount }) || `${item.notesCount} notes`}>
-                                  <FileText className="h-3 w-3" />
-                                  <span>{item.notesCount}</span>
-                                </span>
-                              )}
-                              {item.user_id !== user?.id && (
-                                <span className={`px-2 py-0.5 text-xs rounded-full bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark`}>
-                                  Community
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Creator Info for Community Items */}
-                            {item.user_id !== user?.id && (
-                              <div className={`flex items-center space-x-1 text-sm text-secondary-ink dark:text-secondary-ink-on-dark mb-2`}>
-                                <Users className="h-3 w-3" />
-                                <span>Created by {item.creator_email}</span>
-                              </div>
-                            )}
-
-                            {/* Medical Mode Indicator */}
-                            {(item.title.toLowerCase().includes('medical') ||
-                              item.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical', 'pathology', 'anatomy', 'physiology'].some(med => topic.toLowerCase().includes(med)))) && (
-                              <div className="flex items-center space-x-2 mb-2">
-                                <div className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1 dark:bg-red-900 dark:text-red-300">
-                                  <Stethoscope className="h-3 w-3" />
-                                  <span>Medical Content</span>
-                                </div>
-                              </div>
-                            )}
-
-                            <div className={`flex items-center space-x-4 text-sm text-muted-ink dark:text-muted-ink-on-dark mb-2`}>
-                              <div className="flex items-center">
-                                <Calendar className="h-4 w-4 mr-1" />
-                                {formatDate(item.created_at)}
-                              </div>
-                              {item.last_viewed_at && (
-                                <div className="flex items-center">
-                                  <Eye className="h-4 w-4 mr-1" />
-                                  {t('library.viewed', { date: formatDate(item.last_viewed_at) })}
-                                </div>
-                              )}
-                              <span>{item.flashcards_json.length} {item.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}</span>
-                            </div>
-
-                            {/* Topics */}
-                            {item.topics && item.topics.length > 0 && (
-                              <div className="flex items-center space-x-2 mb-3">
-                                <div className="flex flex-wrap gap-1">
-                                  {item.topics.map((topic, index) => (
-                                    <span
-                                      key={index}
-                                      className={`px-2 py-1 text-xs rounded-full ${
-                                        ['cardiology', 'neurology', 'medicine', 'clinical', 'pathology', 'anatomy', 'physiology', 'pharmacology'].some(med => topic.toLowerCase().includes(med))
-                                          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                                          : `bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark`
-                                      }`}
-                                    >
-                                      {topic}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            <p className={`text-secondary-ink dark:text-secondary-ink-on-dark text-sm mb-3`}>
-                              {item.summary_text.length > 150
-                                ? item.summary_text.substring(0, 150) + '...'
-                                : item.summary_text
-                              }
-                            </p>
-
-                            {/* Like Button */}
-                            <div className="flex items-center space-x-2">
-                              <LikeButton
-                                itemId={item.id}
-                                initialCount={item.reaction_counts?.like_count || 0}
-                                size="sm"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Item Actions */}
-                        {!selectMultipleMode && (
-                          <div className="flex items-center space-x-2 ml-4">
-                            <button
-                              onClick={() => navigate(`/view/library/${item.id}`)}
-                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900 dark:bg-blue-950/40"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </button>
-
-                            {item.is_public && item.shareable_link ? (
-                              <button
-                                onClick={() => handleUnshareItem(item.id)}
-                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900 dark:bg-orange-950/40"
-                                title={t('library.unshare')}
-                              >
-                                <Share2 className="h-4 w-4" />
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => handleShareItem(item.id)}
-                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900 dark:bg-green-950/40"
-                                title={t('library.share')}
-                              >
-                                <Share2 className="h-4 w-4" />
-                              </button>
-                            )}
-
-                            {item.user_id === user?.id && (
-                              <button
-                                onClick={() => handleDeleteItem(item.id)}
-                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900 dark:bg-red-950/40"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          {/* Filter chips row + sort dropdown */}
+          <div className="flex items-center gap-2 pb-2">
+            {/* Topic filter chips */}
+            <button
+              type="button"
+              onClick={() => setShowTopicsTagsModal(true)}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-[var(--s4-dur-fast)] ${
+                (selectedTags.length > 0 || selectedTopics.length > 0)
+                  ? 'bg-accent-gold text-ink-on-dark border-accent-gold'
+                  : 'bg-chip dark:bg-card-dark border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:border-accent-gold'
+              }`}
+            >
+              <Filter className="h-3 w-3" aria-hidden />
+              {t('library.topics_tags_heading') || 'Topics & Tags'}
+              {(selectedTags.length > 0 || selectedTopics.length > 0) && (
+                <span className="ml-1 px-1.5 py-0.5 rounded-full bg-card-light/20 text-ink-on-dark text-[10px] font-bold">
+                  {selectedTags.length + selectedTopics.length}
+                </span>
               )}
-            </div>
+            </button>
+
+            {/* Sort dropdown */}
+            <select
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
+              aria-label={t('library.sort_by')}
+            >
+              <option value="created_at_desc">{t('library.sort_created_newest')}</option>
+              <option value="created_at_asc">{t('library.sort_created_oldest')}</option>
+              <option value="last_viewed_desc">{t('library.sort_last_viewed')}</option>
+              <option value="title_asc">{t('library.sort_title_az')}</option>
+              <option value="title_desc">{t('library.sort_title_za')}</option>
+              <option value="like_count_desc">{t('library.sort_most_liked')}</option>
+            </select>
           </div>
         </div>
+      </div>
+
+      {/* Active filter pills */}
+      {getActiveFiltersCount() > 0 && (
+        <div className="flex flex-wrap items-center gap-2 mb-4">
+          <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('library.active_filters')}:</span>
+          {searchQuery && (
+            <span className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+              Search: {searchQuery}
+            </span>
+          )}
+          {selectedTags.map(tagId => {
+            const tag = tags.find(t => t.id === tagId);
+            return tag ? (
+              <span key={tagId} className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+                <Tag className="h-3 w-3 inline mr-1" />
+                {tag.name}
+              </span>
+            ) : null;
+          })}
+          {selectedTopics.map(topic => (
+            <span key={topic} className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+              <BookOpen className="h-3 w-3 inline mr-1" />
+              {topic}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Multi-select controls */}
+      {selectMultipleMode && (
+        <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark">
+          <span className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">
+            {selectedItems.size > 0
+              ? t('library.items_selected', { count: selectedItems.size })
+              : t('library.select_multiple')
+            }
+          </span>
+          <div className="flex items-center gap-3">
+            {selectedItems.size > 0 && (
+              <>
+                <ScholarButton
+                  variant="danger"
+                  size="sm"
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  {t('library.delete_button', { count: selectedItems.size })}
+                </ScholarButton>
+                <button
+                  onClick={() => setSelectedItems(new Set())}
+                  className="text-sm text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark"
+                >
+                  {t('library.clear_selection')}
+                </button>
+              </>
+            )}
+            <button
+              onClick={handleSelectAll}
+              className="text-sm text-accent-gold hover:opacity-80"
+            >
+              {selectedItems.size === libraryItems.length ? t('library.deselect_all') : t('library.select_all')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Card grid — 3 cols (lg), 2 cols (md), 1 col (sm) */}
+      <div className="ml-4 mr-4 lg:ml-6 lg:mr-6">
+        {libraryItems.length === 0 ? (
+          <div className="text-center py-20 min-h-[40vh] flex flex-col items-center justify-center">
+            {libraryViewMode === 'notebook' ? (
+              <>
+                <FileText className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+                <h3 className="font-display text-xl text-ink dark:text-ink-on-dark mb-2">
+                  {t('notebook.no_items_with_notes') || 'No Notes Yet'}
+                </h3>
+                <p className="text-secondary-ink dark:text-secondary-ink-on-dark max-w-sm">
+                  {t('notebook.add_notes_to_items') || 'Start adding notes to your library items. They will appear here for easy access.'}
+                </p>
+              </>
+            ) : (
+              <>
+                <BookOpen className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+                <h3 className="font-display text-xl text-ink dark:text-ink-on-dark mb-2">
+                  {searchQuery || selectedTags.length > 0
+                    ? t('library.no_items_match_search')
+                    : t('library.no_library_items_yet')}
+                </h3>
+                <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-6 max-w-sm">
+                  {searchQuery || selectedTags.length > 0
+                    ? t('library.adjust_search_filter')
+                    : t('library.process_to_build_library')}
+                </p>
+                {!searchQuery && selectedTags.length === 0 && (
+                  <ScholarButton variant="primary" onClick={() => navigate('/')}>
+                    {t('library.process_first_cta') || 'Process your first document'}
+                  </ScholarButton>
+                )}
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {libraryItems.map((item) => (
+              <div
+                key={item.id}
+                className="group bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-card)] transition-[box-shadow,transform] duration-[var(--s4-dur-fast)] hover:-translate-y-0.5 flex flex-col overflow-hidden"
+              >
+                {/* Card body */}
+                <div className="p-5 flex-1 flex flex-col">
+                  {selectMultipleMode && (
+                    <div className="mb-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems.has(item.id)}
+                        onChange={() => handleSelectItem(item.id)}
+                        className="h-4 w-4 text-accent-gold focus-visible:ring-accent-gold border border-divider dark:border-divider-on-dark rounded"
+                      />
+                    </div>
+                  )}
+
+                  {/* Title */}
+                  <h4 className="font-display text-xl text-ink dark:text-ink-on-dark mb-1 leading-snug line-clamp-2">
+                    {item.title}
+                  </h4>
+
+                  {/* Community / Medical badges */}
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {item.user_id !== user?.id && (
+                      <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark">
+                        Community
+                      </span>
+                    )}
+                    {(item.title.toLowerCase().includes('medical') ||
+                      item.topics?.some(topic => ['cardiology', 'neurology', 'medicine', 'clinical', 'pathology', 'anatomy', 'physiology'].some(med => topic.toLowerCase().includes(med)))) && (
+                      <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 flex items-center gap-1">
+                        <Stethoscope className="h-2.5 w-2.5" />
+                        Medical
+                      </span>
+                    )}
+                    {item.hasNotes && item.notesCount && item.notesCount > 0 && (
+                      <span className="px-2 py-0.5 text-[10px] font-bold tracking-[1.5px] uppercase rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                        <FileText className="h-2.5 w-2.5" />
+                        {item.notesCount}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* 2-line summary excerpt */}
+                  <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark line-clamp-2 mb-3 leading-relaxed flex-1">
+                    {item.summary_text}
+                  </p>
+
+                  {/* Topic chips */}
+                  {item.topics && item.topics.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mb-3">
+                      {item.topics.slice(0, 4).map((topic, index) => (
+                        <span
+                          key={index}
+                          className={`px-2 py-0.5 text-[10px] font-semibold rounded-full ${
+                            ['cardiology', 'neurology', 'medicine', 'clinical', 'pathology', 'anatomy', 'physiology', 'pharmacology'].some(med => topic.toLowerCase().includes(med))
+                              ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300'
+                              : 'bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
+                          }`}
+                        >
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Card footer */}
+                <div className="px-5 py-3 border-t border-divider dark:border-divider-on-dark flex items-center justify-between bg-subtle/50 dark:bg-bg-page/20">
+                  <div className="flex items-center gap-3 text-xs text-muted-ink dark:text-muted-ink-on-dark">
+                    <span className="flex items-center gap-1">
+                      <Eye className="h-3 w-3" />
+                      {item.flashcards_json.length} {item.flashcards_json.length === 1 ? t('common.flashcard') : t('common.flashcards')}
+                    </span>
+                    <LikeButton
+                      itemId={item.id}
+                      initialCount={item.reaction_counts?.like_count || 0}
+                      size="sm"
+                    />
+                    <span>{formatDate(item.created_at)}</span>
+                  </div>
+
+                  {/* Actions */}
+                  {!selectMultipleMode && (
+                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--s4-dur-fast)]">
+                      <button
+                        onClick={() => navigate(`/view/library/${item.id}`)}
+                        className="p-1.5 rounded-md hover:bg-subtle dark:hover:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold transition-colors"
+                        title={t('library.view')}
+                      >
+                        <Eye className="h-3.5 w-3.5" />
+                      </button>
+                      {item.is_public && item.shareable_link ? (
+                        <button
+                          onClick={() => handleUnshareItem(item.id)}
+                          className="p-1.5 rounded-md hover:bg-subtle dark:hover:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-orange-500 transition-colors"
+                          title={t('library.unshare')}
+                        >
+                          <Share2 className="h-3.5 w-3.5" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleShareItem(item.id)}
+                          className="p-1.5 rounded-md hover:bg-subtle dark:hover:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-green-600 transition-colors"
+                          title={t('library.share')}
+                        >
+                          <Share2 className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                      {item.user_id === user?.id && (
+                        <button
+                          onClick={() => handleDeleteItem(item.id)}
+                          className="p-1.5 rounded-md hover:bg-subtle dark:hover:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Delete Items Modal */}
