@@ -852,10 +852,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <button
           onClick={() => { setQuestionSource('auto_generated'); setViewMode('ai-generate'); }}
           className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark opacity-70 hover:opacity-100 transition-opacity text-left"
-          style={{ padding: '18px 20px' }}
+          style={{ padding: '22px 20px' }}
         >
-          <div className="text-[22px] text-muted-ink dark:text-muted-ink-on-dark mb-2">✦</div>
-          <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1">AI Generate.</div>
+          <div className="text-[26px] text-muted-ink dark:text-muted-ink-on-dark mb-[10px]">✦</div>
+          <div className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark mb-[6px]">AI Generate.</div>
           <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">Let AI create questions on any topic.</div>
           <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mt-[10px]">Click to select</div>
         </button>
@@ -863,10 +863,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <button
           onClick={() => { setQuestionSource('manual'); setViewMode('manual-build'); }}
           className="bg-sidebar border-2 border-accent-gold text-left"
-          style={{ padding: '18px 20px' }}
+          style={{ padding: '22px 20px' }}
         >
-          <div className="text-[22px] mb-2">✎</div>
-          <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Manual Build.</div>
+          <div className="text-[26px] mb-[10px]">✎</div>
+          <div className="font-display text-[16px] font-semibold text-ink-on-dark mb-[6px]">Manual Build.</div>
           <div className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.33)' }}>Write your own custom questions.</div>
           <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-accent-gold mt-[10px]">Selected ✓</div>
         </button>
@@ -968,7 +968,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="XXXXXXXX"
               maxLength={8}
-              className="w-full border-2 border-accent-gold bg-bg-chip dark:bg-card-dark px-5 py-4 font-display text-[30px] font-bold text-ink dark:text-ink-on-dark tracking-[8px] text-center focus:outline-none"
+              className="w-full border-2 border-accent-gold bg-accent-gold-soft px-5 py-[14px] font-display text-[30px] font-bold text-ink tracking-[8px] text-center focus:outline-none"
             />
           </div>
           <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">Ask your host or teacher for the 8-character room code.</div>
@@ -981,7 +981,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             onChange={(e) => setDisplayName(e.target.value)}
             placeholder="Your name in the game"
             maxLength={50}
-            className="w-full border border-divider dark:border-divider-on-dark px-4 py-3 text-[13px] bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold mb-2"
+            className="w-full border-[1.5px] border-accent-gold px-[14px] py-[10px] text-[13px] bg-accent-gold-soft text-ink focus:outline-none mb-1"
           />
           <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">This is how you'll appear to others in the game.</div>
 

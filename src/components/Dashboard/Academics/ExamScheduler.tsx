@@ -266,7 +266,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
                 ) : (
                   <div className="shrink-0 text-right">
                     <p className={`text-sm font-bold ${isUrgent ? 'text-accent-gold' : 'text-ink dark:text-ink-on-dark'}`}>
-                      {countdown.days > 0 && `${countdown.days}d `}{countdown.hours}h
+                      {countdown.days > 0 && `${countdown.days}d `}{countdown.hours}h {countdown.minutes}m
                     </p>
                     <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">remaining</p>
                   </div>

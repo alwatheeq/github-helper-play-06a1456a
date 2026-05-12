@@ -102,7 +102,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName, 
     >
       {/* Context bar */}
       <div className="flex items-center gap-3 px-5 py-3 border-b border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark">
-        <div className="p-1.5 rounded-[4px] bg-accent-gold text-white">
+        <div className="p-1.5 rounded-[4px] bg-accent-gold-soft text-accent-gold">
           <Bot className="h-4 w-4" />
         </div>
         <span className="font-semibold text-sm text-ink dark:text-ink-on-dark">
