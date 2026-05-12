@@ -333,7 +333,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                   <p className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-1">
                     {group.name}
                   </p>
-                  <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                  <p className="text-[12.5px] leading-[1.65] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
                     <Users className="w-3 h-3" /> {group.member_count} {t('social.members')}
                   </p>
                 </button>

@@ -732,66 +732,100 @@ export const EduPlayPage: React.FC = React.memo(() => {
   };
 
   const renderGameSelection = () => (
-    <div className="w-full max-w-4xl mx-auto">
-      {/* Header banner — dark bg-sidebar */}
-      <div className="bg-sidebar p-5 mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+    <div className="w-full">
+      {/* Header banner */}
+      <div className="bg-sidebar flex items-center justify-between mb-[22px]" style={{ padding: '20px 26px' }}>
         <div>
-          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">The Games Room · Brain Rush</div>
-          <div className="font-display text-[26px] font-semibold text-ink-on-dark tracking-tight">Brain Rush.</div>
-          <div className="text-[12px] text-muted-ink-on-dark mt-1">Real-time quiz duels · First to answer wins · +350 pts per win</div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+          <div className="font-display text-[26px] font-semibold text-ink-on-dark tracking-tight mb-[5px]">Brain Rush.</div>
+          <div className="text-[12px] text-ink-on-dark/35">Real-time quiz duels · First to 7 correct wins · +350 pts per win</div>
         </div>
         <button
           onClick={() => setViewMode('menu')}
-          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-2 hover:opacity-90 transition"
+          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-[7px] hover:opacity-90 transition border-none cursor-pointer"
         >← Back</button>
       </div>
 
-      {/* Lobby options — 3-col grid */}
-      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How do you want to play?</div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
-        {[
-          { icon: Crown, label: 'Host a Game.', sub: 'Create a private room and share a code with your classmate.', cta: 'Host →', primary: true, action: () => setViewMode('question-source') },
-          { icon: Users, label: 'Join a Game.', sub: 'Enter a room code from your classmate to join their session.', cta: 'Join →', primary: false, action: () => setViewMode('join-game') },
-          { icon: Target, label: 'Play Online.', sub: 'Enter the ranked queue and get matched against players live.', cta: 'Find match →', primary: false, action: () => setViewMode('multiplayer-menu') },
-        ].map(({ icon: Icon, label, sub, cta, primary, action }) => (
-          <div
-            key={label}
-            className={`p-5 flex flex-col shadow-[var(--s4-shadow-hairline)] ${
-              primary ? 'bg-sidebar' : 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark'
-            }`}
-          >
-            <Icon className={`h-5 w-5 mb-3 ${primary ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} />
-            <div className={`font-display text-[15px] font-semibold mb-2 ${primary ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{label}</div>
-            <div className={`text-[11.5px] leading-relaxed flex-1 mb-4 ${primary ? 'text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{sub}</div>
-            <button
-              onClick={action}
-              className={`text-center text-[12px] font-bold py-2 transition ${
-                primary
-                  ? 'bg-accent-gold text-sidebar hover:opacity-90'
-                  : 'border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark hover:opacity-70'
-              }`}
-            >{cta}</button>
-          </div>
-        ))}
-      </div>
-
-      {/* How it works */}
-      <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
-        <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3 opacity-60">How it works</div>
-        <div className="space-y-3">
-          {[
-            'AI generates questions based on your topic',
-            'Share the room code with your class',
-            'Players join from any device',
-            'Most correct answers across all rounds wins',
-          ].map((tip, i) => (
-            <div key={i} className="flex gap-3 items-start">
-              <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
+      <div className="grid gap-[22px]" style={{ gridTemplateColumns: '1fr 300px' }}>
+        {/* Left column */}
+        <div>
+          {/* 3-col option cards */}
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How do you want to play?</div>
+          <div className="grid grid-cols-3 gap-[12px] mb-[22px]">
+            {[
+              { label: 'Host a Game', sub: 'Create a private room and share a code with your classmate.', cta: 'Host →', primary: true, action: () => setViewMode('question-source') },
+              { label: 'Join a Game', sub: 'Enter a room code from your classmate to join their session.', cta: 'Join →', primary: false, action: () => setViewMode('join-game') },
+              { label: 'Play Online', sub: 'Enter the ranked queue and get matched against players live.', cta: 'Find match →', primary: false, action: () => setViewMode('multiplayer-menu') },
+            ].map(({ label, sub, cta, primary, action }) => (
+              <div
+                key={label}
+                className={`flex flex-col ${primary ? 'bg-sidebar' : 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark'}`}
+                style={{ padding: '20px 18px' }}
+              >
+                <div className={`font-display text-[15px] font-semibold mb-[6px] ${primary ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{label}.</div>
+                <div className={`text-[11.5px] leading-[1.65] flex-1 mb-[14px] ${primary ? 'text-ink-on-dark/40' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{sub}</div>
+                <button
+                  onClick={action}
+                  className={`text-center text-[12px] py-[7px] transition cursor-pointer border-none ${
+                    primary ? 'bg-accent-gold text-sidebar font-bold hover:opacity-90' : 'border border-divider dark:border-divider-on-dark bg-transparent text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-70'
+                  }`}
+                >{cta}</button>
               </div>
-              <span className="text-[11.5px] text-muted-ink-on-dark leading-relaxed">{tip}</span>
+            ))}
+          </div>
+
+          {/* Recent Sessions table */}
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-[10px]">Recent Sessions</div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+            <div className="grid py-[6px] px-[16px] border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 110px 80px 60px' }}>
+              {['Session', 'Result', 'Pts', 'Date'].map(h => (
+                <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
+              ))}
             </div>
-          ))}
+            {RECENT_SESSIONS.map((r, i) => (
+              <div key={i} className={`grid py-[11px] px-[16px] items-center ${i < RECENT_SESSIONS.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`} style={{ gridTemplateColumns: '1fr 110px 80px 60px' }}>
+                <div>
+                  <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark">{r.mode}</div>
+                  <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[1px]">{r.detail}</div>
+                </div>
+                <div className={`text-[12px] font-semibold ${r.result.startsWith('Won') ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark font-normal'}`}>{r.result}</div>
+                <div className="font-display text-[13px] font-semibold text-accent-gold">{r.pts}</div>
+                <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{r.date}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right rail */}
+        <div className="flex flex-col gap-[14px]">
+          {/* Online Now */}
+          <div className="bg-sidebar" style={{ padding: '18px 18px' }}>
+            <div className="text-[9px] tracking-[2px] uppercase font-bold text-ink-on-dark/30 mb-2">Online Now</div>
+            <div className="font-display text-[34px] font-semibold text-ink-on-dark">248</div>
+            <div className="text-[11px] text-ink-on-dark/35 mt-[2px]">players in the arena</div>
+            <div className="h-px bg-ink-on-dark/[.08] my-3" />
+            <div className="flex justify-between mb-1">
+              <span className="text-[10px] text-ink-on-dark/30">In matches</span>
+              <span className="text-[10px] text-accent-gold">186</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-[10px] text-ink-on-dark/30">In queue</span>
+              <span className="text-[10px] text-accent-gold">62</span>
+            </div>
+          </div>
+
+          {/* Leaderboard */}
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[16px]">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Leaderboard · This Week</div>
+            {LEADERBOARD.map((p, i) => (
+              <div key={i} className={`flex items-center gap-[9px] py-[7px] px-[6px] ${i < LEADERBOARD.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''} ${p.you ? 'bg-accent-gold-soft' : ''}`}>
+                <span className={`font-display text-[12px] w-[13px] flex-shrink-0 ${p.rank === 1 ? 'text-accent-gold font-bold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.rank}</span>
+                <div className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-sidebar flex-shrink-0" style={{ background: p.you ? 'var(--color-accent-gold)' : 'var(--color-sidebar)' }}>{p.init}</div>
+                <span className={`flex-1 text-[12px] ${p.you ? 'font-bold text-ink dark:text-ink-on-dark' : 'font-medium text-secondary-ink dark:text-muted-ink-on-dark'}`}>{p.name}</span>
+                <span className={`font-display text-[12px] flex-shrink-0 ${p.you ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.pts.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

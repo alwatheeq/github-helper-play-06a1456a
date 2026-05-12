@@ -303,11 +303,11 @@ export const FriendsPanel: React.FC = () => {
                 <div key={row.id} className="flex items-center gap-4 py-3.5">
                   {/* Avatar with online dot */}
                   <div className="relative flex-shrink-0">
-                    <div className="h-10 w-10 rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-[15px]">
+                    <div className="h-[42px] w-[42px] rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-[15px]">
                       {(profile.display_name || profile.username || '?')[0].toUpperCase()}
                     </div>
                     {/* green online indicator */}
-                    <span className="absolute bottom-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-page dark:border-page" />
+                    <span className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-page dark:border-page" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
