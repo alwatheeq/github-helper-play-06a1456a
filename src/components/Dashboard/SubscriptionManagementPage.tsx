@@ -296,7 +296,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           {/* Right rail */}
           <div className="flex flex-col gap-4">
             {/* Current Usage dark tile */}
-            <div className="bg-ink dark:bg-card-dark px-[18px] py-4">
+            <div className="bg-sidebar px-[18px] py-4">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Current Usage</div>
               {[
                 [t('subscription_management.tools_services'), `${toolCreditsRemaining.toLocaleString()} / ${toolPlanCap.toLocaleString()}`],
@@ -312,7 +312,7 @@ export const SubscriptionManagementPage: React.FC = () => {
             </div>
 
             {/* Billing details */}
-            <div className="bg-card-dark dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-4 py-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-4 py-4">
               <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Billing</div>
               {[
                 [subscription.auto_renew ? t('subscription_management.next_billing') : t('subscription_management.expires_on'), subscription.next_billing_date ? new Date(subscription.next_billing_date).toLocaleDateString() : new Date(subscription.end_date).toLocaleDateString()],

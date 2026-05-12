@@ -244,7 +244,7 @@ export const NotificationsPage: React.FC = () => {
         {/* Right rail */}
         <div className="w-[280px] flex-shrink-0 flex flex-col gap-4">
           {/* Notification preferences */}
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold rounded-[var(--s4-radius-card)] p-4">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold rounded-[var(--s4-radius-card)] p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-3">
               Preferences
             </p>

@@ -253,7 +253,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
       <div className="min-w-0 space-y-[14px]">
         {/* Dark "What to generate" panel */}
         <section
-          className="bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)]"
+          className="bg-sidebar text-ink-on-dark rounded-[var(--s4-radius-card)]"
           style={{ padding: 'var(--s4-card-pad-dark)' }}
         >
           <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold">

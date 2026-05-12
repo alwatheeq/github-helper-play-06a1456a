@@ -247,7 +247,7 @@ export const BillingHistoryPage: React.FC = () => {
                     {transactions.map((transaction) => {
                       const { label, className } = getStatusLabel(transaction.status);
                       return (
-                        <tr key={transaction.id} className="hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
+                        <tr key={transaction.id} className="bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-2">
                               <Calendar className="h-3.5 w-3.5 text-muted-ink dark:text-muted-ink-on-dark" />
