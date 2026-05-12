@@ -6,6 +6,7 @@ import { Sidebar } from './Sidebar';
 import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
 import { WorkshopPanel } from './WorkshopPanel';
+import { WorkshopV4 } from './WorkshopV4';
 import { PageHeader } from '../Scholar';
 // Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.
 const SummaryDisplay = lazy(() => import('./SummaryDisplay').then(m => ({ default: m.SummaryDisplay })));
@@ -1499,21 +1500,15 @@ export const Dashboard: React.FC = () => {
             )}
 
             {currentView === 'main' && (
-              <div className="space-y-8">
+              <div className="space-y-7">
                 <PageHeader
-                  eyebrow={
-                    <span className="inline-flex items-center gap-1.5">
-                      The Workshop
-                      <span aria-hidden="true" className="text-[12px] leading-none text-red-600 dark:text-red-400">🚩</span>
-                      <svg aria-hidden="true" width="10" height="12" viewBox="0 0 10 12" fill="none" stroke="#8b5cf6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 11V1" /><path d="M2 1.5h6l-1.5 2L8 5.5H2" fill="#8b5cf6" /></svg>
-                    </span>
-                  }
-                  title={t('dashboard.process_content') || 'Process your content'}
-                  descriptor="Bring in a file, paste text, or scan a page — we'll do the rest."
+                  eyebrow="The Workshop"
+                  title={t('dashboard.process_content') || 'Process your content.'}
+                  descriptor="bring in a document, paste text, or scan a page — we'll do the rest."
                 />
 
                 {processingState.stage === 'idle' && (
-                  <WorkshopPanel
+                  <WorkshopV4
                     onProcessInput={handleProcessInputWrapper}
                     onOpenHistory={() => setCurrentView('history')}
                   />
