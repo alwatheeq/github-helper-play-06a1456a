@@ -86,7 +86,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
     >
       <div className="absolute inset-0 bg-page bg-opacity-50 backdrop-blur-sm"></div>
 
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] max-w-md w-full overflow-hidden animate-scaleIn border border-gray-100 dark:border-gray-700">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] max-w-md w-full overflow-hidden animate-scaleIn border border-divider dark:border-divider-on-dark">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
@@ -120,10 +120,10 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isLoading}
-              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-card-dark dark:border-gray-600 dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
                 error
                   ? 'border-red-500 focus:ring-red-500'
-                  : 'border-gray-300 dark:border-gray-600'
+                  : 'border-divider dark:border-divider-on-dark'
               }`}
             />
             {error && (
@@ -137,7 +137,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-gray-300 dark:border-gray-600 rounded-md hover:bg-subtle dark:hover:bg-card-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-divider dark:border-divider-on-dark rounded-md hover:bg-subtle dark:hover:bg-card-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>

@@ -574,7 +574,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 sticky top-6">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 sticky top-6">
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-yellow-500" />
                 Live Leaderboard

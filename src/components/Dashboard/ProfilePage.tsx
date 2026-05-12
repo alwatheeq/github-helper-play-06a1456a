@@ -1304,7 +1304,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       className={`relative p-4 border-2 rounded-[var(--s4-radius-card)] transition-all cursor-pointer hover:shadow ${
                         isSelected
                           ? `border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20 shadow-[var(--s4-shadow-card)]`
-                          : `border-divider dark:border-divider-on-dark opacity-50 hover:border-gray-300 dark:hover:border-gray-600`
+                          : `border-divider dark:border-divider-on-dark opacity-50 hover:border-divider dark:hover:border-divider-on-dark`
                       } ${savingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isSelected && (
@@ -1343,7 +1343,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         </div>
 
         {/* Profile Header */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
           <div className={`flex items-start justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
             <div className={`flex items-center space-x-6 rtl:space-x-reverse ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div className="relative">
@@ -1478,7 +1478,7 @@ export const ProfilePage: React.FC = React.memo(() => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.current_streak')}</p>
@@ -1495,7 +1495,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.items_published')}</p>
@@ -1509,7 +1509,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.flashcards_studied')}</p>
@@ -1523,7 +1523,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.quizzes_completed')}</p>
@@ -1537,7 +1537,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-gray-100 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 border border-divider dark:border-divider-on-dark">
             <div className={`flex items-center justify-between ${isRtl ? 'flex-row-reverse' : ''}`}>
               <div>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink">{t('profile.total_study_time')}</p>
@@ -1553,7 +1553,7 @@ export const ProfilePage: React.FC = React.memo(() => {
         </div>
 
         {/* Achievements Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
           <div className={`flex items-center space-x-3 rtl:space-x-reverse mb-6 ${isRtl ? 'flex-row-reverse' : ''}`}>
             <Award className="h-6 w-6 text-ink dark:text-ink-on-dark" />
             <h2 className="s4-h3 text-[20px] text-ink dark:text-ink-on-dark">

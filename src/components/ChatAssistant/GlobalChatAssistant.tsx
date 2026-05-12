@@ -620,7 +620,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                       className={`max-w-[80%] rounded-[var(--s4-radius-card)] px-5 py-2.5 ${
                         message.role === 'user'
                           ? `bg-accent-gold text-white`
-                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-gray-200 dark:border-gray-600'
+                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
                       }`}
                     >
                       <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -629,7 +629,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-gray-200 dark:border-gray-600">
+                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
                       <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
                     </div>
                   </div>
@@ -640,7 +640,7 @@ const GlobalChatAssistantContent: React.FC = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="p-4 border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
             <div className="flex items-end space-x-2">
               <textarea
                 ref={inputRef}
@@ -648,7 +648,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className={`flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-accent-gold`}
+                className={`flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-accent-gold`}
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />

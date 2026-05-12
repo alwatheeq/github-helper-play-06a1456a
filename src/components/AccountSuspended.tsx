@@ -123,7 +123,7 @@ export const AccountSuspended: React.FC = () => {
           )}
 
           {blockInfo.isPermanent && (
-            <div className="bg-subtle dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-[var(--s4-radius-card)] p-4">
+            <div className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4">
               <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 This is a permanent suspension. If you believe this is an error, please contact support.
               </p>
