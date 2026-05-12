@@ -1205,7 +1205,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                         isSelected
                           ? 'bg-emerald-500 border-emerald-500 text-white'
-                          : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
+                          : `border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                       }`}
                     >
                       {topic}
@@ -1276,7 +1276,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
                               ? 'bg-emerald-500 border-emerald-500 text-white'
-                              : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
+                              : `border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >
                           {tag.name}
@@ -1305,8 +1305,8 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           )}
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
-                              ? 'bg-card-dark border-gray-700 text-ink-on-dark dark:bg-subtle dark:border-gray-200 dark:text-ink'
-                              : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
+                              ? 'bg-card-dark border-divider-on-dark text-ink-on-dark dark:bg-subtle dark:border-divider dark:text-ink'
+                              : `border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >
                           {tag.name}

@@ -185,7 +185,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
   if (showCreateForm) {
     return (
       <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
           <h2 className="s4-h2 mb-6">Create Multiplayer Game</h2>
 
           {error && (
@@ -204,7 +204,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 value={gameName}
                 onChange={(e) => setGameName(e.target.value)}
                 placeholder="Enter game name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -216,7 +216,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={maxPlayers}
                   onChange={(e) => setMaxPlayers(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   {[2, 3, 4, 5, 6, 8, 10].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -231,7 +231,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={questionCount}
                   onChange={(e) => setQuestionCount(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   {[5, 10, 15, 20, 25].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -247,7 +247,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               <select
                 value={timePerQuestion}
                 onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 {[15, 20, 30, 45, 60].map(num => (
                   <option key={num} value={num}>{num}s</option>
@@ -282,7 +282,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
   if (showJoinForm) {
     return (
       <div className="max-w-md mx-auto p-6">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
           <h2 className="s4-h2 mb-6">Join Game</h2>
 
           {error && (
@@ -302,7 +302,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                 placeholder="Enter 6-digit code"
                 maxLength={6}
-                className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -349,7 +349,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
       <div className="grid md:grid-cols-2 gap-6">
         <button
           onClick={() => setShowCreateForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
+          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
         >
           <div className="flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors">
@@ -368,7 +368,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
         <button
           onClick={() => setShowJoinForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
+          className="group bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] transition-all"
         >
           <div className="flex flex-col items-center text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">

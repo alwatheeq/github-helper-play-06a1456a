@@ -343,7 +343,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow overflow-hidden">
         <div className={`bg-accent-gold p-6 text-white`}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="s4-h2">{lobby.game_name}</h2>
@@ -411,7 +411,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             ))}
 
             {lobby.current_players < lobby.max_players && (
-              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-gray-300 text-center text-muted-ink dark:text-muted-ink-on-dark">
+              <div className="p-4 rounded-[var(--s4-radius-card)] border-2 border-dashed border-divider dark:border-divider-on-dark text-center text-muted-ink dark:text-muted-ink-on-dark">
                 Waiting for more players...
               </div>
             )}

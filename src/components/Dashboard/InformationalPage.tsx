@@ -107,7 +107,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                       <li>• {t('informational.file_upload_drag_drop')}</li>
                     </ul>
                   </div>
-                  <div className="border border-gray-200 rounded-[var(--s4-radius-card)] p-4 dark:border-gray-700">
+                  <div className="border border-divider rounded-[var(--s4-radius-card)] p-4 dark:border-divider-on-dark">
                     <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">📝 {t('informational.text_input_title')}</h5>
                     <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• <strong>{t('informational.text_input_min')}</strong></li>

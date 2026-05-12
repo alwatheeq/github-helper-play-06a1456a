@@ -183,7 +183,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
         <p className="text-secondary-ink dark:text-muted-ink">Let AI create questions about any topic</p>
       </div>
 
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
         {!generating ? (
           <div className="space-y-6">
             {/* Topic Input */}
@@ -196,7 +196,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="e.g., Ancient Rome, Photosynthesis, World War II..."
-                className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               />
               <p className="mt-1 text-sm text-muted-ink dark:text-muted-ink">
                 Be specific for better questions
@@ -211,7 +211,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               >
                 <option value="">Any Subject</option>
                 {subjects.map((s) => (
@@ -250,7 +250,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="flex space-x-4">
               <button
                 onClick={onCancel}
-                className="flex-1 px-6 py-3 border border-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-gray-600 dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
+                className="flex-1 px-6 py-3 border border-divider text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
               >
                 Cancel
               </button>

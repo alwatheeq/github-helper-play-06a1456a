@@ -230,7 +230,7 @@ export const GameJoinPage: React.FC = () => {
       {/* Auth Modal */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[var(--s4-shadow-modal)] p-8 max-w-md w-full">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-modal)] p-8 max-w-md w-full">
             <h3 className={`s4-h2 text-ink dark:text-ink-on-dark mb-4`}>Join the Game</h3>
             <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
               Choose how you'd like to join this game:

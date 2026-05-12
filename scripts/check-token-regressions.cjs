@@ -37,6 +37,15 @@ const FORBIDDEN = [
     re: /(?<![-\w])shadow-(?:sm|md|lg|xl|2xl)(?![-\w])/g,
     hint: 'Use shadow-[var(--s4-shadow-hairline|card|modal|floating)] instead.',
   },
+  {
+    // Phase 4.4 (a/b/c) — raw Tailwind neutral palette utilities for text,
+    // background, border, and divide. `ring-*` deferred to Phase 4.7 (focus).
+    // `/N` opacity overlays (e.g. bg-white/10) and gradient stops handled
+    // elsewhere are intentionally excluded.
+    id: 'raw-neutral',
+    re: /(?<![-\w])(?:dark:)?(?:text|bg|border|divide|placeholder)-(?:gray|slate|zinc|neutral|stone)-\d+(?![-\w/])/g,
+    hint: 'Use semantic tokens: ink / muted-ink / divider / subtle / card-light / card-dark (+ dark: companions).',
+  },
 ];
 
 // Files already swept. Append per phase — never remove.
