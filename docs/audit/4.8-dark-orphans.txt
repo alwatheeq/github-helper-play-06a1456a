@@ -1,0 +1,399 @@
+src/App.tsx:93  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/App.tsx:109  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/App.tsx:178  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/App.tsx:192  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/App.tsx:223  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/App.tsx:235  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/contexts/I18nContext.tsx:171  bg-blue-600  | px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/contexts/I18nContext.tsx:171  bg-blue-700  | px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/ZegoVideoRoom.tsx:245  text-blue-500  | h-12 w-12 animate-spin text-blue-500 mx-auto mb-4
+src/components/Dashboard/ZegoVideoRoom.tsx:255  bg-red-900  | bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md
+src/components/Dashboard/ZegoVideoRoom.tsx:255  border-red-800  | bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md
+src/components/Dashboard/ZegoVideoRoom.tsx:256  text-red-200  | text-lg font-semibold text-red-200 mb-2
+src/components/Dashboard/ZegoVideoRoom.tsx:259  text-red-300  | text-red-300 mb-4
+src/components/Dashboard/ZegoVideoRoom.tsx:260  text-red-400  | space-y-2 text-sm text-red-400
+src/components/Dashboard/ZegoVideoRoom.tsx:271  text-red-200  | underline hover:text-red-200
+src/components/Dashboard/ZegoVideoRoom.tsx:282  bg-red-600  | mt-4 px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-col
+src/components/Dashboard/ZegoVideoRoom.tsx:282  bg-red-700  | mt-4 px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-col
+src/components/Dashboard/HistoryPage.tsx:152  text-red-500  | h-12 w-12 text-red-500 mx-auto mb-4
+src/components/Dashboard/UsernameSetupModal.tsx:176  text-red-500  | h-5 w-5 text-red-500
+src/components/Dashboard/UsernameSetupModal.tsx:177  text-green-500  | h-5 w-5 text-green-500
+src/components/Dashboard/UsernameSetupModal.tsx:178  text-red-500  | h-5 w-5 text-red-500
+src/components/Dashboard/UsernameSetupModal.tsx:184  text-red-500  | text-sm text-red-500 mt-1
+src/components/Dashboard/UsernameSetupModal.tsx:185  text-green-500  | text-sm text-green-500 mt-1
+src/components/Dashboard/UsernameSetupModal.tsx:186  text-red-500  | text-sm text-red-500 mt-1
+src/components/Dashboard/FeedbackPage.tsx:364  text-red-500  | text-red-500 ml-1
+src/components/Dashboard/FeedbackPage.tsx:425  bg-blue-600  | inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700
+src/components/Dashboard/FeedbackPage.tsx:425  bg-blue-700  | inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700
+src/components/Dashboard/FeedbackPage.tsx:451  bg-red-500  | absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition opacity-0 
+src/components/Dashboard/FeedbackPage.tsx:451  bg-red-600  | absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition opacity-0 
+src/components/Dashboard/FeedbackPage.tsx:483  text-red-500  | text-red-500
+src/components/Dashboard/BrainRushResults.tsx:108  border-purple-600  | animate-spin h-12 w-12 border-4 border-purple-600 border-t-transparent rounded-full mx-auto mb-4
+src/components/Dashboard/BrainRushResults.tsx:176  text-yellow-500  | h-12 w-12 text-yellow-500 mx-auto mb-2 animate-bounce
+src/components/Dashboard/BrainRushResults.tsx:178  text-yellow-900  | s4-h1 text-[40px] text-yellow-900
+src/components/Dashboard/BrainRushResults.tsx:196  text-orange-900  | s4-h2 text-orange-900
+src/components/Dashboard/BrainRushResults.tsx:222  text-purple-600  | h-6 w-6 text-purple-600
+src/components/Dashboard/BrainRushResults.tsx:331  text-purple-600  | h-6 w-6 text-purple-600
+src/components/Dashboard/NotificationCenter.tsx:29  text-red-500  | h-5 w-5 text-red-500
+src/components/Dashboard/NotificationCenter.tsx:31  text-green-500  | h-5 w-5 text-green-500
+src/components/Dashboard/NotificationCenter.tsx:33  text-orange-500  | h-5 w-5 text-orange-500
+src/components/Dashboard/NotificationCenter.tsx:35  text-blue-500  | h-5 w-5 text-blue-500
+src/components/Dashboard/NotificationCenter.tsx:37  text-purple-500  | h-5 w-5 text-purple-500
+src/components/Dashboard/NotificationCenter.tsx:93  bg-red-500  | absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-cente
+src/components/Dashboard/SummaryDisplay.tsx:860  text-green-600  | h-4 w-4 text-green-600
+src/components/Dashboard/SummaryDisplay.tsx:869  text-orange-600  | flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition dur
+src/components/Dashboard/SummaryDisplay.tsx:869  text-orange-800  | flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition dur
+src/components/Dashboard/SummaryDisplay.tsx:987  text-green-600  | h-4 w-4 text-green-600
+src/components/Dashboard/SummaryDisplay.tsx:1002  bg-indigo-50  | flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1002  bg-indigo-900  | flex items-center space-x-2 px-3 py-1.5 text-sm text-indigo-600 hover:text-indigo-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1021  bg-purple-50  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1021  bg-purple-900  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1029  bg-purple-50  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1029  bg-purple-900  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 border border-
+src/components/Dashboard/SummaryDisplay.tsx:1098  border-blue-600  | animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600
+src/components/Dashboard/SummaryDisplay.tsx:1161  text-emerald-600  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacit
+src/components/Dashboard/SummaryDisplay.tsx:1161  bg-emerald-50  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacit
+src/components/Dashboard/SummaryDisplay.tsx:1161  bg-emerald-900  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacit
+src/components/Dashboard/SummaryDisplay.tsx:1167  text-red-500  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SummaryDisplay.tsx:1167  bg-red-50  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SummaryDisplay.tsx:1167  bg-red-900  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SummaryDisplay.tsx:1223  text-red-500  | normal-case tracking-normal opacity-100 text-red-500
+src/components/Dashboard/SummaryDisplay.tsx:1247  text-emerald-600  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colo
+src/components/Dashboard/SummaryDisplay.tsx:1247  bg-emerald-50  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colo
+src/components/Dashboard/SummaryDisplay.tsx:1247  bg-emerald-900  | p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colo
+src/components/Dashboard/SummaryDisplay.tsx:1252  text-red-500  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SummaryDisplay.tsx:1252  bg-red-50  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SummaryDisplay.tsx:1252  bg-red-900  | p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/SubscriptionManagementPage.tsx:461  bg-blue-600  | w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-car
+src/components/Dashboard/SubscriptionManagementPage.tsx:461  bg-blue-700  | w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-car
+src/components/Dashboard/SubscriptionManagementPage.tsx:530  bg-red-600  | flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)
+src/components/Dashboard/SubscriptionManagementPage.tsx:530  bg-red-700  | flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)
+src/components/Dashboard/Highlighting/HighlightLayer.tsx:136  bg-red-500  | absolute -top-3 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow-[var(--s4-shadow-card)] hov
+src/components/Dashboard/Highlighting/HighlightLayer.tsx:136  bg-red-600  | absolute -top-3 -right-2 bg-red-500 text-white rounded-full p-0.5 shadow-[var(--s4-shadow-card)] hov
+src/components/Dashboard/MultiplayerResults.tsx:93  text-yellow-500  | w-8 h-8 text-yellow-500
+src/components/Dashboard/MultiplayerResults.tsx:97  text-orange-600  | w-8 h-8 text-orange-600
+src/components/Dashboard/MultiplayerResults.tsx:250  border-yellow-400  | inline-block bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-400 rounded-md p-6
+src/components/Dashboard/MultiplayerResults.tsx:251  text-yellow-600  | w-16 h-16 text-yellow-600 mx-auto mb-3
+src/components/Dashboard/Header.tsx:388  bg-red-50  | w-full flex items-center space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hov
+src/components/Dashboard/Header.tsx:388  bg-red-900  | w-full flex items-center space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hov
+src/components/Dashboard/MultiplayerMenu.tsx:192  bg-red-50  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:192  border-red-200  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:192  text-red-800  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:289  bg-red-50  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:289  border-red-200  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:289  text-red-800  | mb-4 p-3 bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] text-red-800 text-sm
+src/components/Dashboard/MultiplayerMenu.tsx:355  bg-blue-100  | w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 tra
+src/components/Dashboard/MultiplayerMenu.tsx:355  bg-blue-200  | w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 tra
+src/components/Dashboard/MultiplayerMenu.tsx:356  text-blue-600  | w-10 h-10 text-blue-600
+src/components/Dashboard/MultiplayerMenu.tsx:362  text-blue-600  | flex items-center text-blue-600 font-medium
+src/components/Dashboard/MultiplayerMenu.tsx:374  bg-green-100  | w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 t
+src/components/Dashboard/MultiplayerMenu.tsx:374  bg-green-200  | w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 t
+src/components/Dashboard/MultiplayerMenu.tsx:375  text-green-600  | w-10 h-10 text-green-600
+src/components/Dashboard/MultiplayerMenu.tsx:381  text-green-600  | flex items-center text-green-600 font-medium
+src/components/Dashboard/MultiplayerMenu.tsx:389  bg-blue-50  | mt-12 bg-blue-50 rounded-md p-6
+src/components/Dashboard/MultiplayerMenu.tsx:393  text-blue-600  | font-bold text-blue-600
+src/components/Dashboard/MultiplayerMenu.tsx:397  text-blue-600  | font-bold text-blue-600
+src/components/Dashboard/MultiplayerMenu.tsx:401  text-blue-600  | font-bold text-blue-600
+src/components/Dashboard/MultiplayerMenu.tsx:405  text-blue-600  | font-bold text-blue-600
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:414  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:454  bg-green-600  | px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-cent
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:454  bg-green-700  | px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-cent
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:531  bg-green-600  | p-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:531  bg-green-700  | p-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:539  text-red-600  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:539  bg-red-50  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:539  bg-red-900  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:604  text-red-600  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:604  bg-red-50  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:604  bg-red-900  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:625  bg-green-600  | px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:625  bg-green-700  | px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:900  bg-green-600  | flex-1 px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 disabled
+src/components/Dashboard/GoalsAndAchievementsPage.tsx:900  bg-green-700  | flex-1 px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 disabled
+src/components/Dashboard/MultiplayerLobby.tsx:323  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Dashboard/MultiplayerLobby.tsx:331  bg-red-50  | bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800
+src/components/Dashboard/MultiplayerLobby.tsx:331  border-red-200  | bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800
+src/components/Dashboard/MultiplayerLobby.tsx:331  text-red-800  | bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800
+src/components/Dashboard/MultiplayerLobby.tsx:381  text-blue-600  | w-5 h-5 text-blue-600
+src/components/Dashboard/MultiplayerLobby.tsx:387  bg-yellow-50  | p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center
+src/components/Dashboard/MultiplayerLobby.tsx:387  border-yellow-200  | p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center
+src/components/Dashboard/MultiplayerLobby.tsx:388  text-yellow-800  | text-sm text-yellow-800
+src/components/Dashboard/MultiplayerLobby.tsx:395  bg-green-50  | flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-gr
+src/components/Dashboard/MultiplayerLobby.tsx:395  border-green-300  | flex items-center justify-between p-4 rounded-[var(--s4-radius-card)] border-2 bg-green-50 border-gr
+src/components/Dashboard/MultiplayerLobby.tsx:399  text-yellow-500  | w-5 h-5 text-yellow-500
+src/components/Dashboard/MultiplayerLobby.tsx:408  text-green-600  | text-sm font-medium text-green-600
+src/components/Dashboard/MultiplayerLobby.tsx:437  bg-green-600  | flex-1 py-3 rounded-[var(--s4-radius-card)] font-semibold flex items-center justify-center gap-2 tra
+src/components/Dashboard/MultiplayerLobby.tsx:437  bg-green-700  | flex-1 py-3 rounded-[var(--s4-radius-card)] font-semibold flex items-center justify-center gap-2 tra
+src/components/Dashboard/MultiplayerLobby.tsx:446  bg-red-600  | px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 font-semibold trans
+src/components/Dashboard/MultiplayerLobby.tsx:446  bg-red-700  | px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 font-semibold trans
+src/components/Dashboard/MultiplayerGamePlay.tsx:482  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4
+src/components/Dashboard/MultiplayerGamePlay.tsx:508  text-blue-600  | w-5 h-5 text-blue-600
+src/components/Dashboard/MultiplayerGamePlay.tsx:566  text-green-600  | w-5 h-5 text-green-600
+src/components/Dashboard/MultiplayerGamePlay.tsx:579  text-yellow-500  | w-5 h-5 text-yellow-500
+src/components/Dashboard/MultiplayerGamePlay.tsx:601  text-blue-600  | text-xs text-blue-600 ml-1
+src/components/Dashboard/MultiplayerGamePlay.tsx:610  text-blue-600  | font-bold text-lg text-blue-600
+src/components/Dashboard/EduPlayPage.tsx:663  text-green-100  | text-green-100
+src/components/Dashboard/EduPlayPage.tsx:723  border-purple-500  | bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0
+src/components/Dashboard/EduPlayPage.tsx:723  border-purple-400  | bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0
+src/components/Dashboard/EduPlayPage.tsx:863  bg-green-600  | w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/EduPlayPage.tsx:863  bg-green-700  | w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/EduPlayPage.tsx:900  bg-blue-600  | w-full px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/EduPlayPage.tsx:900  bg-blue-700  | w-full px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/EduPlayPage.tsx:950  bg-blue-600  | flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bo
+src/components/Dashboard/EduPlayPage.tsx:956  text-yellow-500  | h-4 w-4 inline ml-1 text-yellow-500
+src/components/Dashboard/EduPlayPage.tsx:983  bg-green-600  | flex-1 px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/EduPlayPage.tsx:983  bg-green-700  | flex-1 px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/Dashboard.tsx:1466  border-blue-600  | animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600
+src/components/Dashboard/Dashboard.tsx:1507  text-red-600  | text-[12px] leading-none text-red-600
+src/components/Dashboard/Dashboard.tsx:1625  text-emerald-600  | h-3.5 w-3.5 text-emerald-600
+src/components/Dashboard/StudyRoomsPage.tsx:1013  bg-red-600  | px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors f
+src/components/Dashboard/StudyRoomsPage.tsx:1013  bg-red-700  | px-6 py-3 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors f
+src/components/Dashboard/StudyRoomsPage.tsx:1021  bg-amber-600  | mb-4 rounded-[var(--s4-radius-card)] bg-amber-600 text-white px-4 py-3 flex items-center justify-cen
+src/components/Dashboard/StudyRoomsPage.tsx:1232  bg-red-600  | px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 flex items-center s
+src/components/Dashboard/StudyRoomsPage.tsx:1232  bg-red-700  | px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 flex items-center s
+src/components/Dashboard/GameJoinPage.tsx:153  bg-blue-600  | px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/GameJoinPage.tsx:153  bg-blue-700  | px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/GameJoinPage.tsx:242  bg-blue-600  | w-full px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/GameJoinPage.tsx:242  bg-blue-700  | w-full px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition
+src/components/Dashboard/GameJoinPage.tsx:249  bg-green-600  | w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/GameJoinPage.tsx:249  bg-green-700  | w-full px-6 py-3 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transiti
+src/components/Dashboard/FloatingVideo/MiniPlayer.tsx:94  text-red-400  | w-3.5 h-3.5 text-red-400
+src/components/Dashboard/FloatingVideo/MiniPlayer.tsx:112  bg-red-500  | p-1 rounded hover:bg-red-500/40 transition-colors
+src/components/Dashboard/FloatingVideo/MiniPlayer.tsx:115  text-red-400  | w-3.5 h-3.5 text-red-400
+src/components/Dashboard/LibraryPage.tsx:704  text-red-500  | h-12 w-12 text-red-500 mx-auto mb-4
+src/components/Dashboard/LibraryPage.tsx:830  border-blue-600  | animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full
+src/components/Dashboard/LibraryPage.tsx:1068  text-blue-600  | mt-1 h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border border-divider dark:border-divider-on-
+src/components/Dashboard/LibraryPage.tsx:1171  bg-blue-50  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition du
+src/components/Dashboard/LibraryPage.tsx:1171  bg-blue-900  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition du
+src/components/Dashboard/LibraryPage.tsx:1179  bg-orange-50  | p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transit
+src/components/Dashboard/LibraryPage.tsx:1179  bg-orange-900  | p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transit
+src/components/Dashboard/LibraryPage.tsx:1187  bg-green-50  | p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition
+src/components/Dashboard/LibraryPage.tsx:1187  bg-green-900  | p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition
+src/components/Dashboard/LibraryPage.tsx:1197  bg-red-50  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition durat
+src/components/Dashboard/LibraryPage.tsx:1197  bg-red-900  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition durat
+src/components/Dashboard/StudyGoalsPage.tsx:316  bg-green-600  | px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-cent
+src/components/Dashboard/StudyGoalsPage.tsx:316  bg-green-700  | px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-cent
+src/components/Dashboard/StudyGoalsPage.tsx:393  bg-green-600  | p-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/StudyGoalsPage.tsx:393  bg-green-700  | p-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/StudyGoalsPage.tsx:401  text-red-600  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:401  bg-red-50  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:401  bg-red-900  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:466  text-red-600  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:466  bg-red-50  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:466  bg-red-900  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20
+src/components/Dashboard/StudyGoalsPage.tsx:487  bg-green-600  | px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/StudyGoalsPage.tsx:487  bg-green-700  | px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700
+src/components/Dashboard/StudyGoalsPage.tsx:595  bg-green-600  | flex-1 px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 disabled
+src/components/Dashboard/StudyGoalsPage.tsx:595  bg-green-700  | flex-1 px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 disabled
+src/components/Dashboard/MindMap/MindMapView.tsx:97  bg-indigo-400  | !bg-indigo-400
+src/components/Dashboard/MindMap/MindMapView.tsx:104  bg-indigo-400  | !bg-indigo-400
+src/components/Dashboard/MindMap/MindMapView.tsx:185  text-indigo-500  | w-5 h-5 text-indigo-500
+src/components/Dashboard/MindMap/MindMapView.tsx:190  text-red-500  | text-sm text-red-500
+src/components/Dashboard/MindMap/MindMapView.tsx:196  bg-indigo-600  | inline-flex items-center gap-2 rounded-[var(--s4-radius-card)] bg-indigo-600 px-4 py-2 text-sm font-
+src/components/Dashboard/MindMap/MindMapView.tsx:196  bg-indigo-700  | inline-flex items-center gap-2 rounded-[var(--s4-radius-card)] bg-indigo-600 px-4 py-2 text-sm font-
+src/components/Dashboard/MindMap/MindMapView.tsx:228  text-indigo-500  | w-5 h-5 text-indigo-500
+src/components/Dashboard/BrainRushQuestionResults.tsx:122  border-blue-600  | animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4
+src/components/Dashboard/BrainRushQuestionResults.tsx:145  text-blue-600  | h-6 w-6 text-blue-600
+src/components/Dashboard/BrainRushQuestionResults.tsx:178  text-yellow-600  | h-6 w-6 text-yellow-600
+src/components/Dashboard/BrainRushQuestionResults.tsx:269  border-blue-600  | animate-spin h-6 w-6 border-3 border-blue-600 border-t-transparent rounded-full
+src/components/Dashboard/ManualQuestionBuilder.tsx:261  bg-blue-50  | p-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded transition
+src/components/Dashboard/ManualQuestionBuilder.tsx:261  bg-blue-900  | p-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded transition
+src/components/Dashboard/ManualQuestionBuilder.tsx:267  bg-red-50  | p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded transition
+src/components/Dashboard/ManualQuestionBuilder.tsx:267  bg-red-900  | p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded transition
+src/components/Dashboard/BrainRushGamePlay.tsx:627  text-yellow-500  | h-6 w-6 text-yellow-500
+src/components/Dashboard/ProcessingStatus.tsx:127  text-red-500  | h-4 w-4 text-red-500
+src/components/Dashboard/Social/GroupsPanel.tsx:407  text-green-500  | w-3.5 h-3.5 text-green-500
+src/components/Dashboard/Social/GroupsPanel.tsx:443  text-amber-500  | w-3 h-3 text-amber-500 shrink-0
+src/components/Dashboard/Social/GroupsPanel.tsx:449  text-red-400  | text-red-400 hover:text-red-500 p-1 transition-colors
+src/components/Dashboard/Social/GroupsPanel.tsx:449  text-red-500  | text-red-400 hover:text-red-500 p-1 transition-colors
+src/components/Dashboard/Social/GroupsPanel.tsx:465  text-red-400  | flex items-center gap-1.5 text-xs text-red-400 hover:text-red-500 transition-colors mt-2
+src/components/Dashboard/Social/GroupsPanel.tsx:465  text-red-500  | flex items-center gap-1.5 text-xs text-red-400 hover:text-red-500 transition-colors mt-2
+src/components/Dashboard/ProfilePage.tsx:1400  text-green-500  | h-3.5 w-3.5 text-green-500
+src/components/Dashboard/ProfilePage.tsx:1413  text-green-500  | h-3.5 w-3.5 text-green-500
+src/components/Dashboard/QuizPage.tsx:1289  text-red-600  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900
+src/components/Dashboard/QuizPage.tsx:1289  bg-red-50  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900
+src/components/Dashboard/QuizPage.tsx:1289  bg-red-900  | p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900
+src/components/NotFound.tsx:38  bg-blue-600  | flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:b
+src/components/NotFound.tsx:38  bg-blue-700  | flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:b
+src/components/ErrorBoundary.tsx:72  bg-orange-100  | bg-orange-100 p-3 rounded-full
+src/components/ErrorBoundary.tsx:73  text-orange-600  | h-12 w-12 text-orange-600
+src/components/ErrorBoundary.tsx:88  text-red-600  | text-xs text-red-600 whitespace-pre-wrap
+src/components/ErrorBoundary.tsx:102  bg-blue-600  | flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:b
+src/components/ErrorBoundary.tsx:102  bg-blue-700  | flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:b
+src/components/Dashboard/Social/FriendsPanel.tsx:244  text-blue-400  | absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-blue-400
+src/components/Dashboard/Social/FriendsPanel.tsx:317  bg-green-500  | p-2 rounded-[var(--s4-radius-card)] bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-
+src/components/Dashboard/Social/FriendsPanel.tsx:317  text-green-500  | p-2 rounded-[var(--s4-radius-card)] bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-
+src/components/Dashboard/Social/FriendsPanel.tsx:317  bg-green-500  | p-2 rounded-[var(--s4-radius-card)] bg-green-500/10 text-green-500 hover:bg-green-500/20 transition-
+src/components/Dashboard/Social/FriendsPanel.tsx:329  bg-red-500  | p-2 rounded-[var(--s4-radius-card)] bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors
+src/components/Dashboard/Social/FriendsPanel.tsx:329  text-red-500  | p-2 rounded-[var(--s4-radius-card)] bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors
+src/components/Dashboard/Social/FriendsPanel.tsx:329  bg-red-500  | p-2 rounded-[var(--s4-radius-card)] bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors
+src/components/Dashboard/FlashcardViewer.tsx:530  text-purple-600  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition dur
+src/components/Dashboard/FlashcardViewer.tsx:530  text-purple-800  | flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition dur
+src/components/Dashboard/FlashcardViewer.tsx:790  bg-red-50  | px-4 py-1.5 rounded-full text-sm font-medium border border-red-200 text-red-600 hover:bg-red-50 dark
+src/components/Dashboard/FlashcardViewer.tsx:790  bg-red-900  | px-4 py-1.5 rounded-full text-sm font-medium border border-red-200 text-red-600 hover:bg-red-50 dark
+src/components/Dashboard/FlashcardViewer.tsx:796  bg-blue-50  | px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 d
+src/components/Dashboard/FlashcardViewer.tsx:796  bg-blue-900  | px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 d
+src/components/Dashboard/FlashcardViewer.tsx:802  bg-emerald-50  | px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-200 text-emerald-600 hover:bg-eme
+src/components/Dashboard/FlashcardViewer.tsx:802  bg-emerald-900  | px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-200 text-emerald-600 hover:bg-eme
+src/components/Dashboard/FlashcardViewer.tsx:808  bg-purple-50  | px-4 py-1.5 rounded-full text-sm font-medium border border-purple-200 text-purple-600 hover:bg-purpl
+src/components/Dashboard/FlashcardViewer.tsx:808  bg-purple-900  | px-4 py-1.5 rounded-full text-sm font-medium border border-purple-200 text-purple-600 hover:bg-purpl
+src/components/Dashboard/FlashcardViewer.tsx:895  text-green-100  | text-green-100
+src/components/Dashboard/FlashcardViewer.tsx:966  text-orange-100  | text-orange-100
+src/components/Dashboard/FlashcardViewer.tsx:1027  text-indigo-100  | text-indigo-100 text-lg
+src/components/EnvValidator.tsx:13  bg-red-100  | bg-red-100 p-3 rounded-full
+src/components/EnvValidator.tsx:14  text-red-600  | h-12 w-12 text-red-600
+src/components/EnvValidator.tsx:34  bg-blue-50  | bg-blue-50 border border-blue-200 rounded-[var(--s4-radius-card)] p-4
+src/components/EnvValidator.tsx:34  border-blue-200  | bg-blue-50 border border-blue-200 rounded-[var(--s4-radius-card)] p-4
+src/components/EnvValidator.tsx:35  text-blue-900  | font-semibold text-blue-900 mb-2
+src/components/EnvValidator.tsx:36  text-blue-800  | text-sm text-blue-800 space-y-1 list-decimal list-inside
+src/components/Dashboard/CommentSection.tsx:315  bg-blue-600  | px-3 py-1 bg-blue-600 text-white rounded-[var(--s4-radius-card)] text-sm hover:bg-blue-700 disabled:
+src/components/Dashboard/CommentSection.tsx:315  bg-blue-700  | px-3 py-1 bg-blue-600 text-white rounded-[var(--s4-radius-card)] text-sm hover:bg-blue-700 disabled:
+src/components/Dashboard/CommentSection.tsx:393  bg-blue-600  | px-3 py-1 bg-blue-600 text-white rounded-[var(--s4-radius-card)] text-sm hover:bg-blue-700 disabled:
+src/components/Dashboard/CommentSection.tsx:393  bg-blue-700  | px-3 py-1 bg-blue-600 text-white rounded-[var(--s4-radius-card)] text-sm hover:bg-blue-700 disabled:
+src/components/Dashboard/CommentSection.tsx:471  bg-blue-600  | px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 disabled:opacity-
+src/components/Dashboard/CommentSection.tsx:471  bg-blue-700  | px-4 py-2 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 disabled:opacity-
+src/components/Subscription/PersistentSubscriptionModal.tsx:83  text-green-500  | h-5 w-5 text-green-500 flex-shrink-0 mt-0.5
+src/components/Dashboard/BookMode/WidgetContainer.tsx:274  bg-red-50  | p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-red-50 hover:text-red-500
+src/components/Dashboard/BookMode/WidgetContainer.tsx:274  bg-red-900  | p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-red-50 hover:text-red-500
+src/components/Dashboard/BookMode/BookModeViewer.tsx:247  border-blue-600  | animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600
+src/components/ShareView.tsx:92  text-red-500  | h-12 w-12 text-red-500 mx-auto mb-4
+src/components/Dashboard/AudioStudy/AudioTtsPlayer.tsx:33  bg-red-500  | inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 bg-red-500 text
+src/components/Dashboard/AudioStudy/AudioTtsPlayer.tsx:33  bg-red-600  | inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 bg-red-500 text
+src/components/Pricing/PricingPage.tsx:156  text-green-500  | h-5 w-5 text-green-500 flex-shrink-0
+src/components/Pricing/CheckoutPage.tsx:454  bg-blue-600  | w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-car
+src/components/Pricing/CheckoutPage.tsx:454  bg-blue-700  | w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-car
+src/components/Dashboard/BillingHistoryPage.tsx:349  border-blue-600  | animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600
+src/components/Dashboard/Academics/AcademicsPage.tsx:877  border-blue-600  | animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600
+src/components/Dashboard/AIQuestionGenerator.tsx:271  text-pink-500  | h-8 w-8 text-pink-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+src/components/Common/LoadingSkeleton.tsx:94  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto
+src/components/Admin/UsersPage.tsx:586  bg-green-600  | flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white ro
+src/components/Admin/UsersPage.tsx:586  bg-green-700  | flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white ro
+src/components/Admin/UsersPage.tsx:593  bg-orange-600  | flex items-center space-x-2 px-3 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transi
+src/components/Admin/UsersPage.tsx:593  bg-orange-700  | flex items-center space-x-2 px-3 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transi
+src/components/Admin/UsersPage.tsx:600  bg-red-600  | flex items-center space-x-2 px-3 py-2 bg-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white roun
+src/components/Admin/UsersPage.tsx:600  bg-red-700  | flex items-center space-x-2 px-3 py-2 bg-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white roun
+src/components/Admin/UsersPage.tsx:607  bg-green-600  | flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white ro
+src/components/Admin/UsersPage.tsx:607  bg-green-700  | flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white ro
+src/components/Admin/UsersPage.tsx:627  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Admin/UsersPage.tsx:627  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Admin/UsersPage.tsx:634  bg-green-600  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/UsersPage.tsx:634  bg-green-700  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/UsersPage.tsx:660  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/UsersPage.tsx:680  text-blue-600  | h-5 w-5 text-blue-600
+src/components/Admin/UsersPage.tsx:728  text-blue-600  | h-5 w-5 text-blue-600
+src/components/Admin/UsersPage.tsx:829  border-orange-600  | animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600
+src/components/Admin/UsersPage.tsx:843  border-green-600  | animate-spin rounded-full h-4 w-4 border-b-2 border-green-600
+src/components/Admin/UsersPage.tsx:998  border-blue-600  | animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600
+src/components/Admin/UsersPage.tsx:1097  bg-blue-600  | px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 tr
+src/components/Admin/UsersPage.tsx:1097  bg-blue-700  | px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 tr
+src/components/Admin/UsersPage.tsx:1130  text-red-600  | hover:text-red-600
+src/components/Admin/UsersPage.tsx:1176  bg-green-600  | px-3 py-1 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 
+src/components/Admin/UsersPage.tsx:1176  bg-green-700  | px-3 py-1 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 
+src/components/Admin/UsersPage.tsx:1217  text-red-600  | ml-2 text-red-600 hover:text-red-800
+src/components/Admin/UsersPage.tsx:1217  text-red-800  | ml-2 text-red-600 hover:text-red-800
+src/components/Admin/UserActivityPage.tsx:337  text-blue-500  | h-5 w-5 text-blue-500
+src/components/Admin/UserActivityPage.tsx:345  text-green-500  | h-5 w-5 text-green-500
+src/components/Admin/UserActivityPage.tsx:353  text-purple-500  | h-5 w-5 text-purple-500
+src/components/Admin/UserActivityPage.tsx:361  text-orange-500  | h-5 w-5 text-orange-500
+src/components/Admin/UserActivityPage.tsx:369  text-red-500  | h-5 w-5 text-red-500
+src/components/Admin/UserActivityPage.tsx:477  border-blue-600  | animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600
+src/components/Admin/AuditLogPage.tsx:171  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/AuditLogPage.tsx:191  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Admin/AuditLogPage.tsx:191  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Dashboard/Academics/ExamScheduler.tsx:251  bg-red-100  | p-1.5 rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/Academics/ExamScheduler.tsx:251  bg-red-900  | p-1.5 rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors
+src/components/Dashboard/Academics/ExamScheduler.tsx:254  text-red-500  | h-4 w-4 text-red-500
+src/components/Admin/AdminRoute.tsx:77  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/AdminUsersManagementPage.tsx:281  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/AdminUsersManagementPage.tsx:295  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Admin/AdminUsersManagementPage.tsx:295  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white r
+src/components/Admin/AdminLogin.tsx:242  bg-red-900  | mb-8 p-6 bg-red-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/30 border border-red-800 rounded-lg flex ite
+src/components/Admin/AdminLogin.tsx:242  border-red-800  | mb-8 p-6 bg-red-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/30 border border-red-800 rounded-lg flex ite
+src/components/Admin/AdminLogin.tsx:243  text-red-400  | h-5 w-5 text-red-400 mt-0.5 flex-shrink-0
+src/components/Admin/AdminLogin.tsx:245  text-red-200  | text-sm text-red-200 mb-2
+src/components/Admin/AdminLogin.tsx:247  text-red-300  | text-xs text-red-300
+src/components/Admin/AdminLogin.tsx:304  text-blue-400  | text-sm text-blue-400 hover:text-blue-300 transition
+src/components/Admin/AdminLogin.tsx:304  text-blue-300  | text-sm text-blue-400 hover:text-blue-300 transition
+src/components/Admin/OverviewPage.tsx:127  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/CreditManagementPage.tsx:240  bg-green-600  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/CreditManagementPage.tsx:240  bg-green-700  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/CreditManagementPage.tsx:251  text-blue-500  | h-5 w-5 text-blue-500
+src/components/Admin/CreditManagementPage.tsx:259  text-green-500  | h-5 w-5 text-green-500
+src/components/Admin/CreditManagementPage.tsx:267  text-orange-500  | h-5 w-5 text-orange-500
+src/components/Admin/CreditManagementPage.tsx:275  text-purple-500  | h-5 w-5 text-purple-500
+src/components/Admin/CreditManagementPage.tsx:344  border-blue-600  | animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600
+src/components/AccountSuspended.tsx:61  border-red-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-red-600
+src/components/Admin/FoldersManagementPage.tsx:220  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/FoldersManagementPage.tsx:307  bg-blue-50  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-l
+src/components/Admin/FoldersManagementPage.tsx:307  bg-blue-900  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-l
+src/components/Admin/FoldersManagementPage.tsx:314  bg-red-50  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg t
+src/components/Admin/FoldersManagementPage.tsx:314  bg-red-900  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg t
+src/components/Admin/FeedbackManagementPage.tsx:218  bg-green-600  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/FeedbackManagementPage.tsx:218  bg-green-700  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/FeedbackManagementPage.tsx:268  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/SubscriptionsManagementPage.tsx:400  bg-green-600  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-gr
+src/components/Admin/SubscriptionsManagementPage.tsx:400  bg-green-700  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-gr
+src/components/Admin/SubscriptionsManagementPage.tsx:411  bg-blue-500  | bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/SubscriptionsManagementPage.tsx:412  text-blue-400  | h-6 w-6 text-blue-400
+src/components/Admin/SubscriptionsManagementPage.tsx:414  text-green-400  | h-5 w-5 text-green-400
+src/components/Admin/SubscriptionsManagementPage.tsx:422  bg-green-500  | bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/SubscriptionsManagementPage.tsx:423  text-green-400  | h-6 w-6 text-green-400
+src/components/Admin/SubscriptionsManagementPage.tsx:432  bg-orange-500  | bg-orange-500/20 p-3 rounded-lg
+src/components/Admin/SubscriptionsManagementPage.tsx:433  text-orange-400  | h-6 w-6 text-orange-400
+src/components/Admin/SubscriptionsManagementPage.tsx:442  bg-purple-500  | bg-purple-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/SubscriptionsManagementPage.tsx:443  text-purple-400  | h-6 w-6 text-purple-400
+src/components/Admin/SubscriptionsManagementPage.tsx:492  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/SubscriptionsManagementPage.tsx:492  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/SubscriptionsManagementPage.tsx:562  text-green-400  | h-5 w-5 text-green-400
+src/components/Admin/SubscriptionsManagementPage.tsx:564  text-red-400  | h-5 w-5 text-red-400
+src/components/Admin/SubscriptionsManagementPage.tsx:571  bg-blue-500  | p-2 hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition
+src/components/Admin/SubscriptionsManagementPage.tsx:574  text-blue-400  | h-4 w-4 text-blue-400
+src/components/Admin/SubscriptionsManagementPage.tsx:579  bg-orange-500  | p-2 hover:bg-orange-500/20 rounded-lg transition
+src/components/Admin/SubscriptionsManagementPage.tsx:582  text-orange-400  | h-4 w-4 text-orange-400
+src/components/Admin/SubscriptionsManagementPage.tsx:587  bg-green-500  | p-2 hover:bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition
+src/components/Admin/SubscriptionsManagementPage.tsx:590  text-green-400  | h-4 w-4 text-green-400
+src/components/Admin/SubscriptionsManagementPage.tsx:595  bg-red-500  | p-2 hover:bg-red-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition
+src/components/Admin/SubscriptionsManagementPage.tsx:598  text-red-400  | h-4 w-4 text-red-400
+src/components/Admin/BlockUserModal.tsx:123  bg-green-500  | p-2 rounded-lg ${isCurrentlyBlocked ? 'bg-green-500/20' : 'bg-red-500/20'}
+src/components/Admin/BlockUserModal.tsx:123  bg-red-500  | p-2 rounded-lg ${isCurrentlyBlocked ? 'bg-green-500/20' : 'bg-red-500/20'}
+src/components/Admin/BlockUserModal.tsx:125  text-green-500  | h-5 w-5 text-green-500
+src/components/Admin/BlockUserModal.tsx:127  text-red-500  | h-5 w-5 text-red-500
+src/components/Admin/BlockUserModal.tsx:169  text-red-600  | w-4 h-4 text-red-600 focus-visible:ring-red-500
+src/components/Admin/BlockUserModal.tsx:180  text-red-600  | w-4 h-4 text-red-600 focus-visible:ring-red-500
+src/components/Admin/TagsManagementPage.tsx:218  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/TagsManagementPage.tsx:298  bg-blue-50  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-l
+src/components/Admin/TagsManagementPage.tsx:298  bg-blue-900  | p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-l
+src/components/Admin/TagsManagementPage.tsx:305  bg-red-50  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg t
+src/components/Admin/TagsManagementPage.tsx:305  bg-red-900  | p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg t
+src/components/Admin/TokenUsagePage.tsx:159  border-blue-500  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500
+src/components/Admin/TokenUsagePage.tsx:174  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/TokenUsagePage.tsx:174  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/TokenUsagePage.tsx:184  bg-blue-500  | bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/TokenUsagePage.tsx:185  text-blue-400  | h-6 w-6 text-blue-400
+src/components/Admin/TokenUsagePage.tsx:194  bg-green-500  | bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/TokenUsagePage.tsx:195  text-green-400  | h-6 w-6 text-green-400
+src/components/Admin/TokenUsagePage.tsx:204  bg-orange-500  | bg-orange-500/20 p-3 rounded-lg
+src/components/Admin/TokenUsagePage.tsx:205  text-orange-400  | h-6 w-6 text-orange-400
+src/components/Admin/TokenUsagePage.tsx:214  bg-purple-500  | bg-purple-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg
+src/components/Admin/TokenUsagePage.tsx:215  text-purple-400  | h-6 w-6 text-purple-400
+src/components/Admin/TokenUsagePage.tsx:250  bg-blue-600  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/TokenUsagePage.tsx:250  bg-blue-700  | flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blu
+src/components/Admin/TokenUsagePage.tsx:336  bg-blue-600  | flex items-center space-x-1 px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-
+src/components/Admin/TokenUsagePage.tsx:336  bg-blue-700  | flex items-center space-x-1 px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-
+src/components/Admin/AppSettingsPage.tsx:138  text-green-400  | h-8 w-8 text-green-400
+src/components/Admin/AppSettingsPage.tsx:139  text-green-400  | text-sm text-green-400 font-medium
+src/components/Admin/SubscriptionModal.tsx:333  text-blue-600  | h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border-gray-300 rounded
+src/components/Admin/SubscriptionModal.tsx:344  bg-blue-600  | flex-1 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-bl
+src/components/Admin/SubscriptionModal.tsx:344  bg-blue-700  | flex-1 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-bl
+src/components/Admin/AnalyticsPage.tsx:205  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/AnalyticsPage.tsx:332  bg-blue-600  | bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] h-2 rounded-full
+src/components/ChatAssistant/GlobalChatAssistant.tsx:568  bg-blue-500  | absolute top-0 right-0 w-3 h-3 cursor-nesw-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.0
+src/components/ChatAssistant/GlobalChatAssistant.tsx:572  bg-blue-500  | absolute bottom-0 left-0 w-3 h-3 cursor-nesw-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0
+src/components/ChatAssistant/GlobalChatAssistant.tsx:576  bg-blue-500  | absolute bottom-0 right-0 w-3 h-3 cursor-nwse-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,
+src/components/ChatAssistant/GlobalChatAssistant.tsx:581  bg-blue-500  | absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.
+src/components/ChatAssistant/GlobalChatAssistant.tsx:585  bg-blue-500  | absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0
+src/components/ChatAssistant/GlobalChatAssistant.tsx:589  bg-blue-500  | absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0
+src/components/ChatAssistant/GlobalChatAssistant.tsx:593  bg-blue-500  | absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,
+src/components/Admin/TransactionsPage.tsx:170  border-blue-600  | animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600
+src/components/Admin/TransactionsPage.tsx:184  bg-green-600  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
+src/components/Admin/TransactionsPage.tsx:184  bg-green-700  | flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white 
