@@ -288,7 +288,7 @@ export const PricingPage: React.FC = () => {
           </div>
           <button
             onClick={handleSubscribe}
-            className={`w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-200 flex items-center justify-center gap-2`}
+            className={`w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center gap-2`}
           >
             <span>{isStripeEnabled() ? t('pricing.subscribe') : t('pricing.continue')}</span>
             <ArrowRight className="h-5 w-5" />

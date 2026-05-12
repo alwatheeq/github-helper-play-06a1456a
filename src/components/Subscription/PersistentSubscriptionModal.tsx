@@ -44,10 +44,10 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onDismiss}
-            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
+            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-[var(--s4-dur-fast)] group"
             aria-label="Close"
           >
-            <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
+            <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-[var(--s4-dur-base)]" />
           </button>
 
           <div className="flex items-center space-x-3 mb-2">
@@ -128,10 +128,10 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
           }
         }
         .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
+          animation: fadeIn 0.2s ease-[var(--s4-ease-out)];
         }
         .animate-scaleIn {
-          animation: scaleIn 0.3s ease-out;
+          animation: scaleIn 0.3s ease-[var(--s4-ease-out)];
         }
       `}</style>
     </div>

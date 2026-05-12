@@ -174,7 +174,7 @@ export const Header: React.FC = () => {
                         </div>
                         <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
                           <div
-                            className="absolute inset-y-0 left-0 rounded-full bg-accent-gold transition-all duration-200 ease-out"
+                            className="absolute inset-y-0 left-0 rounded-full bg-accent-gold transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-base)] ease-[var(--s4-ease-out)]"
                             style={{ width: `${toolProgress}%` }}
                           />
                         </div>
@@ -197,7 +197,7 @@ export const Header: React.FC = () => {
                         {zegoTotal > 0 && (
                           <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/80 transition-all duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/80 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-base)] ease-[var(--s4-ease-out)]"
                               style={{ width: `${zegoProgress}%` }}
                             />
                           </div>
@@ -228,7 +228,7 @@ export const Header: React.FC = () => {
                         {useRpcChatTokens && (chatTokLimRpc ?? 0) > 0 && (
                           <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-all duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-base)] ease-[var(--s4-ease-out)]"
                               style={{
                                 width: `${Math.min(100, ((chatTokRemRpc ?? 0) / (chatTokLimRpc ?? 1)) * 100)}%`
                               }}
@@ -238,7 +238,7 @@ export const Header: React.FC = () => {
                         {!useRpcChatTokens && hasAiAddon && aiChatCreditsTotal > 0 && (
                           <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-all duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-base)] ease-[var(--s4-ease-out)]"
                               style={{
                                 width: `${Math.min(100, (aiChatCreditsRemaining / aiChatCreditsTotal) * 100)}%`
                               }}
@@ -272,7 +272,7 @@ export const Header: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                className="flex items-center space-x-2 group hover:bg-subtle rounded-md p-2 transition-colors duration-150"
+                className="flex items-center space-x-2 group hover:bg-subtle rounded-md p-2 transition-colors duration-[var(--s4-dur-fast)]"
               >
                 {user?.avatar_url ? (
                   <img
@@ -309,7 +309,7 @@ export const Header: React.FC = () => {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => setTheme('light')}
-                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-150 ${
+                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-[var(--s4-dur-fast)] ${
                           theme === 'light'
                             ? 'bg-accent-gold/15 text-accent-gold'
                             : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -320,7 +320,7 @@ export const Header: React.FC = () => {
                       </button>
                       <button
                         onClick={() => setTheme('dark')}
-                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-150 ${
+                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-[var(--s4-dur-fast)] ${
                           theme === 'dark'
                             ? 'bg-accent-gold/15 text-accent-gold'
                             : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -342,7 +342,7 @@ export const Header: React.FC = () => {
                         <button
                           key={lang.code}
                           onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors duration-150 ${
+                          className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors duration-[var(--s4-dur-fast)] ${
                             language === lang.code
                               ? 'bg-accent-gold/15 text-accent-gold'
                               : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -364,7 +364,7 @@ export const Header: React.FC = () => {
                       <a
                         href="/admin/dashboard"
                         onClick={() => setShowProfileDropdown(false)}
-                        className="w-full flex items-center space-x-3 px-3 py-2 text-accent-gold hover:bg-accent-gold/10 rounded-md transition-colors duration-150"
+                        className="w-full flex items-center space-x-3 px-3 py-2 text-accent-gold hover:bg-accent-gold/10 rounded-md transition-colors duration-[var(--s4-dur-fast)]"
                       >
                         <Shield className="h-4 w-4" />
                         <span className="text-sm font-medium">{t('header.admin_portal')}</span>
@@ -375,7 +375,7 @@ export const Header: React.FC = () => {
                         window.dispatchEvent(new CustomEvent('navigateToProfile'));
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 text-ink dark:text-ink-on-dark hover:bg-subtle rounded-md transition-colors duration-150"
+                      className="w-full flex items-center space-x-3 px-3 py-2 text-ink dark:text-ink-on-dark hover:bg-subtle rounded-md transition-colors duration-[var(--s4-dur-fast)]"
                     >
                       <User className="h-4 w-4" />
                       <span className="text-sm font-medium">{t('header.profile')}</span>
@@ -385,7 +385,7 @@ export const Header: React.FC = () => {
                         signOut();
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors duration-150"
+                      className="w-full flex items-center space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors duration-[var(--s4-dur-fast)]"
                     >
                       <LogOut className="h-4 w-4" />
                       <span className="text-sm font-medium">{t('header.sign_out')}</span>

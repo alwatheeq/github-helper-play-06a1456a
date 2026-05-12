@@ -553,7 +553,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                             </div>
                             <div className={`w-full bg-accent-gold-soft/20 rounded-full h-3`}>
                               <div
-                                className={`h-3 rounded-full transition-colors duration-150 ${
+                                className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                                   progress >= 100
                                     ? 'bg-green-600'
                                     : progress >= 75
@@ -708,7 +708,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 return (
                   <div
                     key={achievement.id}
-                    className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 transition-all ${
+                    className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
                       isUnlocked
                         ? 'border-2 border-yellow-400 dark:border-yellow-600'
                         : 'opacity-75 hover:opacity-100'

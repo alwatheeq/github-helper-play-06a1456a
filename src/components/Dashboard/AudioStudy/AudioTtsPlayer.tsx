@@ -21,7 +21,7 @@ export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang
           <button
             type="button"
             onClick={pause}
-            className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 bg-accent-gold text-white hover:opacity-90`}
+            className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-[var(--s4-dur-fast)] bg-accent-gold text-white hover:opacity-90`}
             aria-label={t('audio_study.pause_audio') || 'Pause'}
             title={t('audio_study.pause_audio') || 'Pause'}
           >
@@ -30,7 +30,7 @@ export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang
           <button
             type="button"
             onClick={stop}
-            className="inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 bg-red-500 text-white hover:bg-red-600"
+            className="inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-[var(--s4-dur-fast)] bg-red-500 text-white hover:bg-red-600"
             aria-label={t('audio_study.stop_audio') || 'Stop'}
             title={t('audio_study.stop_audio') || 'Stop'}
           >
@@ -50,7 +50,7 @@ export const AudioTtsPlayer: React.FC<AudioTtsPlayerProps> = ({ textToPlay, lang
               speak(textToPlay);
             }
           }}
-          className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-150 ${
+          className={`inline-flex items-center justify-center rounded-md px-3 py-2 transition duration-[var(--s4-dur-fast)] ${
             !hasText
               ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
               : `bg-accent-gold text-white hover:opacity-90`

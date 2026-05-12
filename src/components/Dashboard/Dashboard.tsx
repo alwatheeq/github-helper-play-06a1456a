@@ -1442,7 +1442,7 @@ export const Dashboard: React.FC = () => {
         )}
 
         <main
-          className="flex-1 transition-colors duration-150 ease-in-out"
+          className="flex-1 transition-colors duration-[var(--s4-dur-fast)] ease-[var(--s4-ease)]"
           style={isMobile ? {} : isRtl
             ? { marginRight: isSidebarOpen ? '128px' : '32px' }
             : { marginLeft: isSidebarOpen ? '128px' : '32px' }
@@ -1453,7 +1453,7 @@ export const Dashboard: React.FC = () => {
             <button
               type="button"
               onClick={toggleSidebar}
-              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-150`}
+              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-[var(--s4-dur-fast)]`}
               aria-label={t('header.open_menu')}
             >
               <PanelLeft className="h-6 w-6" strokeWidth={2} aria-hidden />
@@ -1734,7 +1734,7 @@ export const Dashboard: React.FC = () => {
                           </p>
                           <button
                             onClick={resetProcessing}
-                            className={`px-4 py-2 text-ink-on-dark rounded-[var(--s4-radius-card)] transition duration-150 ${
+                            className={`px-4 py-2 text-ink-on-dark rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
                               processingState.medicalMode
                                 ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
                                 : 'bg-red-600 hover:bg-red-700'

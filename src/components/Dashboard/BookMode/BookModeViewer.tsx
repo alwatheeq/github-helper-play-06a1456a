@@ -262,7 +262,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
           </button>
 
           {/* Widget type menu */}
-          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
+          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-all duration-[var(--s4-dur-fast)] ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
             <div className="p-1.5 space-y-0.5">
               {!widgets.some(w => w.type === 'book') && (
                 <button

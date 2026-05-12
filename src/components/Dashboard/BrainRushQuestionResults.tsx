@@ -164,7 +164,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
         {/* Percentage Bar */}
         <div className={`bg-accent-gold-soft/20 rounded-full h-6 overflow-hidden`}>
           <div
-            className="bg-gradient-to-r from-green-500 to-emerald-500 h-full flex items-center justify-center text-white text-sm font-bold transition-colors duration-150"
+            className="bg-gradient-to-r from-green-500 to-emerald-500 h-full flex items-center justify-center text-white text-sm font-bold transition-colors duration-[var(--s4-dur-fast)]"
             style={{ width: `${correctPercentage}%` }}
           >
             {correctPercentage}% Correct

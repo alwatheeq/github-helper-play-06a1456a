@@ -47,7 +47,7 @@ const variantMap: Record<ScholarButtonVariant, string> = {
 
 const baseCls =
   'inline-flex items-center justify-center font-medium rounded-[6px] ' +
-  'transition-all duration-150 select-none ' +
+  'transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-fast)] select-none ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 

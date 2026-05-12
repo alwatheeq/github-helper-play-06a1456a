@@ -542,7 +542,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                     tabIndex={hasAnswered ? -1 : 0}
                     onClick={() => !hasAnswered && handleAnswerSelect(option)}
                     onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
-                    className={`${optionClass} rounded-md p-6 text-left transition-all relative ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                    className={`${optionClass} rounded-md p-6 text-left transition-[background-color,border-color,color,opacity,transform,box-shadow] relative ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-lg font-medium text-ink dark:text-ink-on-dark flex-1">

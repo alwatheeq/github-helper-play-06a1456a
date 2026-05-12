@@ -415,7 +415,7 @@ export const StudyGoalsPage: React.FC = () => {
                         </div>
                         <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
                           <div
-                            className={`h-3 rounded-full transition-colors duration-150 ${
+                            className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                               progress >= 100
                                 ? 'bg-green-600'
                                 : progress >= 75

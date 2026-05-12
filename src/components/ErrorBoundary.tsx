@@ -99,7 +99,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center space-x-4">
               <button
                 onClick={this.handleReset}
-                className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[var(--s4-radius-card)] hover:bg-blue-700 transition duration-[var(--s4-dur-fast)]"
               >
                 <RefreshCw className="h-5 w-5" />
                 <span>Try Again</span>
@@ -107,7 +107,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle transition duration-[var(--s4-dur-fast)]"
               >
                 <Home className="h-5 w-5" />
                 <span>Go Home</span>

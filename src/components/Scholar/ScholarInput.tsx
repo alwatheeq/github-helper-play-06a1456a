@@ -6,7 +6,7 @@ const fieldBase =
   'rounded-[6px] px-3 py-2 text-sm ' +
   'text-ink dark:text-ink-on-dark ' +
   'placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark ' +
-  'transition-colors duration-150 ' +
+  'transition-colors duration-[var(--s4-dur-fast)] ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-accent-gold/60 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 

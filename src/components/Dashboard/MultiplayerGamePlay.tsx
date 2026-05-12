@@ -523,7 +523,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
               <div className="mb-6">
                 <div className="h-2 bg-accent-gold-soft/20 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-accent-gold transition-colors duration-150"
+                    className="h-full bg-accent-gold transition-colors duration-[var(--s4-dur-fast)]"
                     style={{ width: `${progress}%` }}
                   ></div>
                 </div>

@@ -86,7 +86,7 @@ export const NotificationCenter: React.FC = () => {
           setIsOpen(!isOpen);
           if (!isOpen) setActiveTab('alerts');
         }}
-        className="relative p-2 hover:opacity-60 rounded-[var(--s4-radius-card)] transition duration-200"
+        className="relative p-2 hover:opacity-60 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
       >
         <Bell className="h-6 w-6 text-secondary-ink dark:text-muted-ink-on-dark" />
         {visibleUnreadCount > 0 && (

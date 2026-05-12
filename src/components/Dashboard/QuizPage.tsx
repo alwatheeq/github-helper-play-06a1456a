@@ -1005,7 +1005,7 @@ export const QuizPage: React.FC = React.memo(() => {
                 </p>
                 <button
                   onClick={() => setQuizViewMode('quizzes')}
-                  className={`px-6 py-3 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-all font-medium`}
+                  className={`px-6 py-3 bg-accent-gold text-white dark:text-ink rounded-[var(--s4-radius-card)] hover:opacity-90 transition-[background-color,border-color,color,opacity,transform,box-shadow] font-medium`}
                 >
                   {t('quiz.switch_to_quizzes') || 'Switch to My Quizzes'}
                 </button>
@@ -1224,7 +1224,7 @@ export const QuizPage: React.FC = React.memo(() => {
               <button
                 onClick={handleGenerateQuiz}
                 disabled={generating || !quizTitle.trim()}
-                className={`w-full py-2 bg-accent-gold text-white rounded-md hover:opacity-90 transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 text-sm`}
+                className={`w-full py-2 bg-accent-gold text-white rounded-md hover:opacity-90 transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-50 disabled:cursor-not-allowed font-medium flex items-center justify-center space-x-2 text-sm`}
               >
                 {generating ? (
                   <>

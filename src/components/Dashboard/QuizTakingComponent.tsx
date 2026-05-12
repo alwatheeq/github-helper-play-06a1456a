@@ -519,7 +519,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
 
           <div className="w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2 mb-4">
             <div
-              className="bg-accent-gold h-2 rounded-full transition-colors duration-150"
+              className="bg-accent-gold h-2 rounded-full transition-colors duration-[var(--s4-dur-fast)]"
               style={{ width: `${progress}%` }}
             ></div>
           </div>

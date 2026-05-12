@@ -1063,7 +1063,7 @@ export const ProfilePage: React.FC = React.memo(() => {
 
                 <div className={`w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-3 mb-2`}>
                   <div
-                    className={`h-3 rounded-full transition-colors duration-150 bg-emerald-500 dark:bg-emerald-600`}
+                    className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] bg-emerald-500 dark:bg-emerald-600`}
                     style={{ width: `${toolBarPct}%` }}
                   />
                 </div>
@@ -1233,8 +1233,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                     checked={preferences?.tts_hover_enabled !== false}
                     onChange={(e) => updateTtsHoverEnabled(e.target.checked)}
                   />
-                  <div className={`w-11 h-6 rounded-full transition-colors duration-200 ${preferences?.tts_hover_enabled !== false ? 'bg-blue-600' : 'bg-subtle dark:bg-card-dark'}`} />
-                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-card-light dark:bg-card-dark rounded-full shadow transition-transform duration-200 ${preferences?.tts_hover_enabled !== false ? 'translate-x-5' : 'translate-x-0'}`} />
+                  <div className={`w-11 h-6 rounded-full transition-colors duration-[var(--s4-dur-base)] ${preferences?.tts_hover_enabled !== false ? 'bg-blue-600' : 'bg-subtle dark:bg-card-dark'}`} />
+                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-card-light dark:bg-card-dark rounded-full shadow transition-transform duration-[var(--s4-dur-base)] ${preferences?.tts_hover_enabled !== false ? 'translate-x-5' : 'translate-x-0'}`} />
                 </div>
                 <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                   {preferences?.tts_hover_enabled !== false ? t('subscription_management.enabled') : t('subscription_management.disabled')}
@@ -1301,7 +1301,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                         }
                       }}
                       disabled={savingSettings}
-                      className={`relative p-4 border-2 rounded-[var(--s4-radius-card)] transition-all cursor-pointer hover:shadow ${
+                      className={`relative p-4 border-2 rounded-[var(--s4-radius-card)] transition-[background-color,border-color,color,opacity,transform,box-shadow] cursor-pointer hover:shadow ${
                         isSelected
                           ? `border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20 shadow-[var(--s4-shadow-card)]`
                           : `border-divider dark:border-divider-on-dark opacity-50 hover:border-divider dark:hover:border-divider-on-dark`
@@ -1432,7 +1432,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   </div>
                   <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
                     <div
-                      className={`bg-accent-gold h-3 rounded-full transition-colors duration-150`}
+                      className={`bg-accent-gold h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)]`}
                       style={{ width: `${progress}%` }}
                     ></div>
                   </div>

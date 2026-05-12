@@ -215,7 +215,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
         </div>
         <div className="w-full h-3 rounded-full bg-accent-gold-soft/20 overflow-hidden">
           <div
-            className="h-full rounded-full bg-accent-gold transition-all duration-500"
+            className="h-full rounded-full bg-accent-gold transition-all duration-[var(--s4-dur-slow)]"
             style={{ width: `${masteryPct}%` }}
           />
         </div>

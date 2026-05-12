@@ -45,7 +45,7 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
           type="button"
           disabled={!canGenerate}
           onClick={onGenerateRequestedContent}
-          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-150 ${
+          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
             !canGenerate
               ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
               : `bg-accent-gold text-white hover:opacity-90`

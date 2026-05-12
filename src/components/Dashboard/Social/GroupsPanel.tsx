@@ -345,7 +345,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             {groups.map((group) => (
               <div
                 key={group.id}
-                className={`rounded-[var(--s4-radius-card)] border overflow-hidden transition-all bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
+                className={`rounded-[var(--s4-radius-card)] border overflow-hidden transition-[background-color,border-color,color,opacity,transform,box-shadow] bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark`}
               >
                 {/* Group header */}
                 <button

@@ -26,7 +26,7 @@ export const TutorialStep: React.FC<TutorialStepProps> = ({
           {Array.from({ length: totalSteps }).map((_, index) => (
             <div
               key={index}
-              className={`h-1.5 rounded-full transition-colors duration-150 ${
+              className={`h-1.5 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
                 index + 1 <= stepNumber
                   ? `bg-accent-gold w-6`
                   : `bg-subtle dark:bg-subtle-on-dark w-1.5`
