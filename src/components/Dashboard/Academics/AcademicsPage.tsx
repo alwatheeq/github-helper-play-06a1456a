@@ -633,10 +633,11 @@ export const AcademicsPage: React.FC = React.memo(() => {
   };
 
   // Tab state for Scholar v4 section navigation
-  const [activeTab, setActiveTab] = useState<'overview' | 'tutor' | 'exams' | 'srs' | 'analytics'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'upload' | 'tutor' | 'exams' | 'srs' | 'analytics'>('overview');
 
   const academicsTabs = [
     { id: 'overview', label: t('academics.tab_overview') || 'Overview' },
+    { id: 'upload', label: 'Upload' },
     { id: 'tutor', label: t('academics.tab_tutor') || 'AI Tutor' },
     { id: 'exams', label: t('academics.tab_exams') || 'Exam Prep' },
     { id: 'srs', label: t('academics.tab_srs') || 'SRS' },
@@ -926,8 +927,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
             </div>
           </div>
 
+        </div>
+      )}
+
+      {/* ── Upload tab ── */}
+      {activeTab === 'upload' && (
+        <div className="space-y-3">
           {/* Upload / generation section */}
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 space-y-4 mt-5">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 space-y-4">
             <div className="flex items-center justify-between gap-2">
               <h3 className="font-semibold text-ink dark:text-ink-on-dark">
                 {selectedCourse?.course_name || t('academics.select_course')}
@@ -1045,7 +1052,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
           </div>
 
           {/* Generated content list */}
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 mt-3">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5">
             <h4 className="font-semibold text-ink dark:text-ink-on-dark mb-3">{t('academics.generated_content_heading')}</h4>
             <div className="space-y-2">
               {courseItems.map((item) => (

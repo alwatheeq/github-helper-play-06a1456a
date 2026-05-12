@@ -832,49 +832,43 @@ export const EduPlayPage: React.FC = React.memo(() => {
   );
 
   const renderQuestionSource = () => (
-    <div className="w-full max-w-4xl mx-auto">
-      <button
-        onClick={() => setViewMode('game-selection')}
-        className={`mb-6 flex items-center space-x-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition`}
-      >
-        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        <span>Back</span>
-      </button>
-
-      <div className="mb-6 text-center">
-        <h2 className={`s4-h1 text-ink dark:text-ink-on-dark mb-2`}>Choose Question Source</h2>
-        <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>How would you like to create your questions?</p>
+    <div className="w-full">
+      <div className="bg-sidebar flex items-center justify-between mb-[22px]" style={{ padding: '20px 26px' }}>
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+          <div className="font-display text-[24px] font-semibold text-ink-on-dark" style={{ letterSpacing: -0.5 }}>Host a Game.</div>
+        </div>
+        <button
+          onClick={() => setViewMode('game-selection')}
+          className="px-4 py-[7px] bg-accent-gold text-sidebar text-[12px] font-bold"
+          style={{ borderRadius: 3 }}
+        >
+          ← Back
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-3">Question Source</div>
+      <div className="grid grid-cols-2 gap-3 mb-[22px]">
         <button
-          onClick={() => {
-            setQuestionSource('auto_generated');
-            setViewMode('ai-generate');
-          }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] border-2 border-transparent hover:border-purple-500 dark:hover:border-purple-400`}
+          onClick={() => { setQuestionSource('auto_generated'); setViewMode('ai-generate'); }}
+          className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark opacity-70 hover:opacity-100 transition-opacity text-left"
+          style={{ padding: '18px 20px' }}
         >
-          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
-            <Sparkles className="h-8 w-8 text-purple-600 dark:text-purple-400" />
-          </div>
-          <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-2`}>AI Generate</h3>
-          <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Let AI create questions about any topic</p>
+          <div className="text-[22px] text-muted-ink dark:text-muted-ink-on-dark mb-2">✦</div>
+          <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1">AI Generate.</div>
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">Let AI create questions on any topic.</div>
+          <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mt-[10px]">Click to select</div>
         </button>
 
         <button
-          onClick={() => {
-            setQuestionSource('manual');
-            setViewMode('manual-build');
-          }}
-          className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] hover:shadow-[var(--s4-shadow-modal)] transition-[background-color,border-color,color,opacity,transform,box-shadow] border-2 border-transparent hover:border-divider dark:border-divider-on-dark`}
+          onClick={() => { setQuestionSource('manual'); setViewMode('manual-build'); }}
+          className="bg-sidebar border-2 border-accent-gold text-left"
+          style={{ padding: '18px 20px' }}
         >
-          <div className={`bg-accent-gold-soft/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4`}>
-            <Edit className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-          </div>
-          <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-2">Manual Build</h3>
-          <p className="text-secondary-ink dark:text-muted-ink">Create your own custom questions</p>
+          <div className="text-[22px] mb-2">✎</div>
+          <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Manual Build.</div>
+          <div className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.33)' }}>Write your own custom questions.</div>
+          <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-accent-gold mt-[10px]">Selected ✓</div>
         </button>
       </div>
     </div>
@@ -1052,7 +1046,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid gap-5" style={{ gridTemplateColumns: '240px 1fr' }}>
           {/* Left: QR + code + room settings */}
           <div>
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Share with your class</div>
@@ -1098,13 +1092,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
             </div>
           </div>
 
-          {/* Right: player grid (2-col-span) */}
-          <div className="md:col-span-2">
+          {/* Right: player grid */}
+          <div>
             <div className="flex justify-between items-center mb-3">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Players in Room</div>
               <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">{participants.length} joined</div>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {participants.map((participant) => (
                 <div
                   key={participant.id}
