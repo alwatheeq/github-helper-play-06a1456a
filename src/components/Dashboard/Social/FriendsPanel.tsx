@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Search, UserPlus, Check, X, Users, Loader2 } from 'lucide-react';
+import { Search, UserPlus, Check, X, Loader2 } from 'lucide-react';
 
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';

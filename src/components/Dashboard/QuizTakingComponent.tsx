@@ -45,7 +45,7 @@ function normalizeAnswerStatic(answer: string): string {
     .trim()
     .replace(/\s+/g, ' ')
     .replace(/[.,!?;:'"()-]/g, '')
-    .replace(/ /g, ' ')
+    .replace(/\u00A0/g, ' ')
     .trim();
 }
 
@@ -252,7 +252,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
       .trim()
       .replace(/\s+/g, ' ')
       .replace(/[.,!?;:'"()-]/g, '')
-      .replace(/ /g, ' ')
+      .replace(/\u00A0/g, ' ')
       .trim();
   };
 
@@ -364,8 +364,6 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
   /* ── Result screen ── */
   if (isSubmitted && results) {
     const passed = results.scorePercentage >= 60;
-    const total = questions.length;
-
     return (
       <div className="min-h-screen bg-page dark:bg-page-dark p-6">
         <div className="max-w-4xl mx-auto space-y-5">

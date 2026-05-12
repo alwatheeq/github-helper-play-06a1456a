@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Target, Plus, Calendar, TrendingUp, CheckCircle, Clock, Trash2, X, Award, Lock, Star, Users, BookOpen, Zap } from 'lucide-react';
+import { Target, TrendingUp, CheckCircle, Trash2, Award, Lock, Star, Users, BookOpen } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useI18n } from '../../contexts/I18nContext';
@@ -7,7 +7,7 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useConfirm } from '../../hooks/useConfirm';
-import { PageHeader, SectionTabs } from '../Scholar';
+import { SectionTabs } from '../Scholar';
 
 interface StudyGoal {
   id: string;
@@ -143,18 +143,6 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
     return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  const getGoalTypeLabel = (type: string) => t(`goals.type_${type}`);
-
-  const getGoalTypeIcon = (type: string) => {
-    switch (type) {
-      case 'daily_study_time': return <Clock className="h-5 w-5" />;
-      case 'weekly_flashcards': return <TrendingUp className="h-5 w-5" />;
-      case 'quiz_streak': return <Target className="h-5 w-5" />;
-      case 'items_published': return <CheckCircle className="h-5 w-5" />;
-      default: return <Target className="h-5 w-5" />;
-    }
-  };
-
   const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
   const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
 
@@ -163,23 +151,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
     return colors[tier] || 'from-gray-400 to-gray-600';
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'study': return <BookOpen className="h-5 w-5" />;
-      case 'social': return <Users className="h-5 w-5" />;
-      case 'achievement': return <TrendingUp className="h-5 w-5" />;
-      case 'special': return <Star className="h-5 w-5" />;
-      default: return <Award className="h-5 w-5" />;
-    }
-  };
-
   const activeGoals = goals.filter(g => !g.is_completed);
   const completedGoals = goals.filter(g => g.is_completed);
   const filteredAchievements = selectedCategory === 'all' ? allAchievements : allAchievements.filter(a => a.category === selectedCategory);
   const earnedCount = allAchievements.filter(a => isAchievementUnlocked(a.id)).length;
   const totalXPEarned = allAchievements.filter(a => isAchievementUnlocked(a.id)).reduce((sum, a) => sum + a.xp_reward, 0);
 
-  const cats = ['all', 'library', 'exams', 'eduplay', 'rooms', 'streak'];
   const categories = [
     { id: 'all', label: t('achievements.all'), icon: <Award className="h-4 w-4" /> },
     { id: 'study', label: t('achievements.category_study'), icon: <BookOpen className="h-4 w-4" /> },

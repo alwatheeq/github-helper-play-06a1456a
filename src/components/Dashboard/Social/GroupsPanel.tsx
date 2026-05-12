@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Plus, Hash, Users, Crown, Trash2, Copy, Check, MessageSquare } from 'lucide-react';
+import { Hash, Users, Crown, Trash2, Copy, Check, MessageSquare } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useI18n } from '../../../contexts/I18nContext';
 
@@ -281,7 +281,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
         {/* My Groups section heading */}
         <div className="flex items-center gap-3 mb-4">
           <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">{t('social.my_groups')}</span>
-          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {groups.filter(g => true).length}</span>
+          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {groups.length}</span>
           <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
         </div>
 

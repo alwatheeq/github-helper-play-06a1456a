@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Award, Flame, BookOpen, FileQuestion, Clock, TrendingUp, Edit2, Save, X, CreditCard, Crown, Gift, ChevronDown, Copy, Check, AtSign, Hash } from 'lucide-react';
+import { User, Award, Save, X, Crown, Gift, Copy, Check, Hash } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useSubscription } from '../../hooks/useSubscription';
 import { useCredits } from '../../contexts/CreditContext';
@@ -42,13 +42,6 @@ interface Achievement {
   earned_at?: string;
 }
 
-// Small section divider matching Scholar v4 editorial style
-const SectionLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="flex items-center gap-3 my-5">
-    <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">{children}</div>
-    <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
-  </div>
-);
 
 export const ProfilePage: React.FC = React.memo(() => {
   const { user } = useAuth();

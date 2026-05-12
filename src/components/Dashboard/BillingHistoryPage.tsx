@@ -8,7 +8,6 @@ import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
-import { useI18n } from '../../contexts/I18nContext';
 
 interface Transaction {
   id: string;
@@ -26,7 +25,6 @@ interface Transaction {
 export const BillingHistoryPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const { t } = useI18n();
   const { error: showErrorToast } = useToast();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);

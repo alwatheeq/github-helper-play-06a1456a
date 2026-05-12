@@ -3,9 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { MoreVertical, Copy, Check, FileSearch, Download, BookOpen, GraduationCap, RefreshCw, ArrowLeft, PanelLeft } from 'lucide-react';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
-import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
-import { WorkshopPanel } from './WorkshopPanel';
 import { WorkshopV4 } from './WorkshopV4';
 import { PageHeader } from '../Scholar';
 // Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.

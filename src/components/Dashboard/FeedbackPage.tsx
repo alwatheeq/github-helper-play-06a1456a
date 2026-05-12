@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Lightbulb, Upload, X, Video, Send, CheckCircle, AlertCircle, Flag } from 'lucide-react';
+import { MessageSquare, Lightbulb, X, Video, Send, CheckCircle, AlertCircle, Flag } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
@@ -19,7 +18,6 @@ type FeedbackTab = 'note' | 'suggestion' | 'complaint';
 
 export const FeedbackPage: React.FC = React.memo(() => {
   const { user } = useAuth();
-  const { t } = useI18n();
   const { error: showErrorToast, success: showSuccessToast } = useToast();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('feedback');
   const [activeTab, setActiveTab] = useState<FeedbackTab>('note');

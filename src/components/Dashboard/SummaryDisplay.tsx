@@ -9,7 +9,6 @@ import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useChatContext } from '../../contexts/ChatContext';
-import { FreeFormToggle } from './BookMode/FreeFormToggle';
 import { BookModeViewer } from './BookMode/BookModeViewer';
 import { useUserPreferences } from '../../contexts/UserPreferencesContext';
 import { ReadAloudButton } from './ReadAloud/ReadAloudButton';

@@ -497,7 +497,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
   const timerPct = Math.round((timeLeft / timePerQuestion) * 100);
   const answeredCount = playerScores.filter(p => p.score > 0 || p.correct > 0).length;
 
@@ -579,7 +578,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} answered · {playerScores.length - answeredCount} waiting</span>
         </div>
         <div className="p-4 flex flex-wrap gap-2">
-          {playerScores.map((player, i) => {
+          {playerScores.map((player) => {
             const answered = player.correct > 0 || (hasAnswered && player.user_id === user?.id);
             const isMe = player.user_id === user?.id;
             return (

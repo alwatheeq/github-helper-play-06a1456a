@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Users, Plus, X, Copy, Check, Clock, UserPlus, Trash2, Search } from 'lucide-react';
+import { Users, X, Copy, Check, Clock, UserPlus, Trash2, Search } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 const ZegoVideoRoom = React.lazy(() => import('./ZegoVideoRoom').then(m => ({ default: m.ZegoVideoRoom })));
@@ -17,7 +17,7 @@ import { useFloatingVideoStore } from '../../stores/useFloatingVideoStore';
 import { FriendsPanel } from './Social/FriendsPanel';
 import { GroupsPanel } from './Social/GroupsPanel';
 import { GroupChat } from './Social/GroupChat';
-import { PageHeader, ScholarButton, RoomCard, SectionTabs, type SectionTab } from '../Scholar';
+import { PageHeader, ScholarButton, SectionTabs, type SectionTab } from '../Scholar';
 
 interface StudyRoom {
   id: string;

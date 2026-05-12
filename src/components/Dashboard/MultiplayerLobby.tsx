@@ -410,7 +410,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
               <div className="px-4 py-6 text-center text-[12px] text-muted-ink dark:text-muted-ink-on-dark italic">Loading players...</div>
             )}
 
-            {players.map((player, i) => (
+            {players.map((player) => (
               <div
                 key={player.id}
                 className={`grid grid-cols-[28px_1fr_80px_64px] px-4 py-3 items-center border-b border-divider dark:border-divider-on-dark last:border-0`}

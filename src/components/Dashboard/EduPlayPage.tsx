@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Gamepad2, Play, Users, Clock, Trophy, Copy, Check, LogOut, Crown, Target, Sparkles, Edit, QrCode } from 'lucide-react';
+import { Gamepad2, Play, Users, Clock, Trophy, Copy, Check, LogOut, Crown, Target, Sparkles, Edit } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, BookOpen, Headphones, GitBranch, BookMarked, Network } from 'lucide-react';
+import { ArrowLeft, BookOpen, Headphones, BookMarked, Network } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useChatContext } from '../../contexts/ChatContext';
 import { useUserPreferences } from '../../contexts/UserPreferencesContext';

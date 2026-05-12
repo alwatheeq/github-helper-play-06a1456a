@@ -178,7 +178,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
               [myStats.participant.score.toLocaleString(), 'Score'],
               [`${myStats.correctAnswers} / ${myStats.totalAnswers}`, 'Correct'],
               [`${myStats.accuracy.toFixed(0)}%`, 'Accuracy'],
-            ].map(([v, l], i) => (
+            ].map(([v, l]) => (
               <div key={l} className="text-center">
                 <div className="font-display text-[30px] font-semibold text-ink-on-dark leading-none">{v}</div>
                 <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-2">{l}</div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { History, AlertCircle, RefreshCw, Clock, Stethoscope } from 'lucide-react';
+import { History, AlertCircle, RefreshCw, Clock } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';

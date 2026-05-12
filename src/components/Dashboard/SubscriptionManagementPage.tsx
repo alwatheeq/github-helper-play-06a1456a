@@ -3,8 +3,7 @@ import { useSubscription } from '../../hooks/useSubscription';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import {
-  Crown, Calendar, CreditCard, AlertCircle, CheckCircle,
-  XCircle, Clock, Shield, X, BarChart3, ArrowLeft
+  Crown, Calendar, CreditCard, AlertCircle, Clock, Shield, ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { getTierDisplayInfo, getStatusDisplayInfo, getToolsCreditsPlanCap } from '../../utils/subscriptionHelpers';
@@ -13,7 +12,6 @@ import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } fr
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useCredits } from '../../contexts/CreditContext';
 import { useI18n } from '../../contexts/I18nContext';
-import { PageHeader, EditorialCard } from '../Scholar';
 
 export const SubscriptionManagementPage: React.FC = () => {
   const { user } = useAuth();

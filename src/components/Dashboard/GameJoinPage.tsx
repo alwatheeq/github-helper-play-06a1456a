@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Gamepad2, Users, AlertCircle, Loader2 } from 'lucide-react';
+import { Gamepad2, AlertCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';

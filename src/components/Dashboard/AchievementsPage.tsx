@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Award, Lock, Star, TrendingUp, Users, BookOpen, Zap } from 'lucide-react';
+import { Award, Lock, Zap } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
 import { useI18n } from '../../contexts/I18nContext';
@@ -58,16 +58,6 @@ export const AchievementsPage: React.FC = () => {
   const getBadgeColor = (tier: string) => {
     const colors: Record<string, string> = { bronze: 'from-amber-600 to-amber-800', silver: 'from-gray-400 to-gray-600', gold: 'from-yellow-400 to-yellow-600', platinum: 'from-cyan-400 to-cyan-600', diamond: 'from-purple-400 to-purple-600' };
     return colors[tier] || 'from-gray-400 to-gray-600';
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'study': return <BookOpen className="h-5 w-5" />;
-      case 'social': return <Users className="h-5 w-5" />;
-      case 'achievement': return <TrendingUp className="h-5 w-5" />;
-      case 'special': return <Star className="h-5 w-5" />;
-      default: return <Award className="h-5 w-5" />;
-    }
   };
 
   const formatDate = (dateString: string) => {
