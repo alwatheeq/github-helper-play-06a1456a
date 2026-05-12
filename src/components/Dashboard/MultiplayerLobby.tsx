@@ -328,7 +328,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
   if (error || !lobby) {
     return (
       <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800">
+        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-4 text-red-800 dark:text-red-200">
           {error || 'Lobby not found'}
         </div>
         <button
@@ -378,14 +378,14 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-blue-600" />
+            <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             Players ({players.length})
           </h3>
 
           <div className="space-y-2 mb-6">
             {players.length === 0 && (
               <div className="p-4 rounded-[var(--s4-radius-card)] bg-yellow-50 border border-yellow-200 text-center">
-                <p className="text-sm text-yellow-800">Loading players...</p>
+                <p className="text-sm text-yellow-800 dark:text-yellow-200">Loading players...</p>
               </div>
             )}
 
@@ -405,7 +405,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-green-600">Ready</span>
+                  <span className="text-sm font-medium text-green-600 dark:text-green-400">Ready</span>
                 </div>
               </div>
             ))}

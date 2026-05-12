@@ -142,7 +142,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       {/* Statistics */}
       <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6">
         <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
-          <Target className="h-6 w-6 text-blue-600" />
+          <Target className="h-6 w-6 text-blue-600 dark:text-blue-400" />
           <span>Question Statistics</span>
         </h3>
 
@@ -175,7 +175,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       {/* Player Results */}
       <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6">
         <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
-          <Trophy className="h-6 w-6 text-yellow-600" />
+          <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
           <span>Player Results</span>
         </h3>
 

@@ -330,7 +330,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               id="auto_renew"
               checked={formData.auto_renew}
               onChange={(e) => setFormData({ ...formData, auto_renew: e.target.checked })}
-              className="h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border-gray-300 rounded dark:text-blue-400"
             />
             <label htmlFor="auto_renew" className="ml-2 block text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
               Auto-renew enabled

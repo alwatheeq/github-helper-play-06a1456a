@@ -94,7 +94,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
       case 2:
         return <Medal className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
       case 3:
-        return <Medal className="w-8 h-8 text-orange-600" />;
+        return <Medal className="w-8 h-8 text-orange-600 dark:text-orange-400" />;
       default:
         return <Award className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
     }
@@ -248,7 +248,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
         {results.length > 0 && results[0].user_id === user?.id && (
           <div className="mt-8 text-center">
             <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-400 rounded-md p-6">
-              <Trophy className="w-16 h-16 text-yellow-600 mx-auto mb-3" />
+              <Trophy className="w-16 h-16 text-yellow-600 mx-auto mb-3 dark:text-yellow-400" />
               <h3 className="s4-h2 text-yellow-800 dark:text-yellow-300 mb-2">
                 Congratulations!
               </h3>

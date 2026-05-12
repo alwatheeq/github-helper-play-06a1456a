@@ -1286,7 +1286,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           </button>
                           <button
                             onClick={() => handleDeleteQuiz(quiz.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900 dark:text-red-400"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

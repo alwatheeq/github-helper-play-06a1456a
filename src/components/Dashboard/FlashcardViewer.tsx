@@ -527,7 +527,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             
             <button
               onClick={() => setShowAll(false)}
-              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition duration-150"
+              className="flex items-center space-x-2 px-3 py-1.5 text-sm text-purple-600 hover:text-purple-800 transition duration-150 dark:text-purple-400 dark:text-purple-200"
             >
               <EyeOff className="h-4 w-4" />
               <span>{t('flashcards.card_view')}</span>

@@ -857,7 +857,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                 className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
               >
                 {copiedIndex === -2 ? (
-                  <Check className="h-4 w-4 text-green-600" />
+                  <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
                 ) : (
                   <Copy className="h-4 w-4" />
                 )}
@@ -866,7 +866,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
               <button
                 onClick={() => setShowOriginalText(false)}
-                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-150"
+                className="flex items-center space-x-2 px-3 py-1.5 text-sm text-orange-600 hover:text-orange-800 transition duration-150 dark:text-orange-400 dark:text-orange-200"
               >
                 <X className="h-4 w-4" />
                 <span>{t('summary.back_to_summary')}</span>
@@ -984,7 +984,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               className={`flex items-center space-x-2 px-3 py-1.5 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-60 transition duration-150`}
             >
               {copiedIndex === -1 ? (
-                <Check className="h-4 w-4 text-green-600" />
+                <Check className="h-4 w-4 text-green-600 dark:text-green-400" />
               ) : (
                 <Copy className="h-4 w-4" />
               )}
@@ -1158,7 +1158,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                     <button
                       onClick={createFolderInPublishModal}
                       disabled={creatingFolder}
-                      className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacity-50 transition-colors"
+                      className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacity-50 transition-colors dark:text-emerald-400"
                     >
                       {creatingFolder ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                     </button>
@@ -1244,7 +1244,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
-                    <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors">
+                    <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors dark:text-emerald-400">
                       <Check className="h-3.5 w-3.5" />
                     </button>
                     <button

@@ -166,7 +166,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                       setBlockType(e.target.value as 'permanent' | 'temporary');
                       setExpirationDate('');
                     }}
-                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500"
+                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
                   <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Permanent</span>
                 </label>
@@ -177,7 +177,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     value="temporary"
                     checked={blockType === 'temporary'}
                     onChange={(e) => setBlockType(e.target.value as 'permanent' | 'temporary')}
-                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500"
+                    className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
                   <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Temporary</span>
                 </label>

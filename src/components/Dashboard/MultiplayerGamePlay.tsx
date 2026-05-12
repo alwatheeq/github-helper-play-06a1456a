@@ -505,7 +505,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] px-4 py-2 shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow flex items-center gap-2">
-              <Clock className="w-5 h-5 text-blue-600" />
+              <Clock className="w-5 h-5 text-blue-600 dark:text-blue-400" />
               <span className={`text-2xl font-bold ${timeLeft <= 5 ? 'text-red-600 animate-pulse' : 'text-ink dark:text-ink-on-dark'}`}>
                 {timeLeft}s
               </span>
@@ -563,7 +563,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                       <div className="flex items-center justify-between">
                         <span>{option}</span>
                         {showResult && isCorrect && (
-                          <Zap className="w-5 h-5 text-green-600" />
+                          <Zap className="w-5 h-5 text-green-600 dark:text-green-400" />
                         )}
                       </div>
                     </button>
@@ -598,7 +598,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                         <div className="font-semibold">
                           {player.display_name}
                           {player.user_id === user?.id && (
-                            <span className="text-xs text-blue-600 ml-1">(You)</span>
+                            <span className="text-xs text-blue-600 ml-1 dark:text-blue-400">(You)</span>
                           )}
                         </div>
                         <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
@@ -607,7 +607,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold text-lg text-blue-600">
+                      <div className="font-bold text-lg text-blue-600 dark:text-blue-400">
                         {player.score}
                       </div>
                       <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">pts</div>

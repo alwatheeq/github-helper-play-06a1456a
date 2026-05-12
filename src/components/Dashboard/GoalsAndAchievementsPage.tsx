@@ -536,7 +536,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               )}
                               <button
                                 onClick={() => handleDeleteGoal(goal.id)}
-                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                                 title="Delete goal"
                               >
                                 <Trash2 className="h-5 w-5" />
@@ -601,7 +601,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                           </div>
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />

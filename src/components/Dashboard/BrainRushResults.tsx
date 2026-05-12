@@ -175,7 +175,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
             <div className="text-center">
               <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-2 animate-bounce" />
               <div className="bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full w-28 h-28 flex items-center justify-center mx-auto mb-3 shadow-[var(--s4-shadow-modal)]">
-                <span className="s4-h1 text-[40px] text-yellow-900">1</span>
+                <span className="s4-h1 text-[40px] text-yellow-900 dark:text-yellow-200">1</span>
               </div>
               <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 dark:from-yellow-900 dark:to-yellow-800 rounded-[var(--s4-radius-card)] p-4 min-w-[160px]">
                 <p className={`font-bold text-lg text-ink dark:text-ink-on-dark truncate`}>
@@ -193,7 +193,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
           {participantStats[2] && (
             <div className="text-center pb-16">
               <div className="bg-gradient-to-br from-orange-400 to-orange-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-3 shadow">
-                <span className="s4-h2 text-orange-900">3</span>
+                <span className="s4-h2 text-orange-900 dark:text-orange-200">3</span>
               </div>
               <div className="bg-orange-100 dark:bg-orange-900 rounded-[var(--s4-radius-card)] p-4 min-w-[120px]">
                 <p className={`font-bold text-ink dark:text-ink-on-dark truncate text-sm`}>
@@ -219,7 +219,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       {/* Full Leaderboard */}
       <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 mb-6">
         <h2 className={`s4-h2 text-ink dark:text-ink-on-dark mb-6 flex items-center space-x-2`}>
-          <TrendingUp className="h-6 w-6 text-purple-600" />
+          <TrendingUp className="h-6 w-6 text-purple-600 dark:text-purple-400" />
           <span>Final Standings</span>
         </h2>
 
@@ -328,7 +328,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       {myStats && (
         <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
           <h3 className={`font-bold text-ink dark:text-ink-on-dark mb-4 flex items-center space-x-2`}>
-            <Medal className="h-6 w-6 text-purple-600" />
+            <Medal className="h-6 w-6 text-purple-600 dark:text-purple-400" />
             <span>Your Performance</span>
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

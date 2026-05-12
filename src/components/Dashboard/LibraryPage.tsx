@@ -1065,7 +1065,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                               type="checkbox"
                               checked={selectedItems.has(item.id)}
                               onChange={() => handleSelectItem(item.id)}
-                              className={`mt-1 h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border border-divider dark:border-divider-on-dark rounded`}
+                              className={`mt-1 h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border border-divider dark:border-divider-on-dark rounded dark:text-blue-400`}
                             />
                           )}
 
