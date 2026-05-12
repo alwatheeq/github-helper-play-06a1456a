@@ -585,20 +585,20 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                       onClick={() => handleAnswerSelect(option)}
                       className={`flex items-stretch text-left border transition-colors w-full overflow-hidden ${
                         selected
-                          ? 'border-accent-gold bg-accent-gold/10 dark:bg-accent-gold/15'
+                          ? 'bg-ink border-ink'
                           : 'border-divider dark:border-divider-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
                       }`}
                     >
                       {/* Letter badge */}
-                      <div className={`w-11 flex-shrink-0 flex items-center justify-center border-r text-xs font-bold ${
+                      <div className={`w-11 flex-shrink-0 flex items-center justify-center border-r font-display text-sm font-bold ${
                         selected
-                          ? 'border-accent-gold bg-accent-gold/20 text-accent-gold'
+                          ? 'border-accent-gold bg-accent-gold text-ink-on-dark'
                           : 'border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
                       }`}>
                         {OPTION_LETTERS[i] || String(i + 1)}
                       </div>
                       <div className="flex flex-1 items-center justify-between px-4 py-3">
-                        <span className={`text-sm leading-snug ${selected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
+                        <span className={`text-sm leading-snug ${selected ? 'text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
                           {option}
                         </span>
                         <span onClick={(e) => e.stopPropagation()}>
@@ -628,7 +628,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                       }`}
                     >
                       <span className={`text-xl ${selected ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{icon}</span>
-                      <span className={`font-display text-2xl font-semibold tracking-tight ${selected ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
+                      <span className={`font-display text-[28px] font-semibold tracking-tight ${selected ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
                         {option}
                       </span>
                     </button>
@@ -647,7 +647,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                     value={answers[currentQuestionIndex] || ''}
                     onChange={(e) => handleAnswerSelect(e.target.value)}
                     placeholder="Type your answer…"
-                    className="w-full bg-transparent font-display text-lg text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark outline-none"
+                    className="w-full bg-transparent font-display text-[17px] italic text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark outline-none"
                   />
                 </div>
                 <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
