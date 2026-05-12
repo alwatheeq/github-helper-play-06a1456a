@@ -343,14 +343,36 @@ Deno.serve(async (req) => {
 
         if (convError) {
           const ce = convError as { message?: string; code?: string; details?: string; hint?: string };
-          console.error('Failed to create conversation:', {
+          console.error('Failed to create conversation, falling back to one-shot:', {
             message: ce.message,
             code: ce.code,
             details: ce.details,
             hint: ce.hint,
-            raw: convError,
+            context_type,
           });
-          return errorResponse('Failed to create conversation', 500);
+          // Fallback: reply without persistence so the chat still works
+          // (e.g. when a CHECK constraint or RLS blocks the insert).
+          const systemPrompt = buildSystemPrompt(
+            summary_text,
+            typeof original_text === 'string' ? original_text : null,
+            Array.isArray(topics) ? topics : [],
+            medical_mode === true,
+          );
+          const fb = await callClaude(
+            systemPrompt,
+            [{ role: 'user', content: message.trim() }],
+            typeof model === 'string' ? model : DEFAULT_MODEL,
+            typeof maxTokens === 'number' ? maxTokens : 2000,
+          );
+          if ('error' in fb) {
+            return errorResponse(fb.error, 500);
+          }
+          return jsonResponse({
+            message: fb.output,
+            tokens: fb.tokens,
+            persisted: false,
+            persistence_error: ce.message ?? 'insert blocked',
+          });
         }
 
         conversationId = newConversation.id;
