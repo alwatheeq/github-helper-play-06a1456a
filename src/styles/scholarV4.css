@@ -88,3 +88,46 @@
 .s4-small         { font-size: 12px; line-height: 1.45; color: var(--s4-muted); }
 .s4-numeric       { font-variant-numeric: tabular-nums; }
 .s4-hairline      { border-top: 1px solid var(--s4-rule); }
+
+/* ---------------- Phase 4.6 — Iconography normalization -----------------
+ * Lucide icons render with stroke-width="2" by default. Scholar v4 spec
+ * calls for a lighter stroke: 1.7 at ≤16px, 1.6 at >16px. Rather than
+ * mass-rewrite ~523 JSX call sites (high regression risk), we override
+ * via CSS using the `lucide` class lucide-react attaches to every <svg>.
+ * Intentional per-element strokeWidth props still win because the SVG
+ * attribute fallback is overridden by the `stroke-width` SVG attr only
+ * when CSS doesn't apply — explicit JSX `strokeWidth={n}` still produces
+ * a `stroke-width="n"` attr, which CSS here will override. For per-icon
+ * intentional overrides, use the new <ScholarIcon> wrapper or apply an
+ * inline style="stroke-width: …" (style wins over CSS class rules).
+ * ----------------------------------------------------------------------- */
+svg.lucide { stroke-width: 1.6; }
+svg.lucide[width="10"],
+svg.lucide[width="12"],
+svg.lucide[width="14"],
+svg.lucide[width="16"] { stroke-width: 1.7; }
+
+/* ---------------- Phase 4.7 — Motion tokens ---------------------------- */
+:root {
+  --s4-ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --s4-ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --s4-dur-fast:    120ms;
+  --s4-dur-base:    200ms;
+  --s4-dur-slow:    320ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --s4-dur-fast: 0ms;
+    --s4-dur-base: 0ms;
+    --s4-dur-slow: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
