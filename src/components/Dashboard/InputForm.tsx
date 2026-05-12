@@ -441,11 +441,11 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
           </div>
         )}
         
-        {/* Tab Navigation — hairline strip, horizontally scrollable on small viewports */}
+        {/* Tab Navigation — v4: no full-width rule; only the active tab carries an underline */}
         <div
           role="tablist"
           aria-label="Input source"
-          className="flex gap-8 mb-8 border-b border-divider dark:border-divider-on-dark overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
+          className="flex gap-8 mb-8 overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
         >
           <button
             type="button"
