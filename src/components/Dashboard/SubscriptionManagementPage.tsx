@@ -305,8 +305,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
-                      <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
+                      <p className={`s4-h2 s4-numeric text-ink dark:text-ink-on-dark`}>{zegoCreditsRemaining}</p>
+                      <p className={`s4-numeric text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>{t('subscription_management.of_credits', { total: zegoCreditsTotal })}</p>
                     </div>
                   </div>
                   <div className="space-y-2">
