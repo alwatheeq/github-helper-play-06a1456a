@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
 import { BookOpen, Search, Eye, Share2, Trash2, CheckCircle2, AlertCircle, X, Tag, FileText, Stethoscope, Filter } from 'lucide-react';
@@ -76,6 +76,19 @@ interface PendingInvitation {
   permission_level: 'read' | 'write' | 'admin';
 }
 
+const TOPIC_COLORS: Record<string, [string, string]> = {
+  biology: ['#2E4228', '#D8E8C8'], anatomy: ['#2E4228', '#D8E8C8'], physiology: ['#2E4228', '#D8E8C8'], genetics: ['#2E4228', '#D8E8C8'],
+  chemistry: ['#3A2E1E', '#F0DCBC'], biochemistry: ['#3A2E1E', '#F0DCBC'], pharmacology: ['#3A2E1E', '#F0DCBC'],
+  physics: ['#2A3E4A', '#D8E8E0'], engineering: ['#2A3E4A', '#D8E8E0'], astronomy: ['#2A3E4A', '#D8E8E0'],
+  mathematics: ['#1C3555', '#E8DFC8'], statistics: ['#1C3555', '#E8DFC8'],
+  'computer science': ['#1A2A48', '#C8D8F0'], programming: ['#1A2A48', '#C8D8F0'],
+  economics: ['#6B4E1A', '#F8EDD0'], business: ['#6B4E1A', '#F8EDD0'], law: ['#6B4E1A', '#F8EDD0'],
+  psychology: ['#4A2830', '#F0D8DC'], psychiatry: ['#4A2830', '#F0D8DC'],
+  history: ['#3A3020', '#F0E8C8'], geography: ['#3A3020', '#F0E8C8'],
+  literature: ['#DDD5B8', '#2A2218'], art: ['#DDD5B8', '#2A2218'],
+  medicine: ['#2C3E50', '#ECF0F1'], cardiology: ['#2C3E50', '#ECF0F1'], neurology: ['#2C3E50', '#ECF0F1'],
+};
+
 export const LibraryPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -119,6 +132,25 @@ export const LibraryPage: React.FC = React.memo(() => {
 
   // Debounce search query to avoid excessive database queries
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  const shelfData = useMemo(() => {
+    const counts: Record<string, { count: number; bg: string; txt: string }> = {};
+    libraryItems.forEach(item => {
+      item.topics?.forEach(topic => {
+        const key = topic.toLowerCase();
+        if (!counts[key]) {
+          const matchKey = Object.keys(TOPIC_COLORS).find(k => key.includes(k) || k.includes(key));
+          const [bg, txt] = matchKey ? TOPIC_COLORS[matchKey] : ['#3A3020', '#F0E8C8'];
+          counts[key] = { count: 0, bg, txt };
+        }
+        counts[key].count++;
+      });
+    });
+    return Object.entries(counts)
+      .sort(([, a], [, b]) => b.count - a.count)
+      .slice(0, 16)
+      .map(([label, data]) => ({ label, ...data }));
+  }, [libraryItems]);
 
   // Auto-dismiss notification
   useEffect(() => {
@@ -813,6 +845,61 @@ export const LibraryPage: React.FC = React.memo(() => {
           </div>
         }
       />
+
+      {/* Bookshelf ranking bar — v4 signature visual */}
+      {shelfData.length > 0 && (
+        <div className="mb-5">
+          <div className="flex items-baseline gap-2.5 mb-1.5">
+            <span className="text-[9px] font-bold tracking-[2px] uppercase text-accent-gold">By subject — most volumes first</span>
+            <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+            <span className="font-display text-[10px] text-muted-ink dark:text-muted-ink-on-dark">scroll →</span>
+          </div>
+          <div className="overflow-x-auto pb-0.5">
+            <div className="flex gap-1 items-end" style={{ minWidth: 'max-content' }}>
+              {shelfData.map(({ label, bg, txt, count }) => (
+                <div
+                  key={label}
+                  className="flex-shrink-0 flex flex-col items-center cursor-pointer"
+                  onClick={() => {
+                    setSelectedTopics(prev =>
+                      prev.includes(label)
+                        ? prev.filter(t => t !== label)
+                        : [...prev, label]
+                    );
+                  }}
+                  title={`${label} (${count})`}
+                >
+                  <div className="relative overflow-hidden" style={{ width: 46, height: 118, background: bg }}>
+                    <div
+                      className="absolute inset-x-0 bottom-0"
+                      style={{ height: `${Math.min(75, count * 18)}%`, background: 'var(--accent-gold)', opacity: 0.22 }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                      <span
+                        className="font-display text-[10.5px] font-semibold capitalize leading-tight"
+                        style={{
+                          color: txt,
+                          writingMode: 'vertical-rl',
+                          textOrientation: 'mixed',
+                          transform: 'rotate(180deg)',
+                          maxHeight: 108,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[7.5px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mt-1">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="h-[4px] bg-ink dark:bg-ink-on-dark opacity-75 mt-1" />
+        </div>
+      )}
 
       {/* Scholar v4: SectionTabs (All | Mine | Community | Liked) */}
       <div className="mb-6">
