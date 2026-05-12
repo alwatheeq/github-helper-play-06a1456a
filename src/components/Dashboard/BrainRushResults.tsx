@@ -166,7 +166,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
         <div className="bg-sidebar px-7 py-6 mb-4 flex items-center shadow-[var(--s4-shadow-hairline)]">
           <div className="pr-7 border-r border-white/10 flex-shrink-0">
             <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Your Rank</div>
-            <div className="font-display text-[56px] font-semibold text-ink-on-dark leading-none tracking-tight">
+            <div className="font-display text-[60px] font-semibold text-ink-on-dark leading-none tracking-tight">
               #{myRank}<span className="text-[20px] text-accent-gold ml-2">of {participantStats.length}</span>
             </div>
             <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold mt-2 uppercase">
@@ -206,7 +206,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
               return (
                 <div
                   key={stats.participant.id}
-                  className={`flex items-center gap-4 px-5 py-4 border-b border-divider dark:border-divider-on-dark last:border-0 ${i === 0 ? 'bg-chip dark:bg-chip' : ''}`}
+                  className={`flex items-center gap-4 px-5 py-4 border-b border-divider dark:border-divider-on-dark last:border-0 ${i === 0 ? 'bg-accent-gold-soft' : ''}`}
                   style={{ borderLeft: i === 0 ? '3px solid var(--color-accent-gold)' : '3px solid transparent' }}
                 >
                   <div className={`font-display text-[22px] font-bold w-7 flex-shrink-0 ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 1}</div>

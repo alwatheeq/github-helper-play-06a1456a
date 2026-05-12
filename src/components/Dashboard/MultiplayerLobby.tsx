@@ -376,7 +376,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
       <div className="bg-sidebar px-7 py-5 mb-5 flex items-center shadow-[var(--s4-shadow-hairline)]">
         <div className="pr-7 border-r border-white/10 flex-shrink-0">
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Room Code</div>
-          <div className="font-display text-[32px] font-black text-ink-on-dark tracking-[4px] leading-none font-mono">{lobby.game_code}</div>
+          <div className="font-mono text-[34px] font-black text-ink-on-dark tracking-[5px] leading-none">{lobby.game_code}</div>
           <div className="text-[10px] text-muted-ink-on-dark mt-1">Share with participants</div>
         </div>
         <div className="flex-1 flex justify-evenly pl-7">
@@ -387,7 +387,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             [`${lobby.game_config?.timePerQuestion || 30}s`, 'Per Question'],
           ].map(([v, l], i) => (
             <div key={l} className="text-center">
-              <div className={`font-display text-[26px] font-semibold leading-none ${i < 2 ? 'text-accent-gold' : 'text-ink-on-dark'}`}>{v}</div>
+              <div className={`font-display text-[28px] font-semibold leading-none ${i < 2 ? 'text-accent-gold' : 'text-ink-on-dark'}`}>{v}</div>
               <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-1">{l}</div>
             </div>
           ))}
