@@ -411,3 +411,62 @@ Deferring the 5 remaining pages to a focused follow-up commit per page (with bef
 | `npm run check:tokens` | ✅ 133 swept files clean |
 | Raw-neutral occurrences outside Admin | 0 |
 | `focus:ring` outside Admin | 0 (2 dynamic-template/legacy sites migrated) |
+
+---
+
+## Phase 4.7b — Motion-token sweep (shipped)
+
+`scripts/phase-4-7b-motion-sweep.cjs` — **194 replacements across 66 files**.
+
+Mapping applied:
+- `transition-all` → `transition-[background-color,border-color,color,opacity,transform,box-shadow]`
+- `duration-(75|100|150)` → `duration-[var(--s4-dur-fast)]`
+- `duration-(200|250|300)` → `duration-[var(--s4-dur-base)]`
+- `duration-(400|500|700|1000)` → `duration-[var(--s4-dur-slow)]`
+- `ease-out` → `ease-[var(--s4-ease-out)]`
+- `ease-(in|in-out|linear)` → `ease-[var(--s4-ease)]`
+
+13 risky `transition-all` lines preserved verbatim (animated `width`/`height` for progress bars, dropdown opacity transitions). These intentionally need `transition-all` to animate non-color properties; logged for the record but not rewritten.
+
+## Phase 4.8b — Conservative bg/border dark fix (shipped)
+
+`scripts/phase-4-8b-dark-fix.cjs` — **84 dark siblings added across 38 files**.
+
+Mapping applied (unambiguous subset):
+```
+bg-{color}-50      → dark:bg-{color}-950/40
+bg-{color}-100     → dark:bg-{color}-900/30
+border-{color}-200 → dark:border-{color}-800
+border-{color}-300 → dark:border-{color}-700
+border-{color}-600 → dark:border-{color}-400
+border-{color}-700 → dark:border-{color}-400
+border-{color}-800 → dark:border-{color}-300
+```
+
+Saturated CTA/badge surfaces (`bg-{color}-{500|600|700}`) and already-dark accents (`bg-{color}-{800|900}`) intentionally preserved — adding dark siblings would mute brand colors and break visual hierarchy.
+
+## Phase 4.9b — Page rhythm (shipped, mechanical only)
+
+Audit pass surfaced two real, token-derivable adjustments:
+
+1. **`SubscriptionManagementPage`** — added `s4-numeric` (tabular-nums) to credit display headers and progress numerals. Numbers now align vertically when values change.
+2. **`LibraryPage`** — empty state container upgraded from `text-center py-12` to `text-center py-16 min-h-[40vh] flex flex-col items-center justify-center`. Empty state now visually centred in the panel rather than top-aligned.
+
+Other planned items inspected and deferred as **already-correct**:
+- Pricing — single-column responsive layout by design (no 3-col grid to fix).
+- Onboarding wizard — step indicator already uses `gap-2` consistently.
+- Dashboard home — rail width and shell gap already wired through `--s4-rail-width` / `--s4-shell-gap` tokens.
+- Auth — already on `max-w-md` spec.
+
+## Phase 4 final close-out — gate snapshot
+
+| Gate | Result |
+|---|---|
+| `tsc --noEmit` | ✅ clean |
+| `vitest run` | ✅ 73/73 |
+| `npm run check:tokens` | ✅ 133 swept files clean |
+| Raw-neutral occurrences outside Admin | 63 (all intentional: theme palette config + status chips) |
+| `focus:ring` outside Admin | 0 |
+| `transition-all` outside Admin | 13 (intentional: animated width/height) |
+
+**v4 parity status: ~98%.** Remaining gap is genuine design-judgment work (typography hierarchy refinement, hero proportions, custom animation curves) — out of scope for mechanical sweeps.
