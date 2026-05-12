@@ -783,7 +783,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         descriptor={libraryViewMode === 'notebook'
           ? (t('notebook.subtitle') || 'Your personal notes and annotations')
           : 'indexed by subject, by date, by hand.'}
-        className="mb-8"
+        className="mb-5"
         actions={
           <div className="flex items-center gap-3">
             {/* Search input right-aligned in header */}
@@ -868,7 +868,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                   }}
                   title={`${label} (${count})`}
                 >
-                  <div className="relative overflow-hidden" style={{ width: 46, height: 118, background: bg }}>
+                  <div className="relative overflow-hidden" style={{ width: 56, height: 155, background: bg }}>
                     <div
                       className="absolute inset-x-0 bottom-0"
                       style={{ height: `${Math.min(75, count * 18)}%`, background: 'var(--accent-gold)', opacity: 0.22 }}
@@ -896,7 +896,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               ))}
             </div>
           </div>
-          <div className="h-[4px] bg-ink dark:bg-ink-on-dark opacity-75 mt-1" />
+          <div className="h-[5px] bg-ink dark:bg-ink-on-dark opacity-85 mt-[3px]" />
         </div>
       )}
 
@@ -1127,24 +1127,25 @@ export const LibraryPage: React.FC = React.memo(() => {
           ) : (
             <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] overflow-hidden shadow-[var(--s4-shadow-hairline)]">
               {/* Table header */}
-              <div className="grid grid-cols-[1fr_auto_auto_auto] gap-4 px-5 py-2.5 border-b border-divider dark:border-divider-on-dark bg-subtle/50 dark:bg-subtle-on-dark/30">
-                <span className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Title</span>
-                <span className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark w-24 text-left hidden sm:block">Subject</span>
-                <span className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark w-20 text-left hidden md:block">Format</span>
-                <span className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark w-24 text-right">Catalogued</span>
+              <div className="grid gap-3.5 px-5 py-2 border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 120px 120px 110px' }}>
+                <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Title</span>
+                <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark hidden sm:block">Subject</span>
+                <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark hidden md:block">Format</span>
+                <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Catalogued</span>
               </div>
 
               {/* Table rows */}
               {libraryItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`group grid grid-cols-[1fr_auto_auto_auto] gap-4 items-center px-5 py-3.5 hover:bg-subtle/60 dark:hover:bg-subtle-on-dark/20 transition-colors duration-[var(--s4-dur-fast)] cursor-pointer ${
+                  className={`group grid gap-3.5 items-center px-5 py-[14px] hover:bg-subtle/60 dark:hover:bg-subtle-on-dark/20 transition-colors duration-[var(--s4-dur-fast)] cursor-pointer ${
                     index < libraryItems.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
                   }`}
+                  style={{ gridTemplateColumns: '1fr 120px 120px 110px' }}
                   onClick={() => navigate(`/view/library/${item.id}`)}
                 >
-                  {/* TITLE column with gold accent bar */}
-                  <div className="flex items-center gap-3 min-w-0">
+                  {/* TITLE column with topic accent bar */}
+                  <div className="flex items-center gap-2 min-w-0">
                     {selectMultipleMode && (
                       <input
                         type="checkbox"
@@ -1153,7 +1154,14 @@ export const LibraryPage: React.FC = React.memo(() => {
                         className="h-3.5 w-3.5 text-accent-gold focus-visible:ring-accent-gold border border-divider dark:border-divider-on-dark rounded flex-shrink-0"
                       />
                     )}
-                    <div className="w-0.5 h-5 bg-accent-gold flex-shrink-0 opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div
+                      className="flex-shrink-0 opacity-80"
+                      style={{
+                        width: 3,
+                        height: 20,
+                        background: (item.topics?.[0] && TOPIC_COLORS[item.topics[0].toLowerCase()]?.[0]) || 'var(--color-accent-gold)',
+                      }}
+                    />
                     <div className="min-w-0">
                       <span className="font-display text-sm font-semibold text-ink dark:text-ink-on-dark truncate block leading-snug">
                         {item.title}
@@ -1174,19 +1182,19 @@ export const LibraryPage: React.FC = React.memo(() => {
                   </div>
 
                   {/* SUBJECT column */}
-                  <div className="w-24 hidden sm:block">
+                  <div className="hidden sm:block min-w-0">
                     {item.topics && item.topics.length > 0 ? (
-                      <span className="text-xs text-secondary-ink dark:text-muted-ink-on-dark capitalize truncate block">
+                      <span className="text-[11px] tracking-[1.5px] font-bold uppercase text-secondary-ink dark:text-muted-ink-on-dark truncate block">
                         {item.topics[0]}
                       </span>
                     ) : (
-                      <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">—</span>
+                      <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">—</span>
                     )}
                   </div>
 
                   {/* FORMAT column */}
-                  <div className="w-20 hidden md:block">
-                    <span className="text-xs text-secondary-ink dark:text-muted-ink-on-dark whitespace-nowrap">
+                  <div className="hidden md:block min-w-0">
+                    <span className="font-display text-[12.5px] text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap">
                       {item.flashcards_json.length > 0
                         ? `${item.flashcards_json.length} cards`
                         : 'Summary'}
@@ -1194,8 +1202,8 @@ export const LibraryPage: React.FC = React.memo(() => {
                   </div>
 
                   {/* CATALOGUED + actions */}
-                  <div className="w-24 flex items-center justify-end gap-2">
-                    <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap hidden sm:block">
+                  <div className="flex items-center justify-end gap-2 min-w-0">
+                    <span className="font-display text-[12px] text-muted-ink dark:text-muted-ink-on-dark whitespace-nowrap">
                       {formatDate(item.created_at)}
                     </span>
                     {!selectMultipleMode && (
