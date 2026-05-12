@@ -127,7 +127,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               onChange={(e) => setCurrentQuestion(e.target.value)}
               placeholder="Enter your question here..."
               rows={3}
-              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
             />
           </div>
 
@@ -151,7 +151,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       setCurrentOptions(newOptions);
                     }}
                     placeholder={`Enter option ${idx + 1}...`}
-                    className="flex-1 px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                    className="flex-1 px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
                   />
                   <button
                     type="button"
@@ -307,7 +307,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               value={saveSetName}
               onChange={(e) => setSaveSetName(e.target.value)}
               placeholder="Enter a name for this question set..."
-              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark mb-4"
+              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark mb-4"
             />
             <div className="flex space-x-3">
               <button

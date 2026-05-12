@@ -1102,7 +1102,7 @@ export const StudyRoomsPage: React.FC = () => {
                   onChange={(e) => setRoomName(e.target.value)}
                   placeholder={t('study_rooms.room_name_placeholder')}
                   maxLength={100}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
@@ -1116,7 +1116,7 @@ export const StudyRoomsPage: React.FC = () => {
                   placeholder={t('study_rooms.description_placeholder')}
                   maxLength={500}
                   rows={3}
-                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                  className={`w-full px-4 py-2 input-clean border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                 />
               </div>
 
@@ -1169,7 +1169,7 @@ export const StudyRoomsPage: React.FC = () => {
                   value={browseSearchQuery}
                   onChange={(e) => setBrowseSearchQuery(e.target.value)}
                   placeholder={t('study_rooms.browse_search_placeholder')}
-                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink focus:outline-none focus:ring-2 focus:ring-blue-500/40`}
+                  className={`w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] bg-transparent text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40`}
                   aria-label={t('study_rooms.browse_search_placeholder')}
                 />
               </div>

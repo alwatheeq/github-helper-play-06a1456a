@@ -196,7 +196,7 @@ export const GameJoinPage: React.FC = () => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your name"
               maxLength={50}
-              className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 

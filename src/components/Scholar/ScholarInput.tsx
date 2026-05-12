@@ -7,10 +7,10 @@ const fieldBase =
   'text-ink dark:text-ink-on-dark ' +
   'placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark ' +
   'transition-colors duration-150 ' +
-  'focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent-gold/60 ' +
+  'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-accent-gold/60 ' +
   'disabled:opacity-50 disabled:cursor-not-allowed';
 
-const errorCls = 'border-red-500 dark:border-red-500 focus:ring-red-500/30 focus:border-red-500';
+const errorCls = 'border-red-500 dark:border-red-500 focus-visible:ring-red-500/30 focus:border-red-500';
 
 interface FieldShellProps {
   label?: string;

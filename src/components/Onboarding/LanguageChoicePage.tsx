@@ -84,7 +84,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
         <button
           type="button"
           onClick={handleContinue}
-          className="w-full py-2.5 rounded-[var(--s4-radius-card)] text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark hover:bg-accent-gold-soft/10 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-gold"
+          className="w-full py-2.5 rounded-[var(--s4-radius-card)] text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark hover:bg-accent-gold-soft/10 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent-gold"
         >
           {getConfirmLabel(selectedLang)}
         </button>

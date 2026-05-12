@@ -761,7 +761,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               value={gameTitle}
               onChange={(e) => setGameTitle(e.target.value)}
               placeholder="e.g., Biology Quiz Battle"
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 
@@ -787,7 +787,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 onChange={(e) => setQuestionTimer(Number(e.target.value))}
                 min="5"
                 max="60"
-                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               />
             </div>
           </div>
@@ -839,7 +839,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 6-digit code"
               maxLength={6}
-              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
+              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
             />
           </div>
 
@@ -853,7 +853,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your display name"
               maxLength={50}
-              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+              className={`w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
             />
           </div>
 

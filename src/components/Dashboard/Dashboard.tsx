@@ -1557,7 +1557,7 @@ export const Dashboard: React.FC = () => {
                                 value={processingState.selectedLanguage}
                                 onChange={(e) => handleLanguageChange(e.target.value)}
                                 disabled={processingState.translating}
-                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                                className="px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                               >
                                 {AVAILABLE_LANGUAGES.map((lang: { code: string; name: string; flag: string; dir: string }) => (
                                   <option key={lang.code} value={lang.code}>

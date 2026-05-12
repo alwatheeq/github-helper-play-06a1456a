@@ -238,7 +238,7 @@ export const FriendsPanel: React.FC = () => {
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder={t('social.search_friends')}
-            className="w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 transition-colors"
           />
           {isSearching && (
             <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 animate-spin text-blue-400" />

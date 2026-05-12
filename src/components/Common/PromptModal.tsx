@@ -120,9 +120,9 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isLoading}
-              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
                 error
-                  ? 'border-red-500 focus:ring-red-500'
+                  ? 'border-red-500 focus-visible:ring-red-500'
                   : 'border-divider dark:border-divider-on-dark'
               }`}
             />

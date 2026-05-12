@@ -350,7 +350,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className="flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className="flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400"
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />

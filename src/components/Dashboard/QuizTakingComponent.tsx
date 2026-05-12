@@ -500,7 +500,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               <select
                 value={currentLanguage}
                 onChange={(e) => handleLanguageSwitch(e.target.value)}
-                className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-sm focus:ring-2 focus:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-sm focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               >
                 {availableLanguages.map((lang) => (
                   <option key={lang} value={lang}>
@@ -549,7 +549,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                   value={answers[currentQuestionIndex] || ''}
                   onChange={(e) => handleAnswerSelect(e.target.value)}
                   rows={getQuestionKind(currentQuestion) === 'open_ended' ? 5 : 2}
-                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border-2 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:border-accent-gold focus:ring-1 focus:ring-focus"
+                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border-2 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:border-accent-gold focus-visible:ring-1 focus-visible:ring-focus"
                   placeholder={t('quiz.type_your_answer')}
                 />
               </div>

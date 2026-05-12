@@ -1364,7 +1364,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       onChange={(e) => setEditedName(e.target.value)}
                       placeholder={t('profile.display_name')}
                       maxLength={50}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-focus focus-visible:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
                     />
                     <textarea
                       value={editedBio}
@@ -1372,7 +1372,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       placeholder={t('profile.bio_placeholder')}
                       maxLength={500}
                       rows={3}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-focus focus-visible:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
                     />
                   </div>
                 ) : (

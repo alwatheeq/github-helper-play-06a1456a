@@ -196,7 +196,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="e.g., Ancient Rome, Photosynthesis, World War II..."
-                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               />
               <p className="mt-1 text-sm text-muted-ink dark:text-muted-ink">
                 Be specific for better questions
@@ -211,7 +211,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               >
                 <option value="">Any Subject</option>
                 {subjects.map((s) => (

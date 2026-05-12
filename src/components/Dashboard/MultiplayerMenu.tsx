@@ -204,7 +204,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 value={gameName}
                 onChange={(e) => setGameName(e.target.value)}
                 placeholder="Enter game name"
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               />
             </div>
 
@@ -216,7 +216,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={maxPlayers}
                   onChange={(e) => setMaxPlayers(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
                 >
                   {[2, 3, 4, 5, 6, 8, 10].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -231,7 +231,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 <select
                   value={questionCount}
                   onChange={(e) => setQuestionCount(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
                 >
                   {[5, 10, 15, 20, 25].map(num => (
                     <option key={num} value={num}>{num}</option>
@@ -247,7 +247,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               <select
                 value={timePerQuestion}
                 onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               >
                 {[15, 20, 30, 45, 60].map(num => (
                   <option key={num} value={num}>{num}s</option>
@@ -302,7 +302,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
                 onChange={(e) => setGameCode(e.target.value.toUpperCase())}
                 placeholder="Enter 6-digit code"
                 maxLength={6}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] text-center s4-h2 tracking-wider focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
               />
             </div>
           </div>
