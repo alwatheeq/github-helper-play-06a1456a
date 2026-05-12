@@ -256,7 +256,7 @@ export const ContentViewPage: React.FC = () => {
                   {data.topics.map((topic, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark"
+                      className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-accent-gold-soft text-accent-gold"
                     >
                       {topic}
                     </span>

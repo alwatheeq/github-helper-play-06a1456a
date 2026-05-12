@@ -501,13 +501,13 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       </div>
 
       {/* Live player strip */}
-      <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
+      <div className="flex gap-[5px] mb-4 overflow-x-auto pb-1">
         {sortedParticipants.slice(0, 6).map((p, i) => {
           const isMe = user && p.user_id === user.id;
           return (
             <div
               key={p.id}
-              className={`flex items-center gap-2 px-3 py-2 flex-shrink-0 border ${
+              className={`flex items-center gap-2 px-[11px] py-[7px] flex-shrink-0 border ${
                 isMe
                   ? 'bg-sidebar border-accent-gold'
                   : i === 0
@@ -516,7 +516,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               }`}
             >
               <span className={`text-[9px] font-bold ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>#{i + 1}</span>
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+              <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 border border-divider ${isMe ? 'bg-accent-gold text-sidebar' : i === 0 ? 'bg-sidebar text-ink-on-dark' : 'bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
               <span className={`text-[11px] font-semibold ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
@@ -532,7 +532,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       </div>
 
       {/* Timer bar — full-width accent-gold fill */}
-      <div className="mb-4">
+      <div className="mb-[18px]">
         <div className="h-1 bg-divider dark:bg-divider-on-dark">
           <div
             className="h-full bg-accent-gold transition-all duration-1000"
@@ -546,7 +546,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       </div>
 
       {/* Question — centered, font-display, borderLeft accent */}
-      <div className="border-l-[3px] border-accent-gold pl-5 mb-5">
+      <div className="border-l-[3px] border-accent-gold pl-[18px] mb-[18px]">
         <div className="flex items-start gap-3">
           <h2 className="font-display text-[20px] font-semibold text-ink dark:text-ink-on-dark leading-snug flex-1">
             {currentQuestion.question_text}
@@ -556,7 +556,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       </div>
 
       {/* Answer cards — 2x2 grid with distinct colours */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-4">
         {currentQuestion.options.map((option, index) => {
           const isSelected = selectedAnswer === option;
           const isCorrect = option === currentQuestion.correct_answer;
@@ -577,7 +577,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               onClick={() => !hasAnswered && handleAnswerSelect(option)}
               onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
               style={{ backgroundColor: bgColor, borderColor }}
-              className={`flex gap-4 items-start p-5 border-2 rounded-[var(--s4-radius-card)] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
+              className={`flex gap-4 items-start px-5 py-[18px] ${isSelected ? 'border-2' : 'border'} rounded-[var(--s4-radius-card)] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
             >
               <span style={{ color: colors.label }} className="text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5">
                 {['A','B','C','D'][index]}
@@ -630,7 +630,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
       {/* Live leaderboard — compact 3-col grid */}
       <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Live Standings · {participants.length} Players</div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[6px] mb-4">
         {/* Rank 1 spans full row */}
         {sortedParticipants.slice(0, 1).map(p => {
           const isMe = user && p.user_id === user.id;
@@ -644,7 +644,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
                 <div className={`text-[13px] font-bold ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</div>
                 <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">Leading the room</div>
               </div>
-              <span className="font-display text-[24px] font-bold text-accent-gold">{p.score.toLocaleString()}</span>
+              <span className="font-display text-[26px] font-bold text-accent-gold">{p.score.toLocaleString()}</span>
             </div>
           );
         })}
@@ -653,7 +653,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           return (
             <div key={p.id} className={`flex items-center gap-2 px-3 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
               <span className="font-display text-[14px] font-bold text-muted-ink dark:text-muted-ink-on-dark w-5">{i + 2}</span>
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+              <div className={`w-[26px] h-[26px] rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
               <span className={`text-[11px] flex-1 truncate ${isMe ? 'text-ink-on-dark font-bold' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
