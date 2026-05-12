@@ -84,7 +84,12 @@
     "check_email_confirm": "تحقق من بريدك الإلكتروني لتأكيد حسابك",
     "signup_success_message": "تم إنشاء الحساب بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد حسابك قبل تسجيل الدخول.",
     "pages_per_month": "1500 رصيد أدوات وخدمات/شهر (قياسي)",
-    "supported_formats": "PDF، PPTX، DOCX"
+    "supported_formats": "PDF، PPTX، DOCX",
+    "welcome_back": "مرحباً بعودتك.",
+    "create_account": "أنشئ حسابك.",
+    "signin_subtitle": "سجّل دخولك لمتابعة دراستك",
+    "signup_subtitle": "انضم وابدأ الدراسة بذكاء",
+    "editorial_subtitle": "ملخصات ذكية وبطاقات تعليمية واختبارات من أي وثيقة."
   },
   "sidebar": {
     "navigation": "التنقل",

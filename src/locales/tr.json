@@ -84,7 +84,12 @@
     "check_email_confirm": "Hesabınızı onaylamak için e-postanızı kontrol edin",
     "signup_success_message": "Hesap başarıyla oluşturuldu! Giriş yapmadan önce hesabınızı doğrulamak için lütfen e-postanızı kontrol edin.",
     "pages_per_month": "1.500 araç ve hizmet kredisi/ay (Standart)",
-    "supported_formats": "PDF, PPTX, DOCX"
+    "supported_formats": "PDF, PPTX, DOCX",
+    "welcome_back": "Tekrar hoş geldiniz.",
+    "create_account": "Hesabınızı oluşturun.",
+    "signin_subtitle": "Çalışmalarınıza devam etmek için giriş yapın",
+    "signup_subtitle": "Daha akıllı çalışmaya başlamak için katılın",
+    "editorial_subtitle": "Herhangi bir belgeden yapay zeka destekli özetler."
   },
   "sidebar": {
     "navigation": "Gezinme",

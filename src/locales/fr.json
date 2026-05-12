@@ -84,7 +84,12 @@
     "check_email_confirm": "Vérifiez votre e-mail pour confirmer votre compte",
     "signup_success_message": "Compte créé avec succès ! Veuillez vérifier votre e-mail pour vérifier votre compte avant de vous connecter.",
     "pages_per_month": "1 500 crédits outils et services/mois (Standard)",
-    "supported_formats": "PDF, PPTX, DOCX"
+    "supported_formats": "PDF, PPTX, DOCX",
+    "welcome_back": "Bon retour.",
+    "create_account": "Créez votre compte.",
+    "signin_subtitle": "Connectez-vous pour poursuivre vos études",
+    "signup_subtitle": "Rejoignez pour étudier plus intelligemment",
+    "editorial_subtitle": "Résumés, flashcards et quiz alimentés par IA."
   },
   "sidebar": {
     "navigation": "Navigation",

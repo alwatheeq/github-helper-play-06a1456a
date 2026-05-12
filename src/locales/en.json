@@ -83,7 +83,12 @@
     "check_email_confirm": "Check your email to confirm your account",
     "signup_success_message": "Account created successfully! Please check your email to verify your account before signing in.",
     "pages_per_month": "1,500 credits/month (Standard)",
-    "supported_formats": "PDF, PPTX, DOCX"
+    "supported_formats": "PDF, PPTX, DOCX",
+    "welcome_back": "Welcome back.",
+    "create_account": "Create your account.",
+    "signin_subtitle": "Sign in to continue your studies",
+    "signup_subtitle": "Join to start studying smarter",
+    "editorial_subtitle": "AI-powered summaries, flashcards, and quizzes from any document. Study in your language, at your own pace."
   },
   "sidebar": {
     "navigation": "Navigation",

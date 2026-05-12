@@ -138,6 +138,8 @@ export default {
       colors: {
         // ---- Scholar role-based tokens (spec) ----
         'page':              'var(--bg-page)',
+        'page-light':        'var(--bg-page)',   // alias — bg-page already adapts to dark mode
+        'page-dark':         'var(--bg-page)',   // alias — kept for legacy bg-page-light/dark usage
         'sidebar':           'var(--bg-sidebar)',
         'card-dark':         'var(--bg-card-dark)',
         'card-light':        'var(--bg-card-light)',
