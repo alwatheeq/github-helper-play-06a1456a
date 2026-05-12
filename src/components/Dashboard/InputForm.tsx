@@ -509,14 +509,18 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
             />
 
             <div className="flex flex-col items-center">
-              <Upload size={32} strokeWidth={1.5} className="text-accent-gold" aria-hidden />
-              <p className="font-display text-xl font-semibold text-ink dark:text-ink-on-dark mt-2">
-                {t('dashboard.drop_file')}
+              <Upload size={36} strokeWidth={1.7} className="text-muted-ink dark:text-muted-ink-on-dark" aria-hidden />
+              <p className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mt-3 leading-[1.25]">
+                {t('dashboard.drop_file_line_1') || 'Drop your file here,'}
+                <br />
+                <span className="font-normal text-muted-ink dark:text-muted-ink-on-dark">
+                  {t('dashboard.drop_file_line_2') || 'or click to browse.'}
+                </span>
               </p>
-              <p className="font-light text-[13px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">
-                Or click to browse — PDF, DOCX, PPTX up to 25 MB
+              <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark mt-2">
+                {t('dashboard.drop_file_helper') || 'PDF, PPTX, DOCX · up to 400 pages'}
               </p>
-              <span className="inline-flex items-center gap-2 px-5 py-2.5 bg-sidebar text-ink-on-dark rounded-[4px] text-[13px] font-semibold mt-4">
+              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark rounded-[var(--s4-radius-btn)] text-[13px] font-medium mt-[18px]">
                 Choose a file <span aria-hidden>→</span>
               </span>
             </div>
