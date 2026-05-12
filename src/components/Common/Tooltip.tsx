@@ -22,7 +22,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
     <div className="relative group">
       {children}
       <div
-        className={`absolute ${positionClasses[position]} bg-gray-900 text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 shadow-[var(--s4-shadow-modal)] pointer-events-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 whitespace-nowrap`}
+        className={`absolute ${positionClasses[position]} bg-card-dark text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 shadow-[var(--s4-shadow-modal)] pointer-events-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 whitespace-nowrap`}
       >
         {content}
       </div>

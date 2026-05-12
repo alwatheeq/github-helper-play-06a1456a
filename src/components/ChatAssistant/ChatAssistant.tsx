@@ -263,7 +263,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-150`}>
       {/* Header */}
       <div className={`flex items-center justify-between p-6 bg-accent-gold text-white dark:text-ink rounded-t-[var(--s4-radius-card)]`}>
         <div className="flex items-center space-x-2">
@@ -294,7 +294,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
       {!isMinimized && (
         <>
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-gray-100 dark:bg-gray-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
             {messages.length === 0 ? (
               <div className="text-center py-8">
                 <MessageCircle className="h-12 w-12 mx-auto mb-4 text-muted-ink dark:text-muted-ink-on-dark" />
@@ -304,7 +304,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(question)}
-                      className={`w-full text-left px-5 py-2.5 text-sm rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors`}
+                      className={`w-full text-left px-5 py-2.5 text-sm rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-card-dark transition-colors`}
                     >
                       {question}
                     </button>
@@ -322,7 +322,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                       className={`max-w-[80%] rounded-[var(--s4-radius-card)] px-5 py-2.5 ${
                         message.role === 'user'
                           ? `bg-accent-gold text-white dark:text-ink`
-                          : 'bg-white dark:bg-gray-700 text-ink dark:text-muted-ink-on-dark border border-gray-200 dark:border-gray-600'
+                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-gray-200 dark:border-gray-600'
                       }`}
                     >
                       <p className="text-sm whitespace-pre-wrap">{message.content}</p>
@@ -331,7 +331,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-gray-200 dark:border-gray-600">
+                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-gray-200 dark:border-gray-600">
                       <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
           </div>
 
           {/* Input */}
-          <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="p-6 border-t border-gray-200 dark:border-gray-700 bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
             <div className="flex items-end space-x-2">
               <textarea
                 ref={inputRef}
@@ -350,7 +350,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className="flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] bg-white dark:bg-gray-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+                className="flex-1 resize-none px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />

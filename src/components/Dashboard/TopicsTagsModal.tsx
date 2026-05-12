@@ -82,7 +82,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
   const inactiveTabBtn = `bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
       <ScholarCard variant="elevated" padding="none" className="max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-divider dark:border-divider-on-dark">

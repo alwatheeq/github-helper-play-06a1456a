@@ -1436,7 +1436,7 @@ export const Dashboard: React.FC = () => {
         {/* Mobile overlay */}
         {isMobile && isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-10"
+            className="fixed inset-0 bg-page bg-opacity-50 z-10"
             onClick={toggleSidebar}
           />
         )}

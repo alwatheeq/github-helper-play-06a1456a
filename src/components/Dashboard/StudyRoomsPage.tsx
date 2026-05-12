@@ -984,10 +984,10 @@ export const StudyRoomsPage: React.FC = () => {
 
   if (selectedRoom) {
     return (
-      <div className="min-h-screen bg-gray-900 p-4">
+      <div className="min-h-screen bg-card-dark p-4">
         <div className="max-w-7xl mx-auto">
           {/* Minimal header with room info and leave button */}
-          <div className="mb-4 flex justify-between items-center bg-gray-800 rounded-[var(--s4-radius-card)] p-4 shadow">
+          <div className="mb-4 flex justify-between items-center bg-card-dark rounded-[var(--s4-radius-card)] p-4 shadow">
             <div className="flex items-center space-x-4">
               <div>
                 <h2 className="text-xl font-bold text-ink-on-dark">
@@ -1026,7 +1026,7 @@ export const StudyRoomsPage: React.FC = () => {
           )}
 
           {/* Full-screen ZegoCloud video interface */}
-          <div className="bg-black rounded-md overflow-hidden shadow-[var(--s4-shadow-modal)]" style={{ height: 'calc(100vh - 140px)' }}>
+          <div className="bg-page rounded-md overflow-hidden shadow-[var(--s4-shadow-modal)]" style={{ height: 'calc(100vh - 140px)' }}>
             <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" /></div>}>
               <ZegoVideoRoom
                 roomId={selectedRoom.room_code}

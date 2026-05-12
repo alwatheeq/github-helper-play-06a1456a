@@ -614,7 +614,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               )}
 
               {goals.length === 0 && !loading && (
-                <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
+                <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
                   <Target className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
                   <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('goals.no_goals_yet')}</p>
                   <p className="text-sm text-muted-ink dark:text-muted-ink mb-4">
@@ -681,7 +681,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-4 mb-6">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-4 mb-6">
               <div className="flex flex-wrap gap-2">
                 {categories.map((category) => (
                   <button
@@ -690,7 +690,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                     className={`px-4 py-2 rounded-[var(--s4-radius-card)] font-medium transition-colors flex items-center space-x-2 ${
                       selectedCategory === category.id
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 dark:bg-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-gray-200 dark:hover:bg-gray-600'
+                        : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-card-dark'
                     }`}
                   >
                     {category.icon}
@@ -708,7 +708,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 return (
                   <div
                     key={achievement.id}
-                    className={`bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 transition-all ${
+                    className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 transition-all ${
                       isUnlocked
                         ? 'border-2 border-yellow-400 dark:border-yellow-600'
                         : 'opacity-75 hover:opacity-100'
@@ -719,7 +719,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                         className={`p-3 rounded-md ${
                           isUnlocked
                             ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}`
-                            : 'bg-gray-200 dark:bg-gray-700'
+                            : 'bg-subtle dark:bg-card-dark'
                         }`}
                       >
                         {isUnlocked ? (
@@ -734,7 +734,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                             achievement.badge_tier === 'bronze'
                               ? 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300'
                               : achievement.badge_tier === 'silver'
-                              ? 'bg-gray-100 text-ink dark:bg-gray-700 dark:text-muted-ink-on-dark'
+                              ? 'bg-subtle text-ink dark:bg-card-dark dark:text-muted-ink-on-dark'
                               : achievement.badge_tier === 'gold'
                               ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
                               : achievement.badge_tier === 'platinum'
@@ -789,7 +789,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
             </div>
 
             {filteredAchievements.length === 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
+              <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
                 <Award className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
                 <p className="text-secondary-ink dark:text-muted-ink">{t('achievements.no_achievements')}</p>
               </div>
@@ -799,13 +799,13 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
       </div>
 
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark">{t('goals.create_new_goal')}</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
+                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] dark:hover:bg-card-dark"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -819,7 +819,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -839,7 +839,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder={t('goals.goal_title_placeholder')}
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -853,7 +853,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   placeholder={t('goals.description_placeholder')}
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -867,7 +867,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   {t('goals.target_value_help')}
@@ -883,14 +883,14 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div className="flex space-x-4 pt-4">
                 <button
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark dark:hover:bg-card-dark"
                 >
                   {t('common.cancel')}
                 </button>

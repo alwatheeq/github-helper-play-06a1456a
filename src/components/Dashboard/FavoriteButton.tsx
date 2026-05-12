@@ -115,7 +115,7 @@ export const FavoriteButton: React.FC<FavoriteButtonProps> = ({
         flex items-center space-x-1 rounded-[var(--s4-radius-card)] transition-colors duration-150
         ${isFavorited
           ? 'bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900 dark:text-red-300 dark:hover:bg-red-800'
-          : 'bg-gray-100 text-secondary-ink hover:bg-gray-200 dark:bg-gray-700 dark:text-muted-ink-on-dark dark:hover:bg-gray-600'
+          : 'bg-subtle text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
         }
         ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         ${isAnimating ? 'scale-110' : 'scale-100'}

@@ -21,7 +21,7 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
         onClick={() => onToggle(!enabled)}
         className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-colors ${
           enabled
-            ? 'border-gray-700 dark:border-gray-200 bg-gray-700 dark:bg-gray-200 text-ink-on-dark dark:text-ink'
+            ? 'border-gray-700 dark:border-gray-200 bg-card-dark dark:bg-subtle text-ink-on-dark dark:text-ink'
             : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
         }`}
         title={enabled
@@ -38,14 +38,14 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
         <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full transition-colors ${
           enabled
             ? 'bg-white/20 text-ink-on-dark dark:bg-black/10 dark:text-ink'
-            : 'bg-gray-100 dark:bg-gray-800 text-muted-ink dark:text-muted-ink'
+            : 'bg-subtle dark:bg-card-dark text-muted-ink dark:text-muted-ink'
         }`}>
           {enabled ? 'ON' : 'OFF'}
         </span>
       </button>
 
       {/* Tooltip */}
-      <div className="absolute right-0 top-full mt-2 w-56 bg-gray-900 text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 shadow-[var(--s4-shadow-modal)] pointer-events-none">
+      <div className="absolute right-0 top-full mt-2 w-56 bg-card-dark text-ink-on-dark text-xs rounded-[var(--s4-radius-card)] py-2 px-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50 shadow-[var(--s4-shadow-modal)] pointer-events-none">
         <p className="font-semibold mb-1 flex items-center gap-1.5">
           <Move className="h-3 w-3" />
           <span>{t('free_form.available') || 'Free-Form Mode'}</span>

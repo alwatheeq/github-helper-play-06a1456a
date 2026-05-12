@@ -211,7 +211,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       {/* Background overlay - click to close if onClose provided */}
       {onClose && (
         <div
-          className="absolute inset-0 bg-black bg-opacity-20 z-0"
+          className="absolute inset-0 bg-page bg-opacity-20 z-0"
           onClick={onClose}
         />
       )}

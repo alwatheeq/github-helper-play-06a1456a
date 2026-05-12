@@ -67,7 +67,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       onClick={handleBackdropClick}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
+      <div className="absolute inset-0 bg-page bg-opacity-70 backdrop-blur-md"></div>
 
       {/* Tutorial Modal */}
       <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-2xl w-full overflow-hidden animate-scaleIn">
@@ -75,7 +75,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={handleSkip}
-            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
+            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
             aria-label={t('tutorial.skip')}
           >
             <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
