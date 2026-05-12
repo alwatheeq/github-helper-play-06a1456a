@@ -276,8 +276,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className={`s4-h2 text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
-                    <p className={`text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
+                    <p className={`s4-h2 s4-numeric text-ink dark:text-ink-on-dark`}>{toolCreditsRemaining.toLocaleString()}</p>
+                    <p className={`s4-numeric text-sm text-secondary-ink dark:text-secondary-ink-on-dark`}>
                       / {toolPlanCap.toLocaleString()} {t('subscription_management.credits_plan_cap_suffix')}
                     </p>
                   </div>
