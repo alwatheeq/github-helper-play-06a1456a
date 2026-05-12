@@ -1027,7 +1027,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               </div>
 
               {libraryItems.length === 0 ? (
-                <div className="text-center py-12">
+                <div className="text-center py-16 min-h-[40vh] flex flex-col items-center justify-center">
                   {libraryViewMode === 'notebook' ? (
                     <>
                       <FileText className={`h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4`} />
