@@ -42,6 +42,8 @@ interface RoomParticipant {
 
 // ChatMessage interface removed - using ZegoCloud built-in chat
 
+const ROOM_TOOLS = ['Video', 'Microphone', 'Whiteboard', 'Screen', 'Chat', 'File Share', 'Pomodoro', 'AI Tutor', 'Recording'] as const;
+
 export const StudyRoomsPage: React.FC = () => {
   const { user } = useAuth();
   const { t } = useI18n();
@@ -97,6 +99,12 @@ export const StudyRoomsPage: React.FC = () => {
   const [roomName, setRoomName] = useState('');
   const [roomDescription, setRoomDescription] = useState('');
   const [maxParticipants, setMaxParticipants] = useState(10);
+  const [whenMode, setWhenMode] = useState<'now' | 'later'>('later');
+  const [toolsEnabled, setToolsEnabled] = useState<Record<string, boolean>>(() => ({
+    'Video': true, 'Microphone': true, 'Whiteboard': true,
+    'Screen': false, 'Chat': true, 'File Share': false,
+    'Pomodoro': false, 'AI Tutor': false, 'Recording': false,
+  }));
   const [creating, setCreating] = useState(false);
   const [joiningRoom, setJoiningRoom] = useState(false);
   const [leavingRoom, setLeavingRoom] = useState(false);
@@ -1094,106 +1102,167 @@ export const StudyRoomsPage: React.FC = () => {
         </div>
 
         {activeTab === 'create' && (
-          <div className="bg-card-dark rounded-[var(--s4-radius-card)] p-7 shadow-[var(--s4-shadow-hairline)]">
-            <p className="text-[9px] tracking-[0.25em] uppercase text-accent-gold font-bold mb-6">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark" style={{ padding: '26px 30px' }}>
+            <div className="text-[9px] tracking-[0.25em] uppercase text-accent-gold font-bold mb-5">
               {t('study_rooms.create_new') || 'New Room'}
-            </p>
+            </div>
 
-            <div className="space-y-6">
-              {/* Room name — large underline input matching v4 */}
-              <div>
-                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
-                  {t('study_rooms.room_name')}
-                </label>
-                <div className="border-b border-ink dark:border-ink-on-dark pb-2">
-                  <input
-                    type="text"
-                    value={roomName}
-                    onChange={(e) => setRoomName(e.target.value)}
-                    placeholder={t('study_rooms.room_name_placeholder')}
-                    maxLength={100}
-                    className="w-full bg-transparent text-ink dark:text-ink-on-dark text-xl font-display placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
-                  />
-                </div>
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
-                  {t('study_rooms.description')}
-                </label>
-                <textarea
-                  value={roomDescription}
-                  onChange={(e) => setRoomDescription(e.target.value)}
-                  placeholder={t('study_rooms.description_placeholder')}
-                  maxLength={500}
-                  rows={3}
-                  className="w-full px-4 py-3 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold/40 resize-none"
+            {/* Room name */}
+            <div className="mb-[22px]">
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-[6px]">{t('study_rooms.room_name')}</div>
+              <div className="border-b border-ink dark:border-ink-on-dark pb-2">
+                <input
+                  type="text"
+                  value={roomName}
+                  onChange={(e) => setRoomName(e.target.value)}
+                  placeholder={t('study_rooms.room_name_placeholder') || 'Name your room…'}
+                  maxLength={100}
+                  className="w-full bg-transparent font-display text-[20px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
                 />
               </div>
+            </div>
 
-              {/* Max participants — grid of select with chip display */}
-              <div>
-                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-3">
-                  {t('study_rooms.max_participants')}
-                </label>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center justify-between px-3 py-2 bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)]">
-                    <span className="text-[13px] text-ink dark:text-ink-on-dark">{maxParticipants} {t('study_rooms.participants')}</span>
-                    <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">▾</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="2"
-                    max="20"
-                    value={maxParticipants}
-                    onChange={(e) => setMaxParticipants(Number(e.target.value))}
-                    className="accent-accent-gold self-center"
-                  />
-                </div>
+            {/* Course */}
+            <div className="mb-[22px]">
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-[6px]">Course</div>
+              <div className="flex justify-between items-center px-3 py-2 bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+                <span className="text-[13px] text-ink dark:text-ink-on-dark">Calculus II</span>
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">▾</span>
               </div>
+            </div>
 
-              {/* Privacy toggle chips */}
-              <div>
-                <label className="block text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-3">
-                  Privacy
-                </label>
-                <div className="flex gap-2">
-                  {(['Private with link', 'Public'] as const).map((label, i) => (
+            {/* When */}
+            <div className="mb-[22px]">
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">When</div>
+              <div className="flex gap-[10px] mb-3">
+                {(['Start now', 'Schedule for later'] as const).map((label) => {
+                  const active = (label === 'Start now' && whenMode === 'now') || (label === 'Schedule for later' && whenMode === 'later');
+                  return (
                     <div
                       key={label}
-                      className={`px-4 py-2 text-[12px] cursor-pointer border rounded-[var(--s4-radius-card)] transition-colors ${
-                        i === 0
-                          ? 'border-accent-gold/60 bg-accent-gold/10 text-accent-gold font-semibold'
-                          : 'border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark'
+                      onClick={() => setWhenMode(label === 'Start now' ? 'now' : 'later')}
+                      className={`px-4 py-[7px] text-[12px] cursor-pointer transition-colors ${
+                        active
+                          ? 'border-2 border-accent-gold bg-accent-gold-soft text-accent-gold font-semibold'
+                          : 'border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark'
                       }`}
                     >
                       {label}
                     </div>
+                  );
+                })}
+              </div>
+              {whenMode === 'later' && (
+                <div className="grid grid-cols-2 gap-3">
+                  {[['Date', 'Wednesday, May 8'], ['Time', '8:00 PM']].map(([label, val]) => (
+                    <div key={label}>
+                      <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mb-[5px]">{label}</div>
+                      <div className="flex justify-between items-center px-3 py-[7px] bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+                        <span className="text-[12px] text-ink dark:text-ink-on-dark">{val}</span>
+                        <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">▾</span>
+                      </div>
+                    </div>
                   ))}
                 </div>
-              </div>
+              )}
+            </div>
 
-              {/* Actions */}
-              <div className="flex justify-end gap-3 pt-2">
-                <ScholarButton
-                  variant="secondary"
-                  size="md"
-                  onClick={() => setActiveTab('browse')}
-                >
-                  {t('study_rooms.cancel') || 'Cancel'}
-                </ScholarButton>
-                <ScholarButton
-                  variant="primary"
-                  size="md"
-                  loading={creating}
-                  loadingText={t('study_rooms.creating') || 'Creating…'}
-                  onClick={handleCreateRoom}
-                  disabled={creating || !roomName.trim()}
-                >
-                  {t('study_rooms.create_room') || 'Create Room'} →
-                </ScholarButton>
+            {/* Privacy */}
+            <div className="mb-[22px]">
+              <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-2">Privacy</div>
+              <div className="flex gap-[10px]">
+                {(['Private with link', 'Public'] as const).map((label, i) => (
+                  <div
+                    key={label}
+                    className={`px-4 py-[7px] text-[12px] cursor-pointer transition-colors ${
+                      i === 0
+                        ? 'border-2 border-accent-gold bg-accent-gold-soft text-accent-gold font-semibold'
+                        : 'border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark'
+                    }`}
+                  >
+                    {label}
+                  </div>
+                ))}
               </div>
+            </div>
+
+            {/* Tools grid — 9 cols */}
+            <div className="mb-[22px]">
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-3">Tools in this room</div>
+              <div className="grid gap-2" style={{ gridTemplateColumns: 'repeat(9, 1fr)' }}>
+                {ROOM_TOOLS.map((tool) => {
+                  const on = toolsEnabled[tool];
+                  return (
+                    <div
+                      key={tool}
+                      onClick={() => setToolsEnabled(prev => ({ ...prev, [tool]: !prev[tool] }))}
+                      className={`flex flex-col items-center gap-[6px] py-[10px] px-[6px] cursor-pointer transition-colors ${
+                        on ? 'border-2 border-accent-gold bg-accent-gold-soft' : 'border border-divider dark:border-divider-on-dark'
+                      }`}
+                    >
+                      <div
+                        className="w-[14px] h-[14px] flex-shrink-0"
+                        style={{ background: on ? 'var(--color-accent-gold)' : 'var(--color-divider)' }}
+                      />
+                      <span
+                        className="text-[9px] text-center leading-tight"
+                        style={{ color: on ? 'var(--color-accent-gold)' : undefined, fontWeight: on ? 700 : 400 }}
+                      >
+                        {tool}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Invite link */}
+            <div className="mb-5">
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-[10px]">Invite link</div>
+              <div className="flex border border-divider dark:border-divider-on-dark">
+                <div className="flex-1 px-3 py-[9px] text-[12px] text-muted-ink dark:text-muted-ink-on-dark bg-subtle dark:bg-card-dark">
+                  meshfahem.app/rooms/invite/s8kxq7
+                </div>
+                <button type="button" className="px-4 py-[9px] bg-sidebar text-ink-on-dark text-[12px] font-semibold">
+                  Copy
+                </button>
+              </div>
+              <div className="flex gap-2 mt-[10px] flex-wrap">
+                {['Layla A.', 'Karim H.', 'Reem S.'].map((name) => (
+                  <div key={name} className="inline-flex items-center gap-[6px] px-[10px] py-1 border border-divider dark:border-divider-on-dark text-[11px] text-ink dark:text-ink-on-dark bg-subtle dark:bg-card-dark">
+                    <div className="w-4 h-4 rounded-full bg-accent-gold flex items-center justify-center text-[8px] font-bold text-card-light flex-shrink-0">
+                      {name[0]}
+                    </div>
+                    {name}
+                    <span className="text-muted-ink dark:text-muted-ink-on-dark cursor-pointer">×</span>
+                  </div>
+                ))}
+                <div className="inline-flex items-center px-[10px] py-1 border border-dashed border-divider dark:border-divider-on-dark text-[11px] text-muted-ink dark:text-muted-ink-on-dark cursor-pointer">
+                  + Invite someone
+                </div>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex justify-end gap-[10px]">
+              <button
+                type="button"
+                onClick={() => setActiveTab('browse')}
+                className="px-[18px] py-[9px] bg-transparent border border-divider dark:border-divider-on-dark text-[13px] text-ink dark:text-ink-on-dark cursor-pointer"
+              >
+                {t('study_rooms.cancel') || 'Cancel'}
+              </button>
+              <ScholarButton
+                variant="primary"
+                size="md"
+                loading={creating}
+                loadingText={t('study_rooms.creating') || 'Creating…'}
+                onClick={handleCreateRoom}
+                disabled={creating || !roomName.trim()}
+                className="font-display"
+              >
+                Send the invitation →
+              </ScholarButton>
             </div>
           </div>
         )}
