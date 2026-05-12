@@ -1278,7 +1278,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     <span className="text-[22px] text-accent-gold">%</span>
                   </div>
                   {quizStats.best && (
-                    <div className="font-display text-[12px] text-accent-gold mt-1.5">{quizStats.best.quiz_title?.slice(0, 32) || '—'}</div>
+                    <div className="font-display text-[12px] text-accent-gold mt-1.5">{quizStats.best.quiz_sessions?.quiz_title?.slice(0, 32) || '—'}</div>
                   )}
                   <div className="h-px bg-accent-gold opacity-20 mt-3.5" />
                   <div className="flex justify-between mt-2.5">
