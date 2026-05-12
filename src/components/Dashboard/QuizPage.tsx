@@ -1278,7 +1278,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     <span className="text-[22px] text-accent-gold">%</span>
                   </div>
                   {quizStats.best && (
-                    <div className="font-display text-[12px] text-accent-gold mt-1.5">{quizStats.best.quiz_title?.slice(0, 32) || '—'}</div>
+                    <div className="font-display text-[12px] text-accent-gold mt-1.5">{quizStats.best.quiz_sessions?.quiz_title?.slice(0, 32) || '—'}</div>
                   )}
                   <div className="h-px bg-accent-gold opacity-20 mt-3.5" />
                   <div className="flex justify-between mt-2.5">
@@ -1301,9 +1301,9 @@ export const QuizPage: React.FC = React.memo(() => {
                       <div key={r.id} className={`flex items-start gap-[10px] py-[11px] ${i < Math.min(2, quizHistory.length - 1) ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
                         <span className="font-display text-[12px] text-accent-gold w-6 pt-[1px] flex-shrink-0">{['i.','ii.','iii.'][i]}</span>
                         <div className="flex-1 min-w-0">
-                          <div className="text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-snug truncate">{r.quiz_title}</div>
+                          <div className="text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-snug truncate">{r.quiz_sessions?.quiz_title}</div>
                           <div className="font-display text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
-                            {new Date(r.created_at).toLocaleDateString()}
+                            {new Date(r.completed_at).toLocaleDateString()}
                           </div>
                         </div>
                         <span className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark flex-shrink-0">
