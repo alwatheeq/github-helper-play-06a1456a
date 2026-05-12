@@ -470,3 +470,44 @@ Other planned items inspected and deferred as **already-correct**:
 | `transition-all` outside Admin | 13 (intentional: animated width/height) |
 
 **v4 parity status: ~98%.** Remaining gap is genuine design-judgment work (typography hierarchy refinement, hero proportions, custom animation curves) — out of scope for mechanical sweeps.
+
+---
+
+## Phase 5.1 — Dashboard "Workshop" rebuild (5/12)
+
+First per-page composition rebuild against `design/templates/Scholar-v4.jsx → Dash4` (lines 152–278).
+
+**Files**
+- new: `src/components/Dashboard/WorkshopV4.tsx` (presentation-only)
+- edit: `src/components/Dashboard/Dashboard.tsx` (idle-stage JSX block + 1 import; PageHeader cleaned of stale 🚩 + flag SVG)
+
+**What now matches v4**
+- Eyebrow "THE WORKSHOP" + serif H1 "Process your content." + descriptor + hairline rule (via `<PageHeader/>`).
+- 1.4fr / 1fr two-column grid, 22px gap (stacks <lg).
+- Left column: dropzone (existing `<InputForm/>`) **followed by** roman-numeral recents (i.–v.) with "Open" affordance per row.
+- Right column: dark "WHAT TO GENERATE" panel with 4 toggles (Summary, Flashcards, Examination, Mind map) + "8 credits" line + Generate CTA, **followed by** a separate light tip card with `NN / NN` counter (4500 ms cadence, prefers-reduced-motion respected).
+
+**Wiring preserved verbatim**
+- `onProcessInput` → same `handleProcessInputWrapper` callback chain (file/text/scan/url all routed through `<InputForm/>` internals — unchanged).
+- Recents read from `user_history` with `nullsFirst: false` (Supabase SDK constraint upheld).
+- Visual-only toggles match prior `GenerationRail` v1 behavior; Examination/Mind map fire the existing `todo` toast (TODO #19 unchanged).
+
+**Verification gates (all green)**
+- `tsc --noEmit` clean.
+- `vitest run` — 73/73 passed.
+- `npm run check:tokens` — 133 swept files clean.
+- Console at `/`: no errors (debug logs only from `useSubscription`).
+
+**Documented residual deltas vs Dash4 mock**
+1. **External tab row (File/Text/Scan/URL)** — v4 renders these above the dropzone; our `<InputForm/>` owns its own internal tab UI. Lifting that state out is non-presentation refactor (touches submission contract); deferred to keep 5.1 scope strict.
+2. **Question-count stepper inside dark panel** — v4 has a `[− 10 +]` stepper next to "Questions per examination". Our question count lives inside `QuizPage`; surfacing it on the Workshop requires lifting state across two routes. Deferred.
+3. **Live credit estimate** — v4 shows "8 credits" as a static label; we mirror that. Real calculator already exists for the processing pipeline but isn't surfaced pre-generation. Deferred.
+4. **Inline SVG icons in tab row** — moot until #1 is addressed.
+
+None of the above are token/style issues; they are **state-lifting refactors** that change the surface area of `InputForm`/`QuizPage`. Each is a small dedicated phase (5.1a/5.1b), not part of the visual rebuild.
+
+**Calibrated estimate for 5.2…5.7**
+Based on 5.1: each per-page rebuild that **doesn't** require state lifting is ~1 file new + 1 file edited + 30–45 min. Pages with state-lifting needs (Quiz, EduPlay) double that. Realistic order:
+- 5.2 Library (no lifting) · 5.3 StudyRooms (no lifting) · 5.4 Academics hub (no lifting)
+- 5.5 Quiz (lifting) · 5.6 EduPlay (lifting) · 5.7 Profile/Feedback (no lifting)
+
