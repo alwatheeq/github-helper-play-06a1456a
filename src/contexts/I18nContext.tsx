@@ -148,8 +148,8 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       {children}
       {showRefreshPrompt && (
         <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-md w-full p-6 space-y-4">
-            <p className="text-gray-700 dark:text-gray-200">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-md w-full p-6 space-y-4">
+            <p className="text-ink dark:text-ink-on-dark">
               {t('language_refresh_prompt')}
             </p>
             <div className="flex justify-end gap-3">
@@ -158,7 +158,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 onClick={() => {
                   dismissRefreshPrompt();
                 }}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-[var(--s4-radius-card)] transition"
+                className="px-4 py-2 text-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-card-dark rounded-[var(--s4-radius-card)] transition"
               >
                 {t('language_refresh_ok')}
               </button>
