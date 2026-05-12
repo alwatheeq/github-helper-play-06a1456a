@@ -139,7 +139,7 @@ class MedStudentClient {
     const response = await this.callMedicalFunction({
       action: 'summarize_medical_text',
       text,
-      model: 'claude-3-haiku-20240307',
+      model: 'claude-haiku-4-5-20251001',
       maxTokens: 2000,
       pageCount
     });
@@ -160,7 +160,7 @@ class MedStudentClient {
       action: 'generate_medical_flashcards',
       text,
       count,
-      model: 'claude-3-haiku-20240307',
+      model: 'claude-haiku-4-5-20251001',
       maxTokens: 2500,
       pageCount
     });
@@ -181,7 +181,7 @@ class MedStudentClient {
       const response = await this.callMedicalFunction({
         action: 'detect_medical_topics',
         text,
-        model: 'claude-3-haiku-20240307',
+        model: 'claude-haiku-4-5-20251001',
         maxTokens: 500
       });
 

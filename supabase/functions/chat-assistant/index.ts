@@ -4,7 +4,7 @@ import { handleCorsPreflight } from '../_shared/cors.ts';
 import { jsonResponse, errorResponse } from '../_shared/response.ts';
 import { validateMethod } from '../_shared/validation.ts';
 
-const DEFAULT_MODEL = 'claude-3-haiku-20240307';
+const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS = 4096;
 
 async function callClaude(

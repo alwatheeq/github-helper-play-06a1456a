@@ -4,7 +4,7 @@
 
 export const CONFIG = {
   // AI Model Configuration
-  ANTHROPIC_MODEL: 'claude-3-haiku-20240307',
+  ANTHROPIC_MODEL: 'claude-haiku-4-5-20251001',
   
   // Processing Limits
   MAX_SLIDES_PER_UPLOAD: 400,

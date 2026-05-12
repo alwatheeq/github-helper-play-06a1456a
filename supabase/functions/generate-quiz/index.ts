@@ -2,7 +2,7 @@
 import { createClient } from 'npm:@supabase/supabase-js@2.39.3';
 import type { SupabaseClient } from 'npm:@supabase/supabase-js@2.39.3';
 
-const DEFAULT_MODEL = 'claude-3-haiku-20240307';
+const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 const QUESTIONS_PER_CHUNK = 3;
 const MAX_CHUNK_RETRIES = 3;
 

@@ -5,7 +5,7 @@ import type { SupabaseClient } from 'npm:@supabase/supabase-js@2.54.0';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const DEFAULT_MODEL = 'claude-3-haiku-20240307';
+const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 const MAX_TOKENS_HARD_LIMIT = 4096;
 const ANTHROPIC_TIMEOUT_MS = 45000;
 const MAX_RETRIES = 3;

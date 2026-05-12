@@ -10,7 +10,7 @@ const corsHeaders = {
 };
 
 // Security: server-side model/limits only (ignore client-provided model/maxTokens)
-const DEFAULT_MODEL = 'claude-3-haiku-20240307';
+const DEFAULT_MODEL = 'claude-haiku-4-5-20251001';
 const MAX_MODEL_TOKENS = 4096;
 
 // Action-specific caps (prevents abuse + stabilizes output)
