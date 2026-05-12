@@ -30,7 +30,7 @@ const HighlightMenu: React.FC<HighlightMenuProps> = ({
 
   return (
     <div
-      className="bg-gray-900 text-ink-on-dark rounded-[var(--s4-radius-card)] py-2 px-3 shadow-[var(--s4-shadow-modal)] flex items-center gap-2"
+      className="bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)] py-2 px-3 shadow-[var(--s4-shadow-modal)] flex items-center gap-2"
       style={{
         position: 'fixed',
         left: position.x,
@@ -48,12 +48,12 @@ const HighlightMenu: React.FC<HighlightMenuProps> = ({
         />
       ))}
 
-      <div className="w-px h-5 bg-gray-600 mx-1" />
+      <div className="w-px h-5 bg-card-dark mx-1" />
 
       <button
         onClick={onAddNote}
         title={t('highlights.add_note')}
-        className="p-1 rounded hover:bg-gray-700 transition-colors"
+        className="p-1 rounded hover:bg-card-dark transition-colors"
       >
         <StickyNote size={16} />
       </button>
@@ -61,7 +61,7 @@ const HighlightMenu: React.FC<HighlightMenuProps> = ({
       <button
         onClick={onCreateFlashcard}
         title={t('highlights.create_flashcard')}
-        className="p-1 rounded hover:bg-gray-700 transition-colors"
+        className="p-1 rounded hover:bg-card-dark transition-colors"
       >
         <CreditCard size={16} />
       </button>
@@ -69,14 +69,14 @@ const HighlightMenu: React.FC<HighlightMenuProps> = ({
       <button
         onClick={onCopy}
         title={t('highlights.copy')}
-        className="p-1 rounded hover:bg-gray-700 transition-colors"
+        className="p-1 rounded hover:bg-card-dark transition-colors"
       >
         <Copy size={16} />
       </button>
 
       <button
         onClick={onClose}
-        className="p-1 rounded hover:bg-gray-700 transition-colors"
+        className="p-1 rounded hover:bg-card-dark transition-colors"
       >
         <X size={14} />
       </button>

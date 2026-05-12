@@ -67,7 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-2xl w-full">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-2xl w-full">
             <div className="flex items-center justify-center mb-6">
               <div className="bg-orange-100 p-3 rounded-full">
                 <AlertTriangle className="h-12 w-12 text-orange-600" />
@@ -83,7 +83,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </p>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <div className="bg-gray-50 rounded-[var(--s4-radius-card)] p-4 mb-6 max-h-64 overflow-auto">
+              <div className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] p-4 mb-6 max-h-64 overflow-auto">
                 <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-2">Error Details:</h2>
                 <pre className="text-xs text-red-600 whitespace-pre-wrap">
                   {this.state.error.toString()}
@@ -107,7 +107,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-6 py-3 bg-gray-200 text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-300 transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle transition duration-150"
               >
                 <Home className="h-5 w-5" />
                 <span>Go Home</span>

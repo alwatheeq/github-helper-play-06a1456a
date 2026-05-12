@@ -298,9 +298,9 @@ export const StudyGoalsPage: React.FC = () => {
   const completedGoals = goals.filter(g => g.is_completed);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
+    <div className="min-h-screen bg-subtle dark:bg-card-dark p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 mb-6">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
@@ -322,21 +322,21 @@ export const StudyGoalsPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.active_goals')}</p>
               <p className="s4-h1 text-[36px] text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.completed')}</p>
               <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6">
             <div className="text-center">
               <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.total_goals')}</p>
               <p className="s4-h1 text-[36px] text-ink dark:text-muted-ink-on-dark">{goals.length}</p>
@@ -356,7 +356,7 @@ export const StudyGoalsPage: React.FC = () => {
                   return (
                     <div
                       key={goal.id}
-                      className={`bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 ${
+                      className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-6 ${
                         isOverdue ? 'border-2 border-red-300 dark:border-red-700' : ''
                       }`}
                     >
@@ -413,7 +413,7 @@ export const StudyGoalsPage: React.FC = () => {
                             {goal.current_value} / {goal.target_value}
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                        <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
                           <div
                             className={`h-3 rounded-full transition-colors duration-150 ${
                               progress >= 100
@@ -445,7 +445,7 @@ export const StudyGoalsPage: React.FC = () => {
                 {completedGoals.map((goal) => (
                   <div
                     key={goal.id}
-                    className="bg-gray-50 dark:bg-gray-700 rounded-[var(--s4-radius-card)] shadow p-6 opacity-75"
+                    className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow p-6 opacity-75"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-3 flex-1">
@@ -476,7 +476,7 @@ export const StudyGoalsPage: React.FC = () => {
           )}
 
           {goals.length === 0 && !loading && (
-            <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
+            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow p-12 text-center">
               <Target className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
               <p className="text-secondary-ink dark:text-muted-ink mb-2">No goals yet</p>
               <p className="text-sm text-muted-ink dark:text-muted-ink mb-4">
@@ -494,13 +494,13 @@ export const StudyGoalsPage: React.FC = () => {
       </div>
 
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark">Create New Goal</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-gray-100 rounded-[var(--s4-radius-card)] dark:hover:bg-gray-700"
+                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] dark:hover:bg-card-dark"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -514,7 +514,7 @@ export const StudyGoalsPage: React.FC = () => {
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -534,7 +534,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder="e.g., Study 30 minutes daily"
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -548,7 +548,7 @@ export const StudyGoalsPage: React.FC = () => {
                   placeholder="Describe your goal..."
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
@@ -562,7 +562,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   Set the target number to achieve your goal
@@ -578,14 +578,14 @@ export const StudyGoalsPage: React.FC = () => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-gray-700 dark:border-gray-600 dark:text-muted-ink-on-dark"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-[var(--s4-radius-card)] focus:ring-2 focus:ring-green-500 dark:bg-card-dark dark:border-gray-600 dark:text-muted-ink-on-dark"
                 />
               </div>
 
               <div className="flex space-x-4 pt-4">
                 <button
                   onClick={() => setShowCreateModal(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] hover:bg-gray-50 dark:hover:bg-gray-700"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark dark:hover:bg-card-dark"
                 >
                   Cancel
                 </button>

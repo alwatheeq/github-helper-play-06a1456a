@@ -73,7 +73,7 @@ export const AccountSuspended: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-900 dark:to-gray-950 p-4">
-      <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] p-8 border border-red-200 dark:border-red-900">
+      <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] p-8 border border-red-200 dark:border-red-900">
         <div className="text-center mb-6">
           <div className="mx-auto w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
             <Ban className="h-8 w-8 text-red-600 dark:text-red-400" />
@@ -123,7 +123,7 @@ export const AccountSuspended: React.FC = () => {
           )}
 
           {blockInfo.isPermanent && (
-            <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-[var(--s4-radius-card)] p-4">
+            <div className="bg-subtle dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-[var(--s4-radius-card)] p-4">
               <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 This is a permanent suspension. If you believe this is an error, please contact support.
               </p>
@@ -134,7 +134,7 @@ export const AccountSuspended: React.FC = () => {
         <div className="space-y-3">
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gray-600 hover:bg-gray-700 text-ink-on-dark rounded-[var(--s4-radius-card)] transition"
+            className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-card-dark hover:bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)] transition"
           >
             <LogOut className="h-5 w-5" />
             <span>Sign Out</span>

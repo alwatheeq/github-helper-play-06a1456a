@@ -38,20 +38,20 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-70 backdrop-blur-md"></div>
+      <div className="absolute inset-0 bg-page bg-opacity-70 backdrop-blur-md"></div>
 
       <ScholarCard variant="elevated" padding="none" className="relative max-w-lg w-full overflow-hidden animate-scaleIn">
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onDismiss}
-            className="absolute top-4 right-4 p-2 hover:bg-white hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
+            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-150 group"
             aria-label="Close"
           >
             <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
           </button>
 
           <div className="flex items-center space-x-3 mb-2">
-            <div className="bg-white bg-opacity-20 p-3 rounded-md backdrop-blur-sm">
+            <div className="bg-card-light dark:bg-card-dark bg-opacity-20 p-3 rounded-md backdrop-blur-sm">
               <Crown className="h-8 w-8" />
             </div>
             <div>

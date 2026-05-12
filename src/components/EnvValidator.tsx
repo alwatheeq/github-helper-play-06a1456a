@@ -8,7 +8,7 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
   if (!supabaseUrl || !supabaseAnonKey) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-md w-full">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 p-3 rounded-full">
               <AlertCircle className="h-12 w-12 text-red-600" />
@@ -23,7 +23,7 @@ export const EnvValidator: React.FC<{ children: React.ReactNode }> = ({ children
             The application is missing required environment variables.
           </p>
 
-          <div className="bg-gray-50 rounded-[var(--s4-radius-card)] p-4 mb-6">
+          <div className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] p-4 mb-6">
             <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-2">Missing Variables:</h2>
             <ul className="space-y-1 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
               {!supabaseUrl && <li>• VITE_SUPABASE_URL</li>}

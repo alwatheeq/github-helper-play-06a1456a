@@ -1305,7 +1305,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           )}
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
-                              ? 'bg-gray-700 border-gray-700 text-ink-on-dark dark:bg-gray-200 dark:border-gray-200 dark:text-ink'
+                              ? 'bg-card-dark border-gray-700 text-ink-on-dark dark:bg-subtle dark:border-gray-200 dark:text-ink'
                               : `border-gray-200 dark:border-gray-700 text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >

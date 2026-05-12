@@ -411,7 +411,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           </button>
                         </div>
                       </div>
-                      <div className="bg-white p-2 rounded-[var(--s4-radius-card)]">
+                      <div className="bg-card-light dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)]">
                         <QRCodeSVG value={group.group_code} size={64} />
                       </div>
                     </div>

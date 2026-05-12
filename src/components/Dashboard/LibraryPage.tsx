@@ -1213,7 +1213,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
       {/* Delete Items Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
             <div className={`p-6 border-b border border-divider dark:border-divider-on-dark`}>
               <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('library.delete_items_title')}</h3>

@@ -66,7 +66,7 @@ export const Header: React.FC = () => {
 
   // Tier color mapping — preserved as semantic non-theme colors (subscription tier identity)
   const tierColorClasses: Record<string, { bg: string; text: string; darkBg: string; darkText: string }> = {
-    gray:   { bg: 'bg-gray-100',   text: 'text-ink',   darkBg: 'dark:bg-gray-900',   darkText: 'dark:text-muted-ink-on-dark' },
+    gray:   { bg: 'bg-subtle',   text: 'text-ink',   darkBg: 'dark:bg-card-dark',   darkText: 'dark:text-muted-ink-on-dark' },
     blue:   { bg: 'bg-blue-100',   text: 'text-blue-800',   darkBg: 'dark:bg-blue-900',   darkText: 'dark:text-blue-300' },
     green:  { bg: 'bg-green-100',  text: 'text-green-800',  darkBg: 'dark:bg-green-900',  darkText: 'dark:text-green-300' },
     cyan:   { bg: 'bg-cyan-100',   text: 'text-cyan-800',   darkBg: 'dark:bg-cyan-900',   darkText: 'dark:text-cyan-300' },

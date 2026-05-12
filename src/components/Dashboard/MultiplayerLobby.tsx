@@ -333,7 +333,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
         </div>
         <button
           onClick={onExit}
-          className="mt-4 px-4 py-2 bg-gray-600 text-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-700"
+          className="mt-4 px-4 py-2 bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-card-dark"
         >
           Go Back
         </button>
@@ -343,7 +343,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow overflow-hidden">
         <div className={`bg-accent-gold p-6 text-white`}>
           <div className="flex items-center justify-between mb-4">
             <h2 className="s4-h2">{lobby.game_name}</h2>

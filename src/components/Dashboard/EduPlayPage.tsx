@@ -610,8 +610,8 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <p className={`text-sm text-muted-ink dark:text-muted-ink-on-dark text-center`}>More exciting games on the way!</p>
         </div>
 
-        <div className="bg-gray-100 dark:bg-gray-800 rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
-          <div className="bg-gray-200 dark:bg-gray-700 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+        <div className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] p-8 border-2 border-dashed border-divider dark:border-divider-on-dark opacity-50 flex flex-col items-center justify-center opacity-60">
+          <div className="bg-subtle dark:bg-card-dark rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
             <Clock className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark" />
           </div>
           <h3 className="s4-h3 text-[20px] mb-2 text-secondary-ink dark:text-muted-ink">Coming Soon</h3>
@@ -748,7 +748,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
   const renderGameSettings = () => (
     <div className="max-w-2xl mx-auto">
-      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
         <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-6">Game Settings</h2>
 
         <div className="space-y-6">
@@ -825,7 +825,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <span>Back</span>
       </button>
 
-      <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
+      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
         <h2 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-6 text-center">Join Game</h2>
 
         <div className="space-y-6">
@@ -839,7 +839,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
               placeholder="Enter 6-digit code"
               maxLength={6}
-              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
+              className={`w-full px-4 py-3 s4-h2 text-center tracking-widest border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
             />
           </div>
 
@@ -874,7 +874,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
     return (
       <div className="max-w-5xl mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
           <div className="text-center mb-8">
             <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">
               {currentGame?.game_title}
@@ -920,7 +920,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                   <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink">Scan to Join</span>
                 </div>
                 <div className="flex justify-center">
-                  <div className="bg-white p-4 rounded-[var(--s4-radius-card)] inline-block">
+                  <div className="bg-card-light dark:bg-card-dark p-4 rounded-[var(--s4-radius-card)] inline-block">
                     <QRCodeSVG
                       value={joinUrl}
                       size={160}
@@ -971,7 +971,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         <div className="flex space-x-3">
           <button
             onClick={handleLeaveGame}
-            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-50 transition dark:text-muted-ink-on-dark dark:hover:bg-gray-700 flex items-center justify-center space-x-2`}
+            className={`flex-1 px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:text-muted-ink-on-dark dark:hover:bg-card-dark flex items-center justify-center space-x-2`}
           >
             <LogOut className="h-5 w-5" />
             <span>Leave Game</span>

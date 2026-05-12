@@ -1167,7 +1167,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               </p>
 
               <div className="space-y-3">
-                <label className={`flex items-start space-x-3 p-4 border-2 rounded-[var(--s4-radius-card)] cursor-pointer transition hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                <label className={`flex items-start space-x-3 p-4 border-2 rounded-[var(--s4-radius-card)] cursor-pointer transition hover:bg-subtle dark:bg-card-dark dark:hover:bg-card-dark ${
                   preferences?.sidebar_mode === 'collapsible'
                     ? 'border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20'
                     : 'border-divider dark:border-divider-on-dark opacity-50'
@@ -1191,7 +1191,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   </div>
                 </label>
 
-                <label className={`flex items-start space-x-3 p-4 border-2 rounded-[var(--s4-radius-card)] cursor-pointer transition hover:bg-gray-50 dark:hover:bg-gray-700 ${
+                <label className={`flex items-start space-x-3 p-4 border-2 rounded-[var(--s4-radius-card)] cursor-pointer transition hover:bg-subtle dark:bg-card-dark dark:hover:bg-card-dark ${
                   preferences?.sidebar_mode === 'pinnable'
                     ? 'border-divider dark:border-divider-on-dark bg-opacity-10 dark:bg-opacity-20'
                     : 'border-divider dark:border-divider-on-dark opacity-50'
@@ -1233,8 +1233,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                     checked={preferences?.tts_hover_enabled !== false}
                     onChange={(e) => updateTtsHoverEnabled(e.target.checked)}
                   />
-                  <div className={`w-11 h-6 rounded-full transition-colors duration-200 ${preferences?.tts_hover_enabled !== false ? 'bg-blue-600' : 'bg-gray-300 dark:bg-gray-600'}`} />
-                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${preferences?.tts_hover_enabled !== false ? 'translate-x-5' : 'translate-x-0'}`} />
+                  <div className={`w-11 h-6 rounded-full transition-colors duration-200 ${preferences?.tts_hover_enabled !== false ? 'bg-blue-600' : 'bg-subtle dark:bg-card-dark'}`} />
+                  <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-card-light dark:bg-card-dark rounded-full shadow transition-transform duration-200 ${preferences?.tts_hover_enabled !== false ? 'translate-x-5' : 'translate-x-0'}`} />
                 </div>
                 <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                   {preferences?.tts_hover_enabled !== false ? t('subscription_management.enabled') : t('subscription_management.disabled')}
@@ -1309,7 +1309,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     >
                       {isSelected && (
                         <div className="absolute top-2 right-2">
-                          <div className="bg-gray-700 dark:bg-gray-200 text-ink-on-dark dark:text-ink rounded-full p-1">
+                          <div className="bg-card-dark dark:bg-subtle text-ink-on-dark dark:text-ink rounded-full p-1">
                             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
@@ -1364,7 +1364,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       onChange={(e) => setEditedName(e.target.value)}
                       placeholder={t('profile.display_name')}
                       maxLength={50}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
                     />
                     <textarea
                       value={editedBio}
@@ -1372,7 +1372,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       placeholder={t('profile.bio_placeholder')}
                       maxLength={500}
                       rows={3}
-                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-gray-700 dark:text-muted-ink-on-dark`}
+                      className={`w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:ring-focus focus:ring-2 dark:bg-card-dark dark:text-muted-ink-on-dark`}
                     />
                   </div>
                 ) : (
@@ -1430,7 +1430,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     <span>{t('profile.level')} {currentLevel}</span>
                     <span>{stats.experience_points} / {xpForNextLevel} {t('profile.xp')}</span>
                   </div>
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                  <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
                     <div
                       className={`bg-accent-gold h-3 rounded-full transition-colors duration-150`}
                       style={{ width: `${progress}%` }}
@@ -1446,7 +1446,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                   <button
                     onClick={handleSaveProfile}
                     disabled={saving}
-                    className="p-2 bg-gray-700 dark:bg-gray-200 text-ink-on-dark dark:text-ink rounded-[var(--s4-radius-card)] hover:bg-gray-600 dark:hover:bg-gray-300 disabled:opacity-50"
+                    className="p-2 bg-card-dark dark:bg-subtle text-ink-on-dark dark:text-ink rounded-[var(--s4-radius-card)] hover:bg-card-dark dark:hover:bg-subtle disabled:opacity-50"
                     title="Save"
                   >
                     <Save className="h-5 w-5" />
@@ -1457,7 +1457,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       setEditedName(stats.display_name || '');
                       setEditedBio(stats.bio || '');
                     }}
-                    className="p-2 bg-gray-300 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-400 dark:bg-gray-600 dark:text-muted-ink-on-dark"
+                    className="p-2 bg-subtle text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark"
                     title="Cancel"
                   >
                     <X className="h-5 w-5" />
@@ -1466,7 +1466,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               ) : (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="p-2 bg-gray-100 text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-gray-200 dark:bg-gray-700 dark:text-muted-ink-on-dark"
+                  className="p-2 bg-subtle text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark"
                   title="Edit Profile"
                 >
                   <Edit2 className="h-5 w-5" />

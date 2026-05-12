@@ -27,7 +27,7 @@ export const NotFound: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center space-x-2 px-6 py-3 bg-gray-200 dark:bg-gray-700 text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-gray-300 dark:hover:bg-gray-600 transition duration-150 w-full sm:w-auto justify-center"
+            className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[var(--s4-radius-card)] hover:bg-subtle dark:hover:bg-card-dark transition duration-150 w-full sm:w-auto justify-center"
           >
             <ArrowLeft className="h-5 w-5" />
             <span>Go Back</span>
