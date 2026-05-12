@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
+import { FileQuestion, Clock, Trophy, Play, Trash2, Search, Globe, ChevronDown, Check } from 'lucide-react';
 import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -139,6 +139,61 @@ export const QuizPage: React.FC = React.memo(() => {
     const average = Math.round(quizHistory.reduce((s, h) => s + h.score_percentage, 0) / quizHistory.length);
     return { maxScore, best, average };
   }, [quizHistory]);
+
+  // Best score per quiz session (for conditional border-left and score display)
+  const sessionBestScore = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const h of quizHistory) {
+      const prev = map.get(h.quiz_session_id);
+      if (prev === undefined || h.score_percentage > prev) map.set(h.quiz_session_id, h.score_percentage);
+    }
+    return map;
+  }, [quizHistory]);
+
+  // Stats for "My Quizzes" dark strip
+  const myQuizzesStats = useMemo(() => {
+    const totalQ = quizSessions.reduce((s, q) => s + q.question_count, 0);
+    const scored = quizSessions.filter(q => sessionBestScore.has(q.id)).length;
+    const avg = scored > 0
+      ? Math.round(quizSessions.filter(q => sessionBestScore.has(q.id)).reduce((s, q) => s + sessionBestScore.get(q.id)!, 0) / scored)
+      : 0;
+    return { total: quizSessions.length, scored, avg, totalQ };
+  }, [quizSessions, sessionBestScore]);
+
+  // Month navigator state (for History tab)
+  const [historyMonth, setHistoryMonth] = useState(() => {
+    const n = new Date();
+    return { year: n.getFullYear(), month: n.getMonth() };
+  });
+
+  const historyMonthLabel = useMemo(() => {
+    const d = new Date(historyMonth.year, historyMonth.month, 1);
+    return d.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  }, [historyMonth]);
+
+  // Filter quiz history to selected month
+  const monthlyHistory = useMemo(() => {
+    return quizHistory.filter(h => {
+      const d = new Date(h.completed_at);
+      return d.getFullYear() === historyMonth.year && d.getMonth() === historyMonth.month;
+    });
+  }, [quizHistory, historyMonth]);
+
+  const monthlyExamAttempts = useMemo(() => {
+    return examAttempts.filter(a => {
+      const d = new Date(a.completed_at);
+      return d.getFullYear() === historyMonth.year && d.getMonth() === historyMonth.month;
+    });
+  }, [examAttempts, historyMonth]);
+
+  // Monthly stats for History sidebar panel
+  const monthlyStats = useMemo(() => {
+    const entries = monthlyHistory;
+    if (!entries.length) return { avg: 0, best: 0, sittings: 0, globalCount: monthlyExamAttempts.length };
+    const avg = Math.round(entries.reduce((s, h) => s + h.score_percentage, 0) / entries.length);
+    const best = Math.max(...entries.map(h => Math.round(h.score_percentage)));
+    return { avg, best, sittings: entries.length, globalCount: monthlyExamAttempts.length };
+  }, [monthlyHistory, monthlyExamAttempts]);
 
   useEffect(() => {
     setBusy('quiz', !!activeQuizId);
@@ -1266,10 +1321,26 @@ export const QuizPage: React.FC = React.memo(() => {
 
         {/* ── My Quizzes / My Exams Tab ── */}
         {activeTab === 'quizzes' && (
-          <div className="space-y-3">
+          <div className="space-y-[10px]">
             {quizViewMode === 'quizzes' ? (
-              /* My Quizzes — 2-col card grid */
+              /* My Quizzes — stats strip + 2-col card grid */
               <>
+                {/* Stats strip (dark) */}
+                {!loading && quizSessions.length > 0 && (
+                  <div className="flex bg-ink dark:bg-card-dark mb-[6px]">
+                    {([
+                      [`${myQuizzesStats.scored}/${myQuizzesStats.total}`, 'completed'],
+                      [`${myQuizzesStats.avg}%`, 'average score'],
+                      [String(myQuizzesStats.totalQ), 'total questions'],
+                      [String(new Set(quizSessions.map(q => q.difficulty_level)).size), 'difficulty levels'],
+                    ] as [string, string][]).map(([v, l], i) => (
+                      <div key={i} className="flex-1 py-[11px] px-5 text-center border-r border-page-light/[.08] last:border-r-0">
+                        <div className="font-display text-[22px] font-semibold text-ink-on-dark leading-none">{v}</div>
+                        <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1">{l}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 {loading ? (
                   <LoadingSkeleton type="card" count={3} />
                 ) : quizSessions.length === 0 ? (
@@ -1279,50 +1350,55 @@ export const QuizPage: React.FC = React.memo(() => {
                     <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.create_first')}</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {quizSessions.map((quiz) => (
-                      <div
-                        key={quiz.id}
-                        className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold shadow-[var(--s4-shadow-hairline)] p-4 flex gap-4"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-1">
-                            {new Date(quiz.created_at).toLocaleDateString()}
-                          </p>
-                          <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark leading-snug mb-2.5">
-                            {quiz.quiz_title}
-                          </h3>
-                          <div className="flex flex-wrap gap-1.5">
-                            <span className={`text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(quiz.difficulty_level)}`}>
-                              {quiz.difficulty_level}
-                            </span>
-                            <span className="text-[9px] font-bold tracking-wide px-2 py-0.5 bg-chip text-muted-ink dark:text-muted-ink-on-dark">
-                              {quiz.question_count} q.
-                            </span>
-                            {quiz.time_limit_minutes && (
-                              <span className="text-[9px] font-bold tracking-wide px-2 py-0.5 bg-chip text-muted-ink dark:text-muted-ink-on-dark">
-                                {quiz.time_limit_minutes}m
-                              </span>
-                            )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-[10px]">
+                    {quizSessions.map((quiz) => {
+                      const bestScore = sessionBestScore.get(quiz.id);
+                      const hasScore = bestScore !== undefined;
+                      return (
+                        <div
+                          key={quiz.id}
+                          className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] shadow-[var(--s4-shadow-hairline)] flex gap-[14px] ${hasScore ? 'border-l-accent-gold' : 'border-l-divider dark:border-l-divider-on-dark'}`}
+                          style={{ padding: '14px 16px' }}
+                        >
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-1">
+                              {new Date(quiz.created_at).toLocaleDateString()}
+                            </p>
+                            <h3 className="font-display font-semibold text-[14px] text-ink dark:text-ink-on-dark leading-[1.3] mb-[9px]">
+                              {quiz.quiz_title}
+                            </h3>
+                            <div className="flex flex-wrap gap-[5px]">
+                              {[quiz.difficulty_level, `${quiz.question_count} q.`, quiz.source_type].map((chip, ci) => (
+                                <span key={ci} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[3px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark border border-divider dark:border-divider-on-dark">
+                                  {chip}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex-shrink-0 flex flex-col items-end justify-between">
+                            {hasScore
+                              ? <div className="font-display text-[30px] font-semibold text-ink dark:text-ink-on-dark leading-none text-right">
+                                  {Math.round(bestScore)}<span className="text-[12px] text-accent-gold">%</span>
+                                </div>
+                              : <div className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark text-right">Not started</div>
+                            }
+                            <div className="flex flex-col gap-[5px] items-end">
+                              {hasScore && (
+                                <button className="inline-flex px-[10px] py-1 bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark text-[11px] font-display cursor-pointer">
+                                  Review
+                                </button>
+                              )}
+                              <button
+                                onClick={() => handleStartQuiz(quiz.id)}
+                                className="inline-flex px-[10px] py-1 bg-ink dark:bg-ink-on-dark border border-ink dark:border-ink-on-dark text-ink-on-dark dark:text-ink text-[11px] font-display font-semibold cursor-pointer hover:opacity-80 transition-opacity"
+                              >
+                                {hasScore ? 'Retake →' : 'Begin →'}
+                              </button>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex-shrink-0 flex flex-col items-end justify-between gap-2">
-                          <button
-                            onClick={() => handleStartQuiz(quiz.id)}
-                            className="flex items-center gap-1.5 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
-                          >
-                            <Play className="h-3 w-3" />
-                            {t('quiz.start')}
-                          </button>
-                          <button
-                            onClick={() => handleDeleteQuiz(quiz.id)}
-                            className="p-1.5 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark dark:hover:text-ink-on-dark transition-colors"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 )}
               </>
@@ -1493,319 +1569,237 @@ export const QuizPage: React.FC = React.memo(() => {
                 )}
               </div>
             ) : (
-              /* Quizzes — Explore (Folders) */
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-                {/* Sidebar */}
-                <div className="lg:col-span-1">
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xs font-bold tracking-widest uppercase text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-2">
-                        <Folder className="h-4 w-4" />
-                        Folders
-                      </h3>
-                      <button
-                        onClick={() => setShowCreateFolder(true)}
-                        className="p-1 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark dark:hover:text-ink-on-dark transition-colors"
-                      >
-                        <Plus className="h-4 w-4" />
+              /* Quizzes — Explore (community card grid) */
+              <div className="space-y-[10px]">
+                {/* Search + subject filter + sort bar */}
+                <div className="flex gap-[10px] items-stretch">
+                  <div className="flex-1 flex items-center gap-2 px-[13px] py-[9px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
+                    <Search className="h-3.5 w-3.5 text-muted-ink flex-shrink-0" />
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search community quizzes…"
+                      className="flex-1 bg-transparent font-display text-[13px] outline-none text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark"
+                    />
+                    {loading && <div className="animate-spin h-4 w-4 border-2 border-muted-ink border-t-transparent rounded-full flex-shrink-0" />}
+                  </div>
+                  <div className="relative">
+                    <select className="h-full px-[13px] pr-8 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark font-display text-[13px] appearance-none cursor-pointer min-w-[160px] outline-none">
+                      {['All Subjects','Economics','Biology','Mathematics','History','Physics','Chemistry','Literature','Comp. Sci.'].map(s => <option key={s}>{s}</option>)}
+                    </select>
+                    <span className="absolute right-[10px] top-1/2 -translate-y-1/2 text-muted-ink text-[10px] pointer-events-none">▾</span>
+                  </div>
+                  <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden">
+                    {(['Top rated', 'Most used', 'Newest'] as const).map((s, i) => (
+                      <button key={s} className={`px-[14px] py-[9px] border-none text-[12px] font-display cursor-pointer whitespace-nowrap transition-colors ${i === 0 ? 'bg-ink text-ink-on-dark font-bold' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark'} ${i < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''}`}>
+                        {s}
                       </button>
-                    </div>
-
-                    {showCreateFolder && (
-                      <div className="mb-4 p-3 bg-subtle dark:bg-subtle-on-dark space-y-2">
-                        <input
-                          type="text"
-                          value={newFolderName}
-                          onChange={(e) => setNewFolderName(e.target.value)}
-                          placeholder="Folder name"
-                          className="w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark outline-none focus:border-ink/50"
-                        />
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="color"
-                            value={newFolderColor}
-                            onChange={(e) => setNewFolderColor(e.target.value)}
-                            className="h-8 w-12 cursor-pointer"
-                          />
-                          <button
-                            onClick={handleCreateFolder}
-                            className="flex-1 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
-                          >
-                            Create
-                          </button>
-                          <button
-                            onClick={() => setShowCreateFolder(false)}
-                            className="px-3 py-1.5 bg-subtle dark:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark text-xs hover:opacity-80 transition-opacity"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="space-y-0.5">
-                      {[
-                        { id: 'all', name: 'All Quizzes' },
-                        { id: 'uncategorized', name: 'Uncategorized' },
-                      ].map((f) => (
-                        <button
-                          key={f.id}
-                          onClick={() => setSelectedFolder(f.id)}
-                          className={`w-full text-left px-3 py-2 text-sm transition-colors ${
-                            selectedFolder === f.id
-                              ? 'bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark font-medium'
-                              : 'text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
-                          }`}
-                        >
-                          {f.name}
-                        </button>
-                      ))}
-                      {quizFolders.map((folder) => (
-                        <div key={folder.id} className="group flex items-center">
-                          <button
-                            onClick={() => setSelectedFolder(folder.id)}
-                            className={`flex-1 text-left px-3 py-2 text-sm transition-colors flex items-center gap-2 ${
-                              selectedFolder === folder.id
-                                ? 'bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark font-medium'
-                                : 'text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark'
-                            }`}
-                          >
-                            <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: folder.color }} />
-                            <span>{folder.name}</span>
-                          </button>
-                          <button
-                            onClick={() => handleDeleteFolder(folder.id)}
-                            className="opacity-0 group-hover:opacity-100 p-1.5 text-muted-ink hover:text-ink dark:text-muted-ink-on-dark transition-all"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
+                    ))}
                   </div>
                 </div>
 
-                {/* Quiz list */}
-                <div className="lg:col-span-3">
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-5">
-                    <div className="flex items-center justify-between mb-5">
-                      <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark">
-                        {selectedFolder === 'all' ? 'All Quizzes' :
-                         selectedFolder === 'uncategorized' ? 'Uncategorized Quizzes' :
-                         quizFolders.find(f => f.id === selectedFolder)?.name || 'Quizzes'}
-                      </h3>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-ink" />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search quizzes…"
-                          className="pl-9 pr-4 py-2 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm outline-none focus:border-ink/50"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      {quizSessions
-                        .filter(quiz => {
-                          if (selectedFolder === 'all') return true;
-                          if (selectedFolder === 'uncategorized') return !quiz.folder_id;
-                          return quiz.folder_id === selectedFolder;
-                        })
-                        .filter(quiz => quiz.quiz_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
-                        .map((quiz) => (
-                          <div key={quiz.id} className="border border-divider dark:border-divider-on-dark p-4 flex items-center justify-between gap-4">
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-medium text-sm text-ink dark:text-ink-on-dark truncate mb-1">{quiz.quiz_title}</h4>
-                              <div className="flex items-center gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark">
-                                <span>{quiz.question_count} questions</span>
-                                <span className={`px-1.5 py-0.5 font-bold ${getDifficultyBadgeClass(quiz.difficulty_level)}`}>
-                                  {quiz.difficulty_level}
-                                </span>
-                                {quiz.time_limit_minutes && (
-                                  <span className="flex items-center gap-1">
-                                    <Clock className="h-3 w-3" />
-                                    {quiz.time_limit_minutes}m
-                                  </span>
-                                )}
-                              </div>
+                {/* 3-col community quiz card grid */}
+                {loading ? (
+                  <LoadingSkeleton type="card" count={6} />
+                ) : quizSessions.length === 0 ? (
+                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                    <FileQuestion className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">No community quizzes yet</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Check back soon</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[10px]">
+                    {quizSessions
+                      .filter(q => !debouncedSearchQuery || q.quiz_title.toLowerCase().includes(debouncedSearchQuery.toLowerCase()))
+                      .map((quiz) => (
+                        <div key={quiz.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col gap-2" style={{ padding: '14px 16px' }}>
+                          <div>
+                            <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-accent-gold mb-1">{quiz.source_type || 'Generated'}</div>
+                            <h3 className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark leading-[1.3]">{quiz.quiz_title}</h3>
+                          </div>
+                          <div className="flex gap-[5px] flex-wrap">
+                            {[quiz.difficulty_level, `${quiz.question_count} q.`, quiz.source_type || 'MCQ'].map((tag, ti) => (
+                              <span key={ti} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[2px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark border border-divider dark:border-divider-on-dark">{tag}</span>
+                            ))}
+                          </div>
+                          <div className="h-px bg-divider dark:bg-divider-on-dark" />
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                              <span className="font-display text-[11.5px] font-semibold text-ink dark:text-ink-on-dark">{new Date(quiz.created_at).toLocaleDateString()}</span>
                             </div>
-                            <div className="flex items-center gap-2 flex-shrink-0">
-                              <select
-                                onChange={(e) => handleMoveQuizToFolder(quiz.id, e.target.value || null)}
-                                value={quiz.folder_id || ''}
-                                className="px-2 py-1.5 text-xs border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark outline-none"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <option value="">Move to…</option>
-                                <option value="">Uncategorized</option>
-                                {quizFolders.map(folder => (
-                                  <option key={folder.id} value={folder.id}>{folder.name}</option>
-                                ))}
-                              </select>
+                            <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleStartQuiz(quiz.id)}
-                                className="flex items-center gap-1.5 px-3 py-1.5 bg-ink text-ink-on-dark text-xs font-semibold hover:opacity-80 transition-opacity"
-                              >
-                                <Play className="h-3 w-3" />
-                                Start
-                              </button>
+                                className="inline-flex px-[10px] py-1 bg-ink text-ink-on-dark border-none text-[11px] font-display font-semibold cursor-pointer hover:opacity-80 transition-opacity"
+                              >Use →</button>
                             </div>
                           </div>
-                        ))}
-                    </div>
-
-                    {quizSessions.filter(quiz => {
-                      if (selectedFolder === 'all') return true;
-                      if (selectedFolder === 'uncategorized') return !quiz.folder_id;
-                      return quiz.folder_id === selectedFolder;
-                    }).length === 0 && (
-                      <div className="text-center py-12">
-                        <Folder className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-3" />
-                        <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">No quizzes in this folder</p>
-                      </div>
-                    )}
+                        </div>
+                      ))}
                   </div>
-                </div>
+                )}
               </div>
             )}
           </>
         )}
 
         {/* ── History Tab ── */}
-        {activeTab === 'history' && (
-          <div className="space-y-3">
-            {quizViewMode === 'exams' ? (
-              /* Exam History */
-              <>
-                {loading ? (
-                  <LoadingSkeleton type="card" count={3} />
-                ) : examAttempts.length === 0 ? (
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
-                    <Trophy className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
-                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">
-                      {t('quiz.no_exam_attempts') || 'No exam attempts yet'}
-                    </p>
-                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                      {t('quiz.complete_exam_first') || 'Complete an exam to see your history'}
-                    </p>
+        {activeTab === 'history' && (() => {
+          const isExams = quizViewMode === 'exams';
+          const allEntries = isExams ? examAttempts : quizHistory;
+          const allAvg = allEntries.length
+            ? Math.round(allEntries.reduce((s, h) => s + h.score_percentage, 0) / allEntries.length)
+            : 0;
+          const allBest = allEntries.length
+            ? Math.max(...allEntries.map(h => Math.round(h.score_percentage)))
+            : 0;
+          const monthEntries = isExams ? monthlyExamAttempts : monthlyHistory;
+
+          return (
+            <div className="space-y-[10px]">
+              {loading ? (
+                <LoadingSkeleton type="card" count={3} />
+              ) : allEntries.length === 0 ? (
+                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+                  <Trophy className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+                  <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">
+                    {isExams ? (t('quiz.no_exam_attempts') || 'No exam attempts yet') : t('quiz.no_attempts')}
+                  </p>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
+                    {isExams ? (t('quiz.complete_exam_first') || 'Complete an exam to see your history') : t('quiz.complete_first')}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {/* All-time stats strip */}
+                  <div className="flex bg-ink dark:bg-card-dark">
+                    {([
+                      [String(allEntries.length), 'total sittings'],
+                      [`${allAvg}%`, 'all-time average'],
+                      [`${allBest}%`, 'best score'],
+                      ['3 mo.', 'span'],
+                    ] as [string, string][]).map(([v, l], i) => (
+                      <div key={i} className="flex-1 py-[11px] px-5 text-center border-r border-page-light/[.08] last:border-r-0">
+                        <div className="font-display text-[22px] font-semibold text-ink-on-dark leading-none">{v}</div>
+                        <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1">{l}</div>
+                      </div>
+                    ))}
                   </div>
-                ) : (
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
-                    {examAttempts
-                      .filter((attempt) => attempt.global_exams !== null)
-                      .map((attempt, i, arr) => {
-                        const exam = attempt.global_exams!;
-                        const score = attempt.score_percentage;
-                        const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
-                        const strokeColor = score >= 90 ? 'border-l-accent-gold' : score >= 80 ? 'border-l-secondary-ink' : 'border-l-muted-ink';
-                        return (
-                          <div
-                            key={attempt.id}
-                            className={`flex items-start gap-4 p-5 ${i < arr.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
-                          >
-                            {/* Score column */}
-                            <div className={`flex-shrink-0 border-l-[3px] pl-3 min-w-[52px] ${strokeColor}`}>
-                              <p className={`font-display text-2xl font-bold leading-none ${scoreColor}`}>{score.toFixed(0)}</p>
-                              <p className={`text-[9px] tracking-wide ${scoreColor} opacity-70`}>%</p>
-                            </div>
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1">{exam.exam_name}</h3>
-                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-ink dark:text-muted-ink-on-dark mb-2">
-                                <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
-                                <span>·</span>
-                                <span>{exam.total_questions} q.</span>
-                                <span>·</span>
-                                <span>{formatTime(attempt.time_taken_seconds)}</span>
-                                <span className="px-1.5 py-0.5 font-bold bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark">Global</span>
-                              </div>
-                              {/* Answer bar */}
-                              <div className="flex h-[3px] gap-px mb-1.5">
-                                <div className="bg-accent-gold opacity-75" style={{ width: `${(attempt.correct_count / exam.total_questions) * 100}%` }} />
-                                <div className="bg-muted-ink opacity-40" style={{ width: `${(attempt.incorrect_count / exam.total_questions) * 100}%` }} />
-                                {attempt.unanswered_count > 0 && (
-                                  <div className="bg-divider" style={{ width: `${(attempt.unanswered_count / exam.total_questions) * 100}%` }} />
-                                )}
-                              </div>
-                              <div className="flex gap-3 text-[10px]">
-                                <span className="text-accent-gold">{attempt.correct_count} correct</span>
-                                <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.incorrect_count} wrong</span>
-                                {attempt.unanswered_count > 0 && (
-                                  <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.unanswered_count} skipped</span>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        );
+
+                  {/* Month navigator */}
+                  <div className="flex items-center gap-[14px]">
+                    <button
+                      onClick={() => setHistoryMonth(m => {
+                        const d = new Date(m.year, m.month - 1, 1);
+                        return { year: d.getFullYear(), month: d.getMonth() };
                       })}
+                      className="inline-flex items-center justify-center w-[30px] h-[30px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-sm cursor-pointer hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors"
+                    >‹</button>
+                    <span className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark">{historyMonthLabel}</span>
+                    <button
+                      onClick={() => setHistoryMonth(m => {
+                        const d = new Date(m.year, m.month + 1, 1);
+                        return { year: d.getFullYear(), month: d.getMonth() };
+                      })}
+                      className="inline-flex items-center justify-center w-[30px] h-[30px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-sm cursor-pointer hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors"
+                    >›</button>
                   </div>
-                )}
-              </>
-            ) : (
-              /* Quiz History */
-              <>
-                {loading ? (
-                  <LoadingSkeleton type="card" count={3} />
-                ) : quizHistory.length === 0 ? (
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
-                    <Trophy className="h-9 w-9 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
-                    <p className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark mb-1">{t('quiz.no_attempts')}</p>
-                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.complete_first')}</p>
-                  </div>
-                ) : (
-                  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
-                    {quizHistory.map((attempt, i, arr) => {
-                      const score = attempt.score_percentage;
-                      const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
-                      const strokeColor = score >= 90 ? 'border-l-accent-gold' : score >= 80 ? 'border-l-secondary-ink' : 'border-l-muted-ink';
-                      return (
-                        <div
-                          key={attempt.id}
-                          className={`flex items-start gap-4 p-5 ${i < arr.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
-                        >
-                          {/* Score column */}
-                          <div className={`flex-shrink-0 border-l-[3px] pl-3 min-w-[52px] ${strokeColor}`}>
-                            <p className={`font-display text-2xl font-bold leading-none ${scoreColor}`}>{score.toFixed(0)}</p>
-                            <p className={`text-[9px] tracking-wide ${scoreColor} opacity-70`}>%</p>
-                          </div>
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1">
-                              {attempt.quiz_sessions.quiz_title}
-                            </h3>
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-ink dark:text-muted-ink-on-dark mb-2">
-                              <span>{new Date(attempt.completed_at).toLocaleDateString()}</span>
-                              <span>·</span>
-                              <span>{formatTime(attempt.time_taken_seconds)}</span>
-                              <span className="px-1.5 py-0.5 font-bold bg-chip text-secondary-ink dark:text-secondary-ink-on-dark">My Quiz</span>
-                            </div>
-                            {/* Answer bar */}
-                            <div className="flex h-[3px] gap-px mb-1.5">
-                              <div className="bg-accent-gold opacity-75" style={{ width: `${(attempt.correct_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
-                              <div className="bg-muted-ink opacity-40" style={{ width: `${(attempt.incorrect_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
-                              {attempt.unanswered_count > 0 && (
-                                <div className="bg-divider" style={{ width: `${(attempt.unanswered_count / (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)) * 100}%` }} />
-                              )}
-                            </div>
-                            <div className="flex gap-3 text-[10px]">
-                              <span className="text-accent-gold">{attempt.correct_count} correct</span>
-                              <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.incorrect_count} wrong</span>
-                              {attempt.unanswered_count > 0 && (
-                                <span className="text-muted-ink dark:text-muted-ink-on-dark">{attempt.unanswered_count} skipped</span>
-                              )}
-                            </div>
-                          </div>
+
+                  {/* 2-col: left monthly summary + right entries */}
+                  <div className="grid gap-4" style={{ gridTemplateColumns: '210px 1fr' }}>
+                    {/* Left: dark monthly summary */}
+                    <div className="bg-ink dark:bg-card-dark self-start" style={{ padding: '20px 18px' }}>
+                      <div className="text-[9px] tracking-[2px] uppercase font-bold text-ink-on-dark/35 mb-2">{historyMonthLabel}</div>
+                      <div className="font-display text-[48px] font-semibold text-ink-on-dark leading-none">
+                        {monthlyStats.avg}<span className="text-[18px] text-accent-gold">%</span>
+                      </div>
+                      <div className="font-display text-[11px] text-accent-gold mt-[5px] mb-4">— monthly average</div>
+                      <div className="h-px bg-ink-on-dark/[.08] mb-[14px]" />
+                      {([
+                        [String(monthlyStats.sittings), 'sittings this month'],
+                        [`${monthlyStats.best}%`, 'best this month'],
+                        [String(monthlyStats.globalCount), 'global exams'],
+                      ] as [string, string][]).map(([v, l]) => (
+                        <div key={l} className="flex justify-between items-baseline mb-[9px]">
+                          <span className="text-[11px] text-ink-on-dark/50">{l}</span>
+                          <span className="font-display text-[14px] font-semibold text-ink-on-dark">{v}</span>
                         </div>
-                      );
-                    })}
+                      ))}
+                      <div className="h-px bg-ink-on-dark/[.08] mt-[6px] mb-3" />
+                      <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-ink-on-dark/30 mb-2">vs. all-time avg</div>
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1 h-[3px] bg-ink-on-dark/[.13]">
+                          <div className="h-full bg-accent-gold" style={{ width: `${monthlyStats.avg}%` }} />
+                        </div>
+                        <span className="font-display text-[11px] text-accent-gold">
+                          {monthlyStats.avg >= allAvg ? '+' : ''}{monthlyStats.avg - allAvg}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Right: entries */}
+                    <div>
+                      {monthEntries.length === 0 ? (
+                        <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark py-8 text-center">No sittings in {historyMonthLabel}</p>
+                      ) : (
+                        monthEntries.map((attempt, i, arr) => {
+                          const score = Math.round(attempt.score_percentage);
+                          const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
+                          const strokeColor = score >= 90 ? 'var(--color-accent-gold)' : score >= 80 ? 'var(--color-secondary-ink)' : 'var(--color-muted-ink)';
+                          const total = isExams
+                            ? (attempt as GlobalExamAttempt).global_exams?.total_questions ?? (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)
+                            : (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count);
+                          const title = isExams
+                            ? (attempt as GlobalExamAttempt).global_exams?.exam_name ?? '—'
+                            : (attempt as QuizAttempt).quiz_sessions?.quiz_title ?? '—';
+                          const type = isExams ? 'Global' : 'My Quiz';
+                          return (
+                            <div
+                              key={attempt.id}
+                              className={`flex items-start gap-4 py-4 ${i < arr.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
+                            >
+                              {/* Score column */}
+                              <div className="flex-shrink-0 pl-[10px] min-w-[46px]" style={{ borderLeft: `3px solid ${strokeColor}` }}>
+                                <p className={`font-display text-[26px] font-bold leading-none ${scoreColor}`}>{score}</p>
+                                <p className={`text-[9px] tracking-[1px] ${scoreColor} opacity-65`}>%</p>
+                              </div>
+                              {/* Content */}
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-display font-semibold text-[14px] text-ink dark:text-ink-on-dark mb-[5px]">{title}</h3>
+                                <div className="flex items-center gap-[7px] mb-[9px]">
+                                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{new Date(attempt.completed_at).toLocaleDateString()}</span>
+                                  <span className="text-[11px] text-divider">·</span>
+                                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{total} q.</span>
+                                  <span className="text-[11px] text-divider">·</span>
+                                  <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{formatTime(attempt.time_taken_seconds)}</span>
+                                  <span className="text-[10px] px-[7px] py-px font-bold" style={{ background: type === 'Global' ? 'var(--color-ink-on-dark)0D' : 'var(--color-accent-gold-soft)', color: type === 'Global' ? 'var(--color-ink)' : 'var(--color-accent-gold)' }}>{type}</span>
+                                </div>
+                                <div className="flex h-[3px] mb-[6px] gap-px">
+                                  <div className="bg-accent-gold opacity-75" style={{ width: `${(attempt.correct_count / Math.max(total, 1)) * 100}%` }} />
+                                  <div className="bg-muted-ink opacity-45" style={{ width: `${(attempt.incorrect_count / Math.max(total, 1)) * 100}%` }} />
+                                  {attempt.unanswered_count > 0 && <div className="bg-divider" style={{ width: `${(attempt.unanswered_count / Math.max(total, 1)) * 100}%` }} />}
+                                </div>
+                                <div className="flex gap-[14px]">
+                                  <span className="text-[10px] text-accent-gold">{attempt.correct_count} correct</span>
+                                  <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{attempt.incorrect_count} wrong</span>
+                                  {attempt.unanswered_count > 0 && <span className="text-[10px] text-divider">{attempt.unanswered_count} skipped</span>}
+                                </div>
+                              </div>
+                              <button className="inline-flex px-3 py-[5px] bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark text-[11px] font-display cursor-pointer flex-shrink-0 mt-0.5 hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
+                                Retake
+                              </button>
+                            </div>
+                          );
+                        })
+                      )}
+                    </div>
                   </div>
-                )}
-              </>
-            )}
-          </div>
-        )}
+                </>
+              )}
+            </div>
+          );
+        })()}
       </div>
       {ConfirmModal}
 
