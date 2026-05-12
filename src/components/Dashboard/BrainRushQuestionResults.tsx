@@ -119,7 +119,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
     return (
       <div className="max-w-6xl mx-auto">
         <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-12 text-center`}>
-          <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4 dark:border-blue-400"></div>
           <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>Loading results...</p>
         </div>
       </div>
@@ -266,7 +266,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
         ) : (
           <div className="text-center">
             <div className="inline-flex items-center space-x-3 bg-blue-50 dark:bg-blue-900/20 px-6 py-4 rounded-md">
-              <div className="animate-spin h-6 w-6 border-3 border-blue-600 border-t-transparent rounded-full"></div>
+              <div className="animate-spin h-6 w-6 border-3 border-blue-600 border-t-transparent rounded-full dark:border-blue-400"></div>
               <p className={"text-secondary-ink dark:text-muted-ink-on-dark"}>
                 Waiting for host to continue...
               </p>

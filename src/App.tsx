@@ -90,7 +90,7 @@ const AppContentInternal: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
@@ -106,7 +106,7 @@ const AppContentInternal: React.FC = () => {
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400" />
           </div>
         }>
           <OnboardingWizard />
@@ -175,7 +175,7 @@ const AppContentWithoutTheme: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
@@ -189,7 +189,7 @@ const AppContentWithoutTheme: React.FC = () => {
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark">
         <Suspense fallback={
           <div className="min-h-screen flex items-center justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400" />
           </div>
         }>
           <OnboardingWizard />
@@ -220,7 +220,7 @@ function AppContent() {
 const LoadingFallback: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-page-light dark:bg-page-dark">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
     </div>
   );
 };
@@ -232,7 +232,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (loading) {
     return (
       <div className="min-h-screen w-full min-w-full overflow-x-auto bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }

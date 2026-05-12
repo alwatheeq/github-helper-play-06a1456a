@@ -271,7 +271,7 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
                 e.stopPropagation();
                 onRemove();
               }}
-              className={`p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors`}
+              className={`p-1.5 rounded-full text-secondary-ink dark:text-muted-ink-on-dark hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 dark:hover:text-red-400 transition-colors dark:bg-red-950/40`}
               title={t('book_mode.close') || 'Close'}
             >
               <X className="h-3 w-3" />

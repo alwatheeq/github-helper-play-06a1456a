@@ -827,7 +827,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                         />
                         {searchLoading && (
                           <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
-                            <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full" />
+                            <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full dark:border-blue-400" />
                           </div>
                         )}
                       </div>
@@ -1168,7 +1168,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                           <div className="flex items-center space-x-2 ml-4">
                             <button
                               onClick={() => navigate(`/view/library/${item.id}`)}
-                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900"
+                              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-blue-400 dark:hover:text-blue-200 dark:hover:bg-blue-900 dark:bg-blue-950/40"
                             >
                               <Eye className="h-4 w-4" />
                             </button>
@@ -1176,7 +1176,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.is_public && item.shareable_link ? (
                               <button
                                 onClick={() => handleUnshareItem(item.id)}
-                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900"
+                                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-orange-400 dark:hover:text-orange-200 dark:hover:bg-orange-900 dark:bg-orange-950/40"
                                 title={t('library.unshare')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1184,7 +1184,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             ) : (
                               <button
                                 onClick={() => handleShareItem(item.id)}
-                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900"
+                                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-green-400 dark:hover:text-green-200 dark:hover:bg-green-900 dark:bg-green-950/40"
                                 title={t('library.share')}
                               >
                                 <Share2 className="h-4 w-4" />
@@ -1194,7 +1194,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                             {item.user_id === user?.id && (
                               <button
                                 onClick={() => handleDeleteItem(item.id)}
-                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900"
+                                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] dark:text-red-400 dark:hover:text-red-200 dark:hover:bg-red-900 dark:bg-red-950/40"
                               >
                                 <Trash2 className="h-4 w-4" />
                               </button>

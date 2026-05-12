@@ -411,7 +411,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto dark:border-blue-400"></div>
           <p className={`mt-4 text-ink dark:text-ink-on-dark`}>{t('common.loading')}</p>
         </div>
       </div>
@@ -536,7 +536,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               )}
                               <button
                                 onClick={() => handleDeleteGoal(goal.id)}
-                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                                className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                                 title="Delete goal"
                               >
                                 <Trash2 className="h-5 w-5" />
@@ -601,7 +601,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                           </div>
                           <button
                             onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
                             title="Delete goal"
                           >
                             <Trash2 className="h-5 w-5" />

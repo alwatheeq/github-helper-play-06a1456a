@@ -69,7 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-4">
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8 max-w-2xl w-full">
             <div className="flex items-center justify-center mb-6">
-              <div className="bg-orange-100 p-3 rounded-full">
+              <div className="bg-orange-100 p-3 rounded-full dark:bg-orange-900/30">
                 <AlertTriangle className="h-12 w-12 text-orange-600 dark:text-orange-400" />
               </div>
             </div>

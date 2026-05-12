@@ -248,7 +248,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
                 <button
                   type="button"
                   onClick={() => setDeleteTarget(exam)}
-                  className="p-1.5 rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+                  className="p-1.5 rounded hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors dark:bg-red-900/30"
                   aria-label={t('exam_scheduler.delete') || 'Delete'}
                 >
                   <Trash2 className="h-4 w-4 text-red-500" />

@@ -252,7 +252,7 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
       {/* Error overlay */}
       {error && (
         <div className="absolute inset-0 flex items-center justify-center bg-card-dark z-50 rounded-[var(--s4-radius-card)] p-6">
-          <div className="bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md">
+          <div className="bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md dark:border-red-300">
             <h3 className="text-lg font-semibold text-red-200 mb-2">
               Video Connection Error
             </h3>

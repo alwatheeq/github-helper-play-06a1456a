@@ -244,7 +244,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       </button>
 
       <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-        <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" /></div>}>
+        <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
           <MindMapView text={summaryText} title={t('mind_map.title')} />
         </React.Suspense>
       </Modal>

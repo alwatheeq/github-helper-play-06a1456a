@@ -474,7 +474,7 @@ export const UserActivityPage: React.FC = React.memo(() => {
             <div className="p-6">
               {detailsLoading ? (
                 <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
                 </div>
               ) : userDetails && (
                 <div className="space-y-6">

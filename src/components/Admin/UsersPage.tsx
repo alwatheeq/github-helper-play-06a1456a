@@ -657,7 +657,7 @@ export const UsersPage: React.FC = React.memo(() => {
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -826,7 +826,7 @@ export const UsersPage: React.FC = React.memo(() => {
                                 title="Unsubscribe user"
                               >
                                 {unsubscribingUserId === user.id ? (
-                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600"></div>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-orange-600 dark:border-orange-400"></div>
                                 ) : (
                                   <UserX className="h-4 w-4" />
                                 )}
@@ -840,7 +840,7 @@ export const UsersPage: React.FC = React.memo(() => {
                                 title="Subscribe user"
                               >
                                 {subscribingUserId === user.id ? (
-                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600"></div>
+                                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-green-600 dark:border-green-400"></div>
                                 ) : (
                                   <UserPlus className="h-4 w-4" />
                                 )}
@@ -995,7 +995,7 @@ export const UsersPage: React.FC = React.memo(() => {
 
               {statsLoading ? (
                 <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
                 </div>
               ) : userStats && (
                 <div>
