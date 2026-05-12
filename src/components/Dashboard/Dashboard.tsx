@@ -6,6 +6,7 @@ import { Sidebar } from './Sidebar';
 import { InputForm } from './InputForm';
 import { ProcessingStatus } from './ProcessingStatus';
 import { WorkshopPanel } from './WorkshopPanel';
+import { WorkshopV4 } from './WorkshopV4';
 import { PageHeader } from '../Scholar';
 // Heavy sub-pages are lazy-loaded so they don't bloat the initial bundle.
 const SummaryDisplay = lazy(() => import('./SummaryDisplay').then(m => ({ default: m.SummaryDisplay })));
