@@ -784,31 +784,22 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
 
             {/* Rating buttons for Flip Cards mode */}
             {currentStudyMode === 'flip' && flipped && !studySessionComplete && (
-              <div className="mt-5 flex justify-center gap-2 flex-wrap">
-                <button
-                  onClick={() => handleStudyResponse('hard')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-red-200 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
-                >
-                  {medicalMode ? 'Need Review' : t('flashcards.hard')}
-                </button>
-                <button
-                  onClick={() => handleStudyResponse('good')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30 transition-colors dark:bg-blue-950/40"
-                >
-                  {medicalMode ? 'Understand' : t('flashcards.good')}
-                </button>
-                <button
-                  onClick={() => handleStudyResponse('easy')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-emerald-200 text-emerald-600 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900/30 transition-colors dark:bg-emerald-950/40"
-                >
-                  {medicalMode ? 'Know Well' : t('flashcards.easy')}
-                </button>
-                <button
-                  onClick={() => handleStudyResponse('learned')}
-                  className="px-4 py-1.5 rounded-full text-sm font-medium border border-purple-200 text-purple-600 hover:bg-purple-50 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-900/30 transition-colors dark:bg-purple-950/40"
-                >
-                  {medicalMode ? 'Mastered' : t('flashcards.learned')}
-                </button>
+              <div className="mt-5 flex gap-2">
+                {([
+                  { key: 'hard',    label: medicalMode ? 'Need Review' : t('flashcards.hard'),    color: '#ef4444' },
+                  { key: 'good',    label: medicalMode ? 'Understand'  : t('flashcards.good'),    color: '#22c55e' },
+                  { key: 'easy',    label: medicalMode ? 'Know Well'   : t('flashcards.easy'),    color: '#3b82f6' },
+                  { key: 'learned', label: medicalMode ? 'Mastered'    : t('flashcards.learned'), color: '#a855f7' },
+                ] as const).map(({ key, label, color }) => (
+                  <button
+                    key={key}
+                    onClick={() => handleStudyResponse(key)}
+                    className="flex-1 py-2 rounded-[9px] text-[12px] font-bold transition-opacity hover:opacity-80"
+                    style={{ background: `${color}14`, border: `1.5px solid ${color}44`, color }}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
             )}
 
