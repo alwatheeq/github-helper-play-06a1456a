@@ -69,6 +69,21 @@ interface _GameQuestion {
 type ViewMode = 'menu' | 'game-selection' | 'question-source' | 'ai-generate' | 'manual-build' | 'game-settings' | 'join-game' | 'lobby' | 'game-active' | 'results' | 'multiplayer-menu' | 'multiplayer-lobby' | 'multiplayer-game' | 'multiplayer-results';
 type QuestionSource = 'auto_generated' | 'manual' | 'saved_set' | 'quiz_session' | null;
 
+const RECENT_SESSIONS = [
+  { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–4',  pts: '+350', date: 'Today' },
+  { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–5',  pts: '+350', date: 'Today' },
+  { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Lost 4–7', pts: '+80',  date: 'Yesterday' },
+  { mode: 'Brain Rush', detail: 'Ranked Online', result: 'Won 7–3',  pts: '+420', date: 'Monday' },
+];
+
+const LEADERBOARD = [
+  { rank: 1, init: 'Y', name: 'Yusuf B.',  pts: 2840, you: false },
+  { rank: 2, init: 'J', name: 'You',        pts: 2610, you: true  },
+  { rank: 3, init: 'L', name: 'Layla A.',   pts: 2480, you: false },
+  { rank: 4, init: 'K', name: 'Karim H.',   pts: 1920, you: false },
+  { rank: 5, init: 'R', name: 'Reem S.',    pts: 1750, you: false },
+];
+
 export const EduPlayPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const { error: showErrorToast } = useToast();
@@ -597,19 +612,6 @@ export const EduPlayPage: React.FC = React.memo(() => {
       { k: 'daily', live: false, sub: 'Community · Shared set', title: 'Daily Challenge.', desc: 'One curated question set per day, shared across the whole community.' },
       { k: 'tourn', live: false, sub: 'Competitive · Bracket',  title: 'Tournament.',      desc: 'Bracket-style competitions across a full course. Win rounds to advance.' },
     ];
-    const recentSessions = [
-      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–4',  pts: '+350', date: 'Today' },
-      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Won 7–5',  pts: '+350', date: 'Today' },
-      { mode: 'Brain Rush', detail: 'vs. Classmate', result: 'Lost 4–7', pts: '+80',  date: 'Yesterday' },
-      { mode: 'Brain Rush', detail: 'Ranked Online', result: 'Won 7–3',  pts: '+420', date: 'Monday' },
-    ];
-    const leaderboard = [
-      { rank: 1, init: 'Y', name: 'Yusuf B.',  pts: 2840, you: false },
-      { rank: 2, init: 'J', name: 'You',        pts: 2610, you: true  },
-      { rank: 3, init: 'L', name: 'Layla A.',   pts: 2480, you: false },
-      { rank: 4, init: 'K', name: 'Karim H.',   pts: 1920, you: false },
-      { rank: 5, init: 'R', name: 'Reem S.',    pts: 1750, you: false },
-    ];
 
     return (
       <div className="w-full">
@@ -660,17 +662,17 @@ export const EduPlayPage: React.FC = React.memo(() => {
                     <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
                   ))}
                 </div>
-                {recentSessions.map((r, i) => (
+                {RECENT_SESSIONS.map((r, i) => (
                   <div
                     key={i}
-                    className={`grid py-[10px] px-[16px] items-center ${i < recentSessions.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
+                    className={`grid py-[10px] px-[16px] items-center ${i < RECENT_SESSIONS.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}
                     style={{ gridTemplateColumns: '1fr 80px 70px 70px' }}
                   >
                     <div>
                       <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark">{r.mode}</div>
                       <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[1px]">{r.detail}</div>
                     </div>
-                    <div className={`text-[12px] font-${r.result.startsWith('Won') ? 'semibold' : 'normal'} ${r.result.startsWith('Won') ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{r.result}</div>
+                    <div className={`text-[12px] ${r.result.startsWith('Won') ? 'font-semibold text-accent-gold' : 'font-normal text-muted-ink dark:text-muted-ink-on-dark'}`}>{r.result}</div>
                     <div className="font-display text-[13px] font-semibold text-accent-gold">{r.pts}</div>
                     <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{r.date}</div>
                   </div>
@@ -706,10 +708,10 @@ export const EduPlayPage: React.FC = React.memo(() => {
             {/* Leaderboard */}
             <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[16px]">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Leaderboard · This Week</div>
-              {leaderboard.map((p, i) => (
+              {LEADERBOARD.map((p, i) => (
                 <div
                   key={i}
-                  className={`flex items-center gap-[9px] py-[7px] px-[6px] ${i < leaderboard.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''} ${p.you ? 'bg-accent-gold-soft' : ''}`}
+                  className={`flex items-center gap-[9px] py-[7px] px-[6px] ${i < LEADERBOARD.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''} ${p.you ? 'bg-accent-gold-soft' : ''}`}
                 >
                   <span className={`font-display text-[12px] w-[13px] flex-shrink-0 ${p.rank === 1 ? 'text-accent-gold font-bold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.rank}</span>
                   <div

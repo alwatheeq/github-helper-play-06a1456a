@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Plus, Upload, BarChart3, ChevronDown } from 'lucide-react';
+import { Plus, Upload, ChevronDown } from 'lucide-react';
 import { useI18n } from '../../../contexts/I18nContext';
 import { useAuth } from '../../../hooks/useAuth';
 import { usePageTutorial } from '../../../hooks/usePageTutorial';
@@ -98,6 +98,19 @@ function isUnknownContentGenerationOptionsColumnError(msg: string): boolean {
 function isSevereAcademicsSchemaError(msg: string): boolean {
   return isAcademicsSchemaErrorMessage(msg) && !isUnknownContentGenerationOptionsColumnError(msg);
 }
+
+const COURSE_ACCENT_COLORS = [
+  'var(--color-ink)',
+  'var(--color-accent-gold)',
+  'var(--color-secondary-ink)',
+  'var(--color-muted-ink)',
+];
+
+const WEEK_DAY_LABELS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
 
 /**
  * Academics: courses, uploads (summary / flashcards / quiz), and topic/course analytics.
@@ -630,8 +643,32 @@ export const AcademicsPage: React.FC = React.memo(() => {
     { id: 'analytics', label: t('academics.tab_analytics') || 'Analytics' },
   ] satisfies import('../../Scholar').SectionTab[];
 
-  // Day-of-week streak: last 7 days filled if studied
-  const weekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const currentWeek = useMemo(() => {
+    const today = new Date();
+    const dow = today.getDay();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
+    return WEEK_DAY_LABELS.map((d, i) => {
+      const date = new Date(monday);
+      date.setDate(monday.getDate() + i);
+      return {
+        d,
+        n: date.getDate(),
+        month: MONTH_NAMES[date.getMonth()],
+        isToday: date.toDateString() === today.toDateString(),
+      };
+    });
+  }, []);
+
+  const weekLabel = useMemo(() => {
+    if (!currentWeek.length) return '';
+    const first = currentWeek[0];
+    const last = currentWeek[6];
+    const sameMonth = first.month === last.month;
+    return sameMonth
+      ? `${first.month} ${first.n} — ${last.n}`
+      : `${first.month} ${first.n} — ${last.month} ${last.n}`;
+  }, [currentWeek]);
 
   return (
     <>
@@ -669,121 +706,228 @@ export const AcademicsPage: React.FC = React.memo(() => {
 
       {/* ── Overview tab ── */}
       {activeTab === 'overview' && (
-        <div className="space-y-6">
-          {/* 2×2 dark course cards */}
-          {courses.length === 0 ? (
-            <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
-              <p className="text-muted-ink-on-dark text-sm">
-                {t('academics.courses_empty_state') || 'No courses yet. Create your first course to get started.'}
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {courses.map((course, idx) => {
-                const isSelected = selectedCourseId === course.id;
-                const accentColors = ['var(--color-ink,#1a1a1a)', 'var(--color-accent-gold,#B8893A)', 'var(--color-secondary-ink,#4a5568)', 'var(--color-muted-ink,#9ca3af)'];
-                const accentColor = accentColors[idx % accentColors.length];
-                return (
-                  <div
-                    key={course.id}
-                    className={`bg-subtle dark:bg-card-dark border flex flex-col gap-[10px] p-4 transition-colors cursor-pointer ${
-                      isSelected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark'
-                    }`}
-                    style={{ borderTop: `3px solid ${accentColor}` }}
-                    onClick={() => setSelectedCourseId(course.id)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={(e) => e.key === 'Enter' && setSelectedCourseId(course.id)}
+        <div>
+          {/* Weekly calendar strip */}
+          <div className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 mb-[18px]">
+            <div className="flex items-baseline justify-between mb-3">
+              <div>
+                <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">This week</div>
+                <div className="font-display text-[17px] font-semibold text-ink dark:text-ink-on-dark mt-[3px]">
+                  {weekLabel}
+                </div>
+              </div>
+              <div className="flex gap-1.5">
+                {(['‹ Prev', 'Today', 'Next ›'] as const).map((lbl) => (
+                  <button
+                    key={lbl}
+                    type="button"
+                    className="bg-transparent border border-accent-gold/30 px-[13px] py-[4px] text-[11px] tracking-[0.8px] font-bold text-accent-gold uppercase cursor-pointer"
                   >
-                    {/* Header row: code/prof + grade */}
-                    <div className="flex justify-between items-start gap-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[10px] tracking-[1.5px] uppercase font-bold mb-1" style={{ color: accentColor }}>
-                          {course.course_code || t('academics.topic_label')}
-                          {course.academics_topics?.name ? ` · ${course.academics_topics.name}` : ''}
-                        </div>
-                        <div className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-tight">
-                          {course.course_name}
-                        </div>
-                      </div>
-                      <div className="text-right flex-shrink-0">
-                        <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark">Score</div>
-                        <div className="font-display text-[19px] font-semibold leading-none mt-0.5" style={{ color: accentColor }}>
-                          {isSelected ? `${courseScore}%` : '—'}
-                        </div>
-                      </div>
-                    </div>
-                    {/* Hairline */}
-                    <div className="h-px bg-divider dark:bg-divider-on-dark" />
-                    {/* Stats grid */}
-                    <div className="grid grid-cols-4 gap-1.5">
-                      {[
-                        { v: isSelected ? `${courseScore}%` : '—', l: 'avg score' },
-                        { v: '—', l: 'studied' },
-                        { v: '—', l: 'topics' },
-                        { v: '—', l: 'cards due' },
-                      ].map(({ v, l }) => (
-                        <div key={l}>
-                          <div className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">{v}</div>
-                          <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{l}</div>
-                        </div>
-                      ))}
-                    </div>
-                    {/* Open button */}
-                    <button
-                      type="button"
-                      onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
-                      className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
-                    >
-                      Open →
-                    </button>
-                  </div>
-                );
-              })}
+                    {lbl}
+                  </button>
+                ))}
+              </div>
             </div>
-          )}
-
-          {/* Quick Actions strip */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { label: t('academics.quick_srs') || 'Start SRS Session', tab: 'srs' as const },
-              { label: t('academics.quick_exam') || 'Schedule Exam', tab: 'exams' as const },
-              { label: t('academics.quick_tutor') || 'Ask AI Tutor', tab: 'tutor' as const },
-            ].map(({ label, tab }) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(tab)}
-                className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 text-left hover:border-accent-gold transition-colors"
-              >
-                <span className="font-display font-medium text-[13px] text-ink dark:text-ink-on-dark">{label}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Week streak strip */}
-          <div className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
-            <p className="text-xs font-semibold text-muted-ink-on-dark uppercase tracking-widest mb-3">
-              {t('academics.week_streak') || 'This week'}
-            </p>
-            <div className="flex items-center gap-2">
-              {weekDays.map((day, i) => (
-                <div key={i} className="flex flex-col items-center gap-1">
-                  <div
-                    className={`w-7 h-7 rounded-full border transition-colors ${
-                      i < 5
-                        ? 'bg-accent-gold border-accent-gold'
-                        : 'bg-chip border-divider'
-                    }`}
-                  />
-                  <span className="text-[10px] text-muted-ink-on-dark">{day}</span>
+            <div className="grid grid-cols-7 gap-1.5">
+              {currentWeek.map((day, i) => (
+                <div
+                  key={i}
+                  className={`border p-2 pb-[10px] min-h-[100px] flex flex-col gap-1 ${
+                    day.isToday
+                      ? 'bg-accent-gold-soft border-accent-gold'
+                      : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'
+                  }`}
+                >
+                  <div className="flex justify-between items-baseline mb-1">
+                    <span className={`text-[9px] tracking-[1.5px] font-bold uppercase ${
+                      day.isToday ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'
+                    }`}>
+                      {day.d}
+                    </span>
+                    <span className={`font-display text-[15px] font-semibold ${
+                      day.isToday ? 'text-accent-gold' : 'text-ink dark:text-ink-on-dark'
+                    }`}>
+                      {day.n}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-auto">open</span>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Body: course cards left (1.7fr), topic mastery right (1fr) */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1.7fr 1fr', gap: 20 }}>
+            {/* Left: course cards */}
+            <div>
+              {courses.length === 0 ? (
+                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 text-center">
+                  <p className="text-muted-ink dark:text-muted-ink-on-dark text-sm">
+                    {t('academics.courses_empty_state') || 'No courses yet. Create your first course to get started.'}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  {/* First 2 courses — big variant */}
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    {courses.slice(0, 2).map((course, idx) => {
+                      const accentColor = COURSE_ACCENT_COLORS[idx % COURSE_ACCENT_COLORS.length];
+                      const isSelected = selectedCourseId === course.id;
+                      return (
+                        <div
+                          key={course.id}
+                          className={`bg-subtle dark:bg-card-dark border flex flex-col cursor-pointer transition-colors ${
+                            isSelected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark'
+                          }`}
+                          style={{ borderTop: `3px solid ${accentColor}`, padding: 20, gap: 12 }}
+                          onClick={() => setSelectedCourseId(course.id)}
+                        >
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1 min-w-0 pr-2">
+                              <div className="text-[10px] tracking-[1.5px] uppercase font-bold mb-1" style={{ color: accentColor }}>
+                                {course.course_code || t('academics.topic_label')}
+                                {course.academics_topics?.name ? ` · ${course.academics_topics.name}` : ''}
+                              </div>
+                              <div className="font-display font-semibold text-ink dark:text-ink-on-dark leading-tight" style={{ fontSize: 20 }}>
+                                {course.course_name}
+                              </div>
+                            </div>
+                            <div className="text-right flex-shrink-0">
+                              <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark">Score</div>
+                              <div className="font-display leading-none mt-0.5" style={{ fontSize: 24, fontWeight: 600, color: accentColor }}>
+                                {isSelected ? `${courseScore}%` : '—'}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="h-px bg-divider dark:bg-divider-on-dark" />
+                          <div className="grid grid-cols-4 gap-1.5">
+                            {([
+                              { v: isSelected ? `${courseScore}%` : '—', l: 'avg score' },
+                              { v: '—', l: 'studied' },
+                              { v: '—', l: 'topics' },
+                              { v: '—', l: 'cards due' },
+                            ] as const).map(({ v, l }) => (
+                              <div key={l}>
+                                <div className="font-display font-semibold text-ink dark:text-ink-on-dark" style={{ fontSize: 17 }}>{v}</div>
+                                <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{l}</div>
+                              </div>
+                            ))}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
+                            className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
+                          >
+                            Open →
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {/* Remaining courses — normal variant */}
+                  {courses.length > 2 && (
+                    <div className="grid grid-cols-2 gap-3">
+                      {courses.slice(2).map((course, idx) => {
+                        const accentColor = COURSE_ACCENT_COLORS[(idx + 2) % COURSE_ACCENT_COLORS.length];
+                        const isSelected = selectedCourseId === course.id;
+                        return (
+                          <div
+                            key={course.id}
+                            className={`bg-subtle dark:bg-card-dark border flex flex-col cursor-pointer transition-colors ${
+                              isSelected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark'
+                            }`}
+                            style={{ borderTop: `3px solid ${accentColor}`, padding: 16, gap: 10 }}
+                            onClick={() => setSelectedCourseId(course.id)}
+                          >
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1 min-w-0 pr-2">
+                                <div className="text-[10px] tracking-[1.5px] uppercase font-bold mb-1" style={{ color: accentColor }}>
+                                  {course.course_code || t('academics.topic_label')}
+                                  {course.academics_topics?.name ? ` · ${course.academics_topics.name}` : ''}
+                                </div>
+                                <div className="font-display font-semibold text-ink dark:text-ink-on-dark leading-tight" style={{ fontSize: 16 }}>
+                                  {course.course_name}
+                                </div>
+                              </div>
+                              <div className="text-right flex-shrink-0">
+                                <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark">Score</div>
+                                <div className="font-display leading-none mt-0.5" style={{ fontSize: 19, fontWeight: 600, color: accentColor }}>
+                                  {isSelected ? `${courseScore}%` : '—'}
+                                </div>
+                              </div>
+                            </div>
+                            <div className="h-px bg-divider dark:bg-divider-on-dark" />
+                            <div className="grid grid-cols-4 gap-1.5">
+                              {([
+                                { v: isSelected ? `${courseScore}%` : '—', l: 'avg score' },
+                                { v: '—', l: 'studied' },
+                                { v: '—', l: 'topics' },
+                                { v: '—', l: 'cards due' },
+                              ] as const).map(({ v, l }) => (
+                                <div key={l}>
+                                  <div className="font-display font-semibold text-ink dark:text-ink-on-dark" style={{ fontSize: 14 }}>{v}</div>
+                                  <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{l}</div>
+                                </div>
+                              ))}
+                            </div>
+                            <button
+                              type="button"
+                              onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
+                              className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
+                            >
+                              Open →
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Right: topic mastery panel */}
+            <div className="bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px] self-start">
+              <div className="mb-[14px]">
+                <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Mastery</div>
+                <div className="font-display text-[17px] font-semibold text-ink dark:text-ink-on-dark mt-[3px]">Topics — strongest first</div>
+                <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[3px]">Sorted by mastery score, high to low.</div>
+              </div>
+              {topicScores.length > 0 ? (
+                <div className="flex flex-col gap-[9px]">
+                  {[...topicScores].sort((a, b) => b.score - a.score).map((tp, i) => (
+                    <div key={`${tp.topic}-${i}`}>
+                      <div className="flex justify-between items-baseline mb-[3px]">
+                        <div className="flex-1 min-w-0 pr-2">
+                          <span className="text-[12px] font-semibold text-ink dark:text-ink-on-dark">{tp.topic}</span>
+                        </div>
+                        <span className="font-display text-[12px] font-semibold text-accent-gold flex-shrink-0">
+                          {tp.score}<span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">%</span>
+                        </span>
+                      </div>
+                      <div className="h-[3px] bg-divider dark:bg-divider-on-dark relative">
+                        <div className="absolute inset-0 bg-accent-gold" style={{ width: `${tp.score}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+                  {selectedCourse
+                    ? t('academics.no_analytics_data') || 'No topic data yet. Upload content to generate analytics.'
+                    : t('academics.select_course_first')}
+                </p>
+              )}
+              {topicScores.length > 0 && (
+                <div className="mt-[14px] pt-3 border-t border-divider dark:border-divider-on-dark text-[11px] text-muted-ink dark:text-muted-ink-on-dark text-center">
+                  Average across topics — <span className="text-ink dark:text-ink-on-dark font-semibold">{courseScore}%</span>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Upload / generation section */}
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5 space-y-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 space-y-4 mt-5">
             <div className="flex items-center justify-between gap-2">
               <h3 className="font-semibold text-ink dark:text-ink-on-dark">
                 {selectedCourse?.course_name || t('academics.select_course')}
@@ -793,7 +937,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               {t('academics.upload_section_desc')}
             </p>
             {selectedCourse ? (
-              <details className="group rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-bg-subtle overflow-hidden">
+              <details className="group border border-divider dark:border-divider-on-dark bg-subtle dark:bg-bg-subtle overflow-hidden">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark">
                   <span className="text-sm font-medium">{t('academics.generation_for_upload_title')}</span>
                   <span className="flex min-w-0 flex-1 items-center justify-end gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark">
@@ -843,7 +987,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                     type="button"
                     onClick={() => void saveWorkingGenPrefs()}
                     disabled={savingGenPrefs || uploading || !canPersistGenerationPrefsToDb}
-                    className="text-sm px-3 py-1.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark disabled:opacity-50"
+                    className="text-sm px-3 py-1.5 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark disabled:opacity-50"
                   >
                     {savingGenPrefs ? t('academics.saving_prefs') : t('academics.save_generation_prefs')}
                   </button>
@@ -887,7 +1031,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   type="button"
                   disabled={!selectedCourse || selectedFiles.length === 0 || uploading}
                   onClick={() => void handleGenerateContentForCourse()}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] ${
+                  className={`inline-flex items-center gap-2 px-4 py-2 ${
                     !selectedCourse || selectedFiles.length === 0 || uploading
                       ? 'bg-subtle text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed'
                       : 'bg-accent-gold text-white'
@@ -901,16 +1045,16 @@ export const AcademicsPage: React.FC = React.memo(() => {
           </div>
 
           {/* Generated content list */}
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 mt-3">
             <h4 className="font-semibold text-ink dark:text-ink-on-dark mb-3">{t('academics.generated_content_heading')}</h4>
             <div className="space-y-2">
               {courseItems.map((item) => (
-                <div key={item.id} className="px-3 py-2 rounded-[var(--s4-radius-card)] bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                <div key={item.id} className="px-3 py-2 bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   {item.user_library_items?.title || item.item_id}
                 </div>
               ))}
               {courseQuizzes.map((quiz) => (
-                <div key={quiz.id} className="px-3 py-2 rounded-[var(--s4-radius-card)] bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                <div key={quiz.id} className="px-3 py-2 bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   {quiz.quiz_sessions?.quiz_title || quiz.quiz_session_id}
                 </div>
               ))}
@@ -919,35 +1063,6 @@ export const AcademicsPage: React.FC = React.memo(() => {
               ) : null}
             </div>
           </div>
-
-          {/* Topic score quick view */}
-          {topicScores.length > 0 && (
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <BarChart3 className="h-4 w-4 text-accent-gold" />
-                <h4 className="font-semibold text-ink dark:text-ink-on-dark">{t('academics.analytics_heading')}</h4>
-              </div>
-              <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-3">
-                {t('academics.course_score')} <span className="font-semibold text-ink dark:text-ink-on-dark">{courseScore}%</span>
-              </div>
-              <div className="space-y-2">
-                {topicScores.slice(0, 8).map((entry) => (
-                  <div key={entry.topic} className="flex items-center justify-between gap-3 text-sm">
-                    <span className="text-secondary-ink dark:text-muted-ink-on-dark truncate">{entry.topic}</span>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <div className="w-20 h-1.5 rounded-full bg-subtle overflow-hidden">
-                        <div
-                          className="h-full bg-accent-gold rounded-full"
-                          style={{ width: `${entry.score}%` }}
-                        />
-                      </div>
-                      <span className="text-ink dark:text-ink-on-dark w-8 text-right">{entry.score}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
 

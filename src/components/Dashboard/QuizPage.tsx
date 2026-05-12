@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { FileQuestion, Plus, Clock, Trophy, Play, Trash2, Folder, Search, Globe, ChevronDown, Check } from 'lucide-react';
 import { PageHeader, SectionTabs, type SectionTab } from '../Scholar';
 import { useAuth } from '../../hooks/useAuth';
@@ -131,6 +131,14 @@ export const QuizPage: React.FC = React.memo(() => {
   const [examType, setExamType] = useState<string>('all');
   const [examAttempts, setExamAttempts] = useState<GlobalExamAttempt[]>([]);
   const [incompleteExams, setIncompleteExams] = useState<GlobalExamAttempt[]>([]);
+
+  const quizStats = useMemo(() => {
+    if (!quizHistory.length) return { maxScore: 0, best: null, average: 0 };
+    const maxScore = Math.max(...quizHistory.map(h => Math.round(h.score_percentage)));
+    const best = quizHistory.reduce((b, h) => h.score_percentage > b.score_percentage ? h : b, quizHistory[0]);
+    const average = Math.round(quizHistory.reduce((s, h) => s + h.score_percentage, 0) / quizHistory.length);
+    return { maxScore, best, average };
+  }, [quizHistory]);
 
   useEffect(() => {
     setBusy('quiz', !!activeQuizId);
@@ -1211,20 +1219,17 @@ export const QuizPage: React.FC = React.memo(() => {
                 <div className="bg-sidebar p-[22px] mb-4">
                   <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold">Highest mark</div>
                   <div className="font-display leading-none mt-2" style={{ fontSize: 58, fontWeight: 600, color: 'var(--color-card-light, #f8f4ec)' }}>
-                    {quizHistory.length > 0
-                      ? `${Math.max(...quizHistory.map(h => Math.round(h.score_percentage)))}`
-                      : '—'}
+                    {quizHistory.length > 0 ? `${quizStats.maxScore}` : '—'}
                     <span className="text-[22px] text-accent-gold">%</span>
                   </div>
-                  {quizHistory.length > 0 && (() => {
-                    const best = quizHistory.reduce((b, h) => h.score_percentage > b.score_percentage ? h : b, quizHistory[0]);
-                    return <div className="font-display text-[12px] text-accent-gold mt-1.5">{best.quiz_title?.slice(0, 32) || '—'}</div>;
-                  })()}
+                  {quizStats.best && (
+                    <div className="font-display text-[12px] text-accent-gold mt-1.5">{quizStats.best.quiz_title?.slice(0, 32) || '—'}</div>
+                  )}
                   <div className="h-px bg-accent-gold opacity-20 mt-3.5" />
                   <div className="flex justify-between mt-2.5">
                     {[
                       [String(quizHistory.length), 'sittings'],
-                      [quizHistory.length > 0 ? `${Math.round(quizHistory.reduce((s,h) => s + h.score_percentage, 0) / quizHistory.length)}%` : '—', 'average'],
+                      [quizHistory.length > 0 ? `${quizStats.average}%` : '—', 'average'],
                     ].map(([v, l]) => (
                       <div key={l} className="text-center">
                         <div className="font-display text-[18px] font-bold text-card-light">{v}</div>
