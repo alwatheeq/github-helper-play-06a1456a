@@ -855,7 +855,9 @@ export const LibraryPage: React.FC = React.memo(() => {
           </div>
           <div className="overflow-x-auto pb-0.5">
             <div className="flex gap-1 items-end" style={{ minWidth: 'max-content' }}>
-              {shelfData.map(({ label, bg, txt, count }) => (
+              {shelfData.map(({ label, bg, txt, count }, _i, arr) => {
+                const maxCount = Math.max(...arr.map(d => d.count), 1);
+                return (
                 <div
                   key={label}
                   className="flex-shrink-0 flex flex-col items-center cursor-pointer"
@@ -871,11 +873,11 @@ export const LibraryPage: React.FC = React.memo(() => {
                   <div className="relative overflow-hidden" style={{ width: 56, height: 155, background: bg }}>
                     <div
                       className="absolute inset-x-0 bottom-0"
-                      style={{ height: `${Math.min(75, count * 18)}%`, background: 'var(--accent-gold)', opacity: 0.22 }}
+                      style={{ height: `${Math.round((count / maxCount) * 100)}%`, background: 'var(--accent-gold)', opacity: 0.22 }}
                     />
                     <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
                       <span
-                        className="font-display text-[10.5px] font-semibold capitalize leading-tight"
+                        className="font-display text-[11px] font-semibold capitalize leading-tight"
                         style={{
                           color: txt,
                           writingMode: 'vertical-rl',
@@ -893,7 +895,8 @@ export const LibraryPage: React.FC = React.memo(() => {
                   </div>
                   <span className="text-[7.5px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mt-1">{count}</span>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           <div className="h-[5px] bg-ink dark:bg-ink-on-dark opacity-85 mt-[3px]" />
@@ -903,7 +906,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Scholar v4: SectionTabs (All | Mine | Community | Liked) */}
       <div className="mb-6">
         <div className="flex items-end justify-between gap-4 flex-wrap border-b border-divider dark:border-divider-on-dark pb-0">
-          <div className="flex items-end gap-6">
+          <div className="flex items-end gap-[22px]">
             {(
               [
                 { value: 'all' as const, label: t('library.all_items') || 'All' },
@@ -919,7 +922,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                 aria-selected={viewFilter === value}
                 onClick={() => setViewFilter(value)}
                 className={[
-                  'relative pb-3 pt-1 text-sm font-medium whitespace-nowrap transition-colors',
+                  'relative pt-[2px] pb-[6px] text-sm font-medium whitespace-nowrap transition-colors',
                   viewFilter === value
                     ? 'text-ink dark:text-ink-on-dark'
                     : 'text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark',

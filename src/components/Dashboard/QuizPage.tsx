@@ -1334,7 +1334,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       [String(myQuizzesStats.totalQ), 'total questions'],
                       [String(new Set(quizSessions.map(q => q.difficulty_level)).size), 'difficulty levels'],
                     ] as [string, string][]).map(([v, l], i) => (
-                      <div key={i} className="flex-1 py-[11px] px-5 text-center border-r border-page-light/[.08] last:border-r-0">
+                      <div key={i} className="flex-1 py-3 px-5 text-center border-r border-page-light/[.08] last:border-r-0">
                         <div className="font-display text-[22px] font-semibold text-ink-on-dark leading-none">{v}</div>
                         <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1">{l}</div>
                       </div>
@@ -1468,8 +1468,8 @@ export const QuizPage: React.FC = React.memo(() => {
               /* Global Exams — Explore */
               <div className="space-y-4">
                 {/* Filter bar */}
-                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-[14px]">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px]">
                     <div>
                       <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2">Country / Region</p>
                       <select
@@ -1538,12 +1538,12 @@ export const QuizPage: React.FC = React.memo(() => {
                         className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4 flex flex-col gap-2 relative"
                       >
                         {/* Level badge */}
-                        <span className={`absolute top-3 right-3 text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(exam.difficulty_level)}`}>
+                        <span className={`absolute top-[13px] right-[13px] text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(exam.difficulty_level)}`}>
                           {exam.difficulty_level}
                         </span>
                         <div className="pr-20">
                           <p className="text-[10px] font-bold tracking-widest text-accent-gold mb-0.5">{exam.exam_code}</p>
-                          <h3 className="font-display font-semibold text-base text-ink dark:text-ink-on-dark leading-snug">{exam.exam_name}</h3>
+                          <h3 className="font-display font-semibold text-[17px] text-ink dark:text-ink-on-dark leading-snug">{exam.exam_name}</h3>
                         </div>
                         <p className="text-xs text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed line-clamp-2">
                           {exam.description}

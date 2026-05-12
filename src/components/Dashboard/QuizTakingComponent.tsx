@@ -389,9 +389,9 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           </div>
 
           {/* Score banner — dark ink */}
-          <div className="bg-ink flex items-center gap-0 px-8 py-6">
+          <div className="bg-ink flex items-center gap-0 px-[30px] py-[22px]">
             {/* Score */}
-            <div className="pr-8 border-r border-white/10 flex-shrink-0">
+            <div className="pr-[30px] border-r border-white/10 flex-shrink-0">
               <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Final score</p>
               <p className="font-display text-6xl font-semibold text-ink-on-dark leading-none tracking-tight">
                 {Math.round(results.scorePercentage)}
@@ -411,7 +411,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
               ].map(({ value, label, icon }) => (
                 <div key={label} className="text-center">
                   <div className="flex justify-center mb-1.5 text-accent-gold">{icon}</div>
-                  <p className="font-display text-3xl font-semibold text-ink-on-dark leading-none">{value}</p>
+                  <p className="font-display text-[32px] font-semibold text-ink-on-dark leading-none">{value}</p>
                   <p className="text-[9px] tracking-widest text-white/50 uppercase mt-1.5">{label}</p>
                 </div>
               ))}
