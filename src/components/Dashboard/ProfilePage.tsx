@@ -436,7 +436,7 @@ export const ProfilePage: React.FC = React.memo(() => {
 
         {/* ── Credits ─────────────────────────────────────────────────── */}
         {creditBalance && (
-          <div className="bg-card-dark dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-4 mb-1">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-4 mb-1">
             <div className="flex items-center justify-between mb-4">
               <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">Credits</div>
               <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">Tools &amp; services balance · resets on renewal</div>
@@ -454,7 +454,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                         {' '}<span className="font-normal text-[11px] text-muted-ink dark:text-muted-ink-on-dark">/ {c.total.toLocaleString()}</span>
                       </span>
                     </div>
-                    <div className="h-[5px] bg-card-light dark:bg-subtle-on-dark rounded-full">
+                    <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full">
                       <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: over ? '#dc2626' : 'var(--color-accent-gold)' }} />
                     </div>
                     <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark mt-1">Credits refresh on {c.refresh}</div>

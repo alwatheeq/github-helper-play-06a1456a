@@ -100,7 +100,7 @@ export const AchievementsPage: React.FC = () => {
           </div>
           <div className="text-right">
             <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-1">Scholar — Level 4</div>
-            <div className="w-[200px] h-[5px] bg-card-dark dark:bg-subtle-on-dark rounded-full mb-1.5">
+            <div className="w-[200px] h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full mb-1.5">
               <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
             </div>
             <div className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{totalXPEarned} XP · 680 to Level 5</div>
@@ -131,7 +131,7 @@ export const AchievementsPage: React.FC = () => {
                 return (
                   <div
                     key={achievement.id}
-                    className={`border border-divider dark:border-divider-on-dark px-3 py-3.5 text-center transition-opacity ${isUnlocked ? 'bg-card-dark dark:bg-subtle' : 'bg-card-light dark:bg-card-dark opacity-45'}`}
+                    className={`border border-divider dark:border-divider-on-dark px-3 py-3.5 text-center transition-opacity ${isUnlocked ? 'bg-card-light dark:bg-card-dark' : 'bg-subtle dark:bg-subtle-on-dark opacity-45'}`}
                   >
                     <div className={`p-2 rounded mx-auto w-10 h-10 flex items-center justify-center mb-2 ${isUnlocked ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}` : 'bg-subtle dark:bg-card-dark'}`}>
                       {isUnlocked ? (
