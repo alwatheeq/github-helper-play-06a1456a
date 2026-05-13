@@ -15,21 +15,21 @@ interface NotificationGroup {
 }
 
 const TYPE_BORDER: Record<NotificationItem['type'], string> = {
-  exam:    'border-l-blue-600',
-  room:    'border-l-purple-600',
-  friend:  'border-l-green-600',
-  badge:   'border-l-yellow-600',
-  credit:  'border-l-orange-600',
-  library: 'border-l-teal-600',
+  exam:    'border-l-accent-gold',
+  room:    'border-l-[#3A6B8A]',
+  friend:  'border-l-[#5B7A3A]',
+  badge:   'border-l-accent-gold',
+  credit:  'border-l-red-600',
+  library: 'border-l-[#B8893A]',
 };
 
 const TYPE_ICON_COLOR: Record<NotificationItem['type'], string> = {
-  exam:    'text-blue-600 dark:text-blue-400',
-  room:    'text-purple-600 dark:text-purple-400',
-  friend:  'text-green-600 dark:text-green-400',
-  badge:   'text-yellow-600 dark:text-yellow-400',
-  credit:  'text-orange-600 dark:text-orange-400',
-  library: 'text-teal-600 dark:text-teal-400',
+  exam:    'text-accent-gold',
+  room:    'text-[#3A6B8A]',
+  friend:  'text-[#5B7A3A]',
+  badge:   'text-accent-gold',
+  credit:  'text-red-600',
+  library: 'text-[#B8893A]',
 };
 
 const ExamIcon = () => (
@@ -166,17 +166,17 @@ export const NotificationsPage: React.FC = () => {
         </div>
         <button
           onClick={handleMarkAllRead}
-          className="px-4 py-1.5 text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] hover:opacity-70 transition"
+          className="px-4 py-1.5 text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark hover:opacity-70 transition"
         >
           Mark all read
         </button>
       </div>
 
       {/* Divider line */}
-      <div className="h-px bg-sidebar-on-dark opacity-80 mt-4 mb-6" />
+      <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-[14px] mb-[22px]" />
 
       {/* Two-column layout */}
-      <div className="flex gap-6">
+      <div className="grid grid-cols-[1fr_240px] gap-6">
         {/* Feed */}
         <div className="flex-1 min-w-0">
           {groups.map((group) => (
@@ -193,15 +193,15 @@ export const NotificationsPage: React.FC = () => {
               {group.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className={`flex gap-3 px-4 py-3 mb-2 border border-l-[3px] rounded-[12px] transition-colors ${
+                  className={`flex gap-3 px-4 py-3 mb-2 border border-l-[3px] transition-colors ${
                     item.unread
-                      ? 'bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark'
+                      ? 'bg-accent-gold-soft border-divider dark:border-divider-on-dark'
                       : 'bg-transparent border-divider dark:border-divider-on-dark'
                   } ${TYPE_BORDER[item.type]}`}
                 >
                   {/* Icon */}
                   <div
-                    className={`w-8 h-8 flex items-center justify-center flex-shrink-0 rounded-[12px] border ${
+                    className={`w-8 h-8 flex items-center justify-center flex-shrink-0 border ${
                       item.unread
                         ? 'bg-accent-gold-soft/20 border-accent-gold/30'
                         : 'bg-subtle dark:bg-card-dark border-divider dark:border-divider-on-dark'
@@ -242,9 +242,9 @@ export const NotificationsPage: React.FC = () => {
         </div>
 
         {/* Right rail */}
-        <div className="w-[280px] flex-shrink-0 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {/* Notification preferences */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold rounded-[12px] p-4">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-3">
               Preferences
             </p>
@@ -279,7 +279,7 @@ export const NotificationsPage: React.FC = () => {
           </div>
 
           {/* Quick stats */}
-          <div className="bg-sidebar rounded-[12px] p-4">
+          <div className="bg-sidebar p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-2.5">
               Quick Stats
             </p>
