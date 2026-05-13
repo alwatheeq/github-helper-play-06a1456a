@@ -125,12 +125,12 @@ export const SubscriptionManagementPage: React.FC = () => {
         </button>
 
         {/* ── v4 Header ─────────────────────────────────────────────── */}
-        <div className="bg-ink dark:bg-card-dark px-7 py-5 mb-5">
+        <div className="bg-sidebar px-7 py-5 mb-5">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">{t('subscription_management.eyebrow')}</div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink tracking-[-0.4px]">{tierInfo.name}</div>
-              <div className="text-[12px] text-muted-ink-on-dark dark:text-muted-ink mt-1">{tierInfo.description}</div>
+              <div className="font-display text-[28px] font-semibold text-card-light tracking-[-0.4px]">{tierInfo.name}</div>
+              <div className="text-[12px] text-muted-ink-on-dark mt-1">{tierInfo.description}</div>
             </div>
             <span className={`text-[10px] font-bold tracking-[1px] uppercase px-2.5 py-1 ${
               subscription.status === 'canceled' ? 'bg-amber-700 text-white'
@@ -340,10 +340,10 @@ export const SubscriptionManagementPage: React.FC = () => {
       {showCancelModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-card-light dark:bg-card-dark shadow-[0_24px_56px_rgba(0,0,0,0.3)] max-w-md w-full">
-            <div className="bg-ink dark:bg-card-dark px-6 py-5">
+            <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Plan</div>
               <div className="flex justify-between items-center">
-                <div className="font-display text-[20px] font-semibold text-card-light dark:text-ink">{t('subscription_management.cancel_confirm_title')}</div>
+                <div className="font-display text-[20px] font-semibold text-card-light">{t('subscription_management.cancel_confirm_title')}</div>
                 <button onClick={() => setShowCancelModal(false)} className="w-6 h-6 grid place-items-center border border-white/20 text-white/50 hover:text-white/80 transition text-sm cursor-pointer">✕</button>
               </div>
             </div>

@@ -777,13 +777,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
           {/* Recent Sessions table */}
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-[10px]">Recent Sessions</div>
           <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
-            <div className="grid py-[6px] px-[16px] border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 110px 80px 60px' }}>
+            <div className="grid py-[6px] px-[16px] border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 80px 70px 70px' }}>
               {['Session', 'Result', 'Pts', 'Date'].map(h => (
                 <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
               ))}
             </div>
             {RECENT_SESSIONS.map((r, i) => (
-              <div key={i} className={`grid py-[11px] px-[16px] items-center ${i < RECENT_SESSIONS.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`} style={{ gridTemplateColumns: '1fr 110px 80px 60px' }}>
+              <div key={i} className={`grid py-[11px] px-[16px] items-center ${i < RECENT_SESSIONS.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`} style={{ gridTemplateColumns: '1fr 80px 70px 70px' }}>
                 <div>
                   <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark">{r.mode}</div>
                   <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[1px]">{r.detail}</div>
@@ -1023,7 +1023,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
     return (
       <div className="w-full max-w-5xl mx-auto">
         {/* Banner — dark, room open header */}
-        <div className="bg-sidebar p-5 mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-sidebar py-[18px] px-[26px] mb-5 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
           <div>
             <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Brain Rush · Waiting Room</div>
             <div className="flex items-center gap-4">
@@ -1039,7 +1039,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             <button
               onClick={handleStartGame}
               disabled={participants.length < 1 || startingGame}
-              className="font-display text-[13px] font-bold text-sidebar bg-accent-gold px-5 py-3 hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="font-display text-[13px] font-bold text-sidebar bg-accent-gold px-5 py-[9px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {startingGame ? 'Starting...' : 'Start Game →'}
             </button>
@@ -1061,7 +1061,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             </div>
 
             {/* Room code */}
-            <div className="bg-sidebar p-4 text-center mb-3 shadow-[var(--s4-shadow-hairline)]">
+            <div className="bg-sidebar py-4 px-[18px] text-center mb-3 shadow-[var(--s4-shadow-hairline)]">
               <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Room Code</div>
               <div className="font-display text-[28px] font-bold text-ink-on-dark tracking-[6px] leading-none mb-1">
                 {currentGame?.game_code}

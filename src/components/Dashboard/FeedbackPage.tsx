@@ -518,7 +518,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
           {/* ── RIGHT rail ──────────────────────────────────────────────── */}
           <div className="flex flex-col gap-0">
             {/* From the editors — dark ink tile */}
-            <div className="bg-ink dark:bg-card-dark px-6 py-5 mb-5">
+            <div className="bg-sidebar px-6 py-5 mb-5">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">From the editors</div>
               <div className="font-display text-[16px] text-card-light dark:text-ink-on-dark leading-relaxed">
                 "This is just the beginning — there is better still to come."

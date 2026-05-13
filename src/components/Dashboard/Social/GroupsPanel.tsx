@@ -292,14 +292,14 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             {t('social.no_groups')}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px] mb-8">
             {groups.map((group) => (
               <div
                 key={group.id}
-                className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)]"
+                className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)]"
               >
                 {/* Group card header */}
-                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)] ${group.my_role === 'admin' ? 'bg-ink dark:bg-ink' : 'bg-subtle dark:bg-card-dark'}`}>
+                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)] ${group.my_role === 'admin' ? 'bg-sidebar' : 'bg-subtle dark:bg-subtle-on-dark'}`}>
                   <div className="flex items-center gap-2">
                     {/* Mini avatar stack */}
                     <div className="flex">
@@ -446,7 +446,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       <div className="flex flex-col gap-4">
 
         {/* Create Group CTA — dark card like v4 */}
-        <div className="bg-ink dark:bg-card-dark rounded-[var(--s4-radius-card)] p-5 shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-sidebar rounded-[var(--s4-radius-card)] p-5 shadow-[var(--s4-shadow-hairline)]">
           <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-2">
             {t('social.create_group')}
           </p>

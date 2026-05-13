@@ -584,7 +584,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
             return (
               <div
                 key={player.user_id}
-                className={`flex items-center gap-2 px-3 py-1.5 border ${answered ? 'bg-chip dark:bg-chip border-accent-gold/20' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark opacity-60'}`}
+                className={`flex items-center gap-2 px-3 py-1.5 border ${answered ? 'bg-accent-gold-soft border-accent-gold/20' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark opacity-60'}`}
               >
                 {answered ? (
                   <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-gold"><polyline points="20 6 9 17 4 12"/></svg>

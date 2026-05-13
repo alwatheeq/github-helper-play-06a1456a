@@ -581,13 +581,13 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className="flex-1 min-w-0">
               {isEditing ? (
                 <div className="space-y-2">
-                  <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t('profile.display_name')} maxLength={50} className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
-                  <textarea value={editedBio} onChange={(e) => setEditedBio(e.target.value)} placeholder={t('profile.bio_placeholder')} maxLength={500} rows={2} className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
+                  <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t('profile.display_name')} maxLength={50} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
+                  <textarea value={editedBio} onChange={(e) => setEditedBio(e.target.value)} placeholder={t('profile.bio_placeholder')} maxLength={500} rows={2} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
                 </div>
               ) : (
                 <>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <h1 className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark truncate">{stats.display_name || user?.email}</h1>
+                    <h1 className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark truncate">{stats.display_name || user?.email}</h1>
                     <button onClick={() => setIsEditing(true)} className="shrink-0 px-2 py-0.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition rounded-[3px]">Edit ✎</button>
                   </div>
                   {stats.bio && <p className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mt-0.5 mb-1">{stats.bio}</p>}

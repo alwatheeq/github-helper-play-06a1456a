@@ -75,7 +75,8 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <button
           type="button"
           onClick={isRunning ? pause : start}
-          className="p-2.5 rounded-full text-white transition bg-accent-gold hover:opacity-90"
+          className="p-2.5 rounded-full text-white transition hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg, var(--color-accent-gold), color-mix(in srgb, var(--color-accent-gold) 80%, transparent))' }}
         >
           {isRunning ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
         </button>

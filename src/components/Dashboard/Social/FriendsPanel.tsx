@@ -325,7 +325,7 @@ export const FriendsPanel: React.FC = () => {
       </div>
 
       {/* RIGHT rail */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-[14px]">
 
         {/* Add a Friend card */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
@@ -346,7 +346,7 @@ export const FriendsPanel: React.FC = () => {
 
         {/* Pending Requests */}
         {pendingIncoming.length > 0 && (
-          <div className="bg-ink dark:bg-card-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-sidebar rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
             <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3">
               {t('social.pending_requests')} · {pendingIncoming.length}
             </p>

@@ -130,7 +130,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
               </a>
               <button
                 onClick={onClose}
-                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-70 transition-opacity"
+                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border-[1.5px] border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-70 transition-opacity"
               >
                 Dismiss
               </button>

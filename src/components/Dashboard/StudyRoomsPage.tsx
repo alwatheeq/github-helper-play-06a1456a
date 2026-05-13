@@ -991,7 +991,7 @@ export const StudyRoomsPage: React.FC = () => {
           <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border border-white/10 rounded-[var(--s4-radius-card)] px-5 py-3">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent-gold inline-block" />
+                <span className="w-[7px] h-[7px] rounded-full bg-accent-gold inline-block" />
                 <span className="text-[10px] tracking-[0.15em] uppercase font-bold text-accent-gold">Live</span>
               </div>
               <div className="w-px h-4 bg-white/10" />

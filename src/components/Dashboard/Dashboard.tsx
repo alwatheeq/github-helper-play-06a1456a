@@ -1533,7 +1533,7 @@ export const Dashboard: React.FC = () => {
                     {processingState.stage === 'completed' && (
                       <div className="space-y-3">
                         {/* Dash4Result action bar */}
-                        <div className="flex items-center gap-1 pb-2.5 border-b border-divider dark:border-divider-on-dark flex-wrap">
+                        <div className="flex items-center gap-[4px] pb-2.5 border-b border-divider dark:border-divider-on-dark flex-wrap">
                           {/* Back to History */}
                           {loadedHistoryEntry && (
                             <button
@@ -1603,7 +1603,7 @@ export const Dashboard: React.FC = () => {
                               <button
                                 onClick={actionBarData.onPublish}
                                 disabled={actionBarData.publishing || actionBarData.published}
-                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-ink dark:bg-card-dark border-none text-[11.5px] font-semibold text-card-light dark:text-ink-on-dark cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-[var(--s4-dur-fast)]"
+                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-sidebar border-none text-[11.5px] font-semibold text-card-light cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-[var(--s4-dur-fast)]"
                               >
                                 {actionBarData.publishing ? <RefreshCw className="h-3 w-3 animate-spin" /> : actionBarData.published ? <Check className="h-3 w-3" /> : <BookOpen className="h-3 w-3" />}
                                 {actionBarData.published ? t('summary.published') : actionBarData.publishing ? t('summary.publishing') : t('summary.publish_library')}

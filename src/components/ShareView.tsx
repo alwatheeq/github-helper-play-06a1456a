@@ -146,7 +146,7 @@ export const ShareView: React.FC = () => {
         {/* Title card */}
         <div className="mb-8">
           <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-6">
-            <h2 className="font-display text-2xl font-bold text-ink dark:text-ink-on-dark mb-2" style={{ letterSpacing: '-0.01em' }}>
+            <h2 className="font-display text-[22px] font-bold text-ink dark:text-ink-on-dark mb-2" style={{ letterSpacing: '-0.01em' }}>
               {item.title}
             </h2>
             <div className="flex items-center flex-wrap gap-3 text-sm text-muted-ink dark:text-muted-ink-on-dark">

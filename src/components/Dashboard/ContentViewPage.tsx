@@ -199,7 +199,7 @@ export const ContentViewPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-page">
       {/* Scholar v4: sticky top bar with back + title + tab strip */}
-      <div className="sticky top-0 z-30 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+      <div className="sticky top-0 z-30 bg-sidebar border-b border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
         {/* Top row: back button + title */}
         <div className="flex items-center gap-4 px-5 py-3 border-b border-divider dark:border-divider-on-dark">
           <button

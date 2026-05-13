@@ -212,7 +212,7 @@ export const BillingHistoryPage: React.FC = () => {
         </button>
 
         {/* ── v4 dark ink header ─────────────────────────────────────── */}
-        <div className="bg-ink dark:bg-card-dark px-7 py-5 mb-6">
+        <div className="bg-sidebar px-7 py-5 mb-6">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">Account</div>
           <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
         </div>
