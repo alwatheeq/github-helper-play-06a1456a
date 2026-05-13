@@ -21,6 +21,37 @@ interface Transaction {
   created_at: string;
 }
 
+const STATUS_ICON: Record<string, React.ReactNode> = {
+  succeeded: <CheckCircle className="h-[13px] w-[13px] text-accent-gold" />,
+  failed:    <XCircle    className="h-[13px] w-[13px] text-red-600 dark:text-red-400" />,
+  pending:   <Clock      className="h-[13px] w-[13px] text-amber-600 dark:text-amber-400" />,
+  refunded:  <RotateCcw  className="h-[13px] w-[13px] text-muted-ink dark:text-muted-ink-on-dark" />,
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  succeeded: 'Paid', failed: 'Failed', pending: 'Pending', refunded: 'Refunded',
+};
+
+const STATUS_BORDER: Record<string, string> = {
+  succeeded: 'border-l-accent-gold',
+  failed:    'border-l-red-600',
+  pending:   'border-l-amber-500',
+  refunded:  'border-l-muted-ink',
+};
+
+const STATUS_TEXT_COLOR: Record<string, string> = {
+  succeeded: 'text-accent-gold',
+  failed:    'text-red-600 dark:text-red-400',
+  pending:   'text-amber-600 dark:text-amber-400',
+  refunded:  'text-muted-ink dark:text-muted-ink-on-dark',
+};
+
+const TX_TYPE_LABEL: Record<string, string> = {
+  subscription_payment: 'Subscription',
+  trial_conversion:     'Trial Upgrade',
+  refund:               'Refund',
+};
+
 export const BillingHistoryPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -69,37 +100,6 @@ export const BillingHistoryPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const STATUS_ICON: Record<string, React.ReactNode> = {
-    succeeded: <CheckCircle className="h-[13px] w-[13px] text-accent-gold" />,
-    failed:    <XCircle    className="h-[13px] w-[13px] text-red-600 dark:text-red-400" />,
-    pending:   <Clock      className="h-[13px] w-[13px] text-amber-600 dark:text-amber-400" />,
-    refunded:  <RotateCcw  className="h-[13px] w-[13px] text-muted-ink dark:text-muted-ink-on-dark" />,
-  };
-
-  const STATUS_LABEL: Record<string, string> = {
-    succeeded: 'Paid', failed: 'Failed', pending: 'Pending', refunded: 'Refunded',
-  };
-
-  const STATUS_BORDER: Record<string, string> = {
-    succeeded: 'border-l-accent-gold',
-    failed:    'border-l-red-600',
-    pending:   'border-l-amber-500',
-    refunded:  'border-l-muted-ink',
-  };
-
-  const STATUS_TEXT_COLOR: Record<string, string> = {
-    succeeded: 'text-accent-gold',
-    failed:    'text-red-600 dark:text-red-400',
-    pending:   'text-amber-600 dark:text-amber-400',
-    refunded:  'text-muted-ink dark:text-muted-ink-on-dark',
-  };
-
-  const TX_TYPE_LABEL: Record<string, string> = {
-    subscription_payment: 'Subscription',
-    trial_conversion:     'Trial Upgrade',
-    refund:               'Refund',
   };
 
   const downloadReceipt = async (transaction: Transaction) => {
@@ -203,10 +203,8 @@ export const BillingHistoryPage: React.FC = () => {
     return groups;
   }, [transactions]);
 
-  const totalPaid = useMemo(
-    () => transactions.filter(tx => tx.status === 'succeeded').reduce((sum, tx) => sum + tx.amount, 0),
-    [transactions]
-  );
+  const succeededTxs = useMemo(() => transactions.filter(tx => tx.status === 'succeeded'), [transactions]);
+  const totalPaid = useMemo(() => succeededTxs.reduce((sum, tx) => sum + tx.amount, 0), [succeededTxs]);
 
   const currency = transactions[0]?.currency?.toUpperCase() ?? 'USD';
 
@@ -238,12 +236,12 @@ export const BillingHistoryPage: React.FC = () => {
         {/* ── v4 dark ink header ─────────────────────────────────────── */}
         <div className="bg-sidebar px-7 py-5 mb-6">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">Account</div>
-          <div className="flex items-flex-end justify-between">
+          <div className="flex items-end justify-between">
             <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
             {transactions.length > 0 && (
               <div className="text-right">
                 <div className="font-display text-[24px] font-bold text-card-light dark:text-ink-on-dark">{formatCurrency(totalPaid, currency)}</div>
-                <div className="text-[10px] text-card-light/[0.27] dark:text-ink-on-dark/40">total charged · {transactions.filter(t => t.status === 'succeeded').length} payments</div>
+                <div className="text-[10px] text-card-light/[0.27] dark:text-ink-on-dark/40">total charged · {succeededTxs.length} payments</div>
               </div>
             )}
           </div>
@@ -290,7 +288,7 @@ export const BillingHistoryPage: React.FC = () => {
                           {TX_TYPE_LABEL[tx.transaction_type] ?? 'Payment'}
                         </div>
                         <div className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">
-                          {tx.payment_method === 'card'
+                          {tx.transaction_type !== 'trial_conversion'
                             ? new Date(tx.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
                             : 'Trial upgrade'}
                         </div>
