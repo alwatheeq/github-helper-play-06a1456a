@@ -38,7 +38,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Overview Section */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Info className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
@@ -72,7 +72,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* What&apos;s new */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <BarChart3 className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
@@ -185,7 +185,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Understanding Results Section */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
@@ -283,7 +283,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Smart Features Section */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
@@ -327,7 +327,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Language & Translation Section */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Globe className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
@@ -456,7 +456,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Navigation & Account Section */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <User className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
@@ -532,7 +532,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         {/* Tips & Best Practices */}
         <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
+            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
