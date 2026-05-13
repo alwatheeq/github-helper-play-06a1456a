@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Home } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
@@ -42,15 +42,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
   const [loading, setLoading] = useState(true);
   const [showConfetti, setShowConfetti] = useState(true);
 
-  useEffect(() => {
-    loadParticipantStats();
-
-    setTimeout(() => {
-      setShowConfetti(false);
-    }, 5000);
-  }, []);
-
-  const loadParticipantStats = async () => {
+  const loadParticipantStats = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -91,15 +83,21 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
       setParticipantStats(sortedStats);
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'BrainRushResults', 
-        action: 'loadStats', 
-        metadata: { gameSessionId: gameSession.id } 
+      ErrorLogger.error(err, {
+        component: 'BrainRushResults',
+        action: 'loadStats',
+        metadata: { gameSessionId: gameSession.id }
       });
     } finally {
       setLoading(false);
     }
-  };
+  }, [initialParticipants, gameSession.id]);
+
+  useEffect(() => {
+    void loadParticipantStats();
+    const timer = setTimeout(() => setShowConfetti(false), 5000);
+    return () => clearTimeout(timer);
+  }, [loadParticipantStats]);
 
   if (loading) {
     return (

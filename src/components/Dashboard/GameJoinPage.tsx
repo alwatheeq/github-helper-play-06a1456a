@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Gamepad2, AlertCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -23,13 +23,7 @@ export const GameJoinPage: React.FC = () => {
   const [gameInfo, setGameInfo] = useState<GameSession | null>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
-  useEffect(() => {
-    if (gameCode) {
-      validateGameCode();
-    }
-  }, [gameCode]);
-
-  const validateGameCode = async () => {
+  const validateGameCode = useCallback(async () => {
     if (!gameCode) {
       setError('No game code provided');
       setLoading(false);
@@ -70,7 +64,13 @@ export const GameJoinPage: React.FC = () => {
       setError('Failed to validate game code. Please try again.');
       setLoading(false);
     }
-  };
+  }, [gameCode, user]);
+
+  useEffect(() => {
+    if (gameCode) {
+      validateGameCode();
+    }
+  }, [gameCode, validateGameCode]);
 
   const handleJoinGame = async () => {
     if (!gameInfo) return;
