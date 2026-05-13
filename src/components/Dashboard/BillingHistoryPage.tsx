@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { Download, Receipt, Calendar, CheckCircle, XCircle, Clock, ArrowLeft } from 'lucide-react';
-// html2pdf.js is dynamically imported on demand to keep it out of the initial bundle.
+import { Download, Receipt, CheckCircle, XCircle, Clock, ArrowLeft, RotateCcw } from 'lucide-react';
 import { formatCurrency } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { handleApiError, handleSupabaseError, isOffline, handleOfflineError } from '../../utils/errorHandler';
@@ -72,27 +71,35 @@ export const BillingHistoryPage: React.FC = () => {
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'succeeded':
-        return <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />;
-      case 'failed':
-        return <XCircle className="h-4 w-4 text-red-600 dark:text-red-400" />;
-      case 'pending':
-        return <Clock className="h-4 w-4 text-yellow-600 dark:text-yellow-400" />;
-      default:
-        return <Clock className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />;
-    }
+  const STATUS_ICON: Record<string, React.ReactNode> = {
+    succeeded: <CheckCircle className="h-[13px] w-[13px] text-accent-gold" />,
+    failed:    <XCircle    className="h-[13px] w-[13px] text-red-600 dark:text-red-400" />,
+    pending:   <Clock      className="h-[13px] w-[13px] text-amber-600 dark:text-amber-400" />,
+    refunded:  <RotateCcw  className="h-[13px] w-[13px] text-muted-ink dark:text-muted-ink-on-dark" />,
   };
 
-  const getStatusLabel = (status: string): { label: string; className: string } => {
-    const map: Record<string, { label: string; className: string }> = {
-      succeeded: { label: 'Succeeded', className: 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' },
-      failed: { label: 'Failed', className: 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300' },
-      pending: { label: 'Pending', className: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300' },
-      refunded: { label: 'Refunded', className: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark' },
-    };
-    return map[status] || map.pending;
+  const STATUS_LABEL: Record<string, string> = {
+    succeeded: 'Paid', failed: 'Failed', pending: 'Pending', refunded: 'Refunded',
+  };
+
+  const STATUS_BORDER: Record<string, string> = {
+    succeeded: 'border-l-accent-gold',
+    failed:    'border-l-red-600',
+    pending:   'border-l-amber-500',
+    refunded:  'border-l-muted-ink',
+  };
+
+  const STATUS_TEXT_COLOR: Record<string, string> = {
+    succeeded: 'text-accent-gold',
+    failed:    'text-red-600 dark:text-red-400',
+    pending:   'text-amber-600 dark:text-amber-400',
+    refunded:  'text-muted-ink dark:text-muted-ink-on-dark',
+  };
+
+  const TX_TYPE_LABEL: Record<string, string> = {
+    subscription_payment: 'Subscription',
+    trial_conversion:     'Trial Upgrade',
+    refund:               'Refund',
   };
 
   const downloadReceipt = async (transaction: Transaction) => {
@@ -186,6 +193,23 @@ export const BillingHistoryPage: React.FC = () => {
     }
   };
 
+  const byMonth = useMemo(() => {
+    const groups = new Map<string, Transaction[]>();
+    for (const tx of transactions) {
+      const key = new Date(tx.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key)!.push(tx);
+    }
+    return groups;
+  }, [transactions]);
+
+  const totalPaid = useMemo(
+    () => transactions.filter(tx => tx.status === 'succeeded').reduce((sum, tx) => sum + tx.amount, 0),
+    [transactions]
+  );
+
+  const currency = transactions[0]?.currency?.toUpperCase() ?? 'USD';
+
   if (loading) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
@@ -214,7 +238,15 @@ export const BillingHistoryPage: React.FC = () => {
         {/* ── v4 dark ink header ─────────────────────────────────────── */}
         <div className="bg-sidebar px-7 py-5 mb-6">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">Account</div>
-          <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
+          <div className="flex items-flex-end justify-between">
+            <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
+            {transactions.length > 0 && (
+              <div className="text-right">
+                <div className="font-display text-[24px] font-bold text-card-light dark:text-ink-on-dark">{formatCurrency(totalPaid, currency)}</div>
+                <div className="text-[10px] text-card-light/[0.27] dark:text-ink-on-dark/40">total charged · {transactions.filter(t => t.status === 'succeeded').length} payments</div>
+              </div>
+            )}
+          </div>
         </div>
 
         {transactions.length === 0 ? (
@@ -230,89 +262,78 @@ export const BillingHistoryPage: React.FC = () => {
           </div>
         ) : (
           <>
-            {/* ── Transaction table ─────────────────────────────────────── */}
-            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden mb-4">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark">
-                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Date</th>
-                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Description</th>
-                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Amount</th>
-                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Status</th>
-                      <th className="px-5 py-3 text-left text-[9px] font-bold tracking-[1.5px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Receipt</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-divider dark:divide-divider-on-dark">
-                    {transactions.map((transaction) => {
-                      const { label, className } = getStatusLabel(transaction.status);
-                      return (
-                        <tr key={transaction.id} className="bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            <div className="flex items-center gap-2">
-                              <Calendar className="h-3.5 w-3.5 text-muted-ink dark:text-muted-ink-on-dark" />
-                              <span className="text-[12px] text-ink dark:text-ink-on-dark">
-                                {new Date(transaction.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-5 py-4">
-                            <div className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-tight">
-                              {transaction.transaction_type === 'subscription_payment'
-                                ? 'Subscription Payment'
-                                : transaction.transaction_type === 'trial_conversion'
-                                ? 'Trial Conversion'
-                                : 'Payment'}
-                            </div>
-                            <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
-                              {transaction.payment_method === 'card' ? 'Credit Card' : transaction.payment_method}
-                            </div>
-                          </td>
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            <span className="font-display text-[14px] font-semibold text-ink dark:text-ink-on-dark">
-                              {formatCurrency(transaction.amount, transaction.currency.toUpperCase())}
-                            </span>
-                          </td>
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            <div className="flex items-center gap-2">
-                              {getStatusIcon(transaction.status)}
-                              <span className={`text-[9px] tracking-wide font-bold px-2 py-0.5 ${className}`}>{label.toUpperCase()}</span>
-                            </div>
-                          </td>
-                          <td className="px-5 py-4 whitespace-nowrap">
-                            {transaction.status === 'succeeded' && (
-                              <button
-                                onClick={() => downloadReceipt(transaction)}
-                                disabled={downloadingReceipt === transaction.id}
-                                className="flex items-center gap-1.5 text-[11px] font-semibold text-accent-gold hover:opacity-75 transition disabled:opacity-40"
-                              >
-                                {downloadingReceipt === transaction.id ? (
-                                  <>
-                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-accent-gold" />
-                                    <span>Generating…</span>
-                                  </>
-                                ) : (
-                                  <>
-                                    <Download className="h-3.5 w-3.5" />
-                                    <span>Download</span>
-                                  </>
-                                )}
-                              </button>
+            {/* ── Transaction rows grouped by month ─────────────────────── */}
+            {Array.from(byMonth.entries()).map(([month, rows]) => (
+              <div key={month} className="mb-[18px]">
+                {/* Month header */}
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-[9px] font-bold tracking-[2px] uppercase text-accent-gold whitespace-nowrap">{month}</span>
+                  <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
+                </div>
+                {rows.map((tx, i) => {
+                  const borderClass = STATUS_BORDER[tx.status] ?? 'border-l-muted-ink';
+                  const textColor   = STATUS_TEXT_COLOR[tx.status] ?? 'text-muted-ink dark:text-muted-ink-on-dark';
+                  const label       = STATUS_LABEL[tx.status] ?? tx.status;
+                  return (
+                    <div
+                      key={tx.id}
+                      className={`flex items-center bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] ${borderClass} px-4 py-3 gap-3.5 mb-[1px]`}
+                    >
+                      {/* Status icon */}
+                      <div className="w-10 flex-shrink-0 flex items-center justify-center">
+                        {STATUS_ICON[tx.status] ?? STATUS_ICON.pending}
+                      </div>
+
+                      {/* Description */}
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark leading-tight mb-[2px]">
+                          {TX_TYPE_LABEL[tx.transaction_type] ?? 'Payment'}
+                        </div>
+                        <div className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">
+                          {tx.payment_method === 'card'
+                            ? new Date(tx.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+                            : 'Trial upgrade'}
+                        </div>
+                      </div>
+
+                      {/* Amount + status label */}
+                      <div className="text-right flex-shrink-0">
+                        <div className="font-display text-[15px] font-bold text-ink dark:text-ink-on-dark">
+                          {formatCurrency(tx.amount, tx.currency.toUpperCase())}
+                        </div>
+                        <div className={`text-[10px] font-semibold ${textColor}`}>{label}</div>
+                      </div>
+
+                      {/* Vertical divider */}
+                      <div className="w-px h-7 bg-divider dark:bg-divider-on-dark flex-shrink-0" />
+
+                      {/* Receipt button */}
+                      <div className="w-[88px] flex-shrink-0 flex items-center justify-center">
+                        {tx.status === 'succeeded' ? (
+                          <button
+                            onClick={() => downloadReceipt(tx)}
+                            disabled={downloadingReceipt === tx.id}
+                            className="w-full py-[5px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[10.5px] text-center hover:opacity-75 transition disabled:opacity-40 flex items-center justify-center gap-1"
+                          >
+                            {downloadingReceipt === tx.id ? (
+                              <><div className="animate-spin rounded-full h-3 w-3 border-b-2 border-current" /><span>…</span></>
+                            ) : (
+                              <><Download className="h-3 w-3" /><span>Receipt</span></>
                             )}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                          </button>
+                        ) : (
+                          <span className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark text-center w-full block">—</span>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+            ))}
 
             {/* Note */}
-            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-3">
-              <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">
-                <span className="font-semibold text-ink dark:text-ink-on-dark">Note:</span> Receipts are generated on demand. Successful Stripe payments are recorded here for your account.
-              </p>
+            <div className="mt-1 px-[14px] py-[10px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+              Receipts are generated as PDFs. For disputes: <span className="text-secondary-ink dark:text-muted-ink-on-dark">support@scholar.app</span>
             </div>
           </>
         )}

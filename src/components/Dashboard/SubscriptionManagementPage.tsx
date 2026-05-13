@@ -192,8 +192,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.current_billing_cycle')}</div>
-                <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
-                  <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${toolProgressPct}%` }} />
+                <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-[2px]">
+                  <div className="h-full bg-accent-gold rounded-[2px] transition-all" style={{ width: `${toolProgressPct}%` }} />
                 </div>
               </div>
 
@@ -338,7 +338,7 @@ export const SubscriptionManagementPage: React.FC = () => {
 
       {/* ── Cancel Modal ────────────────────────────────────────────── */}
       {showCancelModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/[0.62] backdrop-blur-[5px] flex items-center justify-center z-50 p-4">
           <div className="bg-card-light dark:bg-card-dark shadow-[0_24px_56px_rgba(0,0,0,0.3)] max-w-md w-full">
             <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Plan</div>

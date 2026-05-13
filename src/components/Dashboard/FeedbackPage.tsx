@@ -338,7 +338,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
     <div className="w-full">
         <PageHeader
           eyebrow="Correspondence"
-          title="A letter to the editors"
+          title="A letter to the editors."
           descriptor="Tell us what worked, what broke, or what could be lovelier."
           className="mb-5"
         />
@@ -368,14 +368,14 @@ export const FeedbackPage: React.FC = React.memo(() => {
                       <Icon className={`h-5 w-5 ${on ? 'text-accent-gold' : 'text-ink dark:text-ink-on-dark'}`} />
                     </div>
                     <div className={`font-display text-[13.5px] font-semibold mb-1.5 ${on ? 'text-card-light dark:text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{l}</div>
-                    <div className={`text-[10.5px] leading-snug ${on ? 'text-card-light/70 dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{desc}</div>
+                    <div className={`text-[10.5px] leading-[1.55] ${on ? 'text-card-light/70 dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{desc}</div>
                   </button>
                 );
               })}
             </div>
 
             {/* Letter panel */}
-            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark px-6 py-5">
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark px-[26px] py-[22px]">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">To the editors of Scholar</div>
               <div className="font-display text-[14px] text-muted-ink dark:text-muted-ink-on-dark mb-3.5">Dear Scholar,</div>
 
@@ -518,7 +518,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
           {/* ── RIGHT rail ──────────────────────────────────────────────── */}
           <div className="flex flex-col gap-0">
             {/* From the editors — dark ink tile */}
-            <div className="bg-sidebar px-6 py-5 mb-5">
+            <div className="bg-sidebar px-6 py-[22px] mb-5">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">From the editors</div>
               <div className="font-display text-[16px] text-card-light dark:text-ink-on-dark leading-relaxed">
                 "This is just the beginning — there is better still to come."
@@ -535,7 +535,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
               {shipped.map((r, i) => (
                 <div key={i} className={`flex items-baseline gap-3 py-2.5 ${i < shipped.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
                   <span className="font-display text-[11px] text-accent-gold font-bold min-w-[46px]">{r.v}</span>
-                  <span className="text-[12.5px] text-ink dark:text-ink-on-dark leading-snug flex-1">{r.n}</span>
+                  <span className="text-[12.5px] text-secondary-ink dark:text-muted-ink-on-dark leading-snug flex-1">{r.n}</span>
                   <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0">{r.date}</span>
                 </div>
               ))}

@@ -72,7 +72,7 @@ export const LowCreditBanner: React.FC = () => {
     switch (warningLevel) {
       case 250:
         return {
-          wrapperClass: 'bg-red-50 dark:bg-red-900/20 border-l-4 border-l-red-600 border border-red-200 dark:border-red-800/60',
+          wrapperClass: 'bg-red-50 dark:bg-red-900/20 border-[1.5px] border-red-200 dark:border-red-800/60',
           iconClass: 'text-red-600 dark:text-red-400',
           textClass: 'text-red-800 dark:text-red-200',
           badgeClass: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700',
@@ -82,7 +82,7 @@ export const LowCreditBanner: React.FC = () => {
         };
       case 500:
         return {
-          wrapperClass: 'bg-amber-50 dark:bg-amber-900/20 border-l-4 border-l-amber-500 border border-amber-200 dark:border-amber-800/60',
+          wrapperClass: 'bg-amber-50 dark:bg-amber-900/20 border-[1.5px] border-amber-200 dark:border-amber-800/60',
           iconClass: 'text-amber-600 dark:text-amber-400',
           textClass: 'text-amber-900 dark:text-amber-200',
           badgeClass: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700',
@@ -92,7 +92,7 @@ export const LowCreditBanner: React.FC = () => {
         };
       case 1000:
         return {
-          wrapperClass: 'bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-l-yellow-500 border border-yellow-200 dark:border-yellow-800/60',
+          wrapperClass: 'bg-yellow-50 dark:bg-yellow-900/20 border-[1.5px] border-yellow-200 dark:border-yellow-800/60',
           iconClass: 'text-yellow-600 dark:text-yellow-400',
           textClass: 'text-yellow-900 dark:text-yellow-200',
           badgeClass: 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700',
