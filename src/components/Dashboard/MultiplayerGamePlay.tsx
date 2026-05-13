@@ -510,9 +510,9 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         <div className="flex items-center gap-3">
           <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} / {playerScores.length} answered</span>
           {/* Timer pill */}
-          <div className="flex items-center gap-2 bg-chip dark:bg-chip border border-accent-gold px-3 py-1.5 rounded-full">
+          <div className="flex items-center gap-2 bg-chip dark:bg-chip border border-accent-gold px-[14px] py-[5px] rounded-full">
             <Clock className="w-3.5 h-3.5 text-accent-gold" />
-            <span className={`font-display text-[20px] font-bold leading-none ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-accent-gold'}`}>{timeLeft}</span>
+            <span className={`font-display text-[21px] font-bold leading-none ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-accent-gold'}`}>{timeLeft}</span>
             <span className="text-[10px] text-accent-gold opacity-70 font-semibold">s</span>
           </div>
         </div>

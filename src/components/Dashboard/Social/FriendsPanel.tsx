@@ -233,7 +233,7 @@ export const FriendsPanel: React.FC = () => {
       {/* LEFT — search + friend list */}
       <div>
         {/* Search bar */}
-        <div className="flex items-center gap-3 px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] mb-6">
+        <div className="flex items-center gap-3 px-[14px] py-[9px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] mb-3">
           <Search className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
           <input
             type="text"
@@ -247,7 +247,7 @@ export const FriendsPanel: React.FC = () => {
 
         {/* Search results */}
         {(searchResults.length > 0 || (searchQuery.trim().length >= 2 && !isSearching)) && (
-          <div className="mb-6">
+          <div className="mb-3">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">Results</span>
               <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
@@ -255,7 +255,7 @@ export const FriendsPanel: React.FC = () => {
             {searchResults.length > 0 ? (
               <div className="space-y-0 divide-y divide-divider dark:divide-divider-on-dark">
                 {searchResults.map((profile) => (
-                  <div key={profile.id} className="flex items-center gap-4 py-3">
+                  <div key={profile.id} className="flex items-center gap-[14px] py-3">
                     <Avatar name={profile.display_name} />
                     <div className="flex-1 min-w-0">
                       <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
@@ -300,7 +300,7 @@ export const FriendsPanel: React.FC = () => {
             {friends.map((row) => {
               const profile = getFriendProfile(row);
               return (
-                <div key={row.id} className="flex items-center gap-4 py-3.5">
+                <div key={row.id} className="flex items-center gap-[14px] py-3.5">
                   {/* Avatar with online dot */}
                   <div className="relative flex-shrink-0">
                     <div className="h-[42px] w-[42px] rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-[15px]">
@@ -355,7 +355,7 @@ export const FriendsPanel: React.FC = () => {
                 const profile = req.requester;
                 return (
                   <div key={req.id}>
-                    <div className="flex items-center gap-3 mb-3">
+                    <div className="flex items-center gap-[10px] mb-3">
                       <div className="w-8 h-8 rounded-full bg-accent-gold flex items-center justify-center text-[12px] font-bold text-ink-on-dark flex-shrink-0">
                         {(profile.display_name || profile.username || '?')[0].toUpperCase()}
                       </div>
@@ -368,7 +368,7 @@ export const FriendsPanel: React.FC = () => {
                         )}
                       </div>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-[7px]">
                       <button
                         onClick={() => handleRequest(req.id, 'accepted')}
                         disabled={processingRequest === req.id}

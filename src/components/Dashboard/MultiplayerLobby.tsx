@@ -469,7 +469,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             )}
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark border border-t-2 border-accent-gold border-b-divider border-l-divider border-r-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-t-[3px] border-accent-gold border-b-divider border-l-divider border-r-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
             <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Settings</div>
             {[
               ['Questions', String(lobby.game_config?.questionCount || 10)],

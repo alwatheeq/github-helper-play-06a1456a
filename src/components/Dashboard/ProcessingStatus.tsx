@@ -87,7 +87,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
             <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-accent-gold">
               The Workshop · Processing
             </div>
-            <h1 className="font-display text-[34px] font-semibold text-ink mt-1.5 mb-1 tracking-tight leading-tight">
+            <h1 className="font-display text-[38px] font-semibold text-ink mt-1.5 mb-1 tracking-tight leading-tight">
               Composing your materials.
             </h1>
             <p className="text-[13px] text-muted-ink italic">{modeDesc}</p>
@@ -184,7 +184,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
 
         {/* Right — dark editorial panel */}
         <div className="bg-sidebar flex flex-col px-[26px] py-6">
-          <div className="text-[9px] font-bold tracking-[2.5px] uppercase text-accent-gold mb-4">While you wait</div>
+          <div className="text-[9px] font-bold tracking-[2.5px] uppercase text-accent-gold mb-[18px]">While you wait</div>
           <p className="font-display text-[15px] text-ink-on-dark leading-[1.72] flex-1">
             "Reading in short bursts with intentional pauses activates your brain's consolidation process — what you're doing right now."
           </p>

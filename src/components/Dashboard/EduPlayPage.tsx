@@ -1005,7 +1005,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               'Answer as fast as you can — speed counts!',
             ].map((tip, i) => (
               <div key={i} className="flex gap-3 mb-3">
-                <div className="w-5 h-5 rounded-full bg-subtle dark:bg-chip flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-accent-gold-soft flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
                 </div>
                 <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">{tip}</span>

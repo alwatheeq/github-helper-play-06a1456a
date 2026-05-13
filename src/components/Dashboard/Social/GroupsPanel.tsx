@@ -279,7 +279,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       {/* LEFT — My groups + Discover */}
       <div>
         {/* My Groups section heading */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-[10px] mb-4">
           <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">{t('social.my_groups')}</span>
           <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {groups.length}</span>
           <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
@@ -306,7 +306,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                       {(members[group.id] || []).slice(0, 4).map((m, idx) => (
                         <div
                           key={m.id}
-                          className="w-5 h-5 rounded-full bg-accent-gold border-2 border-card-dark flex items-center justify-center text-[8px] font-bold text-white"
+                          className="w-[22px] h-[22px] rounded-full bg-accent-gold border-2 border-card-dark flex items-center justify-center text-[9px] font-bold text-white"
                           style={{ marginLeft: idx > 0 ? -6 : 0 }}
                         >
                           {(m.username || m.display_name || '?')[0].toUpperCase()}
@@ -330,17 +330,17 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                   onClick={() => toggleExpand(group.id)}
                   className="px-4 py-4 flex-1 text-left"
                 >
-                  <p className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-1">
+                  <p className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-[3px]">
                     {group.name}
                   </p>
-                  <p className="text-[12.5px] leading-[1.65] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
+                  <p className="text-[11px] leading-[1.65] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
                     <Users className="w-3 h-3" /> {group.member_count} {t('social.members')}
                   </p>
                 </button>
 
                 {/* Card footer */}
-                <div className="px-4 py-3 border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
-                  <div className="flex items-center gap-1.5">
+                <div className="px-4 py-[10px] border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
+                  <div className="flex items-center gap-[5px]">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                     <span className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">{t('social.member')}</span>
                   </div>
@@ -446,11 +446,11 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       <div className="flex flex-col gap-4">
 
         {/* Create Group CTA — dark card like v4 */}
-        <div className="bg-sidebar rounded-[var(--s4-radius-card)] p-5 shadow-[var(--s4-shadow-hairline)]">
-          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-2">
+        <div className="bg-sidebar rounded-[var(--s4-radius-card)] py-[20px] px-[18px] shadow-[var(--s4-shadow-hairline)]">
+          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-[10px]">
             {t('social.create_group')}
           </p>
-          <p className="font-display text-[15px] text-ink-on-dark dark:text-ink-on-dark leading-snug mb-4">
+          <p className="font-display text-[15px] text-ink-on-dark dark:text-ink-on-dark leading-[1.55] mb-[14px]">
             Gather your study circle — invite peers by course or name.
           </p>
           <input
@@ -472,7 +472,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
         </div>
 
         {/* Join Group */}
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] py-[14px] px-4 shadow-[var(--s4-shadow-hairline)]">
           <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3 flex items-center gap-2">
             <Hash className="w-3 h-3" />
             {t('social.join_group')}

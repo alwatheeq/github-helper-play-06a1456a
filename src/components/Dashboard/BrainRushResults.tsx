@@ -163,7 +163,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
 
       {/* Dark banner — your result */}
       {myStats && myRank && (
-        <div className="bg-sidebar px-7 py-6 mb-4 flex items-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-sidebar py-[22px] px-[30px] mb-4 flex items-center shadow-[var(--s4-shadow-hairline)]">
           <div className="pr-7 border-r border-white/10 flex-shrink-0">
             <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Your Rank</div>
             <div className="font-display text-[60px] font-semibold text-ink-on-dark leading-none tracking-tight">
@@ -180,7 +180,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
               [`${myStats.accuracy.toFixed(0)}%`, 'Accuracy'],
             ].map(([v, l]) => (
               <div key={l} className="text-center">
-                <div className="font-display text-[30px] font-semibold text-ink-on-dark leading-none">{v}</div>
+                <div className="font-display text-[32px] font-semibold text-ink-on-dark leading-none">{v}</div>
                 <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-2">{l}</div>
               </div>
             ))}
