@@ -851,24 +851,36 @@ export const EduPlayPage: React.FC = React.memo(() => {
       <div className="grid grid-cols-2 gap-3 mb-[22px]">
         <button
           onClick={() => { setQuestionSource('auto_generated'); setViewMode('ai-generate'); }}
-          className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark opacity-70 hover:opacity-100 transition-opacity text-left"
+          className={`text-left transition-opacity ${
+            questionSource === 'manual'
+              ? 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark opacity-70 hover:opacity-100'
+              : 'bg-sidebar border-2 border-accent-gold'
+          }`}
           style={{ padding: '22px 20px' }}
         >
-          <div className="text-[26px] text-muted-ink dark:text-muted-ink-on-dark mb-[10px]">✦</div>
-          <div className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark mb-[6px]">AI Generate.</div>
-          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">Let AI create questions on any topic.</div>
-          <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mt-[10px]">Click to select</div>
+          <div className={`text-[26px] mb-[10px] ${questionSource !== 'manual' ? '' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>✦</div>
+          <div className={`font-display text-[16px] font-semibold mb-[6px] ${questionSource !== 'manual' ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>AI Generate.</div>
+          <div className={`text-[11px] leading-relaxed ${questionSource !== 'manual' ? '' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} style={questionSource !== 'manual' ? { color: 'rgba(255,255,255,0.33)' } : {}}>Let AI create questions on any topic.</div>
+          <div className={`text-[9px] tracking-[1.5px] uppercase font-bold mt-[10px] ${questionSource !== 'manual' ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+            {questionSource !== 'manual' ? 'Selected ✓' : 'Click to select'}
+          </div>
         </button>
 
         <button
           onClick={() => { setQuestionSource('manual'); setViewMode('manual-build'); }}
-          className="bg-sidebar border-2 border-accent-gold text-left"
+          className={`text-left transition-opacity ${
+            questionSource === 'manual'
+              ? 'bg-sidebar border-2 border-accent-gold'
+              : 'bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark opacity-70 hover:opacity-100'
+          }`}
           style={{ padding: '22px 20px' }}
         >
-          <div className="text-[26px] mb-[10px]">✎</div>
-          <div className="font-display text-[16px] font-semibold text-ink-on-dark mb-[6px]">Manual Build.</div>
-          <div className="text-[11px] leading-relaxed" style={{ color: 'rgba(255,255,255,0.33)' }}>Write your own custom questions.</div>
-          <div className="text-[9px] tracking-[1.5px] uppercase font-bold text-accent-gold mt-[10px]">Selected ✓</div>
+          <div className={`text-[26px] mb-[10px] ${questionSource === 'manual' ? '' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>✎</div>
+          <div className={`font-display text-[16px] font-semibold mb-[6px] ${questionSource === 'manual' ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>Manual Build.</div>
+          <div className={`text-[11px] leading-relaxed ${questionSource === 'manual' ? '' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} style={questionSource === 'manual' ? { color: 'rgba(255,255,255,0.33)' } : {}}>Write your own custom questions.</div>
+          <div className={`text-[9px] tracking-[1.5px] uppercase font-bold mt-[10px] ${questionSource === 'manual' ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+            {questionSource === 'manual' ? 'Selected ✓' : 'Click to select'}
+          </div>
         </button>
       </div>
     </div>

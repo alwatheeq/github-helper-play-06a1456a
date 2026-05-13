@@ -168,7 +168,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Upcoming banner */}
       {upcoming && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-[var(--s4-radius-card)] bg-accent-gold/10 border border-accent-gold">
+        <div className="flex items-center gap-3 px-[18px] py-3 rounded-[var(--s4-radius-card)] bg-accent-gold-soft border border-accent-gold">
           <CalendarDays className="h-5 w-5 text-accent-gold shrink-0" />
           <div>
             <p className="text-sm font-semibold text-accent-gold">
@@ -227,19 +227,19 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
             return (
               <div
                 key={exam.id}
-                className={`flex items-center gap-4 p-4 rounded-[var(--s4-radius-card)] border transition-colors ${
+                className={`flex items-center gap-[14px] py-[14px] px-[18px] rounded-[var(--s4-radius-card)] border transition-colors ${
                   countdown.isPast
-                    ? 'opacity-60 border-divider dark:border-divider-on-dark'
+                    ? 'opacity-[0.65] border-divider dark:border-divider-on-dark'
                     : isUrgent
                       ? 'border-accent-gold bg-accent-gold/5'
                       : 'border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark'
                 }`}
               >
                 {/* Date icon */}
-                <div className={`shrink-0 w-12 h-12 rounded-[var(--s4-radius-card)] flex flex-col items-center justify-center border ${
+                <div className={`shrink-0 w-10 h-10 rounded-[var(--s4-radius-card)] flex flex-col items-center justify-center border ${
                   countdown.isPast
-                    ? 'bg-chip border-divider text-muted-ink dark:text-muted-ink-on-dark'
-                    : 'bg-accent-gold/10 border-accent-gold/30 text-accent-gold'
+                    ? 'bg-subtle border-divider text-muted-ink dark:text-muted-ink-on-dark'
+                    : 'bg-accent-gold-soft border-accent-gold/30 text-accent-gold'
                 }`}>
                   <span className="text-lg font-bold leading-none">
                     {new Date(exam.exam_date).getDate()}

@@ -183,13 +183,13 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
         ].map(({ icon: Icon, value, label }) => (
           <div
             key={label}
-            className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4"
+            className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] py-4 px-[18px]"
           >
             <div className="flex items-center gap-2 mb-2">
               <Icon className="h-4 w-4 text-accent-gold" />
-              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{label}</p>
+              <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{label}</p>
             </div>
-            <p className="font-display text-2xl font-bold text-ink dark:text-ink-on-dark">{value}</p>
+            <p className="font-display text-2xl font-extrabold text-ink dark:text-ink-on-dark">{value}</p>
           </div>
         ))}
       </div>

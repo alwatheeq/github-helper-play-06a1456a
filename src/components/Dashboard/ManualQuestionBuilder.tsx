@@ -104,22 +104,35 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="mb-6">
-        <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">Build Your Questions</h2>
-        <p className="text-secondary-ink dark:text-muted-ink">Create custom questions for your Brain Rush game ({questions.length} questions)</p>
+    <div className="w-full">
+      {/* Dark banner — Play4HostManual */}
+      <div className="bg-sidebar flex items-center justify-between mb-[22px]" style={{ padding: '20px 26px' }}>
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+          <div className="font-display text-[24px] font-semibold text-ink-on-dark" style={{ letterSpacing: -0.5 }}>Build Your Questions.</div>
+          <div className="text-[12px] text-ink-on-dark/35 mt-1">
+            {questions.length} question{questions.length !== 1 ? 's' : ''} added
+          </div>
+        </div>
+        <button
+          onClick={onCancel}
+          className="px-4 py-[7px] bg-accent-gold text-sidebar text-[12px] font-bold"
+          style={{ borderRadius: 3 }}
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Question Form */}
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
-        <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6 mb-[14px]">
+        <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-4">
           {editingIndex !== null ? 'Edit Question' : 'Add New Question'}
-        </h3>
+        </div>
 
         <div className="space-y-4">
           {/* Question Text */}
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
               Question
             </label>
             <textarea
@@ -127,21 +140,18 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
               onChange={(e) => setCurrentQuestion(e.target.value)}
               placeholder="Enter your question here..."
               rows={3}
-              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+              className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-muted-ink-on-dark text-[13px]"
             />
           </div>
 
-          {/* Answer Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[0, 1, 2, 3].map((idx) => (
-              <div key={idx} className="relative">
-                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                  Option {idx + 1}
-                  {correctAnswer === idx && (
-                    <span className="ml-2 text-xs bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">Correct</span>
-                  )}
-                </label>
-                <div className="flex space-x-2">
+          {/* Answer Options — 2×2 grid */}
+          <div>
+            <label className="block text-[11px] font-semibold uppercase tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
+              Answer Options
+            </label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[0, 1, 2, 3].map((idx) => (
+                <div key={idx} className="flex gap-2">
                   <input
                     type="text"
                     value={currentOptions[idx]}
@@ -150,40 +160,49 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       newOptions[idx] = e.target.value;
                       setCurrentOptions(newOptions);
                     }}
-                    placeholder={`Enter option ${idx + 1}...`}
-                    className="flex-1 px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                    placeholder={`Option ${idx + 1}`}
+                    className={`flex-1 px-3 py-2.5 border focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-muted-ink-on-dark text-[13px] ${
+                      correctAnswer === idx
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+                        : 'border-divider dark:border-divider-on-dark'
+                    }`}
                   />
                   <button
                     type="button"
                     onClick={() => setCorrectAnswer(idx)}
-                    className={`px-4 py-2 rounded-[var(--s4-radius-card)] transition ${
+                    className={`w-[38px] h-[38px] flex items-center justify-center flex-shrink-0 transition ${
                       correctAnswer === idx
                         ? 'bg-green-600 text-white'
-                        : 'bg-subtle text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
+                        : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
                     }`}
                   >
-                    <Check className="h-5 w-5" />
+                    <Check className="h-4 w-4" />
                   </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            {correctAnswer !== undefined && (
+              <p className="text-[11px] text-green-600 dark:text-green-400 mt-1.5">
+                Option {correctAnswer + 1} is marked as correct
+              </p>
+            )}
           </div>
 
           {/* Difficulty */}
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
+            <label className="block text-[11px] font-semibold uppercase tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark mb-2">
               Difficulty
             </label>
-            <div className="flex space-x-3">
+            <div className="flex gap-2">
               {(['easy', 'medium', 'hard'] as const).map((level) => (
                 <button
                   key={level}
                   type="button"
                   onClick={() => setDifficulty(level)}
-                  className={`px-6 py-2 rounded-[var(--s4-radius-card)] font-medium transition ${
+                  className={`px-5 py-2 text-[12px] font-semibold transition ${
                     difficulty === level
-                      ? 'bg-accent-gold text-ink-on-dark'
-                      : 'bg-subtle text-secondary-ink hover:bg-subtle dark:bg-card-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark'
+                      ? 'bg-accent-gold text-sidebar'
+                      : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
                   }`}
                 >
                   {level.charAt(0).toUpperCase() + level.slice(1)}
@@ -193,25 +212,25 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex space-x-3">
+          <div className="flex gap-3 pt-1">
             {editingIndex !== null && (
               <button
                 type="button"
                 onClick={handleCancelEdit}
-                className="px-6 py-3 border border-divider text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark flex items-center space-x-2"
+                className="px-5 py-2.5 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[13px] flex items-center gap-2 hover:bg-subtle transition"
               >
-                <X className="h-5 w-5" />
-                <span>Cancel Edit</span>
+                <X className="h-4 w-4" />
+                Cancel Edit
               </button>
             )}
             <button
               type="button"
               onClick={handleAddQuestion}
               disabled={!validateCurrentQuestion()}
-              className="flex-1 px-6 py-3 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="flex-1 py-2.5 bg-accent-gold text-sidebar text-[13px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {editingIndex !== null ? <Edit2 className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
-              <span>{editingIndex !== null ? 'Update Question' : 'Add Question'}</span>
+              {editingIndex !== null ? <Edit2 className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+              {editingIndex !== null ? 'Update Question' : 'Add Question'}
             </button>
           </div>
         </div>
@@ -219,35 +238,36 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
 
       {/* Questions List */}
       {questions.length > 0 && (
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-6 mb-6">
-          <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">
-            Questions ({questions.length})
-          </h3>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6 mb-[14px]">
+          <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-4">
+            Questions Added ({questions.length})
+          </div>
           <div className="space-y-3">
             {questions.map((q, index) => (
               <div
                 key={index}
-                className="border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 hover:border-purple-300 dark:hover:border-purple-600 transition"
+                className="border border-divider dark:border-divider-on-dark p-4"
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 text-sm font-bold px-2 py-1 rounded">
-                        Q{index + 1}
-                      </span>
-                      <span className="text-xs bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink px-2 py-1 rounded">
+                <div className="flex items-start gap-3">
+                  {/* Number badge */}
+                  <div className="w-7 h-7 bg-sidebar text-ink-on-dark text-[11px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                    {index + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] font-semibold uppercase tracking-[1px] text-muted-ink dark:text-muted-ink-on-dark bg-subtle dark:bg-card-dark px-2 py-0.5">
                         {q.difficulty}
                       </span>
                     </div>
-                    <p className="font-medium text-ink dark:text-muted-ink-on-dark mb-2">{q.question}</p>
-                    <div className="grid grid-cols-2 gap-2 text-sm">
+                    <p className="text-[13px] font-medium text-ink dark:text-ink-on-dark mb-2">{q.question}</p>
+                    <div className="grid grid-cols-2 gap-1.5">
                       {q.options.map((opt, optIdx) => (
                         <div
                           key={optIdx}
-                          className={`px-3 py-2 rounded ${
+                          className={`px-3 py-1.5 text-[12px] ${
                             optIdx === q.correct_answer
-                              ? 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-medium'
-                              : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
+                              ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 font-semibold border border-green-200 dark:border-green-700'
+                              : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
                           }`}
                         >
                           {opt}
@@ -255,18 +275,18 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
                       ))}
                     </div>
                   </div>
-                  <div className="flex flex-col space-y-2 ml-4">
+                  <div className="flex flex-col gap-1.5 ml-2 flex-shrink-0">
                     <button
                       onClick={() => handleEditQuestion(index)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-900/20 rounded transition dark:bg-blue-950/40"
+                      className="w-8 h-8 flex items-center justify-center text-accent-gold border border-accent-gold/30 hover:bg-accent-gold-soft transition"
                     >
-                      <Edit2 className="h-4 w-4" />
+                      <Edit2 className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => handleDeleteQuestion(index)}
-                      className="p-2 text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded transition dark:bg-red-950/40"
+                      className="w-8 h-8 flex items-center justify-center text-red-500 border border-red-200 dark:border-red-800/40 hover:bg-red-50 dark:hover:bg-red-900/20 transition"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
                 </div>
@@ -277,48 +297,48 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
       )}
 
       {/* Bottom Actions */}
-      <div className="flex justify-between space-x-4">
+      <div className="flex justify-between gap-4">
         <button
           onClick={onCancel}
-          className="px-6 py-3 border border-divider text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
+          className="px-6 py-3 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[13px] hover:bg-subtle transition"
         >
           Cancel
         </button>
         <button
           onClick={handleFinish}
           disabled={questions.length === 0}
-          className={`px-8 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2`}
+          className="px-8 py-3 bg-accent-gold text-sidebar text-[13px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
-          <Save className="h-5 w-5" />
-          <span>Finish & Create Game</span>
+          <Save className="h-4 w-4" />
+          Finish & Create Game
         </button>
       </div>
 
       {/* Save Dialog */}
       {showSaveDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-modal)] p-6 max-w-md w-full">
-            <h3 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">Save Question Set?</h3>
-            <p className="text-secondary-ink dark:text-muted-ink mb-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-modal)] p-6 max-w-md w-full">
+            <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-3">Save Question Set?</div>
+            <p className="text-[13px] text-secondary-ink dark:text-muted-ink dark:text-muted-ink-on-dark mb-4 leading-relaxed">
               Would you like to save these questions for future use?
             </p>
             <input
               type="text"
               value={saveSetName}
               onChange={(e) => setSaveSetName(e.target.value)}
-              placeholder="Enter a name for this question set..."
-              className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark mb-4"
+              placeholder="Name for this question set..."
+              className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-muted-ink-on-dark text-[13px] mb-4"
             />
-            <div className="flex space-x-3">
+            <div className="flex gap-3">
               <button
                 onClick={() => handleSaveAndFinish(false)}
-                className="flex-1 px-4 py-2 border border-divider text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
+                className="flex-1 px-4 py-2.5 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[13px] hover:bg-subtle transition"
               >
                 Don't Save
               </button>
               <button
                 onClick={() => handleSaveAndFinish(true)}
-                className="flex-1 px-4 py-2 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-card)] hover:opacity-90 transition"
+                className="flex-1 px-4 py-2.5 bg-accent-gold text-sidebar text-[13px] font-bold hover:opacity-90 transition"
               >
                 Save & Continue
               </button>
