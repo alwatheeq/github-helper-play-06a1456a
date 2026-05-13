@@ -305,7 +305,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                   style={{ marginBottom: isLast ? 14 : 3 }}
                 >
                   {/* Avatar column — 34px fixed width for alignment */}
-                  <div className="w-8 flex-shrink-0" style={{ paddingBottom: isFirst ? 0 : 0 }}>
+                  <div className="w-8 flex-shrink-0">
                     {!own && isFirst && (
                       <div
                         className="flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0"

@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Hash, Crown, Trash2, Copy, Check } from 'lucide-react';
+
+const AVATAR_PAL = ['bg-accent-gold', 'bg-secondary-ink', 'bg-sidebar', 'bg-muted-ink'] as const;
 import { QRCodeSVG } from 'qrcode.react';
 import { useI18n } from '../../../contexts/I18nContext';
 
@@ -303,17 +305,16 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                   <div className="flex items-center gap-2">
                     {/* Mini avatar stack — rotating color palette per design */}
                     <div className="flex">
-                      {[0, 1, 2, 3].slice(0, Math.min(4, group.member_count)).map((idx) => {
-                        const pal = ['bg-accent-gold', 'bg-secondary-ink', 'bg-sidebar', 'bg-muted-ink'];
+                      {(() => {
                         const borderCls = group.my_role === 'admin' ? 'border-sidebar' : 'border-subtle dark:border-subtle-on-dark';
-                        return (
+                        return Array.from({ length: Math.min(4, group.member_count) }, (_, idx) => (
                           <div
                             key={idx}
-                            className={`w-[22px] h-[22px] rounded-full ${pal[idx % pal.length]} border-2 ${borderCls} flex items-center justify-center text-[9px] font-bold text-white`}
+                            className={`w-[22px] h-[22px] rounded-full ${AVATAR_PAL[idx % AVATAR_PAL.length]} border-2 ${borderCls}`}
                             style={{ marginLeft: idx > 0 ? -7 : 0, zIndex: 10 - idx }}
                           />
-                        );
-                      })}
+                        ));
+                      })()}
                     </div>
                     {group.member_count > 4 && (
                       <span className={`text-[10px] ${group.my_role === 'admin' ? 'text-white/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
