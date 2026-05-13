@@ -49,33 +49,23 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
     setError(null);
 
     try {
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .single();
-
-      const displayName = profile?.full_name || 'Anonymous';
       const code = generateGameCode();
-
-      const { data: lobby, error: lobbyError } = await supabase
-        .from('multiplayer_game_lobbies')
-        .insert({
+      const [{ data: profile }, { data: lobby, error: lobbyError }] = await Promise.all([
+        supabase.from('user_profiles').select('full_name').eq('id', user.id).single(),
+        supabase.from('multiplayer_game_lobbies').insert({
           host_user_id: user.id,
           game_code: code,
           game_name: gameName,
           max_players: maxPlayers,
           current_players: 1,
           status: 'waiting',
-          game_config: {
-            timePerQuestion,
-            questionCount
-          },
+          game_config: { timePerQuestion, questionCount },
           question_set_id: questionSetId,
           questions_json: questionsJson
-        })
-        .select()
-        .single();
+        }).select().single(),
+      ]);
+
+      const displayName = profile?.full_name || 'Anonymous';
 
       if (lobbyError) throw lobbyError;
 
@@ -116,20 +106,12 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
     setError(null);
 
     try {
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('full_name')
-        .eq('id', user.id)
-        .single();
+      const [{ data: profile }, { data: lobby, error: lobbyError }] = await Promise.all([
+        supabase.from('user_profiles').select('full_name').eq('id', user.id).single(),
+        supabase.from('multiplayer_game_lobbies').select('*').eq('game_code', gameCode.toUpperCase()).eq('status', 'waiting').single(),
+      ]);
 
       const displayName = profile?.full_name || 'Anonymous';
-
-      const { data: lobby, error: lobbyError } = await supabase
-        .from('multiplayer_game_lobbies')
-        .select('*')
-        .eq('game_code', gameCode.toUpperCase())
-        .eq('status', 'waiting')
-        .single();
 
       if (lobbyError || !lobby) {
         throw new Error('Game not found or already started');
@@ -179,6 +161,9 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
     }
   };
 
+  const closeCreateForm = () => { setShowCreateForm(false); setError(null); };
+  const closeJoinForm = () => { setShowJoinForm(false); setError(null); };
+
   if (showCreateForm) {
     return (
       <div className="w-full max-w-2xl mx-auto">
@@ -188,7 +173,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <div className="font-display text-[24px] font-semibold text-ink-on-dark">Host a Game.</div>
           </div>
           <button
-            onClick={() => { setShowCreateForm(false); setError(null); }}
+            onClick={closeCreateForm}
             className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
           >
             ← Back
@@ -264,7 +249,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               {loading ? 'Creating…' : 'Create Game →'}
             </button>
             <button
-              onClick={() => { setShowCreateForm(false); setError(null); }}
+              onClick={closeCreateForm}
               className="px-6 py-[11px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[13px] hover:opacity-70 transition"
             >
               Cancel
@@ -284,7 +269,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <div className="font-display text-[24px] font-semibold text-ink-on-dark">Join a Game.</div>
           </div>
           <button
-            onClick={() => { setShowJoinForm(false); setError(null); }}
+            onClick={closeJoinForm}
             className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
           >
             ← Back
@@ -321,7 +306,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               {loading ? 'Joining…' : 'Join Game →'}
             </button>
             <button
-              onClick={() => { setShowJoinForm(false); setError(null); }}
+              onClick={closeJoinForm}
               className="px-6 py-[11px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[13px] hover:opacity-70 transition"
             >
               Cancel
@@ -334,7 +319,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
   return (
     <div className="w-full">
-      {/* Dark header banner */}
       <div className="bg-sidebar px-[26px] py-[20px] mb-[22px] flex items-center justify-between">
         <div>
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
@@ -350,10 +334,8 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[22px]">
         <div>
-          {/* How do you want to play? */}
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How do you want to play?</div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-[22px]">
-            {/* Host — primary dark card */}
             <div className="bg-sidebar p-[18px] flex flex-col">
               <div className="text-[18px] mb-2 text-accent-gold">⊕</div>
               <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1.5">Host a Game.</div>
@@ -368,7 +350,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               </button>
             </div>
 
-            {/* Join — panel card */}
             <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px] flex flex-col">
               <div className="text-[18px] mb-2 text-muted-ink dark:text-muted-ink-on-dark">→</div>
               <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1.5">Join a Game.</div>
@@ -383,7 +364,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               </button>
             </div>
 
-            {/* Play Online — panel card */}
             <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px] flex flex-col">
               <div className="text-[18px] mb-2 text-muted-ink dark:text-muted-ink-on-dark">◈</div>
               <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1.5">Play Online.</div>
@@ -399,7 +379,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             </div>
           </div>
 
-          {/* How it works */}
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How it works</div>
           <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-5">
             <ol className="space-y-3">
@@ -418,9 +397,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           </div>
         </div>
 
-        {/* Right rail */}
         <div className="flex flex-col gap-[14px]">
-          {/* Quick join */}
           <div className="bg-sidebar px-[18px] py-[18px]">
             <div className="text-[9px] tracking-[2px] text-white/45 font-bold uppercase mb-2">Quick Join</div>
             <div className="text-[11px] text-white/55 mb-3">Have a room code? Enter it to jump straight in.</div>
@@ -441,7 +418,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             </button>
           </div>
 
-          {/* Info card */}
           <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Brain Rush</div>
             <div className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark leading-[1.65]">
