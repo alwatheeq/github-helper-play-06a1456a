@@ -503,7 +503,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      {/* Header row */}
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[10px] tracking-[2.5px] text-accent-gold font-bold uppercase">
@@ -522,7 +521,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       </div>
       <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-[10px] mb-[14px]" />
 
-      {/* Live Rankings Strip — horizontal */}
       <div className="flex gap-[5px] mb-[14px] overflow-x-auto">
         {playerScores.slice(0, 7).map((p, i) => {
           const isMe = p.user_id === user?.id;
@@ -550,12 +548,11 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                 {p.display_name[0].toUpperCase()}
               </div>
             ))}
-            <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark ml-[3px]">+{Math.max(0, playerScores.length - 7)}</span>
+            <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark ml-[3px]">+{playerScores.length - 7}</span>
           </div>
         )}
       </div>
 
-      {/* Timer bar */}
       <div className="mb-[18px]">
         <div className="h-[4px] bg-divider dark:bg-divider-on-dark rounded-sm">
           <div className="h-full bg-accent-gold rounded-sm transition-all duration-1000" style={{ width: `${timerPct}%` }} />
@@ -566,12 +563,10 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         </div>
       </div>
 
-      {/* Question — left accent border */}
       <div className="font-display text-[20px] font-semibold text-ink dark:text-ink-on-dark leading-snug border-l-[3px] border-l-accent-gold pl-[18px] mb-[18px]">
         {currentQuestion.question}
       </div>
 
-      {/* Answer options — 2×2 grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
         {currentQuestion.options.map((option, i) => {
           const isSelected = selectedAnswer === option;
@@ -604,7 +599,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         })}
       </div>
 
-      {/* Game info strip */}
       <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-[16px] py-[9px] flex gap-[24px] mb-[18px]">
         {([
           ['Format', 'Most correct answers wins'],
@@ -618,7 +612,6 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         ))}
       </div>
 
-      {/* Live Leaderboard grid — rank 1 spans full row */}
       <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-[10px]">
         Live Standings · {playerScores.length} Players
       </div>

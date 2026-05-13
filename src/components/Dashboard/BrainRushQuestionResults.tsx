@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
 interface Participant {
@@ -109,9 +109,13 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
 
   const correctCount = participantResults.filter(p => p.answer?.is_correct).length;
   const myResult = participantResults.find(p => p.user_id === currentUserId);
-  const sortedByScore = [...participantResults].sort((a, b) => b.score - a.score);
+  const sortedByScore = useMemo(
+    () => [...participantResults].sort((a, b) => b.score - a.score),
+    [participantResults]
+  );
   const myRank = currentUserId ? sortedByScore.findIndex(p => p.user_id === currentUserId) + 1 : 0;
   const myPointsThisRound = myResult?.answer?.points_earned ?? 0;
+  const correctThisRound = sortedByScore.filter(p => p.answer?.is_correct).length;
 
   if (loading) {
     return (
@@ -148,7 +152,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
           </div>
           {([
             [String(myResult.score), 'Total pts'],
-            [`${sortedByScore.filter(p => p.answer?.is_correct).length} / ${questionIndex + 1}`, 'Correct'],
+            [`${correctThisRound} / ${questionIndex + 1}`, 'Correct'],
             [myResult.answer ? `${myResult.answer.time_taken_seconds.toFixed(1)}s` : '—', 'Time'],
           ] as [string, string][]).map(([v, l], i) => (
             <div key={l} className={`${i < 2 ? 'pr-7 border-r border-white/[.08]' : ''} text-center`}>
@@ -210,9 +214,13 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                       </div>
                     </div>
                   </div>
-                  <span className="font-display text-[16px] font-bold text-muted-ink dark:text-muted-ink-on-dark">{p.score > 0 ? p.score : 0}</span>
+                  <span className={`text-[13px] font-bold ${p.answer?.is_correct ? 'text-accent-gold' : p.answered ? 'text-red-400' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {p.answer?.is_correct ? '✓' : p.answered ? '✗' : '—'}
+                  </span>
                   <span className="font-display text-[14px] font-semibold text-muted-ink dark:text-muted-ink-on-dark">{p.score}</span>
-                  <span className={`font-display text-[12px] font-semibold ${pts !== 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score}</span>
+                  <span className={`font-display text-[12px] font-semibold ${pts !== 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {pts > 0 ? `+${pts}` : pts < 0 ? String(pts) : '—'}
+                  </span>
                 </div>
               );
             })}
