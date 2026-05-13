@@ -570,7 +570,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             </div>
 
             {/* Question text */}
-            <p className="relative font-display font-semibold text-[22px] text-ink dark:text-ink-on-dark leading-snug mb-7" style={{ lineHeight: 1.4 }}>
+            <p className="relative font-display font-semibold text-[22px] leading-[1.4] text-ink dark:text-ink-on-dark mb-7">
               {currentQuestion?.question}
             </p>
 
@@ -664,8 +664,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                   value={answers[currentQuestionIndex] || ''}
                   onChange={(e) => handleAnswerSelect(e.target.value)}
                   placeholder={t('quiz.type_your_answer')}
-                  className="w-full px-4 py-[14px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold text-[13px] text-ink dark:text-ink-on-dark outline-none resize-none min-h-[148px]"
-                  style={{ lineHeight: 1.6 }}
+                  className="w-full px-4 py-[14px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold text-[13px] leading-[1.6] text-ink dark:text-ink-on-dark outline-none resize-none min-h-[148px]"
                 />
                 <div className="flex justify-between mt-2">
                   <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">

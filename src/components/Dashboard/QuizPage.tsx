@@ -1542,9 +1542,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         <span className={`absolute top-[14px] right-[14px] text-[9.5px] font-bold tracking-[0.5px] px-[9px] py-[3px] ${
                           exam.difficulty_level === 'advanced'
                             ? 'bg-ink/[.08] dark:bg-white/[.08] text-ink dark:text-ink-on-dark'
-                            : exam.difficulty_level === 'intermediate'
-                            ? 'bg-accent-gold-soft text-accent-gold'
-                            : getDifficultyBadgeClass(exam.difficulty_level)
+                            : 'bg-accent-gold-soft text-accent-gold'
                         }`}>
                           {exam.difficulty_level}
                         </span>
