@@ -1327,8 +1327,8 @@ export const StudyRoomsPage: React.FC = () => {
                     <div key={room.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col">
                       {/* Card header — dark ink strip */}
                       <div className="bg-sidebar px-[14px] py-[11px] flex justify-between items-center">
-                        <div className="text-[9.5px] tracking-[1.5px] uppercase font-bold text-accent-gold">
-                          {room.room_code}
+                        <div className="text-[9.5px] tracking-[1.5px] uppercase font-bold text-accent-gold truncate max-w-[140px]">
+                          {room.room_description || 'Study Room'}
                         </div>
                         <div className="inline-flex items-center gap-[5px] px-[9px] py-[3px] bg-accent-gold text-[9px] tracking-[1.5px] uppercase font-bold text-ink">
                           <div className="w-1 h-1 rounded-full bg-ink flex-shrink-0" />

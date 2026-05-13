@@ -198,26 +198,21 @@ export const ContentViewPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-page">
-      {/* Scholar v4: sticky top bar with back + title + tab strip */}
-      <div className="sticky top-0 z-30 bg-sidebar border-b border-divider dark:border-divider-on-dark ">
-        {/* Top row: back button + title */}
-        <div className="flex items-center gap-4 px-5 py-3 border-b border-divider dark:border-divider-on-dark">
-          <button
-            type="button"
-            onClick={goBack}
-            className="flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span className="text-sm">Back</span>
-          </button>
-          <div className="h-4 w-px bg-divider dark:bg-divider-on-dark" />
-          <h1 className="font-display text-base text-ink dark:text-ink-on-dark truncate flex-1">
-            {title}
-          </h1>
-        </div>
-
-        {/* Scholar v4 tab strip — accent-gold active underline */}
-        <div className="flex items-end px-5 gap-0" role="tablist" aria-label="Content view modes">
+      {/* Scholar v4: single 52px dark bar — back | sep | title | pill tabs */}
+      <div className="sticky top-0 z-30 bg-sidebar flex items-center h-[52px] px-[18px] gap-[14px]">
+        <button
+          type="button"
+          onClick={goBack}
+          className="flex items-center gap-1.5 text-white/50 hover:text-white/80 transition-colors flex-shrink-0"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          <span className="text-[13px]">Back</span>
+        </button>
+        <div className="w-px h-4 bg-white/20 flex-shrink-0" />
+        <h1 className="font-display text-[13px] font-semibold text-white truncate flex-1">
+          {title}
+        </h1>
+        <div className="flex gap-0.5 bg-white/[0.07] rounded-[8px] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
             return (
@@ -227,17 +222,12 @@ export const ContentViewPage: React.FC = () => {
                 aria-selected={active}
                 onClick={() => setActiveTab(tab.id)}
                 className={[
-                  'relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors duration-150',
-                  active
-                    ? 'text-ink dark:text-ink-on-dark'
-                    : 'text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark',
+                  'flex items-center gap-1 px-[14px] py-[5px] rounded-[6px] text-[12px] font-semibold whitespace-nowrap transition-colors duration-150',
+                  active ? 'bg-accent-gold text-sidebar' : 'text-white/50 hover:text-white/80',
                 ].join(' ')}
               >
                 <span aria-hidden>{tab.icon}</span>
                 {tab.label}
-                {active && (
-                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-accent-gold" />
-                )}
               </button>
             );
           })}

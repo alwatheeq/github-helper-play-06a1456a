@@ -479,13 +479,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
     );
   }
 
-  // Colour palette for 4 answer cards (blue / orange / green / red)
-  const cardColors = [
-    { bg: '#1e3a5f', border: '#2d5a8e', label: '#7ab3e0' },
-    { bg: '#5c2d0a', border: '#8a4412', label: '#f0a05a' },
-    { bg: '#0d3d2e', border: '#1a6449', label: '#5dd4a4' },
-    { bg: '#4a1020', border: '#7a1a35', label: '#e07a9a' },
-  ];
+  const answerLabelColors = ['text-blue-500', 'text-orange-500', 'text-emerald-500', 'text-pink-500'];
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -561,13 +555,14 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           const isSelected = selectedAnswer === option;
           const isCorrect = option === currentQuestion.correct_answer;
           const showResult = hasAnswered;
-          const colors = cardColors[index];
 
-          let bgColor = colors.bg;
-          let borderColor = colors.border;
-          if (showResult && isCorrect) { bgColor = '#1a4d2e'; borderColor = '#4caf50'; }
-          else if (showResult && isSelected && !isCorrect) { bgColor = '#4a1212'; borderColor = '#d9534f'; }
-          else if (isSelected) { borderColor = '#e2c06a'; }
+          const cardCls = showResult && isCorrect
+            ? 'bg-green-50 dark:bg-green-900/30 border-green-500'
+            : showResult && isSelected && !isCorrect
+            ? 'bg-red-50 dark:bg-red-900/30 border-red-500'
+            : isSelected
+            ? 'bg-accent-gold-soft border-accent-gold'
+            : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-accent-gold/50';
 
           return (
             <div
@@ -576,13 +571,12 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               tabIndex={hasAnswered ? -1 : 0}
               onClick={() => !hasAnswered && handleAnswerSelect(option)}
               onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
-              style={{ backgroundColor: bgColor, borderColor }}
-              className={`flex gap-4 items-start px-5 py-[18px] ${isSelected ? 'border-2' : 'border'} rounded-[12px] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
+              className={`flex gap-4 items-start px-5 py-[18px] border-2 min-h-[80px] transition-colors ${cardCls} ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              <span style={{ color: colors.label }} className="text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5">
+              <span className={`text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5 ${answerLabelColors[index]}`}>
                 {['A','B','C','D'][index]}
               </span>
-              <span className="text-[13.5px] text-white leading-snug font-medium flex-1">{option}</span>
+              <span className="text-[13.5px] text-ink dark:text-ink-on-dark leading-snug font-medium flex-1">{option}</span>
               <div className="flex items-center gap-2 flex-shrink-0">
                 {showResult && isCorrect && <CheckCircle className="h-5 w-5 text-green-400" />}
                 {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-red-400" />}
@@ -628,14 +622,14 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
         ))}
       </div>
 
-      {/* Live leaderboard — compact 3-col grid */}
+      {/* Live leaderboard — podium: rank 1 full-width, ranks 2-3 side-by-side, rest 3-per-row */}
       <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Live Standings · {participants.length} Players</div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-[6px] mb-4">
-        {/* Rank 1 spans full row */}
+      <div className="flex flex-col gap-[6px] mb-4">
+        {/* Rank 1 — full width */}
         {sortedParticipants.slice(0, 1).map(p => {
           const isMe = user && p.user_id === user.id;
           return (
-            <div key={p.id} className={`sm:col-span-3 flex items-center gap-3 px-4 py-3 border-2 border-accent-gold ${isMe ? 'bg-sidebar' : 'bg-chip dark:bg-chip'}`}>
+            <div key={p.id} className={`flex items-center gap-3 px-4 py-3 border-2 border-accent-gold ${isMe ? 'bg-sidebar' : 'bg-chip dark:bg-chip'}`}>
               <span className="font-display text-[22px] font-bold text-accent-gold w-7">1</span>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
@@ -648,19 +642,42 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
             </div>
           );
         })}
-        {sortedParticipants.slice(1).map((p, i) => {
-          const isMe = user && p.user_id === user.id;
-          return (
-            <div key={p.id} className={`flex items-center gap-2 px-3 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
-              <span className="font-display text-[14px] font-bold text-muted-ink dark:text-muted-ink-on-dark w-5">{i + 2}</span>
-              <div className={`w-[26px] h-[26px] rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
-                {p.display_name[0].toUpperCase()}
-              </div>
-              <span className={`text-[11px] flex-1 truncate ${isMe ? 'text-ink-on-dark font-bold' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
-              <span className={`font-display text-[13px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score.toLocaleString()}</span>
-            </div>
-          );
-        })}
+        {/* Ranks 2-3 — side by side */}
+        {sortedParticipants.length > 1 && (
+          <div className="grid grid-cols-2 gap-[6px]">
+            {sortedParticipants.slice(1, 3).map((p, i) => {
+              const isMe = user && p.user_id === user.id;
+              return (
+                <div key={p.id} className={`flex items-center gap-2.5 px-4 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
+                  <span className="font-display text-[18px] font-bold text-muted-ink dark:text-muted-ink-on-dark w-6">{i + 2}</span>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                    {p.display_name[0].toUpperCase()}
+                  </div>
+                  <span className={`text-[12px] flex-1 truncate font-semibold ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
+                  <span className={`font-display text-[14px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score.toLocaleString()}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+        {/* Ranks 4+ — 3 per row */}
+        {sortedParticipants.length > 3 && (
+          <div className="grid grid-cols-3 gap-[6px]">
+            {sortedParticipants.slice(3).map((p, i) => {
+              const isMe = user && p.user_id === user.id;
+              return (
+                <div key={p.id} className={`flex items-center gap-2 px-3 py-2.5 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
+                  <span className="font-display text-[13px] font-bold text-muted-ink dark:text-muted-ink-on-dark w-4">{i + 4}</span>
+                  <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
+                    {p.display_name[0].toUpperCase()}
+                  </div>
+                  <span className={`text-[10px] flex-1 truncate ${isMe ? 'text-ink-on-dark font-bold' : 'text-ink dark:text-ink-on-dark'}`}>{p.display_name}</span>
+                  <span className={`font-display text-[11px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.score.toLocaleString()}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* Host Controls */}
