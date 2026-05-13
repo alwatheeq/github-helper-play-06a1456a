@@ -66,7 +66,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
   const embeddedTimer = (
     <div className="w-full flex flex-col items-center gap-4 py-5 px-5">
       {/* Mode badge */}
-      <div className="px-3.5 py-1 bg-accent-gold-soft border border-accent-gold/44 text-[11px] font-bold text-accent-gold tracking-[0.08em] uppercase">
+      <div className="px-3.5 py-1 bg-accent-gold-soft border border-accent-gold/44 rounded-[20px] text-[11px] font-bold text-accent-gold tracking-[0.08em] uppercase">
         {modeLabel === t('pomodoro.work') ? 'Work Session' : 'Break Time'}
       </div>
 

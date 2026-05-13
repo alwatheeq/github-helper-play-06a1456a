@@ -10,7 +10,7 @@ export const NotFound: React.FC = () => {
 
         {/* Large 404 */}
         <div
-          className="font-display text-[120px] font-black leading-none select-none tracking-[-6px] text-subtle dark:text-subtle-on-dark"
+          className="font-display text-[120px] font-black leading-none select-none tracking-[-6px] text-accent-gold-soft"
           style={{ letterSpacing: '-6px' }}
         >
           404

@@ -71,7 +71,7 @@ const MiniPlayer: React.FC = () => {
         onPointerUp={handlePointerUp}
       >
         <div className="flex gap-0.5 flex-shrink-0">
-          {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
+          {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5 rounded-[1px]" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
         </div>
         <span className="text-[9px] text-white/[0.6] font-semibold flex-1 text-center truncate">
           {activeRoom.name}

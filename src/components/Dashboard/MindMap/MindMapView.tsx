@@ -105,7 +105,7 @@ function CustomNode({ data }: NodeProps) {
 
       {showTooltip && (data.description as string) && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-[12px] border px-3 py-2 text-xs shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-[220px] whitespace-pre-wrap"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 border px-3 py-2 text-xs shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-[220px] whitespace-pre-wrap"
           style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
         >
           {data.description as string}
@@ -178,7 +178,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
   if (!generated) {
     return (
       <div
-        className="rounded-[12px] border p-6 flex flex-col items-center gap-4"
+        className="border p-6 flex flex-col items-center gap-4"
         style={{ background: CARD_BG, borderColor: MM_BORDER_FAINT }}
       >
         <div className="flex items-center gap-2 text-lg font-semibold">
@@ -218,7 +218,7 @@ export default function MindMapView({ text, title }: MindMapViewProps) {
 
   return (
     <div
-      className="rounded-[12px] border overflow-hidden"
+      className="border overflow-hidden"
       style={{ borderColor: MM_BORDER_FAINT }}
     >
       <div

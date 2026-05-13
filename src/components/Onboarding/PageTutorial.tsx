@@ -67,10 +67,10 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       onClick={handleBackdropClick}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-page bg-opacity-70 backdrop-blur-md"></div>
+      <div className="absolute inset-0 bg-black/[0.62] backdrop-blur-[5px]"></div>
 
       {/* Tutorial Modal */}
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-2xl w-full overflow-hidden animate-scaleIn">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[0_20px_70px_rgba(0,0,0,0.45)] max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
         <div className="bg-accent-gold px-7 py-5 text-white relative">
           <button
@@ -105,7 +105,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
             {/* Skip Button */}
             <button
               onClick={handleSkip}
-              className="text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity font-medium"
+              className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity font-medium"
             >
               {t('tutorial.skip')}
             </button>
