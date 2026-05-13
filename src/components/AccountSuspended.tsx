@@ -121,14 +121,14 @@ export const AccountSuspended: React.FC = () => {
           )}
 
           {/* Appeal note */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[10px] px-3.5 py-2.5 mb-4.5 text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center leading-relaxed">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[10px] px-3.5 py-2.5 mb-[18px] text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center leading-relaxed">
             If you believe this is an error, contact support to appeal your suspension.
           </div>
 
           {/* Sign Out button */}
           <button
             onClick={handleSignOut}
-            className="w-full bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark rounded-[11px] py-[11px] text-[13px] font-semibold flex items-center justify-center gap-2 hover:opacity-85 transition"
+            className="w-full bg-sidebar text-card-light rounded-[11px] py-[11px] text-[13px] font-semibold flex items-center justify-center gap-2 hover:opacity-85 transition"
           >
             <LogOut className="h-3.5 w-3.5" />
             Sign Out

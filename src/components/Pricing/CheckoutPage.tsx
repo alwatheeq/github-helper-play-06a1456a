@@ -479,40 +479,51 @@ export const CheckoutPage: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
-      <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-hairline)] p-8">
-        <div className="flex items-center justify-center mb-6">
-          <Loader2 className="h-12 w-12 text-blue-600 dark:text-blue-400 animate-spin" />
+    <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
+      <div className="w-[420px] max-w-full bg-card-light dark:bg-card-dark rounded-[16px] border border-divider dark:border-divider-on-dark p-10 text-center">
+        {/* Spinner ring */}
+        <div className="relative w-[60px] h-[60px] mx-auto mb-6">
+          <div className="absolute inset-0 rounded-full border-[5px] border-divider dark:border-divider-on-dark" />
+          <div className="absolute inset-0 rounded-full border-[5px] border-transparent border-t-accent-gold animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-gold, #d97706)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
         </div>
 
-        <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
+        <h2 className="font-display text-[24px] font-bold text-ink dark:text-ink-on-dark mb-2">
           {getCheckoutMode() === 'free' ? 'Activating Subscription' : 'Processing Checkout'}
         </h2>
-
-        <p className="text-secondary-ink dark:text-secondary-ink-on-dark text-center mb-6">
+        <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-7">
           {getCheckoutMode() === 'free'
             ? `Activating your ${planDetails.name}...`
-            : 'Redirecting to secure checkout...'}
+            : 'Redirecting to secure payment...'}
         </p>
 
-        <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">Plan:</span>
+        <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[10px] px-5 py-4 mb-5 text-left">
+          <div className="flex justify-between text-[13px] mb-2">
+            <span className="text-muted-ink dark:text-muted-ink-on-dark">Plan</span>
             <span className="font-semibold text-ink dark:text-ink-on-dark">{planDetails.name}</span>
           </div>
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-secondary-ink dark:text-secondary-ink-on-dark">Price:</span>
+          <div className="flex justify-between text-[13px] mb-2">
+            <span className="text-muted-ink dark:text-muted-ink-on-dark">Billing</span>
             <span className="font-semibold text-ink dark:text-ink-on-dark">
-              {formatCurrency(planDetails.price)}
+              {billingMonths === 1 ? 'Monthly' : billingMonths === 3 ? 'Quarterly' : 'Biannual'}
             </span>
+          </div>
+          <div className="flex justify-between text-[13px] border-t border-divider dark:border-divider-on-dark pt-2">
+            <span className="text-muted-ink dark:text-muted-ink-on-dark">Total</span>
+            <span className="font-bold text-ink dark:text-ink-on-dark">{formatCurrency(planDetails.price)} / month</span>
           </div>
         </div>
 
-        {getCheckoutMode() === 'free' && (
-          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark text-center">
-            No payment required - All tiers are currently free!
-          </p>
-        )}
+        <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+          Secured by Stripe · your payment is safe
+        </div>
       </div>
     </div>
   );

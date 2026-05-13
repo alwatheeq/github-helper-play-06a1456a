@@ -47,10 +47,10 @@ export const PaymentSuccess: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-divider dark:border-divider-on-dark overflow-hidden">
+      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark rounded-[22px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-divider dark:border-divider-on-dark overflow-hidden">
 
         {/* Dark top band */}
-        <div className="bg-ink dark:bg-ink px-10 pt-8 pb-12 relative text-center overflow-hidden">
+        <div className="bg-sidebar px-[40px] pt-[30px] pb-12 relative text-center overflow-hidden">
           {/* Decorative dots */}
           {[
             { l: 32,  t: 18, s: 7, o: 0.35 },
@@ -89,7 +89,7 @@ export const PaymentSuccess: React.FC = () => {
           </p>
 
           {/* What's next */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5 mb-6">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[14px] p-5 mb-6">
             <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-4">
               What's Next?
             </p>
@@ -116,7 +116,7 @@ export const PaymentSuccess: React.FC = () => {
           <div className="space-y-2.5">
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-accent-gold hover:opacity-90 text-white font-bold py-3.5 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)] flex items-center justify-center gap-2"
+              className="w-full bg-accent-gold hover:opacity-90 text-white font-bold py-[13px] px-6 rounded-[11px] transition flex items-center justify-center gap-2"
             >
               <Home className="h-5 w-5" />
               <span>Start Using the App</span>
@@ -125,7 +125,7 @@ export const PaymentSuccess: React.FC = () => {
 
             <button
               onClick={() => navigate('/profile/subscription')}
-              className="w-full border border-divider dark:border-divider-on-dark hover:opacity-70 text-secondary-ink dark:text-muted-ink-on-dark font-medium py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
+              className="w-full border border-divider dark:border-divider-on-dark hover:opacity-70 text-secondary-ink dark:text-muted-ink-on-dark font-medium py-[11px] px-6 rounded-[11px] transition"
             >
               View Subscription Details
             </button>

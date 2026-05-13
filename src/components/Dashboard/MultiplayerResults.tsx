@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Trophy, Medal, Award, TrendingUp, Clock, Target, Home } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -86,178 +85,204 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
     }
   };
 
-  // Game podium colors preserved (semantic ranking palette)
-  const getRankIcon = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return <Trophy className="w-8 h-8 text-yellow-500" />;
-      case 2:
-        return <Medal className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
-      case 3:
-        return <Medal className="w-8 h-8 text-orange-600 dark:text-orange-400" />;
-      default:
-        return <Award className="w-8 h-8 text-muted-ink dark:text-muted-ink-on-dark" />;
-    }
-  };
-
-  // Game podium colors preserved
-  const getRankBgColor = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return 'bg-gradient-to-r from-yellow-400 to-yellow-600';
-      case 2:
-        return 'bg-gradient-to-r from-gray-300 to-gray-500';
-      case 3:
-        return 'bg-gradient-to-r from-orange-400 to-orange-600';
-      default:
-        return 'bg-accent-gold-soft/20';
-    }
-  };
-
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center py-16">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto mb-4" />
           <p className="text-secondary-ink dark:text-muted-ink-on-dark">Loading results...</p>
         </div>
       </div>
     );
   }
 
+  const getRankLabel = (rank: number) => {
+    if (rank === 1) return 'Champion';
+    if (rank <= 3) return 'Strong performance';
+    if (rank <= 5) return 'Great effort';
+    return 'Keep pushing';
+  };
+
   return (
-    <div className="min-h-screen bg-page-light dark:bg-page-dark p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="s4-h1 text-[36px] mb-2">Game Over!</h1>
-          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-lg">{gameName}</p>
+    <div className="w-full">
+      {/* Header */}
+      <div className="flex items-end justify-between mb-3">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">
+            Brain Rush · {gameName || 'Game Results'}
+          </div>
+          <h1
+            className="font-display text-[30px] font-semibold text-ink dark:text-ink-on-dark mt-[5px] mb-[3px]"
+            style={{ letterSpacing: -0.6 }}
+          >
+            Final Results
+          </h1>
         </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => navigate('/dashboard/brain-rush')}
+            className="inline-flex items-center gap-1.5 px-[13px] py-1.5 border border-divider dark:border-divider-on-dark text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
+          >
+            ← Back to Games
+          </button>
+          <button
+            onClick={() => navigate('/dashboard/brain-rush')}
+            className="inline-flex items-center gap-1.5 px-[15px] py-1.5 bg-sidebar text-card-light text-[11.5px] font-semibold hover:opacity-90 transition"
+          >
+            Play Again
+          </button>
+        </div>
+      </div>
 
-        {myResult && (
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8 mb-8">
-            <h2 className="s4-h2 mb-6 text-center">Your Performance</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {/* Stat tiles preserve game semantic colors */}
-              <div className="text-center">
-                <div className="bg-blue-100 dark:bg-blue-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  {getRankIcon(myResult.rank)}
-                </div>
-                <div className="s4-h1 text-blue-600 dark:text-blue-400">#{myResult.rank}</div>
-                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Rank</div>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-green-100 dark:bg-green-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <TrendingUp className="w-8 h-8 text-green-600 dark:text-green-400" />
-                </div>
-                <div className="s4-h1 text-green-600 dark:text-green-400">{myResult.total_score}</div>
-                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Points</div>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-purple-100 dark:bg-purple-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <Target className="w-8 h-8 text-purple-600 dark:text-purple-400" />
-                </div>
-                <div className="s4-h1 text-purple-600 dark:text-purple-400">
-                  {myResult.correct_answers}/{myResult.total_questions}
-                </div>
-                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Correct</div>
-              </div>
-
-              <div className="text-center">
-                <div className="bg-orange-100 dark:bg-orange-900/30 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
-                  <Clock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
-                </div>
-                <div className="s4-h1 text-orange-600 dark:text-orange-400">
-                  {(myResult.average_time_ms / 1000).toFixed(1)}s
-                </div>
-                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Avg Time</div>
-              </div>
+      {/* Dark banner — your result */}
+      {myResult && (
+        <div className="bg-sidebar px-[30px] py-[22px] flex items-center mb-4">
+          <div className="pr-[30px] border-r border-card-light/[0.08] flex-shrink-0">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Your Rank</div>
+            <div
+              className="font-display text-[60px] font-semibold text-card-light leading-none"
+              style={{ letterSpacing: -2 }}
+            >
+              #{myResult.rank}
+              <span className="text-[22px] text-accent-gold ml-1.5">of {results.length}</span>
+            </div>
+            <div className="font-display text-[10.5px] text-accent-gold mt-2">
+              — {getRankLabel(myResult.rank)}
             </div>
           </div>
-        )}
+          <div className="flex-1 flex justify-evenly pl-[30px]">
+            {[
+              [myResult.total_score.toLocaleString(), 'Score'],
+              [`${myResult.correct_answers} / ${myResult.total_questions}`, 'Correct'],
+              [`${myResult.total_questions > 0 ? Math.round((myResult.correct_answers / myResult.total_questions) * 100) : 0}%`, 'Accuracy'],
+            ].map(([v, l]) => (
+              <div key={l} className="text-center">
+                <div className="font-display text-[32px] font-semibold text-card-light leading-none">{v}</div>
+                <div className="text-[9px] tracking-[1.5px] text-card-light/[0.34] uppercase mt-1.5">{l}</div>
+              </div>
+            ))}
+            <div className="text-center pl-7 border-l border-card-light/[0.08]">
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-1.5">Avg Time</div>
+              <div className="font-display text-[26px] font-semibold text-card-light leading-none">
+                {(myResult.average_time_ms / 1000).toFixed(1)}
+                <span className="text-[13px] text-card-light/[0.34]">s</span>
+              </div>
+              <div className="text-[10px] text-card-light/[0.27] mt-1.5">per question</div>
+            </div>
+          </div>
+        </div>
+      )}
 
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark overflow-hidden">
-          <div className="bg-accent-gold p-6 text-white">
-            <h2 className="s4-h2 flex items-center gap-2">
-              <Trophy className="w-6 h-6" />
-              Final Leaderboard
-            </h2>
+      {/* 2-col layout */}
+      <div className="grid gap-5" style={{ gridTemplateColumns: '280px 1fr' }}>
+        {/* Left: top finishers + game summary */}
+        <div className="flex flex-col">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2.5">Top Finishers</div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+            {results.slice(0, 3).map((p, i) => (
+              <div
+                key={p.user_id}
+                className={`flex items-center gap-3.5 px-[18px] py-3.5 ${
+                  i < 2 ? 'border-b border-divider dark:border-divider-on-dark' : ''
+                } ${
+                  i === 0
+                    ? 'bg-accent-gold-soft border-l-[3px] border-l-accent-gold'
+                    : 'border-l-[3px] border-l-transparent'
+                }`}
+              >
+                <div className={`font-display text-[24px] font-bold flex-shrink-0 w-6 ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                  {p.rank}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-[12.5px] font-bold text-ink dark:text-ink-on-dark mb-0.5">
+                    {p.display_name}
+                    {p.user_id === user?.id && (
+                      <span className="text-[9px] tracking-[1px] text-accent-gold ml-1.5">YOU</span>
+                    )}
+                  </div>
+                  <div className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">
+                    {p.correct_answers}/{p.total_questions} correct · {p.total_questions > 0 ? Math.round((p.correct_answers / p.total_questions) * 100) : 0}%
+                  </div>
+                </div>
+                <div className={`font-display text-[17px] font-bold flex-shrink-0 ${i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                  {p.total_score.toLocaleString()}
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="p-6">
-            <div className="space-y-3">
-              {results.map((result) => (
-                <div
-                  key={result.user_id}
-                  className={`rounded-[var(--s4-radius-card)] overflow-hidden transition-[background-color,border-color,color,opacity,transform,box-shadow] ${
-                    result.user_id === user?.id
-                      ? 'ring-2 ring-accent-gold shadow scale-[1.02]'
-                      : 'shadow'
-                  }`}
-                >
-                  <div
-                    className={`${
-                      result.rank <= 3
-                        ? getRankBgColor(result.rank) + ' text-ink-on-dark'
-                        : 'bg-accent-gold-soft/10 text-ink dark:text-ink-on-dark'
-                    } p-4`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
-                          {getRankIcon(result.rank)}
-                          <span className="s4-h2">#{result.rank}</span>
-                        </div>
-                        <div>
-                          <div className="font-bold text-lg">
-                            {result.display_name}
-                            {result.user_id === user?.id && (
-                              <span className="ml-2 text-sm font-normal opacity-90">(You)</span>
-                            )}
-                          </div>
-                          <div className="text-sm opacity-90">
-                            {result.correct_answers}/{result.total_questions} correct •{' '}
-                            {(result.average_time_ms / 1000).toFixed(1)}s avg
-                          </div>
-                        </div>
-                      </div>
+          {/* Game summary */}
+          <div className="mt-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-[18px] py-3.5">
+            <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-2.5">Game Summary</div>
+            {([
+              ['Questions', String(results[0]?.total_questions ?? '—')],
+              ['Players', String(results.length)],
+              ['Winner', results[0]?.display_name ?? '—'],
+            ] as [string, string][]).map(([k, v]) => (
+              <div key={k} className="flex justify-between py-1.5 border-b border-divider dark:border-divider-on-dark last:border-b-0">
+                <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{k}</span>
+                <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark">{v}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-                      <div className="text-right">
-                        <div className="s4-h1">{result.total_score}</div>
-                        <div className="text-sm opacity-90">points</div>
-                      </div>
-                    </div>
-                  </div>
+        {/* Right: full standings */}
+        <div>
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2.5">
+            Final Standings · All {results.length} Players
+          </div>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+            {/* Header row */}
+            <div
+              className="grid px-4 py-1.5 border-b border-divider dark:border-divider-on-dark"
+              style={{ gridTemplateColumns: '36px 1fr 60px 52px 52px 80px' }}
+            >
+              {['#', 'Player', 'Correct', 'Acc', 'Avg', 'Score'].map((h) => (
+                <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">
+                  {h}
                 </div>
               ))}
             </div>
+            {/* Player rows */}
+            {results.map((p, i) => {
+              const isMe = p.user_id === user?.id;
+              const acc = p.total_questions > 0 ? Math.round((p.correct_answers / p.total_questions) * 100) : 0;
+              const avgSec = (p.average_time_ms / 1000).toFixed(1);
+              return (
+                <div
+                  key={p.user_id}
+                  className={`grid px-4 py-[9px] items-center ${
+                    i < results.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
+                  } ${
+                    isMe
+                      ? 'bg-accent-gold-soft border-l-[3px] border-l-accent-gold'
+                      : 'border-l-[3px] border-l-transparent'
+                  }`}
+                  style={{ gridTemplateColumns: '36px 1fr 60px 52px 52px 80px' }}
+                >
+                  <span className={`font-display text-[14px] font-bold ${p.rank <= 3 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {p.rank}
+                  </span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className={`w-6 h-6 rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-card-light' : 'bg-sidebar text-card-light'}`}>
+                      {p.display_name[0]}
+                    </div>
+                    <span className={`text-[12px] truncate ${isMe ? 'font-bold' : 'font-normal'} text-ink dark:text-ink-on-dark`}>
+                      {p.display_name}
+                    </span>
+                  </div>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{p.correct_answers}/{p.total_questions}</span>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{acc}%</span>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{avgSec}s</span>
+                  <span className={`font-display text-[16px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    {p.total_score.toLocaleString()}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        <div className="mt-8 flex justify-center gap-4">
-          <button
-            onClick={() => navigate('/dashboard/brain-rush')}
-            className="px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 font-semibold flex items-center gap-2 transition-colors"
-          >
-            <Home className="w-5 h-5" />
-            Back to Brain Rush
-          </button>
-        </div>
-
-        {results.length > 0 && results[0].user_id === user?.id && (
-          <div className="mt-8 text-center">
-            <div className="inline-block bg-yellow-100 dark:bg-yellow-900/30 border-2 border-yellow-400 rounded-md p-6">
-              <Trophy className="w-16 h-16 text-yellow-600 mx-auto mb-3 dark:text-yellow-400" />
-              <h3 className="s4-h2 text-yellow-800 dark:text-yellow-300 mb-2">
-                Congratulations!
-              </h3>
-              <p className="text-yellow-700 dark:text-yellow-400">
-                You won this game! 🎉
-              </p>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
