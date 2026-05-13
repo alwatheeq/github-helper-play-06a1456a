@@ -297,199 +297,172 @@ export const StudyGoalsPage: React.FC = () => {
   const activeGoals = goals.filter(g => !g.is_completed);
   const completedGoals = goals.filter(g => g.is_completed);
 
+  const statusColor = (goal: StudyGoal) => {
+    if (goal.is_completed) return 'var(--color-accent-gold)';
+    const pct = calculateProgress(goal.current_value, goal.target_value);
+    if (pct >= 100) return 'var(--color-accent-gold)';
+    if (goal.deadline_date && new Date(goal.deadline_date) < new Date()) return '#dc2626';
+    return 'var(--color-accent-gold)';
+  };
+
+  const statusLabel = (goal: StudyGoal) => {
+    if (goal.is_completed) return 'Complete';
+    const pct = calculateProgress(goal.current_value, goal.target_value);
+    if (pct >= 100) return 'Complete';
+    if (goal.deadline_date && new Date(goal.deadline_date) < new Date()) return 'Behind';
+    return 'On track';
+  };
+
+  const goalTypeCounts: Record<string, number> = {};
+  for (const g of goals) {
+    goalTypeCounts[g.goal_type] = (goalTypeCounts[g.goal_type] || 0) + 1;
+  }
+
   return (
-    <div className="min-h-screen bg-subtle dark:bg-card-dark p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 mb-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Target className="h-8 w-8 text-green-600 dark:text-green-400" />
-              <div>
-                <h1 className="s4-h1 text-ink dark:text-muted-ink-on-dark">{t('goals.title')}</h1>
-                <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
-                  {t('goals.subtitle')}
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className="px-4 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 flex items-center space-x-2"
-            >
-              <Plus className="h-5 w-5" />
-              <span>{t('goals.new_goal')}</span>
-            </button>
+    <div className="p-6 md:p-8">
+      {/* Page header */}
+      <div className="text-[9px] tracking-[2.5px] uppercase font-bold text-accent-gold">Study Goals</div>
+      <div className="flex justify-between items-end">
+        <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark mt-[6px] mb-1 tracking-tight leading-tight">
+          {t('goals.title') || "This Week's Targets."}
+        </h1>
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="px-4 py-[7px] bg-sidebar text-ink-on-dark text-[12px] font-semibold border-none cursor-pointer hover:opacity-90 transition-opacity"
+        >
+          + {t('goals.new_goal') || 'Add Goal'}
+        </button>
+      </div>
+      <div className="h-px bg-ink/80 mt-3 mb-[22px]" />
+
+      {/* Dark stats strip */}
+      <div className="bg-sidebar px-8 py-[22px] mb-6 flex justify-around items-center">
+        {[
+          [String(activeGoals.length), 'Active Goals'],
+          [String(completedGoals.length), 'Completed'],
+          [String(goals.length), 'Total Goals'],
+          [`${goals.length > 0 ? Math.round(goals.reduce((s, g) => s + calculateProgress(g.current_value, g.target_value), 0) / goals.length) : 0}%`, 'Avg. Progress'],
+        ].map(([v, l], i) => (
+          <div key={i} className="text-center">
+            <div className="font-display text-[36px] font-semibold text-ink-on-dark leading-none">{v}</div>
+            <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-2">{l}</div>
           </div>
-        </div>
+        ))}
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-            <div className="text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.active_goals')}</p>
-              <p className="s4-h1 text-[36px] text-blue-600 dark:text-blue-400">{activeGoals.length}</p>
+      {/* 2-col: goal cards + right rail */}
+      <div className="grid gap-[22px]" style={{ gridTemplateColumns: '1fr 240px' }}>
+
+        {/* Goal cards — 2-col grid */}
+        <div>
+          {loading ? (
+            <div className="py-12 flex justify-center">
+              <div className="animate-spin h-6 w-6 border-2 border-accent-gold border-t-transparent rounded-full" />
             </div>
-          </div>
-
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-            <div className="text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.completed')}</p>
-              <p className="s4-h1 text-[36px] text-green-600 dark:text-green-400">{completedGoals.length}</p>
+          ) : goals.length === 0 ? (
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-16 flex flex-col items-center">
+              <Target className="h-10 w-10 text-muted-ink dark:text-muted-ink-on-dark mb-4" />
+              <p className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1">No goals yet</p>
+              <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark mb-5">Create your first study goal to start tracking progress.</p>
+              <button
+                onClick={() => setShowCreateModal(true)}
+                className="px-5 py-[9px] bg-sidebar text-ink-on-dark text-[12px] font-semibold hover:opacity-90 transition-opacity"
+              >
+                {t('goals.create_goal') || '+ Create Goal'}
+              </button>
             </div>
-          </div>
-
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-            <div className="text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink mb-2">{t('goals.total_goals')}</p>
-              <p className="s4-h1 text-[36px] text-ink dark:text-muted-ink-on-dark">{goals.length}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          {activeGoals.length > 0 && (
-            <div>
-              <h2 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">{t('goals.active_goals')}</h2>
-              <div className="space-y-4">
-                {activeGoals.map((goal) => {
-                  const progress = calculateProgress(goal.current_value, goal.target_value);
-                  const isOverdue = goal.deadline_date && new Date(goal.deadline_date) < new Date();
-
-                  return (
-                    <div
-                      key={goal.id}
-                      className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6 ${
-                        isOverdue ? 'border-2 border-red-300 dark:border-red-700' : ''
-                      }`}
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-start space-x-3 flex-1">
-                          <div className="bg-green-100 dark:bg-green-900 p-2 rounded-[var(--s4-radius-card)] text-green-600 dark:text-green-300">
-                            {getGoalTypeIcon(goal.goal_type)}
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark">
-                              {goal.goal_title}
-                            </h3>
-                            {goal.goal_description && (
-                              <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
-                                {goal.goal_description}
-                              </p>
-                            )}
-                            <div className="flex items-center space-x-4 mt-2 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                              <span className="flex items-center">
-                                <Target className="h-4 w-4 mr-1" />
-                                {getGoalTypeLabel(goal.goal_type)}
-                              </span>
-                              <span className="flex items-center">
-                                <Calendar className="h-4 w-4 mr-1" />
-                                {formatDate(goal.deadline_date)}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          {progress >= 100 && (
-                            <button
-                              onClick={() => handleMarkComplete(goal.id)}
-                              className="p-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700"
-                              title="Mark as complete"
-                            >
-                              <CheckCircle className="h-5 w-5" />
-                            </button>
-                          )}
-                          <button
-                            onClick={() => handleDeleteGoal(goal.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
-                            title="Delete goal"
-                          >
-                            <Trash2 className="h-5 w-5" />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-secondary-ink dark:text-muted-ink">{t('goals.progress')}</span>
-                          <span className="font-semibold text-ink dark:text-muted-ink-on-dark">
-                            {goal.current_value} / {goal.target_value}
-                          </span>
-                        </div>
-                        <div className="w-full bg-subtle dark:bg-card-dark rounded-full h-3">
-                          <div
-                            className={`h-3 rounded-full transition-colors duration-[var(--s4-dur-fast)] ${
-                              progress >= 100
-                                ? 'bg-green-600'
-                                : progress >= 75
-                                ? 'bg-blue-600'
-                                : progress >= 50
-                                ? 'bg-yellow-600'
-                                : 'bg-orange-600'
-                            }`}
-                            style={{ width: `${progress}%` }}
-                          ></div>
-                        </div>
-                        <p className="text-xs text-right text-muted-ink dark:text-muted-ink-on-dark">
-                          {Math.round(progress)}% {t('goals.complete')}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {completedGoals.length > 0 && (
-            <div>
-              <h2 className="s4-h3 text-[20px] text-ink dark:text-muted-ink-on-dark mb-4">{t('goals.completed_goals')}</h2>
-              <div className="space-y-4">
-                {completedGoals.map((goal) => (
+          ) : (
+            <div className="grid grid-cols-2 gap-3">
+              {goals.map((goal) => {
+                const pct = calculateProgress(goal.current_value, goal.target_value);
+                const color = statusColor(goal);
+                const label = statusLabel(goal);
+                return (
                   <div
                     key={goal.id}
-                    className="bg-subtle dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow p-6 opacity-75"
+                    className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark"
+                    style={{ borderLeft: `3px solid ${color}`, padding: '14px 16px' }}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start space-x-3 flex-1">
-                        <div className="bg-green-100 dark:bg-green-900 p-2 rounded-[var(--s4-radius-card)] text-green-600 dark:text-green-300">
-                          <CheckCircle className="h-5 w-5" />
-                        </div>
-                        <div className="flex-1">
-                          <h3 className="text-lg font-semibold text-ink dark:text-muted-ink-on-dark">
-                            {goal.goal_title}
-                          </h3>
-                          <p className="text-sm text-secondary-ink dark:text-muted-ink mt-1">
-                            {t('goals.completed_on')} {formatDate(goal.completed_at)}
-                          </p>
-                        </div>
+                    <div className="flex justify-between items-start mb-[10px]">
+                      <div className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-[1.35] flex-1 pr-2">
+                        {goal.goal_title}
                       </div>
+                      <span
+                        className="text-[8px] tracking-[1.5px] uppercase font-bold flex-shrink-0 px-[7px] py-[2px]"
+                        style={{ color, background: `${color}15` }}
+                      >{label}</span>
+                    </div>
+                    <div className="h-1 bg-subtle dark:bg-subtle-on-dark mb-2">
+                      <div className="h-full transition-all" style={{ width: `${Math.min(pct, 100)}%`, background: color }} />
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">
+                        {goal.deadline_date ? `Due ${formatDate(goal.deadline_date)}` : t('goals.no_deadline')}
+                      </span>
+                      <span className="font-display text-[12px] font-semibold text-ink dark:text-ink-on-dark">
+                        {goal.is_completed ? '✓ Done' : `${goal.current_value} / ${goal.target_value}`}
+                      </span>
+                    </div>
+                    <div className="flex gap-[6px] mt-3">
+                      {!goal.is_completed && pct >= 100 && (
+                        <button
+                          onClick={() => handleMarkComplete(goal.id)}
+                          className="flex-1 py-[5px] bg-accent-gold-soft border border-accent-gold text-accent-gold text-[10px] font-bold hover:opacity-90 transition-opacity"
+                        >
+                          <CheckCircle className="h-3 w-3 inline mr-1" />Mark done
+                        </button>
+                      )}
                       <button
                         onClick={() => handleDeleteGoal(goal.id)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-[var(--s4-radius-card)] dark:hover:bg-red-900/20 dark:text-red-400 dark:bg-red-950/40"
-                        title="Delete goal"
+                        className="p-[5px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-red-500 transition-colors"
                       >
-                        <Trash2 className="h-5 w-5" />
+                        <Trash2 className="h-3 w-3" />
                       </button>
                     </div>
                   </div>
-                ))}
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Right rail */}
+        <div className="flex flex-col gap-4">
+          {completedGoals.length > 0 && (
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-4">
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-3">
+                {t('goals.completed_goals') || 'Completed'}
               </div>
+              {completedGoals.slice(0, 5).map((g, i) => (
+                <div key={g.id} className={`flex justify-between items-center py-[7px] ${i < Math.min(completedGoals.length, 5) - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
+                  <div className="flex items-center gap-[7px] min-w-0">
+                    <div className="w-[14px] h-[14px] rounded-full bg-accent-gold-soft border border-accent-gold flex items-center justify-center text-[8px] text-accent-gold flex-shrink-0">✓</div>
+                    <span className="text-[11.5px] text-secondary-ink dark:text-secondary-ink-on-dark truncate">{g.goal_title}</span>
+                  </div>
+                  <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 ml-2">{formatDate(g.completed_at)}</span>
+                </div>
+              ))}
             </div>
           )}
 
-          {goals.length === 0 && !loading && (
-            <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-12 text-center">
-              <Target className="h-16 w-16 text-muted-ink-on-dark dark:text-secondary-ink mx-auto mb-4" />
-              <p className="text-secondary-ink dark:text-muted-ink mb-2">No goals yet</p>
-              <p className="text-sm text-muted-ink dark:text-muted-ink mb-4">
-                Create your first study goal to start tracking your progress!
-              </p>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="px-6 py-2 bg-green-600 text-white rounded-[var(--s4-radius-card)] hover:bg-green-700"
-              >
-                {t('goals.create_goal')}
-              </button>
+          {Object.keys(goalTypeCounts).length > 0 && (
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-[10px]">Goal Types</div>
+              {Object.entries(goalTypeCounts).map(([type, count]) => (
+                <div key={type} className="flex justify-between py-[5px]">
+                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{getGoalTypeLabel(type)}</span>
+                  <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark">{count}</span>
+                </div>
+              ))}
             </div>
           )}
+
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="py-[11px] bg-transparent border border-dashed border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] cursor-pointer hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors text-center"
+          >
+            + {t('goals.new_goal') || 'Add a new goal'}
+          </button>
         </div>
       </div>
 

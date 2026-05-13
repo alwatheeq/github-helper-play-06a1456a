@@ -1327,7 +1327,7 @@ export const QuizPage: React.FC = React.memo(() => {
               <>
                 {/* Stats strip (dark) */}
                 {!loading && quizSessions.length > 0 && (
-                  <div className="flex bg-ink dark:bg-card-dark mb-[6px]">
+                  <div className="flex bg-sidebar mb-[6px]">
                     {([
                       [`${myQuizzesStats.scored}/${myQuizzesStats.total}`, 'completed'],
                       [`${myQuizzesStats.avg}%`, 'average score'],
@@ -1673,7 +1673,7 @@ export const QuizPage: React.FC = React.memo(() => {
               ) : (
                 <>
                   {/* All-time stats strip */}
-                  <div className="flex bg-ink dark:bg-card-dark">
+                  <div className="flex bg-sidebar">
                     {([
                       [String(allEntries.length), 'total sittings'],
                       [`${allAvg}%`, 'all-time average'],
@@ -1709,7 +1709,7 @@ export const QuizPage: React.FC = React.memo(() => {
                   {/* 2-col: left monthly summary + right entries */}
                   <div className="grid gap-4" style={{ gridTemplateColumns: '210px 1fr' }}>
                     {/* Left: dark monthly summary */}
-                    <div className="bg-ink dark:bg-card-dark self-start" style={{ padding: '20px 18px' }}>
+                    <div className="bg-sidebar self-start" style={{ padding: '20px 18px' }}>
                       <div className="text-[9px] tracking-[2px] uppercase font-bold text-ink-on-dark/35 mb-2">{historyMonthLabel}</div>
                       <div className="font-display text-[48px] font-semibold text-ink-on-dark leading-none">
                         {monthlyStats.avg}<span className="text-[18px] text-accent-gold">%</span>

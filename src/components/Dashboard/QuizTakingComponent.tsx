@@ -393,9 +393,9 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             {/* Score */}
             <div className="pr-[30px] border-r border-white/10 flex-shrink-0">
               <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Final score</p>
-              <p className="font-display text-6xl font-semibold text-ink-on-dark leading-none tracking-tight">
+              <p className="font-display text-[64px] font-semibold text-ink-on-dark leading-none tracking-tight">
                 {Math.round(results.scorePercentage)}
-                <span className="text-2xl text-accent-gold">%</span>
+                <span className="text-[26px] text-accent-gold">%</span>
               </p>
               <p className="text-[10px] text-accent-gold mt-2">
                 — {passed ? 'Pass' : 'Below passing mark'}
@@ -432,7 +432,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           {/* Answer review */}
           <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold shadow-[var(--s4-shadow-hairline)]">
             <div className="px-5 py-2.5 border-b border-divider dark:border-divider-on-dark">
-              <p className="text-[9px] tracking-[2.2px] uppercase font-bold text-ink dark:text-ink-on-dark opacity-50">
+              <p className="text-[9px] tracking-[2.2px] uppercase font-bold text-ink dark:text-ink-on-dark opacity-[0.45]">
                 Answer review
               </p>
             </div>
@@ -445,7 +445,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                 return (
                   <div key={index} className="flex gap-3 p-5">
                     {/* Status icon */}
-                    <div className={`w-5 h-5 flex-shrink-0 flex items-center justify-center mt-0.5 ${
+                    <div className={`w-[22px] h-[22px] flex-shrink-0 flex items-center justify-center mt-0.5 ${
                       !wasAnswered ? 'bg-subtle dark:bg-subtle-on-dark' :
                       isCorrect ? 'bg-accent-gold/15' : 'bg-ink/10 dark:bg-white/10'
                     }`}>
