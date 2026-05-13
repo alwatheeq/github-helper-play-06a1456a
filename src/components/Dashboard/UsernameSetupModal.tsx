@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { User, Check, X, Loader2 } from 'lucide-react';
-import { ScholarCard, ScholarButton } from '../Scholar';
+import { Check, X, Loader2, Lock, Clock } from 'lucide-react';
 import { useI18n } from '../../contexts/I18nContext';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../Toast/Toast';
@@ -170,100 +169,154 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
     if (e.target === e.currentTarget) onClose();
   };
 
-  const renderValidationIcon = () => {
-    if (isChecking) return <Loader2 className="h-5 w-5 animate-spin text-accent-gold" />;
+  const renderInputIcon = () => {
+    if (isChecking) return <Loader2 className="h-[15px] w-[15px] animate-spin text-accent-gold" />;
     if (!username || username.length < 3) return null;
-    if (!isValid) return <X className="h-5 w-5 text-red-500" />;
-    if (isAvailable === true) return <Check className="h-5 w-5 text-green-500" />;
-    if (isAvailable === false) return <X className="h-5 w-5 text-red-500" />;
+    if (isAvailable === true) return <Check className="h-[15px] w-[15px] text-accent-gold" />;
+    if (isAvailable === false || !isValid) return <X className="h-[15px] w-[15px] text-red-600" />;
     return null;
   };
 
-  const renderValidationMessage = () => {
-    if (isChecking || !username || username.length < 3) return null;
-    if (!isValid) return <p className="text-sm text-red-500 mt-1">{t('social.username_invalid')}</p>;
-    if (isAvailable === true) return <p className="text-sm text-green-500 mt-1">{t('social.username_available')}</p>;
-    if (isAvailable === false) return <p className="text-sm text-red-500 mt-1">{t('social.username_taken')}</p>;
-    return null;
-  };
+  const isTaken = isAvailable === false && !isChecking;
+  const isAvailableConfirmed = isAvailable === true && !isChecking;
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] bg-black/[0.58] grid place-items-center p-4"
       dir={dir}
       onClick={handleOverlayClick}
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
-
-      <ScholarCard
-        variant="elevated"
-        padding="none"
-        className="relative w-full max-w-md animate-scaleIn"
+      <div
+        className="bg-page-light dark:bg-page-dark w-full max-w-[430px] shadow-[0_24px_56px_rgba(0,0,0,0.3)]"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between p-5 border-b border-divider dark:border-divider-on-dark">
-          <div className="flex items-center gap-2">
-            <User className="h-5 w-5 text-accent-gold" />
-            <h2 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
-              {t('social.username_setup')}
-            </h2>
+        {/* Ink header */}
+        <div className="bg-sidebar px-6 py-5">
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Profile</div>
+          <div className="flex items-center justify-between">
+            <div className="font-display text-[20px] font-semibold text-card-light">Set Username.</div>
+            <button
+              onClick={onClose}
+              className="w-[26px] h-[26px] grid place-items-center bg-transparent border border-white/[0.13] text-white/[0.27] text-[14px] cursor-pointer hover:text-white/50 transition"
+              aria-label="Close"
+            >
+              ✕
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
         </div>
 
-        <div className="p-5 space-y-4">
+        {/* Body */}
+        <div className="px-6 py-[22px]">
+          <p className="text-[12.5px] text-muted-ink dark:text-muted-ink-on-dark leading-[1.7] mb-5">
+            Choose a public username. Changeable once every <strong className="text-ink dark:text-ink-on-dark">10 days</strong>.
+          </p>
+
           {cooldownDays !== null ? (
-            <div className="p-4 rounded-[var(--s4-radius-card)] bg-subtle text-center">
-              <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
-                {t('social.username_cooldown').replace('{days}', String(cooldownDays))}
-              </p>
-            </div>
-          ) : (
             <>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">@</span>
-                </div>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={username}
-                  onChange={handleInputChange}
-                  maxLength={20}
-                  placeholder={t('social.username_placeholder')}
-                  className="w-full pl-8 pr-10 py-2.5 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus transition-colors"
-                />
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  {renderValidationIcon()}
+              {/* Cooldown notice */}
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold px-[18px] py-4 mb-[18px]">
+                <div className="flex items-start gap-3">
+                  <Clock className="h-[18px] w-[18px] text-accent-gold flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="text-[12.5px] font-semibold text-ink dark:text-ink-on-dark mb-1">Username recently changed</div>
+                    <div className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark leading-[1.6]">
+                      You can change your username again in <strong className="text-ink dark:text-ink-on-dark">{cooldownDays} days</strong>.
+                      {username && <> Your current username is <strong className="text-ink dark:text-ink-on-dark font-mono">@{username}</strong>.</>}
+                    </div>
+                  </div>
                 </div>
               </div>
-              {renderValidationMessage()}
-              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
-                3–20 characters: lowercase letters, numbers, underscores
-              </p>
+              {/* Locked input */}
+              <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden opacity-50">
+                <div className="px-[14px] py-3 bg-subtle dark:bg-subtle-on-dark flex items-center">
+                  <span className="font-display text-[20px] font-bold text-muted-ink dark:text-muted-ink-on-dark">@</span>
+                </div>
+                <div className="flex-1 px-[14px] py-[10px] flex items-center justify-between bg-subtle dark:bg-subtle-on-dark">
+                  <span className="text-[14px] text-muted-ink dark:text-muted-ink-on-dark font-mono">{username}</span>
+                  <Lock className="h-[14px] w-[14px] text-muted-ink dark:text-muted-ink-on-dark" />
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Input — available/taken state */}
+              <div className={`flex mb-2 overflow-hidden ${isTaken ? 'border-2 border-red-600' : 'border-2 border-sidebar dark:border-sidebar'}`}>
+                <div className="px-[14px] py-3 bg-sidebar flex items-center">
+                  <span className="font-display text-[20px] font-bold text-card-light">@</span>
+                </div>
+                <div className="flex-1 px-[14px] py-[10px] flex items-center justify-between bg-page-light dark:bg-page-dark">
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={username}
+                    onChange={handleInputChange}
+                    maxLength={20}
+                    placeholder={t('social.username_placeholder')}
+                    className={`flex-1 font-mono text-[14px] bg-transparent border-none outline-none placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark ${isTaken ? 'text-red-600' : 'text-ink dark:text-ink-on-dark'}`}
+                  />
+                  <div className="flex-shrink-0 ml-2">{renderInputIcon()}</div>
+                </div>
+              </div>
+
+              {/* Status line — fixed height to prevent layout shift */}
+              <div className="flex items-center gap-1.5 mb-4 h-[18px]">
+                {isAvailableConfirmed && (
+                  <>
+                    <div className="w-1.5 h-1.5 rounded-full bg-accent-gold flex-shrink-0" />
+                    <span className="text-[11.5px] text-accent-gold font-semibold">{t('social.username_available')}</span>
+                  </>
+                )}
+                {isTaken && (
+                  <>
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0" />
+                    <span className="text-[11.5px] text-red-600 font-semibold">{t('social.username_taken')}</span>
+                  </>
+                )}
+                {!isValid && username.length >= 3 && !isTaken && (
+                  <>
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-600 flex-shrink-0" />
+                    <span className="text-[11.5px] text-red-600 font-semibold">{t('social.username_invalid')}</span>
+                  </>
+                )}
+              </div>
+
+              {/* Hint box */}
+              <div className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark leading-[1.6] px-3 py-[9px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
+                3–20 characters · lowercase, numbers, underscores only
+              </div>
             </>
           )}
         </div>
 
-        {cooldownDays === null && (
-          <div className="p-5 border-t border-divider dark:border-divider-on-dark">
-            <ScholarButton
-              variant="primary"
+        {/* Footer */}
+        {cooldownDays !== null ? (
+          <div className="px-6 pb-[22px]">
+            <button
+              onClick={onClose}
+              className="w-full py-[11px] bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] cursor-pointer hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-[10px] px-6 pb-[22px]">
+            <button
               onClick={handleSubmit}
               disabled={!isValid || isSubmitting || isAvailable === false || isChecking}
-              className="w-full"
+              className="flex-1 py-[11px] bg-sidebar text-card-light text-[13px] font-bold border-none disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition"
             >
-              {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isSubmitting && <Loader2 className="h-4 w-4 animate-spin inline mr-1" />}
               {t('social.save_username')}
-            </ScholarButton>
+            </button>
+            <button
+              onClick={onClose}
+              className="py-[11px] px-[18px] bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
+            >
+              Cancel
+            </button>
           </div>
         )}
-      </ScholarCard>
+      </div>
     </div>
   );
 };

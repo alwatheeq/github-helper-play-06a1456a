@@ -152,7 +152,7 @@ export const SubscriptionManagementPage: React.FC = () => {
         )}
 
         {subscription.status === 'payment_failed' && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 border-l-4 border-l-red-600 px-4 py-3.5 flex items-start gap-3 mb-4">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 border-l-4 border-l-red-600 px-[18px] py-3.5 flex items-start gap-3 mb-4">
             <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
             <div className="flex-1">
               <p className="font-semibold text-[12.5px] text-red-900 dark:text-red-100">{t('subscription_management.payment_failed_title')}</p>
@@ -163,13 +163,13 @@ export const SubscriptionManagementPage: React.FC = () => {
         )}
 
         {subscription.status === 'canceled' && (
-          <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 border-l-4 border-l-orange-500 px-4 py-3.5 flex items-start gap-3 mb-4">
+          <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 border-l-4 border-l-orange-500 px-[18px] py-3.5 flex items-start gap-3 mb-4">
             <AlertCircle className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
             <div>
               <p className="font-semibold text-[12.5px] text-orange-900 dark:text-orange-100">{t('subscription_management.canceled_banner_title')}</p>
               <p className="text-sm text-orange-700 dark:text-orange-300 mt-0.5">{t('subscription_management.canceled_banner_desc', { date: new Date(subscription.end_date).toLocaleDateString() })}</p>
             </div>
-            <button className="ml-auto shrink-0 px-3 py-1.5 bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition">Reactivate →</button>
+            <button className="ml-auto shrink-0 px-[14px] py-1.5 bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition">Reactivate →</button>
           </div>
         )}
 
@@ -179,7 +179,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           <div className="space-y-4">
 
             {/* Credits section (dark bg) */}
-            <div className="bg-card-dark dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-4">
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-5 py-4">
               <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-4">Credits — Current Cycle</div>
 
               {/* Tools & Services */}
@@ -192,7 +192,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.current_billing_cycle')}</div>
-                <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full">
+                <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
                   <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${toolProgressPct}%` }} />
                 </div>
               </div>
@@ -207,7 +207,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.zego_subtitle')}</div>
-                  <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full">
+                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
                     <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }} />
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.ai_chat_subtitle')}</div>
-                  <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full">
+                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
                     <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }} />
                   </div>
                 </div>

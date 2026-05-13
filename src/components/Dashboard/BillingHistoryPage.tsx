@@ -219,7 +219,7 @@ export const BillingHistoryPage: React.FC = () => {
 
         {transactions.length === 0 ? (
           /* ── Empty state ─────────────────────────────────────────────── */
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col items-center justify-center py-16 text-center">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col items-center justify-center py-[60px] text-center">
             <div className="w-14 h-14 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-full flex items-center justify-center mb-5">
               <Receipt className="h-6 w-6 text-muted-ink dark:text-muted-ink-on-dark" />
             </div>
