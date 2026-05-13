@@ -184,7 +184,7 @@ export const Auth: React.FC = () => {
                 onChange={e => setEmail(e.target.value)}
                 disabled={loading}
                 placeholder={t('auth.enter_email')}
-                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
+                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-[7px] text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
               />
             </div>
 
@@ -200,7 +200,7 @@ export const Auth: React.FC = () => {
                 onChange={e => setPassword(e.target.value)}
                 disabled={loading}
                 placeholder={t('auth.enter_password')}
-                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
+                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-[7px] text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
               />
             </div>
 
@@ -221,7 +221,7 @@ export const Auth: React.FC = () => {
               type="button"
               disabled={loading}
               onClick={() => { setIsSignUp(!isSignUp); setError(null); setSuccess(null); }}
-              className="text-sm text-accent-gold hover:opacity-80 font-medium transition-opacity duration-150 disabled:opacity-50"
+              className="text-[12px] text-accent-gold hover:opacity-80 font-medium transition-opacity duration-150 disabled:opacity-50"
             >
               {isSignUp ? t('auth.have_account') : t('auth.need_account')}
             </button>
@@ -229,7 +229,7 @@ export const Auth: React.FC = () => {
         </div>
 
         {/* Footnotes */}
-        <div className="flex items-center justify-center gap-6 mt-6 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
+        <div className="flex items-center justify-center gap-[22px] mt-6 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
           <span className="flex items-center gap-1.5">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
             {t('auth.pages_per_month')}

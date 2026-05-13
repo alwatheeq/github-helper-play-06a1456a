@@ -55,11 +55,6 @@ export const AchievementsPage: React.FC = () => {
   const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
   const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
 
-  const getBadgeColor = (tier: string) => {
-    const colors: Record<string, string> = { bronze: 'from-amber-600 to-amber-800', silver: 'from-gray-400 to-gray-600', gold: 'from-yellow-400 to-yellow-600', platinum: 'from-cyan-400 to-cyan-600', diamond: 'from-purple-400 to-purple-600' };
-    return colors[tier] || 'from-gray-400 to-gray-600';
-  };
-
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
@@ -133,11 +128,11 @@ export const AchievementsPage: React.FC = () => {
                     key={achievement.id}
                     className={`border border-divider dark:border-divider-on-dark px-3 py-3.5 text-center transition-opacity ${isUnlocked ? 'bg-card-light dark:bg-card-dark' : 'bg-subtle dark:bg-subtle-on-dark opacity-45'}`}
                   >
-                    <div className={`p-2 rounded mx-auto w-10 h-10 flex items-center justify-center mb-2 ${isUnlocked ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}` : 'bg-subtle dark:bg-card-dark'}`}>
+                    <div className="mb-2 flex items-center justify-center h-[26px]">
                       {isUnlocked ? (
-                        <Award className="h-6 w-6 text-ink-on-dark" />
+                        <Award className="h-[26px] w-[26px] text-ink dark:text-ink-on-dark" />
                       ) : (
-                        <Lock className="h-6 w-6 text-muted-ink dark:text-muted-ink-on-dark" />
+                        <Lock className="h-[26px] w-[26px] text-muted-ink dark:text-muted-ink-on-dark" />
                       )}
                     </div>
 

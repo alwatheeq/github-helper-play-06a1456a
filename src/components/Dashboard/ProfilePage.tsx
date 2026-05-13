@@ -454,8 +454,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                         {' '}<span className="font-normal text-[11px] text-muted-ink dark:text-muted-ink-on-dark">/ {c.total.toLocaleString()}</span>
                       </span>
                     </div>
-                    <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-full">
-                      <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: over ? '#dc2626' : 'var(--color-accent-gold)' }} />
+                    <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-[3px]">
+                      <div className="h-full rounded-[3px] transition-all" style={{ width: `${pct}%`, background: over ? '#dc2626' : 'var(--color-accent-gold)' }} />
                     </div>
                     <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark mt-1">Credits refresh on {c.refresh}</div>
                   </div>
@@ -587,7 +587,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               ) : (
                 <>
                   <div className="flex items-center gap-2 mb-0.5">
-                    <h1 className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark truncate">{stats.display_name || user?.email}</h1>
+                    <h1 className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark truncate">{stats.display_name || user?.email}</h1>
                     <button onClick={() => setIsEditing(true)} className="shrink-0 px-2 py-0.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition rounded-[3px]">Edit ✎</button>
                   </div>
                   {stats.bio && <p className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mt-0.5 mb-1">{stats.bio}</p>}
@@ -624,8 +624,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                   <span>{t('profile.level')} {currentLevel}</span>
                   <span>{stats.experience_points} / {xpForNextLevel} {t('profile.xp')}</span>
                 </div>
-                <div className="h-1.5 bg-subtle dark:bg-subtle-on-dark rounded-full">
-                  <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${progress}%` }} />
+                <div className="h-[6px] bg-subtle dark:bg-subtle-on-dark rounded-[3px]">
+                  <div className="h-full bg-accent-gold rounded-[3px] transition-all" style={{ width: `${progress}%` }} />
                 </div>
               </div>
             </div>

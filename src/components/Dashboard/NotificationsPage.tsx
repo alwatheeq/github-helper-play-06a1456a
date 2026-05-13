@@ -156,17 +156,17 @@ export const NotificationsPage: React.FC = () => {
       {/* Page header */}
       <div className="flex items-end justify-between mb-1">
         <div>
-          <p className="text-xs font-bold tracking-[0.18em] uppercase text-accent-gold mb-1.5">Inbox</p>
+          <p className="text-[9px] font-bold tracking-[0.18em] uppercase text-accent-gold mb-1.5">Inbox</p>
           <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark" style={{ letterSpacing: '-0.02em' }}>
             Notifications.
           </h1>
-          <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
+          <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mt-1">
             {totalUnread} unread &middot; {allItems.length} total
           </p>
         </div>
         <button
           onClick={handleMarkAllRead}
-          className="px-4 py-1.5 text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark hover:opacity-70 transition"
+          className="px-4 py-1.5 text-[12px] font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark hover:opacity-70 transition"
         >
           Mark all read
         </button>
@@ -214,7 +214,7 @@ export const NotificationsPage: React.FC = () => {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-3 mb-1">
                       <p
-                        className={`text-sm leading-snug ${
+                        className={`text-[13px] leading-snug ${
                           item.unread
                             ? 'font-bold text-ink dark:text-ink-on-dark'
                             : 'font-medium text-ink dark:text-ink-on-dark'
