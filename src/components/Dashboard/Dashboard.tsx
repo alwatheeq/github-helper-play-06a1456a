@@ -1441,7 +1441,7 @@ export const Dashboard: React.FC = () => {
         )}
 
         <main
-          className="flex-1 transition-colors duration-150 ease-[var(--s4-ease)]"
+          className="flex-1 transition-colors duration-150 ease-in-out"
           style={isMobile ? {} : isRtl
             ? { marginRight: isSidebarOpen ? '128px' : '32px' }
             : { marginLeft: isSidebarOpen ? '128px' : '32px' }

@@ -359,7 +359,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                     onClick={() => setActiveTab(k)}
                     className={`relative text-left px-4 pt-4 pb-3.5 border transition-colors ${
                       on
-                        ? 'bg-ink dark:bg-card-dark border-ink dark:border-divider-on-dark'
+                        ? 'bg-sidebar border-ink dark:border-divider-on-dark'
                         : 'bg-subtle dark:bg-subtle-on-dark border-divider dark:border-divider-on-dark hover:opacity-80'
                     }`}
                   >
@@ -424,7 +424,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                     type="submit"
                     onClick={handleSubmit}
                     disabled={isSubmitting || !feedbackText.trim()}
-                    className="px-5 py-2 bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark border-none font-display text-[13px] font-semibold disabled:opacity-40 hover:opacity-80 transition flex items-center gap-2"
+                    className="px-5 py-2 bg-sidebar text-card-light dark:text-ink-on-dark border-none font-display text-[13px] font-semibold disabled:opacity-40 hover:opacity-80 transition flex items-center gap-2"
                   >
                     {isSubmitting ? (
                       <>

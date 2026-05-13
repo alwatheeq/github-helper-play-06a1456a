@@ -128,10 +128,10 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
           }
         }
         .animate-fadeIn {
-          animation: fadeIn 0.2s ease-[var(--s4-ease-out)];
+          animation: fadeIn 0.2s ease-out;
         }
         .animate-scaleIn {
-          animation: scaleIn 0.3s ease-[var(--s4-ease-out)];
+          animation: scaleIn 0.3s ease-out;
         }
       `}</style>
     </div>

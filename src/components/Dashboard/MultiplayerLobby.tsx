@@ -373,7 +373,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
       </div>
 
       {/* Dark room-code banner */}
-      <div className="bg-sidebar px-7 py-5 mb-5 flex items-center shadow-[var(--s4-shadow-hairline)]">
+      <div className="bg-sidebar px-7 py-5 mb-5 flex items-center ">
         <div className="pr-7 border-r border-white/10 flex-shrink-0">
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Room Code</div>
           <div className="font-mono text-[34px] font-black text-ink-on-dark tracking-[5px] leading-none">{lobby.game_code}</div>
@@ -399,7 +399,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
         {/* Players table — 2 cols wide */}
         <div className="md:col-span-2">
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Players in Lobby</div>
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark ">
             <div className="grid grid-cols-[28px_1fr_80px_64px] px-4 py-2 border-b border-divider dark:border-divider-on-dark">
               {['', 'Player', 'Status', 'Role'].map(h => (
                 <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>
@@ -446,7 +446,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
 
         {/* Host controls + game settings */}
         <div className="flex flex-col gap-3">
-          <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-sidebar p-5 ">
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Host Controls</div>
             {isHost ? (
               <>
@@ -469,7 +469,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
             )}
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark border border-t-[3px] border-accent-gold border-b-divider border-l-divider border-r-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-t-[3px] border-accent-gold border-b-divider border-l-divider border-r-divider dark:border-divider-on-dark p-5 ">
             <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Settings</div>
             {[
               ['Questions', String(lobby.game_config?.questionCount || 10)],

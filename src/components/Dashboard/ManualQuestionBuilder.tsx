@@ -317,7 +317,7 @@ export const ManualQuestionBuilder: React.FC<ManualQuestionBuilderProps> = ({
       {/* Save Dialog */}
       {showSaveDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-modal)] p-6 max-w-md w-full">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[0_8px_32px_rgba(0,0,0,0.18)] p-6 max-w-md w-full">
             <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-3">Save Question Set?</div>
             <p className="text-[13px] text-secondary-ink dark:text-muted-ink dark:text-muted-ink-on-dark mb-4 leading-relaxed">
               Would you like to save these questions for future use?

@@ -39,7 +39,7 @@ export const AdminDashboard: React.FC = () => {
           isSidebarOpen={isSidebarOpen}
         />
 
-        <main className={`flex-1 transition-colors duration-[var(--s4-dur-fast)] ${
+        <main className={`flex-1 transition-colors duration-150 ${
           isSidebarOpen ? 'ml-64' : 'ml-16'
         }`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -525,7 +525,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       </div>
 
       {/* Question card — bordered top with accent */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-6 py-5 mb-3 shadow-[var(--s4-shadow-hairline)]">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-6 py-5 mb-3 ">
         <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Question</div>
         <p className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark leading-snug m-0">
           {currentQuestion.question}
@@ -533,7 +533,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       </div>
 
       {/* Options — full-width vertical list */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-3 shadow-[var(--s4-shadow-hairline)]">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-3 ">
         {currentQuestion.options.map((option, i) => {
           const isSelected = selectedAnswer === option;
           const isCorrect = option === currentQuestion.correct_answer;
@@ -572,7 +572,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       </div>
 
       {/* Players answered status panel */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark ">
         <div className="px-4 py-2 border-b border-divider dark:border-divider-on-dark flex items-center gap-3">
           <span className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Players</span>
           <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} answered · {playerScores.length - answeredCount} waiting</span>

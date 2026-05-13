@@ -72,7 +72,7 @@ export const CreditBalanceWidget: React.FC = () => {
 
       <div className="w-full bg-subtle rounded-full h-2 mb-2">
         <div
-          className={`${getBarColor()} h-2 rounded-full transition-all duration-[var(--s4-dur-fast)]`}
+          className={`${getBarColor()} h-2 rounded-full transition-all duration-150`}
           style={{ width: `${Math.max(0, Math.min(100, percentage))}%` }}
         />
       </div>

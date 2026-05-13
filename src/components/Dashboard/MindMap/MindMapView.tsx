@@ -96,7 +96,7 @@ function CustomNode({ data }: NodeProps) {
     >
       <Handle type="target" position={Position.Top} className="!bg-indigo-400" />
       <div
-        className="rounded-[12px] border px-4 py-3 shadow-[var(--s4-shadow-hairline)] text-sm font-medium min-w-[140px] text-center transition-shadow hover:shadow-[var(--s4-shadow-card)]"
+        className="rounded-[12px] border px-4 py-3  text-sm font-medium min-w-[140px] text-center transition-shadow hover:shadow-sm"
         style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
       >
         {data.label as string}
@@ -105,7 +105,7 @@ function CustomNode({ data }: NodeProps) {
 
       {showTooltip && (data.description as string) && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-[12px] border px-3 py-2 text-xs shadow-[var(--s4-shadow-modal)] max-w-[220px] whitespace-pre-wrap"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 rounded-[12px] border px-3 py-2 text-xs shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-[220px] whitespace-pre-wrap"
           style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
         >
           {data.description as string}

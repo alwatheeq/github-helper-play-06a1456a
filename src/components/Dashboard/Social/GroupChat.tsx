@@ -220,7 +220,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
     <div dir={dir} className="flex flex-col" style={{ height: 'calc(100vh - 220px)', minHeight: 480 }}>
 
       {/* Header — Scholar v4 GroupChat4 style */}
-      <div className="flex items-center gap-3 px-4 py-0 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]" style={{ height: 58 }}>
+      <div className="flex items-center gap-3 px-4 py-0 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark " style={{ height: 58 }}>
         <button
           onClick={onBack}
           className="p-1.5 rounded-[7px] bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-opacity"

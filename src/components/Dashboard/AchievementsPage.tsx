@@ -178,7 +178,7 @@ export const AchievementsPage: React.FC = () => {
           {/* Right rail */}
           <div className="flex flex-col gap-4">
             {/* XP total dark tile */}
-            <div className="bg-ink dark:bg-card-dark px-[18px] py-5 text-center">
+            <div className="bg-sidebar px-[18px] py-5 text-center">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
               <div className="font-display text-[46px] font-bold text-card-light dark:text-ink leading-none">{totalXPEarned}</div>
               <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>

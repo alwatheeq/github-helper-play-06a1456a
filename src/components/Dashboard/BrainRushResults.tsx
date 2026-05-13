@@ -104,7 +104,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
   if (loading) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center ">
           <div className="w-10 h-10 border-2 border-accent-gold border-t-transparent rounded-full animate-spin mx-auto mb-4" />
           <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Loading results...</p>
         </div>
@@ -163,7 +163,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
 
       {/* Dark banner — your result */}
       {myStats && myRank && (
-        <div className="bg-sidebar py-[22px] px-[30px] mb-4 flex items-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-sidebar py-[22px] px-[30px] mb-4 flex items-center ">
           <div className="pr-7 border-r border-white/10 flex-shrink-0">
             <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Your Rank</div>
             <div className="font-display text-[60px] font-semibold text-ink-on-dark leading-none tracking-tight">
@@ -200,7 +200,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
         {/* Left: top 3 + game summary */}
         <div className="flex flex-col gap-0">
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Top Finishers</div>
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark ">
             {participantStats.slice(0, 3).map((stats, i) => {
               const isMe = stats.participant.user_id === user?.id;
               return (
@@ -229,7 +229,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
           </div>
 
           {/* Game summary */}
-          <div className="mt-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="mt-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-5 ">
             <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Summary</div>
             {[
               ['Questions', String(gameSession.total_questions)],
@@ -248,7 +248,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
         {/* Right: full standings table */}
         <div className="md:col-span-2">
           <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Final Standings · All {participantStats.length} Players</div>
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark ">
             <div className="grid grid-cols-[36px_1fr_60px_52px_52px_80px] px-4 py-2 border-b border-divider dark:border-divider-on-dark">
               {['#', 'Player', 'Correct', 'Acc', 'Avg', 'Score'].map(h => (
                 <div key={h} className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase">{h}</div>

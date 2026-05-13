@@ -109,7 +109,7 @@ export const LowCreditBanner: React.FC = () => {
   if (!config) return null;
 
   return (
-    <div className={`${config.wrapperClass} rounded-[12px] px-[18px] py-[14px] mb-5 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
+    <div className={`${config.wrapperClass} rounded-[12px] px-[18px] py-[14px] mb-5 animate-in fade-in slide-in-from-top-2 duration-200`}>
       <div className="flex items-start gap-3.5">
         {/* Alert icon */}
         <div className={`flex-shrink-0 mt-[1px] ${config.iconClass}`}>

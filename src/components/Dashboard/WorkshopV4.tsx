@@ -238,7 +238,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
                   <button
                     type="button"
                     onClick={onOpenHistory}
-                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[var(--s4-radius-btn)] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
+                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[8px] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
                   >
                     Open
                   </button>
@@ -254,7 +254,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
         {/* Dark "What to generate" panel */}
         <section
           className="bg-sidebar text-ink-on-dark rounded-[12px]"
-          style={{ padding: 'var(--s4-card-pad-dark)' }}
+          style={{ padding: '20px' }}
         >
           <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold">
             {t('workshop.outputs_eyebrow')}
@@ -339,7 +339,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
             {String(tipIdx + 1).padStart(2, '0')} / {String(tips.length).padStart(2, '0')}
           </div>
           <p
-            className="font-display text-[13px] text-ink leading-[1.6] italic transition-[opacity] duration-200 ease-[var(--s4-ease)]"
+            className="font-display text-[13px] text-ink leading-[1.6] italic transition-[opacity] duration-200 ease-in-out"
             aria-live="polite"
           >
             {tips[tipIdx]}

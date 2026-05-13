@@ -173,7 +173,7 @@ export const NotificationsPage: React.FC = () => {
       </div>
 
       {/* Divider line */}
-      <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-4 mb-6" />
+      <div className="h-px bg-sidebar-on-dark opacity-80 mt-4 mb-6" />
 
       {/* Two-column layout */}
       <div className="flex gap-6">
@@ -279,7 +279,7 @@ export const NotificationsPage: React.FC = () => {
           </div>
 
           {/* Quick stats */}
-          <div className="bg-ink dark:bg-ink rounded-[12px] p-4">
+          <div className="bg-sidebar rounded-[12px] p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-2.5">
               Quick Stats
             </p>

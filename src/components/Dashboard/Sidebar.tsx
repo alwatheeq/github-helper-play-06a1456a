@@ -94,7 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div
-      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-[var(--s4-dur-base)] ease-[var(--s4-ease)] z-20 ${
+      className={`fixed top-0 bottom-0 ${isRtl ? 'right-0' : 'left-0'} bg-sidebar ${isRtl ? 'border-l' : 'border-r'} border-divider-on-dark transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200 ease-in-out z-20 ${
         isMobile && !isSidebarOpen ? (isRtl ? 'translate-x-full' : '-translate-x-full') : ''
       } ${shouldBeOpen ? 'w-64' : 'w-16'}`}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
@@ -105,14 +105,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="p-4 border-b border-divider-on-dark">
           <div className="flex items-center justify-between">
             {shouldBeOpen && (
-              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-[var(--s4-dur-base)] ease-[var(--s4-ease)] tracking-tight">
+              <h2 className="font-display text-lg text-ink-on-dark transition-opacity duration-200 ease-in-out tracking-tight">
                 {t('app_name')}<span className="text-accent-gold">.</span>
               </h2>
             )}
             {isMobile ? (
               <button
                 onClick={toggleSidebar}
-                className="p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-[var(--s4-dur-fast)]"
+                className="p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150"
                 title={isSidebarOpen ? t('sidebar.collapse_sidebar') : t('sidebar.expand_sidebar')}
               >
                 {isSidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -120,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             ) : isPinnableMode ? (
               <button
                 onClick={togglePin}
-                className={`p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-[var(--s4-dur-fast)] ${
+                className={`p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150 ${
                   shouldBeOpen ? '' : 'mx-auto block'
                 }`}
                 title={isPinned ? t('sidebar.unpin_sidebar') : t('sidebar.pin_sidebar')}
@@ -139,7 +139,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const isActive = currentView === item.id;
               const isDisabled = item.disabled;
 
-              const baseClasses = `relative flex items-center transition-colors duration-[var(--s4-dur-fast)] text-left rounded-md ${
+              const baseClasses = `relative flex items-center transition-colors duration-150 text-left rounded-md ${
                 shouldBeOpen
                   ? 'w-full space-x-3 rtl:space-x-reverse px-3 py-2.5'
                   : 'w-10 h-10 justify-center mx-auto'
@@ -169,7 +169,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-accent-gold' : ''}`}
                     />
                     {shouldBeOpen && (
-                      <div className="flex-1 min-w-0 transition-opacity duration-[var(--s4-dur-base)] ease-[var(--s4-ease)]">
+                      <div className="flex-1 min-w-0 transition-opacity duration-200 ease-in-out">
                         <div className="font-medium flex items-center gap-2 text-sm">
                           {item.label}
                           {isDisabled && (

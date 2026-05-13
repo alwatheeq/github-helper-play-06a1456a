@@ -218,7 +218,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
         {activeTab === 'goals' ? (
           <div className="mt-5">
             {/* Ink strip — 3 stat rings (simplified as number tiles for prod) */}
-            <div className="bg-ink dark:bg-card-dark px-8 py-5 mb-6 flex justify-around items-center gap-4">
+            <div className="bg-sidebar px-8 py-5 mb-6 flex justify-around items-center gap-4">
               {[
                 { label: 'Active Goals', value: activeGoals.length.toString() },
                 { label: 'Completed', value: completedGoals.length.toString() },
@@ -404,7 +404,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               {/* Right rail */}
               <div className="flex flex-col gap-4">
                 {/* XP total dark tile */}
-                <div className="bg-ink dark:bg-card-dark px-[18px] py-5 text-center">
+                <div className="bg-sidebar px-[18px] py-5 text-center">
                   <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
                   <div className="font-display text-[46px] font-bold text-card-light dark:text-ink leading-none">{totalXPEarned}</div>
                   <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>
@@ -456,7 +456,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-card-light dark:bg-card-dark shadow-[0_24px_56px_rgba(0,0,0,0.3)] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Dark header */}
-            <div className="bg-ink dark:bg-card-dark px-6 py-5">
+            <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Goals · New</div>
               <div className="flex justify-between items-center">
                 <div className="font-display text-[20px] font-semibold text-card-light dark:text-ink">{t('goals.create_new_goal')}</div>

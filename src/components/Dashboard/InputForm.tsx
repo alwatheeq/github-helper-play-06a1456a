@@ -520,7 +520,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark mt-2">
                 {t('dashboard.drop_file_helper') || 'PDF, PPTX, DOCX · up to 400 pages'}
               </p>
-              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark rounded-[var(--s4-radius-btn)] text-[13px] font-medium mt-[18px]">
+              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark rounded-[8px] text-[13px] font-medium mt-[18px]">
                 Choose a file <span aria-hidden>→</span>
               </span>
             </div>
@@ -643,13 +643,13 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 placeholder="https://example.com/article"
-                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-btn)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[8px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <button
                 type="button"
                 onClick={handleUrlSubmit}
                 disabled={previewMode || urlInput.trim().length === 0}
-                className="px-5 py-3 bg-accent-gold text-ink-on-dark rounded-[var(--s4-radius-btn)] text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="px-5 py-3 bg-accent-gold text-ink-on-dark rounded-[8px] text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {t('workshop.url_cta')} <span aria-hidden>→</span>
               </button>

@@ -281,7 +281,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="max-w-md mx-auto mb-4">
               <div className="h-3 bg-subtle dark:bg-card-dark rounded-full overflow-hidden">
                 <div
-                  className={`h-full bg-accent-gold transition-colors duration-150 ease-[var(--s4-ease-out)]`}
+                  className={`h-full bg-accent-gold transition-colors duration-150 ease-out`}
                   style={{ width: `${progress}%` }}
                 />
               </div>

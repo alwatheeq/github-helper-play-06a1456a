@@ -430,7 +430,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           </div>
 
           {/* Answer review */}
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold ">
             <div className="px-5 py-2.5 border-b border-divider dark:border-divider-on-dark">
               <p className="text-[9px] tracking-[2.2px] uppercase font-bold text-ink dark:text-ink-on-dark opacity-[0.45]">
                 Answer review

@@ -148,7 +148,7 @@ export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       {children}
       {showRefreshPrompt && (
         <div className="fixed inset-0 z-[10001] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-md w-full p-6 space-y-4">
+          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-md w-full p-6 space-y-4">
             <p className="text-ink dark:text-ink-on-dark">
               {t('language_refresh_prompt')}
             </p>

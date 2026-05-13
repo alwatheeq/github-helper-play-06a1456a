@@ -67,7 +67,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
 
   return (
     <aside
-      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-sidebar border-r border-divider-on-dark transition-all duration-[var(--s4-dur-base)] ease-[var(--s4-ease)] ${
+      className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-sidebar border-r border-divider-on-dark transition-all duration-200 ease-in-out ${
         shouldBeOpen ? 'w-64' : 'w-16'
       } overflow-hidden shadow-[var(--scholar-shadow-sm)] z-30`}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
@@ -81,7 +81,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           {!isMobile && (
             <button
               onClick={togglePin}
-              className={`p-2 rounded-md transition-colors duration-[var(--s4-dur-fast)] text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 ${
+              className={`p-2 rounded-md transition-colors duration-150 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 ${
                 !shouldBeOpen ? 'mx-auto block' : ''
               }`}
               title={isPinned ? 'Unpin Sidebar' : 'Pin Sidebar'}
@@ -94,7 +94,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       <nav className="p-4 space-y-1">
         {navItems.map((item) => {
           const isActive = currentView === item.id;
-          const baseClasses = `relative flex items-center transition-colors duration-[var(--s4-dur-fast)] rounded-md ${
+          const baseClasses = `relative flex items-center transition-colors duration-150 rounded-md ${
             shouldBeOpen ? 'w-full space-x-3 px-4 py-2.5' : 'w-10 h-10 justify-center mx-auto'
           }`;
           const stateClasses = isActive

@@ -718,7 +718,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             {/* Flip Mode */}
             {currentStudyMode === 'flip' && !studySessionComplete && (
               <div
-                className={`relative w-full h-72 cursor-pointer transition-transform duration-[var(--s4-dur-slow)] transform-style-preserve-3d ${
+                className={`relative w-full h-72 cursor-pointer transition-transform duration-300 transform-style-preserve-3d ${
                   flipped ? 'rotate-y-180' : ''
                 }`}
                 onClick={() => setFlipped(!flipped)}

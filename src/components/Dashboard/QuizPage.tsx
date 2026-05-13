@@ -1134,7 +1134,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         <ChevronDown className={`h-4 w-4 shrink-0 transition-transform text-muted-ink ${libraryPickerOpen ? 'rotate-180' : ''}`} />
                       </button>
                       {libraryPickerOpen && (
-                        <div className="absolute left-0 right-0 top-full mt-1 z-50 border shadow-[var(--s4-shadow-hairline)] overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark">
+                        <div className="absolute left-0 right-0 top-full mt-1 z-50 border  overflow-hidden bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark">
                           <div className="p-2 border-b sticky top-0 z-10 border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
                             <div className="flex items-center gap-2 px-2 py-1.5 bg-subtle dark:bg-subtle-on-dark">
                               <Search className="h-4 w-4 shrink-0 text-muted-ink" />
@@ -1357,7 +1357,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       return (
                         <div
                           key={quiz.id}
-                          className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] shadow-[var(--s4-shadow-hairline)] flex gap-[14px] ${hasScore ? 'border-l-accent-gold' : 'border-l-divider dark:border-l-divider-on-dark'}`}
+                          className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px]  flex gap-[14px] ${hasScore ? 'border-l-accent-gold' : 'border-l-divider dark:border-l-divider-on-dark'}`}
                           style={{ padding: '14px 16px' }}
                         >
                           <div className="flex-1 min-w-0">
@@ -1425,7 +1425,7 @@ export const QuizPage: React.FC = React.memo(() => {
                         const exam = attempt.global_exams!;
                         const progress = Math.max(0, Math.min(100, ((exam.total_questions - attempt.unanswered_count) / exam.total_questions) * 100));
                         return (
-                          <div key={attempt.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-5">
+                          <div key={attempt.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark  p-5">
                             <div className="flex items-start justify-between gap-4">
                               <div className="flex-1 min-w-0">
                                 <h3 className="font-display font-semibold text-sm text-ink dark:text-ink-on-dark mb-1.5">
@@ -1468,7 +1468,7 @@ export const QuizPage: React.FC = React.memo(() => {
               /* Global Exams — Explore */
               <div className="space-y-4">
                 {/* Filter bar */}
-                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-[14px]">
+                <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark  p-[14px]">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px]">
                     <div>
                       <p className="text-[9px] tracking-[2px] uppercase font-bold text-muted-ink dark:text-muted-ink-on-dark mb-2">Country / Region</p>
@@ -1535,7 +1535,7 @@ export const QuizPage: React.FC = React.memo(() => {
                     {globalExams.map((exam) => (
                       <div
                         key={exam.id}
-                        className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)] p-4 flex flex-col gap-2 relative"
+                        className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark  p-4 flex flex-col gap-2 relative"
                       >
                         {/* Level badge */}
                         <span className={`absolute top-[13px] right-[13px] text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(exam.difficulty_level)}`}>

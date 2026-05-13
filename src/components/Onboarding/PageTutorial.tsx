@@ -70,7 +70,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       <div className="absolute inset-0 bg-page bg-opacity-70 backdrop-blur-md"></div>
 
       {/* Tutorial Modal */}
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[var(--s4-shadow-modal)] max-w-2xl w-full overflow-hidden animate-scaleIn">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
         <div className="bg-accent-gold px-7 py-5 text-white relative">
           <button
@@ -153,10 +153,10 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
           }
         }
         .animate-fadeIn {
-          animation: fadeIn 0.2s ease-[var(--s4-ease-out)];
+          animation: fadeIn 0.2s ease-out;
         }
         .animate-scaleIn {
-          animation: scaleIn 0.3s ease-[var(--s4-ease-out)];
+          animation: scaleIn 0.3s ease-out;
         }
       `}</style>
     </div>

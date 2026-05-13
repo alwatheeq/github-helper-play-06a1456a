@@ -133,7 +133,7 @@ export const GameJoinPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-page flex items-center justify-center p-4">
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full ">
           <Loader2 className="h-12 w-12 text-accent-gold animate-spin mx-auto mb-4" />
           <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Validating game code...</p>
         </div>
@@ -144,7 +144,7 @@ export const GameJoinPage: React.FC = () => {
   if (error && !gameInfo) {
     return (
       <div className="min-h-screen bg-page flex items-center justify-center p-4">
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full ">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-3">Unable to Join Game</h2>
           <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-6">{error}</p>
@@ -167,7 +167,7 @@ export const GameJoinPage: React.FC = () => {
         {/* Main join card */}
         <div className="md:col-span-2">
           {/* Dark banner header */}
-          <div className="bg-sidebar px-7 py-5 mb-0 flex items-center justify-between shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-sidebar px-7 py-5 mb-0 flex items-center justify-between ">
             <div>
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1">The Games Room · Brain Rush</div>
               <div className="font-display text-[24px] font-semibold text-ink-on-dark">Join a Game.</div>
@@ -178,7 +178,7 @@ export const GameJoinPage: React.FC = () => {
             >← Back</button>
           </div>
 
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-0 px-7 py-6 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-0 px-7 py-6 ">
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Enter Room Code</div>
 
             {/* Game code display — large monospace */}
@@ -229,7 +229,7 @@ export const GameJoinPage: React.FC = () => {
 
         {/* Right rail */}
         <div className="flex flex-col gap-4">
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 ">
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How to Join</div>
             {[
               'Get the room code from your host or teacher',
@@ -245,7 +245,7 @@ export const GameJoinPage: React.FC = () => {
               </div>
             ))}
           </div>
-          <div className="bg-sidebar p-5 shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-sidebar p-5 ">
             <Gamepad2 className="h-7 w-7 text-accent-gold mb-3" />
             <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1">Brain Rush.</div>
             <div className="text-[11px] text-muted-ink-on-dark">Real-time quiz duels against your classmates. First to answer correctly earns the most points.</div>
@@ -256,7 +256,7 @@ export const GameJoinPage: React.FC = () => {
       {/* Auth Modal */}
       {showAuthModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 max-w-md w-full shadow-[var(--s4-shadow-hairline)]">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 max-w-md w-full ">
             <h3 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-2">Join the Game</h3>
             <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-6">
               Choose how you'd like to join this game:

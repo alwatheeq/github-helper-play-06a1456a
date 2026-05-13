@@ -116,7 +116,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
         </div>
         <div className="w-full bg-subtle h-[5px]">
           <div
-            className={`h-full transition-all duration-[var(--s4-dur-base)] ease-[var(--s4-ease)] rounded-full ${
+            className={`h-full transition-all duration-200 ease-in-out rounded-full ${
               medicalMode ? 'bg-red-600' : 'bg-accent-gold'
             }`}
             style={{ width: `${progress}%` }}
@@ -173,7 +173,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               <Loader2 className={`h-6 w-6 animate-spin ${medicalMode ? 'text-red-500' : 'text-accent-gold'}`} />
             </div>
             <div>
-              <p className="font-display text-[16px] text-ink leading-[1.72] transition-opacity duration-[var(--s4-dur-base)]">
+              <p className="font-display text-[16px] text-ink leading-[1.72] transition-opacity duration-200">
                 "{facts[currentFactIndex]}"
               </p>
               <div className="font-display text-[10.5px] text-accent-gold mt-3 tracking-[0.3px]">— Study science</div>
@@ -207,7 +207,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
           <div className="mt-5 flex justify-end">
             <button
               onClick={onReset}
-              className="text-[12px] text-muted-ink-on-dark hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] border border-ink-on-dark/15 px-4 py-1.5 hover:border-ink-on-dark/30"
+              className="text-[12px] text-muted-ink-on-dark hover:text-ink-on-dark transition-colors duration-150 border border-ink-on-dark/15 px-4 py-1.5 hover:border-ink-on-dark/30"
               title={t('processing.cancel_processing')}
             >
               Cancel processing
