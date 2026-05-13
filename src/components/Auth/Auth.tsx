@@ -99,7 +99,7 @@ export const Auth: React.FC = () => {
       <div className="w-full lg:w-[520px] flex flex-col justify-center px-10 py-14 lg:border-r border-divider dark:border-divider-on-dark flex-shrink-0">
         {/* Logo */}
         <div className="flex items-center gap-3 mb-10">
-          <div className="w-9 h-9 bg-ink dark:bg-ink-on-dark rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 bg-sidebar rounded-lg flex items-center justify-center flex-shrink-0">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               className="text-page dark:text-card-dark"
               strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

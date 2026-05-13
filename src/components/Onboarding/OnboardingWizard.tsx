@@ -157,7 +157,7 @@ export const OnboardingWizard: React.FC = () => {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-[8px] bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-[8px] bg-sidebar text-card-light dark:text-card-dark text-[14px] font-semibold hover:opacity-85 transition"
           >
             {t('onboarding.next')}
             <ChevronRight className="h-4 w-4" />
@@ -224,7 +224,7 @@ export const OnboardingWizard: React.FC = () => {
               type="button"
               onClick={handleComplete}
               disabled={completing}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] bg-ink dark:bg-card-dark text-card-light dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] bg-sidebar text-card-light dark:text-card-dark text-[14px] font-semibold hover:opacity-85 transition disabled:opacity-50"
             >
               {completing ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />

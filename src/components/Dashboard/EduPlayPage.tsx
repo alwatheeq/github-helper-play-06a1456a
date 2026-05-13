@@ -638,7 +638,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                       <div className={`font-display text-[18px] font-semibold tracking-tight ${g.live ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>{g.title}</div>
                     </div>
                     {g.live
-                      ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-sidebar font-bold uppercase rounded-full flex-shrink-0">Live</div>
+                      ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-sidebar font-bold uppercase flex-shrink-0">Live</div>
                       : <div className="text-[9px] tracking-[1.5px] px-2 py-[3px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase flex-shrink-0">Soon</div>
                     }
                   </div>
