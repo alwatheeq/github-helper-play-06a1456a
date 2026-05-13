@@ -219,8 +219,11 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
   return (
     <div dir={dir} className="flex flex-col" style={{ height: 'calc(100vh - 220px)', minHeight: 480 }}>
 
-      {/* Header — Scholar v4 GroupChat4 style */}
-      <div className="flex items-center gap-3 px-4 py-0 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark " style={{ height: 58 }}>
+      {/* Header — GroupChat4 */}
+      <div
+        className="flex items-center gap-3 px-[18px] shrink-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark"
+        style={{ height: 58, boxShadow: '0 1px 8px rgba(0,0,0,0.07)' }}
+      >
         <button
           onClick={onBack}
           className="p-1.5 rounded-[7px] bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-opacity"
@@ -229,14 +232,21 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
         </button>
         {/* Group avatar */}
         <div className="relative flex-shrink-0">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-gold to-accent-gold/60 flex items-center justify-center text-[15px] font-bold text-white shadow-md">
+          <div
+            className="flex items-center justify-center text-[15px] font-bold text-white"
+            style={{
+              width: 38, height: 38, borderRadius: 11,
+              background: 'linear-gradient(140deg, var(--color-accent-gold), color-mix(in srgb, var(--color-accent-gold) 60%, transparent))',
+              boxShadow: '0 3px 10px color-mix(in srgb, var(--color-accent-gold) 27%, transparent)',
+            }}
+          >
             {groupName[0]?.toUpperCase()}
           </div>
-          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-accent-gold border-2 border-card-light dark:border-card-dark" />
+          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-card-light dark:border-card-dark" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-[14px] font-bold text-ink dark:text-ink-on-dark truncate leading-tight">{groupName}</h2>
-          <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">Group chat</p>
+          <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[1px]">Group chat</p>
         </div>
       </div>
 
@@ -297,7 +307,10 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                   {/* Avatar column — 34px fixed width for alignment */}
                   <div className="w-8 flex-shrink-0" style={{ paddingBottom: isFirst ? 0 : 0 }}>
                     {!own && isFirst && (
-                      <div className="w-8 h-8 rounded-xl bg-accent-gold flex items-center justify-center text-[11px] font-bold text-white shadow-md flex-shrink-0">
+                      <div
+                        className="flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0"
+                        style={{ width: 34, height: 34, borderRadius: 10, background: 'var(--color-accent-gold)', boxShadow: '0 2px 8px color-mix(in srgb, var(--color-accent-gold) 27%, transparent)' }}
+                      >
                         {senderInitial(msg)}
                       </div>
                     )}
@@ -315,14 +328,17 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
 
                     {/* Bubble */}
                     <div
-                      className={`px-3.5 py-2.5 text-[13px] leading-relaxed break-words ${
+                      className={`text-[13px] leading-[1.65] break-words ${
                         own
                           ? 'bg-accent-gold text-white'
-                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-sm'
+                          : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
                       }`}
                       style={{
+                        padding: '10px 14px',
                         borderRadius: own ? rOwn : rOther,
-                        boxShadow: own ? undefined : '0 1px 5px rgba(0,0,0,0.08)',
+                        boxShadow: own
+                          ? '0 3px 14px color-mix(in srgb, var(--color-accent-gold) 22%, transparent)'
+                          : '0 1px 5px rgba(0,0,0,0.08)',
                       }}
                     >
                       {msg.content}
@@ -343,14 +359,14 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
         )}
       </div>
 
-      {/* Input bar — Scholar v4 GroupChat4 style */}
-      <div className="shrink-0 border-t border-divider dark:border-divider-on-dark px-4 py-2.5 bg-card-light dark:bg-card-dark flex items-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      {/* Input bar — GroupChat4 */}
+      <div className="shrink-0 border-t border-divider dark:border-divider-on-dark px-[18px] py-[10px] bg-card-light dark:bg-card-dark flex items-center gap-2" style={{ boxShadow: '0 -2px 10px rgba(0,0,0,0.05)' }}>
         {/* Attachment icon */}
-        <button className="w-8 h-8 rounded-[8px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+        <button className="flex-shrink-0 flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark" style={{ width: 32, height: 32, borderRadius: 8 }}>
           <Paperclip className="w-3.5 h-3.5" />
         </button>
         {/* Emoji icon */}
-        <button className="w-8 h-8 rounded-[8px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+        <button className="flex-shrink-0 flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark" style={{ width: 32, height: 32, borderRadius: 8 }}>
           <Smile className="w-3.5 h-3.5" />
         </button>
         {/* Text input — pill shape */}
@@ -360,14 +376,15 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
           placeholder={t('social.type_message')}
-          className="flex-1 rounded-full px-5 py-2.5 text-[13px] border-[1.5px] border-divider dark:border-divider-on-dark bg-page dark:bg-page text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+          className="flex-1 text-[13px] border-[1.5px] border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+          style={{ borderRadius: 24, padding: '9px 18px' }}
         />
         {/* Send button */}
         <button
           onClick={handleSend}
           disabled={sending || !input.trim()}
-          className="w-9 h-9 rounded-[11px] bg-accent-gold flex items-center justify-center flex-shrink-0 hover:opacity-90 disabled:opacity-40 transition-opacity shadow-md"
-          style={{ boxShadow: 'var(--color-accent-gold, #c9a227) 0 3px 12px 0' }}
+          className="flex items-center justify-center flex-shrink-0 bg-accent-gold hover:opacity-90 disabled:opacity-40 transition-opacity"
+          style={{ width: 38, height: 38, borderRadius: 11, boxShadow: '0 3px 12px color-mix(in srgb, var(--color-accent-gold) 27%, transparent)' }}
         >
           {sending ? (
             <Loader2 className="w-4 h-4 animate-spin text-white" />

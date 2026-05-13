@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Hash, Users, Crown, Trash2, Copy, Check, MessageSquare } from 'lucide-react';
+import { Hash, Crown, Trash2, Copy, Check } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useI18n } from '../../../contexts/I18nContext';
 
@@ -299,26 +299,30 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                 className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex flex-col"
               >
                 {/* Group card header */}
-                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark ${group.my_role === 'admin' ? 'bg-sidebar' : 'bg-subtle dark:bg-subtle-on-dark'}`}>
+                <div className={`px-4 py-3 flex justify-between items-center ${group.my_role === 'admin' ? 'bg-sidebar' : 'bg-subtle dark:bg-subtle-on-dark'}`}>
                   <div className="flex items-center gap-2">
-                    {/* Mini avatar stack */}
+                    {/* Mini avatar stack — rotating color palette per design */}
                     <div className="flex">
-                      {(members[group.id] || []).slice(0, 4).map((m, idx) => (
-                        <div
-                          key={m.id}
-                          className="w-[22px] h-[22px] rounded-full bg-accent-gold border-2 border-card-dark flex items-center justify-center text-[9px] font-bold text-white"
-                          style={{ marginLeft: idx > 0 ? -6 : 0 }}
-                        >
-                          {(m.username || m.display_name || '?')[0].toUpperCase()}
-                        </div>
-                      ))}
+                      {[0, 1, 2, 3].slice(0, Math.min(4, group.member_count)).map((idx) => {
+                        const pal = ['bg-accent-gold', 'bg-secondary-ink', 'bg-sidebar', 'bg-muted-ink'];
+                        const borderCls = group.my_role === 'admin' ? 'border-sidebar' : 'border-subtle dark:border-subtle-on-dark';
+                        return (
+                          <div
+                            key={idx}
+                            className={`w-[22px] h-[22px] rounded-full ${pal[idx % pal.length]} border-2 ${borderCls} flex items-center justify-center text-[9px] font-bold text-white`}
+                            style={{ marginLeft: idx > 0 ? -7 : 0, zIndex: 10 - idx }}
+                          />
+                        );
+                      })}
                     </div>
                     {group.member_count > 4 && (
-                      <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">+{group.member_count - 4}</span>
+                      <span className={`text-[10px] ${group.my_role === 'admin' ? 'text-white/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                        +{group.member_count - 4}
+                      </span>
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className={`text-[9px] tracking-[0.15em] uppercase font-bold ${group.my_role === 'admin' ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                    <span className={`text-[9px] tracking-[1.5px] uppercase font-bold ${group.my_role === 'admin' ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                       {group.my_role === 'admin' ? t('social.admin') : t('social.member')}
                     </span>
                     {group.my_role === 'admin' && <Crown className="w-3 h-3 text-accent-gold" />}
@@ -328,32 +332,30 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                 {/* Card body */}
                 <button
                   onClick={() => toggleExpand(group.id)}
-                  className="px-4 py-4 flex-1 text-left"
+                  className="px-4 py-[14px] flex-1 text-left"
                 >
                   <p className="font-display text-[16px] font-semibold text-ink dark:text-ink-on-dark leading-snug mb-[3px]">
-                    {group.name}
+                    {group.name}.
                   </p>
-                  <p className="text-[11px] leading-[1.65] text-muted-ink dark:text-muted-ink-on-dark flex items-center gap-1">
-                    <Users className="w-3 h-3" /> {group.member_count} {t('social.members')}
+                  <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">
+                    {group.member_count} members
                   </p>
                 </button>
 
                 {/* Card footer */}
                 <div className="px-4 py-[10px] border-t border-divider dark:border-divider-on-dark flex items-center justify-between">
                   <div className="flex items-center gap-[5px]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                    <span className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">{t('social.member')}</span>
+                    <div className="w-[5px] h-[5px] rounded-full bg-divider dark:bg-divider-on-dark" />
+                    <span className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark">joined</span>
                   </div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onOpenGroupChat(group.id, group.name);
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold hover:opacity-90 transition-opacity"
-                    title={t('social.open_chat')}
+                    className="font-display px-[14px] py-[5px] bg-accent-gold text-white text-[11px] font-semibold hover:opacity-90 transition-opacity"
                   >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    {t('social.open_chat')}
+                    Open group
                   </button>
                 </div>
 
@@ -445,12 +447,12 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       {/* RIGHT rail */}
       <div className="flex flex-col gap-4">
 
-        {/* Create Group CTA — dark card like v4 */}
+        {/* Start a Group CTA — dark panel */}
         <div className="bg-sidebar py-[20px] px-[18px]">
-          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-[10px]">
-            {t('social.create_group')}
+          <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-[10px]">
+            Start a Group
           </p>
-          <p className="font-display text-[15px] text-ink-on-dark dark:text-ink-on-dark leading-[1.55] mb-[14px]">
+          <p className="font-display text-[15px] text-ink-on-dark leading-[1.55] mb-[14px]">
             Gather your study circle — invite peers by course or name.
           </p>
           <input
@@ -465,17 +467,17 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
           <button
             onClick={handleCreate}
             disabled={creating || !newGroupName.trim()}
-            className="w-full py-2.5 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40"
+            className="w-full py-[9px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40"
           >
-            {creating ? '...' : `${t('social.create_group')} →`}
+            {creating ? '…' : 'Create Group →'}
           </button>
         </div>
 
-        {/* Join Group */}
+        {/* Join by code */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark py-[14px] px-4">
-          <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3 flex items-center gap-2">
+          <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-3 flex items-center gap-2">
             <Hash className="w-3 h-3" />
-            {t('social.join_group')}
+            Join by Code
           </p>
           <div className="flex gap-2">
             <input
@@ -484,15 +486,15 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
               onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
               placeholder={t('social.group_code')}
               maxLength={6}
-              className="flex-1 px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] font-mono tracking-widest uppercase text-ink dark:text-ink-on-dark focus:outline-none"
+              className="flex-1 px-3 py-2 border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[12px] font-mono tracking-widest uppercase text-ink dark:text-ink-on-dark focus:outline-none"
               onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
             />
             <button
               onClick={handleJoin}
               disabled={joining || joinCode.trim().length !== 6}
-              className="px-3 py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 disabled:opacity-40 transition-opacity"
+              className="px-3 py-2 bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
-              {joining ? '...' : t('social.join_group')}
+              {joining ? '…' : 'Join'}
             </button>
           </div>
         </div>

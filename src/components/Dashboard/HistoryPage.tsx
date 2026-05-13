@@ -418,7 +418,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
             ].map(({ label, pct, color }, i) => (
               <div key={label} className={i < 3 ? 'mb-3' : ''}>
                 <div className="flex justify-between mb-[5px]">
-                  <span className="text-[12px] text-ink dark:text-ink-on-dark">{label}</span>
+                  <span className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark">{label}</span>
                   <span className="font-display text-[11px] font-semibold text-accent-gold">{pct}%</span>
                 </div>
                 <div className="bg-divider dark:bg-divider-on-dark" style={{ height: 3, borderRadius: 1 }}>

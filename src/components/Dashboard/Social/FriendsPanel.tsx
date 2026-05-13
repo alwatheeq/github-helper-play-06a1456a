@@ -286,8 +286,8 @@ export const FriendsPanel: React.FC = () => {
         )}
 
         {/* Active friends section */}
-        <div className="flex items-center gap-3 mb-3">
-          <span className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold">{t('social.friends_list')}</span>
+        <div className="flex items-center gap-[10px] mb-3">
+          <span className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold">Active Now</span>
           {!loadingFriends && <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">· {friends.length}</span>}
           <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
         </div>
@@ -299,19 +299,33 @@ export const FriendsPanel: React.FC = () => {
         ) : friends.length === 0 ? (
           <p className="text-[12px] text-center py-8 text-muted-ink dark:text-muted-ink-on-dark">{t('social.no_friends')}</p>
         ) : (
-          <div className="divide-y divide-divider dark:divide-divider-on-dark">
+          <div>
             {friends.map((row) => {
               const profile = getFriendProfile(row);
               return (
-                <div key={row.id} className="flex items-center gap-[14px] py-3.5">
+                <div key={row.id} className="flex items-center gap-[14px] py-[14px] border-b border-divider dark:border-divider-on-dark">
                   <Avatar name={profile.display_name || profile.username} size="h-[42px] w-[42px]" dot />
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
                       {profile.display_name || profile.username}
                     </p>
                     {profile.username && (
-                      <p className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">@{profile.username}</p>
+                      <p className="text-[10.5px] text-muted-ink dark:text-muted-ink-on-dark mt-0.5">@{profile.username}</p>
                     )}
+                  </div>
+                  <div className="flex gap-[7px] flex-shrink-0">
+                    <button
+                      type="button"
+                      className="px-[10px] py-[5px] bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11px] hover:opacity-75 transition-opacity"
+                    >
+                      Profile
+                    </button>
+                    <button
+                      type="button"
+                      className="px-[14px] py-[5px] bg-accent-gold text-white text-[11px] font-bold hover:opacity-90 transition-opacity"
+                    >
+                      Invite
+                    </button>
                   </div>
                 </div>
               );
@@ -332,14 +346,14 @@ export const FriendsPanel: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={handleSearchChange}
-            placeholder={t('social.search_friends')}
-            className="w-full px-3 py-2 mb-3 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
+            placeholder="Name or email address…"
+            className="w-full px-3 py-2 mb-[10px] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[12px] text-muted-ink dark:text-muted-ink-on-dark focus:outline-none"
           />
           <button
             onClick={() => searchUsers(searchQuery)}
-            className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity"
+            className="w-full py-2 bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition-opacity"
           >
-            {t('social.add_friend')}
+            Send Request
           </button>
         </div>
 
