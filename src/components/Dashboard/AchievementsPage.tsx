@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Award, Lock, Zap } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -52,8 +52,11 @@ export const AchievementsPage: React.FC = () => {
     } finally { setLoading(false); }
   };
 
-  const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
-  const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
+  const unlockedSet = useMemo(() => new Set(userAchievements.map(ua => ua.achievement_id)), [userAchievements]);
+  const earnedDateMap = useMemo(() => new Map(userAchievements.map(ua => [ua.achievement_id, ua.earned_at])), [userAchievements]);
+
+  const isAchievementUnlocked = (achievementId: string) => unlockedSet.has(achievementId);
+  const getEarnedDate = (achievementId: string) => earnedDateMap.get(achievementId);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });

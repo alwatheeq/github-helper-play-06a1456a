@@ -297,13 +297,10 @@ export const StudyGoalsPage: React.FC = () => {
   const activeGoals = goals.filter(g => !g.is_completed);
   const completedGoals = goals.filter(g => g.is_completed);
 
-  const statusColor = (goal: StudyGoal) => {
-    if (goal.is_completed) return 'var(--color-accent-gold)';
-    const pct = calculateProgress(goal.current_value, goal.target_value);
-    if (pct >= 100) return 'var(--color-accent-gold)';
-    if (goal.deadline_date && new Date(goal.deadline_date) < new Date()) return '#dc2626';
-    return 'var(--color-accent-gold)';
-  };
+  const statusColor = (goal: StudyGoal) =>
+    !goal.is_completed && goal.deadline_date && new Date(goal.deadline_date) < new Date()
+      ? '#dc2626'
+      : 'var(--color-accent-gold)';
 
   const statusLabel = (goal: StudyGoal) => {
     if (goal.is_completed) return 'Complete';
@@ -317,6 +314,8 @@ export const StudyGoalsPage: React.FC = () => {
   for (const g of goals) {
     goalTypeCounts[g.goal_type] = (goalTypeCounts[g.goal_type] || 0) + 1;
   }
+
+  const inputCls = "w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark";
 
   return (
     <div className="p-6 md:p-8">
@@ -487,7 +486,7 @@ export const StudyGoalsPage: React.FC = () => {
                 <select
                   value={goalType}
                   onChange={(e) => setGoalType(e.target.value)}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark"
+                  className={inputCls}
                 >
                   <option value="daily_study_time">{t('goals.type_daily_study_time')}</option>
                   <option value="weekly_flashcards">{t('goals.type_weekly_flashcards')}</option>
@@ -507,7 +506,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setGoalTitle(e.target.value)}
                   placeholder="e.g., Study 30 minutes daily"
                   maxLength={200}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark"
+                  className={inputCls}
                 />
               </div>
 
@@ -521,7 +520,7 @@ export const StudyGoalsPage: React.FC = () => {
                   placeholder="Describe your goal..."
                   maxLength={1000}
                   rows={3}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark"
+                  className={inputCls}
                 />
               </div>
 
@@ -535,7 +534,7 @@ export const StudyGoalsPage: React.FC = () => {
                   onChange={(e) => setTargetValue(Number(e.target.value))}
                   min="1"
                   max="10000"
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark"
+                  className={inputCls}
                 />
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   Set the target number to achieve your goal
@@ -551,7 +550,7 @@ export const StudyGoalsPage: React.FC = () => {
                   value={deadlineDate}
                   onChange={(e) => setDeadlineDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark"
+                  className={inputCls}
                 />
               </div>
 
