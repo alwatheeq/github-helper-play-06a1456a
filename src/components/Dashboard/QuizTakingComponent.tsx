@@ -381,7 +381,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             <div className="flex gap-2">
               <button
                 onClick={onComplete}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-divider dark:border-divider-on-dark text-xs text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
+                className="inline-flex items-center gap-[5px] px-[13px] py-[6px] bg-sidebar text-card-light text-[11.5px] font-semibold hover:opacity-80 transition-opacity"
               >
                 ← {t('quiz.back_to_quizzes')}
               </button>
@@ -512,7 +512,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           <p className="text-[10px] tracking-[2.5px] uppercase font-bold text-accent-gold leading-none mb-0.5">
             {t('quiz.in_progress') || 'The Examination · In Progress'}
           </p>
-          <h1 className="font-display font-semibold text-lg text-ink dark:text-ink-on-dark leading-tight tracking-tight">
+          <h1 className="font-display font-semibold text-[32px] text-ink dark:text-ink-on-dark leading-tight tracking-[-0.5px]">
             {quizTitle}
           </h1>
         </div>
@@ -563,14 +563,14 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           {/* Question watermark number */}
           <div className="relative flex-1">
             <div
-              className="absolute -top-2 -left-1 font-display font-bold text-ink dark:text-ink-on-dark opacity-[0.03] leading-none select-none pointer-events-none"
-              style={{ fontSize: '7rem' }}
+              className="absolute -top-2 -left-1 font-display font-bold text-ink dark:text-ink-on-dark opacity-[0.04] leading-none select-none pointer-events-none"
+              style={{ fontSize: '110px' }}
             >
               {String(currentQuestionIndex + 1).padStart(2, '0')}
             </div>
 
             {/* Question text */}
-            <p className="relative font-display font-semibold text-xl md:text-2xl text-ink dark:text-ink-on-dark leading-relaxed mb-7">
+            <p className="relative font-display font-semibold text-[22px] text-ink dark:text-ink-on-dark leading-snug mb-7" style={{ lineHeight: 1.4 }}>
               {currentQuestion?.question}
             </p>
 
@@ -663,9 +663,9 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                 <textarea
                   value={answers[currentQuestionIndex] || ''}
                   onChange={(e) => handleAnswerSelect(e.target.value)}
-                  rows={6}
                   placeholder={t('quiz.type_your_answer')}
-                  className="w-full px-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold text-sm text-ink dark:text-ink-on-dark leading-relaxed outline-none focus:border-l-accent-gold resize-none"
+                  className="w-full px-4 py-[14px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold text-[13px] text-ink dark:text-ink-on-dark outline-none resize-none min-h-[148px]"
+                  style={{ lineHeight: 1.6 }}
                 />
                 <div className="flex justify-between mt-2">
                   <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">
@@ -724,13 +724,15 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             </p>
             {timeRemaining !== null ? (
               <>
-                <p className={`font-display text-5xl font-semibold leading-none tracking-tighter ${timeRemaining < 60 ? 'text-red-400' : 'text-ink-on-dark'}`}>
-                  {formatTime(timeRemaining)}
-                </p>
+                <div className={`font-display flex items-baseline leading-none ${timeRemaining < 60 ? 'text-red-400' : 'text-ink-on-dark'}`}>
+                  <span className="text-[60px] font-semibold tracking-[-3px]">{String(Math.floor(timeRemaining / 60)).padStart(2, '0')}</span>
+                  <span className="text-[30px] font-semibold text-accent-gold mx-0.5">:</span>
+                  <span className="text-[60px] font-semibold tracking-[-3px]">{String(timeRemaining % 60).padStart(2, '0')}</span>
+                </div>
                 <p className="text-[10px] text-accent-gold mt-2 tracking-wide">— minutes · seconds</p>
               </>
             ) : (
-              <p className="font-display text-5xl font-semibold text-ink-on-dark leading-none tracking-tighter">
+              <p className="font-display text-[60px] font-semibold text-ink-on-dark leading-none tracking-[-3px]">
                 —:——
               </p>
             )}

@@ -1282,10 +1282,11 @@ export const QuizPage: React.FC = React.memo(() => {
                   )}
                   <div className="h-px bg-accent-gold opacity-20 mt-3.5" />
                   <div className="flex justify-between mt-2.5">
-                    {[
+                    {([
                       [String(quizHistory.length), 'sittings'],
                       [quizHistory.length > 0 ? `${quizStats.average}%` : '—', 'average'],
-                    ].map(([v, l]) => (
+                      [String(myQuizzesStats.totalQ), 'questions'],
+                    ] as [string, string][]).map(([v, l]) => (
                       <div key={l} className="text-center">
                         <div className="font-display text-[18px] font-bold text-card-light">{v}</div>
                         <div className="text-[9px] tracking-[1.5px] uppercase text-accent-gold mt-0.5">{l}</div>
@@ -1538,7 +1539,13 @@ export const QuizPage: React.FC = React.memo(() => {
                         className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark  p-4 flex flex-col gap-2 relative"
                       >
                         {/* Level badge */}
-                        <span className={`absolute top-[13px] right-[13px] text-[9px] font-bold tracking-wide px-2 py-0.5 ${getDifficultyBadgeClass(exam.difficulty_level)}`}>
+                        <span className={`absolute top-[14px] right-[14px] text-[9.5px] font-bold tracking-[0.5px] px-[9px] py-[3px] ${
+                          exam.difficulty_level === 'advanced'
+                            ? 'bg-ink/[.08] dark:bg-white/[.08] text-ink dark:text-ink-on-dark'
+                            : exam.difficulty_level === 'intermediate'
+                            ? 'bg-accent-gold-soft text-accent-gold'
+                            : getDifficultyBadgeClass(exam.difficulty_level)
+                        }`}>
                           {exam.difficulty_level}
                         </span>
                         <div className="pr-20">
