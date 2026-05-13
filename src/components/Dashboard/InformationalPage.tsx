@@ -36,9 +36,9 @@ export const InformationalPage: React.FC = React.memo(() => {
 
       <div className="space-y-8">
         {/* Overview Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <Info className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
@@ -70,9 +70,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* What&apos;s new */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <BarChart3 className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
@@ -90,9 +90,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Getting Started Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[12px] dark:from-green-600 dark:to-emerald-700">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[8px] dark:from-green-600 dark:to-emerald-700">
               <Upload className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.getting_started')}</h3>
@@ -183,9 +183,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Understanding Results Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
@@ -281,9 +281,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Smart Features Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
@@ -303,7 +303,7 @@ export const InformationalPage: React.FC = React.memo(() => {
               </ul>
             </div>
 
-            <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4 border-divider dark:border-divider-on-dark`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
               <h4 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>🌙 Dark Mode Support</h4>
               <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                 The application automatically detects your system's theme preference and applies dark mode for comfortable studying at night.
@@ -325,9 +325,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Language & Translation Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <Globe className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
@@ -359,9 +359,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Managing Content Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[12px] dark:from-orange-600 dark:to-red-700">
+            <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[8px] dark:from-orange-600 dark:to-red-700">
               <BookOpen className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.managing_content')}</h3>
@@ -454,9 +454,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Navigation & Account Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <User className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
@@ -530,16 +530,16 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Tips & Best Practices */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border-divider dark:border-divider-on-dark  p-8 dark:shadow-none`}>
+        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className={`bg-accent-gold p-2 rounded-[12px]`}>
+            <div className={`bg-accent-gold-soft p-2 rounded-[8px]`}>
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4 border-divider dark:border-divider-on-dark`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>📝 {t('informational.better_summaries_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.better_summaries_1')}</li>
@@ -548,7 +548,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                 <li>• {t('informational.better_summaries_4')}</li>
               </ul>
             </div>
-            <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4 border-divider dark:border-divider-on-dark`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>🎯 {t('informational.effective_study_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.effective_study_1')}</li>
@@ -557,7 +557,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                 <li>• {t('informational.effective_study_4')}</li>
               </ul>
             </div>
-            <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4 border-divider dark:border-divider-on-dark`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>🏥 {t('informational.tips_medical_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.tips_medical_1')}</li>
@@ -570,24 +570,24 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Support Section */}
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)]  p-8 border-2 border-divider dark:border-divider-on-dark dark:shadow-none`}>
+        <div className="bg-accent-gold-soft dark:bg-accent-gold-soft/10 rounded-[14px] border border-accent-gold/30 p-8">
           <div className="text-center">
-            <h3 className={`s4-h3 text-[20px] text-ink dark:text-ink-on-dark mb-4`}>{t('informational.need_help')}</h3>
-            <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-6`}>
+            <h3 className="font-display text-[20px] font-bold text-ink dark:text-ink-on-dark mb-4">{t('informational.need_help')}</h3>
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-6">
               {t('informational.contact_support')}
             </p>
             <div className="flex justify-center space-x-4">
-              <div className="bg-blue-50 rounded-[12px] p-4 text-center dark:bg-blue-900">
-                <h4 className="font-medium text-blue-900 mb-1 dark:text-blue-300">{t('informational.quick_start')}</h4>
-                <p className="text-sm text-blue-700 dark:text-blue-200">{t('informational.quick_start_desc')}</p>
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+                <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.quick_start')}</h4>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.quick_start_desc')}</p>
               </div>
-              <div className="bg-green-50 rounded-[12px] p-4 text-center dark:bg-green-900">
-                <h4 className="font-medium text-green-900 mb-1 dark:text-green-300">{t('informational.experiment')}</h4>
-                <p className="text-sm text-green-700 dark:text-green-200">{t('informational.experiment_desc')}</p>
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+                <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.experiment')}</h4>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.experiment_desc')}</p>
               </div>
-              <div className="bg-purple-50 rounded-[12px] p-4 text-center dark:bg-purple-900">
-                <h4 className="font-medium text-purple-900 mb-1 dark:text-purple-300">{t('informational.organize')}</h4>
-                <p className="text-sm text-purple-700 dark:text-purple-200">{t('informational.organize_desc')}</p>
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+                <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.organize')}</h4>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.organize_desc')}</p>
               </div>
             </div>
           </div>

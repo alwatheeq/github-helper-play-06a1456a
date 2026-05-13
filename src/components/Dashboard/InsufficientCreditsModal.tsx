@@ -87,7 +87,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
 
           {/* Body */}
           <div className="px-7 py-6">
-            <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed mb-5">
+            <p className="text-[14px] text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed mb-5">
               You've used all your credits for this cycle. Upgrade to continue processing
               documents and generating study materials without interruption.
             </p>
@@ -95,7 +95,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             {/* Two info chips */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {daysUntilRefresh !== null && (
-                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-3.5">
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[8px] p-3.5">
                   <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Refreshes in
                   </p>
@@ -107,7 +107,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
                   </p>
                 </div>
               )}
-              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-3.5">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[8px] p-3.5">
                 <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                   Pro plan gives
                 </p>

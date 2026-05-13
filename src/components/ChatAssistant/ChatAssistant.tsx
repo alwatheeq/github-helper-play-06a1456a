@@ -311,7 +311,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(question)}
-                      className="w-full text-left px-3.5 py-2 text-[12px] rounded-[10px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
+                      className="w-full text-left px-3.5 py-2 text-[10px] font-semibold rounded-[14px] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
                     >
                       {question}
                     </button>
