@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom';
 import { useChatContext } from '../../contexts/ChatContext';
 import './GlobalChatAssistant.css';
 
+const GENERAL_CHAT_CONTEXT_ID = '__global_assistant__';
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
@@ -88,9 +90,11 @@ const GlobalChatAssistantContent: React.FC = () => {
     if (!user) return;
 
     try {
-      // Use context if available, otherwise use general
-      const contextType = chatContext.contextType !== 'general' ? chatContext.contextType : 'general';
-      const contextId = chatContext.contextId;
+      // Store the global assistant as a regular summary context so older databases
+      // without the newer `general` CHECK constraint can still create chats.
+      const isGeneralContext = chatContext.contextType === 'general';
+      const contextType = isGeneralContext ? 'summary' : chatContext.contextType;
+      const contextId = isGeneralContext ? GENERAL_CHAT_CONTEXT_ID : chatContext.contextId;
 
       let query = supabase
         .from('chatbot_conversations')
@@ -370,8 +374,12 @@ const GlobalChatAssistantContent: React.FC = () => {
         throw new Error('Not authenticated');
       }
 
-      // Use chat context if available, otherwise use general context
+      // Use chat context if available, otherwise use the global assistant context.
+      // Keep request values compatible with DBs that only allow the original context types.
       const hasContext = chatContext.summaryText !== null;
+      const isGeneralContext = !hasContext || chatContext.contextType === 'general';
+      const requestContextType = isGeneralContext ? 'summary' : chatContext.contextType;
+      const requestContextId = isGeneralContext ? GENERAL_CHAT_CONTEXT_ID : chatContext.contextId;
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat-assistant`, {
         method: 'POST',
         headers: {
@@ -387,8 +395,8 @@ const GlobalChatAssistantContent: React.FC = () => {
           original_text: hasContext ? chatContext.originalText : null,
           topics: hasContext ? chatContext.topics : [],
           medical_mode: hasContext ? chatContext.medicalMode : false,
-          context_type: hasContext ? chatContext.contextType : 'general',
-          context_id: hasContext ? chatContext.contextId : null
+          context_type: requestContextType,
+          context_id: requestContextId
         })
       });
 
