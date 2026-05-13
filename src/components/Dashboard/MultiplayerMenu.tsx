@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Plus, Users, ArrowRight, ArrowLeft } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { ErrorLogger } from '../../utils/errorLogger';
@@ -94,7 +93,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
       ErrorLogger.info('Host player created successfully', { component: 'MultiplayerMenu', action: 'createLobby', lobbyId: lobby.id, userId: user.id, displayName, isHost: true, isReady: true, currentPlayers: lobby.current_players });
 
-      // Wait briefly for database trigger to update current_players
       await new Promise(resolve => setTimeout(resolve, 300));
 
       ErrorLogger.debug('Navigating to lobby', { component: 'MultiplayerMenu', action: 'createLobby', lobbyId: lobby.id });
@@ -168,7 +166,6 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
       ErrorLogger.info('Player joined successfully', { component: 'MultiplayerMenu', action: 'joinLobby', lobbyId: lobby.id, userId: user.id, displayName, isHost: false, isReady: true });
 
-      // Wait briefly for database trigger to update current_players
       await new Promise(resolve => setTimeout(resolve, 300));
 
       ErrorLogger.debug('Navigating to lobby', { component: 'MultiplayerMenu', action: 'joinLobby', lobbyId: lobby.id });
@@ -184,73 +181,75 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
   if (showCreateForm) {
     return (
-      <div className="max-w-2xl mx-auto p-6">
-        <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-          <h2 className="font-display text-[24px] font-bold mb-6">Create Multiplayer Game</h2>
+      <div className="w-full max-w-2xl mx-auto">
+        <div className="bg-sidebar px-[26px] py-[20px] flex items-center justify-between">
+          <div>
+            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+            <div className="font-display text-[24px] font-semibold text-ink-on-dark">Host a Game.</div>
+          </div>
+          <button
+            onClick={() => { setShowCreateForm(false); setError(null); }}
+            className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
+          >
+            ← Back
+          </button>
+        </div>
 
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-0 px-[26px] py-6">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[12px] text-red-800 text-sm dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
-              {error}
+            <div className="border border-red-500/40 bg-red-500/10 px-4 py-3 mb-5">
+              <span className="text-[12px] text-red-600 dark:text-red-400">{error}</span>
             </div>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                Game Name
-              </label>
+              <div className="text-[10px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2">Game Name</div>
               <input
                 type="text"
                 value={gameName}
                 onChange={(e) => setGameName(e.target.value)}
                 placeholder="Enter game name"
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
+                className="w-full px-[14px] py-[10px] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[13px] text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                  Max Players
-                </label>
+                <div className="text-[10px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2">Max Players</div>
                 <select
                   value={maxPlayers}
                   onChange={(e) => setMaxPlayers(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
+                  className="w-full px-[14px] py-[10px] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[13px] text-ink dark:text-ink-on-dark focus:outline-none"
                 >
                   {[2, 3, 4, 5, 6, 8, 10].map(num => (
-                    <option key={num} value={num}>{num}</option>
+                    <option key={num} value={num}>{num} players</option>
                   ))}
                 </select>
               </div>
-
               <div>
-                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                  Questions
-                </label>
+                <div className="text-[10px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2">Questions</div>
                 <select
                   value={questionCount}
                   onChange={(e) => setQuestionCount(Number(e.target.value))}
-                  className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
+                  className="w-full px-[14px] py-[10px] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[13px] text-ink dark:text-ink-on-dark focus:outline-none"
                 >
                   {[5, 10, 15, 20, 25].map(num => (
-                    <option key={num} value={num}>{num}</option>
+                    <option key={num} value={num}>{num} questions</option>
                   ))}
                 </select>
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                Time per Question (seconds)
-              </label>
+              <div className="text-[10px] font-bold tracking-[1px] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2">Time per Question</div>
               <select
                 value={timePerQuestion}
                 onChange={(e) => setTimePerQuestion(Number(e.target.value))}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
+                className="w-full px-[14px] py-[10px] border border-divider dark:border-divider-on-dark bg-page-light dark:bg-page-dark text-[13px] text-ink dark:text-ink-on-dark focus:outline-none"
               >
                 {[15, 20, 30, 45, 60].map(num => (
-                  <option key={num} value={num}>{num}s</option>
+                  <option key={num} value={num}>{num} seconds</option>
                 ))}
               </select>
             </div>
@@ -260,16 +259,13 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <button
               onClick={createLobby}
               disabled={loading || !gameName.trim()}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 font-semibold disabled:bg-subtle dark:bg-card-dark disabled:cursor-not-allowed transition-colors"
+              className="flex-1 py-[11px] bg-accent-gold text-white font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating...' : 'Create Game'}
+              {loading ? 'Creating…' : 'Create Game →'}
             </button>
             <button
-              onClick={() => {
-                setShowCreateForm(false);
-                setError(null);
-              }}
-              className="px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[12px] hover:bg-subtle font-semibold transition-colors"
+              onClick={() => { setShowCreateForm(false); setError(null); }}
+              className="px-6 py-[11px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[13px] hover:opacity-70 transition"
             >
               Cancel
             </button>
@@ -281,46 +277,52 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
   if (showJoinForm) {
     return (
-      <div className="max-w-md mx-auto p-6">
-        <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-6">
-          <h2 className="font-display text-[24px] font-bold mb-6">Join Game</h2>
+      <div className="w-full max-w-md mx-auto">
+        <div className="bg-sidebar px-[26px] py-[20px] flex items-center justify-between">
+          <div>
+            <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+            <div className="font-display text-[24px] font-semibold text-ink-on-dark">Join a Game.</div>
+          </div>
+          <button
+            onClick={() => { setShowJoinForm(false); setError(null); }}
+            className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
+          >
+            ← Back
+          </button>
+        </div>
+
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-0 px-[26px] py-6">
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Enter Room Code</div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-[12px] text-red-800 text-sm dark:text-red-200 dark:bg-red-950/40 dark:border-red-800">
-              {error}
+            <div className="border border-red-500/40 bg-red-500/10 px-4 py-3 mb-4">
+              <span className="text-[12px] text-red-600 dark:text-red-400">{error}</span>
             </div>
           )}
 
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
-                Game Code
-              </label>
-              <input
-                type="text"
-                value={gameCode}
-                onChange={(e) => setGameCode(e.target.value.toUpperCase())}
-                placeholder="Enter 6-digit code"
-                maxLength={6}
-                className="w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] text-center font-display text-[24px] font-bold tracking-wider focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+          <input
+            type="text"
+            value={gameCode}
+            onChange={(e) => setGameCode(e.target.value.toUpperCase())}
+            placeholder="XXXXXX"
+            maxLength={6}
+            className="w-full border-2 border-accent-gold bg-accent-gold-soft px-6 py-4 text-center font-display text-[30px] font-bold text-ink tracking-[8px] focus:outline-none mb-2"
+          />
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6 text-center">
+            Ask the host for their 6-character room code
           </div>
 
-          <div className="flex gap-3 mt-6">
+          <div className="flex gap-3">
             <button
               onClick={joinLobby}
               disabled={loading || gameCode.length !== 6}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 font-semibold disabled:bg-subtle dark:bg-card-dark disabled:cursor-not-allowed transition-colors"
+              className="flex-1 py-[11px] bg-accent-gold text-white font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Joining...' : 'Join Game'}
+              {loading ? 'Joining…' : 'Join Game →'}
             </button>
             <button
-              onClick={() => {
-                setShowJoinForm(false);
-                setError(null);
-              }}
-              className="px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[12px] hover:bg-subtle font-semibold transition-colors"
+              onClick={() => { setShowJoinForm(false); setError(null); }}
+              className="px-6 py-[11px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[13px] hover:opacity-70 transition"
             >
               Cancel
             </button>
@@ -331,81 +333,128 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      {onBack && (
-        <button
-          onClick={onBack}
-          className="mb-6 flex items-center gap-2 text-secondary-ink hover:text-ink dark:text-muted-ink dark:hover:text-muted-ink-on-dark transition-colors"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back
-        </button>
-      )}
-      <div className="text-center mb-8">
-        <h1 className="font-display text-[38px] font-semibold mb-2">Multiplayer Brain Rush</h1>
-        <p className="text-secondary-ink dark:text-muted-ink-on-dark">Compete with friends in real-time quiz battles!</p>
+    <div className="w-full">
+      {/* Dark header banner */}
+      <div className="bg-sidebar px-[26px] py-[20px] mb-[22px] flex items-center justify-between">
+        <div>
+          <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
+          <div className="font-display text-[26px] font-semibold text-ink-on-dark tracking-[-0.5px] mb-[5px]">Brain Rush.</div>
+          <div className="text-[12px] text-white/35">Real-time quiz duels · First to answer correctly earns the most points</div>
+        </div>
+        {onBack && (
+          <button onClick={onBack} className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition">
+            ← Back
+          </button>
+        )}
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <button
-          onClick={() => setShowCreateForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: transition-[background-color,border-color,color,opacity,transform,box-shadow]"
-        >
-          <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors dark:bg-blue-900/30">
-              <Plus className="w-10 h-10 text-blue-600 dark:text-blue-400" />
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-[22px]">
+        <div>
+          {/* How do you want to play? */}
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How do you want to play?</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-[22px]">
+            {/* Host — primary dark card */}
+            <div className="bg-sidebar p-[18px] flex flex-col">
+              <div className="text-[18px] mb-2 text-accent-gold">⊕</div>
+              <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1.5">Host a Game.</div>
+              <div className="text-[11.5px] text-white/40 leading-[1.65] flex-1 mb-3.5">
+                Create a private room and share a code with your classmates.
+              </div>
+              <button
+                onClick={() => setShowCreateForm(true)}
+                className="py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition text-center"
+              >
+                Host →
+              </button>
             </div>
-            <h3 className="s4-h3 text-[20px] mb-2">Create Game</h3>
-            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
-              Host a new game and invite friends to join
-            </p>
-            <div className="flex items-center text-blue-600 font-medium dark:text-blue-400">
-              Get Started
-              <ArrowRight className="w-4 h-4 ml-2 group- transition-transform" />
+
+            {/* Join — panel card */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px] flex flex-col">
+              <div className="text-[18px] mb-2 text-muted-ink dark:text-muted-ink-on-dark">→</div>
+              <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1.5">Join a Game.</div>
+              <div className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-[1.65] flex-1 mb-3.5">
+                Enter a room code from your classmate to join their session.
+              </div>
+              <button
+                onClick={() => setShowJoinForm(true)}
+                className="py-[7px] bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[12px] hover:opacity-75 transition text-center"
+              >
+                Join →
+              </button>
+            </div>
+
+            {/* Play Online — panel card */}
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px] flex flex-col">
+              <div className="text-[18px] mb-2 text-muted-ink dark:text-muted-ink-on-dark">◈</div>
+              <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark mb-1.5">Play Online.</div>
+              <div className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-[1.65] flex-1 mb-3.5">
+                Enter the ranked queue and get matched against players live.
+              </div>
+              <button
+                disabled
+                className="py-[7px] bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[12px] opacity-50 cursor-not-allowed text-center"
+              >
+                Coming soon
+              </button>
             </div>
           </div>
-        </button>
 
-        <button
-          onClick={() => setShowJoinForm(true)}
-          className="group bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow p-8 hover:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: transition-[background-color,border-color,color,opacity,transform,box-shadow]"
-        >
-          <div className="flex flex-col items-center text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors dark:bg-green-900/30">
-              <Users className="w-10 h-10 text-green-600 dark:text-green-400" />
-            </div>
-            <h3 className="s4-h3 text-[20px] mb-2">Join Game</h3>
-            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">
-              Enter a game code to join an existing game
-            </p>
-            <div className="flex items-center text-green-600 font-medium dark:text-green-400">
-              Join Now
-              <ArrowRight className="w-4 h-4 ml-2 group- transition-transform" />
-            </div>
+          {/* How it works */}
+          <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">How it works</div>
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-5">
+            <ol className="space-y-3">
+              {[
+                'Create a game or join using a code shared by a friend',
+                'Wait for players to join — everyone is automatically ready',
+                'Answer questions as fast and accurately as possible',
+                'See who comes out on top in the final leaderboard!',
+              ].map((step, i) => (
+                <li key={i} className="flex gap-3 text-[12px]">
+                  <span className="font-bold text-accent-gold flex-shrink-0">{i + 1}.</span>
+                  <span className="text-secondary-ink dark:text-muted-ink-on-dark">{step}</span>
+                </li>
+              ))}
+            </ol>
           </div>
-        </button>
-      </div>
+        </div>
 
-      <div className="mt-12 bg-blue-50 rounded-md p-6 dark:bg-blue-950/40">
-        <h3 className="font-semibold mb-3">How it works:</h3>
-        <ol className="space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
-          <li className="flex gap-2">
-            <span className="font-bold text-blue-600 dark:text-blue-400">1.</span>
-            <span>Create a game or join using a code shared by a friend</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-blue-600 dark:text-blue-400">2.</span>
-            <span>Wait for players to join (everyone is automatically ready!)</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-blue-600 dark:text-blue-400">3.</span>
-            <span>Answer questions as fast and accurately as possible</span>
-          </li>
-          <li className="flex gap-2">
-            <span className="font-bold text-blue-600 dark:text-blue-400">4.</span>
-            <span>See who comes out on top in the final leaderboard!</span>
-          </li>
-        </ol>
+        {/* Right rail */}
+        <div className="flex flex-col gap-[14px]">
+          {/* Quick join */}
+          <div className="bg-sidebar px-[18px] py-[18px]">
+            <div className="text-[9px] tracking-[2px] text-white/45 font-bold uppercase mb-2">Quick Join</div>
+            <div className="text-[11px] text-white/55 mb-3">Have a room code? Enter it to jump straight in.</div>
+            <input
+              type="text"
+              placeholder="Room code…"
+              value={gameCode}
+              onChange={(e) => setGameCode(e.target.value.toUpperCase())}
+              maxLength={6}
+              className="w-full px-3 py-2 bg-white/10 border border-white/15 text-ink-on-dark font-display text-[12px] font-bold tracking-[4px] placeholder:text-white/25 focus:outline-none mb-2 text-center"
+            />
+            <button
+              onClick={() => setShowJoinForm(true)}
+              disabled={gameCode.length === 0}
+              className="w-full py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition disabled:opacity-40"
+            >
+              Join →
+            </button>
+          </div>
+
+          {/* Info card */}
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
+            <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">Brain Rush</div>
+            <div className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark leading-[1.65]">
+              Real-time quiz duels against your classmates. First to answer correctly earns the most points.
+            </div>
+            {questionSetId && (
+              <div className="mt-3 pt-3 border-t border-divider dark:border-divider-on-dark">
+                <div className="text-[9px] tracking-[1.5px] text-muted-ink dark:text-muted-ink-on-dark uppercase font-bold mb-1">Using Question Set</div>
+                <div className="text-[11px] text-ink dark:text-ink-on-dark font-semibold">Custom Questions</div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

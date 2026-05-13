@@ -166,10 +166,10 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
         <div className="bg-sidebar py-[22px] px-[30px] mb-4 flex items-center ">
           <div className="pr-7 border-r border-white/10 flex-shrink-0">
             <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Your Rank</div>
-            <div className="font-display text-[54px] font-bold text-ink-on-dark leading-none tracking-[-2px]">
-              #{myRank}<span className="text-[20px] text-accent-gold ml-2">of {participantStats.length}</span>
+            <div className="font-display text-[60px] font-semibold text-ink-on-dark leading-none tracking-[-2px]">
+              #{myRank}<span className="text-[22px] text-accent-gold ml-2">of {participantStats.length}</span>
             </div>
-            <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold mt-2 uppercase">
+            <div className="font-display text-[10.5px] text-accent-gold mt-2">
               {myRank === 1 ? '— Winner!' : myRank <= 3 ? '— Top 3 finish' : '— Strong effort'}
             </div>
           </div>
@@ -180,13 +180,13 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
               [`${myStats.accuracy.toFixed(0)}%`, 'Accuracy'],
             ].map(([v, l]) => (
               <div key={l} className="text-center">
-                <div className="font-display text-[30px] font-bold text-ink-on-dark leading-none">{v}</div>
+                <div className="font-display text-[32px] font-semibold text-ink-on-dark leading-none">{v}</div>
                 <div className="text-[9px] tracking-[1.5px] text-muted-ink-on-dark uppercase mt-2">{l}</div>
               </div>
             ))}
             <div className="text-center border-l border-white/10 pl-7">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Avg Time</div>
-              <div className="font-display text-[24px] font-semibold text-ink-on-dark leading-none">
+              <div className="font-display text-[26px] font-semibold text-ink-on-dark leading-none">
                 {myStats.avgTimeSeconds.toFixed(1)}<span className="text-[13px] text-muted-ink-on-dark">s</span>
               </div>
               <div className="text-[10px] text-muted-ink-on-dark mt-1">per question</div>
@@ -229,7 +229,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
           </div>
 
           {/* Game summary */}
-          <div className="mt-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-5 ">
+          <div className="mt-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold p-5 ">
             <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Game Summary</div>
             {[
               ['Questions', String(gameSession.total_questions)],
@@ -259,7 +259,7 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
               return (
                 <div
                   key={stats.participant.id}
-                  className={`grid grid-cols-[36px_1fr_60px_52px_52px_80px] px-4 py-3 border-b border-divider dark:border-divider-on-dark last:border-0 items-center ${isMe ? 'bg-chip dark:bg-chip' : ''}`}
+                  className={`grid grid-cols-[36px_1fr_60px_52px_52px_80px] px-4 py-3 border-b border-divider dark:border-divider-on-dark last:border-0 items-center ${isMe ? 'bg-accent-gold-soft' : ''}`}
                   style={{ borderLeft: isMe ? '3px solid var(--color-accent-gold)' : '3px solid transparent' }}
                 >
                   <span className={`font-display text-[14px] font-bold ${i < 3 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 1}</span>
@@ -271,9 +271,9 @@ export const BrainRushResults: React.FC<BrainRushResultsProps> = ({
                       {stats.participant.display_name}
                     </span>
                   </div>
-                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.correctAnswers}/{stats.totalAnswers}</span>
-                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.accuracy.toFixed(0)}%</span>
-                  <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{stats.avgTimeSeconds.toFixed(1)}s</span>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{stats.correctAnswers}/{stats.totalAnswers}</span>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{stats.accuracy.toFixed(0)}%</span>
+                  <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark">{stats.avgTimeSeconds.toFixed(1)}s</span>
                   <span className={`font-display text-[16px] font-bold ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                     {stats.participant.score.toLocaleString()}
                   </span>

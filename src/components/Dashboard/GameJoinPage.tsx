@@ -132,7 +132,7 @@ export const GameJoinPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-page flex items-center justify-center p-4">
+      <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4">
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full ">
           <Loader2 className="h-12 w-12 text-accent-gold animate-spin mx-auto mb-4" />
           <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">Validating game code...</p>
@@ -143,7 +143,7 @@ export const GameJoinPage: React.FC = () => {
 
   if (error && !gameInfo) {
     return (
-      <div className="min-h-screen bg-page flex items-center justify-center p-4">
+      <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4">
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center max-w-md w-full ">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
           <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-3">Unable to Join Game</h2>
@@ -160,7 +160,7 @@ export const GameJoinPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-page flex items-center justify-center p-4">
+    <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4">
       {/* Scholar v4 Play4Join layout: centered card */}
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4">
 
