@@ -109,22 +109,22 @@ export const LowCreditBanner: React.FC = () => {
   if (!config) return null;
 
   return (
-    <div className={`${config.wrapperClass} rounded-[var(--s4-radius-card)] p-3.5 mb-5 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
+    <div className={`${config.wrapperClass} rounded-[12px] px-[18px] py-[14px] mb-5 animate-in fade-in slide-in-from-top-2 duration-[var(--s4-dur-base)]`}>
       <div className="flex items-start gap-3.5">
         {/* Alert icon */}
-        <div className={`flex-shrink-0 mt-0.5 ${config.iconClass}`}>
+        <div className={`flex-shrink-0 mt-[1px] ${config.iconClass}`}>
           <AlertIcon />
         </div>
 
         {/* Text content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className={`text-sm font-bold ${config.textClass}`}>{config.title}</span>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${config.badgeClass}`}>
+            <span className={`text-[13px] font-bold ${config.textClass}`}>{config.title}</span>
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-[10px] ${config.badgeClass}`}>
               {credits_remaining.toLocaleString()} credits
             </span>
           </div>
-          <p className={`text-xs leading-relaxed ${config.textClass} opacity-85`}>
+          <p className={`text-[12px] leading-relaxed ${config.textClass} opacity-85`}>
             {config.message}
           </p>
         </div>
@@ -133,16 +133,16 @@ export const LowCreditBanner: React.FC = () => {
         <div className="flex items-center gap-2 flex-shrink-0">
           <a
             href="/pricing"
-            className={`px-3.5 py-1.5 text-xs font-bold rounded-[var(--s4-radius-card)] whitespace-nowrap transition-opacity shadow-sm ${config.btnClass}`}
+            className={`px-3.5 py-[7px] text-[12px] font-bold rounded-[8px] whitespace-nowrap transition-opacity ${config.btnClass}`}
           >
             Top Up
           </a>
           <button
             onClick={() => setShowBanner(false)}
-            className={`w-7 h-7 flex items-center justify-center rounded-[var(--s4-radius-card)] border ${config.badgeClass} hover:opacity-70 transition-opacity`}
+            className={`w-[26px] h-[26px] flex items-center justify-center rounded-[7px] border ${config.badgeClass} hover:opacity-70 transition-opacity`}
             aria-label="Dismiss warning"
           >
-            <X className="h-3.5 w-3.5" />
+            <X className="h-[11px] w-[11px]" />
           </button>
         </div>
       </div>

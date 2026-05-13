@@ -70,27 +70,27 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       <div className="absolute inset-0 bg-page bg-opacity-70 backdrop-blur-md"></div>
 
       {/* Tutorial Modal */}
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] max-w-2xl w-full overflow-hidden animate-scaleIn">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[var(--s4-shadow-modal)] max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
-        <div className="bg-accent-gold p-6 text-white relative">
+        <div className="bg-accent-gold px-7 py-5 text-white relative">
           <button
             onClick={handleSkip}
-            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-[var(--s4-dur-fast)] group"
+            className="absolute top-4 right-[18px] w-7 h-7 rounded-[5px] bg-white/[0.18] flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={t('tutorial.skip')}
           >
-            <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-[var(--s4-dur-base)]" />
+            <X className="h-3 w-3" />
           </button>
 
           <div className="pr-12">
-            <h2 className="s4-h2 mb-1">{config.title}</h2>
-            <p className="text-ink-on-dark/90 text-sm">
+            <h2 className="font-display text-[21px] font-bold mb-[3px]">{config.title}</h2>
+            <p className="text-white/[0.82] text-[13px]">
               {t('tutorial.learn_this_page')}
             </p>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="px-7 py-6">
           <TutorialStep
             step={currentStepData}
             stepNumber={currentStep + 1}
@@ -100,7 +100,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
         </div>
 
         {/* Footer with Navigation */}
-        <div className="border-t border-divider dark:border-divider-on-dark bg-accent-gold-soft/10 px-6 py-4">
+        <div className="border-t border-divider dark:border-divider-on-dark bg-accent-gold-soft px-7 py-[13px]">
           <div className="flex items-center justify-between">
             {/* Skip Button */}
             <button
@@ -116,9 +116,9 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {!isFirstStep && (
                 <button
                   onClick={handlePrevious}
-                  className="flex items-center space-x-2 px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-ink dark:text-ink-on-dark"
+                  className="flex items-center gap-1.5 px-4 py-[7px] border-[1.5px] border-divider dark:border-divider-on-dark rounded-[5px] bg-card-light dark:bg-card-dark hover:opacity-80 transition-opacity text-ink dark:text-ink-on-dark text-[13px] font-medium"
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className="h-[13px] w-[13px]" />
                   <span>{t('tutorial.previous')}</span>
                 </button>
               )}
@@ -126,10 +126,10 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {/* Next/Close Button */}
               <button
                 onClick={handleNext}
-                className="flex items-center space-x-2 px-6 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-80 transition-opacity font-semibold shadow-[var(--s4-shadow-hairline)]"
+                className="flex items-center gap-1.5 px-5 py-[7px] bg-accent-gold text-white rounded-[5px] hover:opacity-80 transition-opacity text-[13px] font-bold"
               >
                 <span>{isLastStep ? t('tutorial.close') : t('tutorial.next')}</span>
-                {!isLastStep && <ChevronRight className="h-4 w-4" />}
+                {!isLastStep && <ChevronRight className="h-[13px] w-[13px]" />}
               </button>
             </div>
           </div>

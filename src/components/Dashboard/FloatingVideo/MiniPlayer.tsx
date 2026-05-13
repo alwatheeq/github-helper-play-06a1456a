@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect } from 'react';
-import { Mic, MicOff, Maximize2, X, GripVertical } from 'lucide-react';
+import { Mic, MicOff, Maximize2, X } from 'lucide-react';
 import { useFloatingVideoStore } from '../../../stores/useFloatingVideoStore';
 import { useI18n } from '../../../contexts/I18nContext';
 
@@ -59,57 +59,63 @@ const MiniPlayer: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed z-[9998] w-40 h-28 rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-floating)] overflow-hidden flex flex-col select-none bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark"
+      className="fixed z-[9998] w-[180px] rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.32)] overflow-hidden flex flex-col select-none border border-white/[0.08]"
       style={{ left: pos.x, top: pos.y }}
     >
       {/* Drag handle + room name */}
       <div
-        className="flex items-center gap-1 px-1.5 py-1 cursor-grab active:cursor-grabbing bg-black/30 backdrop-blur-sm"
+        className="flex items-center gap-1.5 px-2.5 py-[7px] cursor-grab active:cursor-grabbing"
+        style={{ background: '#1a1a2e' }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
       >
-        <GripVertical className="w-3 h-3 text-ink-on-dark/70 shrink-0" />
-        <span className="text-[10px] text-ink-on-dark font-medium truncate flex-1">
+        <div className="flex gap-0.5 flex-shrink-0">
+          {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
+        </div>
+        <span className="text-[9px] text-white/[0.6] font-semibold flex-1 text-center truncate">
           {activeRoom.name}
         </span>
       </div>
 
       {/* Video preview placeholder */}
-      <div className="flex-1 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-        <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">
+      <div className="h-[100px] flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f172a 100%)' }}>
+        <span className="text-[9px] text-white/40">
           {t('floating_video.video_preview') || 'Video Preview'}
         </span>
       </div>
 
       {/* Control bar */}
-      <div className="flex items-center justify-around px-1 py-1 bg-black/40 backdrop-blur-sm">
+      <div className="flex items-center justify-around px-2.5 py-2" style={{ background: '#111827' }}>
         <button
           type="button"
           onClick={toggleMute}
-          className="p-1 rounded hover:bg-white/20 transition-colors"
+          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          style={isMuted ? { background: 'rgba(239,68,68,0.13)', border: '1px solid rgba(239,68,68,0.31)' } : { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
           title={isMuted ? (t('floating_video.unmute') || 'Unmute') : (t('floating_video.mute') || 'Mute')}
         >
           {isMuted ? (
             <MicOff className="w-3.5 h-3.5 text-red-400" />
           ) : (
-            <Mic className="w-3.5 h-3.5 text-ink-on-dark" />
+            <Mic className="w-3.5 h-3.5 text-white/70" />
           )}
         </button>
 
         <button
           type="button"
           onClick={handleExpand}
-          className="p-1 rounded hover:bg-white/20 transition-colors"
+          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
           title={t('floating_video.expand') || 'Expand'}
         >
-          <Maximize2 className="w-3.5 h-3.5 text-ink-on-dark" />
+          <Maximize2 className="w-3.5 h-3.5 text-white/70" />
         </button>
 
         <button
           type="button"
           onClick={leaveRoom}
-          className="p-1 rounded hover:bg-red-500/40 transition-colors"
+          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          style={{ background: 'rgba(239,68,68,0.13)', border: '1px solid rgba(239,68,68,0.31)' }}
           title={t('floating_video.leave_room') || 'Leave'}
         >
           <X className="w-3.5 h-3.5 text-red-400" />

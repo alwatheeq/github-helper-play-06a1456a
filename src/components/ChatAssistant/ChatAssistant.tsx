@@ -254,39 +254,46 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 bg-accent-gold text-white dark:text-ink p-6 rounded-full shadow hover:shadow-[var(--s4-shadow-hairline)] transition-colors duration-[var(--s4-dur-fast)]  flex items-center justify-center`}
+        className="fixed bottom-6 right-6 z-50 w-[46px] h-[46px] rounded-[14px] flex items-center justify-center hover:opacity-90 transition-opacity"
+        style={{ background: 'linear-gradient(135deg, #b45309, #d97706)', boxShadow: '0 4px 18px rgba(180,83,9,0.4)' }}
         aria-label={t('chat.open_assistant')}
       >
-        <MessageCircle className="h-6 w-6" />
+        <MessageCircle className="h-5 w-5 text-white" />
       </button>
     );
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-96 ${isMinimized ? 'h-16' : 'h-[600px]'} flex flex-col bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-[var(--s4-dur-fast)]`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-[360px] ${isMinimized ? 'h-16' : 'h-[520px]'} flex flex-col bg-card-light dark:bg-card-dark rounded-[18px] shadow-[0_12px_48px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark overflow-hidden`}>
       {/* Header */}
-      <div className={`flex items-center justify-between p-6 bg-accent-gold text-white dark:text-ink rounded-t-[var(--s4-radius-card)]`}>
-        <div className="flex items-center space-x-2">
-          <MessageCircle className="h-5 w-5" />
-          <span className="font-semibold">{t('chat.assistant_title')}</span>
+      <div
+        className="flex items-center gap-2.5 px-[18px] py-[14px] rounded-t-[18px] flex-shrink-0"
+        style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}
+      >
+        <div className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center flex-shrink-0">
+          <MessageCircle className="h-4 w-4 text-white" />
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex-1 min-w-0">
+          <div className="text-[13px] font-bold text-white">{t('chat.assistant_title')}</div>
+          <div className="text-[10px] text-white/[0.75] mt-[1px]">Powered by Claude · Always learning</div>
+        </div>
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setIsMinimized(!isMinimized)}
-            className="hover:bg-white/20 p-1 rounded transition-colors"
+            className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={isMinimized ? t('chat.maximize') : t('chat.minimize')}
           >
-            {isMinimized ? <Maximize2 className="h-4 w-4" /> : <Minimize2 className="h-4 w-4" />}
+            {isMinimized ? <Maximize2 className="h-3 w-3 text-white" /> : <Minimize2 className="h-3 w-3 text-white" />}
           </button>
           <button
             onClick={() => {
               setIsOpen(false);
               setIsMinimized(false);
             }}
-            className="hover:bg-white/20 p-1 rounded transition-colors"
+            className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={t('chat.close')}
           >
-            <X className="h-4 w-4" />
+            <X className="h-3 w-3 text-white" />
           </button>
         </div>
       </div>
@@ -294,17 +301,17 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
       {!isMinimized && (
         <>
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="flex-1 overflow-y-auto px-3.5 py-3.5 flex flex-col gap-2.5 bg-page-light dark:bg-page-dark">
             {messages.length === 0 ? (
               <div className="text-center py-8">
-                <MessageCircle className="h-12 w-12 mx-auto mb-4 text-muted-ink dark:text-muted-ink-on-dark" />
-                <p className="text-secondary-ink dark:text-muted-ink mb-4">{t('chat.welcome_message')}</p>
-                <div className="space-y-2">
+                <MessageCircle className="h-10 w-10 mx-auto mb-3 text-muted-ink dark:text-muted-ink-on-dark" />
+                <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark mb-4">{t('chat.welcome_message')}</p>
+                <div className="flex flex-col gap-1.5">
                   {suggestedQuestions.map((question, index) => (
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(question)}
-                      className={`w-full text-left px-5 py-2.5 text-sm rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-card-dark transition-colors`}
+                      className="w-full text-left px-3.5 py-2 text-[12px] rounded-[10px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
                     >
                       {question}
                     </button>
@@ -316,22 +323,32 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                 {messages.map((message) => (
                   <div
                     key={message.id}
-                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`flex ${message.role === 'user' ? 'flex-row-reverse' : 'flex-row'} items-end gap-2`}
                   >
+                    {message.role === 'assistant' && (
+                      <div className="w-[26px] h-[26px] rounded-[8px] flex-shrink-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}>
+                        <MessageCircle className="h-3 w-3 text-white" />
+                      </div>
+                    )}
                     <div
-                      className={`max-w-[80%] rounded-[var(--s4-radius-card)] px-5 py-2.5 ${
+                      className={`max-w-[78%] px-3 py-2.5 text-[12px] leading-relaxed whitespace-pre-line ${
                         message.role === 'user'
-                          ? `bg-accent-gold text-white dark:text-ink`
-                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
+                          ? 'text-white'
+                          : 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark border border-divider dark:border-divider-on-dark'
                       }`}
+                      style={{
+                        borderRadius: message.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+                        background: message.role === 'user' ? 'linear-gradient(135deg, #d97706, #b45309dd)' : undefined,
+                        boxShadow: message.role === 'user' ? '0 2px 8px rgba(180,83,9,0.4)' : '0 1px 4px rgba(0,0,0,0.06)',
+                      }}
                     >
-                      <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                      {message.content}
                     </div>
                   </div>
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
+                    <div className="bg-card-light dark:bg-card-dark px-3 py-2.5 border border-divider dark:border-divider-on-dark" style={{ borderRadius: '14px 14px 14px 4px' }}>
                       <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
                     </div>
                   </div>
@@ -341,32 +358,48 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
             )}
           </div>
 
+          {/* Suggestions */}
+          {messages.length > 0 && (
+            <div className="flex gap-1.5 px-3 py-2 overflow-x-auto border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark flex-shrink-0">
+              {suggestedQuestions.slice(0, 3).map((s, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSuggestionClick(s)}
+                  className="px-2.5 py-1.5 rounded-[14px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-[10px] font-semibold text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity whitespace-nowrap flex-shrink-0"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Input */}
-          <div className="p-6 border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
-            <div className="flex items-end space-x-2">
+          <div className="px-3 py-2.5 flex items-center gap-2 bg-card-light dark:bg-card-dark border-t border-divider dark:border-divider-on-dark flex-shrink-0">
+            <div className="flex-1 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[20px] px-3.5 py-2 text-[12px] text-muted-ink dark:text-muted-ink-on-dark">
               <textarea
                 ref={inputRef}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className="flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400"
+                className="w-full bg-transparent text-ink dark:text-ink-on-dark focus:outline-none resize-none text-[12px] leading-relaxed placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark"
                 rows={1}
-                style={{ minHeight: '40px', maxHeight: '120px' }}
+                style={{ minHeight: '20px', maxHeight: '80px' }}
               />
-              <button
-                onClick={sendMessage}
-                disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white dark:text-ink disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
-                aria-label={t('chat.send')}
-              >
-                {loading ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <Send className="h-5 w-5" />
-                )}
-              </button>
             </div>
+            <button
+              onClick={sendMessage}
+              disabled={!inputValue.trim() || loading}
+              className="w-8 h-8 rounded-[9px] bg-accent-gold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity flex-shrink-0"
+              style={{ boxShadow: '0 2px 8px rgba(180,83,9,0.4)' }}
+              aria-label={t('chat.send')}
+            >
+              {loading ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
+              ) : (
+                <Send className="h-3.5 w-3.5 text-white" />
+              )}
+            </button>
           </div>
         </>
       )}

@@ -223,7 +223,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       <div className="flex items-center gap-3 px-4 py-0 border-b shrink-0 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]" style={{ height: 58 }}>
         <button
           onClick={onBack}
-          className="p-1.5 rounded-[var(--s4-radius-card)] bg-subtle dark:bg-card-dark hover:opacity-80 transition-opacity"
+          className="p-1.5 rounded-[7px] bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="w-5 h-5 text-ink dark:text-ink-on-dark" />
         </button>
@@ -317,7 +317,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                     <div
                       className={`px-3.5 py-2.5 text-[13px] leading-relaxed break-words ${
                         own
-                          ? 'bg-accent-gold/15 text-ink dark:text-ink-on-dark'
+                          ? 'bg-accent-gold text-white'
                           : 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark shadow-sm'
                       }`}
                       style={{
@@ -346,11 +346,11 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       {/* Input bar — Scholar v4 GroupChat4 style */}
       <div className="shrink-0 border-t border-divider dark:border-divider-on-dark px-4 py-2.5 bg-card-light dark:bg-card-dark flex items-center gap-2 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
         {/* Attachment icon */}
-        <button className="w-8 h-8 rounded-lg bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+        <button className="w-8 h-8 rounded-[8px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
           <Paperclip className="w-3.5 h-3.5" />
         </button>
         {/* Emoji icon */}
-        <button className="w-8 h-8 rounded-lg bg-subtle dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
+        <button className="w-8 h-8 rounded-[8px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity flex-shrink-0">
           <Smile className="w-3.5 h-3.5" />
         </button>
         {/* Text input — pill shape */}
@@ -366,7 +366,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
         <button
           onClick={handleSend}
           disabled={sending || !input.trim()}
-          className="w-9 h-9 rounded-xl bg-accent-gold flex items-center justify-center flex-shrink-0 hover:opacity-90 disabled:opacity-40 transition-opacity shadow-md"
+          className="w-9 h-9 rounded-[11px] bg-accent-gold flex items-center justify-center flex-shrink-0 hover:opacity-90 disabled:opacity-40 transition-opacity shadow-md"
           style={{ boxShadow: 'var(--color-accent-gold, #c9a227) 0 3px 12px 0' }}
         >
           {sending ? (
