@@ -260,7 +260,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
                 {/* Countdown badge */}
                 {countdown.isPast ? (
-                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full bg-chip dark:bg-bg-chip text-muted-ink dark:text-muted-ink-on-dark">
+                  <span className="shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full bg-chip dark:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark">
                     {t('exam_scheduler.past') || 'Past'}
                   </span>
                 ) : (

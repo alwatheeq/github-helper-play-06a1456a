@@ -77,6 +77,12 @@ type CourseQuiz = {
   quiz_sessions?: { id: string; quiz_title: string; questions_json: QuizQuestionJson[] } | null;
 };
 
+const SelectCourseEmptyState: React.FC<{ message: string }> = ({ message }) => (
+  <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 text-center">
+    <p className="text-muted-ink dark:text-muted-ink-on-dark text-sm">{message}</p>
+  </div>
+);
+
 /** PostgREST / Postgres errors when academics tables are missing or cache is stale */
 const ACADEMICS_SCHEMA_ERROR_RE =
   /relation|does not exist|schema cache|Could not find the table/i;
@@ -944,7 +950,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               {t('academics.upload_section_desc')}
             </p>
             {selectedCourse ? (
-              <details className="group border border-divider dark:border-divider-on-dark bg-subtle dark:bg-bg-subtle overflow-hidden">
+              <details className="group border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark overflow-hidden">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 [&::-webkit-details-marker]:hidden text-ink dark:text-ink-on-dark">
                   <span className="text-sm font-medium">{t('academics.generation_for_upload_title')}</span>
                   <span className="flex min-w-0 flex-1 items-center justify-end gap-2 text-xs text-muted-ink dark:text-muted-ink-on-dark">
@@ -1056,12 +1062,12 @@ export const AcademicsPage: React.FC = React.memo(() => {
             <h4 className="font-semibold text-ink dark:text-ink-on-dark mb-3">{t('academics.generated_content_heading')}</h4>
             <div className="space-y-2">
               {courseItems.map((item) => (
-                <div key={item.id} className="px-3 py-2 bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                <div key={item.id} className="px-3 py-2 bg-chip dark:bg-card-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   {item.user_library_items?.title || item.item_id}
                 </div>
               ))}
               {courseQuizzes.map((quiz) => (
-                <div key={quiz.id} className="px-3 py-2 bg-chip dark:bg-bg-chip text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                <div key={quiz.id} className="px-3 py-2 bg-chip dark:bg-card-dark text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   {quiz.quiz_sessions?.quiz_title || quiz.quiz_session_id}
                 </div>
               ))}
@@ -1082,9 +1088,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         />
       )}
       {activeTab === 'tutor' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
-          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
-        </div>
+        <SelectCourseEmptyState message={t('academics.select_course_first')} />
       )}
 
       {/* ── Exam Prep tab ── */}
@@ -1092,9 +1096,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         <ExamScheduler courseId={selectedCourse.id} />
       )}
       {activeTab === 'exams' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
-          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
-        </div>
+        <SelectCourseEmptyState message={t('academics.select_course_first')} />
       )}
 
       {/* ── SRS tab ── */}
@@ -1105,9 +1107,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         />
       )}
       {activeTab === 'srs' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
-          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
-        </div>
+        <SelectCourseEmptyState message={t('academics.select_course_first')} />
       )}
 
       {/* ── Analytics tab ── */}
@@ -1121,32 +1121,30 @@ export const AcademicsPage: React.FC = React.memo(() => {
         </React.Suspense>
       )}
       {activeTab === 'analytics' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
-          <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
-        </div>
+        <SelectCourseEmptyState message={t('academics.select_course_first')} />
       )}
 
       {showCreateCourse ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark w-full max-w-lg p-6">
-            <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('academics.create_course') || 'Create course'}</h3>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark w-full max-w-lg p-6">
+            <h3 className="font-display text-lg font-semibold text-ink dark:text-ink-on-dark">{t('academics.create_course') || 'Create course'}</h3>
             <div className="space-y-3 mt-4">
               <input
                 value={newCourseName}
                 onChange={(e) => setNewCourseName(e.target.value)}
                 placeholder={t('academics.placeholder_course_name')}
-                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold"
               />
               <input
                 value={newCourseCode}
                 onChange={(e) => setNewCourseCode(e.target.value)}
                 placeholder={t('academics.placeholder_course_code')}
-                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold"
               />
               <select
                 value={selectedTopicId}
                 onChange={(e) => setSelectedTopicId(e.target.value)}
-                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold"
               >
                 <option value="">{t('academics.select_existing_topic')}</option>
                 {topics.map((topic) => (
@@ -1159,14 +1157,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
                 placeholder={t('academics.placeholder_new_topic')}
-                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold"
               />
             </div>
             <div className="mt-5 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setShowCreateCourse(false)}
-                className="px-4 py-2 rounded-[12px] bg-chip text-secondary-ink dark:text-muted-ink-on-dark"
+                className="px-4 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -1174,7 +1172,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 type="button"
                 disabled={creatingCourse}
                 onClick={handleCreateCourse}
-                className="px-4 py-2 rounded-[12px] bg-accent-gold text-white disabled:opacity-50"
+                className="px-4 py-2 bg-accent-gold text-sidebar font-semibold disabled:opacity-50 hover:opacity-90 transition-opacity"
               >
                 {creatingCourse ? t('academics.creating') : (t('common.save') || 'Save')}
               </button>

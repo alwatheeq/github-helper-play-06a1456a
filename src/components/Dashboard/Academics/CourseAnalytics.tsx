@@ -217,10 +217,10 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
                 />
                 <Tooltip
                   contentStyle={{
-                    borderRadius: '6px',
+                    borderRadius: '4px',
                     fontSize: '12px',
-                    border: '1px solid var(--divider)',
-                    background: 'var(--bg-card)',
+                    border: '1px solid var(--color-border-divider)',
+                    background: 'var(--color-bg-card-light)',
                   }}
                 />
                 <Line

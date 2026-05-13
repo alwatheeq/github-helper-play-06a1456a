@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
-import { BookOpen, Search, Eye, Share2, Trash2, CheckCircle2, AlertCircle, X, Tag, FileText, Stethoscope, Filter } from 'lucide-react';
+import { BookOpen, Search, Eye, Share2, Trash2, AlertCircle, Tag, FileText, Stethoscope, Filter } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
 import { supabase } from '../../lib/supabase';
@@ -15,7 +15,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { PerformanceMonitor } from '../../utils/performanceMonitor';
 import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 import { useConfirm } from '../../hooks/useConfirm';
-import { PageHeader, ScholarButton } from '../Scholar';
+import { PageHeader, ScholarButton, ScholarAlert } from '../Scholar';
 
 // GlobalExam interface removed - moved to QuizPage
 
@@ -719,7 +719,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (initialLoading) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: border border-divider dark:border-divider-on-dark`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <LoadingSkeleton type="page" count={5} />
         </div>
       </div>
@@ -729,7 +729,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (error) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: border border-divider dark:border-divider-on-dark`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
@@ -746,30 +746,14 @@ export const LibraryPage: React.FC = React.memo(() => {
   return (
     <>
     <div className="w-full">
-      {/* Notification */}
       {notification.show && (
-        <div className={`mb-6 p-4 rounded-[12px] flex items-center space-x-3 ${
-          notification.type === 'success'
-            ? 'bg-green-50 border border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
-            : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
-        }`}>
-          {notification.type === 'success' ? (
-            <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
-          ) : (
-            <AlertCircle className="h-5 w-5 flex-shrink-0" />
-          )}
-          <span className="text-sm font-medium flex-1">{notification.message}</span>
-          <button
-            onClick={() => setNotification(prev => ({ ...prev, show: false }))}
-            className={`${
-              notification.type === 'success'
-                ? 'text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-200'
-                : 'text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200'
-            }`}
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
+        <ScholarAlert
+          variant={notification.type === 'success' ? 'success' : 'danger'}
+          onDismiss={() => setNotification(prev => ({ ...prev, show: false }))}
+          className="mb-6"
+        >
+          {notification.message}
+        </ScholarAlert>
       )}
 
       {/* Scholar v4 PageHeader */}
@@ -1004,7 +988,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
       {/* Multi-select controls */}
       {selectMultipleMode && (
-        <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark rounded-[12px] border border-divider dark:border-divider-on-dark">
+        <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
           <span className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">
             {selectedItems.size > 0
               ? t('library.items_selected', { count: selectedItems.size })
@@ -1049,13 +1033,11 @@ export const LibraryPage: React.FC = React.memo(() => {
             <button
               type="button"
               onClick={() => setSelectedTopics([])}
-              className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] font-medium transition-colors duration-150"
-              style={{
-                background: selectedTopics.length === 0 ? 'var(--color-accent-gold-soft, #F0E4CB)' : 'transparent',
-                borderLeft: selectedTopics.length === 0 ? '2px solid var(--color-accent-gold, #B8893A)' : '2px solid transparent',
-                color: selectedTopics.length === 0 ? 'var(--color-accent-gold, #B8893A)' : undefined,
-                fontWeight: selectedTopics.length === 0 ? 600 : 500,
-              }}
+              className={`border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] transition-colors duration-150 ${
+                selectedTopics.length === 0
+                  ? 'bg-accent-gold-soft border-l-2 border-l-accent-gold text-accent-gold font-semibold'
+                  : 'bg-transparent border-l-2 border-l-transparent text-secondary-ink dark:text-muted-ink-on-dark font-medium'
+              }`}
             >
               <span>All topics</span>
               <span className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{libraryItems.length}</span>
@@ -1069,13 +1051,11 @@ export const LibraryPage: React.FC = React.memo(() => {
                   onClick={() => setSelectedTopics(prev =>
                     prev.includes(label) ? prev.filter(t => t !== label) : [...prev, label]
                   )}
-                  className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] capitalize transition-colors duration-150"
-                  style={{
-                    background: active ? 'var(--color-accent-gold-soft, #F0E4CB)' : 'transparent',
-                    borderLeft: active ? '2px solid var(--color-accent-gold, #B8893A)' : '2px solid transparent',
-                    color: active ? 'var(--color-accent-gold, #B8893A)' : undefined,
-                    fontWeight: active ? 600 : 500,
-                  }}
+                  className={`border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] capitalize transition-colors duration-150 ${
+                    active
+                      ? 'bg-accent-gold-soft border-l-2 border-l-accent-gold text-accent-gold font-semibold'
+                      : 'bg-transparent border-l-2 border-l-transparent text-secondary-ink dark:text-muted-ink-on-dark font-medium'
+                  }`}
                 >
                   <span>{label}</span>
                   <span className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{count}</span>
@@ -1128,7 +1108,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               )}
             </div>
           ) : (
-            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] overflow-hidden ">
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
               {/* Table header */}
               <div className="grid gap-3.5 px-5 py-2 border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 120px 120px 110px' }}>
                 <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Title</span>

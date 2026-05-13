@@ -214,7 +214,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
     <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6 space-y-5" dir={dir}>
       {/* Progress row */}
       <div className="flex items-center gap-4">
-        <div className="flex-1 h-[6px] rounded-full bg-chip dark:bg-bg-chip overflow-hidden">
+        <div className="flex-1 h-[6px] rounded-full bg-chip dark:bg-card-dark overflow-hidden">
           <div
             className="h-full rounded-full bg-accent-gold transition-all duration-300 ease-out"
             style={{ width: `${progressPct}%` }}
