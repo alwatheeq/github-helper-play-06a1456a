@@ -75,7 +75,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName, 
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6">
         <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('ai_tutor.loading') || 'Loading tutor…'}
         </div>
@@ -85,7 +85,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName, 
 
   if (!context) {
     return (
-      <div className="bg-card-dark border border-divider rounded-[var(--s4-radius-card)] p-8 text-center" dir={dir}>
+      <div className="bg-card-dark border border-divider rounded-[12px] p-8 text-center" dir={dir}>
         <Bot className="h-8 w-8 text-muted-ink-on-dark mx-auto mb-3" />
         <p className="text-sm text-muted-ink-on-dark">
           {t('ai_tutor.no_context') || 'Upload materials to this course to enable the AI tutor'}
@@ -97,7 +97,7 @@ export const CourseTutor: React.FC<CourseTutorProps> = ({ courseId, courseName, 
   return (
     /* Aca4Tutor: split 70/30 layout */
     <div
-      className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] overflow-hidden"
+      className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] overflow-hidden"
       dir={dir}
     >
       {/* Context bar */}

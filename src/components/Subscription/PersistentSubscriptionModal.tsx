@@ -44,10 +44,10 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onDismiss}
-            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition-colors duration-[var(--s4-dur-fast)] group"
+            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[12px] transition-colors duration-150 group"
             aria-label="Close"
           >
-            <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-[var(--s4-dur-base)]" />
+            <X className="h-5 w-5 group-hover:rotate-90 transition-transform duration-200" />
           </button>
 
           <div className="flex items-center space-x-3 mb-2">
@@ -55,7 +55,7 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
               <Crown className="h-8 w-8" />
             </div>
             <div>
-              <h2 className="s4-h2">Upgrade to Premium</h2>
+              <h2 className="font-display text-[24px] font-bold">Upgrade to Premium</h2>
               <p className="text-ink-on-dark text-opacity-90 text-sm">Unlock unlimited access</p>
             </div>
           </div>

@@ -452,7 +452,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   if (loading || !currentQuestion) {
     return (
       <div className="max-w-6xl mx-auto">
-        <div className="bg-card-dark p-12 text-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-dark p-12 text-center ">
           <Loader2 className="h-12 w-12 text-accent-gold animate-spin mx-auto mb-4" />
           <p className="text-ink-on-dark text-[13px]">Loading question...</p>
         </div>
@@ -577,7 +577,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               onClick={() => !hasAnswered && handleAnswerSelect(option)}
               onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
               style={{ backgroundColor: bgColor, borderColor }}
-              className={`flex gap-4 items-start px-5 py-[18px] ${isSelected ? 'border-2' : 'border'} rounded-[var(--s4-radius-card)] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
+              className={`flex gap-4 items-start px-5 py-[18px] ${isSelected ? 'border-2' : 'border'} rounded-[12px] min-h-[80px] transition-colors ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer hover:opacity-90'}`}
             >
               <span style={{ color: colors.label }} className="text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5">
                 {['A','B','C','D'][index]}
@@ -619,7 +619,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       )}
 
       {/* Game info strip */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-3 flex gap-6 mb-4 shadow-[var(--s4-shadow-hairline)]">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-3 flex gap-6 mb-4 ">
         {[['Game', gameSession.game_title], ['Format', 'Most correct answers wins'], ['Points', '+1000 correct · time bonus']].map(([k, v]) => (
           <div key={k} className="flex gap-2 items-baseline">
             <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark font-bold tracking-wider uppercase">{k}</span>
@@ -665,7 +665,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
       {/* Host Controls */}
       {isHost && hasAnswered && (
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 ">
           <button
             onClick={handleNextQuestion}
             className="w-full py-3 bg-sidebar text-ink-on-dark text-[14px] font-bold font-display hover:opacity-90 transition"
@@ -677,7 +677,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
       {/* Waiting for Host */}
       {!isHost && hasAnswered && (
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 text-center shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-5 text-center ">
           <Loader2 className="h-7 w-7 text-accent-gold animate-spin mx-auto mb-2" />
           <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">Waiting for next question...</p>
         </div>

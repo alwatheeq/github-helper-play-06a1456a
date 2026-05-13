@@ -38,7 +38,7 @@ export const ScholarCard: React.FC<ScholarCardProps> = ({
   const cls = [
     'bg-card-light dark:bg-card-dark',
     'border border-divider dark:border-divider-on-dark',
-    'rounded-[var(--s4-radius-card)]',
+    'rounded-[12px]',
     variantShadow[variant],
     paddingMap[padding],
     hoverCls,

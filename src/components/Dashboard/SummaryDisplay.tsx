@@ -835,7 +835,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className="bg-card-light rounded-[var(--s4-radius-card)] border border-divider shadow-[var(--s4-shadow-card)]">
+      <div className="bg-card-light rounded-[12px] border border-divider shadow-sm">
         {/* Header — Scholar v4 action bar style with border-l accent */}
         <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -850,14 +850,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={() => copyToClipboard(originalText, -2)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               {copiedIndex === -2 ? <Check className="h-3.5 w-3.5 text-green-600" /> : <Copy className="h-3.5 w-3.5" />}
               <span>{t('summary.copy_text')}</span>
             </button>
             <button
               onClick={() => setShowOriginalText(false)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-muted-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-muted-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               <X className="h-3.5 w-3.5" />
               <span>{t('summary.back_to_summary')}</span>
@@ -899,7 +899,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
       </div>
     ) : (
       /* Scholar v4 Dash4Result style — clean card with editorial left-border accent on header */
-      <div className="bg-card-light border border-divider shadow-[var(--s4-shadow-card)]">
+      <div className="bg-card-light border border-divider shadow-sm">
         {/* Header row: title left, action buttons right */}
         <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -943,7 +943,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
           <div className="flex items-center gap-1.5 flex-shrink-0 flex-wrap justify-end">
             <button
               onClick={() => copyToClipboard(combinedSummary, -1)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               {copiedIndex === -1 ? <Check className="h-3.5 w-3.5 text-accent-gold" /> : <Copy className="h-3.5 w-3.5" />}
               {t('summary.copy_all')}
@@ -957,7 +957,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={() => setMindMapOpen(true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               <Brain className="h-3.5 w-3.5" />
               {t('mind_map.title')}
@@ -965,7 +965,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
             <button
               onClick={() => setShowOriginalText(true)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
               title={!originalText?.trim() ? t('summary.no_original_text_available') : t('summary.view_original_text')}
             >
               <FileSearch className="h-3.5 w-3.5" />
@@ -975,7 +975,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={exportAsTxt}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               <Download className="h-3.5 w-3.5" />
               {t('summary.export_txt')}
@@ -984,7 +984,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             <button
               type="button"
               onClick={exportAsPdf}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
               <Download className="h-3.5 w-3.5" />
               {t('summary.export_pdf')}
@@ -994,7 +994,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <button
                 onClick={handleShowPublishModal}
                 disabled={publishing || published}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold transition-colors duration-[var(--s4-dur-fast)] disabled:opacity-60 ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold transition-colors duration-150 disabled:opacity-60 ${
                   published
                     ? 'bg-subtle border border-divider text-accent-gold'
                     : medicalMode
@@ -1018,7 +1018,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
             {!isSharedView && !hideNewDocumentButton && (
               <button
                 onClick={onReset}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
               >
                 <RefreshCw className="h-3.5 w-3.5" />
                 {t('summary.new_document')}
@@ -1057,7 +1057,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     {/* Publish to Library Modal */}
     {showPublishModal && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-floating)] max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.32)] max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
 
           <div className={`px-5 pt-5 pb-4 border-b border-divider dark:border-divider-on-dark flex-shrink-0`}>
             <div className="flex items-start justify-between">
@@ -1099,14 +1099,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateFolderInput && (
-                <div className={`mb-2 p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-2 p-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newFolderNameInput}
                       onChange={(e) => setNewFolderNameInput(e.target.value)}
                       placeholder={t('publish_modal.new_folder_name')}
-                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createFolderInPublishModal()}
                     />
                     <button
@@ -1129,7 +1129,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               <select
                 value={selectedFolderId}
                 onChange={(e) => setSelectedFolderId(e.target.value)}
-                className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                className={`w-full px-3 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
               >
                 <option value="">{t('publish_modal.no_folder')}</option>
                 {folders.map(folder => (
@@ -1188,14 +1188,14 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateTag && (
-                <div className={`mb-3 p-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-3 p-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
                       value={newTagName}
                       onChange={(e) => setNewTagName(e.target.value)}
                       placeholder="New private tag name"
-                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
+                      className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
                     <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors dark:text-emerald-400 dark:bg-emerald-950/40">

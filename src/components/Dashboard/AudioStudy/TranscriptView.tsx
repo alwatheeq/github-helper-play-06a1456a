@@ -25,7 +25,7 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
   const hasText = transcriptText.trim().length > 0;
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark border border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)]`}>
+    <div className={`bg-card-light dark:bg-card-dark border border border-divider dark:border-divider-on-dark rounded-[12px]`}>
       <div className="p-4 border-b" style={{ borderColor: 'transparent' }}>
         <div className="flex items-center gap-2">
           <FileText className={`h-4 w-4 text-ink dark:text-ink-on-dark`} />
@@ -51,7 +51,7 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
               type="button"
               disabled={!hasText || isGenerating}
               onClick={onGenerateRequestedContent}
-              className={`inline-flex items-center px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
+              className={`inline-flex items-center px-4 py-2 rounded-[12px] transition duration-150 ${
                 !hasText || isGenerating
                   ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
                   : `bg-accent-gold text-white hover:opacity-90`

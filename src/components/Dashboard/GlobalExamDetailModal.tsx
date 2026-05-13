@@ -65,18 +65,18 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
         <div className="bg-accent-gold p-6 text-white relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[var(--s4-radius-card)] transition"
+            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[12px] transition"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
 
           <div className="flex items-start space-x-4">
-            <div className="bg-card-light dark:bg-card-dark bg-opacity-20 p-3 rounded-[var(--s4-radius-card)]">
+            <div className="bg-card-light dark:bg-card-dark bg-opacity-20 p-3 rounded-[12px]">
               <Globe className="h-8 w-8" />
             </div>
             <div className="flex-1">
-              <h2 className="s4-h2 mb-1">{exam.exam_name}</h2>
+              <h2 className="font-display text-[24px] font-bold mb-1">{exam.exam_name}</h2>
               <p className="text-ink-on-dark text-opacity-90 text-sm mb-2">{exam.exam_code}</p>
               <div className="flex items-center space-x-2">
                 <span className={`px-2 py-1 text-xs font-medium rounded-full ${getDifficultyColor(exam.difficulty_level)}`}>
@@ -97,9 +97,9 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
               <div className="flex items-center space-x-3">
-                <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-[var(--s4-radius-card)]">
+                <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-[12px]">
                   <FileQuestion className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
@@ -109,9 +109,9 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
               </div>
             </div>
 
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
               <div className="flex items-center space-x-3">
-                <div className="bg-green-100 dark:bg-green-900 p-2 rounded-[var(--s4-radius-card)]">
+                <div className="bg-green-100 dark:bg-green-900 p-2 rounded-[12px]">
                   <Clock className="h-5 w-5 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
@@ -122,9 +122,9 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             </div>
 
             {exam.subject && (
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded-[var(--s4-radius-card)]">
+                  <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded-[12px]">
                     <BookOpen className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
@@ -136,9 +136,9 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             )}
 
             {exam.passing_score && (
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-yellow-100 dark:bg-yellow-900 p-2 rounded-[var(--s4-radius-card)]">
+                  <div className="bg-yellow-100 dark:bg-yellow-900 p-2 rounded-[12px]">
                     <Target className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                   </div>
                   <div>
@@ -150,7 +150,7 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             )}
           </div>
 
-          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-[var(--s4-radius-card)] p-4 mb-6">
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-[12px] p-4 mb-6">
             <div className="flex items-start space-x-3">
               <Award className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
               <div>

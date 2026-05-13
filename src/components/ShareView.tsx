@@ -74,7 +74,7 @@ export const ShareView: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold mr-3"></div>
             <span className="text-secondary-ink dark:text-muted-ink-on-dark">{t('common.loading')}</span>
@@ -87,7 +87,7 @@ export const ShareView: React.FC = () => {
   if (error || !item) {
     return (
       <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center">
-        <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
+        <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-8 max-w-md mx-auto">
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('share.content_not_available')}</h3>
@@ -96,7 +96,7 @@ export const ShareView: React.FC = () => {
             </p>
             <a
               href="/"
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition duration-[var(--s4-dur-fast)]"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white rounded-[12px] hover:opacity-90 transition duration-150"
             >
               <ExternalLink className="h-4 w-4" />
               <span>{t('share.visit_meshfahem')}</span>
@@ -134,7 +134,7 @@ export const ShareView: React.FC = () => {
         {/* CTA */}
         <a
           href="/"
-          className="flex items-center gap-1.5 px-3 py-1.5 border border-accent-gold/50 rounded-[var(--s4-radius-card)] text-xs font-medium text-accent-gold hover:bg-accent-gold/10 transition duration-[var(--s4-dur-fast)] flex-shrink-0"
+          className="flex items-center gap-1.5 px-3 py-1.5 border border-accent-gold/50 rounded-[7px] text-xs font-medium text-accent-gold hover:bg-accent-gold/10 transition duration-150 flex-shrink-0"
         >
           <ExternalLink className="h-3.5 w-3.5" />
           <span>{t('share.get_meshfahem')}</span>
@@ -145,7 +145,7 @@ export const ShareView: React.FC = () => {
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1">
         {/* Title card */}
         <div className="mb-8">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark p-6">
             <h2 className="font-display text-[22px] font-bold text-ink dark:text-ink-on-dark mb-2" style={{ letterSpacing: '-0.01em' }}>
               {item.title}
             </h2>
@@ -180,7 +180,7 @@ export const ShareView: React.FC = () => {
               </p>
               <a
                 href="/"
-                className="flex items-center gap-2 px-4 py-2 bg-ink dark:bg-ink text-ink-on-dark text-sm font-bold rounded-[var(--s4-radius-card)] hover:opacity-85 transition-opacity whitespace-nowrap"
+                className="flex items-center gap-2 px-4 py-2 bg-sidebar text-card-light text-sm font-bold rounded-[8px] hover:opacity-85 transition-opacity whitespace-nowrap"
               >
                 Create your own
                 <ExternalLink className="h-3.5 w-3.5" />

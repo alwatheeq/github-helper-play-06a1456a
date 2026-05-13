@@ -347,7 +347,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-4">We couldn't load your profile data. This might be a temporary issue.</p>
           </div>
           <div className="space-y-3">
-            <button onClick={() => { if (user) { ErrorLogger.info('User clicked retry button', { component: 'ProfilePage', action: 'retry', userId: user.id }); setLoading(true); fetchUserData(); } }} disabled={loading} className="px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium">
+            <button onClick={() => { if (user) { ErrorLogger.info('User clicked retry button', { component: 'ProfilePage', action: 'retry', userId: user.id }); setLoading(true); fetchUserData(); } }} disabled={loading} className="px-6 py-3 bg-accent-gold text-white rounded-[12px] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium">
               {loading ? 'Loading...' : 'Retry'}
             </button>
             <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-4">If this problem persists, please try logging out and back in, or contact support.</p>

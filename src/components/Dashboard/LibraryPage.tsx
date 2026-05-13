@@ -719,7 +719,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (initialLoading) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: border border-divider dark:border-divider-on-dark`}>
           <LoadingSkeleton type="page" count={5} />
         </div>
       </div>
@@ -729,7 +729,7 @@ export const LibraryPage: React.FC = React.memo(() => {
   if (error) {
     return (
       <div className="w-full">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] p-8 dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: border border-divider dark:border-divider-on-dark`}>
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
@@ -748,7 +748,7 @@ export const LibraryPage: React.FC = React.memo(() => {
     <div className="w-full">
       {/* Notification */}
       {notification.show && (
-        <div className={`mb-6 p-4 rounded-[var(--s4-radius-card)] flex items-center space-x-3 ${
+        <div className={`mb-6 p-4 rounded-[12px] flex items-center space-x-3 ${
           notification.type === 'success'
             ? 'bg-green-50 border border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
             : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
@@ -794,7 +794,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('library.search_library_placeholder')}
-                className="pl-9 pr-4 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark w-48 sm:w-64 transition-[width] duration-[var(--s4-dur-fast)]"
+                className="pl-9 pr-4 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark w-48 sm:w-64 transition-[width] duration-150"
               />
               {searchLoading && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -815,7 +815,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                   setLibraryViewMode('library');
                   localStorage.setItem('library_view_mode', 'library');
                 }}
-                className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 ${
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 ${
                   libraryViewMode === 'library'
                     ? 'bg-sidebar text-ink-on-dark'
                     : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -831,7 +831,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                   setLibraryViewMode('notebook');
                   localStorage.setItem('library_view_mode', 'notebook');
                 }}
-                className={`px-4 py-2 text-sm font-medium transition-colors duration-[var(--s4-dur-fast)] inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
+                className={`px-4 py-2 text-sm font-medium transition-colors duration-150 inline-flex items-center gap-2 border-s border-divider dark:border-divider-on-dark ${
                   libraryViewMode === 'notebook'
                     ? 'bg-sidebar text-ink-on-dark'
                     : 'bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -942,7 +942,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <button
               type="button"
               onClick={() => setShowTopicsTagsModal(true)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-[var(--s4-dur-fast)] ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-150 ${
                 (selectedTags.length > 0 || selectedTopics.length > 0)
                   ? 'bg-accent-gold text-ink-on-dark border-accent-gold'
                   : 'bg-chip dark:bg-card-dark border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:border-accent-gold'
@@ -1004,7 +1004,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
       {/* Multi-select controls */}
       {selectMultipleMode && (
-        <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark">
+        <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark rounded-[12px] border border-divider dark:border-divider-on-dark">
           <span className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">
             {selectedItems.size > 0
               ? t('library.items_selected', { count: selectedItems.size })
@@ -1049,7 +1049,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <button
               type="button"
               onClick={() => setSelectedTopics([])}
-              className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] font-medium transition-colors duration-[var(--s4-dur-fast)]"
+              className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] font-medium transition-colors duration-150"
               style={{
                 background: selectedTopics.length === 0 ? 'var(--color-accent-gold-soft, #F0E4CB)' : 'transparent',
                 borderLeft: selectedTopics.length === 0 ? '2px solid var(--color-accent-gold, #B8893A)' : '2px solid transparent',
@@ -1069,7 +1069,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                   onClick={() => setSelectedTopics(prev =>
                     prev.includes(label) ? prev.filter(t => t !== label) : [...prev, label]
                   )}
-                  className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] capitalize transition-colors duration-[var(--s4-dur-fast)]"
+                  className="border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] capitalize transition-colors duration-150"
                   style={{
                     background: active ? 'var(--color-accent-gold-soft, #F0E4CB)' : 'transparent',
                     borderLeft: active ? '2px solid var(--color-accent-gold, #B8893A)' : '2px solid transparent',
@@ -1087,7 +1087,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           <button
             type="button"
             onClick={() => setShowTopicsTagsModal(true)}
-            className="text-[12px] font-display text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold transition-colors duration-[var(--s4-dur-fast)] bg-transparent border-none cursor-pointer p-0"
+            className="text-[12px] font-display text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold transition-colors duration-150 bg-transparent border-none cursor-pointer p-0"
           >
             + manage topics
           </button>
@@ -1128,7 +1128,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               )}
             </div>
           ) : (
-            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] overflow-hidden shadow-[var(--s4-shadow-hairline)]">
+            <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] overflow-hidden ">
               {/* Table header */}
               <div className="grid gap-3.5 px-5 py-2 border-b border-divider dark:border-divider-on-dark" style={{ gridTemplateColumns: '1fr 120px 120px 110px' }}>
                 <span className="text-[10px] font-bold tracking-[2px] uppercase text-muted-ink dark:text-muted-ink-on-dark">Title</span>
@@ -1141,7 +1141,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               {libraryItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className={`group grid gap-3.5 items-center px-5 py-[14px] hover:bg-subtle/60 dark:hover:bg-subtle-on-dark/20 transition-colors duration-[var(--s4-dur-fast)] cursor-pointer ${
+                  className={`group grid gap-3.5 items-center px-5 py-[14px] hover:bg-subtle/60 dark:hover:bg-subtle-on-dark/20 transition-colors duration-150 cursor-pointer ${
                     index < libraryItems.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''
                   }`}
                   style={{ gridTemplateColumns: '1fr 120px 120px 110px' }}
@@ -1210,7 +1210,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       {formatDate(item.created_at)}
                     </span>
                     {!selectMultipleMode && (
-                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--s4-dur-fast)]">
+                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                         <button
                           onClick={(e) => { e.stopPropagation(); navigate(`/view/library/${item.id}`); }}
                           className="p-1 rounded hover:bg-subtle dark:hover:bg-card-dark text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold transition-colors"
@@ -1257,7 +1257,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Delete Items Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
+          <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
             <div className={`p-6 border-b border border-divider dark:border-divider-on-dark`}>
               <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('library.delete_items_title')}</h3>
               <p className="text-sm text-red-600 mt-1 dark:text-red-400">{t('library.action_cannot_be_undone')}</p>

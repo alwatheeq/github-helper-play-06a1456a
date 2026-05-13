@@ -125,9 +125,9 @@ export const Auth: React.FC = () => {
         </div>
 
         {/* Form card */}
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6 shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6 shadow-[var(--s4-shadow-hairline)]">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)]">
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[12px]">
               <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
               {retryAttempts > 0 && retryAttempts < 3 && isSignUp && (
                 <button
@@ -143,7 +143,7 @@ export const Auth: React.FC = () => {
           )}
 
           {success && (
-            <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-[var(--s4-radius-card)]">
+            <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-[12px]">
               <p className="text-green-700 dark:text-green-300 text-sm font-medium">{success}</p>
             </div>
           )}

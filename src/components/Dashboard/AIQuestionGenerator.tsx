@@ -179,11 +179,11 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
   return (
     <div className="max-w-3xl mx-auto">
       <div className="mb-6">
-        <h2 className="s4-h1 text-ink dark:text-muted-ink-on-dark mb-2">AI Question Generator</h2>
+        <h2 className="font-display text-[38px] font-semibold text-ink dark:text-muted-ink-on-dark mb-2">AI Question Generator</h2>
         <p className="text-secondary-ink dark:text-muted-ink">Let AI create questions about any topic</p>
       </div>
 
-      <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-hairline)] p-8">
+      <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: p-8">
         {!generating ? (
           <div className="space-y-6">
             {/* Topic Input */}
@@ -196,7 +196,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
                 placeholder="e.g., Ancient Rome, Photosynthesis, World War II..."
-                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               />
               <p className="mt-1 text-sm text-muted-ink dark:text-muted-ink">
                 Be specific for better questions
@@ -211,7 +211,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="w-full px-4 py-3 border border-divider rounded-[var(--s4-radius-card)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
+                className="w-full px-4 py-3 border border-divider rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:border-divider-on-dark dark:text-muted-ink-on-dark"
               >
                 <option value="">Any Subject</option>
                 {subjects.map((s) => (
@@ -221,7 +221,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             </div>
 
             {/* Settings Display */}
-            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-[var(--s4-radius-card)] p-4">
+            <div className="bg-purple-50 dark:bg-purple-900/20 rounded-[12px] p-4">
               <h4 className="font-semibold text-ink dark:text-muted-ink-on-dark mb-2">Generation Settings</h4>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
@@ -237,7 +237,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[var(--s4-radius-card)] p-4 flex items-start space-x-3">
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-[12px] p-4 flex items-start space-x-3">
                 <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-red-900 dark:text-red-200">Generation Failed</h4>
@@ -250,14 +250,14 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="flex space-x-4">
               <button
                 onClick={onCancel}
-                className="flex-1 px-6 py-3 border border-divider text-secondary-ink rounded-[var(--s4-radius-card)] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
+                className="flex-1 px-6 py-3 border border-divider text-secondary-ink rounded-[12px] hover:bg-subtle dark:bg-card-dark transition dark:border-divider-on-dark dark:text-muted-ink-on-dark dark:hover:bg-card-dark"
               >
                 Cancel
               </button>
               <button
                 onClick={handleGenerate}
                 disabled={!topic.trim() || topic.trim().length < 3}
-                className={`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[var(--s4-radius-card)] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+                className={`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[12px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
               >
                 <Sparkles className="h-5 w-5" />
                 <span>Generate Questions</span>
@@ -270,7 +270,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
               <Loader2 className="h-16 w-16 text-accent-gold dark:text-accent-gold animate-spin" />
               <Sparkles className="h-8 w-8 text-pink-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
             </div>
-            <h3 className="s4-h2 text-ink dark:text-muted-ink-on-dark mb-2">
+            <h3 className="font-display text-[24px] font-bold text-ink dark:text-muted-ink-on-dark mb-2">
               Generating Questions...
             </h3>
             <p className="text-secondary-ink dark:text-muted-ink mb-6">
@@ -281,7 +281,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
             <div className="max-w-md mx-auto mb-4">
               <div className="h-3 bg-subtle dark:bg-card-dark rounded-full overflow-hidden">
                 <div
-                  className={`h-full bg-accent-gold transition-colors duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)]`}
+                  className={`h-full bg-accent-gold transition-colors duration-150 ease-[var(--s4-ease-out)]`}
                   style={{ width: `${progress}%` }}
                 />
               </div>

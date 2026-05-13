@@ -18,12 +18,12 @@ const Toggle: React.FC<ToggleProps> = ({ on, disabled, onToggle, label }) => (
     aria-label={label}
     disabled={disabled}
     onClick={() => onToggle?.(!on)}
-    className={`relative h-4 w-[30px] rounded-full transition-colors duration-[var(--s4-dur-base)] flex-shrink-0 ${
+    className={`relative h-4 w-[30px] rounded-full transition-colors duration-200 flex-shrink-0 ${
       on ? 'bg-accent-gold' : 'bg-divider-on-dark'
     } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
   >
     <span
-      className={`absolute top-0.5 h-3 w-3 rounded-full bg-card-light transition-transform duration-[var(--s4-dur-base)] ${
+      className={`absolute top-0.5 h-3 w-3 rounded-full bg-card-light transition-transform duration-200 ${
         on ? 'translate-x-[15px]' : 'translate-x-0.5'
       }`}
     />
@@ -109,7 +109,7 @@ export const GenerationRail: React.FC<GenerationRailProps> = ({
 
   return (
     <section
-      className="bg-card-dark text-ink-on-dark rounded-[var(--s4-radius-card)]"
+      className="bg-card-dark text-ink-on-dark rounded-[12px]"
       style={{ padding: 'var(--s4-card-pad-dark)' }}
     >
       <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold mb-1">
@@ -178,7 +178,7 @@ export const GenerationRail: React.FC<GenerationRailProps> = ({
       </button>
 
       <p
-        className="mt-3 text-[11px] font-light text-muted-ink-on-dark leading-snug min-h-[2.4em] transition-opacity duration-[var(--s4-dur-base)]"
+        className="mt-3 text-[11px] font-light text-muted-ink-on-dark leading-snug min-h-[2.4em] transition-opacity duration-200"
         aria-live="polite"
       >
         {tips[tipIdx]}

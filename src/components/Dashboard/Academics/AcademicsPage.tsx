@@ -1082,7 +1082,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         />
       )}
       {activeTab === 'tutor' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
           <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
         </div>
       )}
@@ -1092,7 +1092,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         <ExamScheduler courseId={selectedCourse.id} />
       )}
       {activeTab === 'exams' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
           <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
         </div>
       )}
@@ -1105,7 +1105,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
         />
       )}
       {activeTab === 'srs' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
           <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
         </div>
       )}
@@ -1121,32 +1121,32 @@ export const AcademicsPage: React.FC = React.memo(() => {
         </React.Suspense>
       )}
       {activeTab === 'analytics' && !selectedCourse && (
-        <div className="bg-card-dark rounded-[var(--s4-radius-card)] border border-divider p-8 text-center">
+        <div className="bg-card-dark rounded-[12px] border border-divider p-8 text-center">
           <p className="text-muted-ink-on-dark text-sm">{t('academics.select_course_first')}</p>
         </div>
       )}
 
       {showCreateCourse ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark w-full max-w-lg p-6">
+          <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark w-full max-w-lg p-6">
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{t('academics.create_course') || 'Create course'}</h3>
             <div className="space-y-3 mt-4">
               <input
                 value={newCourseName}
                 onChange={(e) => setNewCourseName(e.target.value)}
                 placeholder={t('academics.placeholder_course_name')}
-                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <input
                 value={newCourseCode}
                 onChange={(e) => setNewCourseCode(e.target.value)}
                 placeholder={t('academics.placeholder_course_code')}
-                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <select
                 value={selectedTopicId}
                 onChange={(e) => setSelectedTopicId(e.target.value)}
-                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               >
                 <option value="">{t('academics.select_existing_topic')}</option>
                 {topics.map((topic) => (
@@ -1159,14 +1159,14 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 value={newTopicName}
                 onChange={(e) => setNewTopicName(e.target.value)}
                 placeholder={t('academics.placeholder_new_topic')}
-                className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
             </div>
             <div className="mt-5 flex items-center justify-end gap-2">
               <button
                 type="button"
                 onClick={() => setShowCreateCourse(false)}
-                className="px-4 py-2 rounded-[var(--s4-radius-card)] bg-chip text-secondary-ink dark:text-muted-ink-on-dark"
+                className="px-4 py-2 rounded-[12px] bg-chip text-secondary-ink dark:text-muted-ink-on-dark"
               >
                 {t('common.cancel') || 'Cancel'}
               </button>
@@ -1174,7 +1174,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                 type="button"
                 disabled={creatingCourse}
                 onClick={handleCreateCourse}
-                className="px-4 py-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white disabled:opacity-50"
+                className="px-4 py-2 rounded-[12px] bg-accent-gold text-white disabled:opacity-50"
               >
                 {creatingCourse ? t('academics.creating') : (t('common.save') || 'Save')}
               </button>

@@ -108,7 +108,7 @@ export const LowCreditWarning: React.FC = () => {
   const daysUntilRefresh = getDaysUntilRefresh();
 
   return (
-    <div className={`${style.bg} border ${style.border} rounded-md p-4 mb-6 shadow-[var(--s4-shadow-hairline)]`}>
+    <div className={`${style.bg} border ${style.border} rounded-md p-4 mb-6 `}>
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-3 flex-1">
           <div className={`${style.icon} mt-0.5`}>
@@ -128,7 +128,7 @@ export const LowCreditWarning: React.FC = () => {
             <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={() => navigate('/pricing')}
-                className={`${style.button} text-ink-on-dark px-4 py-2 rounded-[var(--s4-radius-card)] text-sm font-medium transition flex items-center space-x-2`}
+                className={`${style.button} text-ink-on-dark px-4 py-2 rounded-[12px] text-sm font-medium transition flex items-center space-x-2`}
               >
                 <CreditCard className="h-4 w-4" />
                 <span>Upgrade Plan</span>

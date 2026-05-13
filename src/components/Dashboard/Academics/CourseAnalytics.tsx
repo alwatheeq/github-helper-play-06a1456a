@@ -129,7 +129,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6">
         <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('course_analytics.loading') || 'Loading analytics…'}
         </div>
@@ -139,7 +139,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
   if (!hasData) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6" dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6" dir={dir}>
         <div className="flex items-center gap-3">
           <BarChart3 className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
           <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
@@ -183,7 +183,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
         ].map(({ icon: Icon, value, label }) => (
           <div
             key={label}
-            className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] py-4 px-[18px]"
+            className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] py-4 px-[18px]"
           >
             <div className="flex items-center gap-2 mb-2">
               <Icon className="h-4 w-4 text-accent-gold" />
@@ -196,7 +196,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
 
       {/* Quiz scores chart */}
       {quizScores.length > 0 && (
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-5">
           <p className="text-xs font-semibold text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-widest mb-4">
             {t('course_analytics.quiz_scores') || 'Quiz Scores Over Time'}
           </p>
@@ -238,7 +238,7 @@ export const CourseAnalytics: React.FC<CourseAnalyticsProps> = ({ courseId }) =>
       )}
 
       {/* Flashcard mastery — horizontal bar */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-5 space-y-3">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-5 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Layers className="h-4 w-4 text-accent-gold" />

@@ -13,7 +13,7 @@ const roundedMap = {
   none: 'rounded-none',
   sm: 'rounded-[4px]',
   md: 'rounded-[6px]',
-  lg: 'rounded-[var(--s4-radius-card)]',
+  lg: 'rounded-[12px]',
   full: 'rounded-full',
 };
 

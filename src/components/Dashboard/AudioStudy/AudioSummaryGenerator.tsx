@@ -27,7 +27,7 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
   const canGenerate = hasTranscript && !isGenerating;
 
   return (
-    <div className={`bg-card-light dark:bg-card-dark border border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)]`}>
+    <div className={`bg-card-light dark:bg-card-dark border border border-divider dark:border-divider-on-dark rounded-[12px]`}>
       <div className="p-4 border-b" style={{ borderColor: 'transparent' }}>
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
           type="button"
           disabled={!canGenerate}
           onClick={onGenerateRequestedContent}
-          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
+          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[12px] transition duration-150 ${
             !canGenerate
               ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
               : `bg-accent-gold text-white hover:opacity-90`

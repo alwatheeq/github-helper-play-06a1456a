@@ -136,7 +136,7 @@ export const LikeButton: React.FC<LikeButtonProps> = ({
       disabled={isLoading}
       className={`
         ${buttonSizeClasses[size]}
-        flex items-center space-x-1 rounded-[var(--s4-radius-card)] transition-colors duration-[var(--s4-dur-fast)]
+        flex items-center space-x-1 rounded-[12px] transition-colors duration-150
         ${isLiked
           ? 'bg-accent-gold-soft/30 text-accent-gold hover:bg-accent-gold-soft/40'
           : 'bg-accent-gold-soft/10 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-60'

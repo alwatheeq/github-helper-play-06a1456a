@@ -37,7 +37,7 @@ const StepBtn: React.FC<{ onClick: () => void; children: React.ReactNode }> = ({
   <button
     type="button"
     onClick={onClick}
-    className="w-7 h-7 bg-transparent border border-accent-gold/35 text-accent-gold text-lg font-light cursor-pointer grid place-items-center leading-none hover:border-accent-gold/60 transition-colors duration-[var(--s4-dur-fast)]"
+    className="w-7 h-7 bg-transparent border border-accent-gold/35 text-accent-gold text-lg font-light cursor-pointer grid place-items-center leading-none hover:border-accent-gold/60 transition-colors duration-150"
   >
     {children}
   </button>
@@ -88,12 +88,12 @@ const RowToggle: React.FC<RowToggleProps> = ({ on, onToggle, label, disabled }) 
     aria-label={label}
     disabled={disabled}
     onClick={() => onToggle(!on)}
-    className={`relative h-[18px] w-[34px] rounded-full transition-[background-color] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)] flex-shrink-0 ${
+    className={`relative h-[18px] w-[34px] rounded-full transition-[background-color] duration-150 ease-out flex-shrink-0 ${
       on ? 'bg-accent-gold' : 'bg-accent-gold/20'
     } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
   >
     <span
-      className={`absolute top-[3px] h-3 w-3 rounded-full bg-card-dark transition-[left] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)] ${
+      className={`absolute top-[3px] h-3 w-3 rounded-full bg-card-dark transition-[left] duration-150 ease-out ${
         on ? 'left-[19px]' : 'left-[3px]'
       }`}
     />
@@ -238,7 +238,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
                   <button
                     type="button"
                     onClick={onOpenHistory}
-                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[var(--s4-radius-btn)] hover:bg-subtle/60 transition-[background-color] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)]"
+                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[var(--s4-radius-btn)] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
                   >
                     Open
                   </button>
@@ -253,7 +253,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
       <div className="min-w-0 space-y-[14px]">
         {/* Dark "What to generate" panel */}
         <section
-          className="bg-sidebar text-ink-on-dark rounded-[var(--s4-radius-card)]"
+          className="bg-sidebar text-ink-on-dark rounded-[12px]"
           style={{ padding: 'var(--s4-card-pad-dark)' }}
         >
           <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold">
@@ -325,7 +325,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
               type="button"
               disabled
               title={t('workshop.generate_disabled_hint')}
-              className="w-full bg-accent-gold text-card-dark text-[13px] font-semibold py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-[var(--s4-dur-fast)] ease-[var(--s4-ease-out)]"
+              className="w-full bg-accent-gold text-card-dark text-[13px] font-semibold py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-150 ease-out"
             >
               <span>{t('workshop.generate_cta')}</span>
               <ArrowRight size={14} strokeWidth={2} aria-hidden />
@@ -339,7 +339,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
             {String(tipIdx + 1).padStart(2, '0')} / {String(tips.length).padStart(2, '0')}
           </div>
           <p
-            className="font-display text-[13px] text-ink leading-[1.6] italic transition-[opacity] duration-[var(--s4-dur-base)] ease-[var(--s4-ease)]"
+            className="font-display text-[13px] text-ink leading-[1.6] italic transition-[opacity] duration-200 ease-[var(--s4-ease)]"
             aria-live="polite"
           >
             {tips[tipIdx]}

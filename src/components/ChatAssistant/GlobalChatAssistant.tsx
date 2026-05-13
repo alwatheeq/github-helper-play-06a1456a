@@ -501,7 +501,7 @@ const GlobalChatAssistantContent: React.FC = () => {
             });
           }
         }}
-        className={`fixed z-50 bg-accent-gold text-white p-4 rounded-full shadow hover:shadow-[var(--s4-shadow-hairline)] transition-colors duration-[var(--s4-dur-fast)]  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`fixed z-50 bg-accent-gold text-white p-4 rounded-full shadow hover: transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -517,7 +517,7 @@ const GlobalChatAssistantContent: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[var(--s4-shadow-modal)] border border-divider dark:border-divider-on-dark transition-colors duration-[var(--s4-dur-fast)] ${isDragging ? 'cursor-move' : ''}`}
+      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -528,12 +528,12 @@ const GlobalChatAssistantContent: React.FC = () => {
       onMouseDown={handleChatMouseDown}
     >
       {/* Header with drag handle */}
-      <div className={`flex items-center justify-between p-4 bg-accent-gold text-white rounded-t-[var(--s4-radius-card)] chat-header cursor-move`}>
+      <div className={`flex items-center justify-between p-4 bg-accent-gold text-white rounded-t-[12px] chat-header cursor-move`}>
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="drag-handle cursor-move flex-shrink-0">
             <GripVertical className="h-4 w-4 opacity-70" />
           </div>
-          <div className="w-8 h-8 flex-shrink-0 rounded-[var(--s4-radius-card)] bg-white/20 flex items-center justify-center">
+          <div className="w-8 h-8 flex-shrink-0 rounded-[12px] bg-white/20 flex items-center justify-center">
             <Sparkles className="h-4 w-4" />
           </div>
           <div className="flex-1 min-w-0">
@@ -640,7 +640,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                     className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-[var(--s4-radius-card)] px-5 py-2.5 ${
+                      className={`max-w-[80%] rounded-[12px] px-5 py-2.5 ${
                         message.role === 'user'
                           ? `bg-accent-gold text-white`
                           : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
@@ -652,7 +652,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[var(--s4-radius-card)] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
+                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[12px] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
                       <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
                     </div>
                   </div>
@@ -671,14 +671,14 @@ const GlobalChatAssistantContent: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className={`flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold`}
+                className={`flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[12px] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold`}
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-[var(--s4-radius-card)] bg-accent-gold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
+                className={`p-2 rounded-[12px] bg-accent-gold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
                 aria-label={t('chat.send')}
               >
                 {loading ? (

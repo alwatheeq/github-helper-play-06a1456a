@@ -1441,7 +1441,7 @@ export const Dashboard: React.FC = () => {
         )}
 
         <main
-          className="flex-1 transition-colors duration-[var(--s4-dur-fast)] ease-[var(--s4-ease)]"
+          className="flex-1 transition-colors duration-150 ease-[var(--s4-ease)]"
           style={isMobile ? {} : isRtl
             ? { marginRight: isSidebarOpen ? '128px' : '32px' }
             : { marginLeft: isSidebarOpen ? '128px' : '32px' }
@@ -1452,7 +1452,7 @@ export const Dashboard: React.FC = () => {
             <button
               type="button"
               onClick={toggleSidebar}
-              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-[var(--s4-dur-fast)]`}
+              className={`fixed bottom-6 ${isRtl ? 'right-6' : 'left-6'} z-30 flex items-center justify-center p-3 bg-accent-gold text-ink-on-dark rounded-full shadow hover:opacity-90 transition duration-150`}
               aria-label={t('header.open_menu')}
             >
               <PanelLeft className="h-6 w-6" strokeWidth={2} aria-hidden />
@@ -1538,7 +1538,7 @@ export const Dashboard: React.FC = () => {
                           {loadedHistoryEntry && (
                             <button
                               onClick={handleBackToHistory}
-                              className="inline-flex items-center gap-1.5 px-[11px] py-1 border border-divider dark:border-divider-on-dark text-[11px] text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+                              className="inline-flex items-center gap-1.5 px-[11px] py-1 border border-divider dark:border-divider-on-dark text-[11px] text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors duration-150"
                             >
                               <ArrowLeft className="h-3 w-3" />
                               {t('history.back_to_history') || 'Back to History'}
@@ -1550,28 +1550,28 @@ export const Dashboard: React.FC = () => {
                             <>
                               <button
                                 onClick={actionBarData.onCopyAll}
-                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-150 cursor-pointer"
                               >
                                 {actionBarData.copiedIndex === -1 ? <Check className="h-3 w-3 text-accent-gold" /> : <Copy className="h-3 w-3 opacity-60" />}
                                 {t('summary.copy_all')}
                               </button>
                               <button
                                 onClick={actionBarData.onDualMode}
-                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-150 cursor-pointer"
                               >
                                 <FileSearch className="h-3 w-3 opacity-60" />{t('summary.dual_mode')}
                               </button>
                               <button
                                 type="button"
                                 onClick={actionBarData.onExportTxt}
-                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-150 cursor-pointer"
                               >
                                 <Download className="h-3 w-3 opacity-60" />{t('summary.export_txt')}
                               </button>
                               <button
                                 type="button"
                                 onClick={actionBarData.onExportPdf}
-                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-[var(--s4-dur-fast)] cursor-pointer"
+                                className="inline-flex items-center gap-1 px-2 py-1 border-none bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark transition-colors duration-150 cursor-pointer"
                               >
                                 <Download className="h-3 w-3 opacity-60" />{t('summary.export_pdf')}
                               </button>
@@ -1603,21 +1603,21 @@ export const Dashboard: React.FC = () => {
                               <button
                                 onClick={actionBarData.onPublish}
                                 disabled={actionBarData.publishing || actionBarData.published}
-                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-sidebar border-none text-[11.5px] font-semibold text-card-light cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-[var(--s4-dur-fast)]"
+                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-sidebar border-none text-[11.5px] font-semibold text-card-light cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-150"
                               >
                                 {actionBarData.publishing ? <RefreshCw className="h-3 w-3 animate-spin" /> : actionBarData.published ? <Check className="h-3 w-3" /> : <BookOpen className="h-3 w-3" />}
                                 {actionBarData.published ? t('summary.published') : actionBarData.publishing ? t('summary.publishing') : t('summary.publish_library')}
                               </button>
                               <button
                                 onClick={actionBarData.onNewDocument}
-                                className="inline-flex items-center gap-1.5 px-[11px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)] ml-1"
+                                className="inline-flex items-center gap-1.5 px-[11px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-150 ml-1"
                               >
                                 <RefreshCw className="h-3 w-3 opacity-60" />{t('summary.new_document')}
                               </button>
                               <div className="relative ml-0.5">
                                 <button
                                   onClick={() => setShowActionsMenu(!showActionsMenu)}
-                                  className="inline-flex items-center gap-1 px-[10px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-[var(--s4-dur-fast)]"
+                                  className="inline-flex items-center gap-1 px-[10px] py-[5px] border border-divider dark:border-divider-on-dark bg-transparent text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer hover:bg-subtle/60 transition-colors duration-150"
                                 >
                                   <MoreVertical className="h-3.5 w-3.5" /> Actions
                                 </button>
@@ -1663,7 +1663,7 @@ export const Dashboard: React.FC = () => {
 
                     {processingState.stage === 'error' && (
                       <div className="text-center py-12">
-                        <div className="bg-red-50 border border-red-200 rounded-[var(--s4-radius-card)] p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
+                        <div className="bg-red-50 border border-red-200 rounded-[12px] p-6 max-w-md mx-auto dark:bg-red-900 dark:border-red-700">
                           <h3 className="text-lg font-semibold text-red-800 mb-2 dark:text-red-300">
                             {processingState.medicalMode ? '🏥 Medical Processing Error' : 'Processing Error'}
                           </h3>
@@ -1672,7 +1672,7 @@ export const Dashboard: React.FC = () => {
                           </p>
                           <button
                             onClick={resetProcessing}
-                            className={`px-4 py-2 text-ink-on-dark rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-fast)] ${
+                            className={`px-4 py-2 text-ink-on-dark rounded-[12px] transition duration-150 ${
                               processingState.medicalMode
                                 ? 'bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800'
                                 : 'bg-red-600 hover:bg-red-700'

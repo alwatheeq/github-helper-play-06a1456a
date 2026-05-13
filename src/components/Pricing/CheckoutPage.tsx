@@ -409,14 +409,14 @@ export const CheckoutPage: React.FC = () => {
     const mode = getCheckoutMode();
     return (
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
-        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[var(--s4-shadow-hairline)] p-8">
+        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark: p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
               <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
             </div>
           </div>
 
-          <h2 className="s4-h2 text-ink dark:text-ink-on-dark text-center mb-4">
+          <h2 className="font-display text-[24px] font-bold text-ink dark:text-ink-on-dark text-center mb-4">
             {mode === 'free' ? 'Activation Error' : 'Checkout Error'}
           </h2>
 
@@ -425,7 +425,7 @@ export const CheckoutPage: React.FC = () => {
           </p>
 
           {error.includes('policy') && (
-            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
+            <div className="bg-blue-50 dark:bg-blue-900/30 rounded-[12px] p-4 mb-6">
               <p className="text-sm text-blue-800 dark:text-blue-300 mb-2">
                 <strong>Database Permission Issue Detected</strong>
               </p>
@@ -436,7 +436,7 @@ export const CheckoutPage: React.FC = () => {
           )}
 
           {mode === 'stripe' && (
-            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[var(--s4-radius-card)] p-4 mb-6">
+            <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[12px] p-4 mb-6">
               <p className="text-sm text-orange-800 dark:text-orange-300 mb-2">
                 <strong>Common causes:</strong>
               </p>
@@ -451,7 +451,7 @@ export const CheckoutPage: React.FC = () => {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[12px] transition duration-200"
             >
               Back to Pricing
             </button>
@@ -461,14 +461,14 @@ export const CheckoutPage: React.FC = () => {
                 setRetryCount(prev => prev + 1);
                 initiateCheckout();
               }}
-              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
+              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[12px] transition duration-200"
             >
               Try Again {retryCount > 0 && `(${retryCount})`}
             </button>
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[var(--s4-radius-card)] transition duration-[var(--s4-dur-base)]"
+              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[12px] transition duration-200"
             >
               Return to Dashboard
             </button>

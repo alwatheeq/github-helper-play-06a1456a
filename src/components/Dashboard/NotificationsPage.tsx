@@ -157,7 +157,7 @@ export const NotificationsPage: React.FC = () => {
       <div className="flex items-end justify-between mb-1">
         <div>
           <p className="text-xs font-bold tracking-[0.18em] uppercase text-accent-gold mb-1.5">Inbox</p>
-          <h1 className="s4-h1 text-ink dark:text-ink-on-dark" style={{ letterSpacing: '-0.02em' }}>
+          <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark" style={{ letterSpacing: '-0.02em' }}>
             Notifications.
           </h1>
           <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">
@@ -166,7 +166,7 @@ export const NotificationsPage: React.FC = () => {
         </div>
         <button
           onClick={handleMarkAllRead}
-          className="px-4 py-1.5 text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-70 transition"
+          className="px-4 py-1.5 text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] hover:opacity-70 transition"
         >
           Mark all read
         </button>
@@ -193,7 +193,7 @@ export const NotificationsPage: React.FC = () => {
               {group.items.map((item, idx) => (
                 <div
                   key={idx}
-                  className={`flex gap-3 px-4 py-3 mb-2 border border-l-[3px] rounded-[var(--s4-radius-card)] transition-colors ${
+                  className={`flex gap-3 px-4 py-3 mb-2 border border-l-[3px] rounded-[12px] transition-colors ${
                     item.unread
                       ? 'bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark'
                       : 'bg-transparent border-divider dark:border-divider-on-dark'
@@ -201,7 +201,7 @@ export const NotificationsPage: React.FC = () => {
                 >
                   {/* Icon */}
                   <div
-                    className={`w-8 h-8 flex items-center justify-center flex-shrink-0 rounded-[var(--s4-radius-card)] border ${
+                    className={`w-8 h-8 flex items-center justify-center flex-shrink-0 rounded-[12px] border ${
                       item.unread
                         ? 'bg-accent-gold-soft/20 border-accent-gold/30'
                         : 'bg-subtle dark:bg-card-dark border-divider dark:border-divider-on-dark'
@@ -244,7 +244,7 @@ export const NotificationsPage: React.FC = () => {
         {/* Right rail */}
         <div className="w-[280px] flex-shrink-0 flex flex-col gap-4">
           {/* Notification preferences */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold rounded-[var(--s4-radius-card)] p-4">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold rounded-[12px] p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-3">
               Preferences
             </p>
@@ -279,7 +279,7 @@ export const NotificationsPage: React.FC = () => {
           </div>
 
           {/* Quick stats */}
-          <div className="bg-ink dark:bg-ink rounded-[var(--s4-radius-card)] p-4">
+          <div className="bg-ink dark:bg-ink rounded-[12px] p-4">
             <p className="text-[9px] font-bold tracking-[0.2em] uppercase text-accent-gold mb-2.5">
               Quick Stats
             </p>

@@ -135,7 +135,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6">
         <div className="animate-pulse text-sm text-muted-ink dark:text-muted-ink-on-dark">
           {t('exam_scheduler.loading') || 'Loading exams…'}
         </div>
@@ -168,7 +168,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Upcoming banner */}
       {upcoming && (
-        <div className="flex items-center gap-3 px-[18px] py-3 rounded-[var(--s4-radius-card)] bg-accent-gold-soft border border-accent-gold">
+        <div className="flex items-center gap-3 px-[18px] py-3 rounded-[12px] bg-accent-gold-soft border border-accent-gold">
           <CalendarDays className="h-5 w-5 text-accent-gold shrink-0" />
           <div>
             <p className="text-sm font-semibold text-accent-gold">
@@ -183,19 +183,19 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
 
       {/* Inline add form */}
       {showForm && (
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-4 space-y-3">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 space-y-3">
           <input
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             placeholder={t('exam_scheduler.name_placeholder') || 'Exam name'}
-            className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
+            className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
           />
           <input
             type="datetime-local"
             value={newDate}
             onChange={(e) => setNewDate(e.target.value)}
-            className="w-full px-3 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
+            className="w-full px-3 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark text-sm"
           />
           <div className="flex items-center justify-end gap-2">
             <ScholarButton variant="secondary" size="sm" onClick={() => setShowForm(false)}>
@@ -227,7 +227,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
             return (
               <div
                 key={exam.id}
-                className={`flex items-center gap-[14px] py-[14px] px-[18px] rounded-[var(--s4-radius-card)] border transition-colors ${
+                className={`flex items-center gap-[14px] py-[14px] px-[18px] rounded-[12px] border transition-colors ${
                   countdown.isPast
                     ? 'opacity-[0.65] border-divider dark:border-divider-on-dark'
                     : isUrgent
@@ -236,7 +236,7 @@ export const ExamScheduler: React.FC<ExamSchedulerProps> = ({ courseId }) => {
                 }`}
               >
                 {/* Date icon */}
-                <div className={`shrink-0 w-10 h-10 rounded-[var(--s4-radius-card)] flex flex-col items-center justify-center border ${
+                <div className={`shrink-0 w-10 h-10 rounded-[12px] flex flex-col items-center justify-center border ${
                   countdown.isPast
                     ? 'bg-subtle border-divider text-muted-ink dark:text-muted-ink-on-dark'
                     : 'bg-accent-gold-soft border-accent-gold/30 text-accent-gold'

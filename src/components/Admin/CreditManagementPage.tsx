@@ -237,7 +237,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
         </div>
         <button
           onClick={exportCreditsToCSV}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-[var(--s4-radius-card)] hover:bg-green-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-[12px] hover:bg-green-700 transition"
         >
           <Download className="h-4 w-4" />
           <span>Export CSV</span>
@@ -280,7 +280,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-[var(--s4-radius-card)] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-slate-800 rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
         <div className="mb-8">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -289,7 +289,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
               placeholder="Search users by email or name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
             />
           </div>
         </div>

@@ -174,7 +174,7 @@ export const ContentViewPage: React.FC = () => {
         <button
           type="button"
           onClick={goBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           Go back
@@ -199,7 +199,7 @@ export const ContentViewPage: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-page">
       {/* Scholar v4: sticky top bar with back + title + tab strip */}
-      <div className="sticky top-0 z-30 bg-sidebar border-b border-divider dark:border-divider-on-dark shadow-[var(--s4-shadow-hairline)]">
+      <div className="sticky top-0 z-30 bg-sidebar border-b border-divider dark:border-divider-on-dark ">
         {/* Top row: back button + title */}
         <div className="flex items-center gap-4 px-5 py-3 border-b border-divider dark:border-divider-on-dark">
           <button
@@ -227,7 +227,7 @@ export const ContentViewPage: React.FC = () => {
                 aria-selected={active}
                 onClick={() => setActiveTab(tab.id)}
                 className={[
-                  'relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors duration-[var(--s4-dur-fast)]',
+                  'relative flex items-center gap-1.5 px-4 py-3 text-sm font-medium whitespace-nowrap transition-colors duration-150',
                   active
                     ? 'text-ink dark:text-ink-on-dark'
                     : 'text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark',
@@ -481,14 +481,14 @@ export const ContentViewPage: React.FC = () => {
                   <button
                     key={i}
                     type="button"
-                    className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-subtle transition-colors shadow-[var(--s4-shadow-hairline)]"
+                    className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-subtle transition-colors "
                   >
                     {sym}
                   </button>
                 ))}
                 <button
                   type="button"
-                  className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-[9px] font-bold text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors shadow-[var(--s4-shadow-hairline)]"
+                  className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-[9px] font-bold text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
                 >
                   FIT
                 </button>

@@ -988,7 +988,7 @@ export const StudyRoomsPage: React.FC = () => {
       <div className="min-h-screen bg-card-dark p-4">
         <div className="max-w-7xl mx-auto">
           {/* Active room header — Scholar v4 dark bar style */}
-          <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border border-white/10 rounded-[var(--s4-radius-card)] px-5 py-3">
+          <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border border-white/10 rounded-[12px] px-5 py-3">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="w-[7px] h-[7px] rounded-full bg-accent-gold inline-block" />
@@ -1024,7 +1024,7 @@ export const StudyRoomsPage: React.FC = () => {
           </div>
 
           {creditsExhaustedCountdown != null && creditsExhaustedCountdown > 0 && (
-            <div className="mb-4 rounded-[var(--s4-radius-card)] bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
+            <div className="mb-4 rounded-[12px] bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
               <Clock className="h-5 w-5 flex-shrink-0" />
               <span>{t('study_rooms.credits_exhausted_warning') || 'Study room credits exhausted. You will be removed in 30 seconds.'}</span>
               <span className="font-bold">{creditsExhaustedCountdown}s</span>
@@ -1301,12 +1301,12 @@ export const StudyRoomsPage: React.FC = () => {
             {loading ? (
               <LoadingSkeleton type="card" count={3} />
             ) : browseSearchNoMatches ? (
-              <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-12 text-center">
+              <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark p-12 text-center">
                 <Search className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
                 <p className="text-secondary-ink dark:text-muted-ink-on-dark text-sm">{t('study_rooms.browse_no_matches')}</p>
               </div>
             ) : displayRoomList.length === 0 ? (
-              <div className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark p-12 text-center">
+              <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark p-12 text-center">
                 <Users className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
                 <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                   {activeTab === 'browse' ? t('study_rooms.no_active_rooms') : t('study_rooms.no_rooms_yet')}

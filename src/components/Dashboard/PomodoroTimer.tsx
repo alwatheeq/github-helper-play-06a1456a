@@ -45,7 +45,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
 
   const timerCard = (
     <div
-      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-[var(--s4-radius-card)] shadow-[var(--s4-shadow-modal)] border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
+      className={`${isEmbedded ? 'w-full' : 'w-64'} rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3`}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-ink dark:text-ink-on-dark">
@@ -64,7 +64,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
       </div>
 
       <div className="text-center">
-        <p className="s4-h1 text-[36px] font-mono text-ink dark:text-ink-on-dark">{formatTime(timeRemaining)}</p>
+        <p className="font-display text-[38px] font-semibold text-[36px] font-mono text-ink dark:text-ink-on-dark">{formatTime(timeRemaining)}</p>
       </div>
 
       <p className="text-center text-xs text-secondary-ink dark:text-muted-ink-on-dark">
@@ -97,9 +97,9 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <div className={`fixed inset-0 ${breakOverlayZ} flex items-center justify-center bg-black/30 backdrop-blur-lg`}>
           <div className="text-center space-y-4">
             <Coffee className="mx-auto h-16 w-16 text-ink-on-dark animate-pulse" />
-            <h2 className="s4-h1 text-ink-on-dark">{t('pomodoro.take_a_break')}</h2>
+            <h2 className="font-display text-[38px] font-semibold text-ink-on-dark">{t('pomodoro.take_a_break')}</h2>
             <p className="text-lg text-ink-on-dark/80">{t('pomodoro.break_message')}</p>
-            <p className="s4-h1 text-[40px] font-mono text-ink-on-dark">{formatTime(timeRemaining)}</p>
+            <p className="font-display text-[38px] font-semibold text-[40px] font-mono text-ink-on-dark">{formatTime(timeRemaining)}</p>
             <button
               type="button"
               onClick={pause}
@@ -121,7 +121,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
             <button
               type="button"
               onClick={() => setExpanded(true)}
-              className="flex items-center gap-2 px-4 py-2 rounded-full shadow-[var(--s4-shadow-modal)] border transition hover:scale-105 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark"
+              className="flex items-center gap-2 px-4 py-2 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.18)] border transition hover:scale-105 bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark"
             >
               <ModeIcon className="h-4 w-4" />
               <span className="font-mono text-sm font-semibold">{formatTime(timeRemaining)}</span>

@@ -65,7 +65,7 @@ export const Modal: React.FC<ModalProps> = ({
             <h2 className="text-lg font-semibold text-ink dark:text-ink-on-dark">{title}</h2>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
+              className="p-1.5 rounded-[12px] hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-secondary-ink dark:text-muted-ink-on-dark"
               aria-label="Close"
             >
               <X className="h-5 w-5" />
@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
         {!title && (
           <button
             onClick={onClose}
-            className="absolute top-3 right-3 p-1.5 rounded-[var(--s4-radius-card)] hover:bg-black/5 dark:hover:bg-white/10 transition-colors z-10 text-secondary-ink dark:text-muted-ink-on-dark"
+            className="absolute top-3 right-3 p-1.5 rounded-[12px] hover:bg-black/5 dark:hover:bg-white/10 transition-colors z-10 text-secondary-ink dark:text-muted-ink-on-dark"
             aria-label="Close"
           >
             <X className="h-5 w-5" />

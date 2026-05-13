@@ -296,10 +296,10 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             {groups.map((group) => (
               <div
                 key={group.id}
-                className="bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] border border-divider dark:border-divider-on-dark flex flex-col shadow-[var(--s4-shadow-hairline)]"
+                className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark flex flex-col "
               >
                 {/* Group card header */}
-                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[var(--s4-radius-card)] ${group.my_role === 'admin' ? 'bg-sidebar' : 'bg-subtle dark:bg-subtle-on-dark'}`}>
+                <div className={`px-4 py-3 flex justify-between items-center border-b border-divider dark:border-divider-on-dark rounded-t-[12px] ${group.my_role === 'admin' ? 'bg-sidebar' : 'bg-subtle dark:bg-subtle-on-dark'}`}>
                   <div className="flex items-center gap-2">
                     {/* Mini avatar stack */}
                     <div className="flex">
@@ -349,7 +349,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                       e.stopPropagation();
                       onOpenGroupChat(group.id, group.name);
                     }}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 transition-opacity"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold rounded-[12px] hover:opacity-90 transition-opacity"
                     title={t('social.open_chat')}
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
@@ -381,7 +381,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           </button>
                         </div>
                       </div>
-                      <div className="bg-card-light dark:bg-card-dark p-2 rounded-[var(--s4-radius-card)]">
+                      <div className="bg-card-light dark:bg-card-dark p-2 rounded-[12px]">
                         <QRCodeSVG value={group.group_code} size={56} />
                       </div>
                     </div>
@@ -398,7 +398,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                           {(members[group.id] || []).map((m) => (
                             <div
                               key={m.id}
-                              className="flex items-center justify-between py-1.5 px-2.5 rounded-[var(--s4-radius-card)] text-[11px] bg-subtle dark:bg-card-dark"
+                              className="flex items-center justify-between py-1.5 px-2.5 rounded-[12px] text-[11px] bg-subtle dark:bg-card-dark"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <div className="w-6 h-6 rounded-full bg-accent-gold flex items-center justify-center text-[10px] font-bold text-white shrink-0">
@@ -446,7 +446,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
       <div className="flex flex-col gap-4">
 
         {/* Create Group CTA — dark card like v4 */}
-        <div className="bg-sidebar rounded-[var(--s4-radius-card)] py-[20px] px-[18px] shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-sidebar rounded-[12px] py-[20px] px-[18px] ">
           <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-[10px]">
             {t('social.create_group')}
           </p>
@@ -459,20 +459,20 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setNewGroupName(e.target.value)}
             placeholder={t('social.group_name')}
             maxLength={100}
-            className="w-full px-3 py-2 mb-3 border border-white/20 bg-white/10 text-[12px] text-white placeholder:text-white/40 rounded-[var(--s4-radius-card)] focus:outline-none"
+            className="w-full px-3 py-2 mb-3 border border-white/20 bg-white/10 text-[12px] text-white placeholder:text-white/40 rounded-[12px] focus:outline-none"
             onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           />
           <button
             onClick={handleCreate}
             disabled={creating || !newGroupName.trim()}
-            className="w-full py-2.5 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 transition-opacity disabled:opacity-40"
+            className="w-full py-2.5 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[12px] hover:opacity-90 transition-opacity disabled:opacity-40"
           >
             {creating ? '...' : `${t('social.create_group')} →`}
           </button>
         </div>
 
         {/* Join Group */}
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] py-[14px] px-4 shadow-[var(--s4-shadow-hairline)]">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] py-[14px] px-4 ">
           <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3 flex items-center gap-2">
             <Hash className="w-3 h-3" />
             {t('social.join_group')}
@@ -484,13 +484,13 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
               onChange={(e) => setJoinCode(e.target.value.toUpperCase().slice(0, 6))}
               placeholder={t('social.group_code')}
               maxLength={6}
-              className="flex-1 px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] font-mono tracking-widest uppercase text-ink dark:text-ink-on-dark rounded-[var(--s4-radius-card)] focus:outline-none"
+              className="flex-1 px-3 py-2 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] font-mono tracking-widest uppercase text-ink dark:text-ink-on-dark rounded-[12px] focus:outline-none"
               onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
             />
             <button
               onClick={handleJoin}
               disabled={joining || joinCode.trim().length !== 6}
-              className="px-3 py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[var(--s4-radius-card)] hover:opacity-90 disabled:opacity-40 transition-opacity"
+              className="px-3 py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[12px] hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {joining ? '...' : t('social.join_group')}
             </button>

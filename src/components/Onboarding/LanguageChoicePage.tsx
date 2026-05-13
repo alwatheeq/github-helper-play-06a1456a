@@ -47,7 +47,7 @@ export const LanguageChoicePage: React.FC<LanguageChoicePageProps> = ({ onComple
               <Globe className="h-[27px] w-[27px] text-card-light" />
             </div>
           </div>
-          <h1 className="s4-h2 text-ink dark:text-ink-on-dark mb-1.5">
+          <h1 className="font-display text-[24px] font-bold text-ink dark:text-ink-on-dark mb-1.5">
             {t('language_choice.title')}
           </h1>
           <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">

@@ -234,13 +234,13 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
       {/* Video container - always mounted */}
       <div
         ref={containerRef}
-        className="w-full h-full rounded-[var(--s4-radius-card)] overflow-hidden bg-card-dark"
+        className="w-full h-full rounded-[12px] overflow-hidden bg-card-dark"
         style={{ minHeight: '400px' }}
       />
 
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-card-dark z-50 rounded-[var(--s4-radius-card)]">
+        <div className="absolute inset-0 flex items-center justify-center bg-card-dark z-50 rounded-[12px]">
           <div className="text-center">
             <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
             <p className="text-ink-on-dark text-lg">Connecting to video room...</p>
@@ -251,8 +251,8 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
 
       {/* Error overlay */}
       {error && (
-        <div className="absolute inset-0 flex items-center justify-center bg-card-dark z-50 rounded-[var(--s4-radius-card)] p-6">
-          <div className="bg-red-900/20 border border-red-800 rounded-[var(--s4-radius-card)] p-6 max-w-md dark:border-red-300">
+        <div className="absolute inset-0 flex items-center justify-center bg-card-dark z-50 rounded-[12px] p-6">
+          <div className="bg-red-900/20 border border-red-800 rounded-[12px] p-6 max-w-md dark:border-red-300">
             <h3 className="text-lg font-semibold text-red-200 mb-2">
               Video Connection Error
             </h3>
@@ -279,7 +279,7 @@ export const ZegoVideoRoom: React.FC<ZegoVideoRoomProps> = ({
             </div>
             <button
               onClick={onDisconnect}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-[var(--s4-radius-card)] hover:bg-red-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-[12px] hover:bg-red-700 transition-colors"
             >
               Go Back
             </button>

@@ -45,7 +45,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="w-[540px] max-w-full bg-card-light dark:bg-card-dark rounded-[var(--s4-radius-card)] shadow-[0_24px_70px_rgba(0,0,0,0.4)] border border-divider dark:border-divider-on-dark overflow-hidden">
+        <div className="w-[540px] max-w-full bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_24px_70px_rgba(0,0,0,0.4)] border border-divider dark:border-divider-on-dark overflow-hidden">
 
           {/* Red top band */}
           <div className="bg-gradient-to-br from-red-500 to-red-700 px-7 py-6 relative">
@@ -95,7 +95,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             {/* Two info chips */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {daysUntilRefresh !== null && (
-                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-3.5">
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-3.5">
                   <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Refreshes in
                   </p>
@@ -107,7 +107,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
                   </p>
                 </div>
               )}
-              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] p-3.5">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-3.5">
                 <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                   Pro plan gives
                 </p>
@@ -124,13 +124,13 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             <div className="flex gap-2.5">
               <a
                 href="/pricing"
-                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded-[var(--s4-radius-card)] transition-colors"
+                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded-[8px] transition-colors"
               >
                 Upgrade Plan
               </a>
               <button
                 onClick={onClose}
-                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border-[1.5px] border-divider dark:border-divider-on-dark rounded-[var(--s4-radius-card)] hover:opacity-70 transition-opacity"
+                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border-[1.5px] border-divider dark:border-divider-on-dark rounded-[8px] hover:opacity-70 transition-opacity"
               >
                 Dismiss
               </button>
