@@ -40,8 +40,6 @@ interface RoomParticipant {
   is_host: boolean;
 }
 
-// ChatMessage interface removed - using ZegoCloud built-in chat
-
 const ROOM_TOOLS = ['Video', 'Microphone', 'Whiteboard', 'Screen', 'Chat', 'File Share', 'Pomodoro', 'AI Tutor', 'Recording'] as const;
 
 export const StudyRoomsPage: React.FC = () => {
@@ -442,9 +440,6 @@ export const StudyRoomsPage: React.FC = () => {
       showErrorToast(message);
     }
   };
-
-  // Chat functionality now handled by ZegoCloud built-in chat
-  // Removed fetchChatMessages function - no longer needed
 
   /** Single place for study room credit check. Returns { allowed, message } for create/join. */
   const checkCanUseStudyRoom = async (): Promise<{ allowed: boolean; message: string }> => {
@@ -922,9 +917,6 @@ export const StudyRoomsPage: React.FC = () => {
       setTimeout(() => window.location.reload(), 1000);
     }
   };
-
-  // Chat functionality now handled by ZegoCloud built-in chat
-  // Close room functionality removed per user request - delete is sufficient
 
   const handleDeleteRoom = async (roomId: string) => {
     if (!user) return;

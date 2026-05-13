@@ -7,6 +7,15 @@ import { useToast } from '../../Toast/Toast';
 import { supabase } from '../../../lib/supabase';
 import { toErrorMessage } from '../../../utils/errorHandler';
 
+const Avatar: React.FC<{ name: string | null; size?: string; dot?: boolean }> = ({ name, size = 'h-10 w-10', dot }) => (
+  <div className="relative shrink-0">
+    <div className={`${size} rounded-full bg-sidebar flex items-center justify-center text-ink-on-dark font-bold text-[14px]`}>
+      {(name || '?')[0].toUpperCase()}
+    </div>
+    {dot && <span className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-accent-gold border-2 border-page dark:border-page" />}
+  </div>
+);
+
 interface UserProfile {
   id: string;
   display_name: string | null;
@@ -221,12 +230,6 @@ export const FriendsPanel: React.FC = () => {
     return row.requester_id === user.id ? row.addressee : row.requester;
   };
 
-  const Avatar: React.FC<{ name: string | null; size?: string }> = ({ name, size = 'h-10 w-10' }) => (
-    <div className={`${size} rounded-full bg-sidebar flex items-center justify-center text-ink-on-dark font-bold text-sm shrink-0`}>
-      {(name || '?')[0].toUpperCase()}
-    </div>
-  );
-
   return (
     <div dir={dir} className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-6">
 
@@ -301,13 +304,7 @@ export const FriendsPanel: React.FC = () => {
               const profile = getFriendProfile(row);
               return (
                 <div key={row.id} className="flex items-center gap-[14px] py-3.5">
-                  {/* Avatar with online dot */}
-                  <div className="relative flex-shrink-0">
-                    <div className="h-[42px] w-[42px] rounded-full bg-sidebar flex items-center justify-center text-ink-on-dark font-bold text-[15px]">
-                      {(profile.display_name || profile.username || '?')[0].toUpperCase()}
-                    </div>
-                    <span className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-accent-gold border-2 border-page dark:border-page" />
-                  </div>
+                  <Avatar name={profile.display_name || profile.username} size="h-[42px] w-[42px]" dot />
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
                       {profile.display_name || profile.username}
@@ -338,7 +335,10 @@ export const FriendsPanel: React.FC = () => {
             placeholder={t('social.search_friends')}
             className="w-full px-3 py-2 mb-3 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
           />
-          <button className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity">
+          <button
+            onClick={() => searchUsers(searchQuery)}
+            className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity"
+          >
             {t('social.add_friend')}
           </button>
         </div>

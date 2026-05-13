@@ -232,7 +232,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-gold to-accent-gold/60 flex items-center justify-center text-[15px] font-bold text-white shadow-md">
             {groupName[0]?.toUpperCase()}
           </div>
-          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-green-500 border-2 border-card-light dark:border-card-dark" />
+          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-accent-gold border-2 border-card-light dark:border-card-dark" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-[14px] font-bold text-ink dark:text-ink-on-dark truncate leading-tight">{groupName}</h2>
