@@ -224,6 +224,13 @@ Deno.serve(async (req) => {
       return errorResponse('Summary text is required', 400);
     }
     const isGeneralAssistant = summary_text.includes('General assistant');
+    // Backward compatibility: some deployed DBs still have the original CHECK
+    // constraint that does not include `general`. Store global chat as a stable
+    // summary-scoped conversation instead of failing the insert.
+    const normalizedContextType = context_type === 'general' ? 'summary' : context_type;
+    const normalizedContextId = context_type === 'general' && !context_id
+      ? '__global_assistant__'
+      : context_id;
     if (!isGeneralAssistant && summary_text.trim().length < 10) {
       return errorResponse('Summary text is required', 400);
     }
@@ -313,8 +320,8 @@ Deno.serve(async (req) => {
           .from('chatbot_conversations')
           .select('id')
           .eq('user_id', userId)
-          .eq('context_type', context_type)
-          .eq('context_id', context_id)
+          .eq('context_type', normalizedContextType)
+          .eq('context_id', normalizedContextId)
           .maybeSingle();
 
         if (findError) {
@@ -331,8 +338,8 @@ Deno.serve(async (req) => {
           .from('chatbot_conversations')
           .insert({
             user_id: userId,
-            context_type: context_type,
-            context_id: context_id,
+            context_type: normalizedContextType,
+            context_id: normalizedContextId,
             summary_text: summary_text,
             original_text: original_text || null,
             topics: topics || [],
@@ -348,7 +355,7 @@ Deno.serve(async (req) => {
             code: ce.code,
             details: ce.details,
             hint: ce.hint,
-            context_type,
+            context_type: normalizedContextType,
           });
           // Fallback: reply without persistence so the chat still works
           // (e.g. when a CHECK constraint or RLS blocks the insert).
