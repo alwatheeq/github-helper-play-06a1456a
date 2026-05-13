@@ -222,7 +222,7 @@ export const FriendsPanel: React.FC = () => {
   };
 
   const Avatar: React.FC<{ name: string | null; size?: string }> = ({ name, size = 'h-10 w-10' }) => (
-    <div className={`${size} rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-sm shrink-0`}>
+    <div className={`${size} rounded-full bg-sidebar flex items-center justify-center text-ink-on-dark font-bold text-sm shrink-0`}>
       {(name || '?')[0].toUpperCase()}
     </div>
   );
@@ -233,7 +233,7 @@ export const FriendsPanel: React.FC = () => {
       {/* LEFT — search + friend list */}
       <div>
         {/* Search bar */}
-        <div className="flex items-center gap-3 px-[14px] py-[9px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px]  mb-3">
+        <div className="flex items-center gap-3 px-[14px] py-[9px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-3">
           <Search className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
           <input
             type="text"
@@ -268,7 +268,7 @@ export const FriendsPanel: React.FC = () => {
                     <button
                       onClick={() => sendFriendRequest(profile.id)}
                       disabled={sendingRequest === profile.id}
-                      className="shrink-0 flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-bold text-ink-on-dark dark:text-ink bg-accent-gold hover:opacity-90 transition-opacity disabled:opacity-50 rounded-[12px]"
+                      className="shrink-0 flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-bold text-ink-on-dark bg-accent-gold hover:opacity-90 transition-opacity disabled:opacity-50"
                     >
                       {sendingRequest === profile.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UserPlus className="h-3.5 w-3.5" />}
                       {t('social.add_friend')}
@@ -303,11 +303,10 @@ export const FriendsPanel: React.FC = () => {
                 <div key={row.id} className="flex items-center gap-[14px] py-3.5">
                   {/* Avatar with online dot */}
                   <div className="relative flex-shrink-0">
-                    <div className="h-[42px] w-[42px] rounded-full bg-ink dark:bg-ink-on-dark flex items-center justify-center text-ink-on-dark dark:text-ink font-bold text-[15px]">
+                    <div className="h-[42px] w-[42px] rounded-full bg-sidebar flex items-center justify-center text-ink-on-dark font-bold text-[15px]">
                       {(profile.display_name || profile.username || '?')[0].toUpperCase()}
                     </div>
-                    {/* green online indicator */}
-                    <span className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-green-500 border-2 border-page dark:border-page" />
+                    <span className="absolute bottom-0.5 right-0.5 w-[11px] h-[11px] rounded-full bg-accent-gold border-2 border-page dark:border-page" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-display text-[14.5px] font-semibold text-ink dark:text-ink-on-dark truncate">
@@ -328,7 +327,7 @@ export const FriendsPanel: React.FC = () => {
       <div className="flex flex-col gap-[14px]">
 
         {/* Add a Friend card */}
-        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 ">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4">
           <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3">
             {t('social.add_friend')}
           </p>
@@ -337,16 +336,16 @@ export const FriendsPanel: React.FC = () => {
             value={searchQuery}
             onChange={handleSearchChange}
             placeholder={t('social.search_friends')}
-            className="w-full px-3 py-2 mb-3 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark rounded-[12px] focus:outline-none"
+            className="w-full px-3 py-2 mb-3 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-card-dark text-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none"
           />
-          <button className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold rounded-[12px] hover:opacity-90 transition-opacity">
+          <button className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity">
             {t('social.add_friend')}
           </button>
         </div>
 
         {/* Pending Requests */}
         {pendingIncoming.length > 0 && (
-          <div className="bg-sidebar rounded-[12px] p-4 ">
+          <div className="bg-sidebar p-4">
             <p className="text-[9px] tracking-[0.2em] uppercase font-bold text-accent-gold mb-3">
               {t('social.pending_requests')} · {pendingIncoming.length}
             </p>
@@ -372,7 +371,7 @@ export const FriendsPanel: React.FC = () => {
                       <button
                         onClick={() => handleRequest(req.id, 'accepted')}
                         disabled={processingRequest === req.id}
-                        className="flex-1 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold rounded-[12px] hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-1"
+                        className="flex-1 py-1.5 bg-accent-gold text-ink-on-dark text-[11px] font-bold hover:opacity-90 disabled:opacity-50 transition-opacity flex items-center justify-center gap-1"
                         aria-label={t('social.accept')}
                       >
                         {processingRequest === req.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
@@ -381,7 +380,7 @@ export const FriendsPanel: React.FC = () => {
                       <button
                         onClick={() => handleRequest(req.id, 'rejected')}
                         disabled={processingRequest === req.id}
-                        className="flex-1 py-1.5 border border-white/20 text-white/60 text-[11px] rounded-[12px] hover:bg-white/10 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+                        className="flex-1 py-1.5 border border-white/20 text-white/60 text-[11px] hover:bg-white/10 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
                         aria-label={t('social.reject')}
                       >
                         <X className="h-3.5 w-3.5" />

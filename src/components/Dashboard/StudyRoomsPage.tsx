@@ -988,7 +988,7 @@ export const StudyRoomsPage: React.FC = () => {
       <div className="min-h-screen bg-card-dark p-4">
         <div className="max-w-7xl mx-auto">
           {/* Active room header — Scholar v4 dark bar style */}
-          <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border border-white/10 rounded-[12px] px-5 py-3">
+          <div className="mb-4 flex justify-between items-center bg-[#1a1a1a] border-b border-white/[.08] px-5 py-3">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="w-[7px] h-[7px] rounded-full bg-accent-gold inline-block" />
@@ -996,10 +996,10 @@ export const StudyRoomsPage: React.FC = () => {
               </div>
               <div className="w-px h-4 bg-white/10" />
               <div>
-                <h2 className="font-display text-sm font-semibold text-white leading-none">
+                <h2 className="font-display text-[13px] font-semibold text-white leading-none">
                   {selectedRoom.room_name}
                 </h2>
-                <div className="flex items-center gap-3 mt-1 text-xs text-white/50">
+                <div className="flex items-center gap-3 mt-1 text-[11px] text-white/50">
                   <span className="flex items-center gap-1">
                     <Users className="h-3 w-3" />
                     {participants.length}/{selectedRoom.max_participants}
@@ -1016,7 +1016,7 @@ export const StudyRoomsPage: React.FC = () => {
             </div>
             <button
               onClick={handleLeaveRoom}
-              className="px-5 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors font-semibold text-sm flex items-center gap-2"
+              className="px-5 py-2 bg-red-600 text-white hover:bg-red-700 transition-colors font-semibold text-[13px] flex items-center gap-2"
             >
               <X className="h-4 w-4" />
               <span>{t('study_rooms.leave_room') || 'Leave Room'}</span>
@@ -1024,7 +1024,7 @@ export const StudyRoomsPage: React.FC = () => {
           </div>
 
           {creditsExhaustedCountdown != null && creditsExhaustedCountdown > 0 && (
-            <div className="mb-4 rounded-[12px] bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
+            <div className="mb-4 bg-amber-600 text-white px-4 py-3 flex items-center justify-center gap-2">
               <Clock className="h-5 w-5 flex-shrink-0" />
               <span>{t('study_rooms.credits_exhausted_warning') || 'Study room credits exhausted. You will be removed in 30 seconds.'}</span>
               <span className="font-bold">{creditsExhaustedCountdown}s</span>
@@ -1032,7 +1032,7 @@ export const StudyRoomsPage: React.FC = () => {
           )}
 
           {/* Full-screen ZegoCloud video interface */}
-          <div className="bg-[#111] rounded-md overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
+          <div className="bg-[#111] overflow-hidden" style={{ height: 'calc(100vh - 140px)' }}>
             <React.Suspense fallback={<div className="flex items-center justify-center h-full"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-white" /></div>}>
               <ZegoVideoRoom
                 roomId={selectedRoom.room_code}
@@ -1301,12 +1301,12 @@ export const StudyRoomsPage: React.FC = () => {
             {loading ? (
               <LoadingSkeleton type="card" count={3} />
             ) : browseSearchNoMatches ? (
-              <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark p-12 text-center">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center">
                 <Search className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
                 <p className="text-secondary-ink dark:text-muted-ink-on-dark text-sm">{t('study_rooms.browse_no_matches')}</p>
               </div>
             ) : displayRoomList.length === 0 ? (
-              <div className="bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark p-12 text-center">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-12 text-center">
                 <Users className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4 opacity-40" />
                 <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                   {activeTab === 'browse' ? t('study_rooms.no_active_rooms') : t('study_rooms.no_rooms_yet')}
