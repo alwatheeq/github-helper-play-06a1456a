@@ -182,8 +182,8 @@ export const GameJoinPage: React.FC = () => {
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-4">Enter Room Code</div>
 
             {/* Game code display — large monospace */}
-            <div className="border-2 border-accent-gold bg-chip dark:bg-card-dark px-6 py-4 text-center mb-2">
-              <div className="font-display text-[30px] font-bold text-ink dark:text-ink-on-dark tracking-[8px]">
+            <div className="border-2 border-accent-gold bg-accent-gold-soft px-6 py-4 text-center mb-2">
+              <div className="font-display text-[30px] font-bold text-ink tracking-[8px]">
                 {gameCode?.toUpperCase()}
               </div>
             </div>
@@ -199,7 +199,7 @@ export const GameJoinPage: React.FC = () => {
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Enter your name"
               maxLength={50}
-              className="w-full border border-divider dark:border-divider-on-dark px-4 py-3 text-[13px] bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark focus:outline-none focus:border-accent-gold mb-1"
+              className="w-full border-[1.5px] border-accent-gold px-[14px] py-[10px] text-[13px] bg-accent-gold-soft text-ink focus:outline-none mb-1"
             />
             <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mb-6">This is how you'll appear to others in the game.</div>
 
@@ -238,7 +238,7 @@ export const GameJoinPage: React.FC = () => {
               'Answer as fast as you can — speed counts!',
             ].map((tip, i) => (
               <div key={i} className="flex gap-3 mb-3">
-                <div className="w-5 h-5 rounded-full bg-subtle dark:bg-chip flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-5 h-5 rounded-full bg-accent-gold-soft flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-[9px] text-accent-gold font-bold">{i + 1}</span>
                 </div>
                 <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark leading-relaxed">{tip}</span>

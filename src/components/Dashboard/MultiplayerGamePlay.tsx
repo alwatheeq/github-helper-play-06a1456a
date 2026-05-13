@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Zap } from 'lucide-react';
+
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../hooks/useAuth';
 import { useToast } from '../Toast/Toast';
@@ -499,105 +499,180 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
   const currentQuestion = questions[currentQuestionIndex];
   const timerPct = Math.round((timeLeft / timePerQuestion) * 100);
   const answeredCount = playerScores.filter(p => p.score > 0 || p.correct > 0).length;
+  const letters = ['A', 'B', 'C', 'D'];
 
   return (
     <div className="w-full max-w-5xl mx-auto">
-      {/* Label + timer pill row */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase">
-          Brain Rush Multiplayer · Question {currentQuestionIndex + 1} of {questions.length}
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} / {playerScores.length} answered</span>
-          {/* Timer pill */}
-          <div className="flex items-center gap-2 bg-chip dark:bg-chip border border-accent-gold px-[14px] py-[5px] rounded-full">
-            <Clock className="w-3.5 h-3.5 text-accent-gold" />
-            <span className={`font-display text-[21px] font-bold leading-none ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-accent-gold'}`}>{timeLeft}</span>
-            <span className="text-[10px] text-accent-gold opacity-70 font-semibold">s</span>
+      {/* Header row */}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-[10px] tracking-[2.5px] text-accent-gold font-bold uppercase">
+            Brain Rush · Question {currentQuestionIndex + 1} / {questions.length}
+          </div>
+          <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark mt-[2px]">
+            {playerScores.length} players · {answeredCount} answered
           </div>
         </div>
+        <button
+          onClick={() => navigate('/dashboard?view=eduplay')}
+          className="px-3 py-[4px] bg-transparent border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[11px] cursor-pointer"
+        >
+          Leave Game
+        </button>
+      </div>
+      <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-[10px] mb-[14px]" />
+
+      {/* Live Rankings Strip — horizontal */}
+      <div className="flex gap-[5px] mb-[14px] overflow-x-auto">
+        {playerScores.slice(0, 7).map((p, i) => {
+          const isMe = p.user_id === user?.id;
+          return (
+            <div
+              key={p.user_id}
+              className={`flex items-center gap-[7px] px-[11px] py-[7px] border flex-shrink-0 min-w-0 ${i < 2 ? 'flex-none' : 'flex-1'}
+                ${isMe ? 'bg-sidebar border-accent-gold' : (i === 0 ? 'bg-accent-gold-soft border-divider dark:border-divider-on-dark' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark')}`}
+            >
+              <span className={`text-[9px] font-bold flex-shrink-0 ${i === 0 || isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>#{i + 1}</span>
+              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[9px] font-bold flex-shrink-0 border border-divider dark:border-divider-on-dark ${isMe ? 'bg-accent-gold text-sidebar' : (i === 0 ? 'bg-sidebar text-card-light' : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark')}`}>
+                {p.display_name[0].toUpperCase()}
+              </div>
+              <span className={`text-[11px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap min-w-0 ${isMe ? 'font-bold text-card-light' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
+                {isMe ? 'You' : p.display_name}
+              </span>
+              <span className={`font-display text-[14px] font-bold flex-shrink-0 ${isMe || i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.correct}</span>
+            </div>
+          );
+        })}
+        {playerScores.length > 7 && (
+          <div className="flex items-center px-[11px] py-[7px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex-shrink-0 gap-[3px]">
+            {playerScores.slice(7, 10).map((p) => (
+              <div key={p.user_id} className="w-[20px] h-[20px] rounded-full bg-sidebar text-card-light grid place-items-center text-[8px] font-bold">
+                {p.display_name[0].toUpperCase()}
+              </div>
+            ))}
+            <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark ml-[3px]">+{Math.max(0, playerScores.length - 7)}</span>
+          </div>
+        )}
       </div>
 
-      {/* Progress bar — accent-gold fill */}
-      <div className="h-px bg-divider dark:bg-divider-on-dark mb-2" />
-      <div className="h-[3px] bg-divider dark:bg-divider-on-dark mb-4">
-        <div className="h-full bg-accent-gold transition-all duration-1000" style={{ width: `${timerPct}%` }} />
+      {/* Timer bar */}
+      <div className="mb-[18px]">
+        <div className="h-[4px] bg-divider dark:bg-divider-on-dark rounded-sm">
+          <div className="h-full bg-accent-gold rounded-sm transition-all duration-1000" style={{ width: `${timerPct}%` }} />
+        </div>
+        <div className="flex justify-between mt-[5px]">
+          <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">time remaining</span>
+          <span className={`font-display text-[13px] font-semibold ${timeLeft <= 5 ? 'text-red-500 animate-pulse' : 'text-ink dark:text-ink-on-dark'}`}>{timeLeft}s</span>
+        </div>
       </div>
 
-      {/* Question card — bordered top with accent */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-t-[3px] border-t-accent-gold px-6 py-5 mb-3 ">
-        <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-3">Question</div>
-        <p className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark leading-snug m-0">
-          {currentQuestion.question}
-        </p>
+      {/* Question — left accent border */}
+      <div className="font-display text-[20px] font-semibold text-ink dark:text-ink-on-dark leading-snug border-l-[3px] border-l-accent-gold pl-[18px] mb-[18px]">
+        {currentQuestion.question}
       </div>
 
-      {/* Options — full-width vertical list */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark mb-3 ">
+      {/* Answer options — 2×2 grid */}
+      <div className="grid grid-cols-2 gap-3 mb-4">
         {currentQuestion.options.map((option, i) => {
           const isSelected = selectedAnswer === option;
           const isCorrect = option === currentQuestion.correct_answer;
           const showResult = hasAnswered;
-          const letters = ['A', 'B', 'C', 'D'];
 
-          let borderLeft = '3px solid transparent';
-          let bg = 'transparent';
-          if (showResult && isCorrect) { borderLeft = '3px solid #4caf50'; bg = 'rgba(76,175,80,0.08)'; }
-          else if (showResult && isSelected && !isCorrect) { borderLeft = '3px solid #d9534f'; bg = 'rgba(217,83,79,0.08)'; }
-          else if (isSelected) { borderLeft = '3px solid var(--color-accent-gold)'; bg = 'rgba(226,192,106,0.07)'; }
+          const bgBorder = showResult && isCorrect
+            ? 'border-[2px] border-green-500 bg-green-500/10'
+            : showResult && isSelected && !isCorrect
+            ? 'border-[2px] border-red-500 bg-red-500/10'
+            : isSelected
+            ? 'border-[2px] border-accent-gold bg-accent-gold-soft'
+            : 'border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark';
 
           return (
             <button
               key={i}
               onClick={() => !hasAnswered && submitAnswer(option)}
               disabled={hasAnswered}
-              style={{ borderLeft, background: bg }}
-              className={`w-full flex items-center gap-4 px-6 py-4 border-b border-divider dark:border-divider-on-dark last:border-0 text-left transition-colors ${!hasAnswered ? 'cursor-pointer hover:bg-chip/30' : 'cursor-not-allowed'}`}
+              className={`flex gap-[14px] items-start p-[18px_20px] text-left min-h-[80px] transition ${bgBorder} ${!hasAnswered ? 'cursor-pointer hover:opacity-80' : 'cursor-not-allowed'}`}
             >
-              <span className={`font-display text-[17px] font-bold flex-shrink-0 w-6 ${isSelected || (showResult && isCorrect) ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+              <span className={`text-[11px] tracking-[1px] font-bold flex-shrink-0 mt-[2px] ${isSelected || (showResult && isCorrect) ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                 {letters[i]}
               </span>
-              <span className={`text-[14px] leading-snug flex-1 ${isSelected ? 'text-ink dark:text-ink-on-dark font-semibold' : 'text-ink dark:text-ink-on-dark'}`}>{option}</span>
-              {showResult && isCorrect && (
-                <div className="ml-auto w-5 h-5 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                </div>
-              )}
-              {showResult && isSelected && !isCorrect && (
-                <Zap className="w-4 h-4 text-red-400 flex-shrink-0 ml-auto" />
-              )}
+              <span className={`text-[13.5px] leading-[1.55] flex-1 ${isSelected ? 'text-ink dark:text-ink-on-dark font-semibold' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>
+                {option}
+              </span>
             </button>
           );
         })}
       </div>
 
-      {/* Players answered status panel */}
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark ">
-        <div className="px-4 py-2 border-b border-divider dark:border-divider-on-dark flex items-center gap-3">
-          <span className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">Players</span>
-          <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{answeredCount} answered · {playerScores.length - answeredCount} waiting</span>
-        </div>
-        <div className="p-4 flex flex-wrap gap-2">
-          {playerScores.map((player) => {
-            const answered = player.correct > 0 || (hasAnswered && player.user_id === user?.id);
-            const isMe = player.user_id === user?.id;
-            return (
-              <div
-                key={player.user_id}
-                className={`flex items-center gap-2 px-3 py-1.5 border ${answered ? 'bg-accent-gold-soft border-accent-gold/20' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark opacity-60'}`}
-              >
-                {answered ? (
-                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-gold"><polyline points="20 6 9 17 4 12"/></svg>
-                ) : (
-                  <div className="w-2 h-2 rounded-full border border-muted-ink dark:border-muted-ink-on-dark" />
-                )}
-                <span className={`text-[11.5px] ${answered ? 'text-ink dark:text-ink-on-dark font-medium' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
-                  {player.display_name}{isMe ? ' (You)' : ''}
-                </span>
+      {/* Game info strip */}
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-[16px] py-[9px] flex gap-[24px] mb-[18px]">
+        {([
+          ['Format', 'Most correct answers wins'],
+          ['Players', `${answeredCount} / ${playerScores.length} answered`],
+          ['Progress', `Q ${currentQuestionIndex + 1} of ${questions.length}`],
+        ] as [string, string][]).map(([k, v]) => (
+          <div key={k} className="flex gap-[6px] items-baseline">
+            <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase tracking-[1px]">{k}</span>
+            <span className="text-[11px] text-ink dark:text-ink-on-dark font-medium">{v}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Live Leaderboard grid — rank 1 spans full row */}
+      <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-[10px]">
+        Live Standings · {playerScores.length} Players
+      </div>
+      <div className="grid grid-cols-3 gap-[6px]">
+        {playerScores.slice(0, 1).map((p) => {
+          const isMe = p.user_id === user?.id;
+          return (
+            <div key={p.user_id} className={`col-span-3 flex items-center gap-3 px-4 py-3 border-[2px] border-accent-gold ${isMe ? 'bg-sidebar' : 'bg-accent-gold-soft'}`}>
+              <span className="font-display text-[22px] font-bold text-accent-gold min-w-[26px]">1</span>
+              <div className={`w-8 h-8 rounded-full grid place-items-center text-[12px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+                {p.display_name[0].toUpperCase()}
               </div>
-            );
-          })}
-        </div>
+              <div className="flex-1 min-w-0">
+                <div className={`text-[13px] font-bold truncate ${isMe ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>
+                  {isMe ? `${p.display_name} (You)` : p.display_name}
+                </div>
+                <div className={`text-[10px] ${isMe ? 'text-card-light/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>Leading the room</div>
+              </div>
+              <span className="font-display text-[26px] font-bold text-accent-gold">{p.correct}</span>
+            </div>
+          );
+        })}
+        {playerScores.slice(1, 3).map((p, i) => {
+          const isMe = p.user_id === user?.id;
+          return (
+            <div key={p.user_id} className={`flex items-center gap-2 px-3 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
+              <span className="font-display text-[16px] font-bold text-muted-ink dark:text-muted-ink-on-dark min-w-[20px]">{i + 2}</span>
+              <div className={`w-[26px] h-[26px] rounded-full grid place-items-center text-[10px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+                {p.display_name[0].toUpperCase()}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className={`text-[12px] truncate ${isMe ? 'text-card-light font-bold' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
+                  {isMe ? `${p.display_name} (You)` : p.display_name}
+                </div>
+              </div>
+              <span className="font-display text-[15px] font-bold text-muted-ink dark:text-muted-ink-on-dark">{p.correct}</span>
+            </div>
+          );
+        })}
+        {playerScores.slice(3).map((p, i) => {
+          const isMe = p.user_id === user?.id;
+          return (
+            <div key={p.user_id} className={`flex items-center gap-2 px-3 py-[9px] border ${isMe ? 'bg-accent-gold-soft border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
+              <span className={`text-[11px] font-semibold min-w-[18px] ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 4}</span>
+              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+                {p.display_name[0].toUpperCase()}
+              </div>
+              <span className={`text-[11px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap ${isMe ? 'text-ink dark:text-ink-on-dark font-bold' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>
+                {isMe ? `${p.display_name} (You)` : p.display_name}
+              </span>
+              <span className={`font-display text-[12px] font-semibold ${p.correct > 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.correct}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
