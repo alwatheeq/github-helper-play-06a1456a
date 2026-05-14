@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
-import { Upload, FileText, Settings, Info, Type, File, AlertCircle, X, Stethoscope, Scan, Globe } from 'lucide-react';
+import { Upload, FileText, Settings, Info, Type, File, Stethoscope, Scan, Globe } from 'lucide-react';
 import { ScholarCard, ScholarAlert } from '../Scholar';
 import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
@@ -404,9 +404,8 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         : 'border-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark'
     }`;
 
-  // Dropzone container — hairline dashed, v4 radius token, 220px min-height (v4 spec)
   const dropzoneCls = (active: boolean) =>
-    `relative border border-dashed rounded-[12px] min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-150 ${
+    `relative border border-dashed min-h-[220px] flex items-center justify-center py-10 px-8 text-center transition-colors duration-150 ${
       active
         ? 'border-accent-gold bg-accent-gold/5'
         : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-accent-gold/60'
@@ -601,7 +600,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 textInput.length > 100000 ||
                 (medicalMode && medicalValidation && !medicalValidation.isValid)
               }
-              className={`w-full py-3 px-4 rounded-md font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
+              className={`w-full py-3 px-4 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ${
                 medicalMode
                   ? 'bg-red-600 text-white hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600'
                   : 'bg-accent-gold text-ink-on-dark hover:opacity-90'
@@ -612,7 +611,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
 
             {/* Medical Validation Feedback */}
             {medicalMode && medicalValidation && textInput.trim().length > 100 && (
-              <div className={`mt-3 p-3 rounded-[12px] border text-sm ${
+              <div className={`mt-3 p-3 border text-sm ${
                 medicalValidation.isValid
                   ? 'bg-green-50 border-green-200 text-green-800 dark:bg-green-900 dark:border-green-700 dark:text-green-200'
                   : 'bg-orange-50 border-orange-200 text-orange-800 dark:bg-orange-900 dark:border-orange-700 dark:text-orange-200'
@@ -677,7 +676,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         </div>
 
         {showSettings && (
-          <div className="mt-6 p-6 bg-subtle rounded-[12px] space-y-4 border border-divider dark:border-divider-on-dark">
+          <div className="mt-6 p-6 bg-subtle space-y-4 border border-divider dark:border-divider-on-dark">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('dashboard.flashcard_count')}</label>
@@ -764,7 +763,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               </div>
             </div>
 
-            <div className={`text-sm rounded-[12px] p-3 ${
+            <div className={`text-sm p-3 ${
               medicalMode
                 ? 'bg-red-50 border border-red-200 text-red-700 dark:bg-red-900 dark:border-red-700 dark:text-red-200'
                 : 'bg-accent-gold/10 border border-accent-gold/30 text-secondary-ink dark:text-muted-ink-on-dark'
@@ -793,10 +792,10 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         )}
 
         {/* Medical Mode Toggle - Compact Version */}
-        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-[12px] dark:bg-red-900/20 dark:border-red-800">
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 dark:bg-red-900/20 dark:border-red-800">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded-md border border-red-200 dark:border-red-800">
+              <div className="bg-red-100 dark:bg-red-900/30 p-2 border border-red-200 dark:border-red-800">
                 <Stethoscope className="h-5 w-5 text-red-700 dark:text-red-400" />
               </div>
               <div>

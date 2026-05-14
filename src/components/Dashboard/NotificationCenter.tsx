@@ -40,24 +40,6 @@ export const NotificationCenter: React.FC = () => {
     }
   };
 
-  // Severity colors preserved
-  const _getNotificationColor = (type: string) => {
-    switch (type) {
-      case 'payment_failed':
-        return 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800';
-      case 'subscription_renewed':
-        return 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800';
-      case 'trial_expiring':
-        return 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800';
-      case 'subscription_canceled':
-        return 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800';
-      case 'admin_notification':
-        return 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800';
-      default:
-        return 'bg-accent-gold-soft/10 border-divider dark:border-divider-on-dark';
-    }
-  };
-
   const handleNotificationClick = (notification: { id: string; action_url?: string }) => {
     markAsRead(notification.id);
     if (notification.action_url) {
@@ -86,11 +68,11 @@ export const NotificationCenter: React.FC = () => {
           setIsOpen(!isOpen);
           if (!isOpen) setActiveTab('alerts');
         }}
-        className="relative p-2 hover:opacity-60 rounded-[12px] transition duration-200"
+        className="relative p-2 hover:opacity-60 transition duration-200"
       >
         <Bell className="h-6 w-6 text-secondary-ink dark:text-muted-ink-on-dark" />
         {visibleUnreadCount > 0 && (
-          <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+          <span className="absolute top-0 right-0 bg-accent-gold text-sidebar text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
             {visibleUnreadCount > 9 ? '9+' : visibleUnreadCount}
           </span>
         )}
@@ -106,7 +88,7 @@ export const NotificationCenter: React.FC = () => {
           />
 
           {/* Dropdown Panel */}
-          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
+          <div className="absolute right-0 mt-2 w-96 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark z-50 max-h-[min(600px,80vh)] flex flex-col">
             {/* Header */}
             <div className="p-4 border-b border-divider dark:border-divider-on-dark space-y-3">
               <div className="flex items-center justify-between gap-2">
@@ -122,7 +104,7 @@ export const NotificationCenter: React.FC = () => {
                 )}
               </div>
               <div
-                className="flex rounded-[12px] p-0.5 bg-accent-gold-soft/10 border border-divider dark:border-divider-on-dark"
+                className="flex p-0.5 bg-accent-gold-soft/10 border border-divider dark:border-divider-on-dark"
                 role="tablist"
               >
                 <button
@@ -130,9 +112,9 @@ export const NotificationCenter: React.FC = () => {
                   role="tab"
                   aria-selected={activeTab === 'alerts'}
                   onClick={() => setActiveTab('alerts')}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 text-sm font-medium transition ${
                     activeTab === 'alerts'
-                      ? 'bg-card-light dark:bg-card-dark  text-ink dark:text-ink-on-dark'
+                      ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
                       : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >
@@ -144,9 +126,9 @@ export const NotificationCenter: React.FC = () => {
                   role="tab"
                   aria-selected={activeTab === 'timer'}
                   onClick={() => setActiveTab('timer')}
-                  className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md text-sm font-medium transition ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 text-sm font-medium transition ${
                     activeTab === 'timer'
-                      ? 'bg-card-light dark:bg-card-dark  text-ink dark:text-ink-on-dark'
+                      ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
                       : 'text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80'
                   }`}
                 >

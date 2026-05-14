@@ -87,10 +87,10 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
             <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-accent-gold">
               The Workshop · Processing
             </div>
-            <h1 className="font-display text-[38px] font-semibold text-ink mt-1.5 mb-1 tracking-tight leading-tight">
+            <h1 className="font-display text-[38px] font-semibold text-ink dark:text-ink-on-dark mt-1.5 mb-1 tracking-tight leading-tight">
               Composing your materials.
             </h1>
-            <p className="text-[13px] text-muted-ink italic">{modeDesc}</p>
+            <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark italic">{modeDesc}</p>
           </div>
           {/* Mode badge */}
           <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold tracking-[1.2px] uppercase border ${
@@ -111,12 +111,12 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
       {/* Progress bar — full-width, accent-gold fill */}
       <div className="mb-6">
         <div className="flex items-baseline justify-between mb-2">
-          <span className="text-[12.5px] text-secondary-ink">{message}</span>
+          <span className="text-[12.5px] text-secondary-ink dark:text-muted-ink-on-dark">{message}</span>
           <span className="font-display text-[12px] font-bold text-accent-gold tracking-[0.5px]">{progress}%</span>
         </div>
         <div className="w-full bg-subtle h-[5px]">
           <div
-            className={`h-full transition-all duration-200 ease-in-out rounded-full ${
+            className={`h-full transition-all duration-200 ease-in-out ${
               medicalMode ? 'bg-red-600' : 'bg-accent-gold'
             }`}
             style={{ width: `${progress}%` }}
@@ -140,7 +140,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
                 }
               </div>
               <div>
-                <div className="font-display text-[15px] font-semibold text-ink leading-tight">{modeLabel}</div>
+                <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark leading-tight">{modeLabel}</div>
                 <div className="text-[11px] text-muted-ink mt-0.5">
                   AI extraction · est. 40 seconds remaining
                   {/* OCR Indicator */}
@@ -173,7 +173,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               <Loader2 className={`h-6 w-6 animate-spin ${medicalMode ? 'text-red-500' : 'text-accent-gold'}`} />
             </div>
             <div>
-              <p className="font-display text-[16px] text-ink leading-[1.72] transition-opacity duration-200">
+              <p className="font-display text-[16px] text-ink dark:text-ink-on-dark leading-[1.72] transition-opacity duration-200">
                 "{facts[currentFactIndex]}"
               </p>
               <div className="font-display text-[10.5px] text-accent-gold mt-3 tracking-[0.3px]">— Study science</div>
