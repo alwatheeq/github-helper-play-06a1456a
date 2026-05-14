@@ -16,7 +16,6 @@ export const Header: React.FC = () => {
   const {
     subscription,
     getTierDisplayName,
-    getTierColor,
     getDaysRemainingInCycle
   } = useSubscription();
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
@@ -64,17 +63,6 @@ export const Header: React.FC = () => {
     toolPlanCap > 0 ? Math.min(100, (toolRemaining / toolPlanCap) * 100) : 0;
   const zegoProgress = zegoTotal > 0 ? Math.min((zegoRemaining / zegoTotal) * 100, 100) : 0;
 
-  // Tier color mapping — preserved as semantic non-theme colors (subscription tier identity)
-  const tierColorClasses: Record<string, { bg: string; text: string; darkBg: string; darkText: string }> = {
-    gray:   { bg: 'bg-subtle',   text: 'text-ink',   darkBg: 'dark:bg-card-dark',   darkText: 'dark:text-muted-ink-on-dark' },
-    blue:   { bg: 'bg-blue-100',   text: 'text-blue-800',   darkBg: 'dark:bg-blue-900',   darkText: 'dark:text-blue-300' },
-    green:  { bg: 'bg-green-100',  text: 'text-green-800',  darkBg: 'dark:bg-green-900',  darkText: 'dark:text-green-300' },
-    cyan:   { bg: 'bg-cyan-100',   text: 'text-cyan-800',   darkBg: 'dark:bg-cyan-900',   darkText: 'dark:text-cyan-300' },
-    yellow: { bg: 'bg-yellow-100', text: 'text-yellow-800', darkBg: 'dark:bg-yellow-900', darkText: 'dark:text-yellow-300' },
-  };
-
-  const tierColor = getTierColor();
-  const tierClasses = tierColorClasses[tierColor] || tierColorClasses.gray;
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -100,9 +88,8 @@ export const Header: React.FC = () => {
     setShowProfileDropdown(false);
   };
 
-  // Common Scholar dropdown panel classes
   const dropdownPanelCls =
-    'absolute right-0 mt-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[6px] shadow-[var(--scholar-shadow-lg)] z-50';
+    'absolute right-0 mt-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark z-50';
 
   return (
     <header className="bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark sticky top-0 z-50">
@@ -174,9 +161,9 @@ export const Header: React.FC = () => {
                             ) : null}
                           </span>
                         </div>
-                        <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
+                        <div className="relative w-full h-[5px] bg-chip overflow-hidden">
                           <div
-                            className="absolute inset-y-0 left-0 rounded-full bg-accent-gold transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200 ease-out"
+                            className="absolute inset-y-0 left-0 bg-accent-gold transition-all duration-200"
                             style={{ width: `${toolProgress}%` }}
                           />
                         </div>
@@ -197,9 +184,9 @@ export const Header: React.FC = () => {
                           </span>
                         </div>
                         {zegoTotal > 0 && (
-                          <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
+                          <div className="relative w-full h-[5px] bg-chip overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/80 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 bg-accent-gold/80 transition-all duration-200"
                               style={{ width: `${zegoProgress}%` }}
                             />
                           </div>
@@ -228,9 +215,9 @@ export const Header: React.FC = () => {
                           </p>
                         )}
                         {useRpcChatTokens && (chatTokLimRpc ?? 0) > 0 && (
-                          <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
+                          <div className="relative w-full h-[5px] bg-chip overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 bg-accent-gold/60 transition-all duration-200"
                               style={{
                                 width: `${Math.min(100, ((chatTokRemRpc ?? 0) / (chatTokLimRpc ?? 1)) * 100)}%`
                               }}
@@ -238,9 +225,9 @@ export const Header: React.FC = () => {
                           </div>
                         )}
                         {!useRpcChatTokens && hasAiAddon && aiChatCreditsTotal > 0 && (
-                          <div className="relative w-full h-2 bg-chip rounded-full overflow-hidden">
+                          <div className="relative w-full h-[5px] bg-chip overflow-hidden">
                             <div
-                              className="absolute inset-y-0 left-0 rounded-full bg-accent-gold/60 transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200 ease-out"
+                              className="absolute inset-y-0 left-0 bg-accent-gold/60 transition-all duration-200"
                               style={{
                                 width: `${Math.min(100, (aiChatCreditsRemaining / aiChatCreditsTotal) * 100)}%`
                               }}
@@ -274,7 +261,7 @@ export const Header: React.FC = () => {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                className="flex items-center space-x-2 group hover:bg-subtle rounded-md p-2 transition-colors duration-150"
+                className="flex items-center space-x-2 group hover:bg-subtle p-2 transition-colors duration-150"
               >
                 {user?.avatar_url ? (
                   <img
@@ -292,7 +279,7 @@ export const Header: React.FC = () => {
                     <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
                       {user?.name || user?.email?.split('@')[0]}
                     </p>
-                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${tierClasses.bg} ${tierClasses.text} ${tierClasses.darkBg} ${tierClasses.darkText}`}>
+                    <span className="text-[10px] font-bold text-accent-gold">
                       {getTierDisplayName()}
                     </span>
                   </div>
@@ -311,7 +298,7 @@ export const Header: React.FC = () => {
                     <div className="flex space-x-2">
                       <button
                         onClick={() => setTheme('light')}
-                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-150 ${
+                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 transition-colors duration-150 ${
                           theme === 'light'
                             ? 'bg-accent-gold/15 text-accent-gold'
                             : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -322,7 +309,7 @@ export const Header: React.FC = () => {
                       </button>
                       <button
                         onClick={() => setTheme('dark')}
-                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 rounded-md transition-colors duration-150 ${
+                        className={`flex-1 flex items-center justify-center space-x-2 px-3 py-2 transition-colors duration-150 ${
                           theme === 'dark'
                             ? 'bg-accent-gold/15 text-accent-gold'
                             : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -344,7 +331,7 @@ export const Header: React.FC = () => {
                         <button
                           key={lang.code}
                           onClick={() => handleLanguageChange(lang.code)}
-                          className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-left transition-colors duration-150 ${
+                          className={`w-full flex items-center space-x-3 px-3 py-2 text-left transition-colors duration-150 ${
                             language === lang.code
                               ? 'bg-accent-gold/15 text-accent-gold'
                               : 'text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -366,7 +353,7 @@ export const Header: React.FC = () => {
                       <a
                         href="/admin/dashboard"
                         onClick={() => setShowProfileDropdown(false)}
-                        className="w-full flex items-center space-x-3 px-3 py-2 text-accent-gold hover:bg-accent-gold/10 rounded-md transition-colors duration-150"
+                        className="w-full flex items-center space-x-3 px-3 py-2 text-accent-gold hover:bg-accent-gold/10 transition-colors duration-150"
                       >
                         <Shield className="h-4 w-4" />
                         <span className="text-sm font-medium">{t('header.admin_portal')}</span>
@@ -377,7 +364,7 @@ export const Header: React.FC = () => {
                         window.dispatchEvent(new CustomEvent('navigateToProfile'));
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 text-ink dark:text-ink-on-dark hover:bg-subtle rounded-md transition-colors duration-150"
+                      className="w-full flex items-center space-x-3 px-3 py-2 text-ink dark:text-ink-on-dark hover:bg-subtle transition-colors duration-150"
                     >
                       <User className="h-4 w-4" />
                       <span className="text-sm font-medium">{t('header.profile')}</span>
@@ -387,7 +374,7 @@ export const Header: React.FC = () => {
                         signOut();
                         setShowProfileDropdown(false);
                       }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors duration-150 dark:bg-red-950/40"
+                      className="w-full flex items-center space-x-3 px-3 py-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors duration-150"
                     >
                       <LogOut className="h-4 w-4" />
                       <span className="text-sm font-medium">{t('header.sign_out')}</span>

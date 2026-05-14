@@ -36,7 +36,7 @@ export const InformationalPage: React.FC = React.memo(() => {
 
       <div className="space-y-8">
         {/* Overview Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Info className="h-6 w-6 text-ink-on-dark" />
@@ -50,18 +50,18 @@ export const InformationalPage: React.FC = React.memo(() => {
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 mt-6">
-              <div className="bg-blue-50 rounded-[12px] p-4 dark:bg-blue-900">
-                <FileText className="h-8 w-8 text-blue-600 mb-2 dark:text-blue-300" />
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                <FileText className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mb-2" />
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('informational.smart_summaries')}</h4>
                 <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>{t('informational.smart_summaries_desc')}</p>
               </div>
-              <div className="bg-green-50 rounded-[12px] p-4 dark:bg-green-900">
-                <Brain className="h-8 w-8 text-green-600 mb-2 dark:text-green-300" />
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                <Brain className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mb-2" />
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('informational.interactive_flashcards')}</h4>
                 <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>{t('informational.interactive_flashcards_desc')}</p>
               </div>
-              <div className="bg-purple-50 rounded-[12px] p-4 dark:bg-purple-900">
-                <Globe className="h-8 w-8 text-purple-600 mb-2 dark:text-purple-300" />
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                <Globe className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark mb-2" />
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('informational.multi_language')}</h4>
                 <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>{t('informational.multi_language_desc')}</p>
               </div>
@@ -70,7 +70,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* What&apos;s new */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-4">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <BarChart3 className="h-6 w-6 text-ink-on-dark" />
@@ -90,9 +90,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Getting Started Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-[8px] dark:from-green-600 dark:to-emerald-700">
+            <div className="bg-accent-gold-soft p-2">
               <Upload className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.getting_started')}</h3>
@@ -101,10 +101,10 @@ export const InformationalPage: React.FC = React.memo(() => {
           <div className="space-y-6">
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>1. {t('informational.upload_content')}</h4>
-              <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4 mb-4`}>
+              <div className={`bg-accent-gold-soft/10 p-4 mb-4`}>
                 <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-3`}>{t('informational.upload_methods_intro')}</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className={`border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
+                  <div className={`border-divider dark:border-divider-on-dark p-4`}>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>📁 {t('informational.file_upload_title')}</h5>
                     <ul className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark space-y-1`}>
                       <li>• <strong>{t('informational.file_upload_formats')}</strong></li>
@@ -113,7 +113,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                       <li>• {t('informational.file_upload_drag_drop')}</li>
                     </ul>
                   </div>
-                  <div className="border border-divider rounded-[12px] p-4 dark:border-divider-on-dark">
+                  <div className="border border-divider p-4 dark:border-divider-on-dark">
                     <h5 className="font-medium text-ink mb-2 dark:text-muted-ink-on-dark">📝 {t('informational.text_input_title')}</h5>
                     <ul className="text-sm text-secondary-ink space-y-1 dark:text-muted-ink-on-dark">
                       <li>• <strong>{t('informational.text_input_min')}</strong></li>
@@ -128,7 +128,7 @@ export const InformationalPage: React.FC = React.memo(() => {
 
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>2. {t('informational.configure_settings')}</h4>
-              <div className="bg-blue-50 rounded-[12px] p-4 dark:bg-blue-900">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>{t('informational.flashcard_count_title')}</h5>
@@ -149,20 +149,20 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>3. {t('informational.processing_modes_title')}</h4>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="border border-green-200 bg-green-50 rounded-[12px] p-4 dark:border-green-700 dark:bg-green-900">
-                  <h5 className="font-medium text-green-800 mb-2 dark:text-green-300">⚡ {t('informational.fast_mode_title')}</h5>
-                  <p className="text-sm text-green-700 dark:text-green-200">{t('informational.fast_mode_desc')}</p>
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                  <h5 className="font-medium text-ink dark:text-ink-on-dark mb-2">⚡ {t('informational.fast_mode_title')}</h5>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('informational.fast_mode_desc')}</p>
                 </div>
-                <div className="border border-orange-200 bg-orange-50 rounded-[12px] p-4 dark:border-orange-700 dark:bg-orange-900">
-                  <h5 className="font-medium text-orange-800 mb-2 dark:text-orange-300">🧠 {t('informational.staged_mode_title')}</h5>
-                  <p className="text-sm text-orange-700 dark:text-orange-200">{t('informational.staged_mode_desc')}</p>
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                  <h5 className="font-medium text-ink dark:text-ink-on-dark mb-2">🧠 {t('informational.staged_mode_title')}</h5>
+                  <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('informational.staged_mode_desc')}</p>
                 </div>
               </div>
             </div>
 
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>{t('informational.medical_student_step_title')}</h4>
-              <div className={`bg-card-light dark:bg-card-dark rounded-[12px] p-4 border-divider dark:border-divider-on-dark`}>
+              <div className={`bg-card-light dark:bg-card-dark p-4 border-divider dark:border-divider-on-dark`}>
                 <div className="flex items-center space-x-2 mb-3">
                   <Stethoscope className={`h-5 w-5 text-secondary-ink dark:text-muted-ink-on-dark`} />
                   <h5 className={`font-medium text-ink dark:text-ink-on-dark`}>🏥 {t('informational.medical_student_card_heading')}</h5>
@@ -183,7 +183,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Understanding Results Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
@@ -194,7 +194,7 @@ export const InformationalPage: React.FC = React.memo(() => {
           <div className="space-y-6">
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>📄 {t('informational.summary_display_title')}</h4>
-              <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4`}>
+              <div className={`bg-accent-gold-soft/10 p-4`}>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>{t('informational.summary_features')}</h5>
@@ -220,45 +220,45 @@ export const InformationalPage: React.FC = React.memo(() => {
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>🎯 {t('informational.flashcard_viewer_title')}</h4>
               <div className="space-y-4">
-                <div className="bg-blue-50 rounded-[12px] p-4 dark:bg-blue-900">
-                  <h5 className="font-medium text-blue-900 mb-3 dark:text-blue-300">{t('informational.study_modes')}</h5>
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                  <h5 className="font-medium text-ink dark:text-ink-on-dark mb-3">{t('informational.study_modes')}</h5>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <RotateCcw className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+                        <RotateCcw className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                         <span className={`font-medium text-sm text-ink dark:text-ink-on-dark`}>{t('informational.flip_cards_mode')}</span>
                       </div>
                       <p className={`text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>{t('informational.flip_cards_desc')}</p>
                     </div>
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <Edit3 className="h-4 w-4 text-purple-600 dark:text-purple-300" />
+                        <Edit3 className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                         <span className={`font-medium text-sm text-ink dark:text-ink-on-dark`}>{t('informational.type_answer_mode')}</span>
                       </div>
                       <p className={`text-xs text-secondary-ink dark:text-muted-ink-on-dark`}>{t('informational.type_answer_desc')}</p>
                     </div>
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <List className="h-4 w-4 text-green-600 dark:text-green-300" />
+                        <List className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.multiple_choice_mode')}</span>
                       </div>
                       <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.multiple_choice_desc')}</p>
                     </div>
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <FileText className="h-4 w-4 text-orange-600 dark:text-orange-300" />
+                        <FileText className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.fill_blanks_mode')}</span>
                       </div>
                       <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.fill_blanks_desc')}</p>
                     </div>
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
-                        <HelpCircle className="h-4 w-4 text-red-600 dark:text-red-300" />
+                        <HelpCircle className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.true_false_mode')}</span>
                       </div>
                       <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.true_false_desc')}</p>
                     </div>
-                    <div className={`bg-card-light dark:bg-card-dark rounded p-3`}>
+                    <div className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3`}>
                       <div className="flex items-center space-x-2 mb-1">
                         <Eye className="h-4 w-4 text-secondary-ink dark:text-muted-ink-on-dark" />
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('informational.view_all_mode')}</span>
@@ -268,9 +268,9 @@ export const InformationalPage: React.FC = React.memo(() => {
                   </div>
                 </div>
 
-                <div className="bg-green-50 rounded-[12px] p-4 dark:bg-green-900">
-                  <h5 className="font-medium text-green-900 mb-2 dark:text-green-300">{t('informational.export_options')}</h5>
-                  <ul className="text-sm text-green-700 space-y-1 dark:text-green-200">
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                  <h5 className="font-medium text-ink dark:text-ink-on-dark mb-2">{t('informational.export_options')}</h5>
+                  <ul className="text-sm text-muted-ink dark:text-muted-ink-on-dark space-y-1">
                     <li>• {t('informational.export_csv_desc')}</li>
                     <li>• {t('informational.export_txt_desc')}</li>
                   </ul>
@@ -281,7 +281,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Smart Features Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
@@ -290,12 +290,12 @@ export const InformationalPage: React.FC = React.memo(() => {
           </div>
 
           <div className="space-y-4">
-            <div className="bg-green-50 rounded-[12px] p-4 dark:bg-green-900">
-              <h4 className="font-medium text-green-900 mb-2 dark:text-green-300">⚡ Intelligent Content Deduplication</h4>
-              <p className="text-sm text-green-700 mb-3 dark:text-green-200">
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+              <h4 className="font-medium text-ink dark:text-ink-on-dark mb-2">⚡ Intelligent Content Deduplication</h4>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-3">
                 Our system automatically detects when you're uploading duplicate or similar content and retrieves results instantly from cache instead of reprocessing.
               </p>
-              <ul className="text-sm text-green-700 space-y-1 dark:text-green-200">
+              <ul className="text-sm text-muted-ink dark:text-muted-ink-on-dark space-y-1">
                 <li>• <strong>Instant Results:</strong> Previously processed content loads in seconds</li>
                 <li>• <strong>Save Resources:</strong> Reduces AI processing time and usage limits</li>
                 <li>• <strong>Smart Matching:</strong> Uses content fingerprinting to detect duplicates</li>
@@ -303,7 +303,7 @@ export const InformationalPage: React.FC = React.memo(() => {
               </ul>
             </div>
 
-            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4`}>
               <h4 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>🌙 Dark Mode Support</h4>
               <p className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-2`}>
                 The application automatically detects your system's theme preference and applies dark mode for comfortable studying at night.
@@ -315,9 +315,9 @@ export const InformationalPage: React.FC = React.memo(() => {
               </ul>
             </div>
 
-            <div className="bg-yellow-50 rounded-[12px] p-4 border border-yellow-200 dark:bg-yellow-900 dark:border-yellow-700">
-              <h4 className="font-medium text-yellow-900 mb-2 dark:text-yellow-300">📅 365-Day History Retention</h4>
-              <p className="text-sm text-yellow-700 dark:text-yellow-200">
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+              <h4 className="font-medium text-ink dark:text-ink-on-dark mb-2">📅 365-Day History Retention</h4>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
                 All your processed content is automatically saved to your history for one full year, giving you long-term access to your study materials without taking up space in your library.
               </p>
             </div>
@@ -325,7 +325,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Language & Translation Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Globe className="h-6 w-6 text-ink-on-dark" />
@@ -334,11 +334,11 @@ export const InformationalPage: React.FC = React.memo(() => {
           </div>
           
           <div className="space-y-4">
-            <div className="bg-purple-50 rounded-[12px] p-4 dark:bg-purple-900">
-              <h4 className="font-medium text-purple-900 mb-2 dark:text-purple-300">{t('informational.available_languages')}</h4>
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+              <h4 className="font-medium text-ink dark:text-ink-on-dark mb-2">{t('informational.available_languages')}</h4>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
                 {AVAILABLE_LANGUAGES.map((language) => (
-                  <div key={language.code} className={`bg-card-light dark:bg-card-dark rounded p-3 text-center`}>
+                  <div key={language.code} className={`bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-3 text-center`}>
                     <span className={`text-2xl mb-1 block text-ink dark:text-ink-on-dark`}>{language.flag}</span>
                     <span className={`font-medium text-sm text-ink dark:text-ink-on-dark`}>{language.name}</span>
                   </div>
@@ -346,9 +346,9 @@ export const InformationalPage: React.FC = React.memo(() => {
               </div>
             </div>
             
-            <div className="bg-blue-50 rounded-[12px] p-4 dark:bg-blue-900">
-              <h4 className="font-medium text-blue-900 mb-2 dark:text-blue-300">{t('informational.how_translation_works')}</h4>
-              <ul className="text-sm text-blue-700 space-y-1 dark:text-blue-200">
+            <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+              <h4 className="font-medium text-ink dark:text-ink-on-dark mb-2">{t('informational.how_translation_works')}</h4>
+              <ul className="text-sm text-muted-ink dark:text-muted-ink-on-dark space-y-1">
                 <li>• {t('informational.translation_tip_1')}</li>
                 <li>• {t('informational.translation_tip_2')}</li>
                 <li>• {t('informational.translation_tip_3')}</li>
@@ -359,9 +359,9 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Managing Content Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-gradient-to-r from-orange-500 to-red-600 p-2 rounded-[8px] dark:from-orange-600 dark:to-red-700">
+            <div className="bg-accent-gold-soft p-2">
               <BookOpen className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.managing_content')}</h3>
@@ -370,8 +370,8 @@ export const InformationalPage: React.FC = React.memo(() => {
           <div className="space-y-6">
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>📚 {t('informational.my_library_title')}</h4>
-              <div className="bg-orange-50 rounded-[12px] p-4 mb-4 dark:bg-orange-900">
-                <p className="text-orange-800 mb-3 dark:text-orange-300">{t('informational.my_library_desc')}</p>
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4 mb-4">
+                <p className="text-muted-ink dark:text-muted-ink-on-dark mb-3">{t('informational.my_library_desc')}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>{t('informational.library_org_features')}</h5>
@@ -395,18 +395,18 @@ export const InformationalPage: React.FC = React.memo(() => {
               </div>
 
               {/* Public Library Feature */}
-              <div className="bg-blue-50 rounded-[12px] p-4 border-2 border-blue-200 dark:bg-blue-900 dark:border-blue-700">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
                 <div className="flex items-center space-x-2 mb-3">
-                  <Globe className="h-5 w-5 text-blue-600 dark:text-blue-300" />
-                  <h5 className="font-medium text-blue-900 dark:text-blue-300">🌍 Public Library - Learn from the Community</h5>
+                  <Globe className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
+                  <h5 className="font-medium text-ink dark:text-ink-on-dark">🌍 Public Library - Learn from the Community</h5>
                 </div>
-                <p className="text-sm text-blue-800 mb-3 dark:text-blue-200">
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-3">
                   Access a wealth of knowledge created by other users! The public library allows you to discover, explore, and learn from study materials shared by the community.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h6 className={`font-medium text-ink dark:text-ink-on-dark text-sm mb-2`}>View Options:</h6>
-                    <ul className="text-sm text-blue-700 space-y-1 dark:text-blue-200">
+                    <ul className="text-sm text-muted-ink dark:text-muted-ink-on-dark space-y-1">
                       <li>• <strong>All Items:</strong> See both your content and community contributions</li>
                       <li>• <strong>My Items:</strong> View only your personal study materials</li>
                       <li>• <strong>Community Items:</strong> Browse content created by other users</li>
@@ -414,7 +414,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                   </div>
                   <div>
                     <h6 className="font-medium text-ink text-sm mb-2 dark:text-muted-ink-on-dark">Community Features:</h6>
-                    <ul className="text-sm text-blue-700 space-y-1 dark:text-blue-200">
+                    <ul className="text-sm text-muted-ink dark:text-muted-ink-on-dark space-y-1">
                       <li>• See creator email on community items</li>
                       <li>• Items are clearly labeled with "Community" badge</li>
                       <li>• Search and filter across all public content</li>
@@ -427,8 +427,8 @@ export const InformationalPage: React.FC = React.memo(() => {
 
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>📜 {t('informational.history_title')}</h4>
-              <div className="bg-blue-50 rounded-[12px] p-4 dark:bg-blue-900">
-                <p className="text-blue-800 mb-3 dark:text-blue-300">{t('informational.history_desc_long')}</p>
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
+                <p className="text-muted-ink dark:text-muted-ink-on-dark mb-3">{t('informational.history_desc_long')}</p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>{t('informational.history_stored_what')}</h5>
@@ -454,7 +454,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Navigation & Account Section */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <User className="h-6 w-6 text-ink-on-dark" />
@@ -465,18 +465,18 @@ export const InformationalPage: React.FC = React.memo(() => {
           <div className="space-y-6">
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>🧭 {t('informational.sidebar_nav_title')}</h4>
-              <div className="bg-teal-50 rounded-[12px] p-4 dark:bg-teal-900">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-3">
-                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
-                      <FileText className="h-5 w-5 text-blue-600 dark:text-blue-300" />
+                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark`}>
+                      <FileText className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className={`font-medium text-sm text-ink dark:text-ink-on-dark`}>{t('sidebar.dashboard')}</span>
                         <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark`}>{t('sidebar.dashboard_desc')}</p>
                       </div>
                     </div>
-                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
-                      <BookOpen className="h-5 w-5 text-green-600 dark:text-green-300" />
+                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark`}>
+                      <BookOpen className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className={`font-medium text-sm text-ink dark:text-ink-on-dark`}>{t('sidebar.my_library')}</span>
                         <p className={`text-xs text-muted-ink dark:text-muted-ink-on-dark`}>{t('sidebar.library_desc')}</p>
@@ -484,15 +484,15 @@ export const InformationalPage: React.FC = React.memo(() => {
                     </div>
                   </div>
                   <div className="space-y-3">
-                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
-                      <History className="h-5 w-5 text-orange-600 dark:text-orange-300" />
+                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark`}>
+                      <History className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.history')}</span>
                         <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.history_desc')}</p>
                       </div>
                     </div>
-                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark rounded`}>
-                      <Info className="h-5 w-5 text-purple-600 dark:text-purple-300" />
+                    <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark`}>
+                      <Info className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.informational')}</span>
                         <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.info_desc')}</p>
@@ -505,7 +505,7 @@ export const InformationalPage: React.FC = React.memo(() => {
 
             <div>
               <h4 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-3`}>📊 {t('informational.header_info_title')}</h4>
-              <div className={`bg-accent-gold-soft/10 rounded-[12px] p-4`}>
+              <div className={`bg-accent-gold-soft/10 p-4`}>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>{t('informational.usage_tracking')}</h5>
@@ -530,7 +530,7 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Tips & Best Practices */}
-        <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark p-8">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
             <div className="bg-accent-gold-soft p-2 rounded-[8px]">
               <Brain className="h-6 w-6 text-ink-on-dark" />
@@ -539,7 +539,7 @@ export const InformationalPage: React.FC = React.memo(() => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>📝 {t('informational.better_summaries_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.better_summaries_1')}</li>
@@ -548,7 +548,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                 <li>• {t('informational.better_summaries_4')}</li>
               </ul>
             </div>
-            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>🎯 {t('informational.effective_study_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.effective_study_1')}</li>
@@ -557,7 +557,7 @@ export const InformationalPage: React.FC = React.memo(() => {
                 <li>• {t('informational.effective_study_4')}</li>
               </ul>
             </div>
-            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4`}>
+            <div className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4`}>
               <h4 className={`font-semibold mb-3 text-ink dark:text-ink-on-dark`}>🏥 {t('informational.tips_medical_title')}</h4>
               <ul className={`space-y-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark`}>
                 <li>• {t('informational.tips_medical_1')}</li>
@@ -570,22 +570,22 @@ export const InformationalPage: React.FC = React.memo(() => {
         </div>
 
         {/* Support Section */}
-        <div className="bg-accent-gold-soft dark:bg-accent-gold-soft/10 rounded-[14px] border border-accent-gold/30 p-8">
+        <div className="bg-accent-gold-soft dark:bg-accent-gold-soft/10 border border-accent-gold/30 p-8">
           <div className="text-center">
             <h3 className="font-display text-[20px] font-bold text-ink dark:text-ink-on-dark mb-4">{t('informational.need_help')}</h3>
             <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-6">
               {t('informational.contact_support')}
             </p>
             <div className="flex justify-center space-x-4">
-              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 text-center">
                 <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.quick_start')}</h4>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.quick_start_desc')}</p>
               </div>
-              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 text-center">
                 <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.experiment')}</h4>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.experiment_desc')}</p>
               </div>
-              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-4 text-center">
+              <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-4 text-center">
                 <h4 className="font-medium text-ink dark:text-ink-on-dark mb-1">{t('informational.organize')}</h4>
                 <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('informational.organize_desc')}</p>
               </div>
