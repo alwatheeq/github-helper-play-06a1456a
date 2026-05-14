@@ -62,17 +62,17 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
   return (
     <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <ScholarCard variant="elevated" padding="none" className="max-w-3xl w-full max-h-[90vh] overflow-hidden animate-scaleIn">
-        <div className="bg-accent-gold p-6 text-white relative">
+        <div className="bg-accent-gold p-6 text-ink-on-dark relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 hover:bg-card-light dark:bg-card-dark hover:bg-opacity-20 rounded-[12px] transition"
+            className="absolute top-4 right-4 p-2 hover:bg-white/20 transition"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
 
           <div className="flex items-start space-x-4">
-            <div className="bg-card-light dark:bg-card-dark bg-opacity-20 p-3 rounded-[12px]">
+            <div className="bg-white/20 p-3">
               <Globe className="h-8 w-8" />
             </div>
             <div className="flex-1">
@@ -97,10 +97,10 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark p-4">
               <div className="flex items-center space-x-3">
-                <div className="bg-blue-100 dark:bg-blue-900 p-2 rounded-[12px]">
-                  <FileQuestion className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <div className="bg-accent-gold-soft p-2 border border-divider dark:border-divider-on-dark">
+                  <FileQuestion className="h-5 w-5 text-accent-gold" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Total Questions</p>
@@ -109,10 +109,10 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
               </div>
             </div>
 
-            <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
+            <div className="bg-subtle dark:bg-subtle-on-dark p-4">
               <div className="flex items-center space-x-3">
-                <div className="bg-green-100 dark:bg-green-900 p-2 rounded-[12px]">
-                  <Clock className="h-5 w-5 text-green-600 dark:text-green-400" />
+                <div className="bg-accent-gold-soft p-2 border border-divider dark:border-divider-on-dark">
+                  <Clock className="h-5 w-5 text-accent-gold" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Time Limit</p>
@@ -122,10 +122,10 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             </div>
 
             {exam.subject && (
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-purple-100 dark:bg-purple-900 p-2 rounded-[12px]">
-                    <BookOpen className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  <div className="bg-accent-gold-soft p-2 border border-divider dark:border-divider-on-dark">
+                    <BookOpen className="h-5 w-5 text-accent-gold" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Subject</p>
@@ -136,10 +136,10 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             )}
 
             {exam.passing_score && (
-              <div className="bg-subtle dark:bg-subtle-on-dark rounded-[12px] p-4">
+              <div className="bg-subtle dark:bg-subtle-on-dark p-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-yellow-100 dark:bg-yellow-900 p-2 rounded-[12px]">
-                    <Target className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+                  <div className="bg-accent-gold-soft p-2 border border-divider dark:border-divider-on-dark">
+                    <Target className="h-5 w-5 text-accent-gold" />
                   </div>
                   <div>
                     <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">Passing Score</p>
@@ -150,12 +150,12 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
             )}
           </div>
 
-          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-[12px] p-4 mb-6">
+          <div className="bg-accent-gold-soft/20 border border-accent-gold/30 dark:border-accent-gold/20 p-4 mb-6">
             <div className="flex items-start space-x-3">
-              <Award className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
+              <Award className="h-5 w-5 text-accent-gold mt-0.5" />
               <div>
-                <h4 className="font-semibold text-blue-900 dark:text-blue-200 mb-1">Practice Mode</h4>
-                <p className="text-sm text-blue-700 dark:text-blue-300">
+                <h4 className="font-semibold text-ink dark:text-ink-on-dark mb-1">Practice Mode</h4>
+                <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   This is a practice session. Take your time to understand each question and improve your knowledge.
                   Your results will be saved to track your progress.
                 </p>
