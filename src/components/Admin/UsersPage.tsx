@@ -651,12 +651,7 @@ export const UsersPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
+        <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-subtle dark:bg-subtle-on-dark">
                 <tr>
@@ -886,7 +881,6 @@ export const UsersPage: React.FC = React.memo(() => {
               </div>
             )}
           </div>
-        )}
       </div>
 
       {selectedUser && (

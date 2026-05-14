@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 import {
   Search, Download, Users, AlertTriangle, BarChart3, RefreshCw, Calendar, Activity
 } from 'lucide-react';
-import { getTierDisplayInfo, formatTokenUsage } from '../../utils/subscriptionHelpers';
+import { getTierDisplayInfo, getStatusDisplayInfo, formatTokenUsage } from '../../utils/subscriptionHelpers';
 import { useToast } from '../Toast/Toast';
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
@@ -111,11 +111,18 @@ export const TokenUsagePage: React.FC = React.memo(() => {
     [users, debouncedSearchTerm, usageFilter]
   );
 
-  const getUsageColor = (percentage: number) => {
-    if (percentage >= 90) return 'text-red-400 bg-red-500/20';
-    if (percentage >= 80) return 'text-orange-400 bg-orange-500/20';
-    if (percentage >= 50) return 'text-secondary-ink dark:text-muted-ink-on-dark bg-subtle dark:bg-subtle-on-dark';
-    return 'text-green-400 bg-green-500/20';
+  const getUsageTextColor = (percentage: number) => {
+    if (percentage >= 90) return 'text-red-400';
+    if (percentage >= 80) return 'text-orange-400';
+    if (percentage >= 50) return 'text-secondary-ink dark:text-muted-ink-on-dark';
+    return 'text-green-400';
+  };
+
+  const getUsageBgColor = (percentage: number) => {
+    if (percentage >= 90) return 'bg-red-500/20';
+    if (percentage >= 80) return 'bg-orange-500/20';
+    if (percentage >= 50) return 'bg-subtle dark:bg-subtle-on-dark';
+    return 'bg-green-500/20';
   };
 
   const exportToCSV = () => {
@@ -287,6 +294,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
               {filteredUsers.map((user) => {
                 const tierInfo = getTierDisplayInfo(user.subscription_tier);
 
+                const statusInfo = getStatusDisplayInfo(user.subscription_status);
                 return (
                   <tr key={user.user_id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                     <td className="px-6 py-6 whitespace-nowrap">
@@ -298,21 +306,19 @@ export const TokenUsagePage: React.FC = React.memo(() => {
                       </span>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        user.subscription_status === 'active' ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'
-                      }`}>
-                        {user.subscription_status}
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusInfo.bgColor} ${statusInfo.color}`}>
+                        {statusInfo.name}
                       </span>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
                         <div className="flex-1 bg-subtle dark:bg-subtle-on-dark h-[3px] w-24">
                           <div
-                            className={`h-[3px] ${getUsageColor(user.usage_percentage)}`}
+                            className={`h-[3px] ${getUsageBgColor(user.usage_percentage)}`}
                             style={{ width: `${Math.min(100, user.usage_percentage)}%` }}
                           />
                         </div>
-                        <span className={`text-sm font-semibold ${getUsageColor(user.usage_percentage)}`}>
+                        <span className={`text-sm font-semibold ${getUsageTextColor(user.usage_percentage)}`}>
                           {user.usage_percentage.toFixed(1)}%
                         </span>
                       </div>
@@ -391,7 +397,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
                       </div>
                       <div>
                         <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1">Percentage</p>
-                        <p className={`text-sm font-semibold ${getUsageColor(record.usage_percentage)}`}>
+                        <p className={`text-sm font-semibold ${getUsageTextColor(record.usage_percentage)}`}>
                           {record.usage_percentage.toFixed(1)}%
                         </p>
                       </div>
