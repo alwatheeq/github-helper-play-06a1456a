@@ -30,6 +30,25 @@ interface LoginAttempt {
   ip_address: string | null;
 }
 
+async function tryLogAdminAction(params: {
+  p_action_type: string;
+  p_table_name: string;
+  p_record_id?: string | null;
+  p_old_values?: Record<string, unknown>;
+  p_new_values?: Record<string, unknown>;
+  p_description?: string;
+}, context: { component: string; action: string; metadata?: Record<string, string> }) {
+  try {
+    await supabase.rpc('log_admin_action', params);
+  } catch (logErr: unknown) {
+    const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
+    ErrorLogger.warn('Failed to log action', {
+      ...context,
+      metadata: { ...context.metadata, error: logError.message }
+    });
+  }
+}
+
 export const AdminUsersManagementPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const toast = useToast();
@@ -111,22 +130,13 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      try {
-        await supabase.rpc('log_admin_action', {
-          p_action_type: 'CREATE',
-          p_table_name: 'admin_users',
-          p_record_id: data?.user_id || null,
-          p_new_values: { email: newAdminEmail.trim() },
-          p_description: `Added new admin user: ${newAdminEmail.trim()}`
-        });
-      } catch (logErr: unknown) {
-        const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', {
-          component: 'AdminUsersManagementPage',
-          action: 'handleAddAdmin',
-          metadata: { error: logError.message }
-        });
-      }
+      await tryLogAdminAction({
+        p_action_type: 'CREATE',
+        p_table_name: 'admin_users',
+        p_record_id: data?.user_id || null,
+        p_new_values: { email: newAdminEmail.trim() },
+        p_description: `Added new admin user: ${newAdminEmail.trim()}`
+      }, { component: 'AdminUsersManagementPage', action: 'handleAddAdmin' });
 
       toast.success('Admin user added successfully!');
       setShowAddModal(false);
@@ -168,22 +178,13 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      try {
-        await supabase.rpc('log_admin_action', {
-          p_action_type: 'UPDATE',
-          p_table_name: 'admin_users',
-          p_old_values: { is_active: true },
-          p_new_values: { is_active: false },
-          p_description: `Deactivated admin user: ${adminEmail}`
-        });
-      } catch (logErr: unknown) {
-        const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', {
-          component: 'AdminUsersManagementPage',
-          action: 'handleDeactivateAdmin',
-          metadata: { adminEmail, error: logError.message }
-        });
-      }
+      await tryLogAdminAction({
+        p_action_type: 'UPDATE',
+        p_table_name: 'admin_users',
+        p_old_values: { is_active: true },
+        p_new_values: { is_active: false },
+        p_description: `Deactivated admin user: ${adminEmail}`
+      }, { component: 'AdminUsersManagementPage', action: 'handleDeactivateAdmin', metadata: { adminEmail } });
 
       toast.success('Admin user deactivated successfully');
       fetchAdminUsers();
@@ -215,22 +216,13 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      try {
-        await supabase.rpc('log_admin_action', {
-          p_action_type: 'UPDATE',
-          p_table_name: 'admin_users',
-          p_old_values: { is_active: false },
-          p_new_values: { is_active: true },
-          p_description: `Reactivated admin user: ${adminEmail}`
-        });
-      } catch (logErr: unknown) {
-        const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', {
-          component: 'AdminUsersManagementPage',
-          action: 'handleReactivateAdmin',
-          metadata: { adminEmail, error: logError.message }
-        });
-      }
+      await tryLogAdminAction({
+        p_action_type: 'UPDATE',
+        p_table_name: 'admin_users',
+        p_old_values: { is_active: false },
+        p_new_values: { is_active: true },
+        p_description: `Reactivated admin user: ${adminEmail}`
+      }, { component: 'AdminUsersManagementPage', action: 'handleReactivateAdmin', metadata: { adminEmail } });
 
       toast.success('Admin user reactivated successfully');
       fetchAdminUsers();
@@ -264,11 +256,17 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
     [loginAttempts, selectedAdminEmail]
   );
 
-  const stats = {
+  const stats = useMemo(() => ({
     total_admins: adminUsers.length,
     active_admins: adminUsers.filter(a => a.is_active).length,
     inactive_admins: adminUsers.filter(a => !a.is_active).length,
-    recent_logins: loginAttempts.filter(a => a.success).length
+    recent_logins: loginAttempts.filter(a => a.success).length,
+  }), [adminUsers, loginAttempts]);
+
+  const resetAddModal = () => {
+    setShowAddModal(false);
+    setNewAdminEmail('');
+    setNewAdminNotes('');
   };
 
   if (loading) {
@@ -468,11 +466,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Add Admin User</h3>
               <button
-                onClick={() => {
-                  setShowAddModal(false);
-                  setNewAdminEmail('');
-                  setNewAdminNotes('');
-                }}
+                onClick={resetAddModal}
                 className="text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80"
               >
                 <AlertCircle className="h-5 w-5" />
@@ -522,11 +516,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   Add Admin
                 </LoadingButton>
                 <button
-                  onClick={() => {
-                    setShowAddModal(false);
-                    setNewAdminEmail('');
-                    setNewAdminNotes('');
-                  }}
+                  onClick={resetAddModal}
                   disabled={isAddingAdmin}
                   className="flex-1 px-5 py-2.5 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >

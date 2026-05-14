@@ -109,6 +109,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
       return;
     }
 
+    const deletedFeedback = feedbacks.find(f => f.id === id);
     try {
       const { error } = await supabase
         .from('user_feedback')
@@ -129,8 +130,8 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
             p_action_type: 'DELETE',
             p_table_name: 'user_feedback',
             p_record_id: id,
-            p_old_values: { feedback_text: feedbacks.find(f => f.id === id)?.feedback_text, status: feedbacks.find(f => f.id === id)?.status },
-            p_description: `Deleted feedback from ${feedbacks.find(f => f.id === id)?.user_email || 'unknown user'}`
+            p_old_values: { feedback_text: deletedFeedback?.feedback_text, status: deletedFeedback?.status },
+            p_description: `Deleted feedback from ${deletedFeedback?.user_email || 'unknown user'}`
           });
         } catch (logErr: unknown) {
           const logError = logErr instanceof Error ? logErr : new Error(String(logErr));

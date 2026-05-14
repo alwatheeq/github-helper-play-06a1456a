@@ -32,6 +32,24 @@ interface AuditStats {
   };
 }
 
+const ACTION_TYPE_COLORS: Record<string, string> = {
+  CREATE: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+  UPDATE: 'bg-accent-gold-soft text-accent-gold dark:bg-accent-gold-soft/20',
+  DELETE: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+  VIEW: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
+  LOGIN: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
+  LOGOUT: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
+  EXPORT: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400',
+};
+
+function getDateRangeStart(dateRange: 'today' | '7days' | '30days' | 'all'): string | null {
+  if (dateRange === 'all') return null;
+  const days = dateRange === 'today' ? 1 : dateRange === '7days' ? 7 : 30;
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date.toISOString();
+}
+
 export const AuditLogPage: React.FC = React.memo(() => {
   const toast = useToast();
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
@@ -48,20 +66,12 @@ export const AuditLogPage: React.FC = React.memo(() => {
     try {
       setLoading(true);
 
-      let startDate = null;
-      if (dateRange !== 'all') {
-        const days = dateRange === 'today' ? 1 : dateRange === '7days' ? 7 : 30;
-        const date = new Date();
-        date.setDate(date.getDate() - days);
-        startDate = date.toISOString();
-      }
-
       const { data, error } = await supabase.rpc('get_admin_audit_log', {
         p_limit: 200,
         p_offset: 0,
         p_action_type: filterActionType || null,
         p_table_name: filterTable || null,
-        p_start_date: startDate,
+        p_start_date: getDateRangeStart(dateRange),
         p_end_date: null
       });
 
@@ -79,16 +89,8 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
   const fetchAuditStats = useCallback(async () => {
     try {
-      let startDate = null;
-      if (dateRange !== 'all') {
-        const days = dateRange === 'today' ? 1 : dateRange === '7days' ? 7 : 30;
-        const date = new Date();
-        date.setDate(date.getDate() - days);
-        startDate = date.toISOString();
-      }
-
       const { data, error } = await supabase.rpc('get_audit_log_stats', {
-        p_start_date: startDate,
+        p_start_date: getDateRangeStart(dateRange),
         p_end_date: null
       });
 
@@ -141,18 +143,8 @@ export const AuditLogPage: React.FC = React.memo(() => {
     }
   };
 
-  const getActionTypeColor = (type: string) => {
-    const colors: Record<string, string> = {
-      CREATE: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-      UPDATE: 'bg-accent-gold-soft text-accent-gold dark:bg-accent-gold-soft/20',
-      DELETE: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-      VIEW: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
-      LOGIN: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-      LOGOUT: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
-      EXPORT: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400'
-    };
-    return colors[type] || 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark';
-  };
+  const getActionTypeColor = (type: string) =>
+    ACTION_TYPE_COLORS[type] || 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark';
 
   const filteredLogs = useMemo(() =>
     auditLogs.filter(log =>
@@ -162,7 +154,10 @@ export const AuditLogPage: React.FC = React.memo(() => {
     [auditLogs, debouncedSearchQuery]
   );
 
-  const uniqueTables = Array.from(new Set(auditLogs.map(log => log.table_name).filter(Boolean))) as string[];
+  const uniqueTables = useMemo(
+    () => Array.from(new Set(auditLogs.map(log => log.table_name).filter(Boolean))) as string[],
+    [auditLogs]
+  );
 
   if (loading) {
     return (

@@ -86,90 +86,64 @@ export const UserActivityPage: React.FC = React.memo(() => {
 
       const userIds = (profiles || []).map(p => p.id);
 
-      const { data: sessions, error: sessionsError } = await supabase
-        .from('study_sessions')
-        .select('user_id, duration_minutes, completed_at')
-        .in('user_id', userIds);
-
-      if (sessionsError) {
-        const error = sessionsError instanceof Error ? sessionsError : new Error(String(sessionsError));
-        ErrorLogger.warn('Failed to fetch study sessions', {
-          component: 'UserActivityPage',
-          action: 'fetchActivities',
-          metadata: { step: 'fetchSessions', error: error.message }
-        });
-      }
-
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-      const { data: recentHistory, error: historyError } = await supabase
-        .from('user_history')
-        .select('user_id')
-        .in('user_id', userIds)
-        .gte('created_at', sevenDaysAgo.toISOString());
+      const [sessionsResult, historyResult, libraryResult, adminUsersResult] = await Promise.all([
+        supabase.from('study_sessions').select('user_id, duration_minutes, completed_at').in('user_id', userIds),
+        supabase.from('user_history').select('user_id').in('user_id', userIds).gte('created_at', sevenDaysAgo.toISOString()),
+        supabase.from('user_library_items').select('user_id').in('user_id', userIds),
+        supabase.from('admin_users').select('id, last_login_at').in('id', userIds),
+      ]);
 
-      if (historyError) {
-        const error = historyError instanceof Error ? historyError : new Error(String(historyError));
-        ErrorLogger.warn('Failed to fetch user history', {
-          component: 'UserActivityPage',
-          action: 'fetchActivities',
-          metadata: { step: 'fetchHistory', error: error.message }
-        });
+      if (sessionsResult.error) {
+        const error = sessionsResult.error instanceof Error ? sessionsResult.error : new Error(String(sessionsResult.error));
+        ErrorLogger.warn('Failed to fetch study sessions', { component: 'UserActivityPage', action: 'fetchActivities', metadata: { error: error.message } });
+      }
+      if (historyResult.error) {
+        const error = historyResult.error instanceof Error ? historyResult.error : new Error(String(historyResult.error));
+        ErrorLogger.warn('Failed to fetch user history', { component: 'UserActivityPage', action: 'fetchActivities', metadata: { error: error.message } });
+      }
+      if (libraryResult.error) {
+        const error = libraryResult.error instanceof Error ? libraryResult.error : new Error(String(libraryResult.error));
+        ErrorLogger.warn('Failed to fetch library items', { component: 'UserActivityPage', action: 'fetchActivities', metadata: { error: error.message } });
       }
 
-      const { data: libraryItems, error: libraryError } = await supabase
-        .from('user_library_items')
-        .select('user_id')
-        .in('user_id', userIds);
-
-      if (libraryError) {
-        const error = libraryError instanceof Error ? libraryError : new Error(String(libraryError));
-        ErrorLogger.warn('Failed to fetch library items', {
-          component: 'UserActivityPage',
-          action: 'fetchActivities',
-          metadata: { step: 'fetchLibrary', error: error.message }
-        });
-      }
+      const sessions = sessionsResult.data || [];
+      const recentHistory = historyResult.data || [];
+      const libraryItems = libraryResult.data || [];
+      const adminUsers = adminUsersResult.data || [];
 
       const sessionMap = new Map<string, { count: number; totalTime: number }>();
-      (sessions || []).forEach(session => {
+      const sessionTimeMap = new Map<string, string>();
+      sessions.forEach(session => {
         const existing = sessionMap.get(session.user_id) || { count: 0, totalTime: 0 };
         sessionMap.set(session.user_id, {
           count: existing.count + 1,
           totalTime: existing.totalTime + (session.duration_minutes || 0)
         });
+        if (session.completed_at) {
+          const existingTime = sessionTimeMap.get(session.user_id);
+          if (!existingTime || session.completed_at > existingTime) {
+            sessionTimeMap.set(session.user_id, session.completed_at);
+          }
+        }
       });
 
       const historyMap = new Map<string, number>();
-      (recentHistory || []).forEach(item => {
+      recentHistory.forEach(item => {
         historyMap.set(item.user_id, (historyMap.get(item.user_id) || 0) + 1);
       });
 
       const libraryMap = new Map<string, number>();
-      (libraryItems || []).forEach(item => {
+      libraryItems.forEach(item => {
         libraryMap.set(item.user_id, (libraryMap.get(item.user_id) || 0) + 1);
       });
 
-      const { data: adminUsers } = await supabase
-        .from('admin_users')
-        .select('id, last_login_at')
-        .in('id', userIds);
-
       const adminLoginMap = new Map<string, string>();
-      (adminUsers || []).forEach(admin => {
+      adminUsers.forEach(admin => {
         if (admin.last_login_at) {
           adminLoginMap.set(admin.id, admin.last_login_at);
-        }
-      });
-
-      const sessionTimeMap = new Map<string, string>();
-      (sessions || []).forEach(session => {
-        const existing = sessionTimeMap.get(session.user_id);
-        if (!existing || (session.completed_at && session.completed_at > existing)) {
-          if (session.completed_at) {
-            sessionTimeMap.set(session.user_id, session.completed_at);
-          }
         }
       });
 
@@ -216,28 +190,17 @@ export const UserActivityPage: React.FC = React.memo(() => {
 
       const userIds = (profiles || []).map(p => p.id);
 
-      const { data: sessionsToday } = await supabase
-        .from('study_sessions')
-        .select('user_id')
-        .in('user_id', userIds)
-        .gte('completed_at', today.toISOString());
-
-      const { data: sessionsWeek } = await supabase
-        .from('study_sessions')
-        .select('user_id')
-        .in('user_id', userIds)
-        .gte('completed_at', weekAgo.toISOString());
-
-      const { data: sessionsMonth } = await supabase
-        .from('study_sessions')
-        .select('user_id')
-        .in('user_id', userIds)
-        .gte('completed_at', monthAgo.toISOString());
-
-      const { data: allSessions } = await supabase
-        .from('study_sessions')
-        .select('duration_minutes')
-        .in('user_id', userIds);
+      const [
+        { data: sessionsToday },
+        { data: sessionsWeek },
+        { data: sessionsMonth },
+        { data: allSessions },
+      ] = await Promise.all([
+        supabase.from('study_sessions').select('user_id').in('user_id', userIds).gte('completed_at', today.toISOString()),
+        supabase.from('study_sessions').select('user_id').in('user_id', userIds).gte('completed_at', weekAgo.toISOString()),
+        supabase.from('study_sessions').select('user_id').in('user_id', userIds).gte('completed_at', monthAgo.toISOString()),
+        supabase.from('study_sessions').select('duration_minutes').in('user_id', userIds),
+      ]);
 
       const activeToday = new Set((sessionsToday || []).map(s => s.user_id)).size;
       const activeWeek = new Set((sessionsWeek || []).map(s => s.user_id)).size;
