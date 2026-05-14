@@ -59,14 +59,23 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
   // Select facts based on medical mode
   const facts = medicalMode ? medicalFacts : generalFacts;
 
-  // Rotate facts every 4 seconds
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setCurrentFactIndex(0);
+    const factCount = medicalMode ? medicalFacts.length : generalFacts.length;
     const interval = setInterval(() => {
-      setCurrentFactIndex((prevIndex) => (prevIndex + 1) % facts.length);
-    }, 4000); // 4 seconds
-
+      setCurrentFactIndex((prev) => (prev + 1) % factCount);
+    }, 4000);
     return () => clearInterval(interval);
-  }, [facts.length]);
+  }, [medicalMode]);
+
+  const badgeIcon = mode === 'fast'
+    ? <Zap className="h-2.5 w-2.5" />
+    : medicalMode ? <Stethoscope className="h-2.5 w-2.5" /> : <Brain className="h-2.5 w-2.5" />;
+
+  const composingIcon = mode === 'fast'
+    ? medicalMode ? <Activity className="h-5 w-5 text-red-600" /> : <Zap className="h-5 w-5 text-accent-gold" />
+    : medicalMode ? <Stethoscope className="h-5 w-5 text-red-600" /> : <Brain className="h-5 w-5 text-accent-gold" />;
 
   const modeLabel = medicalMode
     ? mode === 'fast' ? 'Fast Medical Processing' : 'Comprehensive Medical Analysis'
@@ -98,10 +107,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               ? 'bg-red-50 border-red-300 text-red-700'
               : 'bg-accent-gold-soft border-accent-gold text-accent-gold'
           }`}>
-            {mode === 'fast'
-              ? <Zap className="h-2.5 w-2.5" />
-              : medicalMode ? <Stethoscope className="h-2.5 w-2.5" /> : <Brain className="h-2.5 w-2.5" />
-            }
+            {badgeIcon}
             {modeLabel}
           </div>
         </div>
@@ -134,10 +140,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
               <div className={`w-[38px] h-[38px] border border-divider flex items-center justify-center flex-shrink-0 ${
                 medicalMode ? 'bg-red-50' : 'bg-accent-gold-soft'
               }`}>
-                {mode === 'fast'
-                  ? medicalMode ? <Activity className="h-5 w-5 text-red-600" /> : <Zap className="h-5 w-5 text-accent-gold" />
-                  : medicalMode ? <Stethoscope className="h-5 w-5 text-red-600" /> : <Brain className="h-5 w-5 text-accent-gold" />
-                }
+                {composingIcon}
               </div>
               <div>
                 <div className="font-display text-[15px] font-semibold text-ink dark:text-ink-on-dark leading-tight">{modeLabel}</div>

@@ -202,9 +202,7 @@ export const NotificationCenter: React.FC = () => {
                 {visibleNotifications.length > 0 && (
                   <div className="p-3 border-t border-divider dark:border-divider-on-dark text-center">
                     <button
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
+                      onClick={() => setIsOpen(false)}
                       className="text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80"
                     >
                       Close

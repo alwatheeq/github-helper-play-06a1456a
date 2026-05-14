@@ -96,10 +96,10 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
   }, [textInput, medicalMode, previewMode]);
 
   React.useEffect(() => {
-    if (!generationPrefs.includeSummary && fromSummary) {
+    if (!generationPrefs.includeSummary) {
       setFromSummary(false);
     }
-  }, [generationPrefs.includeSummary, fromSummary]);
+  }, [generationPrefs.includeSummary]);
 
   const toggleDashboardQuizType = (qt: QuizQuestionTypePreference) => {
     setGenerationPrefs((prev) => {
