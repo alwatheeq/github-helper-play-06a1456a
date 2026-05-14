@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Target, TrendingUp, CheckCircle, Trash2, Award, Lock, Star, Users, BookOpen } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -62,11 +62,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
   const [deadlineDate, setDeadlineDate] = useState('');
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => {
-    if (user) { fetchData(); }
-  }, [user]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     if (isOffline()) { handleOfflineError(showErrorToast); setLoading(false); return; }
     try {
@@ -87,7 +83,11 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
       ErrorLogger.error(error, { component: 'GoalsAndAchievementsPage', action: 'fetchData', userId: user.id });
       showErrorToast(message);
     } finally { setLoading(false); }
-  };
+  }, [user, showErrorToast]);
+
+  useEffect(() => {
+    if (user) { void fetchData(); }
+  }, [user, fetchData]);
 
   const handleCreateGoal = async () => {
     if (!user || !goalTitle.trim()) return;
@@ -145,11 +145,6 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
   const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
   const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
-
-  const getBadgeColor = (tier: string) => {
-    const colors: Record<string, string> = { bronze: 'from-amber-600 to-amber-800', silver: 'from-gray-400 to-gray-600', gold: 'from-yellow-400 to-yellow-600', platinum: 'from-cyan-400 to-cyan-600', diamond: 'from-purple-400 to-purple-600' };
-    return colors[tier] || 'from-gray-400 to-gray-600';
-  };
 
   const activeGoals = goals.filter(g => !g.is_completed);
   const completedGoals = goals.filter(g => g.is_completed);
@@ -274,11 +269,11 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                                   {goal.is_completed ? '✓ Done' : `${goal.current_value} / ${goal.target_value}`}
                                 </span>
                                 {progress >= 100 && !goal.is_completed && (
-                                  <button onClick={() => handleMarkComplete(goal.id)} className="p-0.5 text-emerald-600 hover:text-emerald-700" title="Mark complete">
+                                  <button onClick={() => handleMarkComplete(goal.id)} className="p-0.5 text-accent-gold hover:opacity-75" title="Mark complete">
                                     <CheckCircle className="h-4 w-4" />
                                   </button>
                                 )}
-                                <button onClick={() => handleDeleteGoal(goal.id)} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:text-red-600" title="Delete">
+                                <button onClick={() => handleDeleteGoal(goal.id)} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-60" title="Delete">
                                   <Trash2 className="h-3.5 w-3.5" />
                                 </button>
                               </div>
@@ -298,7 +293,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                         <div key={goal.id} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-3.5 opacity-70" style={{ borderLeft: `3px solid var(--color-accent-gold)` }}>
                           <div className="flex justify-between items-start mb-1">
                             <div className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark leading-snug flex-1 pr-2">{goal.goal_title}</div>
-                            <button onClick={() => handleDeleteGoal(goal.id)} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:text-red-600 shrink-0"><Trash2 className="h-3.5 w-3.5" /></button>
+                            <button onClick={() => handleDeleteGoal(goal.id)} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-60 shrink-0"><Trash2 className="h-3.5 w-3.5" /></button>
                           </div>
                           <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{t('goals.completed_on')} {formatDate(goal.completed_at)}</div>
                         </div>
@@ -386,18 +381,12 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                     const earnedDate = getEarnedDate(achievement.id);
                     return (
                       <div key={achievement.id} className={`border border-divider dark:border-divider-on-dark px-3 py-3.5 text-center transition-opacity ${isUnlocked ? 'bg-card-light dark:bg-card-dark' : 'bg-subtle dark:bg-subtle-on-dark opacity-45'}`}>
-                        <div className={`p-2 rounded mx-auto w-10 h-10 flex items-center justify-center mb-2 ${isUnlocked ? `bg-gradient-to-br ${getBadgeColor(achievement.badge_tier)}` : 'bg-subtle dark:bg-card-dark'}`}>
-                          {isUnlocked ? <Award className="h-6 w-6 text-ink-on-dark" /> : <Lock className="h-6 w-6 text-muted-ink dark:text-muted-ink-on-dark" />}
+                        <div className="mb-2 flex items-center justify-center h-[26px]">
+                          {isUnlocked ? <Award className="h-[26px] w-[26px] text-ink dark:text-ink-on-dark" /> : <Lock className="h-[26px] w-[26px] text-muted-ink dark:text-muted-ink-on-dark" />}
                         </div>
                         <div className="font-display text-[11px] font-semibold text-ink dark:text-ink-on-dark mb-1 leading-snug">{achievement.title}</div>
                         <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark leading-snug mb-1.5">{achievement.description}</div>
-                        <div className={`text-[8px] tracking-wide font-bold px-1.5 py-0.5 mb-1 inline-block ${
-                          achievement.badge_tier === 'bronze' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300'
-                          : achievement.badge_tier === 'gold' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
-                          : achievement.badge_tier === 'platinum' ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300'
-                          : achievement.badge_tier === 'diamond' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
-                          : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
-                        }`}>{achievement.badge_tier.toUpperCase()}</div>
+                        <div className="text-[8px] tracking-wide font-bold text-muted-ink dark:text-muted-ink-on-dark uppercase mb-1">{achievement.badge_tier}</div>
                         {isUnlocked && earnedDate
                           ? <div className="text-[9px] text-accent-gold font-semibold">Earned {formatDate(earnedDate)}</div>
                           : <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark italic">{t('achievements.locked')}</div>
@@ -420,7 +409,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 {/* XP total dark tile */}
                 <div className="bg-sidebar px-[18px] py-5 text-center">
                   <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
-                  <div className="font-display text-[46px] font-bold text-card-light dark:text-ink leading-none">{totalXPEarned}</div>
+                  <div className="font-display text-[46px] font-bold text-ink-on-dark leading-none">{totalXPEarned}</div>
                   <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>
                   <div className="h-[3px] bg-white/10 dark:bg-white/5 rounded-full mt-3 mb-1">
                     <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />

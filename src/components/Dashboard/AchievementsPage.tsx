@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Award, Lock, Zap } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -32,11 +32,7 @@ export const AchievementsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) { fetchData(); }
-  }, [user]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!user) return;
     try {
       setLoading(true);
@@ -50,7 +46,11 @@ export const AchievementsPage: React.FC = () => {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, { component: 'AchievementsPage', action: 'fetchAchievements', userId: user?.id });
     } finally { setLoading(false); }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) { void fetchData(); }
+  }, [user, fetchData]);
 
   const unlockedSet = useMemo(() => new Set(userAchievements.map(ua => ua.achievement_id)), [userAchievements]);
   const earnedDateMap = useMemo(() => new Map(userAchievements.map(ua => [ua.achievement_id, ua.earned_at])), [userAchievements]);
@@ -142,13 +142,7 @@ export const AchievementsPage: React.FC = () => {
                     <div className="font-display text-[11px] font-semibold text-ink dark:text-ink-on-dark mb-1 leading-snug">{achievement.title}</div>
                     <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark leading-snug mb-1.5">{achievement.description}</div>
 
-                    <div className={`text-[8px] tracking-wide font-bold px-1.5 py-0.5 mb-1.5 inline-block ${
-                      achievement.badge_tier === 'bronze' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300'
-                      : achievement.badge_tier === 'gold' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300'
-                      : achievement.badge_tier === 'platinum' ? 'bg-cyan-100 dark:bg-cyan-900/30 text-cyan-800 dark:text-cyan-300'
-                      : achievement.badge_tier === 'diamond' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300'
-                      : 'bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
-                    }`}>{achievement.badge_tier.toUpperCase()}</div>
+                    <div className="text-[8px] tracking-wide font-bold text-muted-ink dark:text-muted-ink-on-dark uppercase mb-1.5">{achievement.badge_tier}</div>
 
                     <div className="flex items-center justify-center gap-0.5 text-[9px] text-muted-ink dark:text-muted-ink-on-dark mb-1">
                       <Zap className="h-2.5 w-2.5" />
@@ -178,7 +172,7 @@ export const AchievementsPage: React.FC = () => {
             {/* XP total dark tile */}
             <div className="bg-sidebar px-[18px] py-5 text-center">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
-              <div className="font-display text-[46px] font-bold text-card-light dark:text-ink leading-none">{totalXPEarned}</div>
+              <div className="font-display text-[46px] font-bold text-ink-on-dark leading-none">{totalXPEarned}</div>
               <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>
               <div className="h-[3px] bg-white/10 dark:bg-white/5 rounded-full mt-3 mb-1">
                 <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
