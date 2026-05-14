@@ -55,7 +55,6 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
     try {
       setLoading(true);
 
-      // Get admin users with creator info
       const { data, error } = await supabase
         .from('admin_users')
         .select(`
@@ -112,7 +111,6 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log the action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'CREATE',
@@ -123,10 +121,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'AdminUsersManagementPage', 
-          action: 'handleAddAdmin', 
-          metadata: { error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'AdminUsersManagementPage',
+          action: 'handleAddAdmin',
+          metadata: { error: logError.message }
         });
       }
 
@@ -137,10 +135,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
       fetchAdminUsers();
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'AdminUsersManagementPage', 
-        action: 'handleAddAdmin', 
-        metadata: { email: newAdminEmail } 
+      ErrorLogger.error(error, {
+        component: 'AdminUsersManagementPage',
+        action: 'handleAddAdmin',
+        metadata: { email: newAdminEmail }
       });
       toast.error(error.message || 'Failed to add admin user');
     } finally {
@@ -170,7 +168,6 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log the action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -181,10 +178,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'AdminUsersManagementPage', 
-          action: 'handleDeactivateAdmin', 
-          metadata: { adminEmail, error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'AdminUsersManagementPage',
+          action: 'handleDeactivateAdmin',
+          metadata: { adminEmail, error: logError.message }
         });
       }
 
@@ -192,10 +189,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
       fetchAdminUsers();
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'AdminUsersManagementPage', 
-        action: 'handleDeactivateAdmin', 
-        metadata: { adminEmail } 
+      ErrorLogger.error(error, {
+        component: 'AdminUsersManagementPage',
+        action: 'handleDeactivateAdmin',
+        metadata: { adminEmail }
       });
       toast.error(error.message || 'Failed to deactivate admin user');
     }
@@ -218,7 +215,6 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log the action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -229,10 +225,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'AdminUsersManagementPage', 
-          action: 'handleReactivateAdmin', 
-          metadata: { adminEmail, error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'AdminUsersManagementPage',
+          action: 'handleReactivateAdmin',
+          metadata: { adminEmail, error: logError.message }
         });
       }
 
@@ -240,10 +236,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
       fetchAdminUsers();
     } catch (err: unknown) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'AdminUsersManagementPage', 
-        action: 'handleReactivateAdmin', 
-        metadata: { adminEmail } 
+      ErrorLogger.error(error, {
+        component: 'AdminUsersManagementPage',
+        action: 'handleReactivateAdmin',
+        metadata: { adminEmail }
       });
       toast.error(error.message || 'Failed to reactivate admin user');
     }
@@ -278,7 +274,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
@@ -288,108 +284,114 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Admin Users Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Manage administrator access and permissions</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Manage administrator access and permissions</p>
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <UserPlus className="h-4 w-4" />
           <span>Add Admin</span>
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Total Admins</p>
-              <p className="text-3xl font-bold mt-1">{stats.total_admins}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Admins</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.total_admins}</p>
             </div>
-            <Shield className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Shield className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Active Admins</p>
-              <p className="text-3xl font-bold mt-1">{stats.active_admins}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Active Admins</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.active_admins}</p>
             </div>
-            <UserCheck className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <UserCheck className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Inactive Admins</p>
-              <p className="text-3xl font-bold mt-1">{stats.inactive_admins}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Inactive Admins</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.inactive_admins}</p>
             </div>
-            <UserX className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <UserX className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Recent Logins</p>
-              <p className="text-3xl font-bold mt-1">{stats.recent_logins}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Recent Logins</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.recent_logins}</p>
             </div>
-            <Clock className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Clock className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Admin Users Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search admin users..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+          <table className="min-w-full divide-y divide-divider dark:divide-divider-on-dark">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Email
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Created By
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Last Login
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
               {filteredAdminUsers.map((admin) => (
-                <tr key={admin.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                <tr key={admin.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div className="flex items-center">
-                      <Shield className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
+                      <Shield className="h-5 w-5 text-accent-gold mr-2" />
                       <div>
                         <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                           {admin.email}
                         </div>
                         {admin.notes && (
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                          <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                             {admin.notes}
                           </div>
                         )}
@@ -398,11 +400,11 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
                     {admin.is_active ? (
-                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
                         Active
                       </span>
                     ) : (
-                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-800 dark:bg-gray-900/30 dark:text-gray-300">
+                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark">
                         Inactive
                       </span>
                     )}
@@ -424,7 +426,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                     <div className="flex items-center space-x-3">
                       <button
                         onClick={() => handleViewHistory(admin.email)}
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                        className="text-accent-gold hover:opacity-80"
                       >
                         View History
                       </button>
@@ -454,16 +456,15 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
           {filteredAdminUsers.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No admin users found</p>
+              <p className="text-muted-ink dark:text-muted-ink-on-dark">No admin users found</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Add Admin Modal */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-md w-full p-6">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-md w-full p-6">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Add Admin User</h3>
               <button
@@ -472,7 +473,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   setNewAdminEmail('');
                   setNewAdminNotes('');
                 }}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80"
               >
                 <AlertCircle className="h-5 w-5" />
               </button>
@@ -480,7 +481,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Email Address
                 </label>
                 <input
@@ -488,12 +489,12 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   value={newAdminEmail}
                   onChange={(e) => setNewAdminEmail(e.target.value)}
                   placeholder="admin@example.com"
-                  className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                  className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+                <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                   Notes (Optional)
                 </label>
                 <textarea
@@ -501,12 +502,12 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   onChange={(e) => setNewAdminNotes(e.target.value)}
                   placeholder="Additional information about this admin..."
                   rows={3}
-                  className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                  className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
 
-              <div className="bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
-                <p className="text-sm text-blue-800 dark:text-blue-200">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
+                <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   The user must already have an account in the system. They will be added to the admin_users table.
                 </p>
               </div>
@@ -527,7 +528,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                     setNewAdminNotes('');
                   }}
                   disabled={isAddingAdmin}
-                  className="flex-1 px-5 py-2.5 bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-5 py-2.5 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Cancel
                 </button>
@@ -537,11 +538,10 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
         </div>
       )}
 
-      {/* Login History Modal */}
       {showHistoryModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-4xl w-full max-h-[80vh] overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-divider dark:border-divider-on-dark">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
                 Login History - {selectedAdminEmail}
               </h3>
@@ -550,7 +550,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                   setShowHistoryModal(false);
                   setSelectedAdminEmail('');
                 }}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80"
               >
                 <AlertCircle className="h-5 w-5" />
               </button>
@@ -561,7 +561,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                 {filteredLoginAttempts.map((attempt) => (
                   <div
                     key={attempt.id}
-                    className={`p-6 rounded-lg border ${
+                    className={`p-6 border ${
                       attempt.success
                         ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800'
                         : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800'
@@ -583,7 +583,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
                             {attempt.success ? 'Successful Login' : 'Failed Login'}
                           </span>
                         </div>
-                        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div className="mt-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                           <div className="flex items-center space-x-2">
                             <Calendar className="h-4 w-4" />
                             <span>{new Date(attempt.attempted_at).toLocaleString()}</span>
@@ -601,7 +601,7 @@ export const AdminUsersManagementPage: React.FC = React.memo(() => {
 
                 {filteredLoginAttempts.length === 0 && (
                   <div className="text-center py-12">
-                    <p className="text-gray-500 dark:text-gray-400">No login attempts found</p>
+                    <p className="text-muted-ink dark:text-muted-ink-on-dark">No login attempts found</p>
                   </div>
                 )}
               </div>

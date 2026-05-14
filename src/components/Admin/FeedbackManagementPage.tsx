@@ -69,7 +69,6 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
         setSelectedFeedback(prev => prev ? { ...prev, status: newStatus } : null);
       }
 
-      // Log audit action
       if (user?.id) {
         try {
           await supabase.rpc('log_admin_action', {
@@ -82,19 +81,19 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
           });
         } catch (logErr: unknown) {
           const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', { 
-            component: 'FeedbackManagementPage', 
-            action: 'updateFeedbackStatus', 
-            metadata: { feedbackId: id, error: logError.message } 
+          ErrorLogger.warn('Failed to log admin action', {
+            component: 'FeedbackManagementPage',
+            action: 'updateFeedbackStatus',
+            metadata: { feedbackId: id, error: logError.message }
           });
         }
       }
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'FeedbackManagementPage', 
-        action: 'updateFeedbackStatus', 
-        metadata: { feedbackId: id, newStatus } 
+      ErrorLogger.error(err, {
+        component: 'FeedbackManagementPage',
+        action: 'updateFeedbackStatus',
+        metadata: { feedbackId: id, newStatus }
       });
       showErrorToast('Failed to update feedback status');
     }
@@ -124,7 +123,6 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
         setSelectedFeedback(null);
       }
 
-      // Log audit action
       if (user?.id) {
         try {
           await supabase.rpc('log_admin_action', {
@@ -136,10 +134,10 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
           });
         } catch (logErr: unknown) {
           const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', { 
-            component: 'FeedbackManagementPage', 
-            action: 'deleteFeedback', 
-            metadata: { feedbackId: id, error: logError.message } 
+          ErrorLogger.warn('Failed to log admin action', {
+            component: 'FeedbackManagementPage',
+            action: 'deleteFeedback',
+            metadata: { feedbackId: id, error: logError.message }
           });
         }
       }
@@ -147,10 +145,10 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
       showSuccessToast('Feedback deleted successfully');
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'FeedbackManagementPage', 
-        action: 'deleteFeedback', 
-        metadata: { feedbackId: id } 
+      ErrorLogger.error(err, {
+        component: 'FeedbackManagementPage',
+        action: 'deleteFeedback',
+        metadata: { feedbackId: id }
       });
       showErrorToast('Failed to delete feedback');
     }
@@ -193,8 +191,8 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      pending: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white',
-      reviewed: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300',
+      pending: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
+      reviewed: 'bg-accent-gold-soft text-accent-gold dark:bg-accent-gold-soft/20',
       resolved: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
     };
     return styles[status as keyof typeof styles] || styles.pending;
@@ -202,8 +200,8 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
 
   const getTypeBadge = (type: string) => {
     return type === 'feedback'
-      ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
-      : 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300';
+      ? 'bg-accent-gold-soft text-ink dark:text-muted-ink-on-dark'
+      : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark';
   };
 
   return (
@@ -211,36 +209,36 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Feedback Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Review and manage user feedback and suggestions</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Review and manage user feedback and suggestions</p>
         </div>
         <button
           onClick={exportFeedbackToCSV}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <Download className="h-4 w-4" />
           <span>Export CSV</span>
         </button>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search feedback..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="pending">Pending</option>
@@ -250,11 +248,11 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
           </div>
 
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus appearance-none"
             >
               <option value="all">All Types</option>
               <option value="feedback">Feedback</option>
@@ -265,36 +263,36 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+              <thead className="bg-subtle dark:bg-subtle-on-dark">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     User
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Preview
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
                 {filteredFeedbacks.map((feedback) => (
-                  <tr key={feedback.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                  <tr key={feedback.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {feedback.user_email}
@@ -311,8 +309,8 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                       </div>
                       {feedback.media_urls.length > 0 && (
                         <div className="flex items-center space-x-1 mt-1">
-                          <ImageIcon className="h-3 w-3 text-gray-400" />
-                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                          <ImageIcon className="h-3 w-3 text-muted-ink dark:text-muted-ink-on-dark" />
+                          <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                             {feedback.media_urls.length} attachment{feedback.media_urls.length > 1 ? 's' : ''}
                           </span>
                         </div>
@@ -325,8 +323,8 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <Clock className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                        <Clock className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
+                        <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                           {new Date(feedback.created_at).toLocaleDateString()}
                         </span>
                       </div>
@@ -335,7 +333,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                       <div className="flex items-center space-x-3">
                         <button
                           onClick={() => setSelectedFeedback(feedback)}
-                          className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                          className="flex items-center space-x-1 text-accent-gold hover:opacity-80"
                         >
                           <Eye className="h-4 w-4" />
                           <span>View</span>
@@ -356,7 +354,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
 
             {filteredFeedbacks.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400">No feedback found matching your filters</p>
+                <p className="text-muted-ink dark:text-muted-ink-on-dark">No feedback found matching your filters</p>
               </div>
             )}
           </div>
@@ -365,27 +363,27 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
 
       {selectedFeedback && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Feedback Details</h3>
               <button
                 onClick={() => setSelectedFeedback(null)}
-                className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
+                className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
               >
-                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
               </button>
             </div>
 
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     User Email
                   </label>
                   <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedFeedback.user_email}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Type
                   </label>
                   <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${getTypeBadge(selectedFeedback.feedback_type)}`}>
@@ -395,7 +393,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                   Submission Date
                 </label>
                 <p className="text-base text-ink dark:text-ink-on-dark">
@@ -404,7 +402,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-2">
                   Status
                 </label>
                 <div className="flex items-center space-x-2">
@@ -414,7 +412,7 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                   <select
                     value={selectedFeedback.status}
                     onChange={(e) => updateFeedbackStatus(selectedFeedback.id, e.target.value as 'pending' | 'reviewed' | 'resolved')}
-                    className="px-3 py-1 border border-divider dark:border-divider-on-dark rounded-lg text-sm focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                    className="px-3 py-1 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-sm text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                   >
                     <option value="pending">Pending</option>
                     <option value="reviewed">Reviewed</option>
@@ -424,17 +422,17 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-2">
                   Feedback Message
                 </label>
-                <div className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg p-6 border border-gray-200 dark:border-gray-600">
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
                   <p className="text-ink dark:text-ink-on-dark whitespace-pre-wrap">{selectedFeedback.feedback_text}</p>
                 </div>
               </div>
 
               {selectedFeedback.media_urls.length > 0 && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-2">
                     Attachments ({selectedFeedback.media_urls.length})
                   </label>
                   <div className="grid grid-cols-2 gap-6">
@@ -446,22 +444,22 @@ export const FeedbackManagementPage: React.FC = React.memo(() => {
                             <video
                               src={url}
                               controls
-                              className="w-full h-48 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
+                              className="w-full h-48 object-cover rounded-lg border border-divider dark:border-divider-on-dark"
                             />
                           ) : (
                             <img
                               src={url}
                               alt={`Attachment ${index + 1}`}
-                              className="w-full h-48 object-cover rounded-lg border border-gray-200 dark:border-gray-600"
+                              className="w-full h-48 object-cover rounded-lg border border-divider dark:border-divider-on-dark"
                             />
                           )}
                           <a
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="absolute top-2 right-2 bg-white dark:bg-slate-800 p-2 rounded-lg shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow opacity-0 group-hover:opacity-100 transition"
+                            className="absolute top-2 right-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-2 opacity-0 group-hover:opacity-100 transition"
                           >
-                            <Eye className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                            <Eye className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                           </a>
                         </div>
                       );

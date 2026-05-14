@@ -101,20 +101,18 @@ export const OverviewPage: React.FC = React.memo(() => {
     title: string;
     value: number;
     icon: React.ReactNode;
-    bgColor: string;
-    iconColor: string;
     trend?: string;
-  }> = ({ title, value, icon, bgColor, iconColor, trend }) => (
-    <div className={`${bgColor} rounded-md p-6 border border-opacity-20`}>
+  }> = ({ title, value, icon, trend }) => (
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium opacity-80 mb-1">{title}</p>
-          <p className="text-3xl font-bold">{value.toLocaleString()}</p>
+          <p className="text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">{title}</p>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{value.toLocaleString()}</p>
           {trend && (
-            <p className="text-xs mt-2 opacity-70">{trend}</p>
+            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-2">{trend}</p>
           )}
         </div>
-        <div className={`${iconColor} p-3 rounded-lg bg-white bg-opacity-20`}>
+        <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark text-accent-gold">
           {icon}
         </div>
       </div>
@@ -124,7 +122,7 @@ export const OverviewPage: React.FC = React.memo(() => {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
@@ -133,7 +131,7 @@ export const OverviewPage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Dashboard Overview</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">Monitor platform statistics and user activity</p>
+        <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Monitor platform statistics and user activity</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -141,53 +139,41 @@ export const OverviewPage: React.FC = React.memo(() => {
           title="Total Users"
           value={stats.totalUsers}
           icon={<Users className="h-6 w-6" />}
-          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
-          iconColor="text-white"
         />
         <StatCard
           title="Active This Month"
           value={stats.activeUsersThisMonth}
           icon={<TrendingUp className="h-6 w-6" />}
-          bgColor="bg-gradient-to-br from-green-500 to-green-600 text-white"
-          iconColor="text-white"
           trend="Users with activity"
         />
         <StatCard
           title="Total Feedback"
           value={stats.totalFeedback}
           icon={<MessageSquare className="h-6 w-6" />}
-          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
-          iconColor="text-white"
           trend={`${stats.pendingFeedback} pending`}
         />
         <StatCard
           title="Generated Summaries"
           value={stats.totalSummaries}
           icon={<FileText className="h-6 w-6" />}
-          bgColor="bg-gradient-to-br from-orange-500 to-orange-600 text-white"
-          iconColor="text-white"
         />
         <StatCard
           title="Library Items"
           value={stats.totalLibraryItems}
           icon={<FileText className="h-6 w-6" />}
-          bgColor={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white`}
-          iconColor="text-white"
         />
         <StatCard
           title="Pending Feedback"
           value={stats.pendingFeedback}
           icon={<MessageSquare className="h-6 w-6" />}
-          bgColor="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white"
-          iconColor="text-white"
           trend="Needs review"
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-800 rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
-            <Calendar className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
+            <Calendar className="h-5 w-5 mr-2 text-accent-gold" />
             Recent Activity
           </h3>
           <div className="space-y-6">
@@ -195,54 +181,54 @@ export const OverviewPage: React.FC = React.memo(() => {
               recentActivity.map((activity, index) => (
                 <div
                   key={index}
-                  className="flex items-start space-x-3 p-3 bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg border border-gray-200 dark:border-gray-600"
+                  className="flex items-start space-x-3 p-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark"
                 >
                   <div className="flex-shrink-0">
-                    <MessageSquare className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                    <MessageSquare className="h-5 w-5 text-accent-gold" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
                       {activity.user_email}
                     </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{activity.details}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                    <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{activity.details}</p>
+                    <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                       {new Date(activity.created_at).toLocaleString()}
                     </p>
                   </div>
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">No recent activity</p>
+              <p className="text-muted-ink dark:text-muted-ink-on-dark text-center py-8">No recent activity</p>
             )}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 rounded-md shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-sm border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <div className="p-6 bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
+            <div className="p-6 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
+              <h4 className="text-sm font-semibold text-ink dark:text-ink-on-dark mb-1">
                 {stats.pendingFeedback} Pending Feedback
               </h4>
-              <p className="text-xs text-blue-700 dark:text-blue-300">
+              <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">
                 Review user feedback and suggestions to improve the platform
               </p>
             </div>
 
-            <div className="p-6 bg-green-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
-              <h4 className="text-sm font-semibold text-green-900 dark:text-green-100 mb-1">
+            <div className="p-6 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
+              <h4 className="text-sm font-semibold text-ink dark:text-ink-on-dark mb-1">
                 {stats.activeUsersThisMonth} Active Users
               </h4>
-              <p className="text-xs text-green-700 dark:text-green-300">
+              <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">
                 Users who have been active this month
               </p>
             </div>
 
-            <div className="p-6 bg-purple-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-purple-900/30 rounded-lg border border-purple-200 dark:border-purple-800">
-              <h4 className="text-sm font-semibold text-purple-900 dark:text-purple-100 mb-1">
+            <div className="p-6 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
+              <h4 className="text-sm font-semibold text-ink dark:text-ink-on-dark mb-1">
                 {stats.totalSummaries} Total Summaries
               </h4>
-              <p className="text-xs text-purple-700 dark:text-purple-300">
+              <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark">
                 Content generated by users across all time
               </p>
             </div>

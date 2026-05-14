@@ -48,7 +48,6 @@ export const AuditLogPage: React.FC = React.memo(() => {
     try {
       setLoading(true);
 
-      // Calculate date range
       let startDate = null;
       if (dateRange !== 'all') {
         const days = dateRange === 'today' ? 1 : dateRange === '7days' ? 7 : 30;
@@ -145,14 +144,14 @@ export const AuditLogPage: React.FC = React.memo(() => {
   const getActionTypeColor = (type: string) => {
     const colors: Record<string, string> = {
       CREATE: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
-      UPDATE: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+      UPDATE: 'bg-accent-gold-soft text-accent-gold dark:bg-accent-gold-soft/20',
       DELETE: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
-      VIEW: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400',
+      VIEW: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
       LOGIN: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400',
-      LOGOUT: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white',
+      LOGOUT: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
       EXPORT: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-400'
     };
-    return colors[type] || 'bg-gray-100 text-gray-800';
+    return colors[type] || 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark';
   };
 
   const filteredLogs = useMemo(() =>
@@ -168,112 +167,117 @@ export const AuditLogPage: React.FC = React.memo(() => {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark flex items-center">
-            <Shield className="h-8 w-8 mr-3 text-blue-600 dark:text-blue-400" />
+            <Shield className="h-8 w-8 mr-3 text-accent-gold" />
             Audit Log
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">
             Comprehensive log of all admin actions and system events
           </p>
         </div>
         <button
           onClick={exportToCSV}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <Download className="h-4 w-4" />
           <span>Export CSV</span>
         </button>
       </div>
 
-      {/* Statistics Cards */}
       {stats && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-80">Total Actions</p>
-                <p className="text-3xl font-bold mt-1">{stats.total_actions.toLocaleString()}</p>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Actions</p>
+                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.total_actions.toLocaleString()}</p>
               </div>
-              <Activity className="h-12 w-12 opacity-80" />
+              <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+                <Activity className="h-8 w-8 text-accent-gold" />
+              </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-md p-6">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-80">Active Admins</p>
-                <p className="text-3xl font-bold mt-1">{stats.unique_admins}</p>
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Active Admins</p>
+                <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.unique_admins}</p>
               </div>
-              <User className="h-12 w-12 opacity-80" />
+              <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+                <User className="h-8 w-8 text-accent-gold" />
+              </div>
             </div>
           </div>
 
-          <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-80">Most Active</p>
-                <p className="text-sm font-bold mt-1 truncate">
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Most Active</p>
+                <p className="text-sm font-bold text-ink dark:text-ink-on-dark mt-1 truncate">
                   {stats.most_active_admin?.email || 'N/A'}
                 </p>
-                <p className="text-xs opacity-70 mt-1">
+                <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
                   {stats.most_active_admin?.actions || 0} actions
                 </p>
               </div>
-              <Shield className="h-12 w-12 opacity-80" />
+              <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+                <Shield className="h-8 w-8 text-accent-gold" />
+              </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-md p-6">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-80">Period</p>
-                <p className="text-2xl font-bold mt-1">
+                <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Period</p>
+                <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">
                   {dateRange === 'today' ? 'Today' : dateRange === '7days' ? '7 Days' : dateRange === '30days' ? '30 Days' : 'All Time'}
                 </p>
               </div>
-              <Calendar className="h-12 w-12 opacity-80" />
+              <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+                <Calendar className="h-8 w-8 text-accent-gold" />
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Filters */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Search
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by admin or description..."
-                className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Action Type
             </label>
             <select
               value={filterActionType}
               onChange={(e) => setFilterActionType(e.target.value)}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <option value="">All Actions</option>
               <option value="CREATE">Create</option>
@@ -287,13 +291,13 @@ export const AuditLogPage: React.FC = React.memo(() => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Table
             </label>
             <select
               value={filterTable}
               onChange={(e) => setFilterTable(e.target.value)}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <option value="">All Tables</option>
               {uniqueTables.map(table => (
@@ -303,7 +307,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Date Range
             </label>
             <select
@@ -314,7 +318,7 @@ export const AuditLogPage: React.FC = React.memo(() => {
                   setDateRange(value);
                 }
               }}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <option value="today">Today</option>
               <option value="7days">Last 7 Days</option>
@@ -325,38 +329,37 @@ export const AuditLogPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      {/* Audit Log Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Timestamp
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Admin
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Action
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Table
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Description
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   IP Address
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-ink dark:text-secondary-ink-on-dark uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Details
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="divide-y divide-divider dark:divide-divider-on-dark">
               {filteredLogs.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50 transition">
+                <tr key={log.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30 transition">
                   <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                     {new Date(log.created_at).toLocaleString()}
                   </td>
@@ -368,19 +371,19 @@ export const AuditLogPage: React.FC = React.memo(() => {
                       {log.action_type}
                     </span>
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                     {log.table_name || '-'}
                   </td>
-                  <td className="px-6 py-6 text-sm text-gray-600 dark:text-gray-400 max-w-md truncate">
+                  <td className="px-6 py-6 text-sm text-secondary-ink dark:text-muted-ink-on-dark max-w-md truncate">
                     {log.description || '-'}
                   </td>
-                  <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                  <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                     {log.ip_address || '-'}
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap text-sm">
                     <button
                       onClick={() => setSelectedLog(log)}
-                      className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                      className="text-accent-gold hover:opacity-80"
                     >
                       <Eye className="h-4 w-4" />
                     </button>
@@ -392,33 +395,32 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
           {filteredLogs.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No audit logs found</p>
+              <p className="text-muted-ink dark:text-muted-ink-on-dark">No audit logs found</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* Detail Modal */}
       {selectedLog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div className="p-6 border-b border-divider dark:border-divider-on-dark">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Audit Log Details</h3>
             </div>
 
             <div className="p-6 space-y-6">
               <div>
-                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Timestamp</label>
+                <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Timestamp</label>
                 <p className="text-ink dark:text-ink-on-dark mt-1">{new Date(selectedLog.created_at).toLocaleString()}</p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Admin</label>
+                <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Admin</label>
                 <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.admin_email}</p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Action Type</label>
+                <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Action Type</label>
                 <p className="mt-1">
                   <span className={`px-2 py-1 text-xs font-medium rounded-full ${getActionTypeColor(selectedLog.action_type)}`}>
                     {selectedLog.action_type}
@@ -428,22 +430,22 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.table_name && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Table</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Table</label>
                   <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.table_name}</p>
                 </div>
               )}
 
               {selectedLog.description && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Description</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Description</label>
                   <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.description}</p>
                 </div>
               )}
 
               {selectedLog.old_values && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">Old Values</label>
-                  <pre className="text-xs bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 p-3 rounded mt-1 overflow-x-auto">
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">Old Values</label>
+                  <pre className="text-xs bg-subtle dark:bg-subtle-on-dark p-3 mt-1 overflow-x-auto">
                     {JSON.stringify(selectedLog.old_values, null, 2)}
                   </pre>
                 </div>
@@ -451,8 +453,8 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.new_values && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">New Values</label>
-                  <pre className="text-xs bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 p-3 rounded mt-1 overflow-x-auto">
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">New Values</label>
+                  <pre className="text-xs bg-subtle dark:bg-subtle-on-dark p-3 mt-1 overflow-x-auto">
                     {JSON.stringify(selectedLog.new_values, null, 2)}
                   </pre>
                 </div>
@@ -460,23 +462,23 @@ export const AuditLogPage: React.FC = React.memo(() => {
 
               {selectedLog.ip_address && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">IP Address</label>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">IP Address</label>
                   <p className="text-ink dark:text-ink-on-dark mt-1">{selectedLog.ip_address}</p>
                 </div>
               )}
 
               {selectedLog.user_agent && (
                 <div>
-                  <label className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">User Agent</label>
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">{selectedLog.user_agent}</p>
+                  <label className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">User Agent</label>
+                  <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark mt-1">{selectedLog.user_agent}</p>
                 </div>
               )}
             </div>
 
-            <div className="p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="p-6 border-t border-divider dark:border-divider-on-dark">
               <button
                 onClick={() => setSelectedLog(null)}
-                className="w-full px-5 py-2.5 bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                className="w-full px-5 py-2.5 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
               >
                 Close
               </button>
