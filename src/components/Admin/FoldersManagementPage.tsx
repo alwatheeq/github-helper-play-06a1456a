@@ -6,6 +6,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useAuth } from '../../hooks/useAuth';
 import { useConfirm } from '../../hooks/useConfirm';
+import { tryLogAdminAction } from '../../utils/adminHelpers';
 
 interface FolderData {
   id: string;
@@ -36,32 +37,29 @@ export const FoldersManagementPage: React.FC = React.memo(() => {
   const fetchFolders = async () => {
     setLoading(true);
     try {
-      const { data: foldersData, error: foldersError } = await supabase
-        .from('user_folders')
-        .select(`
-          *,
-          user_profiles!inner(email)
-        `)
-        .order('created_at', { ascending: false });
+      const [{ data: foldersData, error: foldersError }, { data: itemCounts }] = await Promise.all([
+        supabase
+          .from('user_folders')
+          .select('*, user_profiles!inner(email)')
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('user_library_items')
+          .select('folder_id')
+          .not('folder_id', 'is', null),
+      ]);
 
       if (foldersError) throw foldersError;
 
-      const foldersWithCounts = await Promise.all(
-        (foldersData || []).map(async (folder) => {
-          const { count } = await supabase
-            .from('user_library_items')
-            .select('id', { count: 'exact', head: true })
-            .eq('folder_id', folder.id);
+      const countMap = new Map<string, number>();
+      itemCounts?.forEach(({ folder_id }) => {
+        countMap.set(folder_id, (countMap.get(folder_id) || 0) + 1);
+      });
 
-          return {
-            ...folder,
-            user_email: folder.user_profiles?.email || 'Unknown',
-            item_count: count || 0,
-          };
-        })
-      );
-
-      setFolders(foldersWithCounts);
+      setFolders((foldersData || []).map(folder => ({
+        ...folder,
+        user_email: folder.user_profiles?.email || 'Unknown',
+        item_count: countMap.get(folder.id) || 0,
+      })));
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, { component: 'FoldersManagementPage', action: 'fetchFolders' });
@@ -93,23 +91,14 @@ export const FoldersManagementPage: React.FC = React.memo(() => {
 
       if (user?.id) {
         const oldFolder = folders.find(f => f.id === folderId);
-        try {
-          await supabase.rpc('log_admin_action', {
-            p_action_type: 'UPDATE',
-            p_table_name: 'user_folders',
-            p_record_id: folderId,
-            p_old_values: { name: oldFolder?.name },
-            p_new_values: { name: editingName.trim() },
-            p_description: `Updated folder name from "${oldFolder?.name}" to "${editingName.trim()}"`
-          });
-        } catch (logErr: unknown) {
-          const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', {
-            component: 'FoldersManagementPage',
-            action: 'handleSaveEdit',
-            metadata: { folderId, error: logError.message }
-          });
-        }
+        await tryLogAdminAction({
+          p_action_type: 'UPDATE',
+          p_table_name: 'user_folders',
+          p_record_id: folderId,
+          p_old_values: { name: oldFolder?.name },
+          p_new_values: { name: editingName.trim() },
+          p_description: `Updated folder name from "${oldFolder?.name}" to "${editingName.trim()}"`,
+        }, { component: 'FoldersManagementPage', action: 'handleSaveEdit', metadata: { folderId } });
       }
 
       await fetchFolders();
@@ -152,22 +141,13 @@ export const FoldersManagementPage: React.FC = React.memo(() => {
       if (error) throw error;
 
       if (user?.id) {
-        try {
-          await supabase.rpc('log_admin_action', {
-            p_action_type: 'DELETE',
-            p_table_name: 'user_folders',
-            p_record_id: folderId,
-            p_old_values: { name: folderName, item_count: itemCount },
-            p_description: `Deleted folder "${folderName}"${itemCount > 0 ? ` (${itemCount} items moved to uncategorized)` : ''}`
-          });
-        } catch (logErr: unknown) {
-          const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', {
-            component: 'FoldersManagementPage',
-            action: 'handleDeleteFolder',
-            metadata: { folderId, error: logError.message }
-          });
-        }
+        await tryLogAdminAction({
+          p_action_type: 'DELETE',
+          p_table_name: 'user_folders',
+          p_record_id: folderId,
+          p_old_values: { name: folderName, item_count: itemCount },
+          p_description: `Deleted folder "${folderName}"${itemCount > 0 ? ` (${itemCount} items moved to uncategorized)` : ''}`,
+        }, { component: 'FoldersManagementPage', action: 'handleDeleteFolder', metadata: { folderId } });
       }
 
       await fetchFolders();

@@ -6,6 +6,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useAuth } from '../../hooks/useAuth';
 import { useConfirm } from '../../hooks/useConfirm';
+import { tryLogAdminAction } from '../../utils/adminHelpers';
 
 interface User {
   id: string;
@@ -145,17 +146,13 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
         if (user?.id) {
           const createdUser = users.find(u => u.id === formData.user_id);
-          try {
-            await supabase.rpc('log_admin_action', {
-              p_action_type: 'CREATE',
-              p_table_name: 'subscriptions',
-              p_record_id: null,
-              p_new_values: { user_id: formData.user_id, subscription_tier: formData.subscription_tier, status: formData.status },
-              p_description: `Created ${formData.subscription_tier} subscription for ${createdUser?.email || formData.user_id}`
-            });
-          } catch (err: unknown) {
-            ErrorLogger.warn('Failed to log admin action', { component: 'SubscriptionModal', action: 'handleSave', metadata: { mode: 'create', error: err instanceof Error ? err.message : String(err) } });
-          }
+          await tryLogAdminAction({
+            p_action_type: 'CREATE',
+            p_table_name: 'subscriptions',
+            p_record_id: null,
+            p_new_values: { user_id: formData.user_id, subscription_tier: formData.subscription_tier, status: formData.status },
+            p_description: `Created ${formData.subscription_tier} subscription for ${createdUser?.email || formData.user_id}`,
+          }, { component: 'SubscriptionModal', action: 'handleSave', metadata: { mode: 'create' } });
         }
 
         showSuccessToast('Subscription created successfully!');
@@ -174,23 +171,14 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
         if (updateError) throw updateError;
 
         if (user?.id) {
-          try {
-            await supabase.rpc('log_admin_action', {
-              p_action_type: 'UPDATE',
-              p_table_name: 'subscriptions',
-              p_record_id: subscription!.id,
-              p_old_values: { subscription_tier: subscription!.subscription_tier, status: subscription!.status, auto_renew: subscription!.auto_renew },
-              p_new_values: { subscription_tier: formData.subscription_tier, status: formData.status, auto_renew: formData.auto_renew },
-              p_description: `Updated subscription: ${formData.subscription_tier} (${formData.status})`
-            });
-          } catch (logErr: unknown) {
-            const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-            ErrorLogger.warn('Failed to log admin action', {
-              component: 'SubscriptionModal',
-              action: 'handleSave',
-              metadata: { mode: 'edit', subscriptionId: subscription!.id, error: logError.message }
-            });
-          }
+          await tryLogAdminAction({
+            p_action_type: 'UPDATE',
+            p_table_name: 'subscriptions',
+            p_record_id: subscription!.id,
+            p_old_values: { subscription_tier: subscription!.subscription_tier, status: subscription!.status, auto_renew: subscription!.auto_renew },
+            p_new_values: { subscription_tier: formData.subscription_tier, status: formData.status, auto_renew: formData.auto_renew },
+            p_description: `Updated subscription: ${formData.subscription_tier} (${formData.status})`,
+          }, { component: 'SubscriptionModal', action: 'handleSave', metadata: { mode: 'edit', subscriptionId: subscription!.id } });
         }
 
         showSuccessToast('Subscription updated successfully!');

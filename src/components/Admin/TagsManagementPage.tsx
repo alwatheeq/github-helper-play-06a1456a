@@ -6,6 +6,7 @@ import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
 import { useAuth } from '../../hooks/useAuth';
+import { tryLogAdminAction } from '../../utils/adminHelpers';
 
 interface TagData {
   id: string;
@@ -34,32 +35,28 @@ export const TagsManagementPage: React.FC = React.memo(() => {
   const fetchTags = async () => {
     setLoading(true);
     try {
-      const { data: tagsData, error: tagsError } = await supabase
-        .from('tags')
-        .select(`
-          *,
-          user_profiles!inner(email)
-        `)
-        .order('name');
+      const [{ data: tagsData, error: tagsError }, { data: tagCounts }] = await Promise.all([
+        supabase
+          .from('tags')
+          .select('*, user_profiles!inner(email)')
+          .order('name'),
+        supabase
+          .from('item_tags')
+          .select('tag_id'),
+      ]);
 
       if (tagsError) throw tagsError;
 
-      const tagsWithCounts = await Promise.all(
-        (tagsData || []).map(async (tag) => {
-          const { count } = await supabase
-            .from('item_tags')
-            .select('id', { count: 'exact', head: true })
-            .eq('tag_id', tag.id);
+      const countMap = new Map<string, number>();
+      tagCounts?.forEach(({ tag_id }) => {
+        countMap.set(tag_id, (countMap.get(tag_id) || 0) + 1);
+      });
 
-          return {
-            ...tag,
-            user_email: tag.user_profiles?.email || 'Unknown',
-            usage_count: count || 0,
-          };
-        })
-      );
-
-      setTags(tagsWithCounts);
+      setTags((tagsData || []).map(tag => ({
+        ...tag,
+        user_email: tag.user_profiles?.email || 'Unknown',
+        usage_count: countMap.get(tag.id) || 0,
+      })));
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, { component: 'TagsManagementPage', action: 'fetchTags' });
@@ -91,23 +88,14 @@ export const TagsManagementPage: React.FC = React.memo(() => {
 
       if (user?.id) {
         const oldTag = tags.find(t => t.id === tagId);
-        try {
-          await supabase.rpc('log_admin_action', {
-            p_action_type: 'UPDATE',
-            p_table_name: 'tags',
-            p_record_id: tagId,
-            p_old_values: { name: oldTag?.name },
-            p_new_values: { name: editingName.trim() },
-            p_description: `Updated tag name from "${oldTag?.name}" to "${editingName.trim()}"`
-          });
-        } catch (logErr: unknown) {
-          const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', {
-            component: 'TagsManagementPage',
-            action: 'handleSaveEdit',
-            metadata: { tagId, error: logError.message }
-          });
-        }
+        await tryLogAdminAction({
+          p_action_type: 'UPDATE',
+          p_table_name: 'tags',
+          p_record_id: tagId,
+          p_old_values: { name: oldTag?.name },
+          p_new_values: { name: editingName.trim() },
+          p_description: `Updated tag name from "${oldTag?.name}" to "${editingName.trim()}"`,
+        }, { component: 'TagsManagementPage', action: 'handleSaveEdit', metadata: { tagId } });
       }
 
       await fetchTags();
@@ -150,22 +138,13 @@ export const TagsManagementPage: React.FC = React.memo(() => {
       if (error) throw error;
 
       if (user?.id) {
-        try {
-          await supabase.rpc('log_admin_action', {
-            p_action_type: 'DELETE',
-            p_table_name: 'tags',
-            p_record_id: tagId,
-            p_old_values: { name: tagName, usage_count: usageCount },
-            p_description: `Deleted tag "${tagName}"${usageCount > 0 ? ` (removed from ${usageCount} items)` : ''}`
-          });
-        } catch (logErr: unknown) {
-          const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', {
-            component: 'TagsManagementPage',
-            action: 'handleDeleteTag',
-            metadata: { tagId, error: logError.message }
-          });
-        }
+        await tryLogAdminAction({
+          p_action_type: 'DELETE',
+          p_table_name: 'tags',
+          p_record_id: tagId,
+          p_old_values: { name: tagName, usage_count: usageCount },
+          p_description: `Deleted tag "${tagName}"${usageCount > 0 ? ` (removed from ${usageCount} items)` : ''}`,
+        }, { component: 'TagsManagementPage', action: 'handleDeleteTag', metadata: { tagId } });
       }
 
       await fetchTags();

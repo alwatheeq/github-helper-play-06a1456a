@@ -7,6 +7,7 @@ import { LoadingSkeleton } from '../Common/LoadingSkeleton';
 import { useAuth } from '../../hooks/useAuth';
 import { useConfirm } from '../../hooks/useConfirm';
 import { usePrompt } from '../../hooks/usePrompt';
+import { downloadCSV } from '../../utils/csvHelpers';
 import { Coins, Search, Plus, Minus, TrendingUp, Download } from 'lucide-react';
 
 interface UserCredit {
@@ -17,6 +18,7 @@ interface UserCredit {
   credits_total: number;
   credits_cycle_start: string | null;
   credits_cycle_end: string | null;
+  user_role?: string;
 }
 
 interface CreditStats {
@@ -41,7 +43,6 @@ export const CreditManagementPage: React.FC = React.memo(() => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
-  const [_selectedUser, _setSelectedUser] = useState<UserCredit | null>(null);
   const [adjustingUserId, setAdjustingUserId] = useState<string | null>(null);
 
   const fetchUsers = useCallback(async () => {
@@ -49,12 +50,22 @@ export const CreditManagementPage: React.FC = React.memo(() => {
     try {
       const { data, error } = await supabase
         .from('user_profiles')
-        .select('id, email, display_name, credits_remaining, credits_total, credits_cycle_start, credits_cycle_end')
+        .select('id, email, display_name, credits_remaining, credits_total, credits_cycle_start, credits_cycle_end, user_role')
         .order('credits_remaining', { ascending: false });
 
       if (error) throw error;
 
-      setUsers((data || []) as UserCredit[]);
+      const allUsers = (data || []) as UserCredit[];
+      setUsers(allUsers);
+
+      const regularUsers = allUsers.filter(u => u.user_role === 'user');
+      const totalCredits = regularUsers.reduce((sum, u) => sum + (u.credits_remaining || 0), 0);
+      setStats({
+        total_users: regularUsers.length,
+        total_credits: totalCredits,
+        users_with_credits: regularUsers.filter(u => (u.credits_remaining || 0) > 0).length,
+        users_low_credits: regularUsers.filter(u => (u.credits_remaining || 0) < 100).length,
+      });
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, { component: 'CreditManagementPage', action: 'fetchUsers' });
@@ -64,35 +75,9 @@ export const CreditManagementPage: React.FC = React.memo(() => {
     }
   }, [toast]);
 
-  const fetchStats = useCallback(async () => {
-    try {
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('credits_remaining, credits_total')
-        .eq('user_role', 'user');
-
-      if (error) throw error;
-
-      const totalCredits = (data || []).reduce((sum, u) => sum + (u.credits_remaining || 0), 0);
-      const usersWithCredits = (data || []).filter(u => (u.credits_remaining || 0) > 0).length;
-      const usersLowCredits = (data || []).filter(u => (u.credits_remaining || 0) < 100).length;
-
-      setStats({
-        total_users: data?.length || 0,
-        total_credits: totalCredits,
-        users_with_credits: usersWithCredits,
-        users_low_credits: usersLowCredits,
-      });
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { component: 'CreditManagementPage', action: 'fetchStats' });
-    }
-  }, []);
-
   useEffect(() => {
     void fetchUsers();
-    void fetchStats();
-  }, [fetchUsers, fetchStats]);
+  }, [fetchUsers]);
 
   const handleAdjustCredits = async (userId: string, userEmail: string, currentCredits: number) => {
     if (!adminUser?.id) {
@@ -174,7 +159,6 @@ export const CreditManagementPage: React.FC = React.memo(() => {
 
       toast.success(`Credits adjusted successfully! New total: ${newCredits}`);
       await fetchUsers();
-      await fetchStats();
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       ErrorLogger.error(err, {
@@ -188,7 +172,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
     }
   };
 
-  const exportCreditsToCSV = async () => {
+  const exportCreditsToCSV = () => {
     const headers = ['Email', 'Display Name', 'Credits Remaining', 'Credits Total', 'Cycle Start', 'Cycle End'];
     const rows = filteredUsers.map(user => [
       user.email,
@@ -198,20 +182,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
       user.credits_cycle_start ? new Date(user.credits_cycle_start).toLocaleDateString() : '',
       user.credits_cycle_end ? new Date(user.credits_cycle_end).toLocaleDateString() : '',
     ]);
-
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(',')),
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `credits-export-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-
+    downloadCSV(`credits-export-${new Date().toISOString().split('T')[0]}.csv`, headers, rows);
     toast.success(`Exported ${filteredUsers.length} users to CSV`);
   };
 

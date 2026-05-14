@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
+import { formatCurrency } from '../../utils/subscriptionHelpers';
 
 import {
   TrendingUp, Users, DollarSign, Activity, Calendar, BarChart3, ArrowUp, ArrowDown
@@ -24,17 +25,10 @@ interface SubscriptionStats {
   revenue: number;
 }
 
-interface TokenUsageStats {
-  date: string;
-  total_tokens: number;
-  avg_per_user: number;
-}
-
 export const AnalyticsPage: React.FC = React.memo(() => {
   const [userGrowth, setUserGrowth] = useState<UserGrowth[]>([]);
   const [revenueData, setRevenueData] = useState<RevenueData[]>([]);
   const [subscriptionStats, setSubscriptionStats] = useState<SubscriptionStats[]>([]);
-  const [tokenUsageStats, setTokenUsageStats] = useState<TokenUsageStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState<'7' | '30' | '90'>('30');
 
@@ -42,6 +36,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [activeSubscriptions, setActiveSubscriptions] = useState(0);
   const [totalTokenUsage, setTotalTokenUsage] = useState(0);
+  const [avgTokenUsage, setAvgTokenUsage] = useState(0);
 
   const fetchAnalytics = useCallback(async () => {
     try {
@@ -51,46 +46,37 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       startDate.setDate(startDate.getDate() - parseInt(dateRange));
       const startDateStr = startDate.toISOString();
 
-      const { count: usersCount } = await supabase
-        .from('user_profiles')
-        .select('id', { count: 'exact', head: true });
+      const [
+        { count: usersCount },
+        { data: profiles },
+        { data: transactions },
+        { data: subscriptions },
+        { data: tokenData },
+      ] = await Promise.all([
+        supabase.from('user_profiles').select('id', { count: 'exact', head: true }),
+        supabase.from('user_profiles').select('created_at').gte('created_at', startDateStr).order('created_at'),
+        supabase.from('transactions').select('created_at, amount, status').eq('status', 'succeeded').gte('created_at', startDateStr).order('created_at'),
+        supabase.from('subscriptions').select('subscription_tier, status').eq('status', 'active'),
+        supabase.rpc('admin_get_users_with_usage'),
+      ]);
 
       setTotalUsers(usersCount || 0);
-
-      const { data: profiles } = await supabase
-        .from('user_profiles')
-        .select('created_at')
-        .gte('created_at', startDateStr)
-        .order('created_at');
 
       const growthMap = new Map<string, number>();
       profiles?.forEach(profile => {
         const date = new Date(profile.created_at).toISOString().split('T')[0];
         growthMap.set(date, (growthMap.get(date) || 0) + 1);
       });
-
-      const growthData: UserGrowth[] = [];
       const cumulativeTotal = usersCount || 0;
-      Array.from(growthMap.entries()).forEach(([date, newUsers]) => {
-        growthData.push({
-          date,
-          total_users: cumulativeTotal,
-          new_users: newUsers
-        });
-      });
-
+      const growthData: UserGrowth[] = Array.from(growthMap.entries()).map(([date, newUsers]) => ({
+        date,
+        total_users: cumulativeTotal,
+        new_users: newUsers,
+      }));
       setUserGrowth(growthData);
-
-      const { data: transactions } = await supabase
-        .from('transactions')
-        .select('created_at, amount, status')
-        .eq('status', 'succeeded')
-        .gte('created_at', startDateStr)
-        .order('created_at');
 
       const revenueMap = new Map<string, { revenue: number; count: number }>();
       let totalRev = 0;
-
       transactions?.forEach(trans => {
         const date = new Date(trans.created_at).toISOString().split('T')[0];
         const existing = revenueMap.get(date) || { revenue: 0, count: 0 };
@@ -99,50 +85,31 @@ export const AnalyticsPage: React.FC = React.memo(() => {
         revenueMap.set(date, existing);
         totalRev += Number(trans.amount);
       });
-
       setTotalRevenue(totalRev);
-
       const revData: RevenueData[] = Array.from(revenueMap.entries()).map(([date, data]) => ({
         date,
         revenue: data.revenue,
-        transactions: data.count
+        transactions: data.count,
       }));
-
       setRevenueData(revData);
-
-      const { data: subscriptions } = await supabase
-        .from('subscriptions')
-        .select('subscription_tier, status')
-        .eq('status', 'active');
 
       const subsMap = new Map<string, number>();
       subscriptions?.forEach(sub => {
         subsMap.set(sub.subscription_tier, (subsMap.get(sub.subscription_tier) || 0) + 1);
       });
-
       setActiveSubscriptions(subscriptions?.length || 0);
-
       const subsStats: SubscriptionStats[] = Array.from(subsMap.entries()).map(([tier, count]) => ({
         tier,
         count,
-        revenue: 0
+        revenue: 0,
       }));
-
       setSubscriptionStats(subsStats);
-
-      const { data: tokenData } = await supabase.rpc('admin_get_users_with_usage');
 
       if (tokenData) {
         const totalTokens = tokenData.reduce((sum: number, user: { tokens_used: number }) => sum + user.tokens_used, 0);
         const avgTokens = tokenData.length > 0 ? totalTokens / tokenData.length : 0;
-
         setTotalTokenUsage(totalTokens);
-
-        setTokenUsageStats([{
-          date: new Date().toISOString().split('T')[0],
-          total_tokens: totalTokens,
-          avg_per_user: avgTokens
-        }]);
+        setAvgTokenUsage(avgTokens);
       }
 
     } catch (err) {
@@ -157,13 +124,6 @@ export const AnalyticsPage: React.FC = React.memo(() => {
     void fetchAnalytics();
   }, [fetchAnalytics]);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount / 100);
-  };
-
   const getTierDisplayName = (tier: string) => {
     const names: Record<string, string> = {
       trial_1day: 'Legacy 1-day',
@@ -172,7 +132,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       quarterly: 'Quarterly',
       biannual: 'Biannual',
       standard: 'Standard',
-      none: 'None'
+      none: 'None',
     };
     return names[tier] || tier;
   };
@@ -254,7 +214,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Revenue</p>
-              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{formatCurrency(totalRevenue)}</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{formatCurrency(totalRevenue / 100)}</p>
               <div className="flex items-center space-x-1 mt-2 text-muted-ink dark:text-muted-ink-on-dark">
                 {revenueGrowth >= 0 ? (
                   <ArrowUp className="h-4 w-4" />
@@ -293,7 +253,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Token Usage</p>
               <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{(totalTokenUsage / 1000000).toFixed(2)}M</p>
               <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-2">
-                {tokenUsageStats.length > 0 ? (tokenUsageStats[0].avg_per_user / 1000).toFixed(1) : 0}K avg/user
+                {(avgTokenUsage / 1000).toFixed(1)}K avg/user
               </p>
             </div>
             <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
@@ -313,10 +273,8 @@ export const AnalyticsPage: React.FC = React.memo(() => {
           <div className="space-y-3">
             {userGrowth.slice(-10).map((data, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
-                <div className="flex items-center space-x-3">
-                  <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
-                    {new Date(data.date).toLocaleDateString()}
-                  </div>
+                <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
+                  {new Date(data.date).toLocaleDateString()}
                 </div>
                 <div className="flex items-center space-x-6">
                   <div className="text-right">
@@ -358,7 +316,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-semibold text-ink dark:text-ink-on-dark">
-                      {formatCurrency(data.revenue)}
+                      {formatCurrency(data.revenue / 100)}
                     </div>
                     <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                       {data.transactions} transactions

@@ -275,6 +275,7 @@ export const adminHelpers = {
     }
   },
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getAdminLoginAttempts(limit: number = 100): Promise<any[]> {
     try {
       const { data, error } = await supabase
@@ -386,3 +387,25 @@ export const adminHelpers = {
 };
 
 export default adminHelpers;
+
+export async function tryLogAdminAction(
+  params: {
+    p_action_type: string;
+    p_table_name: string;
+    p_record_id?: string | null;
+    p_old_values?: Record<string, unknown>;
+    p_new_values?: Record<string, unknown>;
+    p_description?: string;
+  },
+  context: { component: string; action: string; metadata?: Record<string, string> }
+): Promise<void> {
+  try {
+    await supabase.rpc('log_admin_action', params);
+  } catch (logErr: unknown) {
+    const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
+    ErrorLogger.warn('Failed to log action', {
+      ...context,
+      metadata: { ...context.metadata, error: logError.message },
+    });
+  }
+}

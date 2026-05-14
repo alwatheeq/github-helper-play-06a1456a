@@ -138,15 +138,13 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div>
-            <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-4">
-              {isCurrentlyBlocked ? (
-                <>Unblocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will restore their access to the website.</>
-              ) : (
-                <>Blocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will prevent them from accessing the website.</>
-              )}
-            </p>
-          </div>
+          <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-4">
+            {isCurrentlyBlocked ? (
+              <>Unblocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will restore their access to the website.</>
+            ) : (
+              <>Blocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will prevent them from accessing the website.</>
+            )}
+          </p>
 
           {!isCurrentlyBlocked && (
             <div>

@@ -3,6 +3,8 @@ import { supabase } from '../../lib/supabase';
 import { Search, Filter, Download, DollarSign, TrendingUp, CreditCard, Calendar, CheckCircle, XCircle, Clock } from 'lucide-react';
 
 import { ErrorLogger } from '../../utils/errorLogger';
+import { formatCurrency } from '../../utils/subscriptionHelpers';
+import { downloadCSV } from '../../utils/csvHelpers';
 
 interface Transaction {
   id: string;
@@ -137,28 +139,9 @@ export const TransactionsPage: React.FC = React.memo(() => {
       trans.currency.toUpperCase(),
       trans.status,
       trans.transaction_type,
-      trans.stripe_payment_intent_id || 'N/A'
+      trans.stripe_payment_intent_id || 'N/A',
     ]);
-
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `transactions-${new Date().toISOString().split('T')[0]}.csv`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-  };
-
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency.toUpperCase()
-    }).format(amount / 100);
+    downloadCSV(`transactions-${new Date().toISOString().split('T')[0]}.csv`, headers, rows);
   };
 
   if (loading) {
@@ -191,7 +174,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <div>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Revenue</p>
               <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">
-                {formatCurrency(stats.total_revenue, 'usd')}
+                {formatCurrency(stats.total_revenue / 100)}
               </p>
             </div>
             <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
@@ -229,7 +212,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
             <div>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Avg Amount</p>
               <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">
-                {formatCurrency(stats.avg_transaction_amount, 'usd')}
+                {formatCurrency(stats.avg_transaction_amount / 100)}
               </p>
             </div>
             <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
@@ -331,7 +314,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div className="text-sm font-bold text-ink dark:text-ink-on-dark">
-                      {formatCurrency(trans.amount, trans.currency)}
+                      {formatCurrency(trans.amount / 100, trans.currency)}
                     </div>
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
