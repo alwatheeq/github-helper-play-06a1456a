@@ -62,10 +62,18 @@ export const Header: React.FC = () => {
   const toolProgress =
     toolPlanCap > 0 ? Math.min(100, (toolRemaining / toolPlanCap) * 100) : 0;
   const zegoProgress = zegoTotal > 0 ? Math.min((zegoRemaining / zegoTotal) * 100, 100) : 0;
+  const toolHasBonus = toolPlanCap > 0 && toolRemaining > toolPlanCap;
+  const chatTokRemKilo = Math.round((chatTokRemRpc ?? 0) / 1000);
+  const chatTokLimKilo = Math.round((chatTokLimRpc ?? 0) / 1000);
+  const chatAiProgress = useRpcChatTokens && (chatTokLimRpc ?? 0) > 0
+    ? Math.min(100, ((chatTokRemRpc ?? 0) / (chatTokLimRpc ?? 1)) * 100)
+    : !useRpcChatTokens && hasAiAddon && aiChatCreditsTotal > 0
+      ? Math.min(100, (aiChatCreditsRemaining / aiChatCreditsTotal) * 100)
+      : null;
 
 
-  // Close dropdowns when clicking outside
   useEffect(() => {
+    if (!showProfileDropdown && !showCreditsDropdown) return;
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowProfileDropdown(false);
@@ -76,7 +84,7 @@ export const Header: React.FC = () => {
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  }, [showProfileDropdown, showCreditsDropdown]);
 
   const handleLanguageChange = (newLanguage: string) => {
     ErrorLogger.debug('Language change requested', {
@@ -147,14 +155,10 @@ export const Header: React.FC = () => {
                           </span>
                           <span
                             className="text-xs font-semibold shrink-0 text-secondary-ink dark:text-muted-ink-on-dark text-right max-w-[58%]"
-                            title={
-                              toolPlanCap > 0 && toolRemaining > toolPlanCap
-                                ? t('header.credits_tools_bonus_title')
-                                : undefined
-                            }
+                            title={toolHasBonus ? t('header.credits_tools_bonus_title') : undefined}
                           >
                             {toolRemaining.toLocaleString()} / {toolPlanCap.toLocaleString()}
-                            {toolPlanCap > 0 && toolRemaining > toolPlanCap ? (
+                            {toolHasBonus ? (
                               <span className="block text-[10px] font-normal mt-0.5 text-muted-ink dark:text-muted-ink-on-dark">
                                 {t('header.credits_tools_includes_bonus')}
                               </span>
@@ -205,7 +209,7 @@ export const Header: React.FC = () => {
                             {hasAiAddon && aiChatCreditsTotal > 0
                               ? `${aiChatCreditsRemaining.toLocaleString()} / ${aiChatCreditsTotal.toLocaleString()}`
                               : useRpcChatTokens
-                                ? `${Math.round((chatTokRemRpc ?? 0) / 1000).toLocaleString()} / ${Math.round((chatTokLimRpc ?? 0) / 1000).toLocaleString()}`
+                                ? `${chatTokRemKilo.toLocaleString()} / ${chatTokLimKilo.toLocaleString()}`
                                 : '0'}
                           </span>
                         </div>
@@ -214,23 +218,11 @@ export const Header: React.FC = () => {
                             {t('header.credits_ai_addon_hint')}
                           </p>
                         )}
-                        {useRpcChatTokens && (chatTokLimRpc ?? 0) > 0 && (
+                        {chatAiProgress !== null && (
                           <div className="relative w-full h-[5px] bg-chip overflow-hidden">
                             <div
                               className="absolute inset-y-0 left-0 bg-accent-gold/60 transition-all duration-200"
-                              style={{
-                                width: `${Math.min(100, ((chatTokRemRpc ?? 0) / (chatTokLimRpc ?? 1)) * 100)}%`
-                              }}
-                            />
-                          </div>
-                        )}
-                        {!useRpcChatTokens && hasAiAddon && aiChatCreditsTotal > 0 && (
-                          <div className="relative w-full h-[5px] bg-chip overflow-hidden">
-                            <div
-                              className="absolute inset-y-0 left-0 bg-accent-gold/60 transition-all duration-200"
-                              style={{
-                                width: `${Math.min(100, (aiChatCreditsRemaining / aiChatCreditsTotal) * 100)}%`
-                              }}
+                              style={{ width: `${chatAiProgress}%` }}
                             />
                           </div>
                         )}

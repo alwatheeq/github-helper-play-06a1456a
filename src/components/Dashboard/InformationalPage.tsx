@@ -5,7 +5,7 @@ import { AVAILABLE_LANGUAGES } from '../../utils/translation';
 import { usePageTutorial } from '../../hooks/usePageTutorial';
 import { PageTutorial } from '../Onboarding/PageTutorial';
 
-export const InformationalPage: React.FC = React.memo(() => {
+export const InformationalPage: React.FC = () => {
   const { t } = useI18n();
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('informational');
 
@@ -21,7 +21,6 @@ export const InformationalPage: React.FC = React.memo(() => {
   
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Page header — S4 Eyebrow + font-display heading */}
       <div className="mb-8">
         <p className="text-[11px] font-bold tracking-[0.18em] uppercase text-accent-gold mb-1.5">
           About MeshFahem
@@ -104,7 +103,7 @@ export const InformationalPage: React.FC = React.memo(() => {
               <div className={`bg-accent-gold-soft/10 p-4 mb-4`}>
                 <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-3`}>{t('informational.upload_methods_intro')}</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className={`border-divider dark:border-divider-on-dark p-4`}>
+                  <div className="border border-divider dark:border-divider-on-dark p-4">
                     <h5 className={`font-medium text-ink dark:text-ink-on-dark mb-2`}>📁 {t('informational.file_upload_title')}</h5>
                     <ul className={`text-sm text-secondary-ink dark:text-muted-ink-on-dark space-y-1`}>
                       <li>• <strong>{t('informational.file_upload_formats')}</strong></li>
@@ -394,7 +393,6 @@ export const InformationalPage: React.FC = React.memo(() => {
                 </div>
               </div>
 
-              {/* Public Library Feature */}
               <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4">
                 <div className="flex items-center space-x-2 mb-3">
                   <Globe className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
@@ -488,14 +486,14 @@ export const InformationalPage: React.FC = React.memo(() => {
                       <History className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.history')}</span>
-                        <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.history_desc')}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('sidebar.history_desc')}</p>
                       </div>
                     </div>
                     <div className={`flex items-center space-x-3 p-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark`}>
                       <Info className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                       <div>
                         <span className="font-medium text-sm dark:text-muted-ink-on-dark">{t('sidebar.informational')}</span>
-                        <p className="text-xs text-muted-ink dark:text-muted-ink">{t('sidebar.info_desc')}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('sidebar.info_desc')}</p>
                       </div>
                     </div>
                   </div>
@@ -606,4 +604,4 @@ export const InformationalPage: React.FC = React.memo(() => {
       )}
     </div>
   );
-});
+};
