@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Target, TrendingUp, CheckCircle, Trash2, Award, Lock, Star, Users, BookOpen } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
@@ -143,14 +143,25 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
     return new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
-  const isAchievementUnlocked = (achievementId: string) => userAchievements.some(ua => ua.achievement_id === achievementId);
-  const getEarnedDate = (achievementId: string) => userAchievements.find(ua => ua.achievement_id === achievementId)?.earned_at;
+  const unlockedSet = useMemo(() => new Set(userAchievements.map(ua => ua.achievement_id)), [userAchievements]);
+  const earnedDateMap = useMemo(() => new Map(userAchievements.map(ua => [ua.achievement_id, ua.earned_at])), [userAchievements]);
+
+  const isAchievementUnlocked = (achievementId: string) => unlockedSet.has(achievementId);
+  const getEarnedDate = (achievementId: string) => earnedDateMap.get(achievementId);
 
   const activeGoals = goals.filter(g => !g.is_completed);
   const completedGoals = goals.filter(g => g.is_completed);
   const filteredAchievements = selectedCategory === 'all' ? allAchievements : allAchievements.filter(a => a.category === selectedCategory);
-  const earnedCount = allAchievements.filter(a => isAchievementUnlocked(a.id)).length;
-  const totalXPEarned = allAchievements.filter(a => isAchievementUnlocked(a.id)).reduce((sum, a) => sum + a.xp_reward, 0);
+  const { earnedCount, totalXPEarned } = useMemo(() => {
+    let earned = 0, xp = 0;
+    allAchievements.forEach(a => { if (unlockedSet.has(a.id)) { earned++; xp += a.xp_reward; } });
+    return { earnedCount: earned, totalXPEarned: xp };
+  }, [allAchievements, unlockedSet]);
+  const goalCountsByType = useMemo(() => {
+    const counts: Record<string, number> = {};
+    goals.filter(g => !g.is_completed).forEach(g => { counts[g.goal_type] = (counts[g.goal_type] || 0) + 1; });
+    return counts;
+  }, [goals]);
 
   const categories = [
     { id: 'all', label: t('achievements.all'), icon: <Award className="h-4 w-4" /> },
@@ -332,10 +343,10 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 )}
                 <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-4 py-4">
                   <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2.5">Goal Types</div>
-                  {[['Daily Study Time', activeGoals.filter(g => g.goal_type === 'daily_study_time').length], ['Weekly Flashcards', activeGoals.filter(g => g.goal_type === 'weekly_flashcards').length], ['Quiz Streak', activeGoals.filter(g => g.goal_type === 'quiz_streak').length], ['Items Published', activeGoals.filter(g => g.goal_type === 'items_published').length], ['Custom', activeGoals.filter(g => g.goal_type === 'custom').length]].map(([l, v], i) => (
+                  {([['Daily Study Time', 'daily_study_time'], ['Weekly Flashcards', 'weekly_flashcards'], ['Quiz Streak', 'quiz_streak'], ['Items Published', 'items_published'], ['Custom', 'custom']] as [string, string][]).map(([l, k], i) => (
                     <div key={i} className="flex justify-between py-1.5">
                       <span className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark">{l}</span>
-                      <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark">{v}</span>
+                      <span className="font-display text-[13px] font-semibold text-ink dark:text-ink-on-dark">{goalCountsByType[k] ?? 0}</span>
                     </div>
                   ))}
                 </div>
