@@ -82,6 +82,7 @@ export const ProfilePage: React.FC = React.memo(() => {
     if (user) {
       fetchUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const { shouldShowTutorial, showTutorial, isTutorialOpen, completeTutorial, skipTutorial, config: tutorialConfig } = usePageTutorial('profile');
@@ -166,9 +167,11 @@ export const ProfilePage: React.FC = React.memo(() => {
       if (!profileData || (profileError && (profileError.code === 'PGRST116' || profileError.message?.includes('No rows')))) {
         ErrorLogger.debug('Profile missing - attempting creation', { component: 'ProfilePage', action: 'fetchUserData', userId: user.id });
         let profileCreated = false;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let createdProfile: any = null;
         try {
           ErrorLogger.debug('Attempting direct INSERT for profile', { component: 'ProfilePage', action: 'fetchUserData', step: 'directInsert', userId: user.id });
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const profileDataToInsert: any = { id: user.id, email: user.email || null, level: 1, experience_points: 0, study_streak_current: 0, study_streak_longest: 0, items_published_count: 0, total_flashcards_studied: 0, total_quizzes_completed: 0, total_study_time_minutes: 0 };
           const { data: insertData, error: insertError } = await supabase.from('user_profiles').insert(profileDataToInsert).select().single();
           if (!insertError && insertData) { ErrorLogger.info('Profile created via direct INSERT', { component: 'ProfilePage', action: 'fetchUserData', userId: user.id }); profileCreated = true; createdProfile = insertData; }
@@ -253,6 +256,7 @@ export const ProfilePage: React.FC = React.memo(() => {
       const { data: achievementsData, error: achievementsError } = await supabase.from('user_achievements').select(`earned_at, achievements_definitions ( id, achievement_key, title, description, icon_name, badge_tier, xp_reward, category )`).eq('user_id', user.id).order('earned_at', { ascending: false }).limit(20);
       if (achievementsError) { ErrorLogger.error(achievementsError, { component: 'ProfilePage', action: 'fetchUserData', step: 'fetchAchievements', userId: user.id }); }
       else if (achievementsData) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedAchievements = achievementsData.filter(a => a.achievements_definitions).map((a: any) => ({ ...(Array.isArray(a.achievements_definitions) ? a.achievements_definitions[0] : a.achievements_definitions), earned_at: a.earned_at }));
         setAchievements(formattedAchievements);
       }
@@ -347,7 +351,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-4">We couldn't load your profile data. This might be a temporary issue.</p>
           </div>
           <div className="space-y-3">
-            <button onClick={() => { if (user) { ErrorLogger.info('User clicked retry button', { component: 'ProfilePage', action: 'retry', userId: user.id }); setLoading(true); fetchUserData(); } }} disabled={loading} className="px-6 py-3 bg-accent-gold text-white rounded-[12px] hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium">
+            <button onClick={() => { if (user) { ErrorLogger.info('User clicked retry button', { component: 'ProfilePage', action: 'retry', userId: user.id }); setLoading(true); fetchUserData(); } }} disabled={loading} className="px-6 py-3 bg-accent-gold text-ink-on-dark hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium">
               {loading ? 'Loading...' : 'Retry'}
             </button>
             <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-4">If this problem persists, please try logging out and back in, or contact support.</p>
@@ -416,7 +420,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           </div>
           <div className="flex items-center gap-2">
             {!creditBalance?.free_credits_claimed && (
-              <button onClick={handleClaimFreeCredits} disabled={claimingCredits} className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 disabled:opacity-50 transition">
+              <button onClick={handleClaimFreeCredits} disabled={claimingCredits} className="flex items-center gap-1.5 px-4 py-2 bg-accent-gold text-ink-on-dark text-xs font-bold hover:opacity-80 disabled:opacity-50 transition">
                 <Gift className="h-3.5 w-3.5" />
                 {claimingCredits ? t('profile.claiming') : t('profile.claim_free_credits')}
               </button>
@@ -546,7 +550,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       } finally { setSavingSettings(false); }
                     }}
                     disabled={savingSettings}
-                    className={`relative border-2 rounded-[8px] p-2.5 cursor-pointer transition-[border-color,background] ${isSelected ? 'border-ink dark:border-ink-on-dark bg-subtle dark:bg-subtle-on-dark' : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-ink/40'} ${savingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`relative border-2 p-2.5 cursor-pointer transition-[border-color,background] ${isSelected ? 'border-ink dark:border-ink-on-dark bg-subtle dark:bg-subtle-on-dark' : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-ink/40'} ${savingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isSelected && (
                       <div className="absolute top-1.5 right-1.5 w-[18px] h-[18px] rounded-full bg-sidebar text-card-light grid place-items-center">
@@ -601,7 +605,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">#</span>
                     <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark font-mono">@{username}</span>
                     <button onClick={() => handleCopyField(`@${username}`, 'username')} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold">
-                      {copiedField === 'username' ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+                      {copiedField === 'username' ? <Check className="h-3 w-3 text-accent-gold" /> : <Copy className="h-3 w-3" />}
                     </button>
                     <button onClick={() => setShowUsernameModal(true)} className="text-[10px] text-accent-gold hover:underline ml-1">{t('social.change_username')}</button>
                   </div>
@@ -612,7 +616,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark font-mono">{publicUserId}</span>
                     <span className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">({t('social.your_id')})</span>
                     <button onClick={() => handleCopyField(publicUserId, 'user-id')} className="p-0.5 text-muted-ink dark:text-muted-ink-on-dark hover:text-accent-gold">
-                      {copiedField === 'user-id' ? <Check className="h-3 w-3 text-emerald-500" /> : <Copy className="h-3 w-3" />}
+                      {copiedField === 'user-id' ? <Check className="h-3 w-3 text-accent-gold" /> : <Copy className="h-3 w-3" />}
                     </button>
                   </div>
                 )}
@@ -635,7 +639,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                 <button onClick={handleSaveProfile} disabled={saving} className="p-1.5 bg-sidebar text-card-light dark:text-card-dark hover:opacity-90 disabled:opacity-50" title="Save">
                   <Save className="h-4 w-4" />
                 </button>
-                <button onClick={() => { setIsEditing(false); setEditedName(stats.display_name || ''); setEditedBio(stats.bio || ''); }} className="p-1.5 bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark rounded hover:opacity-90" title="Cancel">
+                <button onClick={() => { setIsEditing(false); setEditedName(stats.display_name || ''); setEditedBio(stats.bio || ''); }} className="p-1.5 bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-90" title="Cancel">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -667,7 +671,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           {achievements.length === 0 ? (
             <div className="text-center py-10">
               <Award className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-3" />
-              <p className="text-secondary-ink dark:text-muted-ink">{t('profile.no_achievements')}</p>
+              <p className="text-secondary-ink dark:text-muted-ink-on-dark">{t('profile.no_achievements')}</p>
               <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-1">{t('profile.start_studying')}</p>
             </div>
           ) : (

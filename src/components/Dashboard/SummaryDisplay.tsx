@@ -835,7 +835,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
 
   if (showOriginalText) {
     return (
-      <div className="bg-card-light rounded-[12px] border border-divider shadow-sm">
+      <div className="bg-card-light border border-divider">
         {/* Header — Scholar v4 action bar style with border-l accent */}
         <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -852,7 +852,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               onClick={() => copyToClipboard(originalText, -2)}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] text-secondary-ink border border-divider hover:bg-subtle/60 transition-colors duration-150"
             >
-              {copiedIndex === -2 ? <Check className="h-3.5 w-3.5 text-green-600" /> : <Copy className="h-3.5 w-3.5" />}
+              {copiedIndex === -2 ? <Check className="h-3.5 w-3.5 text-accent-gold" /> : <Copy className="h-3.5 w-3.5" />}
               <span>{t('summary.copy_text')}</span>
             </button>
             <button
@@ -899,7 +899,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
       </div>
     ) : (
       /* Scholar v4 Dash4Result style — clean card with editorial left-border accent on header */
-      <div className="bg-card-light border border-divider shadow-sm">
+      <div className="bg-card-light border border-divider">
         {/* Header row: title left, action buttons right */}
         <div className="px-6 py-4 border-b border-divider border-l-[3px] border-l-accent-gold flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -1049,7 +1049,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     )}
 
     <Modal isOpen={mindMapOpen} onClose={() => setMindMapOpen(false)} title={t('mind_map.title')} maxWidth="2xl">
-      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400" /></div>}>
+      <React.Suspense fallback={<div className="flex items-center justify-center py-10"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold" /></div>}>
         <MindMapView text={combinedSummary} title={t('mind_map.title')} />
       </React.Suspense>
     </Modal>
@@ -1057,7 +1057,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
     {/* Publish to Library Modal */}
     {showPublishModal && (
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.32)] max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
+        <div className={`bg-card-light dark:bg-card-dark rounded-[12px] max-w-lg w-full max-h-[85vh] flex flex-col border border-divider dark:border-divider-on-dark`}>
 
           <div className={`px-5 pt-5 pb-4 border-b border-divider dark:border-divider-on-dark flex-shrink-0`}>
             <div className="flex items-start justify-between">
@@ -1099,7 +1099,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateFolderInput && (
-                <div className={`mb-2 p-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-2 p-2 border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -1112,13 +1112,13 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                     <button
                       onClick={createFolderInPublishModal}
                       disabled={creatingFolder}
-                      className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 disabled:opacity-50 transition-colors dark:text-emerald-400 dark:bg-emerald-950/40"
+                      className="p-1.5 text-accent-gold hover:opacity-80 disabled:opacity-50 transition-opacity"
                     >
                       {creatingFolder ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
                     </button>
                     <button
                       onClick={() => { setShowCreateFolderInput(false); setNewFolderNameInput(''); }}
-                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
+                      className="p-1.5 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-60 transition-opacity"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -1158,7 +1158,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       }}
                       className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                         isSelected
-                          ? 'bg-emerald-500 border-emerald-500 text-white'
+                          ? 'bg-accent-gold border-accent-gold text-ink-on-dark'
                           : `border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                       }`}
                     >
@@ -1188,7 +1188,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
               </div>
 
               {showCreateTag && (
-                <div className={`mb-3 p-2 rounded-[12px] border border-divider dark:border-divider-on-dark bg-subtle`}>
+                <div className={`mb-3 p-2 border border-divider dark:border-divider-on-dark bg-subtle`}>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -1198,12 +1198,12 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                       className={`flex-1 px-2.5 py-1.5 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark`}
                       onKeyPress={(e) => e.key === 'Enter' && createTag()}
                     />
-                    <button onClick={createTag} className="p-1.5 rounded-full text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 transition-colors dark:text-emerald-400 dark:bg-emerald-950/40">
+                    <button onClick={createTag} className="p-1.5 text-accent-gold hover:opacity-80 transition-opacity">
                       <Check className="h-3.5 w-3.5" />
                     </button>
                     <button
                       onClick={() => { setShowCreateTag(false); setNewTagName(''); }}
-                      className="p-1.5 rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors dark:bg-red-950/40"
+                      className="p-1.5 text-muted-ink dark:text-muted-ink-on-dark hover:opacity-60 transition-opacity"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -1229,7 +1229,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
                           )}
                           className={`px-2.5 py-1 text-xs rounded-full border transition-colors ${
                             isSelected
-                              ? 'bg-emerald-500 border-emerald-500 text-white'
+                              ? 'bg-accent-gold border-accent-gold text-ink-on-dark'
                               : `border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-black/5 dark:hover:bg-white/5`
                           }`}
                         >

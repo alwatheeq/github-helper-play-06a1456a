@@ -42,6 +42,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
 
   useEffect(() => {
     fetchComments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemId, sortOrder]);
 
   const fetchComments = async () => {
@@ -279,7 +280,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
         <div className="py-3">
           <div className="flex items-start space-x-3">
             <div className="flex-shrink-0">
-              <div className="h-8 w-8 rounded-full bg-accent-gold flex items-center justify-center text-white text-sm font-medium">
+              <div className="h-8 w-8 rounded-full bg-accent-gold flex items-center justify-center text-sidebar text-sm font-medium">
                 {comment.user_email?.charAt(0).toUpperCase() || '?'}
               </div>
             </div>
@@ -305,14 +306,14 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
                     maxLength={2000}
-                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={3}
                   />
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handleEditComment(comment.id)}
                       disabled={!editText.trim() || loading}
-                      className="px-3 py-1 bg-blue-600 text-white rounded-[12px] text-sm hover:bg-blue-700 disabled:opacity-50"
+                      className="px-3 py-1 bg-accent-gold text-ink-on-dark text-sm hover:opacity-80 disabled:opacity-50"
                     >
                       Save
                     </button>
@@ -321,7 +322,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                         setEditingComment(null);
                         setEditText('');
                       }}
-                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark rounded-[12px] text-sm hover:opacity-60"
+                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark text-sm hover:opacity-60"
                     >
                       Cancel
                     </button>
@@ -337,7 +338,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     {depth < 2 && (
                       <button
                         onClick={() => setReplyingTo(comment.id)}
-                        className="text-xs text-blue-600 hover:text-blue-800 font-medium dark:text-blue-400"
+                        className="text-xs text-accent-gold hover:opacity-80 font-medium"
                       >
                         Reply
                       </button>
@@ -356,7 +357,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                         </button>
                         <button
                           onClick={() => handleDeleteComment(comment.id)}
-                          className="text-xs text-red-600 hover:text-red-800 font-medium dark:text-red-400"
+                          className="text-xs text-muted-ink dark:text-muted-ink-on-dark hover:opacity-80 font-medium"
                         >
                           Delete
                         </button>
@@ -383,14 +384,14 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                     onChange={(e) => setReplyText(e.target.value)}
                     placeholder="Write a reply..."
                     maxLength={2000}
-                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full px-3 py-2 border border-divider dark:border-divider-on-dark focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent text-sm bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     rows={2}
                   />
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => handleReply(comment.id)}
                       disabled={!replyText.trim() || loading}
-                      className="px-3 py-1 bg-blue-600 text-white rounded-[12px] text-sm hover:bg-blue-700 disabled:opacity-50"
+                      className="px-3 py-1 bg-accent-gold text-ink-on-dark text-sm hover:opacity-80 disabled:opacity-50"
                     >
                       Reply
                     </button>
@@ -399,7 +400,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
                         setReplyingTo(null);
                         setReplyText('');
                       }}
-                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark rounded-[12px] text-sm hover:opacity-60"
+                      className="px-3 py-1 bg-accent-gold-soft/20 text-ink dark:text-ink-on-dark text-sm hover:opacity-60"
                     >
                       Cancel
                     </button>
@@ -445,7 +446,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value as 'newest' | 'oldest')}
-          className="px-3 py-1 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+          className="px-3 py-1 text-sm border border-divider dark:border-divider-on-dark focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
         >
           <option value="newest">Newest First</option>
           <option value="oldest">Oldest First</option>
@@ -458,7 +459,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Write a comment..."
           maxLength={2000}
-          className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+          className="w-full px-4 py-3 border border-divider dark:border-divider-on-dark focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
           rows={3}
         />
         <div className="flex items-center justify-between mt-2">
@@ -468,7 +469,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({
           <button
             onClick={handleSubmitComment}
             disabled={!newComment.trim() || loading}
-            className="px-4 py-2 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+            className="px-4 py-2 bg-accent-gold text-ink-on-dark hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
           >
             <Send className="h-4 w-4" />
             <span>Post Comment</span>
