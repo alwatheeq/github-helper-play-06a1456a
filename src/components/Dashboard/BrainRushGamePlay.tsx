@@ -76,7 +76,7 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
   useEffect(() => {
     if (!gameSession?.id) return;
 
-    loadCurrentQuestion();
+    void loadCurrentQuestion();
     const gameCleanup = subscribeToGameUpdates();
     const participantCleanup = subscribeToParticipantUpdates();
 
@@ -84,23 +84,23 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
       gameCleanup();
       participantCleanup();
     };
-  }, [gameSession.id]);
+  }, [gameSession.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (gameState.current_question_index !== currentQuestion?.question_index) {
-      loadCurrentQuestion();
+      void loadCurrentQuestion();
       resetQuestionState();
     }
-  }, [gameState.current_question_index]);
+  }, [gameState.current_question_index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (timeLeft > 0 && !hasAnswered && !showQuestionResults) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && !hasAnswered) {
-      handleTimeUp();
+      void handleTimeUp();
     }
-  }, [timeLeft, hasAnswered, showQuestionResults]);
+  }, [timeLeft, hasAnswered, showQuestionResults]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const subscribeToGameUpdates = () => {
     const channel = supabase
@@ -479,7 +479,6 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
     );
   }
 
-  const answerLabelColors = ['text-blue-500', 'text-orange-500', 'text-emerald-500', 'text-pink-500'];
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -557,9 +556,9 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           const showResult = hasAnswered;
 
           const cardCls = showResult && isCorrect
-            ? 'bg-green-50 dark:bg-green-900/30 border-green-500'
+            ? 'bg-accent-gold-soft border-accent-gold'
             : showResult && isSelected && !isCorrect
-            ? 'bg-red-50 dark:bg-red-900/30 border-red-500'
+            ? 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'
             : isSelected
             ? 'bg-accent-gold-soft border-accent-gold'
             : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-accent-gold/50';
@@ -573,13 +572,13 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
               onKeyDown={(e) => !hasAnswered && e.key === 'Enter' && handleAnswerSelect(option)}
               className={`flex gap-4 items-start px-5 py-[18px] border-2 min-h-[80px] transition-colors ${cardCls} ${hasAnswered ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              <span className={`text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5 ${answerLabelColors[index]}`}>
+              <span className={`text-[11px] tracking-wider font-bold flex-shrink-0 mt-0.5 ${isSelected ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                 {['A','B','C','D'][index]}
               </span>
               <span className="text-[13.5px] text-ink dark:text-ink-on-dark leading-snug font-medium flex-1">{option}</span>
               <div className="flex items-center gap-2 flex-shrink-0">
-                {showResult && isCorrect && <CheckCircle className="h-5 w-5 text-green-400" />}
-                {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-red-400" />}
+                {showResult && isCorrect && <CheckCircle className="h-5 w-5 text-accent-gold" />}
+                {showResult && isSelected && !isCorrect && <XCircle className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />}
                 <span onClick={(e) => e.stopPropagation()}>
                   <ReadAloudButton text={option} />
                 </span>
@@ -591,21 +590,21 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
 
       {/* Answer feedback banner */}
       {answerFeedback && (
-        <div className={`p-4 mb-4 flex items-center gap-3 ${answerFeedback === 'correct' ? 'bg-green-900/40 border border-green-600' : 'bg-red-900/40 border border-red-600'}`}>
+        <div className={`p-4 mb-4 flex items-center gap-3 border ${answerFeedback === 'correct' ? 'bg-accent-gold-soft border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark border-l-[3px] border-l-red-600'}`}>
           {answerFeedback === 'correct' ? (
             <>
-              <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+              <CheckCircle className="h-5 w-5 text-accent-gold flex-shrink-0" />
               <div>
-                <p className="font-bold text-green-300 text-[13px]">Correct!</p>
-                <p className="text-[11px] text-green-400">+{1000 + Math.floor((timeLeft / currentQuestion.time_limit_seconds) * 500)} points</p>
+                <p className="font-bold text-ink dark:text-ink-on-dark text-[13px]">Correct!</p>
+                <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">+{1000 + Math.floor((timeLeft / currentQuestion.time_limit_seconds) * 500)} points</p>
               </div>
             </>
           ) : (
             <>
-              <XCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+              <XCircle className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0" />
               <div>
-                <p className="font-bold text-red-300 text-[13px]">Incorrect</p>
-                <p className="text-[11px] text-red-400">Correct answer: {currentQuestion.correct_answer}</p>
+                <p className="font-bold text-ink dark:text-ink-on-dark text-[13px]">Incorrect</p>
+                <p className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">Correct answer: {currentQuestion.correct_answer}</p>
               </div>
             </>
           )}

@@ -466,7 +466,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                         <button
                           type="button"
                           onClick={() => removeFile(index)}
-                          className="absolute top-1 right-1 p-0.5 bg-red-500 text-white opacity-0 group-hover:opacity-100 transition"
+                          className="absolute top-1 right-1 p-0.5 bg-sidebar text-ink-on-dark opacity-0 group-hover:opacity-100 transition"
                           disabled={isSubmitting}
                         >
                           <X className="h-3 w-3" />
@@ -499,16 +499,16 @@ export const FeedbackPage: React.FC = React.memo(() => {
 
             {/* Status messages */}
             {errorMessage && (
-              <div className="mt-3 flex items-center gap-2 p-3.5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+              <div className="mt-3 flex items-center gap-2 p-3.5 border border-red-500/40 bg-red-500/10">
                 <AlertCircle className="h-4 w-4 text-red-600 dark:text-red-400 flex-shrink-0" />
-                <p className="text-[12px] text-red-700 dark:text-red-300">{errorMessage}</p>
+                <p className="text-[12px] text-red-600 dark:text-red-400">{errorMessage}</p>
               </div>
             )}
 
             {submitStatus === 'success' && (
-              <div className="mt-3 flex items-center gap-2 p-3.5 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
-                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 flex-shrink-0" />
-                <p className="text-[12px] text-green-700 dark:text-green-300">
+              <div className="mt-3 flex items-center gap-2 p-3.5 bg-accent-gold-soft border border-accent-gold">
+                <CheckCircle className="h-4 w-4 text-accent-gold flex-shrink-0" />
+                <p className="text-[12px] text-ink dark:text-ink-on-dark">
                   Thank you! Your {activeTab} has been submitted successfully.
                 </p>
               </div>

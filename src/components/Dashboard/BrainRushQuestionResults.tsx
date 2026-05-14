@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { ErrorLogger } from '../../utils/errorLogger';
 interface Participant {
@@ -44,18 +44,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
   const [loading, setLoading] = useState(true);
   const [countdown, setCountdown] = useState(5);
 
-  useEffect(() => {
-    loadAnswers();
-  }, [gameSessionId, questionIndex, participants]);
-
-  useEffect(() => {
-    if (!isHost && countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [countdown, isHost]);
-
-  const loadAnswers = async () => {
+  const loadAnswers = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -67,10 +56,10 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
 
       if (error) {
         const err = error instanceof Error ? error : new Error(String(error));
-        ErrorLogger.error(err, { 
-          component: 'BrainRushQuestionResults', 
-          action: 'loadAnswers', 
-          metadata: { gameSessionId, questionIndex } 
+        ErrorLogger.error(err, {
+          component: 'BrainRushQuestionResults',
+          action: 'loadAnswers',
+          metadata: { gameSessionId, questionIndex }
         });
         setLoading(false);
         return;
@@ -98,14 +87,25 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       setLoading(false);
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'BrainRushQuestionResults', 
-        action: 'loadAnswers', 
-        metadata: { gameSessionId, questionIndex } 
+      ErrorLogger.error(error, {
+        component: 'BrainRushQuestionResults',
+        action: 'loadAnswers',
+        metadata: { gameSessionId, questionIndex }
       });
       setLoading(false);
     }
-  };
+  }, [gameSessionId, questionIndex, participants]);
+
+  useEffect(() => {
+    void loadAnswers();
+  }, [loadAnswers]);
+
+  useEffect(() => {
+    if (!isHost && countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [countdown, isHost]);
 
   const correctCount = participantResults.filter(p => p.answer?.is_correct).length;
   const myResult = participantResults.find(p => p.user_id === currentUserId);
@@ -214,7 +214,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                       </div>
                     </div>
                   </div>
-                  <span className={`text-[13px] font-bold ${p.answer?.is_correct ? 'text-accent-gold' : p.answered ? 'text-red-400' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                  <span className={`text-[13px] font-bold ${p.answer?.is_correct ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                     {p.answer?.is_correct ? '✓' : p.answered ? '✗' : '—'}
                   </span>
                   <span className="font-display text-[14px] font-semibold text-muted-ink dark:text-muted-ink-on-dark">{p.score}</span>

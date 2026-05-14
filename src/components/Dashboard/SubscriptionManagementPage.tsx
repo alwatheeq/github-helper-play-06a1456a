@@ -84,7 +84,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           </button>
           <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
             <div className="text-center">
-              <div className="bg-subtle dark:bg-subtle-on-dark p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+              <div className="bg-subtle dark:bg-subtle-on-dark p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
                 <Crown className="h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark" />
               </div>
               <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-4">{t('subscription_management.no_active_title')}</h2>
@@ -133,8 +133,8 @@ export const SubscriptionManagementPage: React.FC = () => {
               <div className="text-[12px] text-muted-ink-on-dark mt-1">{tierInfo.description}</div>
             </div>
             <span className={`text-[10px] font-bold tracking-[1px] uppercase px-2.5 py-1 ${
-              subscription.status === 'canceled' ? 'bg-amber-700 text-white'
-              : subscription.status === 'payment_failed' ? 'bg-red-600 text-white'
+              subscription.status === 'canceled' ? 'bg-accent-gold-soft text-muted-ink dark:text-muted-ink-on-dark'
+              : subscription.status === 'payment_failed' ? 'bg-accent-gold-soft text-muted-ink dark:text-muted-ink-on-dark'
               : 'bg-accent-gold-soft text-accent-gold'
             }`}>{statusInfo.name}</span>
           </div>
@@ -142,34 +142,34 @@ export const SubscriptionManagementPage: React.FC = () => {
 
         {/* ── Status banners ─────────────────────────────────────────── */}
         {trialDaysRemaining !== null && trialDaysRemaining > 0 && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 border-l-4 border-l-blue-500 px-4 py-3.5 flex items-start gap-3 mb-4">
-            <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+          <div className="bg-accent-gold-soft border border-accent-gold border-l-[3px] px-4 py-3.5 flex items-start gap-3 mb-4">
+            <Clock className="h-5 w-5 text-accent-gold shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-[12.5px] text-blue-900 dark:text-blue-100">{t('subscription_management.trial_title')}</p>
-              <p className="text-sm text-blue-700 dark:text-blue-300 mt-0.5">{t('subscription_management.trial_desc', { count: trialDaysRemaining, date: new Date(subscription.trial_end_date!).toLocaleDateString() })}</p>
+              <p className="font-semibold text-[12.5px] text-ink dark:text-ink-on-dark">{t('subscription_management.trial_title')}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{t('subscription_management.trial_desc', { count: trialDaysRemaining, date: new Date(subscription.trial_end_date!).toLocaleDateString() })}</p>
             </div>
           </div>
         )}
 
         {subscription.status === 'payment_failed' && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 border-l-4 border-l-red-600 px-[18px] py-3.5 flex items-start gap-3 mb-4">
-            <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-red-600 px-[18px] py-3.5 flex items-start gap-3 mb-4">
+            <AlertCircle className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark shrink-0 mt-0.5" />
             <div className="flex-1">
-              <p className="font-semibold text-[12.5px] text-red-900 dark:text-red-100">{t('subscription_management.payment_failed_title')}</p>
-              <p className="text-sm text-red-700 dark:text-red-300 mt-0.5">{t('subscription_management.payment_failed_desc')}</p>
-              <button type="button" className="text-sm font-semibold text-red-600 dark:text-red-400 hover:underline mt-1.5">{t('subscription_management.update_payment')} →</button>
+              <p className="font-semibold text-[12.5px] text-ink dark:text-ink-on-dark">{t('subscription_management.payment_failed_title')}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{t('subscription_management.payment_failed_desc')}</p>
+              <button type="button" className="text-sm font-semibold text-muted-ink dark:text-muted-ink-on-dark hover:underline mt-1.5">{t('subscription_management.update_payment')} →</button>
             </div>
           </div>
         )}
 
         {subscription.status === 'canceled' && (
-          <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 border-l-4 border-l-orange-500 px-[18px] py-3.5 flex items-start gap-3 mb-4">
-            <AlertCircle className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-muted-ink px-[18px] py-3.5 flex items-start gap-3 mb-4">
+            <AlertCircle className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-[12.5px] text-orange-900 dark:text-orange-100">{t('subscription_management.canceled_banner_title')}</p>
-              <p className="text-sm text-orange-700 dark:text-orange-300 mt-0.5">{t('subscription_management.canceled_banner_desc', { date: new Date(subscription.end_date).toLocaleDateString() })}</p>
+              <p className="font-semibold text-[12.5px] text-ink dark:text-ink-on-dark">{t('subscription_management.canceled_banner_title')}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mt-0.5">{t('subscription_management.canceled_banner_desc', { date: new Date(subscription.end_date).toLocaleDateString() })}</p>
             </div>
-            <button className="ml-auto shrink-0 px-[14px] py-1.5 bg-orange-500 text-white text-xs font-bold hover:bg-orange-600 transition">Reactivate →</button>
+            <button className="ml-auto shrink-0 px-[14px] py-1.5 bg-accent-gold text-sidebar text-xs font-bold hover:opacity-90 transition">Reactivate →</button>
           </div>
         )}
 
@@ -207,8 +207,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.zego_subtitle')}</div>
-                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
-                    <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }} />
+                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark">
+                    <div className="h-full bg-accent-gold transition-all" style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }} />
                   </div>
                 </div>
               )}
@@ -223,8 +223,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.ai_chat_subtitle')}</div>
-                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full">
-                    <div className="h-full bg-accent-gold rounded-full transition-all" style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }} />
+                  <div className="h-1 bg-subtle dark:bg-subtle-on-dark">
+                    <div className="h-full bg-accent-gold transition-all" style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }} />
                   </div>
                 </div>
               )}
@@ -273,7 +273,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     <Shield className="h-4 w-4" />
                     <span className="text-sm">{t('subscription_management.auto_renew')}</span>
                   </div>
-                  <p className="font-medium" style={{ color: subscription.auto_renew ? 'var(--color-accent-gold)' : '#dc2626' }}>
+                  <p className={`font-medium ${subscription.auto_renew ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                     {subscription.auto_renew ? t('subscription_management.enabled') : t('subscription_management.disabled')}
                   </p>
                 </div>
@@ -286,7 +286,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                 <button type="button" onClick={() => navigate('/profile/billing')} className="px-4 py-2.5 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-sm hover:border-ink dark:hover:border-ink-on-dark transition">
                   {t('subscription_management.view_billing')}
                 </button>
-                <button type="button" onClick={() => setShowCancelModal(true)} className="px-4 py-2.5 border border-red-300 dark:border-red-800 text-red-600 dark:text-red-400 text-sm hover:border-red-500 transition">
+                <button type="button" onClick={() => setShowCancelModal(true)} className="px-4 py-2.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-sm hover:border-ink dark:hover:border-ink-on-dark transition">
                   {t('subscription_management.cancel_subscription')}
                 </button>
               </div>
@@ -306,7 +306,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               ].map(([k, v], i, arr) => (
                 <div key={i} className={`flex justify-between py-1.5 ${i < arr.length - 1 ? 'border-b border-white/10 dark:border-white/5' : ''}`}>
                   <span className="text-[12px] text-muted-ink-on-dark dark:text-muted-ink">{k}</span>
-                  <span className="font-display text-[13px] font-semibold text-card-light dark:text-ink">{v}</span>
+                  <span className="font-display text-[13px] font-semibold text-ink-on-dark">{v}</span>
                 </div>
               ))}
             </div>
@@ -339,7 +339,7 @@ export const SubscriptionManagementPage: React.FC = () => {
       {/* ── Cancel Modal ────────────────────────────────────────────── */}
       {showCancelModal && (
         <div className="fixed inset-0 bg-black/[0.62] backdrop-blur-[5px] flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark shadow-[0_24px_56px_rgba(0,0,0,0.3)] max-w-md w-full">
+          <div className="bg-card-light dark:bg-card-dark max-w-md w-full">
             <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Plan</div>
               <div className="flex justify-between items-center">
@@ -352,13 +352,13 @@ export const SubscriptionManagementPage: React.FC = () => {
                 {t('subscription_management.cancel_confirm_desc', { date: new Date(subscription.end_date).toLocaleDateString() })}
               </p>
               {cancelError && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-3 py-2.5 mb-4 text-sm text-red-700 dark:text-red-300">{cancelError}</div>
+                <div className="border border-red-500/40 bg-red-500/10 px-3 py-2.5 mb-4 text-sm text-red-600 dark:text-red-400">{cancelError}</div>
               )}
               <div className="flex gap-3">
                 <button type="button" onClick={() => setShowCancelModal(false)} className="flex-1 py-2.5 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-sm hover:bg-subtle dark:hover:bg-subtle-on-dark transition">
                   {t('subscription_management.keep_plan')}
                 </button>
-                <button type="button" onClick={handleCancelSubscription} disabled={canceling} className="flex-1 py-2.5 bg-red-600 text-white text-sm font-semibold hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                <button type="button" onClick={handleCancelSubscription} disabled={canceling} className="flex-1 py-2.5 bg-sidebar text-ink-on-dark text-sm font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition">
                   {canceling ? t('subscription_management.canceling') : t('subscription_management.confirm_cancel')}
                 </button>
               </div>
