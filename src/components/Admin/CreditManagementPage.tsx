@@ -154,7 +154,6 @@ export const CreditManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log admin action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -166,10 +165,10 @@ export const CreditManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'CreditManagementPage', 
-          action: 'adjustCredits', 
-          metadata: { userId, error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'CreditManagementPage',
+          action: 'adjustCredits',
+          metadata: { userId, error: logError.message }
         });
       }
 
@@ -178,10 +177,10 @@ export const CreditManagementPage: React.FC = React.memo(() => {
       await fetchStats();
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'CreditManagementPage', 
-        action: 'adjustCredits', 
-        metadata: { userId } 
+      ErrorLogger.error(err, {
+        component: 'CreditManagementPage',
+        action: 'adjustCredits',
+        metadata: { userId }
       });
       toast.error('Failed to adjust credits');
     } finally {
@@ -233,89 +232,87 @@ export const CreditManagementPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Credit Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">View and manage user credits</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">View and manage user credits</p>
         </div>
         <button
           onClick={exportCreditsToCSV}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-[12px] hover:bg-green-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <Download className="h-4 w-4" />
           <span>Export CSV</span>
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-2">
-            <Coins className="h-5 w-5 text-blue-500" />
+            <Coins className="h-5 w-5 text-accent-gold" />
           </div>
-          <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Credits</h3>
+          <h3 className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Credits</h3>
           <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.total_credits.toLocaleString()}</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-2">
-            <TrendingUp className="h-5 w-5 text-green-500" />
+            <TrendingUp className="h-5 w-5 text-accent-gold" />
           </div>
-          <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Users with Credits</h3>
+          <h3 className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Users with Credits</h3>
           <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.users_with_credits}</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-2">
-            <Minus className="h-5 w-5 text-orange-500" />
+            <Minus className="h-5 w-5 text-accent-gold" />
           </div>
-          <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Low Credits (&lt;100)</h3>
+          <h3 className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Low Credits (&lt;100)</h3>
           <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.users_low_credits}</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-gray-200 dark:border-gray-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-2">
-            <Coins className="h-5 w-5 text-purple-500" />
+            <Coins className="h-5 w-5 text-accent-gold" />
           </div>
-          <h3 className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Users</h3>
+          <h3 className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Users</h3>
           <p className="text-2xl font-bold text-ink dark:text-ink-on-dark">{stats.total_users}</p>
         </div>
       </div>
 
-      {/* Users Table */}
-      <div className="bg-white dark:bg-slate-800 rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search users by email or name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-[12px] focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">User</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Credits Remaining</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Credits Total</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Cycle End</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase">User</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase">Credits Remaining</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase">Credits Total</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase">Cycle End</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
               {filteredUsers.map((user) => {
                 const creditsRemaining = user.credits_remaining || 0;
                 const isLow = creditsRemaining < 100;
                 return (
-                  <tr key={user.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                  <tr key={user.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30 transition">
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div>
                         <div className="text-sm font-medium text-ink dark:text-ink-on-dark">{user.email}</div>
                         {user.display_name && (
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{user.display_name}</div>
+                          <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{user.display_name}</div>
                         )}
                       </div>
                     </td>
@@ -329,7 +326,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
                     <td className="px-6 py-6 whitespace-nowrap text-sm text-ink dark:text-ink-on-dark">
                       {(user.credits_total || 0).toLocaleString()}
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                       {user.credits_cycle_end
                         ? new Date(user.credits_cycle_end).toLocaleDateString()
                         : 'N/A'}
@@ -338,10 +335,10 @@ export const CreditManagementPage: React.FC = React.memo(() => {
                       <button
                         onClick={() => handleAdjustCredits(user.id, user.email, creditsRemaining)}
                         disabled={adjustingUserId === user.id}
-                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 disabled:opacity-50"
+                        className="flex items-center space-x-1 text-accent-gold hover:opacity-80 disabled:opacity-50"
                       >
                         {adjustingUserId === user.id ? (
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 dark:border-blue-400"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-accent-gold"></div>
                         ) : (
                           <Plus className="h-4 w-4" />
                         )}
@@ -356,7 +353,7 @@ export const CreditManagementPage: React.FC = React.memo(() => {
 
           {filteredUsers.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No users found</p>
+              <p className="text-muted-ink dark:text-muted-ink-on-dark">No users found</p>
             </div>
           )}
         </div>
@@ -367,4 +364,3 @@ export const CreditManagementPage: React.FC = React.memo(() => {
     </div>
   );
 });
-

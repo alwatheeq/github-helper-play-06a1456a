@@ -27,6 +27,14 @@ interface TransactionStats {
   avg_transaction_amount: number;
 }
 
+const STATUS_BADGE_STYLES: Record<string, string> = {
+  succeeded: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
+  failed: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
+  pending: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
+  refunded: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
+  canceled: 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark',
+};
+
 export const TransactionsPage: React.FC = React.memo(() => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [stats, setStats] = useState<TransactionStats>({
@@ -45,11 +53,9 @@ export const TransactionsPage: React.FC = React.memo(() => {
     try {
       setLoading(true);
 
-      // Calculate date filter
       const startDate = new Date();
       startDate.setDate(startDate.getDate() - parseInt(dateRange));
 
-      // Fetch transactions with user email
       const { data: transactionsData, error: transError } = await supabase
         .from('transactions')
         .select(`
@@ -68,7 +74,6 @@ export const TransactionsPage: React.FC = React.memo(() => {
 
       setTransactions(transactionsWithEmail);
 
-      // Calculate stats
       const successful = transactionsWithEmail.filter(t => t.status === 'succeeded');
       const failed = transactionsWithEmail.filter(t => t.status === 'failed');
       const pending = transactionsWithEmail.filter(t => t.status === 'pending');
@@ -109,16 +114,8 @@ export const TransactionsPage: React.FC = React.memo(() => {
     [transactions, searchTerm, statusFilter]
   );
 
-  const getStatusBadge = (status: string) => {
-    const styles = {
-      succeeded: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
-      failed: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
-      pending: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-white',
-      refunded: 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300',
-      canceled: 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
-    };
-    return styles[status as keyof typeof styles] || styles.pending;
-  };
+  const getStatusBadge = (status: string) =>
+    STATUS_BADGE_STYLES[status] || STATUS_BADGE_STYLES.pending;
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -161,13 +158,13 @@ export const TransactionsPage: React.FC = React.memo(() => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency.toUpperCase()
-    }).format(amount / 100); // Stripe amounts are in cents
+    }).format(amount / 100);
   };
 
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
@@ -177,84 +174,90 @@ export const TransactionsPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Transaction History</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Monitor payment transactions and revenue</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Monitor payment transactions and revenue</p>
         </div>
         <button
           onClick={exportToCSV}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <Download className="h-4 w-4" />
           <span>Export CSV</span>
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Total Revenue</p>
-              <p className="text-2xl font-bold mt-1">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Revenue</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">
                 {formatCurrency(stats.total_revenue, 'usd')}
               </p>
             </div>
-            <DollarSign className="h-8 w-8 opacity-80" />
-          </div>
-        </div>
-
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm opacity-80">Successful</p>
-              <p className="text-2xl font-bold mt-1">{stats.successful_transactions}</p>
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <DollarSign className="h-8 w-8 text-accent-gold" />
             </div>
-            <CheckCircle className="h-8 w-8 opacity-80" />
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-red-500 to-red-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Failed</p>
-              <p className="text-2xl font-bold mt-1">{stats.failed_transactions}</p>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Successful</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.successful_transactions}</p>
             </div>
-            <XCircle className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <CheckCircle className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Avg Amount</p>
-              <p className="text-2xl font-bold mt-1">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Failed</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">{stats.failed_transactions}</p>
+            </div>
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <XCircle className="h-8 w-8 text-accent-gold" />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Avg Amount</p>
+              <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">
                 {formatCurrency(stats.avg_transaction_amount, 'usd')}
               </p>
             </div>
-            <TrendingUp className="h-8 w-8 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <TrendingUp className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus appearance-none"
             >
               <option value="all">All Statuses</option>
               <option value="succeeded">Succeeded</option>
@@ -266,11 +269,11 @@ export const TransactionsPage: React.FC = React.memo(() => {
           </div>
 
           <div className="relative">
-            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white appearance-none"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus appearance-none"
             >
               <option value="7">Last 7 days</option>
               <option value="30">Last 30 days</option>
@@ -280,42 +283,41 @@ export const TransactionsPage: React.FC = React.memo(() => {
           </div>
         </div>
 
-        {/* Transactions Table */}
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-            <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+          <table className="min-w-full divide-y divide-divider dark:divide-divider-on-dark">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Amount
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Type
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Payment Method
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Receipt
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+            <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
               {filteredTransactions.map((trans) => (
-                <tr key={trans.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                <tr key={trans.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30 transition">
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div className="text-sm text-ink dark:text-ink-on-dark">
                       {new Date(trans.created_at).toLocaleDateString()}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                       {new Date(trans.created_at).toLocaleTimeString()}
                     </div>
                   </td>
@@ -323,7 +325,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
                     <div className="text-sm font-medium text-ink dark:text-ink-on-dark">
                       {trans.user_email}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                       ID: {trans.user_id.substring(0, 8)}...
                     </div>
                   </td>
@@ -345,7 +347,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
                   </td>
                   <td className="px-6 py-6 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      <CreditCard className="h-4 w-4 text-gray-400" />
+                      <CreditCard className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
                       <span className="text-sm text-ink dark:text-ink-on-dark">
                         {trans.payment_method || 'N/A'}
                       </span>
@@ -357,12 +359,12 @@ export const TransactionsPage: React.FC = React.memo(() => {
                         href={trans.receipt_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
+                        className="text-accent-gold hover:opacity-80 text-sm"
                       >
                         View Receipt
                       </a>
                     ) : (
-                      <span className="text-sm text-gray-500 dark:text-gray-400">N/A</span>
+                      <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">N/A</span>
                     )}
                   </td>
                 </tr>
@@ -372,7 +374,7 @@ export const TransactionsPage: React.FC = React.memo(() => {
 
           {filteredTransactions.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 dark:text-gray-400">No transactions found</p>
+              <p className="text-muted-ink dark:text-muted-ink-on-dark">No transactions found</p>
             </div>
           )}
         </div>

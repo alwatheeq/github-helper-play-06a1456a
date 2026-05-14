@@ -89,7 +89,6 @@ export const TagsManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log audit action
       if (user?.id) {
         const oldTag = tags.find(t => t.id === tagId);
         try {
@@ -102,13 +101,13 @@ export const TagsManagementPage: React.FC = React.memo(() => {
             p_description: `Updated tag name from "${oldTag?.name}" to "${editingName.trim()}"`
           });
         } catch (logErr: unknown) {
-        const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log admin action', { 
-          component: 'TagsManagementPage', 
-          action: 'handleSaveEdit', 
-          metadata: { tagId, error: logError.message } 
-        });
-      }
+          const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
+          ErrorLogger.warn('Failed to log admin action', {
+            component: 'TagsManagementPage',
+            action: 'handleSaveEdit',
+            metadata: { tagId, error: logError.message }
+          });
+        }
       }
 
       await fetchTags();
@@ -116,10 +115,10 @@ export const TagsManagementPage: React.FC = React.memo(() => {
       setEditingName('');
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'TagsManagementPage', 
-        action: 'handleSaveEdit', 
-        metadata: { tagId } 
+      ErrorLogger.error(err, {
+        component: 'TagsManagementPage',
+        action: 'handleSaveEdit',
+        metadata: { tagId }
       });
       showErrorToast('Failed to update tag');
     }
@@ -150,7 +149,6 @@ export const TagsManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log audit action
       if (user?.id) {
         try {
           await supabase.rpc('log_admin_action', {
@@ -162,10 +160,10 @@ export const TagsManagementPage: React.FC = React.memo(() => {
           });
         } catch (logErr: unknown) {
           const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-          ErrorLogger.warn('Failed to log admin action', { 
-            component: 'TagsManagementPage', 
-            action: 'handleDeleteTag', 
-            metadata: { tagId, error: logError.message } 
+          ErrorLogger.warn('Failed to log admin action', {
+            component: 'TagsManagementPage',
+            action: 'handleDeleteTag',
+            metadata: { tagId, error: logError.message }
           });
         }
       }
@@ -173,10 +171,10 @@ export const TagsManagementPage: React.FC = React.memo(() => {
       await fetchTags();
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'TagsManagementPage', 
-        action: 'handleDeleteTag', 
-        metadata: { tagId } 
+      ErrorLogger.error(err, {
+        component: 'TagsManagementPage',
+        action: 'handleDeleteTag',
+        metadata: { tagId }
       });
       showErrorToast('Failed to delete tag');
     }
@@ -195,50 +193,50 @@ export const TagsManagementPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Tag Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">View, edit, and manage all user tags</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">View, edit, and manage all user tags</p>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search tags by name or user email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+              <thead className="bg-subtle dark:bg-subtle-on-dark">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Tag Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Owner
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Usage
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
                 {filteredTags.map((tag) => (
-                  <tr key={tag.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                  <tr key={tag.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30 transition">
                     <td className="px-6 py-6">
                       {editingTag === tag.id ? (
                         <div className="flex items-center space-x-2">
@@ -246,7 +244,7 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                             type="text"
                             value={editingName}
                             onChange={(e) => setEditingName(e.target.value)}
-                            className="flex-1 px-3 py-1 border border-divider dark:border-divider-on-dark rounded focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                            className="flex-1 px-3 py-1 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                             autoFocus
                           />
                           <button
@@ -266,7 +264,7 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                         </div>
                       ) : (
                         <div className="flex items-center space-x-2">
-                          <Tag className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                          <Tag className="h-4 w-4 text-accent-gold" />
                           <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                             {tag.name}
                           </span>
@@ -275,8 +273,8 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <User className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                        <User className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
+                        <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                           {tag.user_email}
                         </span>
                       </div>
@@ -284,8 +282,8 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                     <td className="px-6 py-6 whitespace-nowrap">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                         tag.usage_count === 0
-                          ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                          : 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
+                          ? 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
+                          : 'bg-accent-gold-soft text-ink dark:text-muted-ink-on-dark'
                       }`}>
                         {tag.usage_count} {tag.usage_count === 1 ? 'item' : 'items'}
                       </span>
@@ -295,14 +293,14 @@ export const TagsManagementPage: React.FC = React.memo(() => {
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleStartEdit(tag)}
-                            className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-blue-400 dark:hover:bg-blue-900/30 dark:bg-blue-950/40"
+                            className="p-2 text-accent-gold hover:opacity-80 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                             title="Edit tag name"
                           >
                             <Edit2 className="h-4 w-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteTag(tag.id, tag.name, tag.usage_count || 0)}
-                            className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition dark:text-red-400 dark:hover:bg-red-900/30 dark:bg-red-950/40"
+                            className="p-2 text-red-600 dark:text-red-400 hover:opacity-80 hover:bg-red-50 dark:hover:bg-red-950/30 transition"
                             title="Delete tag"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -317,8 +315,8 @@ export const TagsManagementPage: React.FC = React.memo(() => {
 
             {filteredTags.length === 0 && (
               <div className="text-center py-12">
-                <Tag className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500 dark:text-gray-400">
+                <Tag className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
+                <p className="text-muted-ink dark:text-muted-ink-on-dark">
                   {searchQuery ? 'No tags found matching your search' : 'No tags found'}
                 </p>
               </div>
@@ -326,8 +324,8 @@ export const TagsManagementPage: React.FC = React.memo(() => {
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+        <div className="mt-4 pt-4 border-t border-divider dark:border-divider-on-dark">
+          <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">
             Total: {filteredTags.length} tags
           </p>
         </div>

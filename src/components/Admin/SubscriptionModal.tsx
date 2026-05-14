@@ -143,7 +143,6 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
         if (insertError) throw insertError;
 
-        // Log audit action
         if (user?.id) {
           const createdUser = users.find(u => u.id === formData.user_id);
           try {
@@ -174,7 +173,6 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
         if (updateError) throw updateError;
 
-        // Log audit action
         if (user?.id) {
           try {
             await supabase.rpc('log_admin_action', {
@@ -187,10 +185,10 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             });
           } catch (logErr: unknown) {
             const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-            ErrorLogger.warn('Failed to log admin action', { 
-              component: 'SubscriptionModal', 
-              action: 'handleSave', 
-              metadata: { mode: 'edit', subscriptionId: subscription!.id, error: logError.message } 
+            ErrorLogger.warn('Failed to log admin action', {
+              component: 'SubscriptionModal',
+              action: 'handleSave',
+              metadata: { mode: 'edit', subscriptionId: subscription!.id, error: logError.message }
             });
           }
         }
@@ -202,10 +200,10 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
       onClose();
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'SubscriptionModal', 
-        action: 'handleSave', 
-        metadata: { mode, userId: formData.user_id, tier: formData.subscription_tier } 
+      ErrorLogger.error(error, {
+        component: 'SubscriptionModal',
+        action: 'handleSave',
+        metadata: { mode, userId: formData.user_id, tier: formData.subscription_tier }
       });
       showErrorToast('Failed to save subscription. Please try again.');
     } finally {
@@ -222,40 +220,40 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
           <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
             {mode === 'create' ? 'Create New Subscription' : 'Edit Subscription'}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
+            className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
           >
-            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           {mode === 'create' && (
             <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Select User
               </label>
               <div className="relative mb-2">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                 <input
                   type="text"
                   placeholder="Search by email..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                  className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 />
               </div>
               <select
                 value={formData.user_id}
                 onChange={(e) => setFormData({ ...formData, user_id: e.target.value })}
                 required
-                className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
                 size={6}
               >
                 <option value="">Choose a user...</option>
@@ -273,14 +271,14 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
           )}
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Subscription Tier
             </label>
             <select
               value={formData.subscription_tier}
               onChange={(e) => setFormData({ ...formData, subscription_tier: e.target.value })}
               required
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <option value="trial_7day">7-Day Trial (121K tokens)</option>
               <option value="monthly">Monthly (520K tokens/30 days)</option>
@@ -290,14 +288,14 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Status
             </label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
               required
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             >
               <option value="active">Active</option>
               <option value="canceled">Canceled</option>
@@ -307,7 +305,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               Duration (Days from now)
             </label>
             <input
@@ -317,9 +315,9 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               value={formData.duration_days}
               onChange={(e) => setFormData({ ...formData, duration_days: e.target.value })}
               required
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-1">
               Common durations: 1 day (trial), 7 days (trial), 30 days (monthly), 90 days (quarterly), 180 days (biannual)
             </p>
           </div>
@@ -330,9 +328,9 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               id="auto_renew"
               checked={formData.auto_renew}
               onChange={(e) => setFormData({ ...formData, auto_renew: e.target.checked })}
-              className="h-4 w-4 text-blue-600 focus-visible:ring-blue-500 border-gray-300 rounded dark:text-blue-400"
+              className="h-4 w-4 text-accent-gold focus-visible:ring-focus border-divider rounded"
             />
-            <label htmlFor="auto_renew" className="ml-2 block text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
+            <label htmlFor="auto_renew" className="ml-2 block text-sm text-secondary-ink dark:text-muted-ink-on-dark">
               Auto-renew enabled
             </label>
           </div>
@@ -341,7 +339,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             <button
               type="submit"
               disabled={saving || (mode === 'create' && !formData.user_id)}
-              className="flex-1 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+              className="flex-1 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2 transition"
             >
               {saving && <Loader2 className="h-4 w-4 animate-spin" />}
               <span>{mode === 'create' ? 'Create Subscription' : 'Update Subscription'}</span>
@@ -349,7 +347,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 bg-gray-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-gray-700"
+              className="px-5 py-2.5 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
             >
               Cancel
             </button>

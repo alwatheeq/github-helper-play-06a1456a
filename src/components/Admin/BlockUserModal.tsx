@@ -53,7 +53,6 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
       setLoading(true);
 
       if (isCurrentlyBlocked) {
-        // Unblock user
         const { data, error } = await supabase.rpc('admin_unblock_user', {
           p_user_id: userId,
           p_admin_id: adminUser.id,
@@ -69,9 +68,8 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
 
         toast.success('User unblocked successfully!');
       } else {
-        // Block user
-        const expiresAt = blockType === 'temporary' && expirationDate 
-          ? new Date(expirationDate).toISOString() 
+        const expiresAt = blockType === 'temporary' && expirationDate
+          ? new Date(expirationDate).toISOString()
           : null;
 
         const { data, error } = await supabase.rpc('admin_block_user', {
@@ -95,10 +93,10 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
       handleClose();
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
-      ErrorLogger.error(err, { 
-        component: 'BlockUserModal', 
-        action: isCurrentlyBlocked ? 'unblockUser' : 'blockUser', 
-        userId 
+      ErrorLogger.error(err, {
+        component: 'BlockUserModal',
+        action: isCurrentlyBlocked ? 'unblockUser' : 'blockUser',
+        userId
       });
       toast.error(`Failed to ${isCurrentlyBlocked ? 'unblock' : 'block'} user`);
     } finally {
@@ -117,10 +115,10 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-md w-full">
-        <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between rounded-t-xl">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-md w-full">
+        <div className="bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-lg ${isCurrentlyBlocked ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
+            <div className={`p-2 ${isCurrentlyBlocked ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
               {isCurrentlyBlocked ? (
                 <Ban className="h-5 w-5 text-green-500" />
               ) : (
@@ -133,15 +131,15 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
           </div>
           <button
             onClick={handleClose}
-            className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
+            className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
           >
-            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mb-4">
               {isCurrentlyBlocked ? (
                 <>Unblocking <span className="font-semibold text-ink dark:text-ink-on-dark">{userEmail}</span> will restore their access to the website.</>
               ) : (
@@ -152,7 +150,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
 
           {!isCurrentlyBlocked && (
             <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 Block Type
               </label>
               <div className="flex space-x-6">
@@ -168,7 +166,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     }}
                     className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
-                  <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Permanent</span>
+                  <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Permanent</span>
                 </label>
                 <label className="flex items-center space-x-2 cursor-pointer">
                   <input
@@ -179,7 +177,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                     onChange={(e) => setBlockType(e.target.value as 'permanent' | 'temporary')}
                     className="w-4 h-4 text-red-600 focus-visible:ring-red-500 dark:text-red-400"
                   />
-                  <span className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">Temporary</span>
+                  <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">Temporary</span>
                 </label>
               </div>
             </div>
@@ -187,7 +185,7 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
 
           {!isCurrentlyBlocked && blockType === 'temporary' && (
             <div>
-              <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+              <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
                 <Clock className="h-4 w-4 inline mr-1" />
                 Expiration Date
               </label>
@@ -197,13 +195,13 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
                 onChange={(e) => setExpirationDate(e.target.value)}
                 min={minDate}
                 required={blockType === 'temporary'}
-                className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+                className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+            <label className="block text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark mb-2">
               <AlertCircle className="h-4 w-4 inline mr-1" />
               Reason {isCurrentlyBlocked ? '(optional)' : '(required)'}
             </label>
@@ -213,22 +211,22 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
               placeholder={isCurrentlyBlocked ? 'Reason for unblocking...' : 'Reason for blocking...'}
               required={!isCurrentlyBlocked}
               rows={4}
-              className="w-full px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-red-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex items-center justify-end space-x-3 pt-4 border-t border-divider dark:border-divider-on-dark">
             <button
               type="button"
               onClick={handleClose}
-              className="px-5 py-2.5 text-secondary-ink dark:text-secondary-ink-on-dark bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition"
+              className="px-5 py-2.5 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className={`px-5 py-2.5 text-white rounded-lg transition ${
+              className={`px-5 py-2.5 text-white transition ${
                 isCurrentlyBlocked
                   ? 'bg-green-600 hover:bg-green-700'
                   : 'bg-red-600 hover:bg-red-700'
@@ -249,4 +247,3 @@ export const BlockUserModal: React.FC<BlockUserModalProps> = ({
     </div>
   );
 };
-

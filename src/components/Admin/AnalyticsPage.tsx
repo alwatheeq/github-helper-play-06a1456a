@@ -51,21 +51,18 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       startDate.setDate(startDate.getDate() - parseInt(dateRange));
       const startDateStr = startDate.toISOString();
 
-      // Fetch total users
       const { count: usersCount } = await supabase
         .from('user_profiles')
         .select('id', { count: 'exact', head: true });
 
       setTotalUsers(usersCount || 0);
 
-      // Fetch user growth data
       const { data: profiles } = await supabase
         .from('user_profiles')
         .select('created_at')
         .gte('created_at', startDateStr)
         .order('created_at');
 
-      // Group by date
       const growthMap = new Map<string, number>();
       profiles?.forEach(profile => {
         const date = new Date(profile.created_at).toISOString().split('T')[0];
@@ -84,7 +81,6 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
       setUserGrowth(growthData);
 
-      // Fetch revenue data
       const { data: transactions } = await supabase
         .from('transactions')
         .select('created_at, amount, status')
@@ -114,7 +110,6 @@ export const AnalyticsPage: React.FC = React.memo(() => {
 
       setRevenueData(revData);
 
-      // Fetch subscription stats
       const { data: subscriptions } = await supabase
         .from('subscriptions')
         .select('subscription_tier, status')
@@ -130,12 +125,11 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       const subsStats: SubscriptionStats[] = Array.from(subsMap.entries()).map(([tier, count]) => ({
         tier,
         count,
-        revenue: 0 // Can calculate based on tier pricing
+        revenue: 0
       }));
 
       setSubscriptionStats(subsStats);
 
-      // Fetch token usage stats using the RPC function
       const { data: tokenData } = await supabase.rpc('admin_get_users_with_usage');
 
       if (tokenData) {
@@ -202,7 +196,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
@@ -215,7 +209,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Analytics Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">Track platform performance and growth metrics</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Track platform performance and growth metrics</p>
         </div>
         <select
           value={dateRange}
@@ -225,7 +219,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
               setDateRange(value);
             }
           }}
-          className="px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+          className="px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
@@ -233,88 +227,94 @@ export const AnalyticsPage: React.FC = React.memo(() => {
         </select>
       </div>
 
-      {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Total Users</p>
-              <p className="text-3xl font-bold mt-1">{totalUsers.toLocaleString()}</p>
-              <div className="flex items-center space-x-1 mt-2">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Users</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{totalUsers.toLocaleString()}</p>
+              <div className="flex items-center space-x-1 mt-2 text-muted-ink dark:text-muted-ink-on-dark">
                 {growthRate >= 0 ? (
                   <ArrowUp className="h-4 w-4" />
                 ) : (
                   <ArrowDown className="h-4 w-4" />
                 )}
-                <span className="text-sm opacity-80">
+                <span className="text-sm">
                   {Math.abs(growthRate).toFixed(1)}% growth
                 </span>
               </div>
             </div>
-            <Users className="h-12 w-12 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Users className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Total Revenue</p>
-              <p className="text-3xl font-bold mt-1">{formatCurrency(totalRevenue)}</p>
-              <div className="flex items-center space-x-1 mt-2">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Total Revenue</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{formatCurrency(totalRevenue)}</p>
+              <div className="flex items-center space-x-1 mt-2 text-muted-ink dark:text-muted-ink-on-dark">
                 {revenueGrowth >= 0 ? (
                   <ArrowUp className="h-4 w-4" />
                 ) : (
                   <ArrowDown className="h-4 w-4" />
                 )}
-                <span className="text-sm opacity-80">
+                <span className="text-sm">
                   {Math.abs(revenueGrowth).toFixed(1)}% growth
                 </span>
               </div>
             </div>
-            <DollarSign className="h-12 w-12 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <DollarSign className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft text-white rounded-md p-6`}>
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Active Subscriptions</p>
-              <p className="text-3xl font-bold mt-1">{activeSubscriptions.toLocaleString()}</p>
-              <p className="text-xs opacity-70 mt-2">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Active Subscriptions</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{activeSubscriptions.toLocaleString()}</p>
+              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-2">
                 {totalUsers > 0 ? ((activeSubscriptions / totalUsers) * 100).toFixed(1) : 0}% conversion
               </p>
             </div>
-            <TrendingUp className="h-12 w-12 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <TrendingUp className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-md p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm opacity-80">Token Usage</p>
-              <p className="text-3xl font-bold mt-1">{(totalTokenUsage / 1000000).toFixed(2)}M</p>
-              <p className="text-xs opacity-70 mt-2">
+              <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-1">Token Usage</p>
+              <p className="text-3xl font-bold text-ink dark:text-ink-on-dark mt-1">{(totalTokenUsage / 1000000).toFixed(2)}M</p>
+              <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mt-2">
                 {tokenUsageStats.length > 0 ? (tokenUsageStats[0].avg_per_user / 1000).toFixed(1) : 0}K avg/user
               </p>
             </div>
-            <Activity className="h-12 w-12 opacity-80" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Activity className="h-8 w-8 text-accent-gold" />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* User Growth Chart */}
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
-          <Calendar className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400" />
+          <Calendar className="h-5 w-5 mr-2 text-accent-gold" />
           User Growth
         </h3>
 
         {userGrowth.length > 0 ? (
           <div className="space-y-3">
             {userGrowth.slice(-10).map((data, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
                 <div className="flex items-center space-x-3">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                     {new Date(data.date).toLocaleDateString()}
                   </div>
                 </div>
@@ -323,13 +323,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                     <div className="text-sm font-semibold text-ink dark:text-ink-on-dark">
                       +{data.new_users} new
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                       {data.total_users} total
                     </div>
                   </div>
-                  <div className="w-32 bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-600 rounded-full h-2">
+                  <div className="w-32 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-full h-2">
                     <div
-                      className="bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] h-2 rounded-full"
+                      className="bg-accent-gold h-2 rounded-full"
                       style={{ width: `${Math.min((data.new_users / 10) * 100, 100)}%` }}
                     />
                   </div>
@@ -338,31 +338,29 @@ export const AnalyticsPage: React.FC = React.memo(() => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 dark:text-gray-400 text-center py-8">No user growth data available</p>
+          <p className="text-muted-ink dark:text-muted-ink-on-dark text-center py-8">No user growth data available</p>
         )}
       </div>
 
-      {/* Revenue and Subscriptions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Breakdown */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
-            <DollarSign className="h-5 w-5 mr-2 text-green-600 dark:text-green-400" />
+            <DollarSign className="h-5 w-5 mr-2 text-accent-gold" />
             Revenue Trend
           </h3>
 
           {revenueData.length > 0 ? (
             <div className="space-y-3">
               {revenueData.slice(-7).map((data, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700 rounded-lg">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div key={index} className="flex items-center justify-between p-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
+                  <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                     {new Date(data.date).toLocaleDateString()}
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-semibold text-ink dark:text-ink-on-dark">
                       {formatCurrency(data.revenue)}
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <div className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
                       {data.transactions} transactions
                     </div>
                   </div>
@@ -370,14 +368,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-center py-8">No revenue data available</p>
+            <p className="text-muted-ink dark:text-muted-ink-on-dark text-center py-8">No revenue data available</p>
           )}
         </div>
 
-        {/* Subscription Distribution */}
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4 flex items-center">
-            <BarChart3 className="h-5 w-5 mr-2 text-purple-600 dark:text-purple-400" />
+            <BarChart3 className="h-5 w-5 mr-2 text-accent-gold" />
             Subscription Distribution
           </h3>
 
@@ -391,13 +388,13 @@ export const AnalyticsPage: React.FC = React.memo(() => {
                       <span className="text-sm font-medium text-ink dark:text-ink-on-dark">
                         {getTierDisplayName(stat.tier)}
                       </span>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                         {stat.count} ({percentage.toFixed(1)}%)
                       </span>
                     </div>
-                    <div className="w-full bg-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-600 rounded-full h-2">
+                    <div className="w-full bg-subtle dark:bg-subtle-on-dark rounded-full h-2">
                       <div
-                        className={`bg-gradient-to-r from-accent-gold to-accent-gold-soft h-2 rounded-full`}
+                        className="bg-accent-gold h-2 rounded-full"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
@@ -406,7 +403,7 @@ export const AnalyticsPage: React.FC = React.memo(() => {
               })}
             </div>
           ) : (
-            <p className="text-gray-500 dark:text-gray-400 text-center py-8">No subscription data available</p>
+            <p className="text-muted-ink dark:text-muted-ink-on-dark text-center py-8">No subscription data available</p>
           )}
         </div>
       </div>

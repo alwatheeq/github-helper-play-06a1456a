@@ -90,19 +90,19 @@ export const AppSettingsPage: React.FC = React.memo(() => {
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-3">
-        <Settings className="h-7 w-7 text-gray-400" />
+        <Settings className="h-7 w-7 text-muted-ink dark:text-muted-ink-on-dark" />
         <div>
-          <h1 className="text-2xl font-bold text-white">App Settings</h1>
-          <p className="text-gray-400 text-sm mt-0.5">
+          <h1 className="text-2xl font-bold text-ink dark:text-ink-on-dark">App Settings</h1>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-sm mt-0.5">
             Manage global application settings and feature toggles.
           </p>
         </div>
       </div>
 
-      <div className="bg-gray-800 rounded-lg border border-gray-700">
-        <div className="p-4 border-b border-gray-700">
-          <h2 className="text-lg font-semibold text-gray-100">Feature Toggles</h2>
-          <p className="text-gray-400 text-sm mt-0.5">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
+        <div className="p-4 border-b border-divider dark:border-divider-on-dark">
+          <h2 className="text-lg font-semibold text-ink dark:text-ink-on-dark">Feature Toggles</h2>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-sm mt-0.5">
             Enable or disable features for all users instantly.
           </p>
         </div>
@@ -112,20 +112,20 @@ export const AppSettingsPage: React.FC = React.memo(() => {
             {[1, 2].map((i) => (
               <div key={i} className="animate-pulse flex items-center justify-between">
                 <div className="space-y-2 flex-1">
-                  <div className="h-4 bg-gray-700 rounded w-1/3" />
-                  <div className="h-3 bg-gray-700 rounded w-2/3" />
+                  <div className="h-4 bg-subtle dark:bg-subtle-on-dark rounded w-1/3" />
+                  <div className="h-3 bg-subtle dark:bg-subtle-on-dark rounded w-2/3" />
                 </div>
-                <div className="h-8 w-14 bg-gray-700 rounded-full ml-4" />
+                <div className="h-8 w-14 bg-subtle dark:bg-subtle-on-dark rounded-full ml-4" />
               </div>
             ))}
           </div>
         ) : (
-          <div className="divide-y divide-gray-700">
+          <div className="divide-y divide-divider dark:divide-divider-on-dark">
             {settings.map((setting) => (
               <div key={setting.key} className="flex items-center justify-between p-5">
                 <div className="flex-1 pr-6">
-                  <p className="font-medium text-gray-100">{setting.label}</p>
-                  <p className="text-sm text-gray-400 mt-0.5">{setting.description}</p>
+                  <p className="font-medium text-ink dark:text-ink-on-dark">{setting.label}</p>
+                  <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark mt-0.5">{setting.description}</p>
                 </div>
                 <button
                   onClick={() => void handleToggle(setting.key, !setting.value)}
@@ -140,8 +140,8 @@ export const AppSettingsPage: React.FC = React.memo(() => {
                     </>
                   ) : (
                     <>
-                      <ToggleLeft className="h-8 w-8 text-gray-500" />
-                      <span className="text-sm text-gray-500 font-medium">Disabled</span>
+                      <ToggleLeft className="h-8 w-8 text-muted-ink dark:text-muted-ink-on-dark" />
+                      <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-medium">Disabled</span>
                     </>
                   )}
                 </button>

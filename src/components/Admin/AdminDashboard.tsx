@@ -29,7 +29,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+    <div className="min-h-screen bg-page-light dark:bg-page-dark">
       <AdminHeader toggleSidebar={toggleSidebar} />
 
       <div className="flex min-h-screen">
