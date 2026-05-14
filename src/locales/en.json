@@ -55,7 +55,8 @@
     "error_loading_library": "Error Loading Library",
     "failed_to_load_library": "Failed to load library",
     "try_again": "Try Again",
-    "go_back": "Go back"
+    "go_back": "Go back",
+    "generated_content": "Generated Content"
   },
   "language_choice": {
     "title": "Choose your language",

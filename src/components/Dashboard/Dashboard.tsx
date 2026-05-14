@@ -1404,7 +1404,7 @@ export const Dashboard: React.FC = () => {
   const subscriptionFeatureConfig = getFeatureConfig(currentFeature);
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-page">
+    <div className="min-h-screen w-full flex flex-col bg-page-light dark:bg-page-dark">
       {/* Persistent Subscription Modal (all dashboard soft / paywall prompts) */}
       <PersistentSubscriptionModal
         isOpen={isModalOpen}
@@ -1435,7 +1435,7 @@ export const Dashboard: React.FC = () => {
         {/* Mobile overlay */}
         {isMobile && isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-page bg-opacity-50 z-10"
+            className="fixed inset-0 bg-black/50 z-10"
             onClick={toggleSidebar}
           />
         )}
@@ -1462,7 +1462,7 @@ export const Dashboard: React.FC = () => {
           <div className="w-full pt-8 pr-10 pb-10 pl-10">
             <Suspense fallback={
               <div className="flex items-center justify-center py-16">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 dark:border-blue-400" />
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent-gold" />
               </div>
             }>
             {currentView === 'history' && (

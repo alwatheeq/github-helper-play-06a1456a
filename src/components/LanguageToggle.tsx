@@ -61,7 +61,7 @@ export const LanguageToggle: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] overflow-hidden z-50 animate-fadeIn">
+        <div className="absolute right-0 mt-2 w-48 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] overflow-hidden z-50 animate-fadeIn">
           {LANGUAGES.map((lang) => (
             <button
               key={lang.code}

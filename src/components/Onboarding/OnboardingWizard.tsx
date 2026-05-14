@@ -116,7 +116,7 @@ export const OnboardingWizard: React.FC = () => {
           {/* Icon + heading */}
           <div className="text-center mb-7">
             <div className="w-14 h-14 rounded-full bg-accent-gold flex items-center justify-center mx-auto mb-4">
-              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-on-dark">
                 <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
                 <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
@@ -169,7 +169,7 @@ export const OnboardingWizard: React.FC = () => {
           {/* Icon + heading */}
           <div className="text-center mb-6">
             <div className="w-14 h-14 rounded-full bg-accent-gold flex items-center justify-center mx-auto mb-3.5">
-              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-ink-on-dark">
                 <circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/>
                 <circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/>
                 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
@@ -202,7 +202,7 @@ export const OnboardingWizard: React.FC = () => {
                   <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{theme.desc}</div>
                   {selected && (
                     <div className="absolute top-2 right-2 w-[18px] h-[18px] rounded-full bg-accent-gold flex items-center justify-center">
-                      <Check className="h-2.5 w-2.5 text-white" strokeWidth={3} />
+                      <Check className="h-2.5 w-2.5 text-ink-on-dark" strokeWidth={3} />
                     </div>
                   )}
                 </button>

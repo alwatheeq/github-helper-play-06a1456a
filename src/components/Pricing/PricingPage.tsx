@@ -100,7 +100,7 @@ export const PricingPage: React.FC = () => {
               />
               <button
                 onClick={() => setShowPromoInput(false)}
-                className="px-4 py-2 bg-accent-gold text-white text-[13px] font-medium"
+                className="px-4 py-2 bg-accent-gold text-ink-on-dark text-[13px] font-medium"
               >
                 {t('pricing.apply')}
               </button>

@@ -952,8 +952,8 @@ export const QuizPage: React.FC = React.memo(() => {
     const map: Record<string, string> = {
       easy: 'bg-chip text-muted-ink dark:text-muted-ink-on-dark',
       beginner: 'bg-chip text-muted-ink dark:text-muted-ink-on-dark',
-      medium: 'bg-chip text-secondary-ink dark:text-secondary-ink-on-dark',
-      intermediate: 'bg-chip text-secondary-ink dark:text-secondary-ink-on-dark',
+      medium: 'bg-chip text-secondary-ink dark:text-muted-ink-on-dark',
+      intermediate: 'bg-chip text-secondary-ink dark:text-muted-ink-on-dark',
       hard: 'bg-ink text-ink-on-dark',
       advanced: 'bg-ink text-ink-on-dark',
     };
@@ -1370,7 +1370,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             </h3>
                             <div className="flex flex-wrap gap-[5px]">
                               {[quiz.difficulty_level, `${quiz.question_count} q.`, quiz.source_type].map((chip, ci) => (
-                                <span key={ci} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[3px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark border border-divider dark:border-divider-on-dark">
+                                <span key={ci} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[3px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark">
                                   {chip}
                                 </span>
                               ))}
@@ -1385,7 +1385,7 @@ export const QuizPage: React.FC = React.memo(() => {
                             }
                             <div className="flex flex-col gap-[5px] items-end">
                               {hasScore && (
-                                <button className="inline-flex px-[10px] py-1 bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark text-[11px] font-display cursor-pointer">
+                                <button className="inline-flex px-[10px] py-1 bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[11px] font-display cursor-pointer">
                                   Review
                                 </button>
                               )}
@@ -1550,13 +1550,13 @@ export const QuizPage: React.FC = React.memo(() => {
                           <p className="text-[10px] font-bold tracking-widest text-accent-gold mb-0.5">{exam.exam_code}</p>
                           <h3 className="font-display font-semibold text-[17px] text-ink dark:text-ink-on-dark leading-snug">{exam.exam_name}</h3>
                         </div>
-                        <p className="text-xs text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed line-clamp-2">
+                        <p className="text-xs text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed line-clamp-2">
                           {exam.description}
                         </p>
                         <div className="h-px bg-divider dark:bg-divider-on-dark mt-1" />
                         <div className="flex items-center justify-between">
                           <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
-                            <span className="font-semibold text-secondary-ink dark:text-secondary-ink-on-dark">{exam.country}</span>
+                            <span className="font-semibold text-secondary-ink dark:text-muted-ink-on-dark">{exam.country}</span>
                             {exam.region && <span className="italic"> · {exam.region}</span>}
                           </p>
                           <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{exam.total_questions} q.</p>
@@ -1590,14 +1590,14 @@ export const QuizPage: React.FC = React.memo(() => {
                     {loading && <div className="animate-spin h-4 w-4 border-2 border-muted-ink border-t-transparent rounded-full flex-shrink-0" />}
                   </div>
                   <div className="relative">
-                    <select className="h-full px-[13px] pr-8 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark font-display text-[13px] appearance-none cursor-pointer min-w-[160px] outline-none">
+                    <select className="h-full px-[13px] pr-8 border border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark font-display text-[13px] appearance-none cursor-pointer min-w-[160px] outline-none">
                       {['All Subjects','Economics','Biology','Mathematics','History','Physics','Chemistry','Literature','Comp. Sci.'].map(s => <option key={s}>{s}</option>)}
                     </select>
                     <span className="absolute right-[10px] top-1/2 -translate-y-1/2 text-muted-ink text-[10px] pointer-events-none">▾</span>
                   </div>
                   <div className="flex border border-divider dark:border-divider-on-dark overflow-hidden">
                     {(['Top rated', 'Most used', 'Newest'] as const).map((s, i) => (
-                      <button key={s} className={`px-[14px] py-[9px] border-none text-[12px] font-display cursor-pointer whitespace-nowrap transition-colors ${i === 0 ? 'bg-ink text-ink-on-dark font-bold' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-secondary-ink-on-dark'} ${i < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''}`}>
+                      <button key={s} className={`px-[14px] py-[9px] border-none text-[12px] font-display cursor-pointer whitespace-nowrap transition-colors ${i === 0 ? 'bg-ink text-ink-on-dark font-bold' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'} ${i < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''}`}>
                         {s}
                       </button>
                     ))}
@@ -1625,7 +1625,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           </div>
                           <div className="flex gap-[5px] flex-wrap">
                             {[quiz.difficulty_level, `${quiz.question_count} q.`, quiz.source_type || 'MCQ'].map((tag, ti) => (
-                              <span key={ti} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[2px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark border border-divider dark:border-divider-on-dark">{tag}</span>
+                              <span key={ti} className="text-[9.5px] font-bold tracking-[0.5px] px-[7px] py-[2px] bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark">{tag}</span>
                             ))}
                           </div>
                           <div className="h-px bg-divider dark:bg-divider-on-dark" />
@@ -1750,7 +1750,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       ) : (
                         monthEntries.map((attempt, i, arr) => {
                           const score = Math.round(attempt.score_percentage);
-                          const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
+                          const scoreColor = score >= 90 ? 'text-accent-gold' : score >= 80 ? 'text-secondary-ink dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark';
                           const strokeColor = score >= 90 ? 'var(--color-accent-gold)' : score >= 80 ? 'var(--color-secondary-ink)' : 'var(--color-muted-ink)';
                           const total = isExams
                             ? (attempt as GlobalExamAttempt).global_exams?.total_questions ?? (attempt.correct_count + attempt.incorrect_count + attempt.unanswered_count)
@@ -1791,7 +1791,7 @@ export const QuizPage: React.FC = React.memo(() => {
                                   {attempt.unanswered_count > 0 && <span className="text-[10px] text-divider">{attempt.unanswered_count} skipped</span>}
                                 </div>
                               </div>
-                              <button className="inline-flex px-3 py-[5px] bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark text-[11px] font-display cursor-pointer flex-shrink-0 mt-0.5 hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
+                              <button className="inline-flex px-3 py-[5px] bg-transparent border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark text-[11px] font-display cursor-pointer flex-shrink-0 mt-0.5 hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors">
                                 Retake
                               </button>
                             </div>

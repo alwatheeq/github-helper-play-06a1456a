@@ -204,7 +204,10 @@
     "quiz_type_fill_in_blank": "املأ الفراغ",
     "quiz_type_open_ended": "إجابة مفتوحة",
     "summary_disabled_hint": "توليد الملخص معطّل، لذا تُستخدم النص الكامل المستخرج للبطاقات.",
-    "eyebrow": "مساحة العمل"
+    "eyebrow": "مساحة العمل",
+    "drop_file_helper": "PDF, PPTX, DOCX · حتى 400 صفحة",
+    "drop_file_line_1": "أسقط ملفك هنا،",
+    "drop_file_line_2": "أو انقر للاستعراض."
   },
   "processing": {
     "fast_processing": "المعالجة السريعة",

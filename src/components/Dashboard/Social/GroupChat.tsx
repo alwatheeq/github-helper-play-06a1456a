@@ -254,7 +254,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto px-4 py-4 bg-page dark:bg-page flex flex-col gap-1"
+        className="flex-1 overflow-y-auto px-4 py-4 bg-page-light dark:bg-page-dark dark:bg-page-light dark:bg-page-dark flex flex-col gap-1"
         style={{
           backgroundImage: 'radial-gradient(var(--color-border-divider, #e5e7eb) 1px, transparent 1px)',
           backgroundSize: '28px 28px',

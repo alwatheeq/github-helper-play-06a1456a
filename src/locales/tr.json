@@ -204,7 +204,10 @@
     "quiz_type_fill_in_blank": "Boşluk doldurma",
     "quiz_type_open_ended": "Açık uçlu",
     "summary_disabled_hint": "Özet kapalı; kartlar için tam çıkarılan metin kullanılır.",
-    "eyebrow": "Çalışma alanı"
+    "eyebrow": "Çalışma alanı",
+    "drop_file_helper": "PDF, PPTX, DOCX · 400 sayfaya kadar",
+    "drop_file_line_1": "Dosyanızı buraya bırakın,",
+    "drop_file_line_2": "veya göz atmak için tıklayın."
   },
   "processing": {
     "fast_processing": "Hızlı İşleme",

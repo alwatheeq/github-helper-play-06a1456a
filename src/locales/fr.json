@@ -204,7 +204,10 @@
     "quiz_type_fill_in_blank": "À trous",
     "quiz_type_open_ended": "Question ouverte",
     "summary_disabled_hint": "Le résumé est désactivé : les fiches utilisent le texte intégral extrait.",
-    "eyebrow": "Espace de travail"
+    "eyebrow": "Espace de travail",
+    "drop_file_helper": "PDF, PPTX, DOCX · jusqu'à 400 pages",
+    "drop_file_line_1": "Déposez votre fichier ici,",
+    "drop_file_line_2": "ou cliquez pour parcourir."
   },
   "processing": {
     "fast_processing": "Traitement rapide",

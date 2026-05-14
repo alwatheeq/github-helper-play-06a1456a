@@ -44,7 +44,7 @@ export const NotFound: React.FC = () => {
           </button>
           <button
             onClick={() => navigate('/')}
-            className="px-6 py-[11px] rounded-[10px] bg-accent-gold text-white border-none text-[14px] font-semibold hover:opacity-90 transition"
+            className="px-6 py-[11px] rounded-[10px] bg-accent-gold text-ink-on-dark border-none text-[14px] font-semibold hover:opacity-90 transition"
             style={{ boxShadow: '0 3px 12px rgba(184,137,58,0.4)' }}
           >
             Go Home

@@ -45,7 +45,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
 
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="w-[540px] max-w-full bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_24px_70px_rgba(0,0,0,0.4)] border border-divider dark:border-divider-on-dark overflow-hidden">
+        <div className="w-[540px] max-w-full bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark overflow-hidden">
 
           {/* Red top band */}
           <div className="bg-gradient-to-br from-red-500 to-red-700 px-7 py-6 relative">
@@ -124,7 +124,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             <div className="flex gap-2.5">
               <a
                 href="/pricing"
-                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-500 hover:bg-red-600 rounded-[8px] transition-colors"
+                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-[8px] transition-colors"
               >
                 Upgrade Plan
               </a>

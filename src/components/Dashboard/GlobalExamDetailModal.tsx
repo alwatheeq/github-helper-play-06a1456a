@@ -55,12 +55,12 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
       case 'advanced':
         return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300';
       default:
-        return 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark';
+        return 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark';
     }
   };
 
   return (
-    <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 animate-fadeIn">
       <ScholarCard variant="elevated" padding="none" className="max-w-3xl w-full max-h-[90vh] overflow-hidden animate-scaleIn">
         <div className="bg-accent-gold p-6 text-ink-on-dark relative">
           <button
@@ -93,7 +93,7 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
         <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">About This Exam</h3>
-            <p className="text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed">{exam.description}</p>
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed">{exam.description}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

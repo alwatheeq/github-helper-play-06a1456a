@@ -72,7 +72,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
       {/* Tutorial Modal */}
       <div className="relative bg-card-light dark:bg-card-dark rounded-[6px] shadow-[0_20px_70px_rgba(0,0,0,0.45)] max-w-2xl w-full overflow-hidden animate-scaleIn">
         {/* Header */}
-        <div className="bg-accent-gold px-7 py-5 text-white relative">
+        <div className="bg-accent-gold px-7 py-5 text-ink-on-dark relative">
           <button
             onClick={handleSkip}
             className="absolute top-4 right-[18px] w-7 h-7 rounded-[5px] bg-white/[0.18] flex items-center justify-center hover:opacity-80 transition-opacity"
@@ -83,7 +83,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
 
           <div className="pr-12">
             <h2 className="font-display text-[21px] font-bold mb-[3px]">{config.title}</h2>
-            <p className="text-white/[0.82] text-[13px]">
+            <p className="text-ink-on-dark/[0.82] text-[13px]">
               {t('tutorial.learn_this_page')}
             </p>
           </div>
@@ -126,7 +126,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
               {/* Next/Close Button */}
               <button
                 onClick={handleNext}
-                className="flex items-center gap-1.5 px-5 py-[7px] bg-accent-gold text-white rounded-[5px] hover:opacity-80 transition-opacity text-[13px] font-bold"
+                className="flex items-center gap-1.5 px-5 py-[7px] bg-accent-gold text-ink-on-dark rounded-[5px] hover:opacity-80 transition-opacity text-[13px] font-bold"
               >
                 <span>{isLastStep ? t('tutorial.close') : t('tutorial.next')}</span>
                 {!isLastStep && <ChevronRight className="h-[13px] w-[13px]" />}

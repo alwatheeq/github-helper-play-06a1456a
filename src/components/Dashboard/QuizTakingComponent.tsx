@@ -352,7 +352,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-page dark:bg-page-dark">
+      <div className="flex items-center justify-center min-h-screen bg-page-light dark:bg-page-dark dark:bg-page-dark">
         <div className="text-center">
           <div className="animate-spin h-10 w-10 border-2 border-ink dark:border-ink-on-dark border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">{t('quiz.loading')}</p>
@@ -365,7 +365,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
   if (isSubmitted && results) {
     const passed = results.scorePercentage >= 60;
     return (
-      <div className="min-h-screen bg-page dark:bg-page-dark p-6">
+      <div className="min-h-screen bg-page-light dark:bg-page-dark dark:bg-page-dark p-6">
         <div className="max-w-4xl mx-auto space-y-5">
 
           {/* Header + action row */}
@@ -461,7 +461,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                       </p>
 
                       {userAnswer && (
-                        <p className={`text-xs mb-1.5 ${isCorrect ? 'text-secondary-ink dark:text-secondary-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                        <p className={`text-xs mb-1.5 ${isCorrect ? 'text-secondary-ink dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                           <span className="text-[9px] tracking-widest uppercase font-bold text-muted-ink mr-1.5">Yours:</span>
                           {userAnswer}
                         </p>
@@ -472,7 +472,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                       {!isCorrect && (
                         <div className="text-xs px-2.5 py-2 bg-accent-gold/10 border-l-2 border-accent-gold mb-1.5">
                           <span className="text-[9px] tracking-widest uppercase font-bold text-accent-gold mr-1.5">Correct:</span>
-                          <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{question.correct_answer}</span>
+                          <span className="text-secondary-ink dark:text-muted-ink-on-dark">{question.correct_answer}</span>
                         </div>
                       )}
                       {question.explanation && (
@@ -505,7 +505,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
   const progressPct = ((currentQuestionIndex + 1) / questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-page dark:bg-page-dark flex flex-col">
+    <div className="min-h-screen bg-page-light dark:bg-page-dark dark:bg-page-dark flex flex-col">
       {/* ── Compact header ── */}
       <div className="border-b border-divider dark:border-divider-on-dark px-6 py-3 flex items-center justify-between">
         <div>
@@ -598,7 +598,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                         {OPTION_LETTERS[i] || String(i + 1)}
                       </div>
                       <div className="flex flex-1 items-center justify-between px-4 py-3">
-                        <span className={`text-sm leading-snug ${selected ? 'text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
+                        <span className={`text-sm leading-snug ${selected ? 'text-ink-on-dark' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>
                           {option}
                         </span>
                         <span onClick={(e) => e.stopPropagation()}>

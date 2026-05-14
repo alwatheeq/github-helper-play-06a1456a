@@ -35,7 +35,7 @@ export const BrainRushMultiplayerWrapper: React.FC = () => {
         <div className="p-4">
           <button
             onClick={handleBackToEduPlay}
-            className={`flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-colors`}
+            className={`flex items-center gap-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-colors`}
           >
             <ArrowLeft className="w-5 h-5" />
             Back to EduPlay

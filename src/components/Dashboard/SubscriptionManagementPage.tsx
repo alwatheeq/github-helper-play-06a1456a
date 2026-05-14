@@ -68,7 +68,7 @@ export const SubscriptionManagementPage: React.FC = () => {
       <div className="min-h-screen w-full bg-page-light dark:bg-page-dark flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold mx-auto" />
-          <p className="mt-4 text-secondary-ink dark:text-secondary-ink-on-dark">{t('subscription_management.loading')}</p>
+          <p className="mt-4 text-secondary-ink dark:text-muted-ink-on-dark">{t('subscription_management.loading')}</p>
         </div>
       </div>
     );
@@ -78,17 +78,17 @@ export const SubscriptionManagementPage: React.FC = () => {
     return (
       <div className="min-h-screen w-full bg-page-light dark:bg-page-dark p-6">
         <div className="max-w-4xl mx-auto">
-          <button type="button" onClick={() => navigate(-1)} className="flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-6">
+          <button type="button" onClick={() => navigate(-1)} className="flex items-center gap-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition mb-6">
             <ArrowLeft className="h-5 w-5" />
             <span>{t('subscription_management.go_back')}</span>
           </button>
           <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
             <div className="text-center">
               <div className="bg-subtle dark:bg-subtle-on-dark p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <Crown className="h-12 w-12 text-secondary-ink dark:text-secondary-ink-on-dark" />
+                <Crown className="h-12 w-12 text-secondary-ink dark:text-muted-ink-on-dark" />
               </div>
               <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-4">{t('subscription_management.no_active_title')}</h2>
-              <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-8">{t('subscription_management.no_active_desc')}</p>
+              <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-8">{t('subscription_management.no_active_desc')}</p>
               <button type="button" onClick={() => navigate('/pricing')} className="bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-8 transition">
                 {t('subscription_management.view_plans')}
               </button>
@@ -119,7 +119,7 @@ export const SubscriptionManagementPage: React.FC = () => {
       <div className="max-w-4xl mx-auto space-y-0">
 
         {/* Back link */}
-        <button type="button" onClick={() => navigate(-1)} className="flex items-center gap-2 text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition mb-4 text-sm">
+        <button type="button" onClick={() => navigate(-1)} className="flex items-center gap-2 text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition mb-4 text-sm">
           <ArrowLeft className="h-4 w-4" />
           <span>{t('subscription_management.go_back')}</span>
         </button>
@@ -191,7 +191,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                     <span className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark"> / {toolPlanCap.toLocaleString()}</span>
                   </div>
                 </div>
-                <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.current_billing_cycle')}</div>
+                <div className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('subscription_management.current_billing_cycle')}</div>
                 <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-[2px]">
                   <div className="h-full bg-accent-gold rounded-[2px] transition-all" style={{ width: `${toolProgressPct}%` }} />
                 </div>
@@ -206,7 +206,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                       <span className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark"> / {zegoCreditsTotal}</span>
                     </div>
                   </div>
-                  <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.zego_subtitle')}</div>
+                  <div className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('subscription_management.zego_subtitle')}</div>
                   <div className="h-1 bg-subtle dark:bg-subtle-on-dark">
                     <div className="h-full bg-accent-gold transition-all" style={{ width: `${zegoCreditsTotal > 0 ? Math.min(100, ((zegoCreditsTotal - zegoCreditsRemaining) / zegoCreditsTotal) * 100) : 0}%` }} />
                   </div>
@@ -222,7 +222,7 @@ export const SubscriptionManagementPage: React.FC = () => {
                       <span className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark"> / {aiChatCreditsTotal}</span>
                     </div>
                   </div>
-                  <div className="text-[12px] text-secondary-ink dark:text-secondary-ink-on-dark mb-2">{t('subscription_management.ai_chat_subtitle')}</div>
+                  <div className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('subscription_management.ai_chat_subtitle')}</div>
                   <div className="h-1 bg-subtle dark:bg-subtle-on-dark">
                     <div className="h-full bg-accent-gold transition-all" style={{ width: `${aiChatCreditsTotal > 0 ? Math.min(100, (aiChatCreditsUsed / aiChatCreditsTotal) * 100) : 0}%` }} />
                   </div>
@@ -231,7 +231,7 @@ export const SubscriptionManagementPage: React.FC = () => {
 
               {subscription.billing_cycle_end && (
                 <div className="mt-4 pt-4 border-t border-divider dark:border-divider-on-dark flex items-center justify-between text-sm">
-                  <span className="text-secondary-ink dark:text-secondary-ink-on-dark">{t('subscription_management.billing_resets_in')}</span>
+                  <span className="text-secondary-ink dark:text-muted-ink-on-dark">{t('subscription_management.billing_resets_in')}</span>
                   <span className="font-semibold text-ink dark:text-ink-on-dark">
                     {t('subscription_management.days_left', { count: daysRemainingInCycle })}
                     <span className="font-normal text-muted-ink dark:text-muted-ink-on-dark text-xs ml-1">({t('subscription_management.resets_on', { date: new Date(subscription.billing_cycle_end).toLocaleDateString() })})</span>
@@ -245,31 +245,31 @@ export const SubscriptionManagementPage: React.FC = () => {
               <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-4">Plan Details</div>
               <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                     <Calendar className="h-4 w-4" />
                     <span className="text-sm">{t('subscription_management.start_date')}</span>
                   </div>
                   <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">{new Date(subscription.start_date).toLocaleDateString()}</p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                     <Calendar className="h-4 w-4" />
                     <span className="text-sm">{subscription.auto_renew ? t('subscription_management.next_billing') : t('subscription_management.expires_on')}</span>
                   </div>
                   <p className="text-lg font-semibold text-ink dark:text-ink-on-dark">
                     {subscription.next_billing_date ? new Date(subscription.next_billing_date).toLocaleDateString() : new Date(subscription.end_date).toLocaleDateString()}
                   </p>
-                  <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">{t('subscription_management.paren_days_left', { count: daysRemaining })}</p>
+                  <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{t('subscription_management.paren_days_left', { count: daysRemaining })}</p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                     <CreditCard className="h-4 w-4" />
                     <span className="text-sm">{t('subscription_management.payment_method')}</span>
                   </div>
                   <p className="text-ink dark:text-ink-on-dark font-medium">{subscription.payment_method_saved ? t('subscription_management.card_on_file') : t('subscription_management.no_card_saved')}</p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                  <div className="flex items-center gap-1.5 text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                     <Shield className="h-4 w-4" />
                     <span className="text-sm">{t('subscription_management.auto_renew')}</span>
                   </div>

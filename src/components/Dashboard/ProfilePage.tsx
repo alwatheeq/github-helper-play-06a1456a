@@ -348,7 +348,7 @@ export const ProfilePage: React.FC = React.memo(() => {
           <div className="mb-4">
             <User className="h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
             <h2 className="font-display text-[20px] text-ink dark:text-ink-on-dark mb-2">{t('profile.load_error') || 'Unable to Load Profile'}</h2>
-            <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-4">We couldn't load your profile data. This might be a temporary issue.</p>
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">We couldn't load your profile data. This might be a temporary issue.</p>
           </div>
           <div className="space-y-3">
             <button onClick={() => { if (user) { ErrorLogger.info('User clicked retry button', { component: 'ProfilePage', action: 'retry', userId: user.id }); setLoading(true); fetchUserData(); } }} disabled={loading} className="px-6 py-3 bg-accent-gold text-ink-on-dark hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition font-medium">
@@ -452,7 +452,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                 return (
                   <div key={i}>
                     <div className="flex justify-between mb-1.5">
-                      <span className="text-[12.5px] text-secondary-ink dark:text-secondary-ink-on-dark font-medium">{c.label}</span>
+                      <span className="text-[12.5px] text-secondary-ink dark:text-muted-ink-on-dark font-medium">{c.label}</span>
                       <span className="font-display text-[13px] font-bold" style={{ color: over ? '#dc2626' : undefined }}>
                         <span className={over ? 'text-red-600' : 'text-ink dark:text-ink-on-dark'}>{c.used.toLocaleString()}</span>
                         {' '}<span className="font-normal text-[11px] text-muted-ink dark:text-muted-ink-on-dark">/ {c.total.toLocaleString()}</span>

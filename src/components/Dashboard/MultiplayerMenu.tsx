@@ -174,7 +174,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           </div>
           <button
             onClick={closeCreateForm}
-            className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
+            className="px-4 py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition"
           >
             ← Back
           </button>
@@ -244,7 +244,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <button
               onClick={createLobby}
               disabled={loading || !gameName.trim()}
-              className="flex-1 py-[11px] bg-accent-gold text-white font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-[11px] bg-accent-gold text-ink-on-dark font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Creating…' : 'Create Game →'}
             </button>
@@ -270,7 +270,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
           </div>
           <button
             onClick={closeJoinForm}
-            className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition"
+            className="px-4 py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition"
           >
             ← Back
           </button>
@@ -301,7 +301,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <button
               onClick={joinLobby}
               disabled={loading || gameCode.length !== 6}
-              className="flex-1 py-[11px] bg-accent-gold text-white font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 py-[11px] bg-accent-gold text-ink-on-dark font-display text-[14px] font-bold hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Joining…' : 'Join Game →'}
             </button>
@@ -323,10 +323,10 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
         <div>
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-[5px]">The Games Room · Brain Rush</div>
           <div className="font-display text-[26px] font-semibold text-ink-on-dark tracking-[-0.5px] mb-[5px]">Brain Rush.</div>
-          <div className="text-[12px] text-white/35">Real-time quiz duels · First to answer correctly earns the most points</div>
+          <div className="text-[12px] text-muted-ink-on-dark">Real-time quiz duels · First to answer correctly earns the most points</div>
         </div>
         {onBack && (
-          <button onClick={onBack} className="px-4 py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition">
+          <button onClick={onBack} className="px-4 py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition">
             ← Back
           </button>
         )}
@@ -339,12 +339,12 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <div className="bg-sidebar p-[18px] flex flex-col">
               <div className="text-[18px] mb-2 text-accent-gold">⊕</div>
               <div className="font-display text-[15px] font-semibold text-ink-on-dark mb-1.5">Host a Game.</div>
-              <div className="text-[11.5px] text-white/40 leading-[1.65] flex-1 mb-3.5">
+              <div className="text-[11.5px] text-muted-ink-on-dark leading-[1.65] flex-1 mb-3.5">
                 Create a private room and share a code with your classmates.
               </div>
               <button
                 onClick={() => setShowCreateForm(true)}
-                className="py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition text-center"
+                className="py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition text-center"
               >
                 Host →
               </button>
@@ -399,8 +399,8 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
 
         <div className="flex flex-col gap-[14px]">
           <div className="bg-sidebar px-[18px] py-[18px]">
-            <div className="text-[9px] tracking-[2px] text-white/45 font-bold uppercase mb-2">Quick Join</div>
-            <div className="text-[11px] text-white/55 mb-3">Have a room code? Enter it to jump straight in.</div>
+            <div className="text-[9px] tracking-[2px] text-muted-ink-on-dark font-bold uppercase mb-2">Quick Join</div>
+            <div className="text-[11px] text-muted-ink-on-dark mb-3">Have a room code? Enter it to jump straight in.</div>
             <input
               type="text"
               placeholder="Room code…"
@@ -412,7 +412,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
             <button
               onClick={() => setShowJoinForm(true)}
               disabled={gameCode.length === 0}
-              className="w-full py-[7px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition disabled:opacity-40"
+              className="w-full py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition disabled:opacity-40"
             >
               Join →
             </button>

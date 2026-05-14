@@ -64,6 +64,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
     if (conversationId && isOpen) {
       loadConversationHistory();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- loadConversationHistory is stable; including it would cause infinite refetches
   }, [conversationId, isOpen]);
 
   // Auto-scroll to bottom when new messages arrive
@@ -258,24 +259,24 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
         style={{ background: 'linear-gradient(135deg, #b45309, #d97706)', boxShadow: '0 4px 18px rgba(180,83,9,0.4)' }}
         aria-label={t('chat.open_assistant')}
       >
-        <MessageCircle className="h-5 w-5 text-white" />
+        <MessageCircle className="h-5 w-5 text-ink-on-dark" />
       </button>
     );
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-[360px] ${isMinimized ? 'h-16' : 'h-[520px]'} flex flex-col bg-card-light dark:bg-card-dark rounded-[18px] shadow-[0_12px_48px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark overflow-hidden`}>
+    <div className={`fixed bottom-6 right-6 z-50 w-[360px] ${isMinimized ? 'h-16' : 'h-[520px]'} flex flex-col bg-card-light dark:bg-card-dark rounded-[18px] border border-divider dark:border-divider-on-dark overflow-hidden`}>
       {/* Header */}
       <div
         className="flex items-center gap-2.5 px-[18px] py-[14px] rounded-t-[18px] flex-shrink-0"
         style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}
       >
         <div className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center flex-shrink-0">
-          <MessageCircle className="h-4 w-4 text-white" />
+          <MessageCircle className="h-4 w-4 text-ink-on-dark" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-[13px] font-bold text-white">{t('chat.assistant_title')}</div>
-          <div className="text-[10px] text-white/[0.75] mt-[1px]">Powered by Claude · Always learning</div>
+          <div className="text-[13px] font-bold text-ink-on-dark">{t('chat.assistant_title')}</div>
+          <div className="text-[10px] text-ink-on-dark/75 mt-[1px]">Powered by Claude · Always learning</div>
         </div>
         <div className="flex items-center gap-1.5">
           <button
@@ -283,7 +284,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
             className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={isMinimized ? t('chat.maximize') : t('chat.minimize')}
           >
-            {isMinimized ? <Maximize2 className="h-3 w-3 text-white" /> : <Minimize2 className="h-3 w-3 text-white" />}
+            {isMinimized ? <Maximize2 className="h-3 w-3 text-ink-on-dark" /> : <Minimize2 className="h-3 w-3 text-ink-on-dark" />}
           </button>
           <button
             onClick={() => {
@@ -293,7 +294,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
             className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={t('chat.close')}
           >
-            <X className="h-3 w-3 text-white" />
+            <X className="h-3 w-3 text-ink-on-dark" />
           </button>
         </div>
       </div>
@@ -327,13 +328,13 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
                   >
                     {message.role === 'assistant' && (
                       <div className="w-[26px] h-[26px] rounded-[8px] flex-shrink-0 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}>
-                        <MessageCircle className="h-3 w-3 text-white" />
+                        <MessageCircle className="h-3 w-3 text-ink-on-dark" />
                       </div>
                     )}
                     <div
                       className={`max-w-[78%] px-3 py-2.5 text-[12px] leading-relaxed whitespace-pre-line ${
                         message.role === 'user'
-                          ? 'text-white'
+                          ? 'text-ink-on-dark'
                           : 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark border border-divider dark:border-divider-on-dark'
                       }`}
                       style={{
@@ -395,9 +396,9 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
               aria-label={t('chat.send')}
             >
               {loading ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-ink-on-dark" />
               ) : (
-                <Send className="h-3.5 w-3.5 text-white" />
+                <Send className="h-3.5 w-3.5 text-ink-on-dark" />
               )}
             </button>
           </div>

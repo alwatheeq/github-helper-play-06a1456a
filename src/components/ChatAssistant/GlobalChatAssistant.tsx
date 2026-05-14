@@ -259,7 +259,6 @@ const GlobalChatAssistantContent: React.FC = () => {
         newWidth = Math.max(minWidth, Math.min(maxWidth, resizeStart.width + deltaX));
       }
       if (resizeDirection.includes('left')) {
-        const _widthChange = resizeStart.width - Math.max(minWidth, Math.min(maxWidth, resizeStart.width - deltaX));
         newWidth = Math.max(minWidth, Math.min(maxWidth, resizeStart.width - deltaX));
         newX = position.x + (resizeStart.width - newWidth);
       }
@@ -267,7 +266,6 @@ const GlobalChatAssistantContent: React.FC = () => {
         newHeight = Math.max(minHeight, Math.min(maxHeight, resizeStart.height + deltaY));
       }
       if (resizeDirection.includes('top')) {
-        const _heightChange = resizeStart.height - Math.max(minHeight, Math.min(maxHeight, resizeStart.height - deltaY));
         newHeight = Math.max(minHeight, Math.min(maxHeight, resizeStart.height - deltaY));
         newY = position.y + (resizeStart.height - newHeight);
       }
@@ -501,7 +499,7 @@ const GlobalChatAssistantContent: React.FC = () => {
             });
           }
         }}
-        className={`fixed z-50 bg-accent-gold text-white p-4 rounded-full shadow hover: transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`fixed z-50 bg-accent-gold text-ink-on-dark p-4 rounded-full shadow hover: transition-colors duration-150  flex items-center justify-center ${shouldShake ? 'animate-shake' : ''} ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -517,7 +515,7 @@ const GlobalChatAssistantContent: React.FC = () => {
   return (
     <div
       ref={chatRef}
-      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
+      className={`fixed z-50 flex flex-col bg-card-light dark:bg-card-dark rounded-[12px] border border-divider dark:border-divider-on-dark transition-colors duration-150 ${isDragging ? 'cursor-move' : ''}`}
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -528,7 +526,7 @@ const GlobalChatAssistantContent: React.FC = () => {
       onMouseDown={handleChatMouseDown}
     >
       {/* Header with drag handle */}
-      <div className={`flex items-center justify-between p-4 bg-accent-gold text-white rounded-t-[12px] chat-header cursor-move`}>
+      <div className={`flex items-center justify-between p-4 bg-accent-gold text-ink-on-dark rounded-t-[12px] chat-header cursor-move`}>
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="drag-handle cursor-move flex-shrink-0">
             <GripVertical className="h-4 w-4 opacity-70" />
@@ -537,8 +535,8 @@ const GlobalChatAssistantContent: React.FC = () => {
             <Sparkles className="h-4 w-4" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-white leading-none">{t('chat.assistant_title')}</p>
-            <p className="text-[10px] text-white/75 leading-none mt-0.5">Powered by Claude · Always learning</p>
+            <p className="text-sm font-bold text-ink-on-dark leading-none">{t('chat.assistant_title')}</p>
+            <p className="text-[10px] text-ink-on-dark/75 leading-none mt-0.5">Powered by Claude · Always learning</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5">
@@ -580,49 +578,49 @@ const GlobalChatAssistantContent: React.FC = () => {
       )}
 
       {/* Resize handles - only show when not minimized (minimized shows circular button) */}
-      {/* Note: At this point, we know isOpen && !isMinimized due to early return above */}
+
       <>
         {/* Corner handles */}
           <div
-            className="absolute top-0 left-0 w-3 h-3 cursor-nwse-resize hover:bg-card-dark dark:hover:bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 rounded-tl-lg resize-handle z-10"
+            className="absolute top-0 left-0 w-3 h-3 cursor-nwse-resize hover:bg-card-dark dark:hover:bg-subtle dark:bg-card-dark rounded-tl-lg resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'top-left')}
           />
           <div
-            className="absolute top-0 right-0 w-3 h-3 cursor-nesw-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 rounded-tr-lg resize-handle z-10"
+            className="absolute top-0 right-0 w-3 h-3 cursor-nesw-resize hover:bg-accent-gold rounded-tr-lg resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'top-right')}
           />
           <div
-            className="absolute bottom-0 left-0 w-3 h-3 cursor-nesw-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 rounded-bl-lg resize-handle z-10"
+            className="absolute bottom-0 left-0 w-3 h-3 cursor-nesw-resize hover:bg-accent-gold rounded-bl-lg resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'bottom-left')}
           />
           <div
-            className="absolute bottom-0 right-0 w-3 h-3 cursor-nwse-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 rounded-br-lg resize-handle z-10"
+            className="absolute bottom-0 right-0 w-3 h-3 cursor-nwse-resize hover:bg-accent-gold rounded-br-lg resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'bottom-right')}
           />
           {/* Edge handles */}
           <div
-            className="absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10"
+            className="absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-accent-gold resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'top')}
           />
           <div
-            className="absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10"
+            className="absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:bg-accent-gold resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'bottom')}
           />
           <div
-            className="absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10"
+            className="absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-accent-gold resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'left')}
           />
           <div
-            className="absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10"
+            className="absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:bg-accent-gold resize-handle z-10"
             onMouseDown={(e) => handleResizeStart(e, 'right')}
           />
       </>
 
       {/* Messages and input - only show when not minimized (minimized shows circular button) */}
-      {/* Note: At this point, we know isOpen && !isMinimized due to early return above */}
+
       <>
         {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-subtle dark:bg-card-dark">
             {messages.length === 0 ? (
               <div className="text-center py-8">
                 <Sparkles className="h-12 w-12 mx-auto mb-4 text-muted-ink dark:text-muted-ink-on-dark" />
@@ -642,7 +640,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                     <div
                       className={`max-w-[80%] rounded-[12px] px-5 py-2.5 ${
                         message.role === 'user'
-                          ? `bg-accent-gold text-white`
+                          ? `bg-accent-gold text-ink-on-dark`
                           : 'bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark border border-divider dark:border-divider-on-dark'
                       }`}
                     >
@@ -652,7 +650,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                 ))}
                 {loading && (
                   <div className="flex justify-start">
-                    <div className="bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-[12px] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
+                    <div className="bg-card-light dark:bg-card-dark rounded-[12px] px-5 py-2.5 border border-divider dark:border-divider-on-dark">
                       <Loader2 className="h-4 w-4 animate-spin text-muted-ink dark:text-muted-ink-on-dark" />
                     </div>
                   </div>
@@ -663,7 +661,7 @@ const GlobalChatAssistantContent: React.FC = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+          <div className="p-4 border-t border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark">
             <div className="flex items-end space-x-2">
               <textarea
                 ref={inputRef}
@@ -671,14 +669,14 @@ const GlobalChatAssistantContent: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder={t('chat.input_placeholder')}
-                className={`flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[12px] bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold`}
+                className={`flex-1 resize-none px-5 py-2.5 border border-divider dark:border-divider-on-dark rounded-[12px] bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold`}
                 rows={1}
                 style={{ minHeight: '40px', maxHeight: '120px' }}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || loading}
-                className={`p-2 rounded-[12px] bg-accent-gold text-white disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
+                className={`p-2 rounded-[12px] bg-accent-gold text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition-opacity`}
                 aria-label={t('chat.send')}
               >
                 {loading ? (

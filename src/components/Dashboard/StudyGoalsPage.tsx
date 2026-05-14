@@ -436,7 +436,7 @@ export const StudyGoalsPage: React.FC = () => {
                 <div key={g.id} className={`flex justify-between items-center py-[7px] ${i < Math.min(completedGoals.length, 5) - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''}`}>
                   <div className="flex items-center gap-[7px] min-w-0">
                     <div className="w-[14px] h-[14px] rounded-full bg-accent-gold-soft border border-accent-gold flex items-center justify-center text-[8px] text-accent-gold flex-shrink-0">✓</div>
-                    <span className="text-[11.5px] text-secondary-ink dark:text-secondary-ink-on-dark truncate">{g.goal_title}</span>
+                    <span className="text-[11.5px] text-secondary-ink dark:text-muted-ink-on-dark truncate">{g.goal_title}</span>
                   </div>
                   <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 ml-2">{formatDate(g.completed_at)}</span>
                 </div>

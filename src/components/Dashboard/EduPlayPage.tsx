@@ -767,7 +767,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 <button
                   onClick={action}
                   className={`text-center text-[12px] py-[7px] transition cursor-pointer border-none ${
-                    primary ? 'bg-accent-gold text-sidebar font-bold hover:opacity-90' : 'border border-divider dark:border-divider-on-dark bg-transparent text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-70'
+                    primary ? 'bg-accent-gold text-sidebar font-bold hover:opacity-90' : 'border border-divider dark:border-divider-on-dark bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-70'
                   }`}
                 >{cta}</button>
               </div>

@@ -60,13 +60,13 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
             {generatedText.summaryText ? (
               <div className="mb-3">
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('audio_study.summary') || 'Summary'}</h4>
-                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-secondary-ink-on-dark`}>{generatedText.summaryText}</div>
+                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-muted-ink-on-dark`}>{generatedText.summaryText}</div>
               </div>
             ) : null}
             {generatedText.explanationText ? (
               <div>
                 <h4 className={`font-semibold text-ink dark:text-ink-on-dark`}>{t('audio_study.explanation') || 'Clearer Explanation'}</h4>
-                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-secondary-ink-on-dark`}>{generatedText.explanationText}</div>
+                <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-muted-ink-on-dark`}>{generatedText.explanationText}</div>
               </div>
             ) : null}
           </div>

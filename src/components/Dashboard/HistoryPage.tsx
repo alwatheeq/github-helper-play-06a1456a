@@ -193,7 +193,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-2">{t('history.error_loading')}</h3>
-            <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-4">{error}</p>
+            <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-4">{error}</p>
             <ScholarButton
               variant="primary"
               onClick={() => fetchHistory()}
@@ -294,7 +294,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
             <div className="text-center py-20 flex flex-col items-center justify-center">
               <History className="h-12 w-12 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
               <h3 className="font-display text-xl text-ink dark:text-ink-on-dark mb-2">{t('history.no_history')}</h3>
-              <p className="text-secondary-ink dark:text-secondary-ink-on-dark max-w-sm">
+              <p className="text-secondary-ink dark:text-muted-ink-on-dark max-w-sm">
                 {t('history.process_first')}
               </p>
             </div>

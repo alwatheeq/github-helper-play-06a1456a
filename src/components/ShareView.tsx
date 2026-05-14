@@ -28,6 +28,7 @@ export const ShareView: React.FC = () => {
     if (shareableLinkId) {
       fetchSharedItem();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchSharedItem is stable; including it would cause infinite refetches
   }, [shareableLinkId]);
 
   const fetchSharedItem = async () => {
@@ -77,7 +78,7 @@ export const ShareView: React.FC = () => {
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold mr-3"></div>
-            <span className="text-secondary-ink dark:text-muted-ink-on-dark">{t('common.loading')}</span>
+            <span className="text-muted-ink dark:text-muted-ink-on-dark">{t('common.loading')}</span>
           </div>
         </div>
       </div>
@@ -96,7 +97,7 @@ export const ShareView: React.FC = () => {
             </p>
             <a
               href="/"
-              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-white hover:opacity-90 transition duration-150"
+              className="inline-flex items-center space-x-2 px-4 py-2 bg-accent-gold text-ink-on-dark hover:opacity-90 transition duration-150"
             >
               <ExternalLink className="h-4 w-4" />
               <span>{t('share.visit_meshfahem')}</span>
@@ -114,7 +115,7 @@ export const ShareView: React.FC = () => {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-[26px] h-[26px] bg-accent-gold rounded-[6px] flex items-center justify-center flex-shrink-0">
-            <FileText className="h-3.5 w-3.5 text-white" />
+            <FileText className="h-3.5 w-3.5 text-ink-on-dark" />
           </div>
           <span className="text-sm font-semibold text-ink-on-dark">{t('app_name')}</span>
         </div>
@@ -216,7 +217,7 @@ export const ShareView: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-center gap-2 text-muted-ink dark:text-muted-ink-on-dark">
             <div className="bg-accent-gold p-1 rounded">
-              <FileText className="h-4 w-4 text-white" />
+              <FileText className="h-4 w-4 text-ink-on-dark" />
             </div>
             <span className="text-sm">
               {t('share.powered_by')} <strong>{t('app_name')}</strong> — {t('share.ai_powered_learning')}

@@ -78,11 +78,11 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
   const tileSelected = `border-2 border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark `;
   const tileUnselected = `border border-divider dark:border-divider-on-dark hover:opacity-80`;
 
-  const activeTabBtn = `bg-accent-gold text-white shadow-sm hover:opacity-90`;
-  const inactiveTabBtn = `bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80`;
+  const activeTabBtn = `bg-accent-gold text-ink-on-dark hover:opacity-90`;
+  const inactiveTabBtn = `bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80`;
 
   return (
-    <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <ScholarCard variant="elevated" padding="none" className="max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="p-4 sm:p-5 border-b border-divider dark:border-divider-on-dark">
@@ -121,7 +121,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                   className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
                     activeTab === 'topics'
                       ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
-                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark'
+                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark'
                   }`}
                 >
                   {localSelectedTopics.length}
@@ -142,7 +142,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                   className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
                     activeTab === 'tags'
                       ? 'bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark'
-                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-secondary-ink-on-dark'
+                      : 'bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark'
                   }`}
                 >
                   {localSelectedTags.length}
@@ -157,7 +157,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
           {activeTab === 'topics' && (
             <div>
               <div className="mb-3">
-                <h4 className="text-sm font-semibold text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                <h4 className="text-sm font-semibold text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                   {t(modalKey('section_topics_title'))}
                 </h4>
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
@@ -178,7 +178,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <BookOpen className={`h-4 w-4 shrink-0 ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} aria-hidden />
-                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
+                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>
                               {topic}
                             </span>
                           </div>
@@ -203,7 +203,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
           {activeTab === 'tags' && (
             <div>
               <div className="mb-3">
-                <h4 className="text-sm font-semibold text-secondary-ink dark:text-secondary-ink-on-dark mb-1">
+                <h4 className="text-sm font-semibold text-secondary-ink dark:text-muted-ink-on-dark mb-1">
                   {t(modalKey('section_tags_title'))}
                 </h4>
                 <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">
@@ -224,12 +224,12 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <Tag className={`h-4 w-4 shrink-0 ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`} aria-hidden />
-                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-secondary-ink-on-dark'}`}>
+                            <span className={`font-medium ${isSelected ? 'text-ink dark:text-ink-on-dark' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>
                               {tag.name}
                             </span>
                           </div>
                           {tag.is_public ? (
-                            <div className="flex items-center gap-1 text-xs text-secondary-ink dark:text-secondary-ink-on-dark">
+                            <div className="flex items-center gap-1 text-xs text-secondary-ink dark:text-muted-ink-on-dark">
                               <Globe className="h-3 w-3 shrink-0" aria-hidden />
                               <span>{t(modalKey('visibility_public'))}</span>
                             </div>
@@ -262,7 +262,7 @@ export const TopicsTagsModal: React.FC<TopicsTagsModalProps> = ({
         {/* Footer */}
         <div className="p-4 sm:p-5 border-t border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-            <div className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
+            <div className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
               {totalSelected === 1
                 ? t(modalKey('filters_selected_one'), { count: totalSelected })
                 : t(modalKey('filters_selected_other'), { count: totalSelected })}

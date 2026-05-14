@@ -187,17 +187,17 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
       onClick={handleOverlayClick}
     >
       <div
-        className="bg-page-light dark:bg-page-dark w-full max-w-[430px] shadow-[0_24px_56px_rgba(0,0,0,0.3)]"
+        className="bg-page-light dark:bg-page-dark w-full max-w-[430px]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Ink header */}
         <div className="bg-sidebar px-6 py-5">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Profile</div>
           <div className="flex items-center justify-between">
-            <div className="font-display text-[20px] font-semibold text-card-light">Set Username.</div>
+            <div className="font-display text-[20px] font-semibold text-ink-on-dark">Set Username.</div>
             <button
               onClick={onClose}
-              className="w-[26px] h-[26px] grid place-items-center bg-transparent border border-white/[0.13] text-white/[0.27] text-[14px] cursor-pointer hover:text-white/50 transition"
+              className="w-[26px] h-[26px] grid place-items-center bg-transparent border border-divider-on-dark text-muted-ink-on-dark text-[14px] cursor-pointer hover:text-ink-on-dark transition"
               aria-label="Close"
             >
               ✕

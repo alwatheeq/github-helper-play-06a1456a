@@ -129,6 +129,7 @@ export const ContentViewPage: React.FC = () => {
 
     load();
     return () => { cancelled = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- user object reference changes frequently; user.id is the stable dependency
   }, [id, user?.id, source]);
 
   // Set chat context when data is loaded; clear on unmount
@@ -157,16 +158,16 @@ export const ContentViewPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-page">
-        <div className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">Loading...</div>
+      <div className="min-h-screen flex items-center justify-center p-6 bg-page-light dark:bg-page-dark">
+        <div className="text-lg text-secondary-ink dark:text-muted-ink-on-dark">Loading...</div>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 gap-4 bg-page">
-        <p className="text-lg text-secondary-ink dark:text-secondary-ink-on-dark">
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 gap-4 bg-page-light dark:bg-page-dark">
+        <p className="text-lg text-secondary-ink dark:text-muted-ink-on-dark">
           {error === 'Unauthorized'
             ? 'Please sign in to view this content.'
             : 'Content not found or you do not have access.'}
@@ -174,7 +175,7 @@ export const ContentViewPage: React.FC = () => {
         <button
           type="button"
           onClick={goBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-secondary-ink-on-dark hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           Go back
@@ -197,19 +198,19 @@ export const ContentViewPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-page">
+    <div className="min-h-screen flex flex-col bg-page-light dark:bg-page-dark">
       {/* Scholar v4: single 52px dark bar — back | sep | title | pill tabs */}
       <div className="sticky top-0 z-30 bg-sidebar flex items-center h-[52px] px-[18px] gap-[14px]">
         <button
           type="button"
           onClick={goBack}
-          className="flex items-center gap-1.5 text-white/50 hover:text-white/80 transition-colors flex-shrink-0"
+          className="flex items-center gap-1.5 text-muted-ink-on-dark hover:text-ink-on-dark transition-colors flex-shrink-0"
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="text-[13px]">Back</span>
         </button>
         <div className="w-px h-4 bg-white/20 flex-shrink-0" />
-        <h1 className="font-display text-[13px] font-semibold text-white truncate flex-1">
+        <h1 className="font-display text-[13px] font-semibold text-ink-on-dark truncate flex-1">
           {title}
         </h1>
         <div className="flex gap-0.5 bg-white/[0.07] rounded-[8px] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
@@ -223,7 +224,7 @@ export const ContentViewPage: React.FC = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={[
                   'flex items-center gap-1 px-[14px] py-[5px] rounded-[6px] text-[12px] font-semibold whitespace-nowrap transition-colors duration-150',
-                  active ? 'bg-accent-gold text-sidebar' : 'text-white/50 hover:text-white/80',
+                  active ? 'bg-accent-gold text-sidebar' : 'text-muted-ink-on-dark hover:text-ink-on-dark',
                 ].join(' ')}
               >
                 <span aria-hidden>{tab.icon}</span>
@@ -371,7 +372,7 @@ export const ContentViewPage: React.FC = () => {
             <div className="flex-1 overflow-y-auto px-6 py-8">
               <p className="text-xs font-bold tracking-[2px] uppercase text-accent-gold mb-6">Transcript</p>
               <div className="space-y-6 max-w-2xl">
-                <div className="flex items-start gap-4 text-sm text-secondary-ink dark:text-secondary-ink-on-dark">
+                <div className="flex items-start gap-4 text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                   <Headphones className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 mt-0.5" />
                   <p className="leading-relaxed">
                     Audio narration for this document is being generated. Once ready, you will see a full transcript with timestamps here, synchronized with the audio playback.
@@ -384,7 +385,7 @@ export const ContentViewPage: React.FC = () => {
                     <span className="text-xs text-accent-gold font-bold font-mono flex-shrink-0 pt-0.5 min-w-[2.5rem]">
                       {String(i * 45).padStart(1, '0')}:{String((i * 7) % 60).padStart(2, '0')}
                     </span>
-                    <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed">
+                    <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed">
                       {paragraph}
                     </p>
                   </div>
@@ -414,7 +415,7 @@ export const ContentViewPage: React.FC = () => {
             </div>
 
             {/* Mind map canvas */}
-            <div className="flex-1 overflow-hidden relative bg-page"
+            <div className="flex-1 overflow-hidden relative bg-page-light dark:bg-page-dark"
               style={{
                 backgroundImage: 'linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)',
                 backgroundSize: '32px 32px',
@@ -440,7 +441,7 @@ export const ContentViewPage: React.FC = () => {
                       <h3 className="font-display text-xl text-ink dark:text-ink-on-dark">
                         Mind map is being generated...
                       </h3>
-                      <p className="text-sm text-secondary-ink dark:text-secondary-ink-on-dark max-w-sm">
+                      <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark max-w-sm">
                         Save this document to your library to enable the full interactive mind map experience.
                       </p>
                     </div>
@@ -471,7 +472,7 @@ export const ContentViewPage: React.FC = () => {
                   <button
                     key={i}
                     type="button"
-                    className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-secondary-ink-on-dark hover:bg-subtle transition-colors "
+                    className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
                   >
                     {sym}
                   </button>

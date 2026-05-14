@@ -201,6 +201,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       const isInitialLoad = libraryItems.length === 0;
       fetchLibraryData(isInitialLoad);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchLibraryData and libraryItems.length are intentionally excluded; including them would cause infinite refetches
   }, [user, debouncedSearchQuery, selectedTags, selectedTopics, sortOption, viewFilter, libraryViewMode, refreshTrigger]);
 
   const fetchLibraryData = async (isInitialLoad = false) => {
@@ -733,7 +734,7 @@ export const LibraryPage: React.FC = React.memo(() => {
           <div className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark mb-2`}>{t('common.error_loading_library')}</h3>
-            <p className={`text-secondary-ink dark:text-secondary-ink-on-dark mb-4`}>{error}</p>
+            <p className={`text-secondary-ink dark:text-muted-ink-on-dark mb-4`}>{error}</p>
             <ScholarButton variant="primary" onClick={() => fetchLibraryData()} className="mx-auto">
               {t('common.try_again')}
             </ScholarButton>
@@ -989,7 +990,7 @@ export const LibraryPage: React.FC = React.memo(() => {
       {/* Multi-select controls */}
       {selectMultipleMode && (
         <div className="flex items-center justify-between p-3 mb-4 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark">
-          <span className="text-sm font-medium text-secondary-ink dark:text-secondary-ink-on-dark">
+          <span className="text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark">
             {selectedItems.size > 0
               ? t('library.items_selected', { count: selectedItems.size })
               : t('library.select_multiple')
@@ -1082,7 +1083,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                   <h3 className="font-display text-xl text-ink dark:text-ink-on-dark mb-2">
                     {t('notebook.no_items_with_notes') || 'No Notes Yet'}
                   </h3>
-                  <p className="text-secondary-ink dark:text-secondary-ink-on-dark max-w-sm">
+                  <p className="text-secondary-ink dark:text-muted-ink-on-dark max-w-sm">
                     {t('notebook.add_notes_to_items') || 'Start adding notes to your library items. They will appear here for easy access.'}
                   </p>
                 </>
@@ -1094,7 +1095,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                       ? t('library.no_items_match_search')
                       : t('library.no_library_items_yet')}
                   </h3>
-                  <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-6 max-w-sm">
+                  <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-6 max-w-sm">
                     {searchQuery || selectedTags.length > 0
                       ? t('library.adjust_search_filter')
                       : t('library.process_to_build_library')}
@@ -1236,15 +1237,15 @@ export const LibraryPage: React.FC = React.memo(() => {
 
       {/* Delete Items Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 bg-page bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className={`bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] max-w-md w-full dark:shadow border border-divider dark:border-divider-on-dark`}>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card-light dark:bg-card-dark rounded-[12px] max-w-md w-full border border-divider dark:border-divider-on-dark">
             <div className={`p-6 border-b border border-divider dark:border-divider-on-dark`}>
               <h3 className={`text-lg font-semibold text-ink dark:text-ink-on-dark`}>{t('library.delete_items_title')}</h3>
               <p className="text-sm text-red-600 mt-1 dark:text-red-400">{t('library.action_cannot_be_undone')}</p>
             </div>
             
             <div className="p-6">
-              <p className={'text-secondary-ink dark:text-secondary-ink-on-dark'}>
+              <p className={'text-secondary-ink dark:text-muted-ink-on-dark'}>
                 {t('library.confirm_bulk_delete', { count: selectedItems.size })}
               </p>
             </div>

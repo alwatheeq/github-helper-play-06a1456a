@@ -76,7 +76,7 @@ export const LowCreditBanner: React.FC = () => {
           iconClass: 'text-red-600 dark:text-red-400',
           textClass: 'text-red-800 dark:text-red-200',
           badgeClass: 'bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-300 dark:border-red-700',
-          btnClass: 'bg-red-600 hover:bg-red-700 text-white shadow-[0_2px_8px_rgba(220,38,38,0.35)]',
+          btnClass: 'bg-red-600 hover:bg-red-700 text-white',
           title: 'Credits Critically Low',
           message: `You have only ${credits_remaining.toLocaleString()} credits left. Upgrade now to avoid interruptions. Credits refresh on ${cycleEndDate}.`,
         };
@@ -86,7 +86,7 @@ export const LowCreditBanner: React.FC = () => {
           iconClass: 'text-amber-600 dark:text-amber-400',
           textClass: 'text-amber-900 dark:text-amber-200',
           badgeClass: 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700',
-          btnClass: 'bg-amber-600 hover:bg-amber-700 text-white shadow-[0_2px_8px_rgba(217,119,6,0.35)]',
+          btnClass: 'bg-amber-600 hover:bg-amber-700 text-white',
           title: 'Running Low on Credits',
           message: `You have ${credits_remaining.toLocaleString()} credits remaining. Consider topping up soon to keep your momentum going. Refreshes on ${cycleEndDate}.`,
         };
@@ -96,7 +96,7 @@ export const LowCreditBanner: React.FC = () => {
           iconClass: 'text-yellow-600 dark:text-yellow-400',
           textClass: 'text-yellow-900 dark:text-yellow-200',
           badgeClass: 'bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 border border-yellow-300 dark:border-yellow-700',
-          btnClass: 'bg-yellow-600 hover:bg-yellow-700 text-white shadow-[0_2px_8px_rgba(202,138,4,0.35)]',
+          btnClass: 'bg-yellow-600 hover:bg-yellow-700 text-white',
           title: 'Credit Balance Notice',
           message: `Your credit balance is at ${credits_remaining.toLocaleString()}. You're doing great — just a heads up to plan ahead. Refreshes on ${cycleEndDate}.`,
         };

@@ -38,7 +38,7 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
 
       <div className="p-4">
         {hasText ? (
-          <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-secondary-ink-on-dark leading-relaxed`}>
+          <div className={`text-sm whitespace-pre-wrap text-secondary-ink dark:text-muted-ink-on-dark leading-relaxed`}>
             {transcriptText}
           </div>
         ) : (
