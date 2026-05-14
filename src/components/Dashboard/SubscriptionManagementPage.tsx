@@ -132,10 +132,10 @@ export const SubscriptionManagementPage: React.FC = () => {
               <div className="font-display text-[28px] font-semibold text-card-light tracking-[-0.4px]">{tierInfo.name}</div>
               <div className="text-[12px] text-muted-ink-on-dark mt-1">{tierInfo.description}</div>
             </div>
-            <span className={`text-[10px] font-bold tracking-[1px] uppercase px-2.5 py-1 ${
-              subscription.status === 'canceled' ? 'bg-accent-gold-soft text-muted-ink dark:text-muted-ink-on-dark'
-              : subscription.status === 'payment_failed' ? 'bg-accent-gold-soft text-muted-ink dark:text-muted-ink-on-dark'
-              : 'bg-accent-gold-soft text-accent-gold'
+            <span className={`text-[10px] font-bold tracking-[1px] uppercase px-2.5 py-1 bg-accent-gold-soft ${
+              subscription.status === 'canceled' || subscription.status === 'payment_failed'
+                ? 'text-muted-ink dark:text-muted-ink-on-dark'
+                : 'text-accent-gold'
             }`}>{statusInfo.name}</span>
           </div>
         </div>

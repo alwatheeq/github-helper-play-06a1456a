@@ -555,13 +555,11 @@ export const BrainRushGamePlay: React.FC<BrainRushGamePlayProps> = ({
           const isCorrect = option === currentQuestion.correct_answer;
           const showResult = hasAnswered;
 
-          const cardCls = showResult && isCorrect
-            ? 'bg-accent-gold-soft border-accent-gold'
-            : showResult && isSelected && !isCorrect
-            ? 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'
-            : isSelected
-            ? 'bg-accent-gold-soft border-accent-gold'
-            : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-accent-gold/50';
+          let cardCls: string;
+          if (showResult && isCorrect) cardCls = 'bg-accent-gold-soft border-accent-gold';
+          else if (showResult && isSelected) cardCls = 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark';
+          else if (isSelected) cardCls = 'bg-accent-gold-soft border-accent-gold';
+          else cardCls = 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark hover:border-accent-gold/50';
 
           return (
             <div
