@@ -82,10 +82,10 @@ export const TokenUsagePage: React.FC = React.memo(() => {
       setSelectedUser(email);
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
-      ErrorLogger.error(error, { 
-        component: 'TokenUsagePage', 
-        action: 'fetchUserHistory', 
-        metadata: { email } 
+      ErrorLogger.error(error, {
+        component: 'TokenUsagePage',
+        action: 'fetchUserHistory',
+        metadata: { email }
       });
       showErrorToast('Failed to load usage history');
     }
@@ -114,7 +114,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
   const getUsageColor = (percentage: number) => {
     if (percentage >= 90) return 'text-red-400 bg-red-500/20';
     if (percentage >= 80) return 'text-orange-400 bg-orange-500/20';
-    if (percentage >= 50) return 'text-gray-600 dark:text-gray-300 bg-subtle dark:bg-subtle-on-dark';
+    if (percentage >= 50) return 'text-secondary-ink dark:text-muted-ink-on-dark bg-subtle dark:bg-subtle-on-dark';
     return 'text-green-400 bg-green-500/20';
   };
 
@@ -156,7 +156,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
       </div>
     );
   }
@@ -165,13 +165,13 @@ export const TokenUsagePage: React.FC = React.memo(() => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">Token Usage Monitoring</h1>
-          <p className="text-gray-400 mt-1">Track and monitor user token consumption</p>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Token Usage Monitoring</h1>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Track and monitor user token consumption</p>
         </div>
         <button
           onClick={handleRefresh}
           disabled={refreshing}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-700 text-white rounded-lg transition disabled:opacity-50"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition disabled:opacity-50"
         >
           <RefreshCw className={`h-5 w-5 ${refreshing ? 'animate-spin' : ''}`} />
           <span>Refresh</span>
@@ -179,64 +179,64 @@ export const TokenUsagePage: React.FC = React.memo(() => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <Users className="h-6 w-6 text-blue-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Users className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Total Users</h3>
-          <p className="text-3xl font-bold text-white">{stats.total_users}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Total Users</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.total_users}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <Activity className="h-6 w-6 text-green-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Activity className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Active Users</h3>
-          <p className="text-3xl font-bold text-white">{stats.active_users}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Active Users</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.active_users}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-orange-500/20 p-3 rounded-lg">
-              <AlertTriangle className="h-6 w-6 text-orange-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <AlertTriangle className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">High Usage (80%+)</h3>
-          <p className="text-3xl font-bold text-white">{stats.high_usage}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">High Usage (80%+)</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.high_usage}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-purple-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <BarChart3 className="h-6 w-6 text-purple-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <BarChart3 className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Average Usage</h3>
-          <p className="text-3xl font-bold text-white">{stats.avg_usage}%</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Average Usage</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.avg_usage}%</p>
         </div>
       </div>
 
-      <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search by email..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
           <select
             value={usageFilter}
             onChange={(e) => setUsageFilter(e.target.value)}
-            className="px-5 py-2.5 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-slate-600 rounded-lg text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <option value="all">All Users</option>
             <option value="active">Active Only</option>
@@ -247,7 +247,7 @@ export const TokenUsagePage: React.FC = React.memo(() => {
 
           <button
             onClick={exportToCSV}
-            className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-700 text-white rounded-lg transition"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
           >
             <Download className="h-5 w-5" />
             <span>Export</span>
@@ -255,42 +255,42 @@ export const TokenUsagePage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md border border-slate-700 overflow-hidden">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Tier
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Usage
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Tokens
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Cycle End
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700">
+            <tbody className="divide-y divide-divider dark:divide-divider-on-dark">
               {filteredUsers.map((user) => {
                 const tierInfo = getTierDisplayInfo(user.subscription_tier);
 
                 return (
-                  <tr key={user.user_id} className="hover:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50">
+                  <tr key={user.user_id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                     <td className="px-6 py-6 whitespace-nowrap">
-                      <p className="text-sm font-medium text-white">{user.email}</p>
+                      <p className="text-sm font-medium text-ink dark:text-ink-on-dark">{user.email}</p>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${tierInfo.bgColor} ${tierInfo.color}`}>
@@ -306,9 +306,9 @@ export const TokenUsagePage: React.FC = React.memo(() => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <div className="flex-1 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-full h-2 w-24">
+                        <div className="flex-1 bg-subtle dark:bg-subtle-on-dark h-[3px] w-24">
                           <div
-                            className={`h-2 rounded-full ${getUsageColor(user.usage_percentage)}`}
+                            className={`h-[3px] ${getUsageColor(user.usage_percentage)}`}
                             style={{ width: `${Math.min(100, user.usage_percentage)}%` }}
                           />
                         </div>
@@ -317,23 +317,23 @@ export const TokenUsagePage: React.FC = React.memo(() => {
                         </span>
                       </div>
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-300">
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                       {formatTokenUsage(user.tokens_used)} / {formatTokenUsage(user.token_limit)}
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       {user.billing_cycle_end ? (
                         <div>
-                          <p className="text-sm text-gray-300">{new Date(user.billing_cycle_end).toLocaleDateString()}</p>
-                          <p className="text-xs text-gray-500">{user.days_remaining} days remaining</p>
+                          <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">{new Date(user.billing_cycle_end).toLocaleDateString()}</p>
+                          <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{user.days_remaining} days remaining</p>
                         </div>
                       ) : (
-                        <span className="text-sm text-gray-500">N/A</span>
+                        <span className="text-sm text-muted-ink dark:text-muted-ink-on-dark">N/A</span>
                       )}
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <button
                         onClick={() => viewHistory(user.user_id, user.email)}
-                        className="flex items-center space-x-1 px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-700 text-white text-sm rounded-lg transition"
+                        className="flex items-center space-x-1 px-3 py-1 bg-accent-gold text-ink-on-dark text-sm hover:opacity-90 transition"
                       >
                         <Calendar className="h-4 w-4" />
                         <span>History</span>
@@ -348,49 +348,49 @@ export const TokenUsagePage: React.FC = React.memo(() => {
 
         {filteredUsers.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-400">No users found</p>
+            <p className="text-muted-ink dark:text-muted-ink-on-dark">No users found</p>
           </div>
         )}
       </div>
 
       {selectedUser && userHistory.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-slate-800 rounded-xl s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700">
-            <div className="sticky top-0 bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-slate-700 px-6 py-6 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-white">Usage History - {selectedUser}</h3>
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
+              <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">Usage History - {selectedUser}</h3>
               <button
                 onClick={() => {
                   setSelectedUser(null);
                   setUserHistory([]);
                 }}
-                className="p-2 hover:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg transition"
+                className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
               >
-                <span className="text-gray-400 text-2xl">&times;</span>
+                <span className="text-muted-ink dark:text-muted-ink-on-dark text-2xl">&times;</span>
               </button>
             </div>
 
             <div className="p-6">
               <div className="space-y-6">
                 {userHistory.map((record, idx) => (
-                  <div key={idx} className="bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-lg p-6 border border-slate-600">
+                  <div key={idx} className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                       <div>
-                        <p className="text-xs text-gray-400 mb-1">Billing Cycle</p>
-                        <p className="text-sm text-white">{new Date(record.cycle_start).toLocaleDateString()}</p>
-                        <p className="text-xs text-gray-500">to {new Date(record.cycle_end).toLocaleDateString()}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1">Billing Cycle</p>
+                        <p className="text-sm text-ink dark:text-ink-on-dark">{new Date(record.cycle_start).toLocaleDateString()}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">to {new Date(record.cycle_end).toLocaleDateString()}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-1">Tier</p>
-                        <p className="text-sm text-white">{getTierDisplayInfo(record.subscription_tier).name}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1">Tier</p>
+                        <p className="text-sm text-ink dark:text-ink-on-dark">{getTierDisplayInfo(record.subscription_tier).name}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-1">Usage</p>
-                        <p className="text-sm text-white">
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1">Usage</p>
+                        <p className="text-sm text-ink dark:text-ink-on-dark">
                           {formatTokenUsage(record.tokens_used)} / {formatTokenUsage(record.token_limit)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-1">Percentage</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark mb-1">Percentage</p>
                         <p className={`text-sm font-semibold ${getUsageColor(record.usage_percentage)}`}>
                           {record.usage_percentage.toFixed(1)}%
                         </p>

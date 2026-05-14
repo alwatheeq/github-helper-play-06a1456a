@@ -76,13 +76,13 @@ export const UsersPage: React.FC = React.memo(() => {
 
   useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = async () => {
     setLoading(true);
     return PerformanceMonitor.measureAsync('UsersPage.fetchUsers', async () => {
       try {
-        // Fetch user profiles
         const { data: profiles, error: profilesError } = await supabase
           .from('user_profiles')
           .select('*')
@@ -90,7 +90,6 @@ export const UsersPage: React.FC = React.memo(() => {
 
         if (profilesError) throw profilesError;
 
-        // Fetch active subscriptions for all users
         const userIds = (profiles || []).map(p => p.id);
         const { data: subscriptions, error: subsError } = await supabase
           .from('subscriptions')
@@ -100,14 +99,13 @@ export const UsersPage: React.FC = React.memo(() => {
 
         if (subsError) {
           const error = subsError instanceof Error ? subsError : new Error(String(subsError));
-          ErrorLogger.warn('Failed to fetch subscriptions', { 
-            component: 'UsersPage', 
-            action: 'fetchUsers', 
-            metadata: { step: 'fetchSubscriptions', error: error.message } 
+          ErrorLogger.warn('Failed to fetch subscriptions', {
+            component: 'UsersPage',
+            action: 'fetchUsers',
+            metadata: { step: 'fetchSubscriptions', error: error.message }
           });
         }
 
-        // Map subscriptions to users
         const subscriptionMap = new Map(
           (subscriptions || []).map(sub => [sub.user_id, sub])
         );
@@ -368,7 +366,6 @@ export const UsersPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log the action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -380,10 +377,10 @@ export const UsersPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'UsersPage', 
-          action: 'togglePaymentStatus', 
-          metadata: { userId, userEmail, error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'UsersPage',
+          action: 'togglePaymentStatus',
+          metadata: { userId, userEmail, error: logError.message }
         });
       }
 
@@ -391,10 +388,10 @@ export const UsersPage: React.FC = React.memo(() => {
       await fetchUsers();
     } catch (error) {
       const err = error instanceof Error ? error : new Error('Unknown error');
-      ErrorLogger.error(err, { 
-        component: 'UsersPage', 
-        action: 'togglePaymentStatus', 
-        metadata: { userId } 
+      ErrorLogger.error(err, {
+        component: 'UsersPage',
+        action: 'togglePaymentStatus',
+        metadata: { userId }
       });
       toast.error('Failed to update payment status');
     }
@@ -538,7 +535,6 @@ export const UsersPage: React.FC = React.memo(() => {
     a.click();
     window.URL.revokeObjectURL(url);
 
-    // Log the export action
     try {
       await supabase.rpc('log_admin_action', {
         p_action_type: 'EXPORT',
@@ -547,10 +543,10 @@ export const UsersPage: React.FC = React.memo(() => {
       });
     } catch (logErr: unknown) {
       const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-      ErrorLogger.warn('Failed to log action', { 
-        component: 'UsersPage', 
-        action: 'exportToCSV', 
-        metadata: { userCount: filteredUsers.length, error: logError.message } 
+      ErrorLogger.warn('Failed to log action', {
+        component: 'UsersPage',
+        action: 'exportToCSV',
+        metadata: { userCount: filteredUsers.length, error: logError.message }
       });
     }
 
@@ -573,38 +569,38 @@ export const UsersPage: React.FC = React.memo(() => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">User Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">View and manage all registered users</p>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">View and manage all registered users</p>
         </div>
         <div className="flex items-center space-x-2">
           {selectMultipleMode && selectedItems.size > 0 && (
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                 {selectedItems.size} selected
               </span>
               <button
                 onClick={handleBulkSubscribe}
-                className="flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition text-sm"
+                className="flex items-center space-x-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 transition text-sm"
               >
                 <UserPlus className="h-4 w-4" />
                 <span>Subscribe</span>
               </button>
               <button
                 onClick={handleBulkUnsubscribe}
-                className="flex items-center space-x-2 px-3 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition text-sm"
+                className="flex items-center space-x-2 px-3 py-2 bg-orange-600 text-white hover:bg-orange-700 transition text-sm"
               >
                 <UserX className="h-4 w-4" />
                 <span>Unsubscribe</span>
               </button>
               <button
                 onClick={handleBulkBlock}
-                className="flex items-center space-x-2 px-3 py-2 bg-red-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-red-700 transition text-sm"
+                className="flex items-center space-x-2 px-3 py-2 bg-red-600 text-white hover:bg-red-700 transition text-sm"
               >
                 <Ban className="h-4 w-4" />
                 <span>Block</span>
               </button>
               <button
                 onClick={handleBulkUnblock}
-                className="flex items-center space-x-2 px-3 py-2 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition text-sm"
+                className="flex items-center space-x-2 px-3 py-2 bg-green-600 text-white hover:bg-green-700 transition text-sm"
               >
                 <Ban className="h-4 w-4" />
                 <span>Unblock</span>
@@ -614,7 +610,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   setSelectedItems(new Set());
                   setSelectMultipleMode(false);
                 }}
-                className="px-3 py-2 bg-gray-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-gray-700 transition text-sm"
+                className="px-3 py-2 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition text-sm"
               >
                 Cancel
               </button>
@@ -624,14 +620,14 @@ export const UsersPage: React.FC = React.memo(() => {
             <>
               <button
                 onClick={() => setSelectMultipleMode(true)}
-                className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 transition"
+                className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
               >
                 <CheckSquare className="h-4 w-4" />
                 <span>Select Multiple</span>
               </button>
               <button
                 onClick={exportUsersToCSV}
-                className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition"
+                className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
               >
                 <Download className="h-4 w-4" />
                 <span>Export CSV</span>
@@ -641,31 +637,31 @@ export const UsersPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow border border-gray-200 dark:border-gray-700 p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="mb-8">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search users by email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-lg focus-visible:ring-2 focus-visible:ring-blue-500 focus:border-transparent dark:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:text-white"
+              className="w-full pl-10 pr-4 py-3 border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus dark:bg-card-dark dark:text-muted-ink-on-dark placeholder:text-muted-ink"
             />
           </div>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-blue-400"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent-gold"></div>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-slate-700">
+              <thead className="bg-subtle dark:bg-subtle-on-dark">
                 <tr>
                   {selectMultipleMode && (
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider w-12">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider w-12">
                       <button
                         onClick={() => {
                           if (selectedItems.size === filteredUsers.length) {
@@ -677,39 +673,39 @@ export const UsersPage: React.FC = React.memo(() => {
                         className="p-1"
                       >
                         {selectedItems.size === filteredUsers.length ? (
-                          <CheckSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                          <CheckSquare className="h-5 w-5 text-accent-gold" />
                         ) : (
-                          <Square className="h-5 w-5 text-gray-400" />
+                          <Square className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                         )}
                       </button>
                     </th>
                   )}
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Email
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Role
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Subscription
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Payment
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Monthly Usage
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Created
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="bg-card-light dark:bg-card-dark divide-y divide-divider dark:divide-divider-on-dark">
                 {filteredUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-slate-700/50">
+                  <tr key={user.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                     {selectMultipleMode && (
                       <td className="px-6 py-6 whitespace-nowrap">
                         <button
@@ -725,9 +721,9 @@ export const UsersPage: React.FC = React.memo(() => {
                           className="p-1"
                         >
                           {selectedItems.has(user.id) ? (
-                            <CheckSquare className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                            <CheckSquare className="h-5 w-5 text-accent-gold" />
                           ) : (
-                            <Square className="h-5 w-5 text-gray-400" />
+                            <Square className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                           )}
                         </button>
                       </td>
@@ -741,7 +737,7 @@ export const UsersPage: React.FC = React.memo(() => {
                       <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         user.user_role === 'admin'
                           ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
-                          : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                          : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
                       }`}>
                         {user.user_role}
                       </span>
@@ -749,7 +745,7 @@ export const UsersPage: React.FC = React.memo(() => {
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex flex-col space-y-1">
                         {user.is_blocked && (
-                          <span className="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-red-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-red-800 dark:bg-red-900/30 dark:text-red-300">
+                          <span className="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
                             Blocked
                           </span>
                         )}
@@ -767,7 +763,7 @@ export const UsersPage: React.FC = React.memo(() => {
                             </span>
                           </>
                         ) : (
-                          <span className="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                          <span className="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark">
                             No Subscription
                           </span>
                         )}
@@ -776,7 +772,7 @@ export const UsersPage: React.FC = React.memo(() => {
                     <td className="px-6 py-6 whitespace-nowrap">
                       <button
                         onClick={() => handleTogglePaymentStatus(user.id, user.has_paid || false)}
-                        className={`flex items-center space-x-2 px-3 py-1 rounded-lg transition ${
+                        className={`flex items-center space-x-2 px-3 py-1 transition ${
                           user.has_paid
                             ? 'bg-green-100 text-green-800 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/50'
                             : 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50'
@@ -795,14 +791,14 @@ export const UsersPage: React.FC = React.memo(() => {
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <TrendingUp className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                        <TrendingUp className="h-4 w-4 text-accent-gold" />
                         <span className="text-sm text-ink dark:text-ink-on-dark">{user.monthly_usage}</span>
                       </div>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div className="flex items-center space-x-2">
-                        <Calendar className="h-4 w-4 text-gray-400" />
-                        <span className="text-sm text-gray-600 dark:text-gray-400">
+                        <Calendar className="h-4 w-4 text-muted-ink dark:text-muted-ink-on-dark" />
+                        <span className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                           {new Date(user.created_at).toLocaleDateString()}
                         </span>
                       </div>
@@ -811,7 +807,7 @@ export const UsersPage: React.FC = React.memo(() => {
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => handleViewUser(user)}
-                          className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                          className="flex items-center space-x-1 text-accent-gold hover:opacity-80"
                         >
                           <Eye className="h-4 w-4" />
                           <span>View</span>
@@ -870,7 +866,7 @@ export const UsersPage: React.FC = React.memo(() => {
                                 setShowNotesModal(true);
                               }}
                               disabled={selectMultipleMode}
-                              className="flex items-center space-x-1 text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 disabled:opacity-50"
+                              className="flex items-center space-x-1 text-accent-gold hover:opacity-80 disabled:opacity-50"
                               title="View notes and tags"
                             >
                               <FileText className="h-4 w-4" />
@@ -886,7 +882,7 @@ export const UsersPage: React.FC = React.memo(() => {
 
             {filteredUsers.length === 0 && (
               <div className="text-center py-12">
-                <p className="text-gray-500 dark:text-gray-400">No users found matching your search</p>
+                <p className="text-muted-ink dark:text-muted-ink-on-dark">No users found matching your search</p>
               </div>
             )}
           </div>
@@ -895,33 +891,33 @@ export const UsersPage: React.FC = React.memo(() => {
 
       {selectedUser && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">User Details</h3>
               <button
                 onClick={handleCloseModal}
-                className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
+                className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
               >
-                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
               </button>
             </div>
 
             <div className="p-6 space-y-6">
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Email Address
                   </label>
                   <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedUser.email}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     User Role
                   </label>
                   <span className={`px-3 py-1 inline-flex text-sm font-semibold rounded-full ${
                     selectedUser.user_role === 'admin'
                       ? 'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
-                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
+                      : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark'
                   }`}>
                     {selectedUser.user_role}
                   </span>
@@ -930,17 +926,17 @@ export const UsersPage: React.FC = React.memo(() => {
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Payment Status
                   </label>
                   <div className="flex items-center space-x-2">
                     {selectedUser.has_paid ? (
-                      <span className="flex items-center space-x-2 px-3 py-1 bg-green-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-green-800 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-semibold">
+                      <span className="flex items-center space-x-2 px-3 py-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 rounded-full text-sm font-semibold">
                         <CheckCircle className="h-4 w-4" />
                         <span>Paid</span>
                       </span>
                     ) : (
-                      <span className="flex items-center space-x-2 px-3 py-1 bg-red-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-red-800 dark:bg-red-900/30 dark:text-red-300 rounded-full text-sm font-semibold">
+                      <span className="flex items-center space-x-2 px-3 py-1 bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 rounded-full text-sm font-semibold">
                         <XCircle className="h-4 w-4" />
                         <span>Unpaid</span>
                       </span>
@@ -948,7 +944,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Payment Date
                   </label>
                   <p className="text-base text-ink dark:text-ink-on-dark">
@@ -959,13 +955,13 @@ export const UsersPage: React.FC = React.memo(() => {
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Monthly Usage
                   </label>
                   <p className="text-base font-semibold text-ink dark:text-ink-on-dark">{selectedUser.monthly_usage}</p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Last Reset
                   </label>
                   <p className="text-base text-ink dark:text-ink-on-dark">
@@ -976,7 +972,7 @@ export const UsersPage: React.FC = React.memo(() => {
 
               <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Account Created
                   </label>
                   <p className="text-base text-ink dark:text-ink-on-dark">
@@ -984,7 +980,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                  <label className="block text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Last Updated
                   </label>
                   <p className="text-base text-ink dark:text-ink-on-dark">
@@ -995,23 +991,23 @@ export const UsersPage: React.FC = React.memo(() => {
 
               {statsLoading ? (
                 <div className="flex justify-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-gold"></div>
                 </div>
               ) : userStats && (
                 <div>
                   <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark mb-4">Activity Statistics</h4>
                   <div className="grid grid-cols-3 gap-6">
-                    <div className="bg-blue-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-blue-900/30 rounded-lg p-6 border border-blue-200 dark:border-blue-800">
-                      <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">History Items</p>
-                      <p className="text-2xl font-bold text-blue-900 dark:text-blue-100 mt-1">{userStats.historyCount}</p>
+                    <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
+                      <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-medium">History Items</p>
+                      <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">{userStats.historyCount}</p>
                     </div>
-                    <div className="bg-green-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-green-900/30 rounded-lg p-6 border border-green-200 dark:border-green-800">
-                      <p className="text-sm text-green-600 dark:text-green-400 font-medium">Library Items</p>
-                      <p className="text-2xl font-bold text-green-900 dark:text-green-100 mt-1">{userStats.libraryCount}</p>
+                    <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
+                      <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-medium">Library Items</p>
+                      <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">{userStats.libraryCount}</p>
                     </div>
-                    <div className="bg-orange-50 dark:bg-orange-900/30 rounded-lg p-6 border border-orange-200 dark:border-orange-800">
-                      <p className="text-sm text-orange-600 dark:text-orange-400 font-medium">Feedback</p>
-                      <p className="text-2xl font-bold text-orange-900 dark:text-orange-100 mt-1">{userStats.feedbackCount}</p>
+                    <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6">
+                      <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark font-medium">Feedback</p>
+                      <p className="text-2xl font-bold text-ink dark:text-ink-on-dark mt-1">{userStats.feedbackCount}</p>
                     </div>
                   </div>
                 </div>
@@ -1038,11 +1034,10 @@ export const UsersPage: React.FC = React.memo(() => {
         />
       )}
 
-      {/* Notes and Tags Modal */}
       {selectedUser && showNotesModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-6">
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-gray-100 dark:s shadow-[0_2px_8px_rgba(0,0,0,0.08)]hadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white dark:bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border-b border-gray-200 dark:border-gray-700 px-6 py-6 flex items-center justify-between">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-6 flex items-center justify-between">
               <h3 className="text-xl font-bold text-ink dark:text-ink-on-dark">
                 Notes & Tags: {selectedUser.email}
               </h3>
@@ -1053,14 +1048,13 @@ export const UsersPage: React.FC = React.memo(() => {
                   setUserNotes([]);
                   setUserTags([]);
                 }}
-                className="p-2 hover:bg-gray-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-gray-700 rounded-lg transition"
+                className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
               >
-                <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
               </button>
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Tags Section */}
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
@@ -1094,7 +1088,7 @@ export const UsersPage: React.FC = React.memo(() => {
                         toast.error('Failed to add tag');
                       }
                     }}
-                    className="px-3 py-1 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-blue-700 transition text-sm"
+                    className="px-3 py-1 bg-accent-gold text-ink-on-dark hover:opacity-90 transition text-sm"
                   >
                     Add Tag
                   </button>
@@ -1103,7 +1097,7 @@ export const UsersPage: React.FC = React.memo(() => {
                   {userTags.map((tag) => (
                     <span
                       key={tag.id}
-                      className="px-3 py-1 bg-blue-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 rounded-full text-sm flex items-center space-x-2"
+                      className="px-3 py-1 bg-accent-gold-soft dark:bg-accent-gold-soft/20 text-ink dark:text-muted-ink-on-dark rounded-full text-sm flex items-center space-x-2"
                     >
                       <span>{tag.tag_name}</span>
                       <button
@@ -1119,27 +1113,26 @@ export const UsersPage: React.FC = React.memo(() => {
                             await fetchUserNotesAndTags(selectedUser.id);
                           } catch (error) {
                             const err = error instanceof Error ? error : new Error(String(error));
-                            ErrorLogger.error(err, { 
-                              component: 'UsersPage', 
-                              action: 'removeTag', 
-                              metadata: { tagId: tag.id } 
+                            ErrorLogger.error(err, {
+                              component: 'UsersPage',
+                              action: 'removeTag',
+                              metadata: { tagId: tag.id }
                             });
                             toast.error('Failed to remove tag');
                           }
                         }}
-                        className="hover:text-red-600 dark:text-red-400"
+                        className="hover:text-red-600 dark:hover:text-red-400"
                       >
                         <X className="h-3 w-3" />
                       </button>
                     </span>
                   ))}
                   {userTags.length === 0 && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">No tags</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">No tags</p>
                   )}
                 </div>
               </div>
 
-              {/* Notes Section */}
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-lg font-semibold text-ink dark:text-ink-on-dark flex items-center space-x-2">
@@ -1173,7 +1166,7 @@ export const UsersPage: React.FC = React.memo(() => {
                         toast.error('Failed to add note');
                       }
                     }}
-                    className="px-3 py-1 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-white rounded-lg hover:bg-green-700 transition text-sm"
+                    className="px-3 py-1 bg-accent-gold text-ink-on-dark hover:opacity-90 transition text-sm"
                   >
                     Add Note
                   </button>
@@ -1182,12 +1175,12 @@ export const UsersPage: React.FC = React.memo(() => {
                   {userNotes.map((note) => (
                     <div
                       key={note.id}
-                      className="bg-gray-50 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-gray-700 rounded-lg p-6 border border-gray-200 dark:border-gray-600"
+                      className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-6"
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <p className="text-sm text-ink dark:text-ink-on-dark">{note.note}</p>
-                          <div className="mt-2 flex items-center space-x-6 text-xs text-gray-500 dark:text-gray-400">
+                          <div className="mt-2 flex items-center space-x-6 text-xs text-muted-ink dark:text-muted-ink-on-dark">
                             <span>By: {note.admin_email}</span>
                             <span>{new Date(note.created_at).toLocaleString()}</span>
                           </div>
@@ -1206,15 +1199,15 @@ export const UsersPage: React.FC = React.memo(() => {
                                 await fetchUserNotesAndTags(selectedUser.id);
                               } catch (error) {
                                 const err = error instanceof Error ? error : new Error(String(error));
-                                ErrorLogger.error(err, { 
-                                  component: 'UsersPage', 
-                                  action: 'deleteNote', 
-                                  metadata: { noteId: note.id } 
+                                ErrorLogger.error(err, {
+                                  component: 'UsersPage',
+                                  action: 'deleteNote',
+                                  metadata: { noteId: note.id }
                                 });
                                 toast.error('Failed to delete note');
                               }
                             }}
-                            className="ml-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:text-red-200"
+                            className="ml-2 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-200"
                           >
                             <X className="h-4 w-4" />
                           </button>
@@ -1223,7 +1216,7 @@ export const UsersPage: React.FC = React.memo(() => {
                     </div>
                   ))}
                   {userNotes.length === 0 && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400">No notes</p>
+                    <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark">No notes</p>
                   )}
                 </div>
               </div>

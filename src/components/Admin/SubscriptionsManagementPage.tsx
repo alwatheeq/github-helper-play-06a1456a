@@ -192,8 +192,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
       }
 
       toast.success('Subscription canceled successfully! User will retain access until end of billing period.');
-      
-      // Log audit action
+
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -205,21 +204,21 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log admin action', { 
-          component: 'SubscriptionsManagementPage', 
-          action: 'handleCancel', 
-          metadata: { subscriptionId: subscription.id, error: logError.message } 
+        ErrorLogger.warn('Failed to log admin action', {
+          component: 'SubscriptionsManagementPage',
+          action: 'handleCancel',
+          metadata: { subscriptionId: subscription.id, error: logError.message }
         });
       }
-      
+
       fetchSubscriptions();
       fetchStats();
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unknown error');
-      ErrorLogger.error(error, { 
-        component: 'SubscriptionsManagementPage', 
-        action: 'cancelSubscription', 
-        metadata: { subscriptionId: subscription.id } 
+      ErrorLogger.error(error, {
+        component: 'SubscriptionsManagementPage',
+        action: 'cancelSubscription',
+        metadata: { subscriptionId: subscription.id }
       });
       toast.error('Failed to cancel subscription. Please try again.');
     }
@@ -270,8 +269,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
       }
 
       toast.success('Subscription reactivated successfully!');
-      
-      // Log audit action
+
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'UPDATE',
@@ -283,21 +281,21 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log action', { 
-          component: 'SubscriptionsManagementPage', 
-          action: 'handleReactivate', 
-          metadata: { subscriptionId: subscription.id, error: logError.message } 
+        ErrorLogger.warn('Failed to log action', {
+          component: 'SubscriptionsManagementPage',
+          action: 'handleReactivate',
+          metadata: { subscriptionId: subscription.id, error: logError.message }
         });
       }
-      
+
       fetchSubscriptions();
       fetchStats();
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unknown error');
-      ErrorLogger.error(error, { 
-        component: 'SubscriptionsManagementPage', 
-        action: 'reactivateSubscription', 
-        metadata: { subscriptionId: subscription.id } 
+      ErrorLogger.error(error, {
+        component: 'SubscriptionsManagementPage',
+        action: 'reactivateSubscription',
+        metadata: { subscriptionId: subscription.id }
       });
       toast.error('Failed to reactivate subscription. Please try again.');
     }
@@ -321,7 +319,6 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
 
       if (error) throw error;
 
-      // Log audit action
       try {
         await supabase.rpc('log_admin_action', {
           p_action_type: 'DELETE',
@@ -332,10 +329,10 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         });
       } catch (logErr: unknown) {
         const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-        ErrorLogger.warn('Failed to log admin action', { 
-          component: 'SubscriptionsManagementPage', 
-          action: 'handleDelete', 
-          metadata: { subscriptionId: subscription.id, error: logError.message } 
+        ErrorLogger.warn('Failed to log admin action', {
+          component: 'SubscriptionsManagementPage',
+          action: 'handleDelete',
+          metadata: { subscriptionId: subscription.id, error: logError.message }
         });
       }
 
@@ -344,10 +341,10 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
       fetchStats();
     } catch (err) {
       const error = err instanceof Error ? err : new Error('Unknown error');
-      ErrorLogger.error(error, { 
-        component: 'SubscriptionsManagementPage', 
-        action: 'deleteSubscription', 
-        metadata: { subscriptionId: subscription.id } 
+      ErrorLogger.error(error, {
+        component: 'SubscriptionsManagementPage',
+        action: 'deleteSubscription',
+        metadata: { subscriptionId: subscription.id }
       });
       toast.error('Failed to delete subscription. Please try again.');
     }
@@ -384,88 +381,85 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
   };
 
   if (loading) {
-    return <div className="mt-8 p-8 text-center text-gray-400">Loading subscriptions...</div>;
+    return <div className="mt-8 p-8 text-center text-muted-ink dark:text-muted-ink-on-dark">Loading subscriptions...</div>;
   }
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white">Subscriptions Management</h1>
-          <p className="text-gray-400 mt-1">Manage and monitor all user subscriptions</p>
+          <h1 className="text-3xl font-bold text-ink dark:text-ink-on-dark">Subscriptions Management</h1>
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark mt-1">Manage and monitor all user subscriptions</p>
         </div>
         <button
           onClick={handleCreateNew}
-          className="flex items-center space-x-2 px-5 py-2.5 bg-green-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-green-700 text-white rounded-lg transition"
+          className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
         >
           <Plus className="h-5 w-5" />
           <span>New Subscription</span>
         </button>
       </div>
 
-      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <Users className="h-6 w-6 text-blue-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Users className="h-6 w-6 text-accent-gold" />
             </div>
             <TrendingUp className="h-5 w-5 text-green-400" />
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Total Subscriptions</h3>
-          <p className="text-3xl font-bold text-white">{stats.total_subscriptions}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Total Subscriptions</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.total_subscriptions}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <CheckCircle className="h-6 w-6 text-green-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <CheckCircle className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Active Subscriptions</h3>
-          <p className="text-3xl font-bold text-white">{stats.active_subscriptions}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Active Subscriptions</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.active_subscriptions}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-orange-500/20 p-3 rounded-lg">
-              <Clock className="h-6 w-6 text-orange-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <Clock className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Trial Users</h3>
-          <p className="text-3xl font-bold text-white">{stats.trial_users}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Trial Users</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{stats.trial_users}</p>
         </div>
 
-        <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
           <div className="flex items-center justify-between mb-4">
-            <div className="bg-purple-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 p-3 rounded-lg">
-              <DollarSign className="h-6 w-6 text-purple-400" />
+            <div className="bg-accent-gold-soft p-3 border border-divider dark:border-divider-on-dark">
+              <DollarSign className="h-6 w-6 text-accent-gold" />
             </div>
           </div>
-          <h3 className="text-gray-400 text-sm mb-1">Monthly Revenue</h3>
-          <p className="text-3xl font-bold text-white">{formatCurrency(stats.monthly_revenue)}</p>
+          <h3 className="text-muted-ink dark:text-muted-ink-on-dark text-sm mb-1">Monthly Revenue</h3>
+          <p className="text-3xl font-bold text-ink dark:text-ink-on-dark">{formatCurrency(stats.monthly_revenue)}</p>
         </div>
       </div>
 
-      {/* Filters and Search */}
-      <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md p-6 border border-slate-700">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             <input
               type="text"
               placeholder="Search by email or name..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="w-full pl-10 pr-4 py-2 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark placeholder:text-muted-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
             />
           </div>
 
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-5 py-2.5 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-slate-600 rounded-lg text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <option value="all">All Statuses</option>
             <option value="active">Active</option>
@@ -477,7 +471,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
           <select
             value={filterTier}
             onChange={(e) => setFilterTier(e.target.value)}
-            className="px-5 py-2.5 bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-slate-600 rounded-lg text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="px-5 py-2.5 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] text-ink dark:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <option value="all">All Tiers</option>
             <option value="trial_1day">Legacy 1-day</option>
@@ -489,7 +483,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
 
           <button
             onClick={exportToCSV}
-            className="flex items-center space-x-2 px-5 py-2.5 bg-blue-600 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-blue-700 text-white rounded-lg transition"
+            className="flex items-center space-x-2 px-5 py-2.5 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
           >
             <Download className="h-5 w-5" />
             <span>Export CSV</span>
@@ -497,48 +491,47 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
         </div>
       </div>
 
-      {/* Subscriptions Table */}
-      <div className="bg-slate-800 shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md border border-slate-700 overflow-hidden">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+            <thead className="bg-subtle dark:bg-subtle-on-dark">
               <tr>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Tier
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Start Date
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   End Date
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Auto Renew
                 </th>
-                <th className="px-6 py-6 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-6 text-left text-xs font-medium text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-700">
+            <tbody className="divide-y divide-divider dark:divide-divider-on-dark">
               {filteredSubscriptions.map((subscription) => {
                 const tierInfo = getTierDisplayInfo(subscription.subscription_tier);
                 const statusInfo = getStatusDisplayInfo(subscription.status);
 
                 return (
-                  <tr key={subscription.id} className="hover:bg-slate-700 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50">
+                  <tr key={subscription.id} className="hover:bg-subtle/50 dark:hover:bg-subtle-on-dark/30">
                     <td className="px-6 py-6 whitespace-nowrap">
                       <div>
-                        <p className="text-sm font-medium text-white">
+                        <p className="text-sm font-medium text-ink dark:text-ink-on-dark">
                           {subscription.user_profiles.name || 'No Name'}
                         </p>
-                        <p className="text-xs text-gray-400">{subscription.user_profiles.email}</p>
+                        <p className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{subscription.user_profiles.email}</p>
                       </div>
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
@@ -551,10 +544,10 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
                         {statusInfo.name}
                       </span>
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-300">
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                       {new Date(subscription.start_date).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-6 whitespace-nowrap text-sm text-gray-300">
+                    <td className="px-6 py-6 whitespace-nowrap text-sm text-secondary-ink dark:text-muted-ink-on-dark">
                       {new Date(subscription.end_date).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-6 whitespace-nowrap">
@@ -568,15 +561,15 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => handleEdit(subscription)}
-                          className="p-2 hover:bg-blue-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition"
+                          className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                           title="Edit subscription"
                         >
-                          <Edit className="h-4 w-4 text-blue-400" />
+                          <Edit className="h-4 w-4 text-accent-gold" />
                         </button>
                         {subscription.status === 'active' ? (
                           <button
                             onClick={() => handleCancel(subscription)}
-                            className="p-2 hover:bg-orange-500/20 rounded-lg transition"
+                            className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                             title="Cancel subscription"
                           >
                             <Ban className="h-4 w-4 text-orange-400" />
@@ -584,7 +577,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
                         ) : (
                           <button
                             onClick={() => handleReactivate(subscription)}
-                            className="p-2 hover:bg-green-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition"
+                            className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                             title="Reactivate subscription"
                           >
                             <RotateCw className="h-4 w-4 text-green-400" />
@@ -592,7 +585,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
                         )}
                         <button
                           onClick={() => handleDelete(subscription)}
-                          className="p-2 hover:bg-red-500 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/20 rounded-lg transition"
+                          className="p-2 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                           title="Delete subscription"
                         >
                           <Trash2 className="h-4 w-4 text-red-400" />
@@ -608,7 +601,7 @@ export const SubscriptionsManagementPage: React.FC = React.memo(() => {
 
         {filteredSubscriptions.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-400">No subscriptions found</p>
+            <p className="text-muted-ink dark:text-muted-ink-on-dark">No subscriptions found</p>
           </div>
         )}
       </div>
