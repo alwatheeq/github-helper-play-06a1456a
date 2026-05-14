@@ -36,11 +36,11 @@ export const PromptModal: React.FC<PromptModalProps> = ({
     if (isOpen) {
       setValue(defaultValue);
       setError(null);
-      // Focus input when modal opens
-      setTimeout(() => {
+      const id = setTimeout(() => {
         inputRef.current?.focus();
         inputRef.current?.select();
       }, 100);
+      return () => clearTimeout(id);
     }
   }, [isOpen, defaultValue]);
 
@@ -52,7 +52,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
 
   const handleConfirm = () => {
     const trimmedValue = value.trim();
-    
+
     if (!trimmedValue) {
       setError('This field is required');
       return;
@@ -84,9 +84,9 @@ export const PromptModal: React.FC<PromptModalProps> = ({
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      <div className="absolute inset-0 bg-page bg-opacity-50 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-md w-full overflow-hidden animate-scaleIn border border-divider dark:border-divider-on-dark">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[12px] max-w-md w-full overflow-hidden animate-scaleIn border border-divider dark:border-divider-on-dark">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-ink dark:text-ink-on-dark">
@@ -94,11 +94,11 @@ export const PromptModal: React.FC<PromptModalProps> = ({
             </h3>
             <button
               onClick={onClose}
-              className="p-1 hover:bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-card-dark rounded-md transition-colors"
+              className="p-1 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
               aria-label="Close"
               disabled={isLoading}
             >
-              <X className="h-5 w-5 text-muted-ink dark:text-muted-ink" />
+              <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
             </button>
           </div>
 
@@ -120,7 +120,7 @@ export const PromptModal: React.FC<PromptModalProps> = ({
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
               disabled={isLoading}
-              className={`w-full px-5 py-2.5 border rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 dark:bg-card-dark dark:border-divider-on-dark dark:text-ink-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`w-full px-5 py-2.5 border rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark dark:border-divider-on-dark disabled:opacity-50 disabled:cursor-not-allowed ${
                 error
                   ? 'border-red-500 focus-visible:ring-red-500'
                   : 'border-divider dark:border-divider-on-dark'
@@ -137,14 +137,14 @@ export const PromptModal: React.FC<PromptModalProps> = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-divider dark:border-divider-on-dark rounded-md hover:bg-subtle dark:hover:bg-card-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>
             <button
               onClick={handleConfirm}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-ink-on-dark bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:bg-card-dark dark:bg-subtle dark:text-ink dark:hover:bg-subtle rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium bg-accent-gold text-ink-on-dark hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? 'Processing...' : confirmText}
             </button>
@@ -154,4 +154,3 @@ export const PromptModal: React.FC<PromptModalProps> = ({
     </div>
   );
 };
-

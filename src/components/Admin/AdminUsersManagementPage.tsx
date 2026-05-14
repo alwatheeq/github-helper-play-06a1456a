@@ -7,6 +7,7 @@ import { Shield, Search, UserPlus, UserX, UserCheck, Clock, Calendar, AlertCircl
 import { ErrorLogger } from '../../utils/errorLogger';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useConfirm } from '../../hooks/useConfirm';
+import { tryLogAdminAction } from '../../utils/adminHelpers';
 
 
 interface AdminUser {
@@ -28,25 +29,6 @@ interface LoginAttempt {
   attempted_at: string;
   error_message: string | null;
   ip_address: string | null;
-}
-
-async function tryLogAdminAction(params: {
-  p_action_type: string;
-  p_table_name: string;
-  p_record_id?: string | null;
-  p_old_values?: Record<string, unknown>;
-  p_new_values?: Record<string, unknown>;
-  p_description?: string;
-}, context: { component: string; action: string; metadata?: Record<string, string> }) {
-  try {
-    await supabase.rpc('log_admin_action', params);
-  } catch (logErr: unknown) {
-    const logError = logErr instanceof Error ? logErr : new Error(String(logErr));
-    ErrorLogger.warn('Failed to log action', {
-      ...context,
-      metadata: { ...context.metadata, error: logError.message }
-    });
-  }
 }
 
 export const AdminUsersManagementPage: React.FC = React.memo(() => {

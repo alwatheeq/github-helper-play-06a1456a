@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { supabase } from '../../lib/supabase';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import {
   PRICING,
   formatCurrency,
@@ -409,7 +409,7 @@ export const CheckoutPage: React.FC = () => {
     const mode = getCheckoutMode();
     return (
       <div className={`min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6`}>
-        <div className="max-w-md w-full bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark: p-8">
+        <div className="max-w-md w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center justify-center mb-6">
             <div className="bg-red-100 dark:bg-red-900/30 p-4 rounded-full">
               <AlertCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
@@ -420,7 +420,7 @@ export const CheckoutPage: React.FC = () => {
             {mode === 'free' ? 'Activation Error' : 'Checkout Error'}
           </h2>
 
-          <p className="text-secondary-ink dark:text-secondary-ink-on-dark text-center mb-2">
+          <p className="text-secondary-ink dark:text-muted-ink-on-dark text-center mb-2">
             {error}
           </p>
 
@@ -451,7 +451,7 @@ export const CheckoutPage: React.FC = () => {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-[12px] transition duration-200"
+              className="w-full bg-accent-gold text-ink-on-dark font-semibold py-3 px-6 hover:opacity-90 transition"
             >
               Back to Pricing
             </button>
@@ -459,16 +459,15 @@ export const CheckoutPage: React.FC = () => {
             <button
               onClick={() => {
                 setRetryCount(prev => prev + 1);
-                initiateCheckout();
               }}
-              className="w-full bg-subtle dark:bg-subtle-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[12px] transition duration-200"
+              className="w-full bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark font-semibold py-3 px-6 hover:opacity-80 transition"
             >
               Try Again {retryCount > 0 && `(${retryCount})`}
             </button>
 
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-card-light dark:bg-card-dark border-2 border-divider dark:border-divider-on-dark hover:opacity-90 text-secondary-ink dark:text-secondary-ink-on-dark font-semibold py-3 px-6 rounded-[12px] transition duration-200"
+              className="w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark font-semibold py-3 px-6 hover:opacity-80 transition"
             >
               Return to Dashboard
             </button>

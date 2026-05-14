@@ -28,8 +28,7 @@ export const PaymentSuccess: React.FC = () => {
           });
         }
       }
-      await refresh();
-      await refreshBalance();
+      await Promise.all([refresh(), refreshBalance()]);
       window.dispatchEvent(new CustomEvent('creditUpdated'));
     })();
     if (typeof sessionStorage !== 'undefined') {
@@ -47,7 +46,7 @@ export const PaymentSuccess: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark rounded-[22px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-divider dark:border-divider-on-dark overflow-hidden">
+      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark rounded-[22px] border border-divider dark:border-divider-on-dark overflow-hidden">
 
         {/* Dark top band */}
         <div className="bg-sidebar px-[40px] pt-[30px] pb-12 relative text-center overflow-hidden">
@@ -116,7 +115,7 @@ export const PaymentSuccess: React.FC = () => {
           <div className="space-y-2.5">
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-accent-gold hover:opacity-90 text-white font-bold py-[13px] px-6 rounded-[11px] transition flex items-center justify-center gap-2"
+              className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-[13px] px-6 rounded-[11px] transition flex items-center justify-center gap-2"
             >
               <Home className="h-5 w-5" />
               <span>Start Using the App</span>

@@ -33,8 +33,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('Error Boundary caught an error:', error, errorInfo);
-    
-    // Log to ErrorLogger with context
+
     ErrorLogger.error(error, {
       component: 'ErrorBoundary',
       action: 'componentDidCatch',
@@ -66,8 +65,8 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 flex items-center justify-center p-4">
-          <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: p-8 max-w-2xl w-full">
+        <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-4">
+          <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8 max-w-2xl w-full">
             <div className="flex items-center justify-center mb-6">
               <div className="bg-orange-100 p-3 rounded-full dark:bg-orange-900/30">
                 <AlertTriangle className="h-12 w-12 text-orange-600 dark:text-orange-400" />
@@ -83,7 +82,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </p>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <div className="bg-subtle dark:bg-card-dark rounded-[12px] p-4 mb-6 max-h-64 overflow-auto">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-4 mb-6 max-h-64 overflow-auto">
                 <h2 className="font-semibold text-ink dark:text-ink-on-dark mb-2">Error Details:</h2>
                 <pre className="text-xs text-red-600 whitespace-pre-wrap dark:text-red-400">
                   {this.state.error.toString()}
@@ -99,7 +98,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex items-center justify-center space-x-4">
               <button
                 onClick={this.handleReset}
-                className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-[12px] hover:bg-blue-700 transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-accent-gold text-ink-on-dark hover:opacity-90 transition"
               >
                 <RefreshCw className="h-5 w-5" />
                 <span>Try Again</span>
@@ -107,7 +106,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <button
                 onClick={this.handleGoHome}
-                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark rounded-[12px] hover:bg-subtle transition duration-150"
+                className="flex items-center space-x-2 px-6 py-3 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition"
               >
                 <Home className="h-5 w-5" />
                 <span>Go Home</span>

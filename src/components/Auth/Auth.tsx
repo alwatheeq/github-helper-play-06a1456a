@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useI18n } from '../../contexts/I18nContext';
@@ -18,6 +18,10 @@ export const Auth: React.FC = () => {
 
   const adminTapCountRef = useRef(0);
   const adminTapResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (adminTapResetRef.current) clearTimeout(adminTapResetRef.current);
+  }, []);
 
   const handleHiddenAdminTap = useCallback(() => {
     if (adminTapResetRef.current) clearTimeout(adminTapResetRef.current);
@@ -78,7 +82,7 @@ export const Auth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex bg-page relative">
+    <div className="min-h-screen w-full flex bg-page-light dark:bg-page-dark relative">
       {/* Language toggle — top right */}
       <div className="absolute top-5 right-6 z-20">
         <LanguageToggle />
@@ -153,7 +157,7 @@ export const Auth: React.FC = () => {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-subtle/20 transition-colors duration-150 disabled:opacity-50 mb-4"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-divider dark:border-divider-on-dark rounded-lg text-sm font-medium text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark hover:bg-subtle dark:hover:bg-subtle-on-dark transition-colors duration-150 disabled:opacity-50 mb-4"
           >
             <svg className="w-[17px] h-[17px]" viewBox="0 0 24 24">
               <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

@@ -69,7 +69,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
     <aside
       className={`fixed left-0 top-16 h-[calc(100vh-4rem)] bg-sidebar border-r border-divider-on-dark transition-all duration-200 ease-in-out ${
         shouldBeOpen ? 'w-64' : 'w-16'
-      } overflow-hidden shadow-[var(--scholar-shadow-sm)] z-30`}
+      } overflow-hidden z-30`}
       onMouseEnter={() => !isMobile && setIsHovered(true)}
       onMouseLeave={() => !isMobile && setIsHovered(false)}
     >

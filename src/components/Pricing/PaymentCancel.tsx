@@ -7,7 +7,7 @@ export const PaymentCancel: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="w-[500px] max-w-full bg-card-light dark:bg-card-dark rounded-[22px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-divider dark:border-divider-on-dark overflow-hidden">
+      <div className="w-[500px] max-w-full bg-card-light dark:bg-card-dark rounded-[22px] border border-divider dark:border-divider-on-dark overflow-hidden">
 
         {/* Orange header section */}
         <div className="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-200 dark:border-orange-800/60 px-9 pt-7 pb-6 text-center">
@@ -78,7 +78,7 @@ export const PaymentCancel: React.FC = () => {
           <div className="space-y-2.5">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-sidebar text-card-light font-bold py-3 px-6 rounded-[11px] flex items-center justify-center gap-2 hover:opacity-85 transition"
+              className="w-full bg-sidebar text-ink-on-dark font-bold py-3 px-6 rounded-[11px] flex items-center justify-center gap-2 hover:opacity-85 transition"
             >
               <RefreshCw className="h-4 w-4" />
               <span>Try Again</span>

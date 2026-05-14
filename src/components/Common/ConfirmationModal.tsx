@@ -32,10 +32,6 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     }
   };
 
-  const handleConfirm = () => {
-    onConfirm();
-  };
-
   const isDestructive = variant === 'destructive';
 
   return (
@@ -43,14 +39,14 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      <div className="absolute inset-0 bg-page bg-opacity-50 backdrop-blur-sm"></div>
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-      <div className="relative bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-md w-full overflow-hidden animate-scaleIn border border-divider dark:border-divider-on-dark">
+      <div className="relative bg-card-light dark:bg-card-dark rounded-[12px] max-w-md w-full overflow-hidden animate-scaleIn border border-divider dark:border-divider-on-dark">
         <div className="p-6">
           <div className="flex items-start space-x-4 mb-4">
             {isDestructive && (
               <div className="flex-shrink-0">
-                <div className="w-10 h-10 rounded-full bg-red-100 shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:bg-red-900/30 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
                   <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
                 </div>
               </div>
@@ -62,11 +58,11 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
                 </h3>
                 <button
                   onClick={onClose}
-                  className="p-1 hover:bg-subtle dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] dark:hover:bg-card-dark rounded-md transition-colors"
+                  className="p-1 hover:bg-subtle dark:hover:bg-subtle-on-dark transition"
                   aria-label="Close"
                   disabled={isLoading}
                 >
-                  <X className="h-5 w-5 text-muted-ink dark:text-muted-ink" />
+                  <X className="h-5 w-5 text-muted-ink dark:text-muted-ink-on-dark" />
                 </button>
               </div>
               <p className="text-sm text-secondary-ink dark:text-muted-ink-on-dark">
@@ -79,17 +75,17 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             <button
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 text-sm font-medium text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] border border-divider dark:border-divider-on-dark rounded-md hover:bg-subtle dark:hover:bg-card-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-5 py-2.5 text-sm font-medium bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelText}
             </button>
             <button
-              onClick={handleConfirm}
+              onClick={onConfirm}
               disabled={isLoading}
-              className={`px-5 py-2.5 text-sm font-medium text-ink-on-dark rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`px-5 py-2.5 text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed ${
                 isDestructive
-                  ? 'bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700'
-                  : 'bg-card-dark hover:bg-card-dark dark:bg-subtle dark:text-ink dark:hover:bg-subtle'
+                  ? 'bg-red-600 hover:bg-red-700 text-white'
+                  : 'bg-accent-gold text-ink-on-dark hover:opacity-90'
               }`}
             >
               {isLoading ? 'Processing...' : confirmText}
@@ -100,4 +96,3 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     </div>
   );
 };
-
