@@ -120,7 +120,7 @@ export const ShareView: React.FC = () => {
           <span className="text-sm font-semibold text-ink-on-dark">{t('app_name')}</span>
         </div>
 
-        <div className="w-px h-[18px] bg-white/15 flex-shrink-0" />
+        <div className="w-px h-[18px] bg-ink-on-dark/[.15] flex-shrink-0" />
 
         {/* Document title */}
         <span className="text-sm font-medium text-ink-on-dark/80 truncate flex-1">

@@ -459,7 +459,7 @@ export default function MultiplayerLobby({ lobbyId: initialLobbyId, onExit }: Mu
                 </button>
                 <button
                   onClick={leaveLobby}
-                  className="w-full py-2.5 border border-white/20 text-muted-ink-on-dark text-[11px] hover:bg-white/10 transition"
+                  className="w-full py-2.5 border border-ink-on-dark/[.20] text-muted-ink-on-dark text-[11px] hover:bg-ink-on-dark/[.10] transition"
                 >
                   Cancel Game
                 </button>

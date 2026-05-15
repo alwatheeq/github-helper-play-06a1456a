@@ -1081,7 +1081,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
               <div className="text-[10px] text-muted-ink-on-dark mb-3">Share this code with your class</div>
               <button
                 onClick={copyGameCode}
-                className="flex items-center justify-center gap-2 w-full py-2 border border-muted-ink-on-dark/30 text-ink-on-dark text-[11px] hover:bg-white/10 transition"
+                className="flex items-center justify-center gap-2 w-full py-2 border border-muted-ink-on-dark/30 text-ink-on-dark text-[11px] hover:bg-ink-on-dark/[.10] transition"
               >
                 {copiedCode ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
                 {copiedCode ? 'Copied!' : 'Copy Code'}

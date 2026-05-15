@@ -209,11 +209,11 @@ export const ContentViewPage: React.FC = () => {
           <ArrowLeft className="h-4 w-4" />
           <span className="text-[13px]">Back</span>
         </button>
-        <div className="w-px h-4 bg-white/20 flex-shrink-0" />
+        <div className="w-px h-4 bg-ink-on-dark/[.20] flex-shrink-0" />
         <h1 className="font-display text-[13px] font-semibold text-ink-on-dark truncate flex-1">
           {title}
         </h1>
-        <div className="flex gap-0.5 bg-white/[0.07] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
+        <div className="flex gap-0.5 bg-ink-on-dark/[.07] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
             return (

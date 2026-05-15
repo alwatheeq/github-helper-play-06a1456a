@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {isMobile ? (
               <button
                 onClick={toggleSidebar}
-                className="p-2 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150"
+                className="p-2 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-ink-on-dark/[.05] transition-colors duration-150"
                 title={isSidebarOpen ? t('sidebar.collapse_sidebar') : t('sidebar.expand_sidebar')}
               >
                 {isSidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -120,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             ) : isPinnableMode ? (
               <button
                 onClick={togglePin}
-                className={`p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150 ${
+                className={`p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-ink-on-dark/[.05] transition-colors duration-150 ${
                   shouldBeOpen ? '' : 'mx-auto block'
                 }`}
                 title={isPinned ? t('sidebar.unpin_sidebar') : t('sidebar.pin_sidebar')}
@@ -148,10 +148,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const stateClasses = isDisabled
                 ? 'opacity-50 cursor-not-allowed text-muted-ink-on-dark'
                 : isActive
-                ? `text-ink-on-dark bg-white/[0.03] ${
+                ? `text-ink-on-dark bg-ink-on-dark/[.03] ${
                     shouldBeOpen ? (isRtl ? 'border-r-[3px] border-accent-gold' : 'border-l-[3px] border-accent-gold') : ''
                   }`
-                : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5';
+                : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-ink-on-dark/[.05]';
 
               return (
                 <li key={item.id} className={!shouldBeOpen ? 'flex justify-center' : ''}>
@@ -173,7 +173,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         <div className="font-semibold flex items-center gap-2 text-[13px]">
                           {item.label}
                           {isDisabled && (
-                            <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 bg-white/10 text-muted-ink-on-dark rounded-full">
+                            <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 bg-ink-on-dark/[.10] text-muted-ink-on-dark rounded-full">
                               {t('sidebar.coming_soon')}
                             </span>
                           )}

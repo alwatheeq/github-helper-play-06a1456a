@@ -212,7 +212,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
             <button
               type="button"
               onClick={pause}
-              className="mt-4 px-6 py-2 rounded-full bg-white/20 hover:bg-white/30 text-ink-on-dark transition"
+              className="mt-4 px-6 py-2 bg-ink-on-dark/[.20] hover:bg-ink-on-dark/[.30] text-ink-on-dark transition"
             >
               {t('pomodoro.pause')}
             </button>

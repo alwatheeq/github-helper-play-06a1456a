@@ -270,8 +270,8 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                               <span className="text-[8px] tracking-[1.5px] font-bold uppercase shrink-0 px-1.5 py-0.5" style={{ color, background: `${color}15` }}>{statusLabel[status]}</span>
                             </div>
                             {goal.goal_description && <p className="text-[11.5px] text-muted-ink dark:text-muted-ink-on-dark mb-2">{goal.goal_description}</p>}
-                            <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-full mb-2">
-                              <div className="h-full rounded-full transition-all" style={{ width: `${progress}%`, background: color }} />
+                            <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-[2px] mb-2">
+                              <div className="h-full rounded-[2px] transition-all" style={{ width: `${progress}%`, background: color }} />
                             </div>
                             <div className="flex justify-between items-baseline">
                               <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">Due {formatDate(goal.deadline_date)}</span>
@@ -364,8 +364,8 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               <p className="text-[13px] text-muted-ink dark:text-muted-ink-on-dark">{earnedCount} earned · {allAchievements.length - earnedCount} locked</p>
               <div className="text-right">
                 <div className="text-[9px] tracking-[2px] text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase mb-1">Scholar — Level 4</div>
-                <div className="w-[200px] h-[5px] bg-card-dark dark:bg-subtle-on-dark rounded-full mb-1">
-                  <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
+                <div className="w-[200px] h-[5px] bg-card-dark dark:bg-subtle-on-dark rounded-[2px] mb-1">
+                  <div className="h-full bg-accent-gold rounded-[2px]" style={{ width: '68%' }} />
                 </div>
                 <div className="font-display text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{totalXPEarned} XP · 680 to Level 5</div>
               </div>
@@ -422,8 +422,8 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                   <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Total XP</div>
                   <div className="font-display text-[46px] font-bold text-ink-on-dark leading-none">{totalXPEarned}</div>
                   <div className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark mt-1.5">Scholar · Level 4</div>
-                  <div className="h-[3px] bg-white/10 dark:bg-white/5 rounded-full mt-3 mb-1">
-                    <div className="h-full bg-accent-gold rounded-full" style={{ width: '68%' }} />
+                  <div className="h-[3px] bg-ink-on-dark/[.10] rounded-[2px] mt-3 mb-1">
+                    <div className="h-full bg-accent-gold rounded-[2px]" style={{ width: '68%' }} />
                   </div>
                   <div className="text-[9px] text-muted-ink dark:text-muted-ink-on-dark">68% to Level 5</div>
                 </div>

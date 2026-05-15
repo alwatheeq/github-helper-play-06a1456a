@@ -986,7 +986,7 @@ export const StudyRoomsPage: React.FC = () => {
                 <span className="w-[7px] h-[7px] rounded-full bg-accent-gold inline-block" />
                 <span className="text-[10px] tracking-[0.15em] uppercase font-bold text-accent-gold">Live</span>
               </div>
-              <div className="w-px h-4 bg-white/10" />
+              <div className="w-px h-4 bg-ink-on-dark/[.10]" />
               <div>
                 <h2 className="font-display text-[13px] font-semibold text-ink-on-dark leading-none">
                   {selectedRoom.room_name}
