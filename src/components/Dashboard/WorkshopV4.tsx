@@ -238,7 +238,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
                   <button
                     type="button"
                     onClick={onOpenHistory}
-                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[8px] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
+                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[6px] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
                   >
                     Open
                   </button>
@@ -253,7 +253,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
       <div className="min-w-0 space-y-[14px]">
         {/* Dark "What to generate" panel */}
         <section
-          className="bg-sidebar text-ink-on-dark rounded-[12px]"
+          className="bg-sidebar text-ink-on-dark"
           style={{ padding: '20px' }}
         >
           <div className="text-[10px] font-bold tracking-[2px] uppercase text-accent-gold">
@@ -325,7 +325,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
               type="button"
               disabled
               title={t('workshop.generate_disabled_hint')}
-              className="w-full bg-accent-gold text-card-dark text-[13px] font-semibold py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-150 ease-out"
+              className="w-full bg-accent-gold text-ink text-[13px] font-semibold py-2.5 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-[opacity] duration-150 ease-out"
             >
               <span>{t('workshop.generate_cta')}</span>
               <ArrowRight size={14} strokeWidth={2} aria-hidden />
@@ -334,7 +334,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
         </section>
 
         {/* Tip card — light panel, font-display italic rotating tip (Dash4 spec) */}
-        <section className="bg-card-light border border-divider px-[18px] py-4 min-h-[76px]">
+        <section className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-[18px] py-4 min-h-[76px]">
           <div className="text-[9px] font-bold tracking-[2px] uppercase text-muted-ink mb-2 tabular-nums">
             {String(tipIdx + 1).padStart(2, '0')} / {String(tips.length).padStart(2, '0')}
           </div>

@@ -102,20 +102,20 @@ export const Header: React.FC = () => {
   return (
     <header className="bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark sticky top-0 z-50">
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-16 rtl:flex-row-reverse">
+        <div className="flex items-center h-[60px] rtl:flex-row-reverse">
           {/* Logo + App name */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse flex-shrink-0">
-            <div className="h-9 w-9 rounded-full bg-sidebar flex items-center justify-center flex-shrink-0">
+            <div className="h-[30px] w-[30px] rounded-[6px] bg-sidebar flex items-center justify-center flex-shrink-0">
               <span className="font-display text-base font-bold text-accent-gold leading-none select-none">
                 {t('app_name')[0]}
               </span>
             </div>
-            <h1 className="font-display text-xl text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
+            <h1 className="font-display text-[19px] text-ink dark:text-ink-on-dark">{t('app_name')}</h1>
           </div>
 
           {/* Middle: Tagline */}
           <div className="flex-1 flex justify-center px-2 sm:px-4 min-w-0">
-            <p className="text-xs sm:text-sm text-secondary-ink dark:text-muted-ink-on-dark text-center whitespace-nowrap truncate">
+            <p className="font-display text-[14px] text-muted-ink dark:text-muted-ink-on-dark text-center whitespace-nowrap truncate">
               {t('header.tagline')}
             </p>
           </div>
@@ -128,7 +128,7 @@ export const Header: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setShowCreditsDropdown(!showCreditsDropdown)}
-                  className="flex items-center space-x-2 bg-chip border border-divider dark:border-divider-on-dark rounded-full px-3 py-1.5 hover:opacity-90 transition-opacity"
+                  className="flex items-center space-x-2 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-full px-3 py-1.5 hover:opacity-90 transition-opacity"
                 >
                   <div className="bg-accent-gold-soft rounded-full p-1 flex items-center justify-center">
                     <HandCoins className="h-4 w-4 text-accent-gold" aria-hidden />

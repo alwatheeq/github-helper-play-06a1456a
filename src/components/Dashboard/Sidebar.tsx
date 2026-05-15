@@ -139,9 +139,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               const isActive = currentView === item.id;
               const isDisabled = item.disabled;
 
-              const baseClasses = `relative flex items-center transition-colors duration-150 text-left rounded-md ${
+              const baseClasses = `relative flex items-center transition-colors duration-150 text-left ${
                 shouldBeOpen
-                  ? 'w-full space-x-3 rtl:space-x-reverse px-3 py-2.5'
+                  ? 'w-full space-x-3 rtl:space-x-reverse px-5 py-2.5'
                   : 'w-10 h-10 justify-center mx-auto'
               }`;
 
@@ -149,7 +149,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 ? 'opacity-50 cursor-not-allowed text-muted-ink-on-dark'
                 : isActive
                 ? `text-ink-on-dark bg-white/[0.03] ${
-                    shouldBeOpen ? (isRtl ? 'border-r-2 border-accent-gold' : 'border-l-2 border-accent-gold') : ''
+                    shouldBeOpen ? (isRtl ? 'border-r-[3px] border-accent-gold' : 'border-l-[3px] border-accent-gold') : ''
                   }`
                 : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5';
 
@@ -170,7 +170,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     />
                     {shouldBeOpen && (
                       <div className="flex-1 min-w-0 transition-opacity duration-200 ease-in-out">
-                        <div className="font-medium flex items-center gap-2 text-sm">
+                        <div className="font-semibold flex items-center gap-2 text-[13px]">
                           {item.label}
                           {isDisabled && (
                             <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 bg-white/10 text-muted-ink-on-dark rounded-full">
@@ -178,7 +178,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             </span>
                           )}
                         </div>
-                        <div className={`text-[10px] uppercase tracking-[0.12em] mt-0.5 ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
+                        <div className={`font-display text-[10.5px] mt-0.5 ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
                           {item.description}
                         </div>
                       </div>

@@ -1459,7 +1459,7 @@ export const Dashboard: React.FC = () => {
             </button>
           )}
 
-          <div className="w-full pt-8 pr-10 pb-10 pl-10">
+          <div className="w-full pt-[26px] pb-[26px] px-8">
             <Suspense fallback={
               <div className="flex items-center justify-center py-16">
                 <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-accent-gold" />

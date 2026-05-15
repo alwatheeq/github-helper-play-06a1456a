@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useI18n, I18nContext } from '../../contexts/I18nContext';
 import { Upload, FileText, Settings, Info, Type, File, Stethoscope, Scan, Globe } from 'lucide-react';
-import { ScholarCard, ScholarAlert } from '../Scholar';
+import { ScholarAlert } from '../Scholar';
 import { todo } from '../../utils/todoToast';
 import { medStudentClient } from '../../utils/medStudentClient';
 import { useFeatureAccess } from '../../hooks/useFeatureAccess';
@@ -427,7 +427,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         </div>
       )}
 
-      <ScholarCard padding="lg">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-[18px]">
         {/* Notification */}
         {notification.show && (
           <div className="mb-6">
@@ -444,7 +444,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
         <div
           role="tablist"
           aria-label="Input source"
-          className="flex gap-8 mb-8 overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
+          className="flex gap-7 mb-5 overflow-x-auto sm:overflow-visible -mx-2 px-2 sm:mx-0 sm:px-0"
         >
           <button
             type="button"
@@ -519,7 +519,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark mt-2">
                 {t('dashboard.drop_file_helper') || 'PDF, PPTX, DOCX · up to 400 pages'}
               </p>
-              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark rounded-[8px] text-[13px] font-medium mt-[18px]">
+              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark text-[13px] font-medium mt-[18px]">
                 Choose a file <span aria-hidden>→</span>
               </span>
             </div>
@@ -825,7 +825,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
             </label>
           </div>
         </div>
-      </ScholarCard>
+      </div>
 
     </div>
   );
