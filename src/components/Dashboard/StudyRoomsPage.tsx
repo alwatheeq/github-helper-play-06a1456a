@@ -1322,8 +1322,8 @@ export const StudyRoomsPage: React.FC = () => {
                         <div className="text-[9.5px] tracking-[1.5px] uppercase font-bold text-accent-gold truncate max-w-[140px]">
                           {room.room_description || 'Study Room'}
                         </div>
-                        <div className="inline-flex items-center gap-[5px] px-[9px] py-[3px] bg-accent-gold text-[9px] tracking-[1.5px] uppercase font-bold text-ink">
-                          <div className="w-1 h-1 rounded-full bg-ink flex-shrink-0" />
+                        <div className="inline-flex items-center gap-[5px] px-[9px] py-[3px] bg-accent-gold text-[9px] tracking-[1.5px] uppercase font-bold text-ink-on-dark">
+                          <div className="w-1 h-1 rounded-full bg-ink-on-dark flex-shrink-0" />
                           Live
                         </div>
                       </div>
@@ -1380,7 +1380,7 @@ export const StudyRoomsPage: React.FC = () => {
                           <button
                             onClick={() => handleJoinRoom(room)}
                             disabled={isFull}
-                            className="px-[14px] py-[6px] bg-accent-gold text-ink font-display text-[12px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-opacity"
+                            className="px-[14px] py-[6px] bg-accent-gold text-ink-on-dark font-display text-[12px] font-semibold border-none cursor-pointer disabled:opacity-50 transition-opacity"
                           >
                             {isFull ? 'Full' : 'Join Now'}
                           </button>

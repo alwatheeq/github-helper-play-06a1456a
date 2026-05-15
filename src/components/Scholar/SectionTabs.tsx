@@ -96,10 +96,10 @@ export const SectionTabs: React.FC<SectionTabsProps> = ({
             onClick={() => !tab.disabled && onChange(tab.id)}
             onKeyDown={(e) => handleKey(e, idx)}
             className={[
-              'relative pb-3 pt-1 text-sm font-medium whitespace-nowrap transition-colors',
+              'relative pb-[6px] pt-[2px] font-display text-[13.5px] whitespace-nowrap transition-colors -mb-px',
               active
-                ? 'text-ink dark:text-ink-on-dark'
-                : 'text-muted-ink dark:text-muted-ink-on-dark hover:text-ink dark:hover:text-ink-on-dark',
+                ? 'text-ink dark:text-ink-on-dark font-semibold'
+                : 'text-muted-ink dark:text-muted-ink-on-dark font-medium hover:text-ink dark:hover:text-ink-on-dark',
               tab.disabled ? 'opacity-50 cursor-not-allowed' : '',
             ].join(' ')}
           >
@@ -112,7 +112,7 @@ export const SectionTabs: React.FC<SectionTabsProps> = ({
               ) : null}
             </span>
             {active ? (
-              <span className="absolute inset-x-0 -bottom-px h-0.5 bg-accent-gold" />
+              <span className="absolute inset-x-0 bottom-0 h-[2px] bg-accent-gold" />
             ) : null}
           </button>
         );
