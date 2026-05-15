@@ -317,7 +317,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                       })()}
                     </div>
                     {group.member_count > 4 && (
-                      <span className={`text-[10px] ${group.my_role === 'admin' ? 'text-white/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
+                      <span className={`text-[10px] ${group.my_role === 'admin' ? 'text-ink-on-dark/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>
                         +{group.member_count - 4}
                       </span>
                     )}
@@ -462,7 +462,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             onChange={(e) => setNewGroupName(e.target.value)}
             placeholder={t('social.group_name')}
             maxLength={100}
-            className="w-full px-3 py-2 mb-3 border border-white/20 bg-white/10 text-[12px] text-white placeholder:text-white/40 focus:outline-none"
+            className="w-full px-3 py-2 mb-3 border border-ink-on-dark/[.20] bg-ink-on-dark/[.10] text-[12px] text-ink-on-dark placeholder:text-ink-on-dark/40 focus:outline-none"
             onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
           />
           <button

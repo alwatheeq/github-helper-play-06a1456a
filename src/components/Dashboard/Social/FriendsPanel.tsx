@@ -394,7 +394,7 @@ export const FriendsPanel: React.FC = () => {
                       <button
                         onClick={() => handleRequest(req.id, 'rejected')}
                         disabled={processingRequest === req.id}
-                        className="flex-1 py-1.5 border border-white/20 text-white/60 text-[11px] hover:bg-white/10 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+                        className="flex-1 py-1.5 border border-ink-on-dark/[.20] text-ink-on-dark/60 text-[11px] hover:bg-ink-on-dark/[.10] disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
                         aria-label={t('social.reject')}
                       >
                         <X className="h-3.5 w-3.5" />

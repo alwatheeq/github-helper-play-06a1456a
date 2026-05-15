@@ -61,7 +61,7 @@ export const PricingPage: React.FC = () => {
         {user ? (
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-[7px] px-[14px] py-[7px] rounded-[8px] bg-accent-gold-soft border border-accent-gold/30 text-[13px] font-medium text-accent-gold hover:opacity-90 transition"
+            className="flex items-center gap-[7px] px-[14px] py-[7px] bg-accent-gold-soft border border-accent-gold/30 text-[13px] font-medium text-accent-gold hover:opacity-90 transition"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             {t('pricing.back_to_dashboard')}
@@ -69,10 +69,10 @@ export const PricingPage: React.FC = () => {
         ) : <div />}
         <button
           onClick={() => navigate('/')}
-          className="w-8 h-8 rounded-[8px] bg-sidebar flex items-center justify-center hover:opacity-90 transition"
+          className="w-8 h-8 bg-sidebar flex items-center justify-center hover:opacity-90 transition"
           aria-label="Close"
         >
-          <X className="h-3.5 w-3.5 text-card-light" />
+          <X className="h-3.5 w-3.5 text-ink-on-dark" />
         </button>
       </div>
 
@@ -116,7 +116,7 @@ export const PricingPage: React.FC = () => {
         </div>
 
         {/* Standard plan card */}
-        <div className="rounded-[14px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden mb-4">
+        <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden mb-4">
           <div className="px-6 py-5 bg-subtle dark:bg-subtle-on-dark border-b border-divider dark:border-divider-on-dark">
             <div className="text-[11px] font-semibold text-muted-ink dark:text-muted-ink-on-dark uppercase tracking-[0.05em] mb-2.5">
               {t('pricing.billing_term_label')}
@@ -127,7 +127,7 @@ export const PricingPage: React.FC = () => {
                   key={months}
                   type="button"
                   onClick={() => setBillingMonths(months)}
-                  className={`px-3.5 py-1.5 rounded-[6px] border text-[12px] transition ${
+                  className={`px-3.5 py-1.5 border text-[12px] transition ${
                     billingMonths === months
                       ? 'border-accent-gold bg-accent-gold/[0.09] font-semibold text-accent-gold'
                       : 'border-divider dark:border-divider-on-dark bg-card-light dark:bg-card-dark font-normal text-muted-ink dark:text-muted-ink-on-dark'
@@ -193,7 +193,7 @@ export const PricingPage: React.FC = () => {
               disableInc: chatBlocks >= MAX_CHAT_BLOCKS,
             },
           ].map((addon, i) => (
-            <div key={i} className="rounded-[10px] bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-[18px] py-3.5 mb-2.5 flex items-center justify-between">
+            <div key={i} className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark px-[18px] py-3.5 mb-2.5 flex items-center justify-between">
               <div>
                 <div className="text-[13px] font-semibold text-ink dark:text-ink-on-dark mb-0.5">{addon.label}</div>
                 <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{addon.desc}</div>
@@ -202,7 +202,7 @@ export const PricingPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <button type="button" onClick={addon.onDec} disabled={addon.disableDec}
-                  className="w-7 h-7 rounded-[6px] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark flex items-center justify-center hover:opacity-80 transition disabled:opacity-40"
+                  className="w-7 h-7 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark flex items-center justify-center hover:opacity-80 transition disabled:opacity-40"
                   aria-label="Decrease">
                   <Minus className="h-3 w-3 text-muted-ink dark:text-muted-ink-on-dark" />
                 </button>
@@ -210,7 +210,7 @@ export const PricingPage: React.FC = () => {
                   {addon.count}
                 </span>
                 <button type="button" onClick={addon.onInc} disabled={addon.disableInc}
-                  className="w-7 h-7 rounded-[6px] border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark flex items-center justify-center hover:opacity-80 transition disabled:opacity-40"
+                  className="w-7 h-7 border border-divider dark:border-divider-on-dark bg-subtle dark:bg-subtle-on-dark flex items-center justify-center hover:opacity-80 transition disabled:opacity-40"
                   aria-label="Increase">
                   <Plus className="h-3 w-3 text-muted-ink dark:text-muted-ink-on-dark" />
                 </button>
@@ -242,7 +242,7 @@ export const PricingPage: React.FC = () => {
           </div>
           <button
             onClick={handleSubscribe}
-            className="w-full bg-sidebar text-card-light font-bold py-3 rounded-[10px] flex items-center justify-center gap-2 hover:opacity-85 transition"
+            className="w-full bg-sidebar text-ink-on-dark font-bold py-3 flex items-center justify-center gap-2 hover:opacity-85 transition"
           >
             <span>{isStripeEnabled() ? t('pricing.subscribe') : t('pricing.continue')}</span>
             <ArrowRight className="h-4 w-4" />

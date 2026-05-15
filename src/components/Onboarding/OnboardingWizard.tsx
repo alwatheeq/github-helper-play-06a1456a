@@ -126,7 +126,7 @@ export const OnboardingWizard: React.FC = () => {
           </div>
 
           {/* Language list */}
-          <div className="border border-divider dark:border-divider-on-dark rounded-[10px] overflow-hidden mb-5">
+          <div className="border border-divider dark:border-divider-on-dark overflow-hidden mb-5">
             {LANGUAGES.map((lang, i) => {
               const selected = selectedLang === lang.code;
               return (
@@ -157,7 +157,7 @@ export const OnboardingWizard: React.FC = () => {
           <button
             type="button"
             onClick={() => setStep(2)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-[8px] bg-sidebar text-card-light dark:text-card-dark text-[14px] font-semibold hover:opacity-85 transition"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-sidebar text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition"
           >
             {t('onboarding.next')}
             <ChevronRight className="h-4 w-4" />
@@ -188,12 +188,12 @@ export const OnboardingWizard: React.FC = () => {
                   key={theme.id}
                   type="button"
                   onClick={() => handleThemeSelect(theme.id)}
-                  className={`relative text-left border-2 rounded-[14px] px-3.5 pt-3.5 pb-3 bg-card-light dark:bg-card-dark transition-colors ${
+                  className={`relative text-left border-2 px-3.5 pt-3.5 pb-3 bg-card-light dark:bg-card-dark transition-colors ${
                     selected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark hover:border-accent-gold/40'
                   }`}
                 >
                   {/* Multi-stripe swatch */}
-                  <div className="flex rounded-[8px] overflow-hidden h-8 mb-2.5">
+                  <div className="flex overflow-hidden h-8 mb-2.5">
                     {theme.stripes.map((color, j) => (
                       <div key={j} className="flex-1" style={{ background: color }} />
                     ))}
@@ -215,7 +215,7 @@ export const OnboardingWizard: React.FC = () => {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="flex items-center gap-1.5 px-4 py-2.5 border border-divider dark:border-divider-on-dark rounded-[8px] text-[13px] text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark hover:opacity-75 transition"
+              className="flex items-center gap-1.5 px-4 py-2.5 border border-divider dark:border-divider-on-dark text-[13px] text-secondary-ink dark:text-muted-ink-on-dark bg-card-light dark:bg-card-dark hover:opacity-75 transition"
             >
               <ChevronLeft className="h-3.5 w-3.5" />
               {t('onboarding.back')}
@@ -224,7 +224,7 @@ export const OnboardingWizard: React.FC = () => {
               type="button"
               onClick={handleComplete}
               disabled={completing}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-[8px] bg-sidebar text-card-light dark:text-card-dark text-[14px] font-semibold hover:opacity-85 transition disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-sidebar text-ink-on-dark text-[14px] font-semibold hover:opacity-85 transition disabled:opacity-50"
             >
               {completing ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current" />

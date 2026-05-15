@@ -73,7 +73,7 @@ export const AccountSuspended: React.FC = () => {
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-page-light dark:bg-page-dark p-6" style={{ fontFamily: 'Inter, sans-serif' }}>
-      <div className="w-[460px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[22px] overflow-hidden">
+      <div className="w-[460px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
 
         {/* ── Red header band — semantic, always red ───────────────── */}
         <div className="bg-red-50 border-b border-red-200 px-9 pt-7 pb-6 text-center">
@@ -92,7 +92,7 @@ export const AccountSuspended: React.FC = () => {
           {/* Reason box */}
           {blockInfo.reason && (
             <div className="bg-red-50 border border-red-200 rounded-[12px] px-4 py-3.5 mb-2.5 flex items-start gap-2.5">
-              <div className="w-7 h-7 rounded-[8px] bg-red-100 flex items-center justify-center flex-shrink-0">
+              <div className="w-7 h-7 bg-red-100flex items-center justify-center flex-shrink-0">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                 </svg>
@@ -107,7 +107,7 @@ export const AccountSuspended: React.FC = () => {
           {/* Expiry box */}
           {!blockInfo.isPermanent && expirationDate && (
             <div className="bg-blue-50 border border-blue-200 rounded-[12px] px-4 py-3.5 mb-3.5 flex items-start gap-2.5">
-              <div className="w-7 h-7 rounded-[8px] bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <div className="w-7 h-7 bg-blue-100 flex items-center justify-center flex-shrink-0">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                 </svg>
@@ -121,14 +121,14 @@ export const AccountSuspended: React.FC = () => {
           )}
 
           {/* Appeal note */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[10px] px-3.5 py-2.5 mb-[18px] text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center leading-relaxed">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark px-3.5 py-2.5 mb-[18px] text-[12px] text-muted-ink dark:text-muted-ink-on-dark text-center leading-relaxed">
             If you believe this is an error, contact support to appeal your suspension.
           </div>
 
           {/* Sign Out button */}
           <button
             onClick={handleSignOut}
-            className="w-full bg-sidebar text-card-light rounded-[11px] py-[11px] text-[13px] font-semibold flex items-center justify-center gap-2 hover:opacity-85 transition"
+            className="w-full bg-sidebar text-ink-on-dark py-[11px] text-[13px] font-semibold flex items-center justify-center gap-2 hover:opacity-85 transition"
           >
             <LogOut className="h-3.5 w-3.5" />
             Sign Out

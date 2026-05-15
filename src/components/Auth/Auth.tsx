@@ -188,7 +188,7 @@ export const Auth: React.FC = () => {
                 onChange={e => setEmail(e.target.value)}
                 disabled={loading}
                 placeholder={t('auth.enter_email')}
-                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-[7px] text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
+                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-darktext-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
               />
             </div>
 
@@ -204,14 +204,14 @@ export const Auth: React.FC = () => {
                 onChange={e => setPassword(e.target.value)}
                 disabled={loading}
                 placeholder={t('auth.enter_password')}
-                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-dark rounded-[7px] text-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
+                className="w-full px-3 py-2.5 border border-divider dark:border-divider-on-darktext-sm text-ink dark:text-ink-on-dark bg-card-light dark:bg-card-dark placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent transition-colors duration-150 disabled:opacity-50"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center py-2.5 px-5 rounded-lg text-sm font-semibold bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold disabled:opacity-50 transition-opacity duration-150"
+              className="w-full flex items-center justify-center py-2.5 px-5 text-sm font-semibold bg-ink text-ink-on-dark hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold disabled:opacity-50 transition-opacity duration-150"
             >
               {loading
                 ? <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />

@@ -73,14 +73,14 @@ const MiniPlayer: React.FC = () => {
         <div className="flex gap-0.5 flex-shrink-0">
           {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
         </div>
-        <span className="text-[9px] text-white/[0.6] font-semibold flex-1 text-center truncate">
+        <span className="text-[9px] text-ink-on-dark/60 font-semibold flex-1 text-center truncate">
           {activeRoom.name}
         </span>
       </div>
 
       {/* Video preview placeholder */}
       <div className="h-[100px] flex items-center justify-center" style={{ background: 'linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f172a 100%)' }}>
-        <span className="text-[9px] text-white/40">
+        <span className="text-[9px] text-ink-on-dark/40">
           {t('floating_video.video_preview') || 'Video Preview'}
         </span>
       </div>
@@ -97,7 +97,7 @@ const MiniPlayer: React.FC = () => {
           {isMuted ? (
             <MicOff className="w-3.5 h-3.5 text-red-400" />
           ) : (
-            <Mic className="w-3.5 h-3.5 text-white/70" />
+            <Mic className="w-3.5 h-3.5 text-ink-on-dark/70" />
           )}
         </button>
 
@@ -108,7 +108,7 @@ const MiniPlayer: React.FC = () => {
           style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
           title={t('floating_video.expand') || 'Expand'}
         >
-          <Maximize2 className="w-3.5 h-3.5 text-white/70" />
+          <Maximize2 className="w-3.5 h-3.5 text-ink-on-dark/70" />
         </button>
 
         <button
