@@ -19,9 +19,9 @@ const paddingMap: Record<ScholarCardPadding, string> = {
 };
 
 const variantShadow: Record<ScholarCardVariant, string> = {
-  default: 'shadow-[var(--scholar-shadow-sm)]',
-  elevated: 'shadow-[var(--scholar-shadow-lg)]',
-  flat: 'shadow-none',
+  default: '',
+  elevated: '',
+  flat: '',
 };
 
 export const ScholarCard: React.FC<ScholarCardProps> = ({
@@ -34,7 +34,7 @@ export const ScholarCard: React.FC<ScholarCardProps> = ({
   ...rest
 }) => {
   const Tag = as as keyof JSX.IntrinsicElements;
-  const hoverCls = hover ? 'hover:shadow-[var(--scholar-shadow-md)] transition-shadow' : '';
+  const hoverCls = hover ? 'hover:opacity-90 transition-opacity' : '';
   const cls = [
     'bg-card-light dark:bg-card-dark',
     'border border-divider dark:border-divider-on-dark',

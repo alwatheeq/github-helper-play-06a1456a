@@ -38,10 +38,9 @@ export const ScholarAlert: React.FC<ScholarAlertProps> = ({
     <div
       role="alert"
       className={
-        'relative flex items-start gap-3 pl-4 pr-3 py-3 rounded-[6px] ' +
+        'relative flex items-start gap-3 pl-4 pr-3 py-3 ' +
         'bg-card-light dark:bg-card-dark ' +
         'border border-divider dark:border-divider-on-dark ' +
-        'shadow-[var(--scholar-shadow-sm)] ' +
         'overflow-hidden ' +
         className
       }
