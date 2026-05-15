@@ -1503,11 +1503,13 @@ export const Dashboard: React.FC = () => {
 
             {currentView === 'main' && (
               <div className="space-y-7">
-                <PageHeader
-                  eyebrow="The Workshop"
-                  title={t('dashboard.process_content') || 'Process your content.'}
-                  descriptor="bring in a document, paste text, or scan a page — we'll do the rest."
-                />
+                {processingState.stage === 'idle' && (
+                  <PageHeader
+                    eyebrow="The Workshop"
+                    title={t('dashboard.process_content') || 'Process your content.'}
+                    descriptor="bring in a document, paste text, or scan a page — we'll do the rest."
+                  />
+                )}
 
                 {processingState.stage === 'idle' && (
                   <WorkshopV4
@@ -1532,6 +1534,21 @@ export const Dashboard: React.FC = () => {
 
                     {processingState.stage === 'completed' && (
                       <div className="space-y-3">
+                        {/* Dash4Result page header — "The Workshop · Results" + document title */}
+                        <div className="mb-2.5">
+                          <div className="text-[10px] font-bold tracking-[2.5px] uppercase text-accent-gold">
+                            The Workshop · Results
+                          </div>
+                          <h1 className="font-display text-[34px] font-semibold text-ink dark:text-ink-on-dark mt-1.5 mb-1 tracking-tight leading-tight">
+                            {loadedHistoryEntry?.original_file_name?.replace(/\.[^/.]+$/, '') || t('dashboard.process_content') || 'Your Document'}
+                          </h1>
+                          <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark">
+                            {processingState.flashcards.length > 0 && `${processingState.flashcards.length} flashcards · `}
+                            {processingState.summaryChunks.some(c => c?.trim()) && 'summary written · '}
+                            generated just now
+                          </p>
+                          <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-2.5" />
+                        </div>
                         {/* Dash4Result action bar */}
                         <div className="flex items-center gap-[4px] pb-2.5 border-b border-divider dark:border-divider-on-dark flex-wrap">
                           {/* Back to History */}
@@ -1624,7 +1641,7 @@ export const Dashboard: React.FC = () => {
                                 {showActionsMenu && (
                                   <>
                                     <div className="fixed inset-0 z-40" onClick={() => setShowActionsMenu(false)} />
-                                    <div className="absolute right-0 mt-1 w-52 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark shadow-[var(--scholar-shadow-lg)] z-50 overflow-hidden">
+                                    <div className="absolute right-0 mt-1 w-52 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark z-50 overflow-hidden">
                                       <div className="p-1.5 space-y-0.5">
                                         <button onClick={() => { actionBarData.onCopyAll(); setShowActionsMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle/60 transition-colors">
                                           <Copy className="h-3.5 w-3.5 opacity-60" />{t('summary.copy_all')}
