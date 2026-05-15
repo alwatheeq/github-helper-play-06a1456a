@@ -253,9 +253,9 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
         ].map(({ label, value }, i, arr) => (
           <div
             key={label}
-            className={`flex-1 py-3.5 px-5 text-center${i < arr.length - 1 ? ' border-r border-card-light/10' : ''}`}
+            className={`flex-1 py-3.5 px-5 text-center${i < arr.length - 1 ? ' border-r border-ink-on-dark/[.10]' : ''}`}
           >
-            <div className="font-display text-[24px] font-bold text-card-light leading-none">{value}</div>
+            <div className="font-display text-[24px] font-bold text-ink-on-dark leading-none">{value}</div>
             <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1.5">{label}</div>
           </div>
         ))}
