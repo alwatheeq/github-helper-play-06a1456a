@@ -225,7 +225,7 @@ export const HistoryPage: React.FC<HistoryPageProps> = React.memo(({ onViewHisto
                 ErrorLogger.debug('Sort option changed', { component: 'HistoryPage', action: 'handleSortChange', newSortOption: e.target.value });
                 setSortOption(e.target.value);
               }}
-              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
+              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
             >
               <option value="created_at_desc">{t('history.creation_newest')}</option>
               <option value="created_at_asc">{t('history.creation_oldest')}</option>
