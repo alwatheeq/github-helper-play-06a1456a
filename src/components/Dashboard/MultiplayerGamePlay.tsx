@@ -531,10 +531,10 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
                 ${isMe ? 'bg-sidebar border-accent-gold' : (i === 0 ? 'bg-accent-gold-soft border-divider dark:border-divider-on-dark' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark')}`}
             >
               <span className={`text-[9px] font-bold flex-shrink-0 ${i === 0 || isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>#{i + 1}</span>
-              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[9px] font-bold flex-shrink-0 border border-divider dark:border-divider-on-dark ${isMe ? 'bg-accent-gold text-sidebar' : (i === 0 ? 'bg-sidebar text-card-light' : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark')}`}>
+              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[9px] font-bold flex-shrink-0 border border-divider dark:border-divider-on-dark ${isMe ? 'bg-accent-gold text-sidebar' : (i === 0 ? 'bg-sidebar text-ink-on-dark' : 'bg-subtle dark:bg-subtle-on-dark text-muted-ink dark:text-muted-ink-on-dark')}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
-              <span className={`text-[11px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap min-w-0 ${isMe ? 'font-bold text-card-light' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
+              <span className={`text-[11px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap min-w-0 ${isMe ? 'font-bold text-ink-on-dark' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
                 {isMe ? 'You' : p.display_name}
               </span>
               <span className={`font-display text-[14px] font-bold flex-shrink-0 ${isMe || i === 0 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.correct}</span>
@@ -544,7 +544,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
         {playerScores.length > 7 && (
           <div className="flex items-center px-[11px] py-[7px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex-shrink-0 gap-[3px]">
             {playerScores.slice(7, 10).map((p) => (
-              <div key={p.user_id} className="w-[20px] h-[20px] rounded-full bg-sidebar text-card-light grid place-items-center text-[8px] font-bold">
+              <div key={p.user_id} className="w-[20px] h-[20px] rounded-full bg-sidebar text-ink-on-dark grid place-items-center text-[8px] font-bold">
                 {p.display_name[0].toUpperCase()}
               </div>
             ))}
@@ -621,14 +621,14 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           return (
             <div key={p.user_id} className={`col-span-3 flex items-center gap-3 px-4 py-3 border-[2px] border-accent-gold ${isMe ? 'bg-sidebar' : 'bg-accent-gold-soft'}`}>
               <span className="font-display text-[22px] font-bold text-accent-gold min-w-[26px]">1</span>
-              <div className={`w-8 h-8 rounded-full grid place-items-center text-[12px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+              <div className={`w-8 h-8 rounded-full grid place-items-center text-[12px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <div className={`text-[13px] font-bold truncate ${isMe ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>
+                <div className={`text-[13px] font-bold truncate ${isMe ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>
                   {isMe ? `${p.display_name} (You)` : p.display_name}
                 </div>
-                <div className={`text-[10px] ${isMe ? 'text-card-light/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>Leading the room</div>
+                <div className={`text-[10px] ${isMe ? 'text-ink-on-dark/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>Leading the room</div>
               </div>
               <span className="font-display text-[26px] font-bold text-accent-gold">{p.correct}</span>
             </div>
@@ -639,11 +639,11 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           return (
             <div key={p.user_id} className={`flex items-center gap-2 px-3 py-3 border ${isMe ? 'bg-sidebar border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
               <span className="font-display text-[16px] font-bold text-muted-ink dark:text-muted-ink-on-dark min-w-[20px]">{i + 2}</span>
-              <div className={`w-[26px] h-[26px] rounded-full grid place-items-center text-[10px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+              <div className={`w-[26px] h-[26px] rounded-full grid place-items-center text-[10px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <div className={`text-[12px] truncate ${isMe ? 'text-card-light font-bold' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
+                <div className={`text-[12px] truncate ${isMe ? 'text-ink-on-dark font-bold' : 'text-ink dark:text-ink-on-dark font-medium'}`}>
                   {isMe ? `${p.display_name} (You)` : p.display_name}
                 </div>
               </div>
@@ -656,7 +656,7 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
           return (
             <div key={p.user_id} className={`flex items-center gap-2 px-3 py-[9px] border ${isMe ? 'bg-accent-gold-soft border-accent-gold' : 'bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark'}`}>
               <span className={`text-[11px] font-semibold min-w-[18px] ${isMe ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 4}</span>
-              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+              <div className={`w-[22px] h-[22px] rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                 {p.display_name[0].toUpperCase()}
               </div>
               <span className={`text-[11px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap ${isMe ? 'text-ink dark:text-ink-on-dark font-bold' : 'text-secondary-ink dark:text-muted-ink-on-dark'}`}>

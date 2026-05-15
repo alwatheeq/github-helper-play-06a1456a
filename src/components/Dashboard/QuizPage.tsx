@@ -1685,7 +1685,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       [`${allBest}%`, 'best score'],
                       ['3 mo.', 'span'],
                     ] as [string, string][]).map(([v, l], i) => (
-                      <div key={i} className="flex-1 py-[11px] px-5 text-center border-r border-page-light/[.08] last:border-r-0">
+                      <div key={i} className="flex-1 py-[11px] px-5 text-center border-r border-ink-on-dark/[.08] last:border-r-0">
                         <div className="font-display text-[22px] font-semibold text-ink-on-dark leading-none">{v}</div>
                         <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1">{l}</div>
                       </div>

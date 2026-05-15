@@ -635,14 +635,14 @@ export const EduPlayPage: React.FC = React.memo(() => {
                   <div className="flex justify-between items-start mb-[10px]">
                     <div>
                       <div className={`text-[9px] tracking-[1.5px] uppercase font-bold mb-[5px] ${g.live ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.sub}</div>
-                      <div className={`font-display text-[18px] font-semibold tracking-tight ${g.live ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>{g.title}</div>
+                      <div className={`font-display text-[18px] font-semibold tracking-tight ${g.live ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{g.title}</div>
                     </div>
                     {g.live
                       ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-ink-on-dark font-bold uppercase flex-shrink-0">Live</div>
                       : <div className="text-[9px] tracking-[1.5px] px-2 py-[3px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase flex-shrink-0">Soon</div>
                     }
                   </div>
-                  <div className={`text-[12px] leading-relaxed flex-1 mb-4 ${g.live ? 'text-card-light/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.desc}</div>
+                  <div className={`text-[12px] leading-relaxed flex-1 mb-4 ${g.live ? 'text-ink-on-dark/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.desc}</div>
                   {g.live && g.onClick
                     ? <button onClick={g.onClick} className="py-2 bg-accent-gold text-ink-on-dark font-display text-[12.5px] font-bold text-center cursor-pointer border-none hover:opacity-90 transition">
                         {g.cta}
@@ -685,21 +685,21 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <div className="flex flex-col gap-[14px]">
             {/* Your Record — dark panel */}
             <div className="bg-sidebar p-[20px_18px]">
-              <div className="text-[9px] tracking-[2px] uppercase font-bold text-card-light/40 mb-3">Your Record</div>
+              <div className="text-[9px] tracking-[2px] uppercase font-bold text-ink-on-dark/40 mb-3">Your Record</div>
               <div className="flex items-baseline gap-[6px] mb-1">
-                <span className="font-display text-[36px] font-bold text-card-light">7</span>
+                <span className="font-display text-[36px] font-bold text-ink-on-dark">7</span>
                 <span className="text-[14px] text-accent-gold font-semibold">W</span>
-                <span className="font-display text-[22px] font-light text-card-light/20 mx-1">—</span>
-                <span className="font-display text-[36px] font-bold text-card-light/50">3</span>
-                <span className="text-[14px] text-card-light/40 font-semibold">L</span>
+                <span className="font-display text-[22px] font-light text-ink-on-dark/20 mx-1">—</span>
+                <span className="font-display text-[36px] font-bold text-ink-on-dark/50">3</span>
+                <span className="text-[14px] text-ink-on-dark/40 font-semibold">L</span>
               </div>
-              <div className="text-[11px] text-card-light/50 mb-3.5">this week · Brain Rush</div>
-              <div className="h-px bg-card-light/10 mb-3.5" />
+              <div className="text-[11px] text-ink-on-dark/50 mb-3.5">this week · Brain Rush</div>
+              <div className="h-px bg-ink-on-dark/[.10] mb-3.5" />
               <div className="grid grid-cols-2 gap-[10px]">
                 {[['70%','win rate'],['2,610','total pts'],['10','games'],['8.2s','avg time']].map(([v,l]) => (
                   <div key={l}>
-                    <div className="font-display text-[16px] font-semibold text-card-light">{v}</div>
-                    <div className="text-[9px] tracking-[1px] uppercase text-card-light/40 mt-0.5">{l}</div>
+                    <div className="font-display text-[16px] font-semibold text-ink-on-dark">{v}</div>
+                    <div className="text-[9px] tracking-[1px] uppercase text-ink-on-dark/40 mt-0.5">{l}</div>
                   </div>
                 ))}
               </div>
