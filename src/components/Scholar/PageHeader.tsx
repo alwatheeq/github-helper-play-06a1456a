@@ -55,7 +55,7 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
         ) : null}
       </div>
       {!hideRule ? (
-        <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-4" />
+        <div className="h-px bg-ink dark:bg-ink-on-dark opacity-80 mt-[14px]" />
       ) : null}
     </header>
   );
