@@ -381,7 +381,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
             <div className="flex gap-2">
               <button
                 onClick={onComplete}
-                className="inline-flex items-center gap-[5px] px-[13px] py-[6px] bg-sidebar text-card-light text-[11.5px] font-semibold hover:opacity-80 transition-opacity"
+                className="inline-flex items-center gap-[5px] px-[13px] py-[6px] bg-sidebar text-ink-on-dark text-[11.5px] font-semibold hover:opacity-80 transition-opacity"
               >
                 ← {t('quiz.back_to_quizzes')}
               </button>
@@ -391,7 +391,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           {/* Score banner — dark ink */}
           <div className="bg-ink flex items-center gap-0 px-[30px] py-[22px]">
             {/* Score */}
-            <div className="pr-[30px] border-r border-white/10 flex-shrink-0">
+            <div className="pr-[30px] border-r border-ink-on-dark/10 flex-shrink-0">
               <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Final score</p>
               <p className="font-display text-[64px] font-semibold text-ink-on-dark leading-none tracking-tight">
                 {Math.round(results.scorePercentage)}
@@ -412,17 +412,17 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                 <div key={label} className="text-center">
                   <div className="flex justify-center mb-1.5 text-accent-gold">{icon}</div>
                   <p className="font-display text-[32px] font-semibold text-ink-on-dark leading-none">{value}</p>
-                  <p className="text-[9px] tracking-widest text-white/50 uppercase mt-1.5">{label}</p>
+                  <p className="text-[9px] tracking-widest text-ink-on-dark/50 uppercase mt-1.5">{label}</p>
                 </div>
               ))}
 
               {/* Time */}
-              <div className="text-center border-l border-white/10 pl-7">
+              <div className="text-center border-l border-ink-on-dark/10 pl-7">
                 <p className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold mb-2">Time taken</p>
                 <p className="font-display text-2xl font-semibold text-ink-on-dark leading-none">
                   {formatTime(results.timeTaken)}
                 </p>
-                <p className="text-[10px] text-white/40 mt-1.5">
+                <p className="text-[10px] text-ink-on-dark/40 mt-1.5">
                   {Math.round(results.timeTaken / questions.length)}s / q avg
                 </p>
               </div>
@@ -717,7 +717,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
         <div className="hidden md:flex flex-col bg-ink w-64 xl:w-72 flex-shrink-0">
 
           {/* Timer */}
-          <div className="px-6 pt-6 pb-5 border-b border-white/10">
+          <div className="px-6 pt-6 pb-5 border-b border-ink-on-dark/10">
             <p className="text-[9px] tracking-[2.5px] uppercase font-bold text-accent-gold mb-3">
               {timeRemaining !== null ? 'Time remaining' : 'Elapsed'}
             </p>
@@ -750,7 +750,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
 
           {/* Question map */}
           <div className="px-6 py-5 flex-1">
-            <p className="text-[9px] tracking-[2px] uppercase font-bold text-white/30 mb-3">Question map</p>
+            <p className="text-[9px] tracking-[2px] uppercase font-bold text-ink-on-dark/30 mb-3">Question map</p>
             <div className="flex flex-wrap gap-1.5">
               {questions.map((_, idx) => {
                 const isCurrent = idx === currentQuestionIndex;
@@ -763,8 +763,8 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
                       isCurrent
                         ? 'bg-accent-gold text-ink'
                         : hasAnswer
-                        ? 'bg-white/15 text-white/60'
-                        : 'bg-transparent text-white/25 border border-white/12'
+                        ? 'bg-ink-on-dark/15 text-ink-on-dark/60'
+                        : 'bg-transparent text-ink-on-dark/25 border border-ink-on-dark/12'
                     }`}
                   >
                     {idx + 1}
@@ -778,7 +778,7 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
           <div className="px-6 pb-6">
             <button
               onClick={onExit}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-white/15 text-[11px] text-white/40 hover:text-white/60 hover:border-white/25 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-ink-on-dark/15 text-[11px] text-ink-on-dark/40 hover:text-ink-on-dark/60 hover:border-ink-on-dark/25 transition-colors"
             >
               Exit quiz
             </button>

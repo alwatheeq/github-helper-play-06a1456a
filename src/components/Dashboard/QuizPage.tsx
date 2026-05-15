@@ -1235,7 +1235,7 @@ export const QuizPage: React.FC = React.memo(() => {
                           onClick={() => setDifficulty(d)}
                           className={`px-4 py-[7px] font-display text-[12px] font-semibold cursor-pointer border-none transition-colors ${
                             j < 2 ? 'border-r border-divider dark:border-divider-on-dark' : ''
-                          } ${difficulty === d ? 'bg-sidebar text-card-light' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'}`}
+                          } ${difficulty === d ? 'bg-sidebar text-ink-on-dark' : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'}`}
                         >
                           {t(`quiz.difficulty_${d}`)}
                         </button>
@@ -1262,7 +1262,7 @@ export const QuizPage: React.FC = React.memo(() => {
                   <button
                     onClick={handleGenerateQuiz}
                     disabled={generating || !quizTitle.trim()}
-                    className="w-full py-[11px] bg-sidebar text-card-light font-display text-[13px] font-medium text-center border-none cursor-pointer hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full py-[11px] bg-sidebar text-ink-on-dark font-display text-[13px] font-medium text-center border-none cursor-pointer hover:opacity-80 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {generating ? t('quiz.generating') : `${t('quiz.generate') || 'Compose the examination'} →`}
                   </button>
@@ -1288,7 +1288,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       [String(myQuizzesStats.totalQ), 'questions'],
                     ] as [string, string][]).map(([v, l]) => (
                       <div key={l} className="text-center">
-                        <div className="font-display text-[18px] font-bold text-card-light">{v}</div>
+                        <div className="font-display text-[18px] font-bold text-ink-on-dark">{v}</div>
                         <div className="text-[9px] tracking-[1.5px] uppercase text-accent-gold mt-0.5">{l}</div>
                       </div>
                     ))}

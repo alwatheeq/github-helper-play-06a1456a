@@ -367,8 +367,8 @@ export const FeedbackPage: React.FC = React.memo(() => {
                     <div className={`mb-2.5 ${on ? 'opacity-100' : 'opacity-60'}`}>
                       <Icon className={`h-5 w-5 ${on ? 'text-accent-gold' : 'text-ink dark:text-ink-on-dark'}`} />
                     </div>
-                    <div className={`font-display text-[13.5px] font-semibold mb-1.5 ${on ? 'text-card-light dark:text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{l}</div>
-                    <div className={`text-[10.5px] leading-[1.55] ${on ? 'text-card-light/70 dark:text-muted-ink-on-dark' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{desc}</div>
+                    <div className={`font-display text-[13.5px] font-semibold mb-1.5 ${on ? 'text-ink-on-dark' : 'text-ink dark:text-ink-on-dark'}`}>{l}</div>
+                    <div className={`text-[10.5px] leading-[1.55] ${on ? 'text-ink-on-dark/70' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{desc}</div>
                   </button>
                 );
               })}
@@ -424,7 +424,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
                     type="submit"
                     onClick={handleSubmit}
                     disabled={isSubmitting || !feedbackText.trim()}
-                    className="px-5 py-2 bg-sidebar text-card-light dark:text-ink-on-dark border-none font-display text-[13px] font-semibold disabled:opacity-40 hover:opacity-80 transition flex items-center gap-2"
+                    className="px-5 py-2 bg-sidebar text-ink-on-dark border-none font-display text-[13px] font-semibold disabled:opacity-40 hover:opacity-80 transition flex items-center gap-2"
                   >
                     {isSubmitting ? (
                       <>
@@ -520,7 +520,7 @@ export const FeedbackPage: React.FC = React.memo(() => {
             {/* From the editors — dark ink tile */}
             <div className="bg-sidebar px-6 py-[22px] mb-5">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-3">From the editors</div>
-              <div className="font-display text-[16px] text-card-light dark:text-ink-on-dark leading-relaxed">
+              <div className="font-display text-[16px] text-ink-on-dark leading-relaxed">
                 "This is just the beginning — there is better still to come."
               </div>
               <div className="font-display text-[11px] text-accent-gold mt-3">— the Scholar team</div>

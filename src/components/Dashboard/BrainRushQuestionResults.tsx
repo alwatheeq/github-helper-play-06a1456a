@@ -143,9 +143,9 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
       {/* Your result banner */}
       {myResult && myRank > 0 && (
         <div className="bg-sidebar px-[28px] py-[20px] mb-3 flex items-center gap-7">
-          <div className="pr-7 border-r border-white/[.08] flex-shrink-0">
-            <div className="text-[9px] tracking-[2px] text-card-light/40 font-bold uppercase mb-[6px]">Your Rank</div>
-            <div className="font-display text-[54px] font-bold text-card-light leading-none tracking-[-2px]">#{myRank}</div>
+          <div className="pr-7 border-r border-ink-on-dark/[.08] flex-shrink-0">
+            <div className="text-[9px] tracking-[2px] text-ink-on-dark/40 font-bold uppercase mb-[6px]">Your Rank</div>
+            <div className="font-display text-[54px] font-bold text-ink-on-dark leading-none tracking-[-2px]">#{myRank}</div>
             <div className="text-[9px] tracking-[1.5px] text-accent-gold font-bold mt-[6px] uppercase">
               {myResult.answer?.is_correct ? '— Correct answer' : '— Keep going'}
             </div>
@@ -155,13 +155,13 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
             [`${correctThisRound} / ${questionIndex + 1}`, 'Correct'],
             [myResult.answer ? `${myResult.answer.time_taken_seconds.toFixed(1)}s` : '—', 'Time'],
           ] as [string, string][]).map(([v, l], i) => (
-            <div key={l} className={`${i < 2 ? 'pr-7 border-r border-white/[.08]' : ''} text-center`}>
-              <div className="font-display text-[30px] font-bold text-card-light leading-none">{v}</div>
-              <div className="text-[9px] tracking-[1.5px] text-card-light/40 uppercase mt-[5px]">{l}</div>
+            <div key={l} className={`${i < 2 ? 'pr-7 border-r border-ink-on-dark/[.08]' : ''} text-center`}>
+              <div className="font-display text-[30px] font-bold text-ink-on-dark leading-none">{v}</div>
+              <div className="text-[9px] tracking-[1.5px] text-ink-on-dark/40 uppercase mt-[5px]">{l}</div>
             </div>
           ))}
           <div className="ml-auto text-right">
-            <div className="text-[9px] tracking-[2px] text-card-light/30 uppercase mb-[4px]">This round</div>
+            <div className="text-[9px] tracking-[2px] text-ink-on-dark/30 uppercase mb-[4px]">This round</div>
             <div className="font-display text-[36px] font-bold text-accent-gold leading-none">
               {myPointsThisRound > 0 ? `+${myPointsThisRound}` : myPointsThisRound < 0 ? String(myPointsThisRound) : '0'}
             </div>
@@ -202,7 +202,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
                 >
                   <span className={`font-display text-[14px] font-bold ${i < 3 ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{i + 1}</span>
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className={`w-[26px] h-[26px] rounded-full grid place-items-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-card-light'}`}>
+                    <div className={`w-[26px] h-[26px] rounded-full grid place-items-center text-[9px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                       {p.display_name[0].toUpperCase()}
                     </div>
                     <div className="min-w-0">
@@ -231,7 +231,7 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
         <div className="flex flex-col gap-3">
           {isHost ? (
             <div className="bg-sidebar px-[16px] py-[20px] text-center">
-              <div className="text-[9px] tracking-[2px] text-card-light/40 font-bold uppercase mb-[10px]">Ready?</div>
+              <div className="text-[9px] tracking-[2px] text-ink-on-dark/40 font-bold uppercase mb-[10px]">Ready?</div>
               <button
                 onClick={onNextQuestion}
                 className="w-full py-[10px] bg-accent-gold text-sidebar font-display text-[13px] font-bold hover:opacity-90 transition"
@@ -241,9 +241,9 @@ export const BrainRushQuestionResults: React.FC<BrainRushQuestionResultsProps> =
             </div>
           ) : (
             <div className="bg-sidebar px-[16px] py-[20px] text-center">
-              <div className="text-[9px] tracking-[2px] text-card-light/40 font-bold uppercase mb-[10px]">Next Question In</div>
-              <div className="font-display text-[64px] font-bold text-card-light leading-none">{countdown}</div>
-              <div className="h-[4px] bg-white/[.18] mt-[14px]">
+              <div className="text-[9px] tracking-[2px] text-ink-on-dark/40 font-bold uppercase mb-[10px]">Next Question In</div>
+              <div className="font-display text-[64px] font-bold text-ink-on-dark leading-none">{countdown}</div>
+              <div className="h-[4px] bg-ink-on-dark/[.18] mt-[14px]">
                 <div className="h-full bg-accent-gold transition-all duration-1000" style={{ width: `${(countdown / 5) * 100}%` }} />
               </div>
             </div>

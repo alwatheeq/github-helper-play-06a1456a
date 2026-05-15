@@ -695,7 +695,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
               migrationErrorToastShownRef.current = false;
               setShowCreateCourse(true);
             }}
-            className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-accent-gold text-ink font-display text-[13px] font-semibold border-none cursor-pointer"
+            className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-accent-gold text-ink-on-dark font-display text-[13px] font-semibold border-none cursor-pointer"
           >
             <Plus className="h-4 w-4" aria-hidden />
             {t('academics.create_course') || 'Enrol a Course'}
@@ -823,7 +823,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                           <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
-                            className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
+                            className="w-full py-[7px] bg-sidebar text-ink-on-dark font-display text-[12px] font-semibold text-center border-none cursor-pointer"
                           >
                             Open →
                           </button>
@@ -880,7 +880,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); setSelectedCourseId(course.id); setActiveTab('analytics'); }}
-                              className="w-full py-[7px] bg-sidebar text-card-light font-display text-[12px] font-semibold text-center border-none cursor-pointer"
+                              className="w-full py-[7px] bg-sidebar text-ink-on-dark font-display text-[12px] font-semibold text-center border-none cursor-pointer"
                             >
                               Open →
                             </button>

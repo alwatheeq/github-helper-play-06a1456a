@@ -242,7 +242,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
               {/* Input — available/taken state */}
               <div className={`flex mb-2 overflow-hidden ${isTaken ? 'border-2 border-red-600' : 'border-2 border-sidebar dark:border-sidebar'}`}>
                 <div className="px-[14px] py-3 bg-sidebar flex items-center">
-                  <span className="font-display text-[20px] font-bold text-card-light">@</span>
+                  <span className="font-display text-[20px] font-bold text-ink-on-dark">@</span>
                 </div>
                 <div className="flex-1 px-[14px] py-[10px] flex items-center justify-between bg-page-light dark:bg-page-dark">
                   <input
@@ -303,7 +303,7 @@ export const UsernameSetupModal: React.FC<UsernameSetupModalProps> = ({
             <button
               onClick={handleSubmit}
               disabled={!isValid || isSubmitting || isAvailable === false || isChecking}
-              className="flex-1 py-[11px] bg-sidebar text-card-light text-[13px] font-bold border-none disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition"
+              className="flex-1 py-[11px] bg-sidebar text-ink-on-dark text-[13px] font-bold border-none disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-90 transition"
             >
               {isSubmitting && <Loader2 className="h-4 w-4 animate-spin inline mr-1" />}
               {t('social.save_username')}

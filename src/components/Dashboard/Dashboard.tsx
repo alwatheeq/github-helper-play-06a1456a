@@ -1620,7 +1620,7 @@ export const Dashboard: React.FC = () => {
                               <button
                                 onClick={actionBarData.onPublish}
                                 disabled={actionBarData.publishing || actionBarData.published}
-                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-sidebar border-none text-[11.5px] font-semibold text-card-light cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-150"
+                                className="inline-flex items-center gap-1.5 px-[13px] py-[5px] bg-sidebar border-none text-[11.5px] font-semibold text-ink-on-dark cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity duration-150"
                               >
                                 {actionBarData.publishing ? <RefreshCw className="h-3 w-3 animate-spin" /> : actionBarData.published ? <Check className="h-3 w-3" /> : <BookOpen className="h-3 w-3" />}
                                 {actionBarData.published ? t('summary.published') : actionBarData.publishing ? t('summary.publishing') : t('summary.publish_library')}
