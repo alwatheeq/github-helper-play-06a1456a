@@ -779,7 +779,7 @@ export const LibraryPage: React.FC = React.memo(() => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('library.search_library_placeholder')}
-                className="pl-9 pr-4 py-2 text-sm border border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark w-48 sm:w-64 transition-[width] duration-150"
+                className="pl-9 pr-4 py-2 text-sm border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark w-48 sm:w-64 transition-[width] duration-150"
               />
               {searchLoading && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -791,7 +791,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <div
               role="tablist"
               aria-label={t('library.view_mode') || 'View mode'}
-              className="inline-flex items-center border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden"
+              className="inline-flex items-center border border-divider dark:border-divider-on-dark overflow-hidden"
             >
               <button
                 role="tab"
@@ -832,7 +832,7 @@ export const LibraryPage: React.FC = React.memo(() => {
 
       {/* Bookshelf ranking bar — v4 signature visual */}
       {shelfData.length > 0 && (
-        <div className="mb-5">
+        <div className="mb-3.5">
           <div className="flex items-baseline gap-2.5 mb-1.5">
             <span className="text-[9px] font-bold tracking-[2px] uppercase text-accent-gold">By subject — most volumes first</span>
             <div className="flex-1 h-px bg-divider dark:bg-divider-on-dark" />
@@ -927,7 +927,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <button
               type="button"
               onClick={() => setShowTopicsTagsModal(true)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors duration-150 ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold border transition-colors duration-150 ${
                 (selectedTags.length > 0 || selectedTopics.length > 0)
                   ? 'bg-accent-gold text-ink-on-dark border-accent-gold'
                   : 'bg-chip dark:bg-card-dark border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:border-accent-gold'
@@ -936,7 +936,7 @@ export const LibraryPage: React.FC = React.memo(() => {
               <Filter className="h-3 w-3" aria-hidden />
               {t('library.topics_tags_heading') || 'Topics & Tags'}
               {(selectedTags.length > 0 || selectedTopics.length > 0) && (
-                <span className="ml-1 px-1.5 py-0.5 rounded-full bg-card-light/20 text-ink-on-dark text-[10px] font-bold">
+                <span className="ml-1 px-1.5 py-0.5 bg-card-light/20 text-ink-on-dark text-[10px] font-bold">
                   {selectedTags.length + selectedTopics.length}
                 </span>
               )}
@@ -946,7 +946,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
-              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
+              className="px-3 py-1.5 text-xs border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold bg-chip dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark cursor-pointer"
               aria-label={t('library.sort_by')}
             >
               <option value="created_at_desc">{t('library.sort_created_newest')}</option>
@@ -965,21 +965,21 @@ export const LibraryPage: React.FC = React.memo(() => {
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark">{t('library.active_filters')}:</span>
           {searchQuery && (
-            <span className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+            <span className="px-2 py-1 text-xs bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
               Search: {searchQuery}
             </span>
           )}
           {selectedTags.map(tagId => {
             const tag = tags.find(t => t.id === tagId);
             return tag ? (
-              <span key={tagId} className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+              <span key={tagId} className="px-2 py-1 text-xs bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
                 <Tag className="h-3 w-3 inline mr-1" />
                 {tag.name}
               </span>
             ) : null;
           })}
           {selectedTopics.map(topic => (
-            <span key={topic} className="px-2 py-1 text-xs rounded-full bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
+            <span key={topic} className="px-2 py-1 text-xs bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark">
               <BookOpen className="h-3 w-3 inline mr-1" />
               {topic}
             </span>
@@ -1034,7 +1034,7 @@ export const LibraryPage: React.FC = React.memo(() => {
             <button
               type="button"
               onClick={() => setSelectedTopics([])}
-              className={`border-none text-left px-2.5 py-2 flex justify-between items-baseline text-[13px] transition-colors duration-150 ${
+              className={`border-0 text-left px-[10px] py-2 flex justify-between items-baseline text-[13px] transition-colors duration-150 ${
                 selectedTopics.length === 0
                   ? 'bg-accent-gold-soft border-l-2 border-l-accent-gold text-accent-gold font-semibold'
                   : 'bg-transparent border-l-2 border-l-transparent text-secondary-ink dark:text-muted-ink-on-dark font-medium'
