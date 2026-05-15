@@ -23,7 +23,7 @@ export const NotFound: React.FC = () => {
         </p>
 
         {/* Broken link icon tile */}
-        <div className="w-[72px] h-[72px] rounded-[20px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center mb-7">
+        <div className="w-[72px] h-[72px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center mb-7">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-muted-ink dark:text-muted-ink-on-dark">
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -38,13 +38,13 @@ export const NotFound: React.FC = () => {
         <div className="flex gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="px-6 py-[11px] rounded-[10px] bg-transparent border-[1.5px] border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-75 transition"
+            className="px-6 py-[11px]bg-transparent border-[1.5px] border-divider dark:border-divider-on-dark text-ink dark:text-ink-on-dark text-[14px] font-semibold hover:opacity-75 transition"
           >
             ← Go Back
           </button>
           <button
             onClick={() => navigate('/')}
-            className="px-6 py-[11px] rounded-[10px] bg-accent-gold text-ink-on-dark border-none text-[14px] font-semibold hover:opacity-90 transition"
+            className="px-6 py-[11px]bg-accent-gold text-ink-on-dark border-none text-[14px] font-semibold hover:opacity-90 transition"
             style={{ boxShadow: '0 3px 12px rgba(184,137,58,0.4)' }}
           >
             Go Home
