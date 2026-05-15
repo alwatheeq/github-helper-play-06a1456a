@@ -407,7 +407,7 @@ export default function MultiplayerMenu({ onLobbyJoined, onBack, questionSetId, 
               value={gameCode}
               onChange={(e) => setGameCode(e.target.value.toUpperCase())}
               maxLength={6}
-              className="w-full px-3 py-2 bg-white/10 border border-white/15 text-ink-on-dark font-display text-[12px] font-bold tracking-[4px] placeholder:text-white/25 focus:outline-none mb-2 text-center"
+              className="w-full px-3 py-2 bg-ink-on-dark/[.10] border border-ink-on-dark/[.15] text-ink-on-dark font-display text-[12px] font-bold tracking-[4px] placeholder:text-ink-on-dark/25 focus:outline-none mb-2 text-center"
             />
             <button
               onClick={() => setShowJoinForm(true)}

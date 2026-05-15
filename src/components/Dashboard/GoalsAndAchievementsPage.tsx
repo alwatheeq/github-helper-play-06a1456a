@@ -204,7 +204,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
               {activeTab === 'goals' ? (t('sidebar.goals_achievements') || "This Week's Targets.") : (t('achievements.title') || 'Your Badges.')}
             </h1>
             {activeTab === 'goals' && (
-              <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-sidebar text-card-light dark:text-card-dark text-xs font-semibold border-none hover:opacity-90 transition">
+              <button onClick={() => setShowCreateModal(true)} className="px-4 py-2 bg-sidebar text-ink-on-dark text-xs font-semibold border-none hover:opacity-90 transition">
                 + {t('goals.new_goal')}
               </button>
             )}
@@ -241,11 +241,11 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                           strokeDasharray={circ} strokeDashoffset={circ * (1 - pct)} strokeLinecap="round" />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <div className="font-display text-[20px] font-bold text-card-light leading-none">{ring.value}<span className="text-[11px]">{ring.unit}</span></div>
-                        <div className="text-[8px] text-card-light/40 mt-0.5">/ {ring.max}{ring.unit}</div>
+                        <div className="font-display text-[20px] font-bold text-ink-on-dark leading-none">{ring.value}<span className="text-[11px]">{ring.unit}</span></div>
+                        <div className="text-[8px] text-ink-on-dark/40 mt-0.5">/ {ring.max}{ring.unit}</div>
                       </div>
                     </div>
-                    <div className="text-[10px] text-card-light/60 text-center leading-snug">{ring.label}</div>
+                    <div className="text-[10px] text-ink-on-dark/60 text-center leading-snug">{ring.label}</div>
                   </div>
                 );
               })}
@@ -318,7 +318,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                     <Target className="h-16 w-16 text-muted-ink dark:text-muted-ink-on-dark mx-auto mb-4" />
                     <p className="text-secondary-ink dark:text-muted-ink mb-2">{t('goals.no_goals_yet')}</p>
                     <p className="text-sm text-muted-ink dark:text-muted-ink-on-dark mb-4">{t('goals.create_first_goal')}</p>
-                    <button onClick={() => setShowCreateModal(true)} className="px-6 py-2 bg-sidebar text-card-light dark:text-card-dark text-xs font-semibold hover:opacity-90 transition">
+                    <button onClick={() => setShowCreateModal(true)} className="px-6 py-2 bg-sidebar text-ink-on-dark text-xs font-semibold hover:opacity-90 transition">
                       {t('goals.create_goal')}
                     </button>
                   </div>
@@ -473,8 +473,8 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
             <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Goals · New</div>
               <div className="flex justify-between items-center">
-                <div className="font-display text-[20px] font-semibold text-card-light dark:text-ink">{t('goals.create_new_goal')}</div>
-                <button onClick={() => setShowCreateModal(false)} className="w-6 h-6 grid place-items-center border border-white/20 text-white/50 hover:text-white/80 transition text-sm cursor-pointer">✕</button>
+                <div className="font-display text-[20px] font-semibold text-ink-on-dark">{t('goals.create_new_goal')}</div>
+                <button onClick={() => setShowCreateModal(false)} className="w-6 h-6 grid place-items-center border border-ink-on-dark/[.20] text-ink-on-dark/50 hover:text-ink-on-dark/80 transition text-sm cursor-pointer">✕</button>
               </div>
             </div>
             <div className="p-6 space-y-5">
@@ -509,7 +509,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
                 <button onClick={() => setShowCreateModal(false)} className="flex-1 px-4 py-2.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-sm hover:bg-subtle dark:hover:bg-subtle-on-dark transition">
                   {t('common.cancel')}
                 </button>
-                <button onClick={handleCreateGoal} disabled={creating || !goalTitle.trim()} className="flex-1 px-4 py-2.5 bg-sidebar text-card-light dark:text-card-dark text-sm font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                <button onClick={handleCreateGoal} disabled={creating || !goalTitle.trim()} className="flex-1 px-4 py-2.5 bg-sidebar text-ink-on-dark text-sm font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition">
                   {creating ? t('goals.creating') : t('goals.create_goal')}
                 </button>
               </div>

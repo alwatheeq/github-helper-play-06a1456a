@@ -988,17 +988,17 @@ export const StudyRoomsPage: React.FC = () => {
               </div>
               <div className="w-px h-4 bg-white/10" />
               <div>
-                <h2 className="font-display text-[13px] font-semibold text-white leading-none">
+                <h2 className="font-display text-[13px] font-semibold text-ink-on-dark leading-none">
                   {selectedRoom.room_name}
                 </h2>
-                <div className="flex items-center gap-3 mt-1 text-[11px] text-white/50">
+                <div className="flex items-center gap-3 mt-1 text-[11px] text-ink-on-dark/50">
                   <span className="flex items-center gap-1">
                     <Users className="h-3 w-3" />
                     {participants.length}/{selectedRoom.max_participants}
                   </span>
                   <button
                     onClick={() => copyRoomCode(selectedRoom.room_code)}
-                    className="flex items-center gap-1 hover:text-white/80 transition-colors font-mono"
+                    className="flex items-center gap-1 hover:text-ink-on-dark/80 transition-colors font-mono"
                   >
                     {copiedCode ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
                     {selectedRoom.room_code}
@@ -1077,7 +1077,7 @@ export const StudyRoomsPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveTab('create')}
-              className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-sidebar text-card-light font-display text-[13px] font-semibold cursor-pointer border-none"
+              className="inline-flex items-center gap-2 px-[18px] py-[9px] bg-sidebar text-ink-on-dark font-display text-[13px] font-semibold cursor-pointer border-none"
             >
               + {t('study_rooms.create_room') || 'Create Room'}
             </button>
@@ -1222,7 +1222,7 @@ export const StudyRoomsPage: React.FC = () => {
               <div className="flex gap-2 mt-[10px] flex-wrap">
                 {['Layla A.', 'Karim H.', 'Reem S.'].map((name) => (
                   <div key={name} className="inline-flex items-center gap-[6px] px-[10px] py-1 border border-divider dark:border-divider-on-dark text-[11px] text-ink dark:text-ink-on-dark bg-subtle dark:bg-card-dark">
-                    <div className="w-4 h-4 rounded-full bg-accent-gold flex items-center justify-center text-[8px] font-bold text-card-light flex-shrink-0">
+                    <div className="w-4 h-4 rounded-full bg-accent-gold flex items-center justify-center text-[8px] font-bold text-sidebar flex-shrink-0">
                       {name[0]}
                     </div>
                     {name}
@@ -1358,7 +1358,7 @@ export const StudyRoomsPage: React.FC = () => {
                             {avatarLetters.map((letter, i) => (
                               <div
                                 key={i}
-                                className="w-[22px] h-[22px] rounded-full grid place-items-center text-[9.5px] font-bold text-card-light border-2 border-card-light dark:border-card-dark flex-shrink-0"
+                                className="w-[22px] h-[22px] rounded-full grid place-items-center text-[9.5px] font-bold text-ink-on-dark border-2 border-ink-on-dark flex-shrink-0"
                                 style={{ background: avatarPalette[i % avatarPalette.length], marginLeft: i ? '-7px' : '0' }}
                               >
                                 {letter}

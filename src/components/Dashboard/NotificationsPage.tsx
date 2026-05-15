@@ -291,11 +291,11 @@ export const NotificationsPage: React.FC = () => {
               <div
                 key={label}
                 className={`flex items-center justify-between py-1.5 ${
-                  idx < 2 ? 'border-b border-white/10' : ''
+                  idx < 2 ? 'border-b border-ink-on-dark/[.10]' : ''
                 }`}
               >
-                <span className="text-xs text-white/50">{label}</span>
-                <span className="font-display text-base font-bold text-white">{value}</span>
+                <span className="text-xs text-ink-on-dark/50">{label}</span>
+                <span className="font-display text-base font-bold text-ink-on-dark">{value}</span>
               </div>
             ))}
           </div>

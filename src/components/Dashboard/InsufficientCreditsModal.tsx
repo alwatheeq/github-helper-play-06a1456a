@@ -61,24 +61,24 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
               </svg>
             </button>
 
-            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-white/65 mb-1.5">
+            <p className="text-[10px] font-bold tracking-[0.14em] uppercase text-ink-on-dark/65 mb-1.5">
               Credits Exhausted
             </p>
-            <h2 className="font-display text-[22px] font-bold text-white mb-4" style={{ letterSpacing: '-0.01em' }}>
+            <h2 className="font-display text-[22px] font-bold text-ink-on-dark mb-4" style={{ letterSpacing: '-0.01em' }}>
               Insufficient Credits
             </h2>
 
             {/* Credit meter */}
             <div>
               <div className="flex justify-between items-center mb-1.5">
-                <span className="text-[11px] font-semibold text-white/70">
+                <span className="text-[11px] font-semibold text-ink-on-dark/70">
                   {creditsRemaining.toLocaleString()} of 10 credits remaining
                 </span>
-                <span className="text-[11px] text-white/70">Free plan</span>
+                <span className="text-[11px] text-ink-on-dark/70">Free plan</span>
               </div>
-              <div className="h-1.5 bg-white/20 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-ink-on-dark/[.20] overflow-hidden">
                 <div
-                  className="h-full bg-white rounded-full transition-all"
+                  className="h-full bg-ink-on-dark transition-all"
                   style={{ width: `${Math.min(100, (creditsRemaining / 10) * 100)}%` }}
                 />
               </div>

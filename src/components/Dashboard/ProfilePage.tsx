@@ -426,11 +426,11 @@ export const ProfilePage: React.FC = React.memo(() => {
               </button>
             )}
             {hasActiveSubscription() && !isTrialUser() ? (
-              <button onClick={() => navigate('/profile/subscription')} className="px-[18px] py-2 bg-sidebar text-card-light dark:text-card-dark text-xs font-bold border-none hover:opacity-90 transition">
+              <button onClick={() => navigate('/profile/subscription')} className="px-[18px] py-2 bg-sidebar text-ink-on-dark text-xs font-bold border-none hover:opacity-90 transition">
                 {t('profile.manage_subscription')}
               </button>
             ) : (
-              <button onClick={() => navigate('/pricing')} className="flex items-center gap-1.5 px-[18px] py-2 bg-sidebar text-card-light dark:text-card-dark text-xs font-bold border-none hover:opacity-90 transition">
+              <button onClick={() => navigate('/pricing')} className="flex items-center gap-1.5 px-[18px] py-2 bg-sidebar text-ink-on-dark text-xs font-bold border-none hover:opacity-90 transition">
                 <Crown className="h-3.5 w-3.5" />
                 {isTrialUser() ? t('profile.upgrade_plan') : t('profile.subscribe_now')}
               </button>
@@ -553,7 +553,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                     className={`relative border-2 p-2.5 cursor-pointer transition-[border-color,background] ${isSelected ? 'border-ink dark:border-ink-on-dark bg-subtle dark:bg-subtle-on-dark' : 'border-divider dark:border-divider-on-dark bg-transparent hover:border-ink/40'} ${savingSettings ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {isSelected && (
-                      <div className="absolute top-1.5 right-1.5 w-[18px] h-[18px] rounded-full bg-sidebar text-card-light grid place-items-center">
+                      <div className="absolute top-1.5 right-1.5 w-[18px] h-[18px] rounded-full bg-sidebar text-ink-on-dark grid place-items-center">
                         <svg className="w-[9px] h-[9px] text-ink-on-dark dark:text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
                     )}
@@ -579,7 +579,7 @@ export const ProfilePage: React.FC = React.memo(() => {
               <div className="w-16 h-16 rounded-full bg-accent-gold flex items-center justify-center font-display text-2xl font-bold text-ink dark:text-ink-on-dark">
                 {(stats.display_name || user?.email)?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <div className="absolute -bottom-1 -left-1 bg-sidebar text-card-light dark:text-card-dark text-[8px] font-bold px-1.5 py-0.5 rounded">Lv {currentLevel}</div>
+              <div className="absolute -bottom-1 -left-1 bg-sidebar text-ink-on-dark text-[8px] font-bold px-1.5 py-0.5 rounded">Lv {currentLevel}</div>
             </div>
             {/* Info */}
             <div className="flex-1 min-w-0">
@@ -636,7 +636,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             {/* Save/Cancel when editing */}
             {isEditing && (
               <div className="flex items-center gap-1 shrink-0">
-                <button onClick={handleSaveProfile} disabled={saving} className="p-1.5 bg-sidebar text-card-light dark:text-card-dark hover:opacity-90 disabled:opacity-50" title="Save">
+                <button onClick={handleSaveProfile} disabled={saving} className="p-1.5 bg-sidebar text-ink-on-dark hover:opacity-90 disabled:opacity-50" title="Save">
                   <Save className="h-4 w-4" />
                 </button>
                 <button onClick={() => { setIsEditing(false); setEditedName(stats.display_name || ''); setEditedBio(stats.bio || ''); }} className="p-1.5 bg-subtle dark:bg-subtle-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-90" title="Cancel">
