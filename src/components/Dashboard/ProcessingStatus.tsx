@@ -88,7 +88,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
     : mode === 'fast' ? t('processing.fast_desc') : t('processing.staged_desc');
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="w-full">
       {/* Page eyebrow + title — no card border, full-width centred layout (Dash4Proc) */}
       <div className="mb-4">
         <div className="flex items-center justify-between">
@@ -120,7 +120,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
           <span className="text-[12.5px] text-secondary-ink dark:text-muted-ink-on-dark">{message}</span>
           <span className="font-display text-[12px] font-bold text-accent-gold tracking-[0.5px]">{progress}%</span>
         </div>
-        <div className="w-full bg-subtle h-[5px]">
+        <div className="w-full bg-subtle dark:bg-subtle-on-dark h-[5px]">
           <div
             className={`h-full transition-all duration-200 ease-in-out ${
               medicalMode ? 'bg-red-600' : 'bg-accent-gold'
@@ -134,7 +134,7 @@ const ProcessingStatusContent: React.FC<ProcessingStatusProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-[22px]">
 
         {/* Left — composing panel with editorial left-border accent */}
-        <div className="bg-subtle border border-divider border-l-[3px] border-l-accent-gold">
+        <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark border-l-[3px] border-l-accent-gold">
           <div className="px-5 py-3.5 border-b border-divider flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className={`w-[38px] h-[38px] border border-divider flex items-center justify-center flex-shrink-0 ${
