@@ -7,7 +7,7 @@ export const PaymentCancel: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="w-[500px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
+      <div className="w-[500px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[22px] overflow-hidden">
 
         {/* Orange header section */}
         <div className="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-200 dark:border-orange-800/60 px-9 pt-7 pb-6 text-center">
@@ -44,7 +44,7 @@ export const PaymentCancel: React.FC = () => {
             ].map((col, ci) => (
               <div
                 key={ci}
-                className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark px-4 py-3.5"
+                className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[12px] px-4 py-3.5"
               >
                 <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-2.5">
                   {col.title}
@@ -63,7 +63,7 @@ export const PaymentCancel: React.FC = () => {
           </div>
 
           {/* Support banner */}
-          <div className="flex items-center gap-2.5 bg-accent-gold-soft border border-accent-gold/30px-4 py-3 mb-5">
+          <div className="flex items-center gap-2.5 bg-accent-gold-soft border border-accent-gold/30 rounded-[11px] px-4 py-3 mb-5">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-gold flex-shrink-0">
               <circle cx="12" cy="12" r="10"/>
               <line x1="12" y1="8" x2="12" y2="12"/>
@@ -78,7 +78,7 @@ export const PaymentCancel: React.FC = () => {
           <div className="space-y-2.5">
             <button
               onClick={() => navigate('/pricing')}
-              className="w-full bg-sidebar text-ink-on-dark font-bold py-3 px-6flex items-center justify-center gap-2 hover:opacity-85 transition"
+              className="w-full bg-sidebar text-ink-on-dark font-bold py-3 px-6 rounded-[11px] flex items-center justify-center gap-2 hover:opacity-85 transition"
             >
               <RefreshCw className="h-4 w-4" />
               <span>Try Again</span>
@@ -86,7 +86,7 @@ export const PaymentCancel: React.FC = () => {
 
             <button
               onClick={() => navigate('/')}
-              className="w-full border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark font-medium py-[11px] px-6flex items-center justify-center gap-2 hover:opacity-70 transition"
+              className="w-full border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark font-medium py-[11px] px-6 rounded-[11px] flex items-center justify-center gap-2 hover:opacity-70 transition"
             >
               <ArrowLeft className="h-4 w-4" />
               <span>Return to Dashboard</span>

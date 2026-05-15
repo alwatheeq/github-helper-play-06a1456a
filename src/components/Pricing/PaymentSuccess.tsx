@@ -46,7 +46,7 @@ export const PaymentSuccess: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-page-light dark:bg-page-dark flex items-center justify-center p-6">
-      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark overflow-hidden">
+      <div className="w-[520px] max-w-full bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[22px] overflow-hidden">
 
         {/* Dark top band */}
         <div className="bg-sidebar px-[40px] pt-[30px] pb-12 relative text-center overflow-hidden">
@@ -88,7 +88,7 @@ export const PaymentSuccess: React.FC = () => {
           </p>
 
           {/* What's next */}
-          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-5 mb-6">
+          <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[14px] p-5 mb-6">
             <p className="text-[10px] font-bold tracking-[0.12em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-4">
               What's Next?
             </p>
@@ -115,7 +115,7 @@ export const PaymentSuccess: React.FC = () => {
           <div className="space-y-2.5">
             <button
               onClick={() => navigate('/')}
-              className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-[13px] px-6 transition flex items-center justify-center gap-2"
+              className="w-full bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-[13px] px-6 rounded-[11px] transition flex items-center justify-center gap-2"
             >
               <Home className="h-5 w-5" />
               <span>Start Using the App</span>
@@ -124,7 +124,7 @@ export const PaymentSuccess: React.FC = () => {
 
             <button
               onClick={() => navigate('/profile/subscription')}
-              className="w-full border border-divider dark:border-divider-on-dark hover:opacity-70 text-secondary-ink dark:text-muted-ink-on-dark font-medium py-[11px] px-6 transition"
+              className="w-full border border-divider dark:border-divider-on-dark hover:opacity-70 text-secondary-ink dark:text-muted-ink-on-dark font-medium py-[11px] px-6 rounded-[11px] transition"
             >
               View Subscription Details
             </button>

@@ -585,8 +585,8 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className="flex-1 min-w-0">
               {isEditing ? (
                 <div className="space-y-2">
-                  <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t('profile.display_name')} maxLength={50} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
-                  <textarea value={editedBio} onChange={(e) => setEditedBio(e.target.value)} placeholder={t('profile.bio_placeholder')} maxLength={500} rows={2} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark rounded focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
+                  <input type="text" value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t('profile.display_name')} maxLength={50} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
+                  <textarea value={editedBio} onChange={(e) => setEditedBio(e.target.value)} placeholder={t('profile.bio_placeholder')} maxLength={500} rows={2} className="w-full px-[14px] py-[11px] border-2 border-ink dark:border-ink-on-dark focus-visible:ring-2 focus-visible:ring-accent-gold dark:bg-card-dark dark:text-ink-on-dark text-sm" />
                 </div>
               ) : (
                 <>
