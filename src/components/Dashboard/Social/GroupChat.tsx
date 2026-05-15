@@ -226,7 +226,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
       >
         <button
           onClick={onBack}
-          className="p-1.5 rounded-[7px] bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-opacity"
+          className="p-1.5 bg-subtle dark:bg-subtle-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="w-5 h-5 text-ink dark:text-ink-on-dark" />
         </button>

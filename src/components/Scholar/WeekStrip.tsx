@@ -49,7 +49,7 @@ export const WeekStrip: React.FC<WeekStripProps> = ({
   className = '',
 }) => {
   const ghost =
-    'px-3 py-1 text-xs font-medium rounded-[6px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors';
+    'px-3 py-1 text-xs font-medium border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors';
 
   return (
     <div className={`w-full ${className}`}>
@@ -69,7 +69,7 @@ export const WeekStrip: React.FC<WeekStripProps> = ({
               onClick={() => onSelect(d.date)}
               aria-pressed={isSelected}
               className={[
-                'flex flex-col items-center justify-center py-3 rounded-[6px] border transition-colors text-center',
+                'flex flex-col items-center justify-center py-3 border transition-colors text-center',
                 isSelected
                   ? 'bg-ink text-ink-on-dark border-ink dark:bg-card-light dark:text-ink dark:border-card-light'
                   : isToday

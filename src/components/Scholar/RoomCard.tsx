@@ -48,7 +48,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
     >
       {status && statusLabel ? (
         <span
-          className={`absolute top-3 end-3 text-[10px] font-semibold tracking-[0.14em] uppercase px-2 py-0.5 rounded-[4px] ${statusStyle[status]}`}
+          className={`absolute top-3 end-3 text-[10px] font-semibold tracking-[0.14em] uppercase px-2 py-0.5 ${statusStyle[status]}`}
         >
           {statusLabel}
         </span>

@@ -171,7 +171,7 @@ export const GenerationRail: React.FC<GenerationRailProps> = ({
         type="button"
         disabled
         title={t('workshop.generate_disabled_hint')}
-        className="mt-3 w-full bg-accent-gold text-card-dark text-[13px] font-bold rounded-[8px] py-3 disabled:opacity-90 disabled:cursor-not-allowed hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+        className="mt-3 w-full bg-accent-gold text-card-dark text-[13px] font-bold py-3 disabled:opacity-90 disabled:cursor-not-allowed hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
       >
         <span>{t('workshop.generate_cta')}</span>
         <ArrowRight size={14} strokeWidth={2} aria-hidden />

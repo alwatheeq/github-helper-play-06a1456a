@@ -192,8 +192,8 @@ export const SubscriptionManagementPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mb-2">{t('subscription_management.current_billing_cycle')}</div>
-                <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-[2px]">
-                  <div className="h-full bg-accent-gold rounded-[2px] transition-all" style={{ width: `${toolProgressPct}%` }} />
+                <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark">
+                  <div className="h-full bg-accent-gold transition-all" style={{ width: `${toolProgressPct}%` }} />
                 </div>
               </div>
 

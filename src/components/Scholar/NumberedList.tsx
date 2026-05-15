@@ -39,7 +39,7 @@ export const NumberedList: React.FC<NumberedListProps> = ({
       {items.map((item, idx) => (
         <li
           key={item.id}
-          className={`py-4 flex items-center gap-4 ${item.onClick ? 'cursor-pointer hover:bg-subtle px-2 -mx-2 rounded-[6px] transition-colors' : ''}`}
+          className={`py-4 flex items-center gap-4 ${item.onClick ? 'cursor-pointer hover:bg-subtle px-2 -mx-2 transition-colors' : ''}`}
           onClick={item.onClick}
         >
           <span className="font-display text-lg text-muted-ink dark:text-muted-ink-on-dark w-8 flex-shrink-0 tabular-nums">

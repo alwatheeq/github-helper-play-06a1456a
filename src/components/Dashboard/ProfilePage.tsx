@@ -458,8 +458,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                         {' '}<span className="font-normal text-[11px] text-muted-ink dark:text-muted-ink-on-dark">/ {c.total.toLocaleString()}</span>
                       </span>
                     </div>
-                    <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark rounded-[3px]">
-                      <div className="h-full rounded-[3px] transition-all" style={{ width: `${pct}%`, background: over ? '#dc2626' : 'var(--color-accent-gold)' }} />
+                    <div className="h-[5px] bg-subtle dark:bg-subtle-on-dark">
+                      <div className="h-full transition-all" style={{ width: `${pct}%`, background: over ? '#dc2626' : 'var(--color-accent-gold)' }} />
                     </div>
                     <div className="text-[9.5px] text-muted-ink dark:text-muted-ink-on-dark mt-1">Credits refresh on {c.refresh}</div>
                   </div>
@@ -489,7 +489,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             ].map((opt, i) => {
               const isSelected = preferences?.sidebar_mode === opt.k;
               return (
-                <label key={i} className={`flex items-start gap-2.5 px-3.5 py-2.5 border rounded-[6px] mb-2 cursor-pointer transition-colors ${isSelected ? 'border-accent-gold bg-accent-gold-soft/20' : 'border-divider dark:border-divider-on-dark bg-transparent'}`}>
+                <label key={i} className={`flex items-start gap-2.5 px-3.5 py-2.5 border mb-2 cursor-pointer transition-colors ${isSelected ? 'border-accent-gold bg-accent-gold-soft/20' : 'border-divider dark:border-divider-on-dark bg-transparent'}`}>
                   <div className={`w-3.5 h-3.5 rounded-full border-2 flex items-center justify-center shrink-0 mt-0.5 ${isSelected ? 'border-accent-gold' : 'border-divider dark:border-divider-on-dark'}`}>
                     {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-accent-gold" />}
                   </div>
@@ -592,7 +592,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                 <>
                   <div className="flex items-center gap-2 mb-0.5">
                     <h1 className="font-display text-[18px] font-semibold text-ink dark:text-ink-on-dark truncate">{stats.display_name || user?.email}</h1>
-                    <button onClick={() => setIsEditing(true)} className="shrink-0 px-2 py-0.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition rounded-[3px]">Edit ✎</button>
+                    <button onClick={() => setIsEditing(true)} className="shrink-0 px-2 py-0.5 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition">Edit ✎</button>
                   </div>
                   {stats.bio && <p className="text-[12px] text-secondary-ink dark:text-muted-ink-on-dark mt-0.5 mb-1">{stats.bio}</p>}
                 </>
@@ -628,8 +628,8 @@ export const ProfilePage: React.FC = React.memo(() => {
                   <span>{t('profile.level')} {currentLevel}</span>
                   <span>{stats.experience_points} / {xpForNextLevel} {t('profile.xp')}</span>
                 </div>
-                <div className="h-[6px] bg-subtle dark:bg-subtle-on-dark rounded-[3px]">
-                  <div className="h-full bg-accent-gold rounded-[3px] transition-all" style={{ width: `${progress}%` }} />
+                <div className="h-[6px] bg-subtle dark:bg-subtle-on-dark">
+                  <div className="h-full bg-accent-gold transition-all" style={{ width: `${progress}%` }} />
                 </div>
               </div>
             </div>
@@ -664,7 +664,7 @@ export const ProfilePage: React.FC = React.memo(() => {
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase">
               Recent Achievements ({achievements.filter(a => a.earned_at).length})
             </div>
-            <button onClick={() => navigate('/achievements')} className="px-2.5 py-1 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition rounded-[3px]">
+            <button onClick={() => navigate('/achievements')} className="px-2.5 py-1 border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark text-[10px] hover:border-ink dark:hover:border-ink-on-dark transition">
               View all →
             </button>
           </div>

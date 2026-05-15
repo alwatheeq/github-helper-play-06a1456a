@@ -419,7 +419,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
   return (
    <div className="w-full">
       {medicalMode && (
-        <div className="mb-4 inline-flex items-center gap-2 bg-chip dark:bg-card-dark px-3 py-1 rounded-[4px] border border-divider dark:border-divider-on-dark">
+        <div className="mb-4 inline-flex items-center gap-2 bg-chip dark:bg-card-dark px-3 py-1 border border-divider dark:border-divider-on-dark">
           <Stethoscope className="h-4 w-4 text-accent-gold" aria-hidden />
           <span className="text-ink dark:text-ink-on-dark text-xs font-semibold tracking-[0.06em] uppercase">
             {t('dashboard.med_student_mode_label')}
@@ -642,13 +642,13 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 placeholder="https://example.com/article"
-                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark rounded-[8px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                className="flex-1 px-4 py-3 border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
               />
               <button
                 type="button"
                 onClick={handleUrlSubmit}
                 disabled={previewMode || urlInput.trim().length === 0}
-                className="px-5 py-3 bg-accent-gold text-ink-on-dark rounded-[8px] text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                className="px-5 py-3 bg-accent-gold text-ink-on-dark text-[13px] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
               >
                 {t('workshop.url_cta')} <span aria-hidden>→</span>
               </button>

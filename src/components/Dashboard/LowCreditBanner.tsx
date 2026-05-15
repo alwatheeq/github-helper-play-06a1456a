@@ -120,7 +120,7 @@ export const LowCreditBanner: React.FC = () => {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             <span className={`text-[13px] font-bold ${config.textClass}`}>{config.title}</span>
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-[10px] ${config.badgeClass}`}>
+            <span className={`text-[10px] font-bold px-2 py-0.5 ${config.badgeClass}`}>
               {credits_remaining.toLocaleString()} credits
             </span>
           </div>
@@ -133,13 +133,13 @@ export const LowCreditBanner: React.FC = () => {
         <div className="flex items-center gap-2 flex-shrink-0">
           <a
             href="/pricing"
-            className={`px-3.5 py-[7px] text-[12px] font-bold rounded-[8px] whitespace-nowrap transition-opacity ${config.btnClass}`}
+            className={`px-3.5 py-[7px] text-[12px] font-bold whitespace-nowrap transition-opacity ${config.btnClass}`}
           >
             Top Up
           </a>
           <button
             onClick={() => setShowBanner(false)}
-            className={`w-[26px] h-[26px] flex items-center justify-center rounded-[7px] border ${config.badgeClass} hover:opacity-70 transition-opacity`}
+            className={`w-[26px] h-[26px] flex items-center justify-center border ${config.badgeClass} hover:opacity-70 transition-opacity`}
             aria-label="Dismiss warning"
           >
             <X className="h-[11px] w-[11px]" />

@@ -46,7 +46,7 @@ export const SectionTabs: React.FC<SectionTabsProps> = ({
       <div
         role="tablist"
         aria-label={ariaLabel}
-        className={`inline-flex border border-divider dark:border-divider-on-dark rounded-[6px] overflow-hidden ${className}`}
+        className={`inline-flex border border-divider dark:border-divider-on-dark overflow-hidden ${className}`}
       >
         {tabs.map((tab, idx) => {
           const active = tab.id === activeId;

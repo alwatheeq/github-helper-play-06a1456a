@@ -175,7 +175,7 @@ export const ContentViewPage: React.FC = () => {
         <button
           type="button"
           onClick={goBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-[12px] border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
+          className="flex items-center gap-2 px-4 py-2 border border-divider dark:border-divider-on-dark text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-80 transition-opacity"
         >
           <ArrowLeft className="h-5 w-5" />
           Go back
@@ -213,7 +213,7 @@ export const ContentViewPage: React.FC = () => {
         <h1 className="font-display text-[13px] font-semibold text-ink-on-dark truncate flex-1">
           {title}
         </h1>
-        <div className="flex gap-0.5 bg-white/[0.07] rounded-[8px] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
+        <div className="flex gap-0.5 bg-white/[0.07] p-[3px] flex-shrink-0" role="tablist" aria-label="Content view modes">
           {tabs.map((tab) => {
             const active = activeTab === tab.id;
             return (
@@ -223,8 +223,8 @@ export const ContentViewPage: React.FC = () => {
                 aria-selected={active}
                 onClick={() => setActiveTab(tab.id)}
                 className={[
-                  'flex items-center gap-1 px-[14px] py-[5px] rounded-[6px] text-[12px] font-semibold whitespace-nowrap transition-colors duration-150',
-                  active ? 'bg-accent-gold text-sidebar' : 'text-muted-ink-on-dark hover:text-ink-on-dark',
+                  'flex items-center gap-1 px-[14px] py-[5px] text-[12px] font-semibold whitespace-nowrap transition-colors duration-150',
+                  active ? 'bg-accent-gold text-ink-on-dark' : 'text-muted-ink-on-dark hover:text-ink-on-dark',
                 ].join(' ')}
               >
                 <span aria-hidden>{tab.icon}</span>

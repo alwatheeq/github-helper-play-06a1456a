@@ -95,7 +95,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             {/* Two info chips */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {daysUntilRefresh !== null && (
-                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[8px] p-3.5">
+                <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-3.5">
                   <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                     Refreshes in
                   </p>
@@ -107,7 +107,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
                   </p>
                 </div>
               )}
-              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark rounded-[8px] p-3.5">
+              <div className="bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark p-3.5">
                 <p className="text-[10px] font-bold tracking-[0.08em] uppercase text-muted-ink dark:text-muted-ink-on-dark mb-1">
                   Pro plan gives
                 </p>
@@ -124,13 +124,13 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             <div className="flex gap-2.5">
               <a
                 href="/pricing"
-                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-600 hover:bg-red-700 rounded-[8px] transition-colors"
+                className="flex-[2] h-11 flex items-center justify-center text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition-colors"
               >
                 Upgrade Plan
               </a>
               <button
                 onClick={onClose}
-                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border-[1.5px] border-divider dark:border-divider-on-dark rounded-[8px] hover:opacity-70 transition-opacity"
+                className="flex-1 h-11 flex items-center justify-center text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark border-[1.5px] border-divider dark:border-divider-on-dark hover:opacity-70 transition-opacity"
               >
                 Dismiss
               </button>

@@ -25,7 +25,7 @@ export const FeatureDarkCard: React.FC<FeatureDarkCardProps> = ({
     <section
       className={[
         'bg-sidebar text-ink-on-dark',
-        'border border-divider-on-dark rounded-[6px]',
+        'border border-divider-on-dark',
         'p-6',
         className,
       ].join(' ')}

@@ -3,7 +3,7 @@ import React from 'react';
 const fieldBase =
   'w-full bg-card-light dark:bg-card-dark ' +
   'border border-divider dark:border-divider-on-dark ' +
-  'rounded-[6px] px-3 py-2 text-sm ' +
+  'px-3 py-2 text-sm ' +
   'text-ink dark:text-ink-on-dark ' +
   'placeholder:text-muted-ink dark:placeholder:text-muted-ink-on-dark ' +
   'transition-colors duration-150 ' +

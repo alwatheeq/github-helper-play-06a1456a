@@ -279,7 +279,7 @@ export const AIQuestionGenerator: React.FC<AIQuestionGeneratorProps> = ({
 
             {/* Progress Bar */}
             <div className="max-w-md mx-auto mb-4">
-              <div className="h-[5px] bg-subtle dark:bg-card-dark rounded-[3px] overflow-hidden">
+              <div className="h-[5px] bg-subtle dark:bg-card-dark overflow-hidden">
                 <div
                   className={`h-full bg-accent-gold transition-colors duration-150 ease-out`}
                   style={{ width: `${progress}%` }}

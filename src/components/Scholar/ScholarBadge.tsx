@@ -17,7 +17,7 @@ const variantMap: Record<ScholarBadgeVariant, string> = {
 };
 
 const baseCls =
-  'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] text-xs font-medium tracking-wide';
+  'inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-medium tracking-wide';
 
 export const ScholarBadge: React.FC<ScholarBadgeProps> = ({
   variant = 'default',

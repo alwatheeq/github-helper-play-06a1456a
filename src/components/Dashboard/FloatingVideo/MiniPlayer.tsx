@@ -71,7 +71,7 @@ const MiniPlayer: React.FC = () => {
         onPointerUp={handlePointerUp}
       >
         <div className="flex gap-0.5 flex-shrink-0">
-          {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5 rounded-[1px]" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
+          {[0,1,2].map(i => <div key={i} className="w-3.5 h-0.5" style={{ background: 'rgba(255,255,255,0.25)' }} />)}
         </div>
         <span className="text-[9px] text-white/[0.6] font-semibold flex-1 text-center truncate">
           {activeRoom.name}
@@ -90,7 +90,7 @@ const MiniPlayer: React.FC = () => {
         <button
           type="button"
           onClick={toggleMute}
-          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          className="w-7 h-7 flex items-center justify-center hover:opacity-80 transition-opacity"
           style={isMuted ? { background: 'rgba(239,68,68,0.13)', border: '1px solid rgba(239,68,68,0.31)' } : { background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
           title={isMuted ? (t('floating_video.unmute') || 'Unmute') : (t('floating_video.mute') || 'Mute')}
         >
@@ -104,7 +104,7 @@ const MiniPlayer: React.FC = () => {
         <button
           type="button"
           onClick={handleExpand}
-          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          className="w-7 h-7 flex items-center justify-center hover:opacity-80 transition-opacity"
           style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)' }}
           title={t('floating_video.expand') || 'Expand'}
         >
@@ -114,7 +114,7 @@ const MiniPlayer: React.FC = () => {
         <button
           type="button"
           onClick={leaveRoom}
-          className="w-7 h-7 rounded-[8px] flex items-center justify-center hover:opacity-80 transition-opacity"
+          className="w-7 h-7 flex items-center justify-center hover:opacity-80 transition-opacity"
           style={{ background: 'rgba(239,68,68,0.13)', border: '1px solid rgba(239,68,68,0.31)' }}
           title={t('floating_video.leave_room') || 'Leave'}
         >

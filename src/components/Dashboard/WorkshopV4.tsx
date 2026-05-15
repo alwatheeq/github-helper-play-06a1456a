@@ -238,7 +238,7 @@ export const WorkshopV4: React.FC<WorkshopV4Props> = ({ onProcessInput, onOpenHi
                   <button
                     type="button"
                     onClick={onOpenHistory}
-                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 rounded-[6px] hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
+                    className="text-[12px] font-medium text-secondary-ink border border-divider px-2.5 py-1 hover:bg-subtle/60 transition-[background-color] duration-150 ease-out"
                   >
                     Open
                   </button>

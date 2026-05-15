@@ -503,11 +503,11 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
 
   if (showAll) {
     return (
-      <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
         <div className="p-6 border-b border-divider dark:border-divider-on-dark">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className={`p-2 rounded-[8px] ${
+              <div className={`p-2 ${
                 medicalMode
                   ? 'bg-red-50 dark:bg-red-900/20'
                   : 'bg-accent-gold-soft'
@@ -541,7 +541,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
         <div className="p-6 max-h-96 overflow-y-auto">
           <div className="space-y-4">
             {flashcards.map((card, index) => (
-              <div key={index} className="border border-divider dark:border-divider-on-dark rounded-[14px] p-4">
+              <div key={index} className="border border-divider dark:border-divider-on-dark p-4">
                 <div className="flex justify-between items-start mb-2">
                   <span className="text-sm font-medium text-muted-ink dark:text-muted-ink-on-dark">{t('flashcards.card')} {index + 1}</span>
                 </div>
@@ -564,11 +564,11 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
   }
 
   return (
-    <div className="bg-card-light dark:bg-card-dark rounded-[14px] border border-divider dark:border-divider-on-dark">
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark">
       <div className="p-6 border-b border-divider dark:border-divider-on-dark">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className={`p-2 rounded-[8px] ${
+            <div className={`p-2 ${
               medicalMode
                 ? 'bg-red-50 dark:bg-red-900/20'
                 : 'bg-accent-gold-soft'
@@ -711,7 +711,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
             
             <button
               onClick={() => setCurrentStudyMode('flip')}
-              className="px-6 py-2 bg-accent-gold text-ink-on-dark rounded-[9px] hover:opacity-90 transition duration-150"
+              className="px-6 py-2 bg-accent-gold text-ink-on-dark hover:opacity-90 transition duration-150"
             >
               {t('flashcards.return_flashcards')}
             </button>
@@ -727,7 +727,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                 onClick={() => setFlipped(!flipped)}
               >
                 {/* Front face */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rounded-[14px] overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-[1.5px] border-divider dark:border-divider-on-dark">
+                <div className="absolute inset-0 w-full h-full backface-hidden overflow-hidden flex flex-col bg-card-light dark:bg-card-dark border-[1.5px] border-divider dark:border-divider-on-dark">
                   <div className="flex-1 flex items-center justify-center p-6 relative">
                     <div
                       className="absolute top-2 right-2"
@@ -749,7 +749,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                   </div>
                 </div>
                 {/* Back face */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-[14px] overflow-hidden flex flex-col bg-accent-gold-soft dark:bg-accent-gold-soft/10 border-[1.5px] border-accent-gold/44">
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 overflow-hidden flex flex-col bg-accent-gold-soft dark:bg-accent-gold-soft/10 border-[1.5px] border-accent-gold/44">
                   <div className="flex-1 flex items-center justify-center p-6 relative">
                     <div
                       className="absolute top-2 right-2"
@@ -785,7 +785,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                   <button
                     key={key}
                     onClick={() => handleStudyResponse(key)}
-                    className="flex-1 py-2 rounded-[9px] text-[12px] font-bold transition-opacity hover:opacity-80"
+                    className="flex-1 py-2 text-[12px] font-bold transition-opacity hover:opacity-80"
                     style={{ background: `${color}14`, border: `1.5px solid ${color}44`, color }}
                   >
                     {label}
@@ -811,7 +811,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     value={typedAnswer}
                     onChange={(e) => setTypedAnswer(e.target.value)}
                     placeholder={medicalMode ? 'Type your clinical answer...' : t('flashcards.type_answer_here')}
-                    className="w-full h-24 px-4 py-3 border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full h-24 px-4 py-3 border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent resize-none bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     disabled={showAnswer}
                   />
                   
@@ -951,7 +951,7 @@ const FlashcardViewerContent: React.FC<FlashcardViewerProps> = ({ flashcards, me
                     value={typedAnswer}
                     onChange={(e) => setTypedAnswer(e.target.value)}
                     placeholder={t('flashcards.enter_missing_word')}
-                    className="w-full px-4 py-3 border-divider dark:border-divider-on-dark rounded-[12px] focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
+                    className="w-full px-4 py-3 border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-ink-on-dark"
                     disabled={showAnswer}
                   />
                   

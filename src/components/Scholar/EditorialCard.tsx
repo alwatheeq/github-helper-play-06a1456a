@@ -44,7 +44,7 @@ export const EditorialCard: React.FC<EditorialCardProps> = ({
     : '';
 
   const cls = [
-    'border rounded-[6px]',
+    'border',
     surface,
     paddingMap[padding],
     hoverCls,

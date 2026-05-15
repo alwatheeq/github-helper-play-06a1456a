@@ -107,14 +107,14 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <button
           type="button"
           onClick={reset}
-          className="w-10 h-10 rounded-[10px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center hover:opacity-80 transition"
+          className="w-10 h-10 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center hover:opacity-80 transition"
         >
           <RotateCcw className="h-3.5 w-3.5 text-ink dark:text-ink-on-dark" />
         </button>
         <button
           type="button"
           onClick={isRunning ? pause : start}
-          className="w-[52px] h-[52px] rounded-[14px] flex items-center justify-center hover:opacity-90 transition text-ink-on-dark"
+          className="w-[52px] h-[52px] flex items-center justify-center hover:opacity-90 transition text-ink-on-dark"
           style={{ background: 'linear-gradient(135deg, var(--color-accent-gold), color-mix(in srgb, var(--color-accent-gold) 80%, #000 20%))', boxShadow: '0 4px 14px rgba(201,168,39,0.4)' }}
         >
           {isRunning ? <Pause className="h-[18px] w-[18px]" /> : <Play className="h-[18px] w-[18px]" />}
@@ -122,7 +122,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
         <button
           type="button"
           onClick={switchMode}
-          className="w-10 h-10 rounded-[10px] bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center hover:opacity-80 transition"
+          className="w-10 h-10 bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark flex items-center justify-center hover:opacity-80 transition"
         >
           <SkipForward className="h-3.5 w-3.5 text-ink dark:text-ink-on-dark" />
         </button>
@@ -144,7 +144,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
                   setBreakDuration(m.seconds!);
                 }
               }}
-              className={`px-3 py-2.5 text-left rounded-[10px] border transition-colors ${
+              className={`px-3 py-2.5 text-left border transition-colors ${
                 isActive
                   ? 'bg-accent-gold-soft border-accent-gold/55'
                   : 'bg-subtle dark:bg-subtle-on-dark border-divider dark:border-divider-on-dark'
@@ -160,7 +160,7 @@ const PomodoroTimer: React.FC<PomodoroTimerProps> = ({ variant = 'floating' }) =
   );
 
   const floatingCard = (
-    <div className="w-64 rounded-[12px] border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3">
+    <div className="w-64 border bg-card-light dark:bg-card-dark border-divider dark:border-divider-on-dark p-4 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 text-ink dark:text-ink-on-dark">
           <ModeIcon className="h-5 w-5" />

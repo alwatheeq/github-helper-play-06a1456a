@@ -39,7 +39,7 @@ export const ScholarIconButton: React.FC<ScholarIconButtonProps> = ({
     type="button"
     disabled={disabled || loading}
     className={
-      'inline-flex items-center justify-center rounded-[6px] transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-150 ' +
+      'inline-flex items-center justify-center transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-150 ' +
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-page ' +
       'disabled:opacity-50 disabled:cursor-not-allowed ' +
       `${sizeMap[size]} ${variantMap[variant]} ${className}`

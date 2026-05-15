@@ -11,9 +11,9 @@ interface ScholarSkeletonProps {
 
 const roundedMap = {
   none: 'rounded-none',
-  sm: 'rounded-[4px]',
-  md: 'rounded-[6px]',
-  lg: 'rounded-[12px]',
+  sm: 'rounded-none',
+  md: 'rounded-none',
+  lg: 'rounded-none',
   full: 'rounded-full',
 };
 

@@ -315,7 +315,7 @@ export const StudyGoalsPage: React.FC = () => {
     goalTypeCounts[g.goal_type] = (goalTypeCounts[g.goal_type] || 0) + 1;
   }
 
-  const inputCls = "w-full px-4 py-2 border border-divider dark:border-divider-on-dark rounded-[7px] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark";
+  const inputCls = "w-full px-4 py-2 border border-divider dark:border-divider-on-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-gold focus:border-transparent bg-card-light dark:bg-card-dark text-ink dark:text-muted-ink-on-dark";
 
   return (
     <div className="p-6 md:p-8">
@@ -391,8 +391,8 @@ export const StudyGoalsPage: React.FC = () => {
                         style={{ color, background: `${color}15` }}
                       >{label}</span>
                     </div>
-                    <div className="h-1 bg-subtle dark:bg-subtle-on-dark rounded-[2px] mb-2">
-                      <div className="h-full rounded-[2px] transition-all" style={{ width: `${Math.min(pct, 100)}%`, background: color }} />
+                    <div className="h-1 bg-subtle dark:bg-subtle-on-dark mb-2">
+                      <div className="h-full transition-all" style={{ width: `${Math.min(pct, 100)}%`, background: color }} />
                     </div>
                     <div className="flex justify-between items-baseline">
                       <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">
@@ -472,7 +472,7 @@ export const StudyGoalsPage: React.FC = () => {
               <h2 className="font-display text-[24px] font-bold text-ink dark:text-muted-ink-on-dark">Create New Goal</h2>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark rounded-[8px]"
+                className="p-2 text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle dark:hover:bg-subtle-on-dark"
               >
                 <X className="h-5 w-5" />
               </button>

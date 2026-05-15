@@ -105,7 +105,7 @@ export const Header: React.FC = () => {
         <div className="flex items-center h-[60px] rtl:flex-row-reverse">
           {/* Logo + App name */}
           <div className="flex items-center space-x-3 rtl:space-x-reverse flex-shrink-0">
-            <div className="h-[30px] w-[30px] rounded-[6px] bg-sidebar flex items-center justify-center flex-shrink-0">
+            <div className="h-[30px] w-[30px] bg-sidebar flex items-center justify-center flex-shrink-0">
               <span className="font-display text-base font-bold text-accent-gold leading-none select-none">
                 {t('app_name')[0]}
               </span>

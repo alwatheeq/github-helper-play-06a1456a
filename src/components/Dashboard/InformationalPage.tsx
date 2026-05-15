@@ -37,7 +37,7 @@ export const InformationalPage: React.FC = () => {
         {/* Overview Section */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <Info className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.overview')}</h3>
@@ -71,7 +71,7 @@ export const InformationalPage: React.FC = () => {
         {/* What&apos;s new */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <BarChart3 className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.whats_new_title')}</h3>
@@ -184,7 +184,7 @@ export const InformationalPage: React.FC = () => {
         {/* Understanding Results Section */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.understanding_results')}</h3>
@@ -282,7 +282,7 @@ export const InformationalPage: React.FC = () => {
         {/* Smart Features Section */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>Smart Features & Performance</h3>
@@ -326,7 +326,7 @@ export const InformationalPage: React.FC = () => {
         {/* Language & Translation Section */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <Globe className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.language_translation')}</h3>
@@ -454,7 +454,7 @@ export const InformationalPage: React.FC = () => {
         {/* Navigation & Account Section */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <User className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.navigation_account')}</h3>
@@ -530,7 +530,7 @@ export const InformationalPage: React.FC = () => {
         {/* Tips & Best Practices */}
         <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
           <div className="flex items-center space-x-3 mb-6">
-            <div className="bg-accent-gold-soft p-2 rounded-[8px]">
+            <div className="bg-accent-gold-soft p-2">
               <Brain className="h-6 w-6 text-ink-on-dark" />
             </div>
             <h3 className={`font-display text-[24px] font-bold text-ink dark:text-ink-on-dark`}>{t('informational.tips_practices')}</h3>
