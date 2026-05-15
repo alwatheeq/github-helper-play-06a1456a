@@ -638,13 +638,13 @@ export const EduPlayPage: React.FC = React.memo(() => {
                       <div className={`font-display text-[18px] font-semibold tracking-tight ${g.live ? 'text-card-light' : 'text-ink dark:text-ink-on-dark'}`}>{g.title}</div>
                     </div>
                     {g.live
-                      ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-sidebar font-bold uppercase flex-shrink-0">Live</div>
+                      ? <div className="text-[9px] tracking-[1.5px] px-[10px] py-[3px] bg-accent-gold text-ink-on-dark font-bold uppercase flex-shrink-0">Live</div>
                       : <div className="text-[9px] tracking-[1.5px] px-2 py-[3px] border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark font-bold uppercase flex-shrink-0">Soon</div>
                     }
                   </div>
                   <div className={`text-[12px] leading-relaxed flex-1 mb-4 ${g.live ? 'text-card-light/50' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{g.desc}</div>
                   {g.live && g.onClick
-                    ? <button onClick={g.onClick} className="py-2 bg-accent-gold text-sidebar font-display text-[12.5px] font-bold text-center cursor-pointer border-none hover:opacity-90 transition">
+                    ? <button onClick={g.onClick} className="py-2 bg-accent-gold text-ink-on-dark font-display text-[12.5px] font-bold text-center cursor-pointer border-none hover:opacity-90 transition">
                         {g.cta}
                       </button>
                     : <div className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark italic">Coming soon.</div>
@@ -715,7 +715,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 >
                   <span className={`font-display text-[12px] w-[13px] flex-shrink-0 ${p.rank === 1 ? 'text-accent-gold font-bold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.rank}</span>
                   <div
-                    className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-sidebar flex-shrink-0"
+                    className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-ink-on-dark flex-shrink-0"
                     style={{ background: p.you ? 'var(--color-accent-gold)' : 'var(--color-sidebar)' }}
                   >
                     {p.init}
@@ -742,7 +742,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         </div>
         <button
           onClick={() => setViewMode('menu')}
-          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-[7px] hover:opacity-90 transition border-none cursor-pointer"
+          className="text-[12px] font-bold text-ink-on-dark bg-accent-gold px-4 py-[7px] hover:opacity-90 transition border-none cursor-pointer"
         >← Back</button>
       </div>
 
@@ -767,7 +767,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                 <button
                   onClick={action}
                   className={`text-center text-[12px] py-[7px] transition cursor-pointer border-none ${
-                    primary ? 'bg-accent-gold text-sidebar font-bold hover:opacity-90' : 'border border-divider dark:border-divider-on-dark bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-70'
+                    primary ? 'bg-accent-gold text-ink-on-dark font-bold hover:opacity-90' : 'border border-divider dark:border-divider-on-dark bg-transparent text-secondary-ink dark:text-muted-ink-on-dark hover:opacity-70'
                   }`}
                 >{cta}</button>
               </div>
@@ -820,7 +820,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             {LEADERBOARD.map((p, i) => (
               <div key={i} className={`flex items-center gap-[9px] py-[7px] px-[6px] ${i < LEADERBOARD.length - 1 ? 'border-b border-divider dark:border-divider-on-dark' : ''} ${p.you ? 'bg-accent-gold-soft' : ''}`}>
                 <span className={`font-display text-[12px] w-[13px] flex-shrink-0 ${p.rank === 1 ? 'text-accent-gold font-bold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.rank}</span>
-                <div className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-sidebar flex-shrink-0" style={{ background: p.you ? 'var(--color-accent-gold)' : 'var(--color-sidebar)' }}>{p.init}</div>
+                <div className="w-6 h-6 rounded-full grid place-items-center text-[9px] font-bold text-ink-on-dark flex-shrink-0" style={{ background: p.you ? 'var(--color-accent-gold)' : 'var(--color-sidebar)' }}>{p.init}</div>
                 <span className={`flex-1 text-[12px] ${p.you ? 'font-bold text-ink dark:text-ink-on-dark' : 'font-medium text-secondary-ink dark:text-muted-ink-on-dark'}`}>{p.name}</span>
                 <span className={`font-display text-[12px] flex-shrink-0 ${p.you ? 'text-accent-gold' : 'text-muted-ink dark:text-muted-ink-on-dark'}`}>{p.pts.toLocaleString()}</span>
               </div>
@@ -840,7 +840,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         </div>
         <button
           onClick={() => setViewMode('game-selection')}
-          className="px-4 py-[7px] bg-accent-gold text-sidebar text-[12px] font-bold"
+          className="px-4 py-[7px] bg-accent-gold text-ink-on-dark text-[12px] font-bold"
           style={{ borderRadius: 3 }}
         >
           ← Back
@@ -963,7 +963,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
         </div>
         <button
           onClick={() => setViewMode('game-selection')}
-          className="text-[12px] font-bold text-sidebar bg-accent-gold px-4 py-2 hover:opacity-90 transition"
+          className="text-[12px] font-bold text-ink-on-dark bg-accent-gold px-4 py-2 hover:opacity-90 transition"
         >← Back</button>
       </div>
 
@@ -1000,7 +1000,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
           <button
             onClick={handleJoinGame}
             disabled={!joinCode.trim() || !displayName.trim()}
-            className="w-full py-3 bg-accent-gold text-sidebar text-[14px] font-bold font-display hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-accent-gold text-ink-on-dark text-[14px] font-bold font-display hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Join Game →
           </button>
@@ -1051,7 +1051,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             <button
               onClick={handleStartGame}
               disabled={participants.length < 1 || startingGame}
-              className="font-display text-[13px] font-bold text-sidebar bg-accent-gold px-5 py-[9px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="font-display text-[13px] font-bold text-ink-on-dark bg-accent-gold px-5 py-[9px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {startingGame ? 'Starting...' : 'Start Game →'}
             </button>
@@ -1121,7 +1121,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
                   }`}
                 >
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
-                    participant.is_host ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'
+                    participant.is_host ? 'bg-accent-gold text-ink-on-dark' : 'bg-sidebar text-ink-on-dark'
                   }`}>
                     {participant.display_name[0].toUpperCase()}
                   </div>
