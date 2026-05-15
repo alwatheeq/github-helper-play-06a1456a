@@ -127,7 +127,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
           </button>
           <button
             onClick={() => navigate('/dashboard/brain-rush')}
-            className="inline-flex items-center gap-1.5 px-[15px] py-1.5 bg-sidebar text-card-light text-[11.5px] font-semibold hover:opacity-90 transition"
+            className="inline-flex items-center gap-1.5 px-[15px] py-1.5 bg-sidebar text-ink-on-dark text-[11.5px] font-semibold hover:opacity-90 transition"
           >
             Play Again
           </button>
@@ -137,10 +137,10 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
       {/* Dark banner — your result */}
       {myResult && (
         <div className="bg-sidebar px-[30px] py-[22px] flex items-center mb-4">
-          <div className="pr-[30px] border-r border-card-light/[0.08] flex-shrink-0">
+          <div className="pr-[30px] border-r border-ink-on-dark/[.08] flex-shrink-0">
             <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-2">Your Rank</div>
             <div
-              className="font-display text-[60px] font-semibold text-card-light leading-none"
+              className="font-display text-[60px] font-semibold text-ink-on-dark leading-none"
               style={{ letterSpacing: -2 }}
             >
               #{myResult.rank}
@@ -157,17 +157,17 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
               [`${myResult.total_questions > 0 ? Math.round((myResult.correct_answers / myResult.total_questions) * 100) : 0}%`, 'Accuracy'],
             ].map(([v, l]) => (
               <div key={l} className="text-center">
-                <div className="font-display text-[32px] font-semibold text-card-light leading-none">{v}</div>
-                <div className="text-[9px] tracking-[1.5px] text-card-light/[0.34] uppercase mt-1.5">{l}</div>
+                <div className="font-display text-[32px] font-semibold text-ink-on-dark leading-none">{v}</div>
+                <div className="text-[9px] tracking-[1.5px] text-ink-on-dark/[.34] uppercase mt-1.5">{l}</div>
               </div>
             ))}
-            <div className="text-center pl-7 border-l border-card-light/[0.08]">
+            <div className="text-center pl-7 border-l border-ink-on-dark/[.08]">
               <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase mb-1.5">Avg Time</div>
-              <div className="font-display text-[26px] font-semibold text-card-light leading-none">
+              <div className="font-display text-[26px] font-semibold text-ink-on-dark leading-none">
                 {(myResult.average_time_ms / 1000).toFixed(1)}
-                <span className="text-[13px] text-card-light/[0.34]">s</span>
+                <span className="text-[13px] text-ink-on-dark/[.34]">s</span>
               </div>
-              <div className="text-[10px] text-card-light/[0.27] mt-1.5">per question</div>
+              <div className="text-[10px] text-ink-on-dark/[.27] mt-1.5">per question</div>
             </div>
           </div>
         </div>
@@ -265,7 +265,7 @@ export default function MultiplayerResults({ lobbyId }: MultiplayerResultsProps)
                     {p.rank}
                   </span>
                   <div className="flex items-center gap-2 min-w-0">
-                    <div className={`w-6 h-6 rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-card-light' : 'bg-sidebar text-card-light'}`}>
+                    <div className={`w-6 h-6 rounded-full grid place-items-center text-[8px] font-bold flex-shrink-0 ${isMe ? 'bg-accent-gold text-sidebar' : 'bg-sidebar text-ink-on-dark'}`}>
                       {p.display_name[0]}
                     </div>
                     <span className={`text-[12px] truncate ${isMe ? 'font-bold' : 'font-normal'} text-ink dark:text-ink-on-dark`}>

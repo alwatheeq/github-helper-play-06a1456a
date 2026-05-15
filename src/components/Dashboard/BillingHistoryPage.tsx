@@ -237,11 +237,11 @@ export const BillingHistoryPage: React.FC = () => {
         <div className="bg-sidebar px-7 py-5 mb-6">
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">Account</div>
           <div className="flex items-end justify-between">
-            <div className="font-display text-[28px] font-semibold text-card-light dark:text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
+            <div className="font-display text-[28px] font-semibold text-ink-on-dark tracking-[-0.4px]">Billing History.</div>
             {transactions.length > 0 && (
               <div className="text-right">
-                <div className="font-display text-[24px] font-bold text-card-light dark:text-ink-on-dark">{formatCurrency(totalPaid, currency)}</div>
-                <div className="text-[10px] text-card-light/[0.27] dark:text-ink-on-dark/40">total charged · {succeededTxs.length} payments</div>
+                <div className="font-display text-[24px] font-bold text-ink-on-dark">{formatCurrency(totalPaid, currency)}</div>
+                <div className="text-[10px] text-ink-on-dark/40">total charged · {succeededTxs.length} payments</div>
               </div>
             )}
           </div>

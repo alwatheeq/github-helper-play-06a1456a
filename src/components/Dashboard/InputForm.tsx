@@ -519,7 +519,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
               <p className="text-[12px] text-muted-ink dark:text-muted-ink-on-dark mt-2">
                 {t('dashboard.drop_file_helper') || 'PDF, PPTX, DOCX · up to 400 pages'}
               </p>
-              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink dark:bg-ink-on-dark text-card-light dark:text-card-dark text-[13px] font-medium mt-[18px]">
+              <span className="inline-flex items-center gap-2 px-6 py-2.5 bg-ink text-ink-on-dark text-[13px] font-medium mt-[18px]">
                 Choose a file <span aria-hidden>→</span>
               </span>
             </div>

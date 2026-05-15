@@ -129,7 +129,7 @@ export const SubscriptionManagementPage: React.FC = () => {
           <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-1.5">{t('subscription_management.eyebrow')}</div>
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-display text-[28px] font-semibold text-card-light tracking-[-0.4px]">{tierInfo.name}</div>
+              <div className="font-display text-[28px] font-semibold text-ink-on-dark tracking-[-0.4px]">{tierInfo.name}</div>
               <div className="text-[12px] text-muted-ink-on-dark mt-1">{tierInfo.description}</div>
             </div>
             <span className={`text-[10px] font-bold tracking-[1px] uppercase px-2.5 py-1 bg-accent-gold-soft ${
@@ -343,8 +343,8 @@ export const SubscriptionManagementPage: React.FC = () => {
             <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Account · Plan</div>
               <div className="flex justify-between items-center">
-                <div className="font-display text-[20px] font-semibold text-card-light">{t('subscription_management.cancel_confirm_title')}</div>
-                <button onClick={() => setShowCancelModal(false)} className="w-6 h-6 grid place-items-center border border-white/20 text-white/50 hover:text-white/80 transition text-sm cursor-pointer">✕</button>
+                <div className="font-display text-[20px] font-semibold text-ink-on-dark">{t('subscription_management.cancel_confirm_title')}</div>
+                <button onClick={() => setShowCancelModal(false)} className="w-6 h-6 grid place-items-center border border-ink-on-dark/[.20] text-ink-on-dark/50 hover:text-ink-on-dark/80 transition text-sm cursor-pointer">✕</button>
               </div>
             </div>
             <div className="p-6">
