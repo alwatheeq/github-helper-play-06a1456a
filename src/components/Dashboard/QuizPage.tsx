@@ -1273,7 +1273,7 @@ export const QuizPage: React.FC = React.memo(() => {
               <div>
                 <div className="bg-sidebar p-[22px] mb-4">
                   <div className="text-[9px] tracking-[2px] uppercase font-bold text-accent-gold">Highest mark</div>
-                  <div className="font-display leading-none mt-2" style={{ fontSize: 58, fontWeight: 600, color: 'var(--color-card-light, #f8f4ec)' }}>
+                  <div className="font-display leading-none mt-2 text-ink-on-dark" style={{ fontSize: 58, fontWeight: 600 }}>
                     {quizHistory.length > 0 ? `${quizStats.maxScore}` : '—'}
                     <span className="text-[22px] text-accent-gold">%</span>
                   </div>
@@ -1335,7 +1335,7 @@ export const QuizPage: React.FC = React.memo(() => {
                       [String(myQuizzesStats.totalQ), 'total questions'],
                       [String(new Set(quizSessions.map(q => q.difficulty_level)).size), 'difficulty levels'],
                     ] as [string, string][]).map(([v, l], i) => (
-                      <div key={i} className="flex-1 py-3 px-5 text-center border-r border-page-light/[.08] last:border-r-0">
+                      <div key={i} className="flex-1 py-3 px-5 text-center border-r border-ink-on-dark/[.08] last:border-r-0">
                         <div className="font-display text-[22px] font-semibold text-ink-on-dark leading-none">{v}</div>
                         <div className="text-[9px] tracking-[2px] uppercase text-accent-gold mt-1">{l}</div>
                       </div>
