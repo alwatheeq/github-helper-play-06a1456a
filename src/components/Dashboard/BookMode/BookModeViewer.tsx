@@ -237,7 +237,7 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
       <button
         type="button"
         onClick={() => setMindMapOpen(true)}
-        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.18)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.18)] transition-shadow text-white bg-accent-gold`}
+        className={`fixed bottom-24 right-6 z-50 rounded-full w-10 h-10 flex items-center justify-center text-ink-on-dark bg-accent-gold`}
         title={t('mind_map.title') || 'Mind map'}
       >
         <Brain className="h-5 w-5" />
@@ -255,14 +255,14 @@ export const BookModeViewer: React.FC<BookModeViewerProps> = ({
           <button
             type="button"
             onClick={() => setAddWidgetMenuOpen(prev => !prev)}
-            className={`bg-accent-gold rounded-full w-10 h-10 flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.18)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.18)] transition-shadow text-white`}
+            className={`bg-accent-gold rounded-full w-10 h-10 flex items-center justify-center text-ink-on-dark`}
             title={t('book_mode.add_widget') || 'Add Widget'}
           >
             <Plus className="h-5 w-5" />
           </button>
 
           {/* Widget type menu */}
-          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_8px_32px_rgba(0,0,0,0.18)] border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
+          <div className={`absolute bottom-full right-0 mb-2 w-52 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark transition-all duration-150 ${addWidgetMenuOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-1 pointer-events-none'}`}>
             <div className="p-1.5 space-y-0.5">
               {!widgets.some(w => w.type === 'book') && (
                 <button

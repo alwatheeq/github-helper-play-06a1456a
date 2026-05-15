@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             {isMobile ? (
               <button
                 onClick={toggleSidebar}
-                className="p-2 rounded-md text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150"
+                className="p-2 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 transition-colors duration-150"
                 title={isSidebarOpen ? t('sidebar.collapse_sidebar') : t('sidebar.expand_sidebar')}
               >
                 {isSidebarOpen ? <ChevronLeft className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

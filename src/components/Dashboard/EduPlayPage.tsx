@@ -888,7 +888,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
 
   const renderGameSettings = () => (
     <div className="max-w-2xl mx-auto">
-      <div className="bg-card-light dark:bg-card-dark rounded-[12px] shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] border border-divider dark:border-divider-on-dark dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.08),0_1px_2px_0_rgba(0,0,0,0.06)] dark: p-8">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-8">
         <h2 className="font-display text-[24px] font-bold text-ink dark:text-muted-ink-on-dark mb-6">Game Settings</h2>
 
         <div className="space-y-6">
@@ -942,7 +942,7 @@ export const EduPlayPage: React.FC = React.memo(() => {
             <button
               onClick={handleCreateGame}
               disabled={creating || !gameTitle.trim()}
-              className={`flex-1 px-6 py-3 bg-accent-gold text-white rounded-[12px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
+              className={`flex-1 px-6 py-3 bg-accent-gold text-ink-on-dark hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2`}
             >
               <Play className="h-5 w-5" />
               <span>{creating ? 'Creating...' : 'Create Game'}</span>

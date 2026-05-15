@@ -330,7 +330,7 @@ export const GroupChat: React.FC<GroupChatProps> = ({ groupId, groupName, onBack
                     <div
                       className={`text-[13px] leading-[1.65] break-words ${
                         own
-                          ? 'bg-accent-gold text-white'
+                          ? 'bg-accent-gold text-ink-on-dark'
                           : 'bg-card-light dark:bg-card-dark text-secondary-ink dark:text-muted-ink-on-dark'
                       }`}
                       style={{

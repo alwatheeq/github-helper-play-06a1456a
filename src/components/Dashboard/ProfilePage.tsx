@@ -386,7 +386,7 @@ export const ProfilePage: React.FC = React.memo(() => {
   ];
 
   return (
-    <div className="w-full min-h-0 p-4 sm:p-6">
+    <div className="w-full">
       <div className="w-full space-y-1">
 
         {/* ── Subscription Status Banner ─────────────────────────────── */}
@@ -558,7 +558,7 @@ export const ProfilePage: React.FC = React.memo(() => {
                       </div>
                     )}
                     <div className={`h-10 rounded bg-gradient-to-br ${bgGradient} flex items-center justify-center mb-1.5`}>
-                      <div className={`h-5 w-full rounded-sm bg-gradient-to-r ${uiGradient}`} />
+                      <div className={`h-5 w-full bg-gradient-to-r ${uiGradient}`} />
                     </div>
                     <div className={`text-[10.5px] text-center ${isSelected ? 'font-semibold' : 'font-normal'} text-ink dark:text-ink-on-dark`}>
                       {t(`profile.theme_${theme.replace(/-/g, '_')}`)}

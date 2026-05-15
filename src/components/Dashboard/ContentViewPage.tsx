@@ -327,11 +327,11 @@ export const ContentViewPage: React.FC = () => {
                   <span className="text-xs text-muted-ink dark:text-muted-ink-on-dark font-mono flex-shrink-0 ml-3">0:00 / —:——</span>
                 </div>
                 {/* Waveform placeholder */}
-                <div className="h-8 bg-subtle dark:bg-subtle-on-dark rounded-md overflow-hidden relative flex items-end gap-px px-1">
+                <div className="h-8 bg-subtle dark:bg-subtle-on-dark overflow-hidden relative flex items-end gap-px px-1">
                   {Array.from({ length: 60 }).map((_, i) => (
                     <div
                       key={i}
-                      className="flex-1 bg-divider dark:bg-divider-on-dark rounded-sm opacity-60"
+                      className="flex-1 bg-divider dark:bg-divider-on-dark opacity-60"
                       style={{ height: `${20 + Math.sin(i * 0.4) * 12 + Math.cos(i * 0.7) * 8}px` }}
                     />
                   ))}
@@ -342,10 +342,10 @@ export const ContentViewPage: React.FC = () => {
 
               {/* Skip controls */}
               <div className="flex gap-2 flex-shrink-0">
-                <button type="button" className="px-2.5 py-1 text-xs border border-divider dark:border-divider-on-dark rounded-md text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors">
+                <button type="button" className="px-2.5 py-1 text-xs border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors">
                   ⏮ 15s
                 </button>
-                <button type="button" className="px-2.5 py-1 text-xs border border-divider dark:border-divider-on-dark rounded-md text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors">
+                <button type="button" className="px-2.5 py-1 text-xs border border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors">
                   15s ⏭
                 </button>
               </div>
@@ -356,7 +356,7 @@ export const ContentViewPage: React.FC = () => {
                   <button
                     key={s}
                     type="button"
-                    className={`px-2 py-1 text-xs rounded-md font-semibold border transition-colors ${
+                    className={`px-2 py-1 text-xs font-semibold border transition-colors ${
                       i === 1
                         ? 'bg-chip dark:bg-card-dark border-accent-gold text-accent-gold'
                         : 'border-divider dark:border-divider-on-dark text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle'
@@ -401,14 +401,14 @@ export const ContentViewPage: React.FC = () => {
             {/* Hint bar */}
             <div className="flex-shrink-0 bg-card-light dark:bg-card-dark border-b border-divider dark:border-divider-on-dark px-6 py-2 flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-muted-ink dark:text-muted-ink-on-dark">
-                <span className="px-2 py-0.5 text-xs font-semibold rounded-md bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-accent-gold">
+                <span className="px-2 py-0.5 text-xs font-semibold bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark text-accent-gold">
                   AI Generated
                 </span>
                 Concept map based on your document · Drag to pan · Scroll to zoom
               </div>
               <button
                 type="button"
-                className="px-3 py-1.5 text-xs font-semibold rounded-md bg-accent-gold text-ink-on-dark hover:opacity-90 transition-opacity"
+                className="px-3 py-1.5 text-xs font-semibold bg-accent-gold text-ink-on-dark hover:opacity-90 transition-opacity"
               >
                 ↺ Regenerate
               </button>
@@ -435,7 +435,7 @@ export const ContentViewPage: React.FC = () => {
                   /* History items: show skeleton node graph */
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 p-8">
                     <div className="flex flex-col items-center gap-3 text-center">
-                      <div className="w-12 h-12 rounded-xl bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center">
+                      <div className="w-12 h-12 bg-chip dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center">
                         <Network className="h-6 w-6 text-accent-gold" />
                       </div>
                       <h3 className="font-display text-xl text-ink dark:text-ink-on-dark">
@@ -472,14 +472,14 @@ export const ContentViewPage: React.FC = () => {
                   <button
                     key={i}
                     type="button"
-                    className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
+                    className="w-8 h-8 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-base text-secondary-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
                   >
                     {sym}
                   </button>
                 ))}
                 <button
                   type="button"
-                  className="w-8 h-8 rounded-lg bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-[9px] font-bold text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
+                  className="w-8 h-8 bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark flex items-center justify-center text-[9px] font-bold text-muted-ink dark:text-muted-ink-on-dark hover:bg-subtle transition-colors "
                 >
                   FIT
                 </button>

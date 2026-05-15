@@ -57,12 +57,12 @@ export const SubscriptionGuard: React.FC<SubscriptionGuardProps> = ({
           {hasExpired ? 'Subscription Expired' : 'Upgrade Required'}
         </h2>
 
-        <p className="text-secondary-ink dark:text-secondary-ink-on-dark mb-2">
+        <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-2">
           {feature ? getAccessMessage(feature) : 'You need an active subscription to access this feature'}
         </p>
 
         {hasExpired && (
-          <div className="bg-orange-50 dark:bg-orange-900/30 rounded-[12px] p-4 mb-6">
+          <div className="bg-orange-50 dark:bg-orange-900/30 p-4 mb-6">
             <p className="text-sm text-orange-800 dark:text-orange-300">
               Your {getTierDisplayName()} subscription expired. Renew now to continue using all features.
             </p>

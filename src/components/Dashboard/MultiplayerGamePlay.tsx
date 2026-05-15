@@ -554,8 +554,8 @@ export default function MultiplayerGamePlay({ lobbyId }: MultiplayerGamePlayProp
       </div>
 
       <div className="mb-[18px]">
-        <div className="h-[4px] bg-divider dark:bg-divider-on-dark rounded-sm">
-          <div className="h-full bg-accent-gold rounded-sm transition-all duration-1000" style={{ width: `${timerPct}%` }} />
+        <div className="h-[4px] bg-divider dark:bg-divider-on-dark">
+          <div className="h-full bg-accent-gold transition-all duration-1000" style={{ width: `${timerPct}%` }} />
         </div>
         <div className="flex justify-between mt-[5px]">
           <span className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">time remaining</span>

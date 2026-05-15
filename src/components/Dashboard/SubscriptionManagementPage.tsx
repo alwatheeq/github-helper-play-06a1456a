@@ -89,7 +89,7 @@ export const SubscriptionManagementPage: React.FC = () => {
               </div>
               <h2 className="font-display text-[22px] font-semibold text-ink dark:text-ink-on-dark mb-4">{t('subscription_management.no_active_title')}</h2>
               <p className="text-secondary-ink dark:text-muted-ink-on-dark mb-8">{t('subscription_management.no_active_desc')}</p>
-              <button type="button" onClick={() => navigate('/pricing')} className="bg-accent-gold hover:opacity-90 text-white font-bold py-3 px-8 transition">
+              <button type="button" onClick={() => navigate('/pricing')} className="bg-accent-gold hover:opacity-90 text-ink-on-dark font-bold py-3 px-8 transition">
                 {t('subscription_management.view_plans')}
               </button>
             </div>

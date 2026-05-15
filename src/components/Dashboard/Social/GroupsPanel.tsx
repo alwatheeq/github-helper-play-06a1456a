@@ -354,7 +354,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
                       e.stopPropagation();
                       onOpenGroupChat(group.id, group.name);
                     }}
-                    className="font-display px-[14px] py-[5px] bg-accent-gold text-white text-[11px] font-semibold hover:opacity-90 transition-opacity"
+                    className="font-display px-[14px] py-[5px] bg-accent-gold text-ink-on-dark text-[11px] font-semibold hover:opacity-90 transition-opacity"
                   >
                     Open group
                   </button>
@@ -468,7 +468,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
           <button
             onClick={handleCreate}
             disabled={creating || !newGroupName.trim()}
-            className="w-full py-[9px] bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40"
+            className="w-full py-[9px] bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity disabled:opacity-40"
           >
             {creating ? '…' : 'Create Group →'}
           </button>
@@ -493,7 +493,7 @@ export const GroupsPanel: React.FC<GroupsPanelProps> = ({ onOpenGroupChat }) => 
             <button
               onClick={handleJoin}
               disabled={joining || joinCode.trim().length !== 6}
-              className="px-3 py-2 bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 disabled:opacity-40 transition-opacity"
+              className="px-3 py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 disabled:opacity-40 transition-opacity"
             >
               {joining ? '…' : 'Join'}
             </button>

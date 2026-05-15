@@ -59,7 +59,7 @@ const MiniPlayer: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed z-[9998] w-[180px] rounded-[14px] shadow-[0_8px_32px_rgba(0,0,0,0.32)] overflow-hidden flex flex-col select-none border border-white/[0.08]"
+      className="fixed z-[9998] w-[180px] overflow-hidden flex flex-col select-none border border-white/[0.08]"
       style={{ left: pos.x, top: pos.y }}
     >
       {/* Drag handle + room name */}

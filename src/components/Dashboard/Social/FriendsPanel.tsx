@@ -322,7 +322,7 @@ export const FriendsPanel: React.FC = () => {
                     </button>
                     <button
                       type="button"
-                      className="px-[14px] py-[5px] bg-accent-gold text-white text-[11px] font-bold hover:opacity-90 transition-opacity"
+                      className="px-[14px] py-[5px] bg-accent-gold text-ink-on-dark text-[11px] font-bold hover:opacity-90 transition-opacity"
                     >
                       Invite
                     </button>
@@ -351,7 +351,7 @@ export const FriendsPanel: React.FC = () => {
           />
           <button
             onClick={() => searchUsers(searchQuery)}
-            className="w-full py-2 bg-accent-gold text-white text-[12px] font-bold hover:opacity-90 transition-opacity"
+            className="w-full py-2 bg-accent-gold text-ink-on-dark text-[12px] font-bold hover:opacity-90 transition-opacity"
           >
             Send Request
           </button>

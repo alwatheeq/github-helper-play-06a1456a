@@ -1047,7 +1047,7 @@ export const AcademicsPage: React.FC = React.memo(() => {
                   className={`inline-flex items-center gap-2 px-4 py-2 ${
                     !selectedCourse || selectedFiles.length === 0 || uploading
                       ? 'bg-subtle text-muted-ink dark:text-muted-ink-on-dark cursor-not-allowed'
-                      : 'bg-accent-gold text-white'
+                      : 'bg-accent-gold text-ink-on-dark'
                   }`}
                 >
                   <Upload className="h-4 w-4" />

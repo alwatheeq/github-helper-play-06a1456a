@@ -105,7 +105,7 @@ function CustomNode({ data }: NodeProps) {
 
       {showTooltip && (data.description as string) && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 border px-3 py-2 text-xs shadow-[0_8px_32px_rgba(0,0,0,0.18)] max-w-[220px] whitespace-pre-wrap"
+          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-50 border px-3 py-2 text-xs max-w-[220px] whitespace-pre-wrap"
           style={{ background: CARD_BG, borderColor: MM_BORDER_SOFT }}
         >
           {data.description as string}

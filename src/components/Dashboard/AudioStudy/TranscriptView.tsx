@@ -54,7 +54,7 @@ export const TranscriptView: React.FC<TranscriptViewProps> = ({
               className={`inline-flex items-center px-4 py-2 rounded-[12px] transition duration-150 ${
                 !hasText || isGenerating
                   ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
-                  : `bg-accent-gold text-white hover:opacity-90`
+                  : `bg-accent-gold text-ink-on-dark hover:opacity-90`
               }`}
             >
               {isGenerating ? (t('audio_study.generating') || 'Generating...') : (t('audio_study.generate_from_transcript') || 'Generate summary/explanation')}

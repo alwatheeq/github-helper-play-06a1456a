@@ -468,7 +468,7 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
       {/* ── Create Goal Modal ──────────────────────────────────────────── */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card-light dark:bg-card-dark shadow-[0_24px_56px_rgba(0,0,0,0.3)] max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-card-light dark:bg-card-dark max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Dark header */}
             <div className="bg-sidebar px-6 py-5">
               <div className="text-[9px] tracking-[2.5px] text-accent-gold font-bold uppercase mb-2">Goals · New</div>

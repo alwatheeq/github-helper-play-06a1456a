@@ -233,7 +233,7 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
     <div
       ref={widgetRef}
       style={widgetStyle}
-      className={`bg-subtle dark:bg-subtle-on-dark rounded-[12px] shadow-[0_4px_16px_rgba(0,0,0,0.07)] dark:shadow-[0_4px_16px_rgba(0,0,0,0.25)] border border-divider dark:border-divider-on-dark ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
+      className={`bg-subtle dark:bg-subtle-on-dark border border-divider dark:border-divider-on-dark ${freeFormMode ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''} ${widget.isCollapsed ? 'inline-block' : ''}`}
       onMouseDown={handleMouseDown}
       onClick={freeFormMode ? handleBringToFront : undefined}
       data-widget={widget.id}
@@ -309,19 +309,19 @@ export const WidgetContainer: React.FC<WidgetContainerProps> = ({
           />
           {/* Edge handles */}
           <div
-            className={`absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
+            className={`absolute top-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'top')}
           />
           <div
-            className={`absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
+            className={`absolute bottom-0 left-3 right-3 h-1 cursor-ns-resize hover:opacity-60 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'bottom')}
           />
           <div
-            className={`absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
+            className={`absolute left-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'left')}
           />
           <div
-            className={`absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 shadow-[0_2px_8px_rgba(0,0,0,0.08)]/50 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
+            className={`absolute right-0 top-3 bottom-3 w-1 cursor-ew-resize hover:opacity-60 resize-handle z-10 text-muted-ink dark:text-muted-ink-on-dark`}
             onMouseDown={(e) => handleResizeStart(e, 'right')}
           />
         </>

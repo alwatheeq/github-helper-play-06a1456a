@@ -48,7 +48,7 @@ export const AudioSummaryGenerator: React.FC<AudioSummaryGeneratorProps> = ({
           className={`inline-flex items-center space-x-2 px-4 py-2 rounded-[12px] transition duration-150 ${
             !canGenerate
               ? `opacity-60 cursor-not-allowed text-muted-ink dark:text-muted-ink-on-dark`
-              : `bg-accent-gold text-white hover:opacity-90`
+              : `bg-accent-gold text-ink-on-dark hover:opacity-90`
           }`}
         >
           {isGenerating ? <Sparkles className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}

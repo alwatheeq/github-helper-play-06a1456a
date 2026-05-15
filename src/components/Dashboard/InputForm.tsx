@@ -818,7 +818,7 @@ const InputFormContent: React.FC<InputFormProps> = ({ onProcessInput, previewMod
                   ? 'bg-red-600'
                   : 'bg-divider dark:bg-divider-on-dark'
               }`}>
-                <div className={`w-5 h-5 bg-card-light rounded-full shadow-[var(--scholar-shadow-sm)] border border-divider transform transition duration-200 ${
+                <div className={`w-5 h-5 bg-card-light rounded-full border border-divider transform transition duration-200 ${
                   medicalMode ? 'translate-x-6' : 'translate-x-0.5'
                 } mt-0.5`}></div>
               </div>

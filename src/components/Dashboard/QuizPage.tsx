@@ -972,7 +972,7 @@ export const QuizPage: React.FC = React.memo(() => {
 
   return (
     <>
-    <div className="w-full min-h-0 p-4 sm:p-6">
+    <div className="w-full">
       <div className="w-full">
         <div className="mb-6">
           <PageHeader

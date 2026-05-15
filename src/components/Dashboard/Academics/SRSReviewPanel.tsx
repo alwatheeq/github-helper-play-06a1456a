@@ -160,7 +160,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   if (loading) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6">
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6">
         <div className="animate-pulse text-muted-ink dark:text-muted-ink-on-dark text-sm">
           {t('srs.loading') || 'Loading flashcards…'}
         </div>
@@ -170,10 +170,10 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   if (!reviewing) {
     return (
-      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6" dir={dir}>
+      <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6" dir={dir}>
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-[12px] bg-accent-gold text-white">
+            <div className="p-2 bg-accent-gold text-ink-on-dark">
               <Brain className="h-5 w-5" />
             </div>
             <div>
@@ -196,7 +196,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
                 setCurrentIndex(0);
                 setFlipped(false);
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-[12px] bg-accent-gold text-white text-sm font-medium hover:opacity-90"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-accent-gold text-ink-on-dark text-sm font-medium hover:opacity-90"
             >
               <ChevronRight className="h-4 w-4" />
               {t('srs.review_now') || 'Review Now'}
@@ -211,7 +211,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
   return (
     /* Aca4SRS: large centered flip card */
-    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark rounded-[12px] p-6 space-y-5" dir={dir}>
+    <div className="bg-card-light dark:bg-card-dark border border-divider dark:border-divider-on-dark p-6 space-y-5" dir={dir}>
       {/* Progress row */}
       <div className="flex items-center gap-4">
         <div className="flex-1 h-[6px] rounded-full bg-chip dark:bg-card-dark overflow-hidden">
@@ -234,7 +234,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
 
       {/* Large flip card — min-h-64 per Aca4SRS */}
       <div
-        className="relative cursor-pointer rounded-[12px] border-2 overflow-hidden"
+        className="relative cursor-pointer border-2 overflow-hidden"
         style={{ minHeight: '16rem', borderColor: 'var(--accent-gold)' }}
         onClick={() => setFlipped((p) => !p)}
       >
@@ -289,7 +289,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
                 type="button"
                 disabled={rating}
                 onClick={() => handleRate(btn.key)}
-                className={`py-3 px-2 rounded-[12px] text-white text-center ${btn.color} disabled:opacity-50 transition-opacity`}
+                className={`py-3 px-2 text-white text-center ${btn.color} disabled:opacity-50 transition-opacity`}
               >
                 <p className="text-sm font-bold">{btn.label}</p>
                 <p className="text-[10px] opacity-85 mt-0.5">{btn.sub}</p>
@@ -302,7 +302,7 @@ export const SRSReviewPanel: React.FC<SRSReviewPanelProps> = ({ courseId: _cours
         <button
           type="button"
           onClick={() => setFlipped(true)}
-          className="w-full py-2.5 rounded-[12px] border border-accent-gold/40 text-sm text-accent-gold font-medium hover:bg-accent-gold/10 transition-colors"
+          className="w-full py-2.5 border border-accent-gold/40 text-sm text-accent-gold font-medium hover:bg-accent-gold/10 transition-colors"
         >
           {t('srs.show_answer') || 'Show Answer'}
         </button>

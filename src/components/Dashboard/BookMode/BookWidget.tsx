@@ -83,7 +83,7 @@ export const BookWidget: React.FC<BookWidgetProps> = ({
   const currentPageContent = config.pages[currentPage]?.content || '';
 
   return (
-    <div className={`flex flex-col h-full bg-card-light dark:bg-card-dark shadow-[0_2px_8px_rgba(0,0,0,0.08)] relative`}>
+    <div className={`flex flex-col h-full bg-card-light dark:bg-card-dark relative`}>
       {/* Page Content */}
       <div className="flex-1 overflow-y-auto p-6 relative">
         {/* Notes for current page - top right, post-it style */}
@@ -95,7 +95,7 @@ export const BookWidget: React.FC<BookWidgetProps> = ({
                 <div
                   key={note.id}
                   onClick={() => setExpandedNoteId(isExpanded ? null : note.id)}
-                  className={`p-2 bg-amber-50 dark:bg-amber-900/30 shadow-[0_2px_8px_rgba(0,0,0,0.12)] rounded-md border border-amber-200/80 dark:border-amber-700/50 cursor-pointer transition-[background-color,border-color,color,opacity,transform,box-shadow] overflow-hidden ${
+                  className={`p-2 bg-amber-50 dark:bg-amber-900/30 border border-amber-200/80 dark:border-amber-700/50 cursor-pointer transition-[background-color,border-color,color,opacity,transform,box-shadow] overflow-hidden ${
                     isExpanded
                       ? 'min-h-[80px] max-h-[104px] w-[280px] min-w-[200px] max-w-[620px]'
                       : 'h-[48px] min-h-[44px] max-h-[52px] w-[280px] min-w-[200px] max-w-[360px]'
