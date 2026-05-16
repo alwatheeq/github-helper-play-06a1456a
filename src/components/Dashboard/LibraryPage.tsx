@@ -88,6 +88,19 @@ const TOPIC_COLORS: Record<string, [string, string]> = {
   medicine: ['#2C3E50', '#ECF0F1'], cardiology: ['#2C3E50', '#ECF0F1'], neurology: ['#2C3E50', '#ECF0F1'],
 };
 
+const TOPIC_PALETTE: [string, string][] = [
+  ['#1A2A48', '#C8D8F0'], ['#2E4228', '#D8E8C8'], ['#3A2E1E', '#F0DCBC'],
+  ['#2A3E4A', '#D8E8E0'], ['#1C3555', '#E8DFC8'], ['#6B4E1A', '#F8EDD0'],
+  ['#4A2830', '#F0D8DC'], ['#3A3020', '#F0E8C8'], ['#2C3E50', '#ECF0F1'],
+  ['#DDD5B8', '#2A2218'], ['#1E3A2A', '#C8E8D0'], ['#3A1E2E', '#F0C8D8'],
+];
+
+function hashTopicColor(key: string): [string, string] {
+  let h = 0;
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
+  return TOPIC_PALETTE[h % TOPIC_PALETTE.length];
+}
+
 export const LibraryPage: React.FC = React.memo(() => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -139,7 +152,7 @@ export const LibraryPage: React.FC = React.memo(() => {
         const key = topic.toLowerCase();
         if (!counts[key]) {
           const matchKey = Object.keys(TOPIC_COLORS).find(k => key.includes(k) || k.includes(key));
-          const [bg, txt] = matchKey ? TOPIC_COLORS[matchKey] : ['#3A3020', '#F0E8C8'];
+          const [bg, txt] = matchKey ? TOPIC_COLORS[matchKey] : hashTopicColor(key);
           counts[key] = { count: 0, bg, txt };
         }
         counts[key].count++;
