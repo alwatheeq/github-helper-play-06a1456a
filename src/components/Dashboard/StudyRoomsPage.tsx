@@ -1341,12 +1341,11 @@ export const StudyRoomsPage: React.FC = () => {
                           </p>
                         )}
                         <div className="flex gap-[5px] flex-wrap">
-                          <span className="text-[9px] tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark font-bold px-[7px] py-[2px] border border-divider dark:border-divider-on-dark uppercase">
-                            Video
-                          </span>
-                          <span className="text-[9px] tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark font-bold px-[7px] py-[2px] border border-divider dark:border-divider-on-dark uppercase">
-                            Chat
-                          </span>
+                          {['Video', 'Mic', 'Whiteboard', 'Chat'].map((tool) => (
+                            <span key={tool} className="text-[9px] tracking-[1.2px] text-muted-ink dark:text-muted-ink-on-dark font-bold px-[7px] py-[2px] border border-divider dark:border-divider-on-dark uppercase">
+                              {tool}
+                            </span>
+                          ))}
                         </div>
                       </div>
 
