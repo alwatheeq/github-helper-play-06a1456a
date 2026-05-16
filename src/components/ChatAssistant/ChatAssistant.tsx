@@ -271,7 +271,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
         className="flex items-center gap-2.5 px-[18px] py-[14px] rounded-t-[18px] flex-shrink-0"
         style={{ background: 'linear-gradient(135deg, #b45309, #d97706)' }}
       >
-        <div className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center flex-shrink-0">
+        <div className="w-[34px] h-[34px] rounded-[10px] bg-ink-on-dark/[.20] flex items-center justify-center flex-shrink-0">
           <MessageCircle className="h-4 w-4 text-ink-on-dark" />
         </div>
         <div className="flex-1 min-w-0">
@@ -281,7 +281,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => setIsMinimized(!isMinimized)}
-            className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="w-[26px] h-[26px] rounded-[7px] bg-ink-on-dark/[.15] flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={isMinimized ? t('chat.maximize') : t('chat.minimize')}
           >
             {isMinimized ? <Maximize2 className="h-3 w-3 text-ink-on-dark" /> : <Minimize2 className="h-3 w-3 text-ink-on-dark" />}
@@ -291,7 +291,7 @@ export const ChatAssistant: React.FC<ChatAssistantProps> = ({
               setIsOpen(false);
               setIsMinimized(false);
             }}
-            className="w-[26px] h-[26px] rounded-[7px] bg-white/15 flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="w-[26px] h-[26px] rounded-[7px] bg-ink-on-dark/[.15] flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={t('chat.close')}
           >
             <X className="h-3 w-3 text-ink-on-dark" />

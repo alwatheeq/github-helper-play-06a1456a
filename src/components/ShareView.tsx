@@ -114,7 +114,7 @@ export const ShareView: React.FC = () => {
       <header className="bg-sidebar dark:bg-sidebar h-[52px] flex items-center px-5 gap-3.5 flex-shrink-0 border-b border-divider/20">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="w-[26px] h-[26px] bg-accent-gold flex items-center justify-center flex-shrink-0">
+          <div className="w-[26px] h-[26px] rounded-[6px] bg-accent-gold flex items-center justify-center flex-shrink-0">
             <FileText className="h-3.5 w-3.5 text-ink-on-dark" />
           </div>
           <span className="text-sm font-semibold text-ink-on-dark">{t('app_name')}</span>
@@ -135,7 +135,7 @@ export const ShareView: React.FC = () => {
         {/* CTA */}
         <a
           href="/"
-          className="flex items-center gap-1.5 px-3 py-1.5 border border-accent-gold/50 text-xs font-medium text-accent-gold hover:bg-accent-gold/10 transition duration-150 flex-shrink-0"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-[7px] border border-accent-gold/50 text-xs font-medium text-accent-gold hover:bg-accent-gold/10 transition duration-150 flex-shrink-0"
         >
           <ExternalLink className="h-3.5 w-3.5" />
           <span>{t('share.get_meshfahem')}</span>
