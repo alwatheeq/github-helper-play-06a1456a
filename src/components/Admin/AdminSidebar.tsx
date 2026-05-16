@@ -81,7 +81,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           {!isMobile && (
             <button
               onClick={togglePin}
-              className={`p-2 rounded-md transition-colors duration-150 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5 ${
+              className={`p-2 rounded-md transition-colors duration-150 text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-ink-on-dark/[.05] ${
                 !shouldBeOpen ? 'mx-auto block' : ''
               }`}
               title={isPinned ? 'Unpin Sidebar' : 'Pin Sidebar'}
@@ -99,7 +99,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           }`;
           const stateClasses = isActive
             ? `bg-accent-gold/15 text-accent-gold ${shouldBeOpen ? 'border-l-2 border-accent-gold' : ''}`
-            : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-white/5';
+            : 'text-muted-ink-on-dark hover:text-ink-on-dark hover:bg-ink-on-dark/[.05]';
           return (
             <button
               key={item.id}

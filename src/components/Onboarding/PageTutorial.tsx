@@ -75,7 +75,7 @@ const PageTutorialContent: React.FC<PageTutorialProps> = ({
         <div className="bg-accent-gold px-7 py-5 text-ink-on-dark relative">
           <button
             onClick={handleSkip}
-            className="absolute top-4 right-[18px] w-7 h-7 rounded-[5px] bg-white/[0.18] flex items-center justify-center hover:opacity-80 transition-opacity"
+            className="absolute top-4 right-[18px] w-7 h-7 rounded-[5px] bg-ink-on-dark/[.18] flex items-center justify-center hover:opacity-80 transition-opacity"
             aria-label={t('tutorial.skip')}
           >
             <X className="h-3 w-3" />

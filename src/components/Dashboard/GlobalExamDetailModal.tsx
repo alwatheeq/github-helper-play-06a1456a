@@ -65,14 +65,14 @@ export const GlobalExamDetailModal: React.FC<GlobalExamDetailModalProps> = ({
         <div className="bg-accent-gold p-6 text-ink-on-dark relative">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 hover:bg-white/20 transition"
+            className="absolute top-4 right-4 p-2 hover:bg-ink-on-dark/[.20] transition"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
 
           <div className="flex items-start space-x-4">
-            <div className="bg-white/20 p-3">
+            <div className="bg-ink-on-dark/[.20] p-3">
               <Globe className="h-8 w-8" />
             </div>
             <div className="flex-1">

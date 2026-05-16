@@ -531,7 +531,7 @@ const GlobalChatAssistantContent: React.FC = () => {
           <div className="drag-handle cursor-move flex-shrink-0">
             <GripVertical className="h-4 w-4 opacity-70" />
           </div>
-          <div className="w-8 h-8 flex-shrink-0 rounded-[12px] bg-white/20 flex items-center justify-center">
+          <div className="w-8 h-8 flex-shrink-0 rounded-[12px] bg-ink-on-dark/[.20] flex items-center justify-center">
             <Sparkles className="h-4 w-4" />
           </div>
           <div className="flex-1 min-w-0">
@@ -549,7 +549,7 @@ const GlobalChatAssistantContent: React.FC = () => {
                 userId: user?.id
               });
             }}
-            className="w-6 h-6 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-ink-on-dark/[.20] transition-colors"
             aria-label={t('chat.minimize')}
           >
             <Minimize2 className="h-3.5 w-3.5" />
@@ -559,7 +559,7 @@ const GlobalChatAssistantContent: React.FC = () => {
               setIsOpen(false);
               setIsMinimized(false);
             }}
-            className="w-6 h-6 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
+            className="w-6 h-6 flex items-center justify-center rounded hover:bg-ink-on-dark/[.20] transition-colors"
             aria-label={t('chat.close')}
           >
             <X className="h-3.5 w-3.5" />

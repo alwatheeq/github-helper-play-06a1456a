@@ -49,7 +49,7 @@ export const PersistentSubscriptionModal: React.FC<PersistentSubscriptionModalPr
           </button>
 
           <div className="flex items-center space-x-3 mb-2">
-            <div className="bg-white/20 p-3 rounded-md backdrop-blur-sm">
+            <div className="bg-ink-on-dark/[.20] p-3 rounded-md backdrop-blur-sm">
               <Crown className="h-8 w-8" />
             </div>
             <div>

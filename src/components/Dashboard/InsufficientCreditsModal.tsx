@@ -52,7 +52,7 @@ export const InsufficientCreditsModal: React.FC<InsufficientCreditsModalProps> =
             {/* Close */}
             <button
               onClick={onClose}
-              className="absolute top-3.5 right-3.5 w-6 h-6 flex items-center justify-center rounded bg-white/15 hover:bg-white/25 transition-colors"
+              className="absolute top-3.5 right-3.5 w-6 h-6 flex items-center justify-center rounded bg-ink-on-dark/[.15] hover:bg-ink-on-dark/[.25] transition-colors"
               aria-label="Close"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
