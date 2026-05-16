@@ -223,32 +223,49 @@ export const GoalsAndAchievementsPage: React.FC = React.memo(() => {
 
         {activeTab === 'goals' ? (
           <div className="mt-5">
-            {/* Ink strip — 3 stat rings */}
-            <div className="bg-sidebar px-8 py-5 mb-6 flex justify-around items-center gap-4">
-              {[
-                { value: activeGoals.length, max: Math.max(goals.length, 1), label: 'Active Goals', unit: '' },
-                { value: completedGoals.length, max: Math.max(goals.length, 1), label: 'Completed', unit: '' },
-                { value: goals.length, max: Math.max(goals.length || 10, 10), label: 'Total Goals', unit: '' },
-              ].map((ring, i) => {
-                const pct = Math.min(ring.value / ring.max, 1);
-                const r = 36, circ = 2 * Math.PI * r;
-                return (
-                  <div key={i} className="flex flex-col items-center gap-2">
-                    <div className="relative w-[90px] h-[90px]">
-                      <svg width="90" height="90" style={{ transform: 'rotate(-90deg)' }}>
-                        <circle cx="45" cy="45" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6" />
-                        <circle cx="45" cy="45" r={r} fill="none" stroke="var(--color-accent-gold, #c9a227)" strokeWidth="6"
-                          strokeDasharray={circ} strokeDashoffset={circ * (1 - pct)} strokeLinecap="round" />
-                      </svg>
-                      <div className="absolute inset-0 flex flex-col items-center justify-center">
-                        <div className="font-display text-[20px] font-bold text-ink-on-dark leading-none">{ring.value}<span className="text-[11px]">{ring.unit}</span></div>
-                        <div className="text-[8px] text-ink-on-dark/40 mt-0.5">/ {ring.max}{ring.unit}</div>
+            {/* Ink strip — week label + 3 stat rings + streak */}
+            <div className="bg-sidebar px-8 py-[22px] mb-6 flex items-center gap-8">
+              {/* Week label — vertical */}
+              <div className="text-[9px] tracking-[2px] text-accent-gold font-bold uppercase flex-shrink-0"
+                style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                {`Week of ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`}
+              </div>
+
+              <div className="flex-1 flex justify-around items-center">
+                {[
+                  { value: activeGoals.length, max: Math.max(goals.length, 1), label: 'Active Goals', unit: '' },
+                  { value: completedGoals.length, max: Math.max(goals.length, 1), label: 'Completed', unit: '' },
+                  { value: goals.length, max: Math.max(goals.length || 10, 10), label: 'Total Goals', unit: '' },
+                ].map((ring, i) => {
+                  const pct = Math.min(ring.value / ring.max, 1);
+                  const r = 36, circ = 2 * Math.PI * r;
+                  return (
+                    <div key={i} className="flex flex-col items-center gap-2">
+                      <div className="relative w-[90px] h-[90px]">
+                        <svg width="90" height="90" style={{ transform: 'rotate(-90deg)' }}>
+                          <circle cx="45" cy="45" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="6" />
+                          <circle cx="45" cy="45" r={r} fill="none" stroke="var(--color-accent-gold, #c9a227)" strokeWidth="6"
+                            strokeDasharray={circ} strokeDashoffset={circ * (1 - pct)} strokeLinecap="round" />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <div className="font-display text-[20px] font-bold text-ink-on-dark leading-none">{ring.value}<span className="text-[11px]">{ring.unit}</span></div>
+                          <div className="text-[8px] text-ink-on-dark/40 mt-0.5">/ {ring.max}{ring.unit}</div>
+                        </div>
                       </div>
+                      <div className="text-[10px] text-ink-on-dark/60 text-center leading-snug">{ring.label}</div>
                     </div>
-                    <div className="text-[10px] text-ink-on-dark/60 text-center leading-snug">{ring.label}</div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Streak counter */}
+              <div className="text-right flex-shrink-0">
+                <div className="font-display text-[11px] text-accent-gold font-bold uppercase tracking-[0.1em] mb-1.5">STREAK</div>
+                <div className="font-display text-[42px] font-bold text-ink-on-dark leading-none">
+                  {completedGoals.length}
+                </div>
+                <div className="text-[10px] text-ink-on-dark/40 mt-0.5">goals done</div>
+              </div>
             </div>
 
             {/* Two-column layout: goal cards + right rail */}
