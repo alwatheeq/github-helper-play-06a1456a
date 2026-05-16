@@ -33,9 +33,9 @@ export const MasteryBar: React.FC<MasteryBarProps> = ({
           {Math.round(pct)}%
         </span>
       </div>
-      <div className="mt-1.5 relative w-full h-1 bg-chip rounded-full overflow-hidden">
+      <div className="mt-1.5 relative w-full h-1 bg-chip rounded-[2px] overflow-hidden">
         <div
-          className="absolute inset-y-0 start-0 bg-accent-gold rounded-full transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200"
+          className="absolute inset-y-0 start-0 bg-accent-gold rounded-[2px] transition-[background-color,border-color,color,opacity,transform,box-shadow] duration-200"
           style={{ width: `${pct}%` }}
         />
       </div>

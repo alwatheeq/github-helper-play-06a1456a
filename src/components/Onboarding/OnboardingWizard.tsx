@@ -105,8 +105,8 @@ export const OnboardingWizard: React.FC = () => {
 
       {/* ── Step indicator ──────────────────────────────────────────── */}
       <div className="flex items-center justify-center gap-2 mb-8">
-        <div className={`h-[6px] rounded-full transition-all ${step >= 1 ? 'w-8 bg-accent-gold' : 'w-8 bg-divider dark:bg-divider-on-dark'}`} />
-        <div className={`h-[6px] rounded-full transition-all ${step >= 2 ? 'w-8 bg-accent-gold' : 'w-4 bg-divider dark:bg-divider-on-dark'}`} />
+        <div className={`h-[6px] rounded-[3px] transition-all ${step >= 1 ? 'w-8 bg-accent-gold' : 'w-8 bg-divider dark:bg-divider-on-dark'}`} />
+        <div className={`h-[6px] rounded-[3px] transition-all ${step >= 2 ? 'w-8 bg-accent-gold' : 'w-4 bg-divider dark:bg-divider-on-dark'}`} />
         <span className="ml-1 text-[11px] text-muted-ink dark:text-muted-ink-on-dark">{stepLabel}</span>
       </div>
 

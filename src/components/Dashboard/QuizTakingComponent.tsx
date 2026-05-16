@@ -536,8 +536,8 @@ export const QuizTakingComponent: React.FC<QuizTakingProps> = ({ quizId, onCompl
         <span className="text-[11px] text-muted-ink dark:text-muted-ink-on-dark flex-shrink-0 tabular-nums">
           Q {currentQuestionIndex + 1} / {questions.length}
         </span>
-        <div className="flex-1 h-[3px] bg-subtle dark:bg-subtle-on-dark">
-          <div className="h-full bg-accent-gold transition-all" style={{ width: `${progressPct}%` }} />
+        <div className="flex-1 h-[3px] bg-subtle dark:bg-subtle-on-dark rounded-[2px]">
+          <div className="h-full bg-accent-gold rounded-[2px] transition-all" style={{ width: `${progressPct}%` }} />
         </div>
         <span className="text-[11px] font-bold text-accent-gold flex-shrink-0 tabular-nums">
           {answeredCount} answered

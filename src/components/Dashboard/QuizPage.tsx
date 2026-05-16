@@ -1439,8 +1439,8 @@ export const QuizPage: React.FC = React.memo(() => {
                                   </span>
                                   <span>{new Date(attempt.started_at).toLocaleDateString()}</span>
                                 </div>
-                                <div className="w-full bg-subtle dark:bg-subtle-on-dark h-[3px] mb-1.5">
-                                  <div className="h-[3px] bg-accent-gold" style={{ width: `${progress}%` }} />
+                                <div className="w-full bg-subtle dark:bg-subtle-on-dark h-[3px] mb-1.5 rounded-[2px]">
+                                  <div className="h-[3px] bg-accent-gold rounded-[2px]" style={{ width: `${progress}%` }} />
                                 </div>
                                 <p className="text-[10px] text-muted-ink dark:text-muted-ink-on-dark">{Math.round(progress)}% {t('quiz.completed') || 'completed'}</p>
                               </div>
