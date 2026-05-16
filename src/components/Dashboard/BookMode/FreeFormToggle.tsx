@@ -37,7 +37,7 @@ export const FreeFormToggle: React.FC<FreeFormToggleProps> = ({
         {/* Pill indicator */}
         <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full transition-colors ${
           enabled
-            ? 'bg-white/20 text-ink-on-dark dark:bg-black/10 dark:text-ink'
+            ? 'bg-ink-on-dark/[.20] text-ink-on-dark dark:bg-black/10 dark:text-ink'
             : 'bg-subtle dark:bg-card-dark text-muted-ink dark:text-muted-ink'
         }`}>
           {enabled ? 'ON' : 'OFF'}
