@@ -132,16 +132,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Navigation Items */}
-        <nav ref={navRef} className="flex-1 p-4 overflow-y-auto">
-          <ul className="space-y-1">
+        <nav ref={navRef} className="flex-1 pt-5 pb-2.5 overflow-y-auto">
+          <ul>
             {navigationItems.map((item) => {
               const IconComponent = item.icon;
               const isActive = currentView === item.id;
               const isDisabled = item.disabled;
 
-              const baseClasses = `relative flex items-center transition-colors duration-150 text-left ${
+              const baseClasses = `relative flex items-center gap-3 transition-colors duration-150 text-left ${
                 shouldBeOpen
-                  ? 'w-full space-x-3 rtl:space-x-reverse px-5 py-2.5'
+                  ? 'w-full px-5 py-[10px]'
                   : 'w-10 h-10 justify-center mx-auto'
               }`;
 
@@ -165,20 +165,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     className={`${baseClasses} ${stateClasses}`}
                     title={!shouldBeOpen ? item.label : undefined}
                   >
-                    <IconComponent
-                      className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-accent-gold' : ''}`}
-                    />
+                    <div className="w-[18px] grid place-items-center flex-shrink-0">
+                      <IconComponent
+                        className={`h-[18px] w-[18px] ${isActive ? 'text-accent-gold' : ''}`}
+                      />
+                    </div>
                     {shouldBeOpen && (
-                      <div className="flex-1 min-w-0 transition-opacity duration-200 ease-in-out">
-                        <div className="font-semibold flex items-center gap-2 text-[13px]">
+                      <div className="flex-1 min-w-0 transition-opacity duration-200 ease-in-out leading-[1.2]">
+                        <div className="font-semibold flex items-center gap-2 text-[13px] tracking-[-0.01em]">
                           {item.label}
                           {isDisabled && (
-                            <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 bg-ink-on-dark/[.10] text-muted-ink-on-dark rounded-full">
+                            <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 bg-ink-on-dark/[.10] text-muted-ink-on-dark">
                               {t('sidebar.coming_soon')}
                             </span>
                           )}
                         </div>
-                        <div className={`font-display text-[10.5px] mt-0.5 ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
+                        <div className={`font-display text-[10.5px] mt-[1px] ${isActive ? 'text-accent-gold' : 'text-muted-ink-on-dark'}`}>
                           {item.description}
                         </div>
                       </div>
@@ -192,11 +194,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Sidebar Footer — v4 pull-quote */}
         {shouldBeOpen && (
-          <div className="p-4 border-t border-divider-on-dark">
-            <p className="font-display italic text-[11.5px] leading-snug text-ink-on-dark/90">
+          <div className="px-5 pt-[14px] pb-4 border-t border-ink-on-dark/[.15]">
+            <p className="font-display text-[11.5px] leading-[1.45] text-ink-on-dark/90">
               "Read with the pen, write with the mind."
             </p>
-            <p className="text-[10px] font-semibold tracking-wider mt-2 text-muted-ink-on-dark">
+            <p className="text-[10px] font-semibold tracking-[0.03em] mt-2 text-muted-ink-on-dark">
               © 2026 {t('app_name')}
             </p>
           </div>
