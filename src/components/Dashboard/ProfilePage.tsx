@@ -104,6 +104,8 @@ export const ProfilePage: React.FC = React.memo(() => {
           setPublicUserId(data.public_user_id);
           setUsernameChangedAt(data.username_changed_at);
         }
+      }).catch((err) => {
+        ErrorLogger.error(err, { component: 'ProfilePage', action: 'loadUsernameData', userId: user.id });
       });
     }
   }, [user]);

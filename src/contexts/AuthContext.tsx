@@ -40,6 +40,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         loadUserProfile(session.user);
       }
       setLoading(false);
+    }).catch((err) => {
+      ErrorLogger.error(err, { component: 'AuthContext', action: 'getSession' });
+      setLoading(false);
     });
 
     // Listen for auth changes

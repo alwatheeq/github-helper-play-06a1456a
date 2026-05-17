@@ -58,6 +58,8 @@ export const StudyRoomsPage: React.FC = () => {
     if (user) {
       supabase.from('user_profiles').select('username').eq('id', user.id).single().then(({ data }) => {
         setHasUsername(!!data?.username);
+      }).catch((err) => {
+        ErrorLogger.error(err, { component: 'StudyRoomsPage', action: 'loadHasUsername', userId: user.id });
       });
     }
   }, [user]);
